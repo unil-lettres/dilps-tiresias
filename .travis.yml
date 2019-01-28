@@ -26,7 +26,6 @@ before_script:
   - ./bin/build.sh
 
 script:
-  - ./vendor/bin/doctrine orm:schema-tool:update --dump-sql
   - ./vendor/bin/doctrine orm:validate-schema
   - ./vendor/bin/php-cs-fixer fix --diff --verbose --dry-run
   - ./vendor/bin/phpunit --coverage-clover coverage-clover.xml
