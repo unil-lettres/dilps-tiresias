@@ -16,7 +16,7 @@ use InvalidArgumentException;
  * A collection of cards
  *
  * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
- * @ORM\Table(indexes={@ORM\Index(columns={"name"})})
+ * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
  */
 class Collection extends AbstractModel
 {

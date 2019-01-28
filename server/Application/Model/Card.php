@@ -26,11 +26,11 @@ use Psr\Http\Message\UploadedFileInterface;
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\Repository\CardRepository")
  * @ORM\Table(indexes={
- *     @ORM\Index(columns={"name"}),
- *     @ORM\Index(columns={"locality"}),
- *     @ORM\Index(columns={"area"}),
- *     @ORM\Index(columns={"latitude"}),
- *     @ORM\Index(columns={"longitude"}),
+ *     @ORM\Index(name="card_name_idx", columns={"name"}),
+ *     @ORM\Index(name="card_locality_idx", columns={"locality"}),
+ *     @ORM\Index(name="card_area_idx", columns={"area"}),
+ *     @ORM\Index(name="card_latitude_idx", columns={"latitude"}),
+ *     @ORM\Index(name="card_longitude_idx", columns={"longitude"}),
  * })
  * @API\Filters({
  *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
