@@ -1,22 +1,22 @@
 {
   "/graphql": {
-    "target": "https://dilps.lan",
+    "target": "http://dilps.lan",
     "secure": false
   },
   "/image": {
-    "target": "https://dilps.lan",
+    "target": "http://dilps.lan",
     "secure": false
   },
   "/pptx": {
-    "target": "https://dilps.lan",
+    "target": "http://dilps.lan",
     "secure": false
   },
   "/zip": {
-    "target": "https://dilps.lan",
+    "target": "http://dilps.lan",
     "secure": false
   },
   "/auth": {
-    "target": "https://dilps.lan",
+    "target": "http://dilps.lan",
     "secure": false
   }
 }

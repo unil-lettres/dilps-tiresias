@@ -22,10 +22,11 @@ before_install:
 before_script:
   - mysql -e 'CREATE DATABASE dilps;'
   - cp config/autoload/local.php.dist config/autoload/local.php
-  - ./bin/build.sh
   - ./bin/load-test-data.php
+  - ./bin/build.sh
 
 script:
+  - ./vendor/bin/doctrine orm:schema-tool:update --dump-sql
   - ./vendor/bin/doctrine orm:validate-schema
   - ./vendor/bin/php-cs-fixer fix --diff --verbose --dry-run
   - ./vendor/bin/phpunit --coverage-clover coverage-clover.xml
