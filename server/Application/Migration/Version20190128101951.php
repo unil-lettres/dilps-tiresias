@@ -6,12 +6,13 @@ namespace Application\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
 
-class Version20190128093024 extends AbstractMigration
+class Version20190128101951 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('ALTER TABLE card CHANGE locality locality VARCHAR(191) NOT NULL, CHANGE area area VARCHAR(191) NOT NULL');
         $this->addSql('DROP INDEX idx_161498d35e237e06 ON card');
         $this->addSql('CREATE INDEX card_name_idx ON card (name)');
         $this->addSql('DROP INDEX idx_161498d3e1d6b8e6 ON card');
@@ -22,6 +23,7 @@ class Version20190128093024 extends AbstractMigration
         $this->addSql('CREATE INDEX card_latitude_idx ON card (latitude)');
         $this->addSql('DROP INDEX idx_161498d385e16f6b ON card');
         $this->addSql('CREATE INDEX card_longitude_idx ON card (longitude)');
+        $this->addSql('ALTER TABLE institution CHANGE locality locality VARCHAR(191) NOT NULL, CHANGE area area VARCHAR(191) NOT NULL');
         $this->addSql('DROP INDEX idx_3a9f98e5e1d6b8e6 ON institution');
         $this->addSql('CREATE INDEX institution_locality_idx ON institution (locality)');
         $this->addSql('DROP INDEX idx_3a9f98e5d7943d68 ON institution');
