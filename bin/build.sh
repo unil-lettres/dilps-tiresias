@@ -47,4 +47,4 @@ echo "********************* Updating database..."
 ./vendor/bin/doctrine orm:generate-proxies
 
 echo "********************* Building Angular application..."
-yarn run prod
+yarn run ${DEPLOY_ENV:-prod}

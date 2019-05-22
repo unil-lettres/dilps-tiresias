@@ -280,8 +280,13 @@ class Card extends AbstractModel
     public function deleteFile(): void
     {
         $path = $this->getPath();
-        if (file_exists($path) && is_file($path) && $this->getFilename() !== 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg') {
-            unlink($path);
+        $config = require 'config/autoload/local.php';
+        $unlink = $config['files']['unlink'];
+
+        if (file_exists($path) && is_file($path)) {
+            if ($this->getFilename() !== 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg' && $unlink) {
+                unlink($path);
+            }
         }
     }
 

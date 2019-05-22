@@ -19,7 +19,7 @@ import { environment } from '../../environments/environment';
 export class HomeComponent implements OnInit, OnDestroy {
     private routeParamsSub;
 
-    public isProduction = environment.production;
+    public environmentString = environment.environment;
     public errors = [];
     public user;
     public nav = 1;
@@ -89,5 +89,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     public showNavigationMenu() {
         return !!this.nav;
     }
-
 }

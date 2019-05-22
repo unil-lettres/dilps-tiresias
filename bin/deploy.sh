@@ -4,11 +4,13 @@
 
 # Make a dump of the database
 echo "********************* Dumping database..."
-php $PWD/bin/dump-data.php $(date +%Y%m%d%H%M%S).db.backup.sql.gz
+if [ ${DEPLOY_ENV:-prod} = "prod" ]; then
+    php $PWD/bin/dump-data.php $(date +%Y%m%d%H%M%S).db.backup.sql.gz
+fi
 
-# Update project from master branch
+# Update project
 echo "********************* Updating project files..."
-git pull origin master
+git pull origin ${GIT_BRANCH:-master}
 
 # Rebuild project
 sh $PWD/bin/build.sh

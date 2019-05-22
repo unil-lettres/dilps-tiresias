@@ -14,6 +14,11 @@
                 min-width: 64px;
             }
         }
+        &.development {
+            background-color: #2ca02c !important;
+        }
+        &.staging {
+            background-color: #ee7f00 !important;
+        }
     }
-
 }

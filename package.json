@@ -6,6 +6,7 @@
     "ng": "ng",
     "dev": "yarn codegen && ng serve --port 4300",
     "prod": "yarn codegen && ng build --aot --prod --build-optimizer false",
+    "stage": "yarn codegen && ng build --aot --stage --build-optimizer false",
     "test": "yarn codegen && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
