@@ -10,6 +10,7 @@ fi
 
 # Update project
 echo "********************* Updating project files..."
+# Default branch is "master" but can be overrided with "GIT_BRANCH" envar
 git pull origin ${GIT_BRANCH:-master}
 
 # Rebuild project
