@@ -32,7 +32,7 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.0",
         "dasprid/container-interop-doctrine": "^1.1",
-        "doctrine/migrations": "^1.7",
+        "doctrine/migrations": "^2.0",
         "ecodev/graphql-doctrine": "^4.0",
         "ecodev/graphql-upload": "^3.0",
         "imagine/imagine": "^0.7.1",
