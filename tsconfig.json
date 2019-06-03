@@ -18,6 +18,10 @@
       "es2017",
       "dom",
       "esnext.asynciterable"
-    ]
+    ],
+    "paths": {
+      "core-js/es7/reflect": ["node_modules/core-js/proposals/reflect-metadata"],
+      "core-js/es6/*": ["node_modules/core-js/es/*"]
+    }
   }
 }
