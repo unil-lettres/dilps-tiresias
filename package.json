@@ -47,7 +47,7 @@
     "jasmine": "^3.1.0",
     "lodash": "^4.17.11",
     "material-design-icons": "^3.0.1",
-    "ngx-perfect-scrollbar": "^7.1.0",
+    "ngx-perfect-scrollbar": "^7.2.1",
     "node-sass": "^4.11.0",
     "puppeteer": "^1.0.0",
     "rxjs": "6.3.3",

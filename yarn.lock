@@ -5399,13 +5399,13 @@ neo-async@^2.5.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
 
-ngx-perfect-scrollbar@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/ngx-perfect-scrollbar/-/ngx-perfect-scrollbar-7.1.0.tgz#9233960512e6c20f39fc22e1f78d85d6884675bc"
-  integrity sha512-88dpMDb9dfRWZb+U1VlLeapy/XA2wzWn44xNrNwiuoYCetwthHorH6C6vDcYFC7mF5V9Xvc50jk2GLQ4lthjTA==
+ngx-perfect-scrollbar@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/ngx-perfect-scrollbar/-/ngx-perfect-scrollbar-7.2.1.tgz#72cbbba6bc75b4836fa0300760d2d69ed41d241c"
+  integrity sha512-2Dyzx2M3ihGSlcTNwb+o8XGJr4ukkeCMz9J6A0cXyL7eX1Tez6BnRqTcpKe9JWkVEdRVd8+WT0uZ2O0tMiRF3A==
   dependencies:
     perfect-scrollbar "^1.4.0"
-    resize-observer-polyfill "^1.4.0"
+    resize-observer-polyfill "^1.5.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -6759,7 +6759,7 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
-resize-observer-polyfill@^1.4.0:
+resize-observer-polyfill@^1.5.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
   integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
