@@ -52,7 +52,7 @@
     "puppeteer": "^1.0.0",
     "rxjs": "6.3.3",
     "shelljs": "^0.8.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0-beta.1",
