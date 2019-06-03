@@ -50,7 +50,7 @@
     "ngx-perfect-scrollbar": "^7.1.0",
     "node-sass": "^4.11.0",
     "puppeteer": "^1.0.0",
-    "rxjs": "6.3.3",
+    "rxjs": "6.5.2",
     "shelljs": "^0.8.1",
     "zone.js": "^0.8.26"
   },
