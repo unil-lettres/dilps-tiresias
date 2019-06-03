@@ -786,19 +786,20 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-apollo-angular-link-http-common@~1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/apollo-angular-link-http-common/-/apollo-angular-link-http-common-1.4.0.tgz#9e361f481562fad9151f95c43ccafc10ba728426"
-  integrity sha512-VAneRp1YYwaggOKgbMGVSuLMpYroLL6tEgS5WH3iNBg4P7cBcubo3uajWRih7E4pZlzX+bCJ5GNqNDJ6xMFT7Q==
+apollo-angular-link-http-common@~1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http-common/-/apollo-angular-link-http-common-1.7.0.tgz#c4ece9832724437027a591e5840ebedef8e4609b"
+  integrity sha512-syKJD/AgSrfeaZ0XRGfDuRNT2CowTu7VugdlPxf41wJ+v3uPbUnNoha9/simuxOQuUR7ykUWVyKtNPpJO+MagA==
   dependencies:
     tslib "^1.9.0"
 
-apollo-angular-link-http@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/apollo-angular-link-http/-/apollo-angular-link-http-1.4.0.tgz#6ae499b3ed44e2201a31f41efef1771580b14069"
-  integrity sha512-YMtk4ZmmQ32kvQVnKNhkqk4QQQ+xb5aaq5XVxLv7AX6S7jDfHDLi18Hc25C4c8revM6gLoGV2Xj9ijvyGGbRCg==
+apollo-angular-link-http@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/apollo-angular-link-http/-/apollo-angular-link-http-1.7.0.tgz#1d0b8a5a6cd94b5397c6a959330a0e2fb9f61d6a"
+  integrity sha512-YNZx1sQS8SleEadF4TPswRF/iq2M99/iwnwtxlqmlq7E+4ZSXXyxXjQO6LsXH8iWoG7aitCpzUZR7XAVuXGp+g==
   dependencies:
-    apollo-angular-link-http-common "~1.4.0"
+    apollo-angular-link-http-common "~1.7.0"
+    extract-files "5.0.1"
     tslib "^1.9.0"
 
 apollo-angular@^1.5.0:
@@ -3027,10 +3028,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extract-files@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-5.0.0.tgz#750f1e969b79b8e67a0ac40268dc6346fc339a3a"
-  integrity sha512-mTMXDGagB142JLMIbGRc11sNLPuN6G8qj5lRMx9T41Fkt3ot0OPkehcsLw05uT98LGEae2A1wFFDMkY4VEpbqg==
+extract-files@5.0.1, extract-files@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-5.0.1.tgz#c9492a8410be643e260a376f0151361993d5f659"
+  integrity sha512-qRW6y9eKF0VbCyOoOEtFhzJ3uykAw8GKwQVXyAIqwocyEWW4m+v+evec34RwtUkkxxHh7NKBLJ6AnXM8W4dH5w==
 
 extract-zip@^1.6.6:
   version "1.6.7"
