@@ -28,7 +28,7 @@
     "@angular/router": "^7.2.0",
     "@ecodev/angular-natural-gallery": "^4.0.2",
     "@ecodev/natural-search": "^0.1.0",
-    "@ngx-progressbar/core": "^5.3.1",
+    "@ngx-progressbar/core": "^5.3.2",
     "angular-file": "^0.5.9",
     "apollo-angular": "^1.5.0",
     "apollo-angular-link-http": "^1.4.0",

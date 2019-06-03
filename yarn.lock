@@ -390,10 +390,10 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
-"@ngx-progressbar/core@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@ngx-progressbar/core/-/core-5.3.1.tgz#ddbc6e1f0f4c5bcf3077d1c82cbb9a7e088600b5"
-  integrity sha512-IAbpPbv0RHwnLTqr8JpEOR2mDbia8jTyZdG0yWmyiGoVfIisSs/NkzMDph43pLvWl2aaJ+Bd2BJTdM2olYK4MQ==
+"@ngx-progressbar/core@^5.3.2":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/core/-/core-5.3.2.tgz#d2e76034324d459dbbd7b9d89aa3b550db5e46f6"
+  integrity sha512-z0VzsJpgWxoU7wLXviCutXPXDop1Ry/SPOlVOtXHlkUGFAzHs3soDeXpTyigSdBB8Q16Nisow4EVuOKCByp6PQ==
   dependencies:
     tslib "^1.9.0"
 
