@@ -7,7 +7,7 @@
     "content-hash": "a7aa935ab0017d50942dc46a0fd1cacd",
     "packages": [
         {
-            "name": "beberlei/DoctrineExtensions",
+            "name": "beberlei/doctrineextensions",
             "version": "v1.1.5",
             "source": {
                 "type": "git",
@@ -1259,16 +1259,16 @@
         },
         {
             "name": "imagine/imagine",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "6a84addad63baeda0a25079580a2e369a36ceb29"
+                "reference": "69ce33008b73a64f5ea25449d1b69146437144fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/6a84addad63baeda0a25079580a2e369a36ceb29",
-                "reference": "6a84addad63baeda0a25079580a2e369a36ceb29",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/69ce33008b73a64f5ea25449d1b69146437144fd",
+                "reference": "69ce33008b73a64f5ea25449d1b69146437144fd",
                 "shasum": ""
             },
             "require": {
@@ -1313,7 +1313,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2018-12-07T16:51:20+00:00"
+            "time": "2019-06-03T15:06:06+00:00"
         },
         {
             "name": "nikic/fast-route",
