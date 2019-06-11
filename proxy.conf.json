@@ -1,6 +1,6 @@
 {
   "/graphql": {
-    "target": "https:// dilps.lan",
+    "target": "https://dilps.lan",
     "secure": false
   },
   "/image": {
