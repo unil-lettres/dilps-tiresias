@@ -732,10 +732,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-file@^0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/angular-file/-/angular-file-0.5.9.tgz#f3f809600e911b806c1ba2803d19614d62d36de1"
-  integrity sha512-ULq2S0oG49p8gUjVjFZtUMkneDRbwWaU0Jl/GvzgBsDILZHPFCUnpKpAOzogsiH663bNhZgb5elX4co4+XPkJA==
+angular-file@^1.2.4:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/angular-file/-/angular-file-1.3.2.tgz#c3afa87242f66925f35e15b2db1c5285db8754c9"
+  integrity sha512-k4HGJJ/JXGmNA8iV206I5WOHbufOy6L5f2MYHiUuGjlDiWjEJmjo8sxnNJsR79FzkjbL41TWRDAH2gi4VTUYKw==
 
 ansi-colors@^3.0.0:
   version "3.2.3"
@@ -6415,10 +6415,10 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@^1.0.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.11.0.tgz#63cdbe12b07275cd6e0b94bce41f3fcb20305770"
-  integrity sha512-iG4iMOHixc2EpzqRV+pv7o3GgmU2dNYEMkvKwSaQO/vMZURakwSOn/EYJ6OIRFYOque1qorzIBvrytPIQB3YzQ==
+puppeteer@^1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.19.0.tgz#e3b7b448c2c97933517078d7a2c53687361bebea"
+  integrity sha512-2S6E6ygpoqcECaagDbBopoSOPDv0pAZvTbnBgUY+6hq0/XDFDOLEMNlHF/SKJlzcaZ9ckiKjKDuueWI3FN/WXw==
   dependencies:
     debug "^4.1.0"
     extract-zip "^1.6.6"
