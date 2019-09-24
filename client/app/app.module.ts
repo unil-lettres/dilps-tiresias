@@ -84,7 +84,7 @@ import { UsersComponent } from './users/users/users.component';
 
     /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
-    appearance: 'legacy',
+    appearance: 'fill',
 };
 
 @NgModule({

@@ -1,12 +1,14 @@
-import gql from 'graphql-tag';
-import { Apollo } from 'apollo-angular';
 import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { FetchResult } from 'apollo-link';
+import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
 import { MutationsQuery } from '../generated-types';
-import { FetchResult } from 'apollo-link';
 import { UtilityService } from './utility.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class LinkMutationService {
 
     /**
