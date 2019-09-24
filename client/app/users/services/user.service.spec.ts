@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockApolloProvider } from '../../shared/testing/MockApolloProvider';
+import { UserType } from '../../shared/generated-types';
 import { AbstractModelServiceSpec } from '../../shared/testing/AbstractModelServiceSpec';
+import { MOCK_APOLLO_PROVIDER } from '../../shared/testing/MOCK_APOLLO_PROVIDER';
 import { userMetaTesting } from '../../shared/testing/userMetaTesting';
 import { UserService } from './user.service';
-import { UserType } from '../../shared/generated-types';
 
 describe('UserService', () => {
 
@@ -29,7 +29,7 @@ describe('UserService', () => {
         permissions: {
             update: true,
             delete: true,
-            __typename : 'Permissions'
+            __typename: 'Permissions',
         },
     };
 
@@ -93,7 +93,7 @@ describe('UserService', () => {
             ],
             providers: [
                 UserService,
-                MockApolloProvider,
+                MOCK_APOLLO_PROVIDER,
             ],
         });
     });

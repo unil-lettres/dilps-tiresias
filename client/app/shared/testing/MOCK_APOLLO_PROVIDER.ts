@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
 import { SchemaLink } from 'apollo-link-schema';
-import { NgZone } from '@angular/core';
 import { buildClientSchema } from 'graphql';
 import { addMockFunctionsToSchema } from 'graphql-tools';
-import { apolloDefaultOptions } from '../config/apollo.default.options';
 import { schema as introspectionResult } from '../../../../data/tmp/schema';
+import { apolloDefaultOptions } from '../config/apollo.default.options';
 
 /**
  * A mock Apollo to be used in tests only
  */
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 class MockApollo extends Apollo {
     constructor(_ngZone: NgZone) {
         super(_ngZone);
@@ -23,8 +24,6 @@ class MockApollo extends Apollo {
     /**
      * This will create a fake ApolloClient who can responds to queries
      * against our real schema with random values
-     *
-     * @returns {ApolloClient<any>}
      */
     private createMockClient() {
         const schema = buildClientSchema(introspectionResult.data as any);
@@ -63,7 +62,7 @@ class MockApollo extends Apollo {
 /**
  * This is the only way to use our MockApollo
  */
-export const MockApolloProvider = {
+export const MOCK_APOLLO_PROVIDER = {
     provide: Apollo,
     useClass: MockApollo,
 };

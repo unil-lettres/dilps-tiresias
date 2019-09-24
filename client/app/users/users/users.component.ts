@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractList } from '../../shared/components/AbstractList';
+import { UserType } from '../../shared/generated-types';
 import { UserService } from '../services/user.service';
 import { UserComponent } from '../user/user.component';
-import {UserType} from '../../shared/generated-types';
 
 @Component({
     selector: 'app-users',
@@ -18,8 +18,9 @@ export class UsersComponent extends AbstractList implements OnInit {
         'email',
         'role',
         'type',
-        'activeUntil'
+        'activeUntil',
     ];
+
     constructor(service: UserService,
                 router: Router,
                 route: ActivatedRoute,

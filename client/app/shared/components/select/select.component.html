@@ -1,35 +1,19 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
 
-    <mat-form-field id="test"
-                    class="width-auto clear-top-spacing clear-bottom-spacing"
-                    [floatLabel]="floatPlaceholder"
+    <mat-form-field [floatLabel]="floatPlaceholder" class="width-auto clear-top-spacing clear-bottom-spacing" id="test"
     >
 
         <!-- Input -->
-        <input matInput
-               #input
-               [readonly]="readonly"
-               [placeholder]="placeholder"
-               aria-label="recherche et sélection"
-               i18n-aria-label
-               [ngModel]="selected"
-               [formControl]="formCtrl"
-               [matAutocomplete]="ac"
+        <input #input [formControl]="formCtrl" [matAutocomplete]="ac" [ngModel]="selected" [placeholder]="placeholder" [readonly]="readonly" aria-label="recherche et sélection" i18n-aria-label matInput
         >
 
         <!-- Meta data -->
-        <mat-icon matPrefix *ngIf="!loading && showIcon">search</mat-icon>
-        <mat-progress-spinner matPrefix *ngIf="showIcon && loading" [diameter]="21" [strokeWidth]="5" mode="indeterminate"
+        <mat-icon *ngIf="!loading && showIcon" matPrefix>search</mat-icon>
+        <mat-progress-spinner *ngIf="showIcon && loading" [diameter]="21" [strokeWidth]="5" matPrefix mode="indeterminate"
         ></mat-progress-spinner>
 
         <!-- Clear button -->
-        <button *ngIf="!readonly && selected"
-                (click)="unselect($event)"
-                mat-icon-button
-                matSuffix
-                i18n-matTooltip
-                matTooltip="Désélectionner"
-                matTooltipPosition="above"
+        <button (click)="unselect($event)" *ngIf="!readonly && selected" i18n-matTooltip mat-icon-button matSuffix matTooltip="Désélectionner" matTooltipPosition="above"
         >
             <mat-icon>close</mat-icon>
         </button>
@@ -39,16 +23,13 @@
         </ng-template>
 
         <!-- Autocomplete menu -->
-        <mat-autocomplete #ac="matAutocomplete"
-                          [displayWith]="getDisplayFn()"
-                          (optionSelected)="notify($event)"
-                          [autoActiveFirstOption]="autoActiveFirstOption"
+        <mat-autocomplete #ac="matAutocomplete" (optionSelected)="notify($event)" [autoActiveFirstOption]="autoActiveFirstOption" [displayWith]="getDisplayFn()"
         >
             <mat-option *ngFor="let item of filteredItems | async" [value]="item">
-                <ng-template [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultACItem" [ngTemplateOutletContext]="{ item: item }"
+                <ng-template [ngTemplateOutletContext]="{ item: item }" [ngTemplateOutlet]="itemTemplate ? itemTemplate : defaultACItem"
                 ></ng-template>
             </mat-option>
-            <div style="padding:5px 10px" class="mat-caption" *ngIf="moreNbItems > 0" i18n>{{ moreNbItems }} élément(s) supplémentaire(s)
+            <div *ngIf="moreNbItems > 0" class="mat-caption" i18n style="padding:5px 10px">{{ moreNbItems }} élément(s) supplémentaire(s)
             </div>
         </mat-autocomplete>
     </mat-form-field>

@@ -1,61 +1,51 @@
 <div class="containerWithToolbar" fxFlex fxLayout="column">
 
-    <mat-toolbar fxFlex="none" color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
         <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
         <div fxFlex></div>
 
         <ng-container *ngIf="user?.role === 'administrator'">
-            <button *ngIf="change" mat-icon-button mat-raised-button color="primary" matTooltip="Accepter suggestion" (click)="accept()">
+            <button (click)="accept()" *ngIf="change" color="primary" mat-icon-button mat-raised-button matTooltip="Accepter suggestion">
                 <mat-icon>check</mat-icon>
             </button>
-            <button *ngIf="change" mat-icon-button mat-raised-button color="warn" matTooltip="Refuser la suggestion" (click)="reject()">
+            <button (click)="reject()" *ngIf="change" color="warn" mat-icon-button mat-raised-button matTooltip="Refuser la suggestion">
                 <mat-icon>close</mat-icon>
             </button>
         </ng-container>
 
-        <button *ngIf="original"
-                mat-icon-button
-                mat-raised-button
-                color="primary"
-                matTooltip="Soumettre la suggestion à validation"
-                (click)="update()"
+        <button (click)="update()" *ngIf="original" color="primary" mat-icon-button mat-raised-button matTooltip="Soumettre la suggestion à validation"
         >
             <mat-icon>save</mat-icon>
         </button>
-        <button *ngIf="!original && suggestion"
-                mat-icon-button
-                mat-raised-button
-                color="primary"
-                matTooltip="Soumettre l'ajout de cette fiche à validation"
-                (click)="create()"
+        <button (click)="create()" *ngIf="!original && suggestion" color="primary" mat-icon-button mat-raised-button matTooltip="Soumettre l'ajout de cette fiche à validation"
         >
             <mat-icon>add</mat-icon>
         </button>
     </mat-toolbar>
 
-    <div fxFlex fxLayout="row" *ngIf="loaded" class="test">
+    <div *ngIf="loaded" class="test" fxFlex fxLayout="row">
 
         <!-- Original -->
-        <div fxFlex *ngIf="!change?.original && !original" fxLayout="column" fxLayoutAlign="center center">
+        <div *ngIf="!change?.original && !original" fxFlex fxLayout="column" fxLayoutAlign="center center">
             <div class="mat-display-1">Nouvelle fiche</div>
         </div>
-        <div fxFlex fxLayout="column" *ngIf="change && change.original">
-            <app-card fxFlex [(model)]="change.original" title="Original"></app-card>
+        <div *ngIf="change && change.original" fxFlex fxLayout="column">
+            <app-card [(model)]="change.original" fxFlex title="Original"></app-card>
         </div>
-        <div fxFlex fxLayout="column" *ngIf="original">
-            <app-card fxFlex [(model)]="original" title="Original"></app-card>
+        <div *ngIf="original" fxFlex fxLayout="column">
+            <app-card [(model)]="original" fxFlex title="Original"></app-card>
         </div>
 
         <!-- Suggestion -->
-        <div fxFlex *ngIf="!change?.suggestion && !suggestion" fxLayout="column" fxLayoutAlign="center center">
+        <div *ngIf="!change?.suggestion && !suggestion" fxFlex fxLayout="column" fxLayoutAlign="center center">
             <div class="mat-display-1">Suppression de la fiche</div>
         </div>
-        <div fxFlex fxLayout="column" *ngIf="change && change.suggestion">
-            <app-card fxFlex title="Suggestion" [(model)]="change.suggestion" [imageSrc]="suggestionImageSrc" [editable]="true"
+        <div *ngIf="change && change.suggestion" fxFlex fxLayout="column">
+            <app-card [(model)]="change.suggestion" [editable]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
             ></app-card>
         </div>
-        <div fxFlex fxLayout="column" *ngIf="suggestion">
-            <app-card fxFlex [(model)]="suggestion" title="Suggestion" [imageSrc]="suggestionImageSrc" [editable]="true" [hideTools]="true"
+        <div *ngIf="suggestion" fxFlex fxLayout="column">
+            <app-card [(model)]="suggestion" [editable]="true" [hideTools]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
             ></app-card>
         </div>
     </div>

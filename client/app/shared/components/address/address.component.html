@@ -1,68 +1,35 @@
-<div fxLayout="column" [fxLayoutGap]="vertical ? '0px' : '10px'">
+<div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
-        <input matInput [readonly]="readonly" name="street" placeholder="Rue" [(ngModel)]="model.street" (keyup.enter)="search()" >
+        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput name="street" placeholder="Rue">
     </mat-form-field>
 
-    <div [fxLayout]="vertical ? 'column': 'row'" [fxLayoutGap]="vertical ? '0px' : '10px'">
+    <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column': 'row'">
         <mat-form-field *ngIf="!readonly || !!model?.postcode">
-            <input matInput [readonly]="readonly" name="postcode" placeholder="NPA" [(ngModel)]="model.postcode" (keyup.enter)="search()"
+            <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput name="postcode" placeholder="NPA"
             >
         </mat-form-field>
-        <mat-form-field [fxFlex]="!vertical"
-                        *ngIf="!readonly || !!model?.locality"
+        <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical"
         >
-            <input matInput
-                   [readonly]="readonly"
-                   name="locality"
-                   placeholder="Localité"
-                   [(ngModel)]="model.locality"
-                   (keyup.enter)="search()"
+            <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput name="locality" placeholder="Localité"
             >
         </mat-form-field>
 
-        <app-select *ngIf="countries && (!readonly || !!model?.postcode)"
-                    [items]="countries"
-                    [(model)]="model.country"
-                    [showIcon]="false"
-                    (keyup.enter)="search()"
-                    placeholder="Pays"
-                    [autoActiveFirstOption]="true"
-                    [readonly]="readonly"
+        <app-select (keyup.enter)="search()" *ngIf="countries && (!readonly || !!model?.postcode)" [(model)]="model.country" [autoActiveFirstOption]="true" [items]="countries" [readonly]="readonly" [showIcon]="false" placeholder="Pays"
         ></app-select>
     </div>
 </div>
 
 <div id="mapZone">
-    <mat-form-field id="search"
-                    class="mat-elevation-z4"
-                    floatLabel="never" [fxShow]="!readonly"
+    <mat-form-field [fxShow]="!readonly" class="mat-elevation-z4" floatLabel="never" id="search"
     >
-        <input matInput
-               placeholder="Chercher"
-               autocorrect="off"
-               autocapitalize="off"
-               spellcheck="off"
-               type="text"
-               class="form-control"
-               #input
-               [formControl]="formCtrl"
+        <input #input [formControl]="formCtrl" autocapitalize="off" autocorrect="off" class="form-control" matInput placeholder="Chercher" spellcheck="off" type="text"
         >
     </mat-form-field>
 
     <!-- Map -->
-    <agm-map [latitude]="model?.latitude"
-             [longitude]="model?.longitude"
-             [zoom]="zoom"
-             [styles]="mapStyles"
-             [scrollwheel]="false"
-             *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
-             style="height:300px;"
+    <agm-map *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)" [latitude]="model?.latitude" [longitude]="model?.longitude" [scrollwheel]="false" [styles]="mapStyles" [zoom]="zoom" style="height:300px;"
     >
-        <agm-marker [latitude]="model?.latitude"
-                    [longitude]="model?.longitude"
-                    [markerDraggable]="!readonly"
-                    (dragEnd)="onMarkerDrag($event)"
-                    [iconUrl]="icon"
+        <agm-marker (dragEnd)="onMarkerDrag($event)" [iconUrl]="icon" [latitude]="model?.latitude" [longitude]="model?.longitude" [markerDraggable]="!readonly"
         ></agm-marker>
     </agm-map>
 

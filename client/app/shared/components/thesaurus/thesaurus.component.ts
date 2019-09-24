@@ -30,35 +30,27 @@ export class ThesaurusComponent implements OnInit {
     @Input() placeholder;
     @Input() multiple = true;
     @Input() previewComponent;
-
-    private _model: ThesaurusModel;
-    @Input() set model(val: ThesaurusModel) {
-        this._model = val;
-        this.convertModel();
-    }
-
     @Output() modelChange = new EventEmitter();
-
     public formCtrl: FormControl = new FormControl();
-    private queryRef: QueryRef<any>;
-
-    /**
-     * Default page size
-     * @type {number}
-     */
-    private pageSize = 10;
-
-    /**
-     * Init search options
-     * @type {IncrementSubject}
-     */
-    private options: IncrementSubject;
 
     /**
      * Number of items not shown in result list
      * Shows a message after list if positive
      */
     public moreNbItems = 0;
+    public suggestionsObs: Observable<any>;
+    public items: ThesaurusModel[] = [];
+    private queryRef: QueryRef<any>;
+
+    /**
+     * Default page size
+     */
+    private pageSize = 10;
+
+    /**
+     * Init search options
+     */
+    private options: IncrementSubject;
 
     /**
      * Filter options debounced.
@@ -66,11 +58,14 @@ export class ThesaurusComponent implements OnInit {
      */
     private optionsFiltered: BehaviorSubject<Literal>;
 
-    public suggestionsObs: Observable<any>;
-
-    public items: { name: string, locality?: string }[] = [];
-
     constructor(private dialog: MatDialog) {
+    }
+
+    private _model: ThesaurusModel;
+
+    @Input() set model(val: ThesaurusModel) {
+        this._model = val;
+        this.convertModel();
     }
 
     ngOnInit() {
@@ -135,24 +130,6 @@ export class ThesaurusComponent implements OnInit {
         }));
     }
 
-    /**
-     * Add term to list
-     * Grants unicity of elements.
-     * Always close the panel (without resetting results)
-     * @param {string} term
-     */
-    private addTerm(term: { name }) {
-        this.autocomplete.closePanel();
-        const indexOf = this.items.findIndex(item => item.name === term.name);
-        if (term && indexOf === -1) {
-            if (!this.multiple) {
-                this.items.length = 0;
-            }
-            this.items.push(clone(term)); // clone to get rid of readonly
-            this.notifyModel();
-        }
-    }
-
     public removeTerm(term: Literal): void {
         const index = this.items.findIndex(item => item.name === term.name);
         if (index >= 0) {
@@ -169,7 +146,6 @@ export class ThesaurusComponent implements OnInit {
      * Add a term
      * On enter key, find if there is an active (focused) option in the mat-select).
      * If not add the term as is. If it does, add the selected option.
-     * @param event
      */
     public onEnter(event) {
         if (!this.autocomplete.activeOption) {
@@ -182,10 +158,26 @@ export class ThesaurusComponent implements OnInit {
 
     /**
      * When click on a suggestion
-     * @param event
      */
     public selectSuggestion(event) {
         this.addTerm(event.option.value);
+    }
+
+    /**
+     * Add term to list
+     * Grants unicity of elements.
+     * Always close the panel (without resetting results)
+     */
+    private addTerm(term: { name }) {
+        this.autocomplete.closePanel();
+        const indexOf = this.items.findIndex(item => item.name === term.name);
+        if (term && indexOf === -1) {
+            if (!this.multiple) {
+                this.items.length = 0;
+            }
+            this.items.push(clone(term)); // clone to get rid of readonly
+            this.notifyModel();
+        }
     }
 
     private notifyModel() {

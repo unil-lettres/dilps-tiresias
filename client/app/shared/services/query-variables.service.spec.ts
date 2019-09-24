@@ -1,6 +1,5 @@
+import { BehaviorSubject, Subject } from 'rxjs';
 import { QueryVariablesService } from './query-variables.service';
-import { BehaviorSubject } from 'rxjs';
-import { Subject } from 'rxjs';
 
 describe('QueryVariablesService', () => {
     const svc = QueryVariablesService;

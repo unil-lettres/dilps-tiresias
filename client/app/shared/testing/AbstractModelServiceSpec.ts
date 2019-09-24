@@ -1,51 +1,12 @@
-import { BehaviorSubject } from 'rxjs';
 import { fakeAsync, inject, tick } from '@angular/core/testing';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AbstractModelService } from '../services/abstract-model.service';
-import { Observable } from 'rxjs';
 import { Literal } from '../types';
 
 export abstract class AbstractModelServiceSpec {
 
-    private static expectNotConfiguredOrEqual(expected,
-                                              getObservable: (any) => Observable<any>,
-                                              variables: string | Literal | BehaviorSubject<string | Literal>,
-                                              newVariables?: string | Literal): void {
-        let actual = null;
-        let count = 0;
-        let observable = null;
-
-        const getActual = () => {
-            observable = getObservable(variables).subscribe(v => {
-                count++;
-                actual = v;
-            });
-            tick();
-        };
-
-        if (expected === false) {
-            expect(getActual).toThrowError('GraphQL query for this method was not configured in this service constructor');
-        } else {
-            getActual();
-            expect(actual).toEqual(expected);
-            expect(count).toBe(1);
-
-            // Check that the next set of variables will trigger exactly 1 callback
-            if (variables instanceof BehaviorSubject && newVariables) {
-                variables.next(newVariables);
-                tick();
-                expect(count).toBe(2);
-            }
-        }
-    }
-
     /**
      * Test all common methods defined on AbstractModelService
-     * @param serviceClass
-     * @param expectedOne
-     * @param expectedAll
-     * @param expectedCreate
-     * @param expectedUpdate
-     * @param expectedDelete
      */
     public static test(serviceClass, expectedOne, expectedAll, expectedCreate, expectedUpdate, expectedDelete = true): void {
 
@@ -149,5 +110,37 @@ export abstract class AbstractModelServiceSpec {
                 expect(() => service.delete(new BehaviorSubject({id: 123}) as any).subscribe()).toThrowError(error);
             })),
         );
+    }
+
+    private static expectNotConfiguredOrEqual(expected,
+                                              getObservable: (any) => Observable<any>,
+                                              variables: string | Literal | BehaviorSubject<string | Literal>,
+                                              newVariables?: string | Literal): void {
+        let actual = null;
+        let count = 0;
+        let observable = null;
+
+        const getActual = () => {
+            observable = getObservable(variables).subscribe(v => {
+                count++;
+                actual = v;
+            });
+            tick();
+        };
+
+        if (expected === false) {
+            expect(getActual).toThrowError('GraphQL query for this method was not configured in this service constructor');
+        } else {
+            getActual();
+            expect(actual).toEqual(expected);
+            expect(count).toBe(1);
+
+            // Check that the next set of variables will trigger exactly 1 callback
+            if (variables instanceof BehaviorSubject && newVariables) {
+                variables.next(newVariables);
+                tick();
+                expect(count).toBe(2);
+            }
+        }
     }
 }

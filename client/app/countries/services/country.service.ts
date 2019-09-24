@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { countryQuery, countriesQuery } from './countryQueries';
-
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import { CountriesQuery, CountryQuery } from '../../shared/generated-types';
 
-@Injectable()
+import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { countriesQuery, countryQuery } from './countryQueries';
+
+@Injectable({
+    providedIn: 'root'
+})
 export class CountryService
     extends AbstractModelService<CountryQuery['country'],
         CountriesQuery['countries'],

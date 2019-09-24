@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArtistComponent } from '../../../artists/artist/artist.component';
 
-
 @Component({
     selector: 'app-download',
     templateUrl: './download.component.html',
@@ -64,9 +63,6 @@ export class DownloadComponent implements OnInit {
 
     /**
      * Convert "#AABBCC" to "FFAABBCC"
-     *
-     * @param {string} rgb
-     * @returns {string}
      */
     private toRgba(rgb: string): string {
         let result = rgb.replace('#', '');

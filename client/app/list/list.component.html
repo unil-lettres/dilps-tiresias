@@ -1,25 +1,21 @@
 <mat-menu #sortingMenu="matMenu" [overlapTrigger]="false">
-    <div mat-menu-item (click)="sort('name', SortingOrder.ASC)">Titre</div>
-    <div mat-menu-item (click)="sort('creationDate', SortingOrder.DESC)">Date d'insertion en tête</div>
-    <div mat-menu-item (click)="sort('dating', SortingOrder.ASC)">Datation</div>
-    <div mat-menu-item (click)="sort('locality', SortingOrder.ASC)">Lieu</div>
-    <div mat-menu-item (click)="sort('artists', SortingOrder.ASC)">Artistes</div>
+    <div (click)="sort('name', SortingOrder.ASC)" mat-menu-item>Titre</div>
+    <div (click)="sort('creationDate', SortingOrder.DESC)" mat-menu-item>Date d'insertion en tête</div>
+    <div (click)="sort('dating', SortingOrder.ASC)" mat-menu-item>Datation</div>
+    <div (click)="sort('locality', SortingOrder.ASC)" mat-menu-item>Lieu</div>
+    <div (click)="sort('artists', SortingOrder.ASC)" mat-menu-item>Artistes</div>
 </mat-menu>
 
-<div fxFlex fxLayout="column" class="containerWithToolbar">
+<div class="containerWithToolbar" fxFlex fxLayout="column">
 
-    <mat-toolbar fxFlex="none" color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
         <img *ngIf="showLogo" src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
-        <div id="natural-search-container" fxFlex fxLayout="row" fxLayoutAlign="start center"
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" id="natural-search-container"
         >
-            <natural-search fxFlex
-                            class="searchField"
-                            [facets]="config"
-                            [selections]="selections"
-                            (selectionChange)="search($event)"
+            <natural-search (selectionChange)="search($event)" [facets]="config" [selections]="selections" class="searchField" fxFlex
             ></natural-search>
-            <button mat-icon-button mat-button [matMenuTriggerFor]="sortingMenu" matTooltip="Trier">
+            <button [matMenuTriggerFor]="sortingMenu" mat-button mat-icon-button matTooltip="Trier">
                 <mat-icon>sort</mat-icon>
             </button>
         </div>
@@ -29,30 +25,26 @@
             <!--<div *ngIf="selected.length === 1" class="mat-body-1">{{ selected.length }} élément sélectionné</div>-->
             <!--<div *ngIf="selected.length > 1" class="mat-body-1">{{ selected.length }} éléments sélectionnés</div>-->
 
-            <button mat-icon-button (click)="linkSelectionToCollection(selected)" matTooltip="Ajouter à une collection">
+            <button (click)="linkSelectionToCollection(selected)" mat-icon-button matTooltip="Ajouter à une collection">
                 <mat-icon>library_add</mat-icon>
             </button>
-            <button mat-icon-button *ngIf="collection?.id" (click)="unlinkFromCollection(selected)" matTooltip="Supprimer de la collection">
+            <button (click)="unlinkFromCollection(selected)" *ngIf="collection?.id" mat-icon-button matTooltip="Supprimer de la collection">
                 <mat-icon>close</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="downloadSelection(selected)" matTooltip="Télécharger">
+            <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Télécharger">
                 <mat-icon>file_download</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="goToQuizz(selected)" matTooltip="Lecture d'oeuvre" *ngIf="!!user">
+            <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
                 <mat-icon>burst_mode</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="edit(selected)" matTooltip="Editer en masse" *ngIf="user?.role === 'administrator'">
+            <button (click)="edit(selected)" *ngIf="user?.role === 'administrator'" mat-icon-button matTooltip="Editer en masse">
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button
-                    (click)="delete(selected)"
-                    color="warn"
-                    matTooltip="Supprimer la fiche définitivement"
-                    *ngIf="user?.role === 'administrator'"
+            <button (click)="delete(selected)" *ngIf="user?.role === 'administrator'" color="warn" mat-icon-button matTooltip="Supprimer la fiche définitivement"
             >
                 <mat-icon>delete_forever</mat-icon>
             </button>
@@ -60,35 +52,26 @@
         </ng-container>
 
         <ng-container *ngIf="!selected?.length && user">
-            <button mat-icon-button
-                    *ngIf="collection?.id"
-                    (click)="linkCollectionToCollection(collection)"
-                    matTooltip="Ajouter la collection à une autre collection"
+            <button (click)="linkCollectionToCollection(collection)" *ngIf="collection?.id" mat-icon-button matTooltip="Ajouter la collection à une autre collection"
             >
                 <mat-icon>library_add</mat-icon>
             </button>
 
-            <button mat-icon-button
-                    *ngIf="showDownloadCollection"
-                    (click)="downloadCollection(collection)"
-                    matTooltip="Télécharger la collection"
+            <button (click)="downloadCollection(collection)" *ngIf="showDownloadCollection" mat-icon-button matTooltip="Télécharger la collection"
             >
                 <mat-icon>file_download</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="goToQuizz()" matTooltip="Lecture d'oeuvre">
+            <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
                 <mat-icon>burst_mode</mat-icon>
             </button>
         </ng-container>
 
-        <button mat-icon-button (click)="unselectAll()" matTooltip="Désélectionner tout" *ngIf="selected?.length">
+        <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
             <mat-icon>select_all</mat-icon>
         </button>
 
-        <button mat-icon-button
-                (click)="selectAll()"
-                matTooltip="Sélectionner les images visibles"
-                *ngIf="!selected?.length"
+        <button (click)="selectAll()" *ngIf="!selected?.length" mat-icon-button matTooltip="Sélectionner les images visibles"
         >
             <mat-icon>select_all</mat-icon>
         </button>
@@ -97,14 +80,7 @@
 
     <perfect-scrollbar #scrollable>
         <div class="scrolled" fxFlex fxLayout="row">
-            <natural-gallery #gallery
-                             fxFlex
-                             class="padding"
-                             [options]="options"
-                             [scrollable]="scrollable.directiveRef.elementRef.nativeElement"
-                             (activate)="activate($event)"
-                             (select)="select($event)"
-                             (pagination)="loadMore($event)"
+            <natural-gallery #gallery (activate)="activate($event)" (pagination)="loadMore($event)" (select)="select($event)" [options]="options" [scrollable]="scrollable.directiveRef.elementRef.nativeElement" class="padding" fxFlex
             ></natural-gallery>
         </div>
     </perfect-scrollbar>

@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AlertService } from '../../shared/components/alert/alert.service';
-import { ArtistService } from '../services/artist.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
+import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserService } from '../../users/services/user.service';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
     selector: 'app-artist',

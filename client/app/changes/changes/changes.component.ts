@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { ChangeService } from '../services/change.service';
-import { UserService } from '../../users/services/user.service';
 
 @Component({
     selector: 'app-changes',
@@ -15,7 +14,7 @@ export class ChangesComponent extends AbstractList {
     public displayedColumns = [
         'type',
         'original',
-        'suggestion'
+        'suggestion',
     ];
 
     constructor(service: ChangeService,

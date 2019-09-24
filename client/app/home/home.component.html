@@ -1,87 +1,53 @@
-<div fxFlex fxLayout="column" appFileDrop [ngfFixOrientation]="false">
+<div [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="column">
 
     <mat-sidenav-container #navContainer fxFlex fxLayout="column">
-        <mat-sidenav *ngIf="showNavigationMenu()"
-                     id="menu"
-                     position="start"
-                     mode="side"
-                     opened="true"
-                     class="menuMinimized"
-                     [ngStyle]="{ 'backgroundColor': environmentColor() }"
+        <mat-sidenav *ngIf="showNavigationMenu()" [ngStyle]="{ 'backgroundColor': environmentColor() }" class="menuMinimized" id="menu" mode="side" opened="true" position="start"
         >
-            <div fxFlex fxLayout="row" fxFlexAlign="start center">
+            <div fxFlex fxFlexAlign="start center" fxLayout="row">
                 <perfect-scrollbar fxLayout="column">
 
                     <ng-container *ngIf="user">
 
                         <mat-nav-list>
                             <!-- Dashboard -->
-                            <a mat-list-item
-                               routerLink="/"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }"
-                               [queryParams]="null"
+                            <a [queryParams]="null" [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>home</mat-icon>
                                 <span matLine>Accueil</span>
                             </a>
 
                             <!-- Collections publiques -->
-                            <a mat-list-item
-                               routerLink="/collection"
-                               routerLinkActive="active"
-                               matTooltipPosition="after"
-                               matTooltip="Collections publiques"
+                            <a mat-list-item matTooltip="Collections publiques" matTooltipPosition="after" routerLink="/collection" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>collections</mat-icon>
                             </a>
 
                             <!-- Mes collections privées -->
-                            <a mat-list-item
-                               routerLink="/my-collection"
-                               routerLinkActive="active"
-                               matTooltipPosition="after"
-                               matTooltip="Mes collections"
+                            <a mat-list-item matTooltip="Mes collections" matTooltipPosition="after" routerLink="/my-collection" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>collections_bookmark</mat-icon>
                             </a>
 
                             <!-- Fonds -->
-                            <a mat-list-item routerLink="/source" routerLinkActive="active" matTooltipPosition="after" matTooltip="Fonds"
+                            <a mat-list-item matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>folder_special</mat-icon>
                             </a>
 
                             <!-- Users -->
-                            <a mat-list-item
-                               routerLink="/user"
-                               routerLinkActive="active"
-                               matTooltipPosition="after"
-                               matTooltip="Liste des utilisateurs"
-                               *ngIf="user.role === 'administrator'"
+                            <a *ngIf="user.role === 'administrator'" mat-list-item matTooltip="Liste des utilisateurs" matTooltipPosition="after" routerLink="/user" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>group</mat-icon>
                             </a>
 
                             <!-- Notifications -->
-                            <a mat-list-item
-                               routerLink="/notification"
-                               routerLinkActive="active"
-                               matTooltipPosition="after"
-                               matTooltip="Notifications"
+                            <a mat-list-item matTooltip="Notifications" matTooltipPosition="after" routerLink="/notification" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>notifications</mat-icon>
                             </a>
 
                             <!-- Add photos -->
-                            <a mat-list-item
-                               matTooltipPosition="after"
-                               matTooltip="Ajouter une image"
-                               ngfSelect
-                               [ngfFixOrientation]="false"
-                               multiple="1"
-                               (filesChange)="uploadPhoto($event)"
-                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                            <a (filesChange)="uploadPhoto($event)" *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'" [ngfFixOrientation]="false" mat-list-item matTooltip="Ajouter une image" matTooltipPosition="after" multiple="1" ngfSelect
                             >
                                 <mat-icon mat-list-icon>file_upload</mat-icon>
                             </a>
@@ -90,17 +56,13 @@
                         <mat-nav-list *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
 
                             <!-- Institutions -->
-                            <a mat-list-item
-                               routerLink="/institution"
-                               routerLinkActive="active"
-                               matTooltipPosition="after"
-                               matTooltip="Institutions"
+                            <a mat-list-item matTooltip="Institutions" matTooltipPosition="after" routerLink="/institution" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>place</mat-icon>
                             </a>
 
                             <!-- Authors -->
-                            <a mat-list-item routerLink="/artist" routerLinkActive="active" matTooltipPosition="after" matTooltip="Artistes"
+                            <a mat-list-item matTooltip="Artistes" matTooltipPosition="after" routerLink="/artist" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>copyright</mat-icon>
                             </a>
@@ -109,46 +71,41 @@
                         <mat-divider></mat-divider>
                         <mat-nav-list fxFlex>
                             <!-- Account -->
-                            <a mat-list-item (click)="editUser()" matTooltipPosition="after" matTooltip="Mon compte">
+                            <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
                                 <mat-icon mat-list-icon>account_circle</mat-icon>
                             </a>
 
                             <!-- Logout -->
-                            <a mat-list-item (click)="userSvc.logout()" matTooltipPosition="after" matTooltip="Se déconnecter">
+                            <a (click)="userSvc.logout()" mat-list-item matTooltip="Se déconnecter" matTooltipPosition="after">
                                 <mat-icon mat-list-icon>exit_to_app</mat-icon>
                             </a>
                         </mat-nav-list>
 
                     </ng-container>
 
-                    <mat-nav-list fxFlex *ngIf="!user">
+                    <mat-nav-list *ngIf="!user" fxFlex>
 
                         <!-- Dashboard -->
-                        <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <a [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active">
                             <mat-icon mat-list-icon>home</mat-icon>
                             <span matLine>Accueil</span>
                         </a>
 
                         <!-- Logout -->
-                        <a mat-list-item (click)="userSvc.revokeTempAccess()" matTooltipPosition="after" matTooltip="Se connecter">
+                        <a (click)="userSvc.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
                             <mat-icon mat-list-icon>account_circle</mat-icon>
                         </a>
                     </mat-nav-list>
 
                     <!-- Bottom nav -->
-                    <a mat-icon-button
-                       mat-raised-button
-                       [matMenuTriggerFor]="errorsMenu"
-                       color="warn"
-                       *ngIf="errors.length"
-                       style="margin:0 11px"
+                    <a *ngIf="errors.length" [matMenuTriggerFor]="errorsMenu" color="warn" mat-icon-button mat-raised-button style="margin:0 11px"
                     >
                         <mat-icon>error</mat-icon>
                     </a>
 
                     <mat-nav-list>
                         <!-- Theme -->
-                        <a mat-list-item (click)="themeSvc.toggle()">
+                        <a (click)="themeSvc.toggle()" mat-list-item>
                             <mat-icon mat-list-icon>invert_colors</mat-icon>
                             <span matLine>Changer couleurs</span>
                         </a>
@@ -157,7 +114,7 @@
             </div>
         </mat-sidenav>
 
-        <div id="appContent" fxFlex fxLayout="row">
+        <div fxFlex fxLayout="row" id="appContent">
             <router-outlet></router-outlet>
         </div>
 
@@ -166,18 +123,13 @@
 </div>
 
 <mat-menu #errorsMenu="matMenu" [overlapTrigger]="false" class="padding error-menu" fxLayout="column" fxLayoutGap="60px">
-    <div mat-menu-item
-         *ngFor="let error of errors"
-         fxLayout="column"
-         class="error"
-         (click)="$event.stopPropagation()"
-         style="user-select: text"
+    <div (click)="$event.stopPropagation()" *ngFor="let error of errors" class="error" fxLayout="column" mat-menu-item style="user-select: text"
     >
         <span class="mat-caption" style="font-weight:bold">{{ error.category }}</span>
         <span class="mat-caption">{{ error.message }}</span>
         <span class="mat-caption">{{ error.debugMessage }}</span>
     </div>
-    <button mat-menu-item (click)="errors = []">
+    <button (click)="errors = []" mat-menu-item>
         <mat-icon>close</mat-icon>
         Masquer
     </button>

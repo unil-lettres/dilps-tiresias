@@ -1,6 +1,6 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ThemeService } from './shared/services/theme.service';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +11,6 @@ export class AppComponent implements OnInit {
 
     /**
      * Bind theme at root-app level
-     * @type {string}
      */
     @HostBinding('class') public theme = '';
 

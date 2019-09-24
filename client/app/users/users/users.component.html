@@ -4,25 +4,19 @@
         <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
         <div fxFlex>
-            <mat-form-field fxFlex class="searchField width-auto no-padding"
-                            floatLabel="never"
+            <mat-form-field class="searchField width-auto no-padding" floatLabel="never" fxFlex
             >
-                <input matInput
-                       appFocus
-                       placeholder="Rechercher"
-                       [ngModel]="dataSource.snapshot.options?.filters?.search"
-                       (change)="dataSource.filter({search : $event.target.value})"
-                       (keyup.esc)="dataSource.filter({search : ''})"
+                <input (change)="dataSource.filter({search : $event.target.value})" (keyup.esc)="dataSource.filter({search : ''})" [ngModel]="dataSource.snapshot.options?.filters?.search" appFocus matInput placeholder="Rechercher"
                 >
                 <mat-icon matPrefix>search</mat-icon>
-                <button mat-icon-button matSuffix (click)="dataSource.filter({search : ''})">
+                <button (click)="dataSource.filter({search : ''})" mat-icon-button matSuffix>
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
         </div>
 
         <div>
-            <button mat-icon-button (click)="add()" matTooltip="Ajouter un utilisateur">
+            <button (click)="add()" mat-icon-button matTooltip="Ajouter un utilisateur">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -44,11 +38,7 @@
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>Login</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <app-table-button [disable]="isLegacyUser(element)"
-                                      [label]="element.login"
-                                      icon="edit"
-                                      (click)="isLegacyUser(element) || edit(element)">
-                    </app-table-button>
+                    <app-table-button (click)="isLegacyUser(element) || edit(element)" [disable]="isLegacyUser(element)" [label]="element.login" icon="edit"></app-table-button>
                 </mat-cell>
             </ng-container>
 
@@ -80,20 +70,15 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
 
-        <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.snapshot.data.length === 0">
+        <div *ngIf="dataSource.snapshot.data.length === 0" class="margin" fxLayout="column" fxLayoutAlign="center center">
             <div i18n>Pas de résultats</div>
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="!dataSource.snapshot.data.items">
-            <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+        <div *ngIf="!dataSource.snapshot.data.items" class="margin" fxLayout="column" fxLayoutAlign="center center">
+            <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
         </div>
 
-        <mat-paginator *ngIf="dataSource.snapshot.data.length > 0"
-                       [length]="dataSource.snapshot.data.length"
-                       [pageSize]="dataSource.snapshot.options.pagination.pageSize"
-                       [pageIndex]="dataSource.snapshot.options.pagination.pageIndex"
-                       [pageSizeOptions]="dataSource.pageSizeOptions"
-                       (page)="dataSource.paging($event)"
+        <mat-paginator (page)="dataSource.paging($event)" *ngIf="dataSource.snapshot.data.length > 0" [length]="dataSource.snapshot.data.length" [pageIndex]="dataSource.snapshot.options.pagination.pageIndex" [pageSizeOptions]="dataSource.pageSizeOptions" [pageSize]="dataSource.snapshot.options.pagination.pageSize"
         ></mat-paginator>
     </div>
 </perfect-scrollbar>

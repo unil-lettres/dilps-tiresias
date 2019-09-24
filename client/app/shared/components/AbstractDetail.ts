@@ -1,9 +1,9 @@
-import { ArtistComponent } from '../../artists/artist/artist.component';
-import { AlertService } from './alert/alert.service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { merge } from 'lodash';
+import { ArtistComponent } from '../../artists/artist/artist.component';
 import { UserService } from '../../users/services/user.service';
+import { AlertService } from './alert/alert.service';
 
 export class AbstractDetail implements OnInit {
 
@@ -33,9 +33,6 @@ export class AbstractDetail implements OnInit {
         this.userSvc.getCurrentUser().subscribe(user => this.user = user);
     }
 
-    protected postQuery() {}
-    protected postUpdate(model) {}
-
     public update() {
         this.service.update(this.data.item).subscribe((model) => {
             this.alertSvc.info('Mis à jour');
@@ -61,5 +58,11 @@ export class AbstractDetail implements OnInit {
                     });
                 }
             });
+    }
+
+    protected postQuery() {
+    }
+
+    protected postUpdate(model) {
     }
 }

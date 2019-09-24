@@ -1,5 +1,5 @@
-import { inject, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { MockApolloProvider } from '../testing/MockApolloProvider';
+import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { MOCK_APOLLO_PROVIDER } from '../testing/MOCK_APOLLO_PROVIDER';
 import { LinkMutationService } from './link-mutation.service';
 
 describe('LinkMutationService', () => {
@@ -7,7 +7,7 @@ describe('LinkMutationService', () => {
         TestBed.configureTestingModule({
             providers: [
                 LinkMutationService,
-                MockApolloProvider,
+                MOCK_APOLLO_PROVIDER,
             ],
         });
     });

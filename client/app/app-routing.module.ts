@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './shared/services/auth.guard';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './users/user/user.component';
-import { ListComponent } from './list/list.component';
-import { CardComponent } from './card/card.component';
-import { UsersComponent } from './users/users/users.component';
-import { CollectionsComponent } from './collections/collections/collections.component';
-import { CardResolver } from './card/services/card.resolver';
-import { InstitutionsComponent } from './institutions/institutions/institutions.component';
 import { ArtistsComponent } from './artists/artists/artists.component';
-import { ChangesComponent } from './changes/changes/changes.component';
+import { CardComponent } from './card/card.component';
+import { CardResolver } from './card/services/card.resolver';
 import { ChangeComponent } from './changes/change/change.component';
-import { UserResolver } from './users/services/user.resolver';
-import { AuthAdminGuard } from './shared/services/auth.admin.guard';
+import { ChangesComponent } from './changes/changes/changes.component';
+import { CollectionsComponent } from './collections/collections/collections.component';
+import { HomeComponent } from './home/home.component';
+import { InstitutionsComponent } from './institutions/institutions/institutions.component';
+import { ListComponent } from './list/list.component';
+import { LoginComponent } from './login/login.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { CollectionVisibility, UserRole } from './shared/generated-types';
+import { AuthAdminGuard } from './shared/services/auth.admin.guard';
+import { AuthGuard } from './shared/services/auth.guard';
+import { UserResolver } from './users/services/user.resolver';
+import { UserComponent } from './users/user/user.component';
+import { UsersComponent } from './users/users/users.component';
 
 export const routes: Routes = [
     {
@@ -135,9 +135,11 @@ export const routes: Routes = [
                             filter: {
                                 groups: [
                                     {
-                                        conditions: [{
-                                            collections: {empty: {not: false}},
-                                        }],
+                                        conditions: [
+                                            {
+                                                collections: {empty: {not: false}},
+                                            },
+                                        ],
                                     },
                                 ],
                             },

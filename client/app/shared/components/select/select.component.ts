@@ -50,7 +50,6 @@ export class SelectComponent implements OnInit {
 
     /**
      * The filter attribute to bind when searching for a term
-     * @type {string}
      */
     @Input() searchField = 'search';
 
@@ -72,27 +71,16 @@ export class SelectComponent implements OnInit {
     /**
      * Model output
      * Usage : (modelChange)
-     * @type {EventEmitter<any>}
      */
     @Output() modelChange = new EventEmitter();
 
     /**
      * On selection change
      * Usage (change)="myFunction($event)"
-     * @type {EventEmitter<any>}
      */
     @Output() change = new EventEmitter();
 
     @Output() blur = new EventEmitter();
-
-    /**
-     * Allow to select a model
-     * Usage : [model]
-     * @param val
-     */
-    @Input() set model(val) {
-        this.selected = val;
-    }
 
     /**
      * Current selection
@@ -103,29 +91,26 @@ export class SelectComponent implements OnInit {
      * Items returned by server to show in listing
      */
     public filteredItems: Observable<any[]>;
-
     public formCtrl: FormControl = new FormControl();
     public loading = false;
     public ac;
-    private queryRef: QueryRef<any>;
-
-    /**
-     * Default page size
-     * @type {number}
-     */
-    private pageSize = 10;
-
-    /**
-     * Init search options
-     * @type {IncrementSubject}
-     */
-    private options: IncrementSubject;
 
     /**
      * Number of items not shown in result list
      * Shows a message after list if positive
      */
     public moreNbItems = 0;
+    private queryRef: QueryRef<any>;
+
+    /**
+     * Default page size
+     */
+    private pageSize = 10;
+
+    /**
+     * Init search options
+     */
+    private options: IncrementSubject;
 
     /**
      * Filter options debounced.
@@ -134,6 +119,14 @@ export class SelectComponent implements OnInit {
     private optionsFiltered: BehaviorSubject<Literal>;
 
     constructor() {
+    }
+
+    /**
+     * Allow to select a model
+     * Usage : [model]
+     */
+    @Input() set model(val) {
+        this.selected = val;
     }
 
     ngOnInit() {
@@ -152,84 +145,6 @@ export class SelectComponent implements OnInit {
         }
 
         this.input.nativeElement.addEventListener('blur', () => this.blur.emit());
-    }
-
-    private useService() {
-
-        if (!this.service) {
-            return false;
-        } else if (this.service && this.service instanceof AbstractModelService) {
-            return true;
-        }
-
-        throw new TypeError('Service does not inherit AbstractModelService');
-    }
-
-    private useList() {
-        return !!this.items;
-    }
-
-    private initFromService() {
-        const options = {
-            filters: {},
-            pagination: {
-                pageIndex: 0,
-                pageSize: this.pageSize,
-            },
-        };
-
-        options.filters[this.searchField] = null;
-        this.options = new IncrementSubject(options);
-        this.optionsFiltered = new BehaviorSubject<Literal>(options);
-
-        // Debounce search...
-        // ...and filter only string search terms (when an item is selected, the value is an object)
-        this.options.pipe(sampleTime(400), filter(val => {
-            return !isObject(val.filters[this.searchField]); // prevent to emit when value is an object
-        })).subscribe(data => {
-            this.optionsFiltered.next(merge({}, {filters: this.filters}, data));
-        });
-
-        // Bind events on search field
-        this.formCtrl.valueChanges.subscribe(val => this.searchInService(val));
-        this.input.nativeElement.addEventListener('focus', () => this.startSearch());
-        this.input.nativeElement.addEventListener('keyup', (e: KeyboardEvent) => {
-            if (e.keyCode === 27) {
-                this.clearServiceSearch();
-            }
-        });
-    }
-
-    private initFromList() {
-
-        if (this.searchField === 'search') {
-            this.searchField = 'name';
-        }
-
-        this.input.nativeElement.addEventListener('keyup', (e: KeyboardEvent) => {
-            if (e.keyCode === 27) {
-                this.clearListSearch();
-            }
-        });
-
-        this.filteredItems = this.formCtrl.valueChanges
-                                 .pipe(
-                                     startWith(''),
-                                     map((searchedTerm: any) => {
-                                         return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
-                                     }),
-                                 );
-    }
-
-    private filterList(searchedTerm) {
-
-        if (searchedTerm.name) {
-            return [searchedTerm];
-        }
-
-        return this.items.filter(i => {
-            return i[this.searchField].toLowerCase().indexOf(searchedTerm.toLowerCase()) > -1;
-        });
     }
 
     public startSearch() {
@@ -308,6 +223,84 @@ export class SelectComponent implements OnInit {
         } else if (this.useList()) {
             this.clearListSearch();
         }
+    }
+
+    private useService() {
+
+        if (!this.service) {
+            return false;
+        } else if (this.service && this.service instanceof AbstractModelService) {
+            return true;
+        }
+
+        throw new TypeError('Service does not inherit AbstractModelService');
+    }
+
+    private useList() {
+        return !!this.items;
+    }
+
+    private initFromService() {
+        const options = {
+            filters: {},
+            pagination: {
+                pageIndex: 0,
+                pageSize: this.pageSize,
+            },
+        };
+
+        options.filters[this.searchField] = null;
+        this.options = new IncrementSubject(options);
+        this.optionsFiltered = new BehaviorSubject<Literal>(options);
+
+        // Debounce search...
+        // ...and filter only string search terms (when an item is selected, the value is an object)
+        this.options.pipe(sampleTime(400), filter(val => {
+            return !isObject(val.filters[this.searchField]); // prevent to emit when value is an object
+        })).subscribe(data => {
+            this.optionsFiltered.next(merge({}, {filters: this.filters}, data));
+        });
+
+        // Bind events on search field
+        this.formCtrl.valueChanges.subscribe(val => this.searchInService(val));
+        this.input.nativeElement.addEventListener('focus', () => this.startSearch());
+        this.input.nativeElement.addEventListener('keyup', (e: KeyboardEvent) => {
+            if (e.keyCode === 27) {
+                this.clearServiceSearch();
+            }
+        });
+    }
+
+    private initFromList() {
+
+        if (this.searchField === 'search') {
+            this.searchField = 'name';
+        }
+
+        this.input.nativeElement.addEventListener('keyup', (e: KeyboardEvent) => {
+            if (e.keyCode === 27) {
+                this.clearListSearch();
+            }
+        });
+
+        this.filteredItems = this.formCtrl.valueChanges
+                                 .pipe(
+                                     startWith(''),
+                                     map((searchedTerm: any) => {
+                                         return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
+                                     }),
+                                 );
+    }
+
+    private filterList(searchedTerm) {
+
+        if (searchedTerm.name) {
+            return [searchedTerm];
+        }
+
+        return this.items.filter(i => {
+            return i[this.searchField].toLowerCase().indexOf(searchedTerm.toLowerCase()) > -1;
+        });
     }
 
 }

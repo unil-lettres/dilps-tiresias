@@ -1,4 +1,4 @@
-<form fxLayout="column" fxFlexFill>
+<form fxFlexFill fxLayout="column">
 
     <perfect-scrollbar fxFlexAlign="center center">
 
@@ -7,12 +7,13 @@
             <div fxLayout="column" fxLayoutGap="15px">
                 <img src="assets/images/logo-bleu.svg" />
 
-                <div fxLayout="column" fxLayoutGap="15px" class="login-info">
-                    Veuillez choisir une méthode d'authentification ou<br>
+                <div class="login-info" fxLayout="column" fxLayoutGap="15px">
+                    Veuillez choisir une méthode d'authentification ou
+                    <br>
                     utiliser le bouton "Accès public"
                 </div>
 
-                <a mat-raised-button href="/auth" class="shib-link">
+                <a class="shib-link" href="/auth" mat-raised-button>
                     <img src="assets/images/logo-unil-bleu.svg" />
                 </a>
 
@@ -27,47 +28,28 @@
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input matInput
-                                   autofocus
-                                   name="login"
-                                   [(ngModel)]="loginForm.login"
-                                   placeholder="login"
-                                   required="required"
-                                   [disabled]="loading"
-                                   (focus)="snackBar.dismiss()"
+                            <input (focus)="snackBar.dismiss()" [(ngModel)]="loginForm.login" [disabled]="loading" autofocus matInput name="login" placeholder="login" required="required"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input matInput
-                                   type="password"
-                                   name="password"
-                                   color="warn"
-                                   [(ngModel)]="loginForm.password"
-                                   placeholder="password"
-                                   required="required"
-                                   [disabled]="loading"
-                                   (focus)="snackBar.dismiss()"
+                            <input (focus)="snackBar.dismiss()" [(ngModel)]="loginForm.password" [disabled]="loading" color="warn" matInput name="password" placeholder="password" required="required" type="password"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
-                        <button type="submit"
-                                mat-button
-                                mat-raised-button
-                                color="primary"
-                                (click)="login()"
-                                [disabled]="loading || !loginForm.login || !loginForm.password"
-                        >Se connecter</button>
+                        <button (click)="login()" [disabled]="loading || !loginForm.login || !loginForm.password" color="primary" mat-button mat-raised-button type="submit"
+                        >Se connecter
+                        </button>
                     </div>
                 </mat-expansion-panel>
 
                 <mat-divider></mat-divider>
 
-                <a mat-raised-button (click)="userService.startTempAccess()">Accès public</a>
+                <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
             </div>
         </div>
 

@@ -3,17 +3,17 @@
 
     <button mat-button mat-dialog-close>Annuler</button>
 
-    <button *ngIf="item.id && item?.permissions?.delete" mat-raised-button (click)="delete.emit(item)" color="warn">
+    <button (click)="delete.emit(item)" *ngIf="item.id && item?.permissions?.delete" color="warn" mat-raised-button>
         <mat-icon>delete_forever</mat-icon>
         Supprimer
     </button>
 
-    <button *ngIf="item.id && item?.permissions?.update" mat-raised-button (click)="update.emit(item)" color="primary" [disabled]="formCtrl?.errors">
+    <button (click)="update.emit(item)" *ngIf="item.id && item?.permissions?.update" [disabled]="formCtrl?.errors" color="primary" mat-raised-button>
         <mat-icon>save</mat-icon>
         Enregistrer
     </button>
 
-    <button *ngIf="!item.id && canCreate" mat-raised-button (click)="create.emit(item)" color="primary">
+    <button (click)="create.emit(item)" *ngIf="!item.id && canCreate" color="primary" mat-raised-button>
         <mat-icon>add</mat-icon>
         Ajouter
     </button>

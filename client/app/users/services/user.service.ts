@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
 import { Router } from '@angular/router';
+import { Apollo } from 'apollo-angular';
 import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
     CreateUserMutation,
     DeleteUsersMutation,
@@ -26,9 +27,10 @@ import {
     usersQuery,
     viewerQuery,
 } from './userQueries';
-import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class UserService extends AbstractModelService<UserQuery['user'],
     UsersQuery['users'],
     CreateUserMutation['createUser'],

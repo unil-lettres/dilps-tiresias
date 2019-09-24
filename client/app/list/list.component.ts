@@ -43,18 +43,19 @@ import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
 export class ListComponent implements OnInit {
 
     @ViewChild('gallery', {static: true}) gallery: NaturalGalleryComponent;
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
-
     public SortingOrder = SortingOrder;
     public galleryCollection = null;
     public selected;
-
     public showLogo = true;
-
+    public collection;
+    public user: ViewerQuery['viewer'];
+    public searchedTerm;
+    public lastUpload;
+    public showDownloadCollection = true;
+    public config: NaturalSearchFacets = cardsConfiguration;
+    public selections: NaturalSearchSelections = [[]];
+    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
     private thumbnailHeight = 300;
-    private enlargedHeight = 2000;
-    private sub;
-
     public options: NaturalGalleryOptions = {
         cover: true,
         gap: 5,
@@ -65,21 +66,8 @@ export class ListComponent implements OnInit {
         lightbox: true,
         infiniteScrollOffset: -200,
     };
-
-    public collection;
-
-    public user: ViewerQuery['viewer'];
-
-    public searchedTerm;
-
-    public lastUpload;
-
-    public showDownloadCollection = true;
-
-    public config: NaturalSearchFacets = cardsConfiguration;
-
-    public selections: NaturalSearchSelections = [[]];
-
+    private enlargedHeight = 2000;
+    private sub;
     private variablesManager: QueryVariablesManager = new QueryVariablesManager();
 
     constructor(private router: Router,
@@ -151,32 +139,6 @@ export class ListComponent implements OnInit {
 
     }
 
-    private initFromUrl() {
-        let naturalSearchSelections = this.persistenceSvc.getFromUrl('natural-search', this.route);
-        const sorting = this.persistenceSvc.getFromUrl('sorting', this.route);
-
-        // prevent null value that is actually not supported
-        naturalSearchSelections = naturalSearchSelections ? fromUrl(naturalSearchSelections) : [[]];
-
-        const containAdminSelection = naturalSearchSelections.some(selection => {
-            return selection.some(value => {
-                return adminConfig.some(config => {
-                    return config.field === value.field;
-                });
-            });
-        });
-
-        if (containAdminSelection) {
-            this.pushAdminConfig();
-        }
-
-        this.selections = naturalSearchSelections;
-        if (this.hasSelections(this.selections)) {
-            this.translateSearchAndUpdate(naturalSearchSelections);
-        }
-        this.variablesManager.set('sorting', sorting);
-    }
-
     public sort(field: string, direction: SortingOrder) {
 
         this.reset();
@@ -223,43 +185,6 @@ export class ListComponent implements OnInit {
         this.showDownloadCollection = hasCollection && roleIsAllowed;
     }
 
-    private formatImages(cards) {
-
-        cards = cards.map(card => {
-            let thumb = CardService.formatImage(card, this.thumbnailHeight);
-            let big = CardService.formatImage(card, this.enlargedHeight);
-
-            thumb = {
-                thumbnailSrc: thumb.src,
-                thumbnailWidth: thumb.width,
-                thumbnailHeight: thumb.height,
-            };
-
-            big = {
-                enlargedSrc: big.src,
-                enlargedWidth: big.width,
-                enlargedHeight: big.height,
-            };
-
-            let title = card.name ? card.name : null;
-            const artists = card.artists.map(a => a.name).join('<br/>');
-
-            if (artists && title) {
-                title = '[ ' + artists + ' ] ' + title;
-            } else if (artists && !title) {
-                title = artists;
-            }
-
-            const fields: any = {
-                title: title ? title : 'Voir le détail',
-            };
-
-            return merge({}, card, thumb, big, fields);
-        });
-
-        return cards;
-    }
-
     public activate(event) {
         console.log('activate', event);
         this.router.navigate([
@@ -292,29 +217,6 @@ export class ListComponent implements OnInit {
         this.translateSearchAndUpdate(selections);
     }
 
-    /**
-     *
-     * @param {NaturalSearchSelections} selections
-     */
-    private translateSearchAndUpdate(selections: NaturalSearchSelections) {
-
-        // Convert to graphql and update query variables
-        const translatedSelection = toGraphQLDoctrineFilter(this.config, selections);
-
-        this.reset();
-        this.variablesManager.set('natural-search', {filter: translatedSelection});
-    }
-
-    /**
-     * Return true wherever natural-search has selection or not.
-     * Natural-search actual "no value" equals [[]]
-     * @param selections
-     * @returns {boolean}
-     */
-    private hasSelections(selections): boolean {
-        return !!selections.filter(e => e.length).length; // because empty natural search return [[]]
-    }
-
     public loadMore(ev) {
 
         this.variablesManager.set('pagination', {pagination: {offset: ev.offset, pageSize: ev.limit}});
@@ -329,32 +231,12 @@ export class ListComponent implements OnInit {
         }
     }
 
-    private linkToCollection(selection) {
-        this.dialog.open(CollectionSelectorComponent, {
-            width: '400px',
-            position: {
-                top: '74px',
-                right: '10px',
-            },
-            data: selection,
-        });
-    }
-
     public linkSelectionToCollection(selection) {
         this.linkToCollection({images: selection});
     }
 
     public linkCollectionToCollection(collection) {
         this.linkToCollection({collection});
-    }
-
-    private download(selection) {
-        const data = merge({denyLegendsDownload: !this.user}, selection);
-
-        this.dialog.open(DownloadComponent, {
-            width: '400px',
-            data,
-        });
     }
 
     public downloadSelection(selection) {
@@ -459,6 +341,109 @@ export class ListComponent implements OnInit {
     public unselectAll() {
         this.gallery.gallery.unselectAllItems();
         this.selected.length = [];
+    }
+
+    private initFromUrl() {
+        let naturalSearchSelections = this.persistenceSvc.getFromUrl('natural-search', this.route);
+        const sorting = this.persistenceSvc.getFromUrl('sorting', this.route);
+
+        // prevent null value that is actually not supported
+        naturalSearchSelections = naturalSearchSelections ? fromUrl(naturalSearchSelections) : [[]];
+
+        const containAdminSelection = naturalSearchSelections.some(selection => {
+            return selection.some(value => {
+                return adminConfig.some(config => {
+                    return config.field === value.field;
+                });
+            });
+        });
+
+        if (containAdminSelection) {
+            this.pushAdminConfig();
+        }
+
+        this.selections = naturalSearchSelections;
+        if (this.hasSelections(this.selections)) {
+            this.translateSearchAndUpdate(naturalSearchSelections);
+        }
+        this.variablesManager.set('sorting', sorting);
+    }
+
+    private formatImages(cards) {
+
+        cards = cards.map(card => {
+            let thumb = CardService.formatImage(card, this.thumbnailHeight);
+            let big = CardService.formatImage(card, this.enlargedHeight);
+
+            thumb = {
+                thumbnailSrc: thumb.src,
+                thumbnailWidth: thumb.width,
+                thumbnailHeight: thumb.height,
+            };
+
+            big = {
+                enlargedSrc: big.src,
+                enlargedWidth: big.width,
+                enlargedHeight: big.height,
+            };
+
+            let title = card.name ? card.name : null;
+            const artists = card.artists.map(a => a.name).join('<br/>');
+
+            if (artists && title) {
+                title = '[ ' + artists + ' ] ' + title;
+            } else if (artists && !title) {
+                title = artists;
+            }
+
+            const fields: any = {
+                title: title ? title : 'Voir le détail',
+            };
+
+            return merge({}, card, thumb, big, fields);
+        });
+
+        return cards;
+    }
+
+    /**
+     *
+     */
+    private translateSearchAndUpdate(selections: NaturalSearchSelections) {
+
+        // Convert to graphql and update query variables
+        const translatedSelection = toGraphQLDoctrineFilter(this.config, selections);
+
+        this.reset();
+        this.variablesManager.set('natural-search', {filter: translatedSelection});
+    }
+
+    /**
+     * Return true wherever natural-search has selection or not.
+     * Natural-search actual "no value" equals [[]]
+     */
+    private hasSelections(selections): boolean {
+        return !!selections.filter(e => e.length).length; // because empty natural search return [[]]
+    }
+
+    private linkToCollection(selection) {
+        this.dialog.open(CollectionSelectorComponent, {
+            width: '400px',
+            position: {
+                top: '74px',
+                right: '10px',
+            },
+            data: selection,
+        });
+    }
+
+    private download(selection) {
+        const data = merge({denyLegendsDownload: !this.user}, selection);
+
+        this.dialog.open(DownloadComponent, {
+            width: '400px',
+            data,
+        });
     }
 
     /**

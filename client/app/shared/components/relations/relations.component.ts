@@ -1,7 +1,7 @@
 import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { PaginatedDataSource } from '../../services/paginated.data.source';
 import { IncrementSubject } from '../../services/increment-subject';
 import { LinkMutationService } from '../../services/link-mutation.service';
+import { PaginatedDataSource } from '../../services/paginated.data.source';
 
 /**
  * Custom template usage :
@@ -25,10 +25,6 @@ export class RelationsComponent implements OnInit {
 
     @Input() service;
     @Input() placeholder;
-
-    @Input() set filters(filters) {
-        this.listingOptions.patch({filters: filters});
-    }
 
     /**
      * Function to customize the rendering of the selected item as text in input
@@ -61,12 +57,6 @@ export class RelationsComponent implements OnInit {
     public dataSource: PaginatedDataSource;
 
     /**
-     * Observable variables/options for listing service usage and apollo watchQuery
-     * @type {IncrementSubject}
-     */
-    private listingOptions = new IncrementSubject();
-
-    /**
      * Manages spinning progress for add action
      */
     public loadingAdd: boolean;
@@ -76,7 +66,16 @@ export class RelationsComponent implements OnInit {
      */
     public loadingRemove: boolean;
 
+    /**
+     * Observable variables/options for listing service usage and apollo watchQuery
+     */
+    private listingOptions = new IncrementSubject();
+
     constructor(private linkMutationService: LinkMutationService) {
+    }
+
+    @Input() set filters(filters) {
+        this.listingOptions.patch({filters: filters});
     }
 
     ngOnInit() {
@@ -86,7 +85,6 @@ export class RelationsComponent implements OnInit {
      * Unlink action
      * Refetch result to display it in table
      * Todo : could maybe use "update" attribute of apollo.mutate function to update table faster (but hard to do it here)
-     * @param relation
      */
     public unlink(event, relation) {
         event.preventDefault();
@@ -107,7 +105,6 @@ export class RelationsComponent implements OnInit {
      * Link action
      * Refetch result to display it in table
      * Todo : could maybe use "update" attribute of apollo.mutate function to update table faster (but hard to do it here)
-     * @param relation
      */
     public link(relation) {
         this.loadingAdd = true;

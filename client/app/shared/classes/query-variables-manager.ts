@@ -1,8 +1,8 @@
-import { Literal } from '../types';
-import { BehaviorSubject } from 'rxjs';
 import { cloneDeep, defaultsDeep, isArray, mergeWith } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 import { CardFilter } from '../generated-types';
+import { Literal } from '../types';
 
 export interface QueryVariables {
     filter?: Filter | null;
@@ -30,9 +30,6 @@ export enum SortingOrder {
 
 /**
  * During lodash merge, overrides arrays
- * @param value
- * @param source
- * @returns {any[]}
  */
 function mergeOverrideArray(destValue, source) {
     if (isArray(source)) {
@@ -42,9 +39,6 @@ function mergeOverrideArray(destValue, source) {
 
 /**
  * During lodash merge, concat arrays
- * @param value
- * @param source
- * @returns {any}
  */
 function mergeConcatArray(destValue, source) {
     if (isArray(source)) {
@@ -79,8 +73,8 @@ function mergeConcatArray(destValue, source) {
  */
 export class QueryVariablesManager<T extends QueryVariables = QueryVariables> {
 
-    private readonly channels: Map<string, T> = new Map<string, T>();
     public readonly variables: BehaviorSubject<T> = new BehaviorSubject<T>(null);
+    private readonly channels: Map<string, T> = new Map<string, T>();
 
     constructor() {
     }
@@ -101,8 +95,6 @@ export class QueryVariablesManager<T extends QueryVariables = QueryVariables> {
 
     /**
      * Merge variable into a channel, overriding arrays in same channel / key
-     * @param {string} channelName key
-     * @param {Literal} newVariables
      */
     public merge(channelName: string, newVariables: T) {
         const variables = this.channels.get(channelName);
@@ -117,8 +109,6 @@ export class QueryVariablesManager<T extends QueryVariables = QueryVariables> {
     /**
      * Apply default values to a channel
      * Note : lodash defaults only defines values on destinations keys that are undefined
-     * @param {string} channelName
-     * @param {T} newVariables
      */
     public defaults(channelName: string, newVariables: T) {
         const variables = this.channels.get(channelName);

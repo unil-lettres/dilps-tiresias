@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { AlertService } from '../../shared/components/alert/alert.service';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractDetail } from '../../shared/components/AbstractDetail';
 import { ArtistComponent } from '../../artists/artist/artist.component';
 import { InstitutionService } from '../../institutions/services/institution.service';
-import { UserService } from '../services/user.service';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractDetail } from '../../shared/components/AbstractDetail';
+import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserType } from '../../shared/generated-types';
+import { UserService } from '../services/user.service';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password').value; // to get value in input tag

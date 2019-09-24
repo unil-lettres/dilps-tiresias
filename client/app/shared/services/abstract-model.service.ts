@@ -1,20 +1,19 @@
 import { NaturalUtility } from '@ecodev/natural';
 import { Apollo, QueryRef } from 'apollo-angular';
-import { Observable, BehaviorSubject, OperatorFunction } from 'rxjs';
+import { RefetchQueryDescription } from 'apollo-client/core/watchQueryOptions';
+import { FetchResult } from 'apollo-link';
+import { DocumentNode } from 'graphql';
+import { defaults, merge, pick } from 'lodash';
+import { BehaviorSubject, Observable, OperatorFunction } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Literal } from '../types';
 import { QueryVariablesService } from './query-variables.service';
-import { DocumentNode } from 'graphql';
-import { defaults, merge, pick } from 'lodash';
 import { UtilityService } from './utility.service';
-import { RefetchQueryDescription } from 'apollo-client/core/watchQueryOptions';
-import { FetchResult } from 'apollo-link';
 
 export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete> {
 
     /**
      * Default variables to be used in queries to fetch all objects
-     * @type {{}}
      */
     protected readonly defaultVariables = {};
 
@@ -40,8 +39,6 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
 
     /**
      * Fetch an object
-     * @param {string} id
-     * @returns {Observable<Tone>}
      */
     public getOne(id: string): Observable<Tone> {
         this.throwIfObservable(id);
@@ -65,8 +62,6 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
 
     /**
      * Watch a query considering an observable question id
-     * @param {string | Observable<string>} id
-     * @returns {Observable<Tone>}
      */
     public watchOne(id: string | Observable<string>): Observable<Tone> {
         this.throwIfNotQuery(this.oneQuery);
@@ -224,6 +219,61 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
     }
 
     /**
+     * Returns an additional context to be used in variables when getting a single object
+     *
+     * This is typically a site or state ID, and is needed to get appropriate access rights
+     */
+    protected getContextForOne(): Literal {
+        return {};
+    }
+
+    /**
+     * Returns an additional context to be used in variables.
+     *
+     * This is typically a site or state ID, but it could be something else to further filter the query
+     */
+    protected getContextForAll(): Literal {
+        return {};
+    }
+
+    /**
+     * Returns an additional context to be used when creating an object
+     *
+     * This is typically a site or state ID
+     */
+    protected getContextForCreation(object: Literal): Literal {
+        return {};
+    }
+
+    /**
+     * Throw exception to prevent executing null queries
+     */
+    protected throwIfObservable(value): void {
+        if (value instanceof Observable) {
+            throw new Error('Cannot use Observable as variables. Instead you should use .subscribe() to call the method with a real value');
+        }
+    }
+
+    /**
+     * Returns the query to refetch the watchAll if it was ever used at some point in the past.
+     *
+     * This allow us to easily refresh a list of items after create/update/delete operations.
+     *
+     */
+    protected getRefetchQueries(): RefetchQueryDescription {
+        if (this.refetchVariables) {
+            return [
+                {
+                    query: this.allQuery,
+                    variables: this.refetchVariables.getValue(),
+                },
+            ];
+        }
+
+        return [];
+    }
+
+    /**
      * Merge given ID with context if there is any
      */
     private getVariablesForOne(id: string | Observable<string>): Literal | Observable<Literal> {
@@ -241,73 +291,12 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
     }
 
     /**
-     * Returns an additional context to be used in variables when getting a single object
-     *
-     * This is typically a site or state ID, and is needed to get appropriate access rights
-     *
-     * @returns {object}
-     */
-    protected getContextForOne(): Literal {
-        return {};
-    }
-
-    /**
-     * Returns an additional context to be used in variables.
-     *
-     * This is typically a site or state ID, but it could be something else to further filter the query
-     * @returns {object}
-     */
-    protected getContextForAll(): Literal {
-        return {};
-    }
-
-    /**
-     * Returns an additional context to be used when creating an object
-     *
-     * This is typically a site or state ID
-     */
-    protected getContextForCreation(object: Literal): Literal {
-        return {};
-    }
-
-    /**
      * Throw exception to prevent executing null queries
-     * @param query
      */
     private throwIfNotQuery(query): void {
         if (!query) {
             throw new Error('GraphQL query for this method was not configured in this service constructor');
         }
-    }
-
-    /**
-     * Throw exception to prevent executing null queries
-     * @param query
-     */
-    protected throwIfObservable(value): void {
-        if (value instanceof Observable) {
-            throw new Error('Cannot use Observable as variables. Instead you should use .subscribe() to call the method with a real value');
-        }
-    }
-
-    /**
-     * Returns the query to refetch the watchAll if it was ever used at some point in the past.
-     *
-     * This allow us to easily refresh a list of items after create/update/delete operations.
-     *
-     * @returns {RefetchQueryDescription}
-     */
-    protected getRefetchQueries(): RefetchQueryDescription {
-        if (this.refetchVariables) {
-            return [
-                {
-                    query: this.allQuery,
-                    variables: this.refetchVariables.getValue(),
-                },
-            ];
-        }
-
-        return [];
     }
 }
 

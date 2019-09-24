@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { CollectionService } from '../../../collections/services/collection.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArtistComponent } from '../../../artists/artist/artist.component';
+import { CollectionService } from '../../../collections/services/collection.service';
 
 import { UserService } from '../../../users/services/user.service';
+import { UserRole } from '../../generated-types';
 import { Literal } from '../../types';
-import { UserRole, CollectionVisibility } from '../../generated-types';
 import { AlertService } from '../alert/alert.service';
 
 @Component({
@@ -48,6 +48,20 @@ export class CollectionSelectorComponent implements OnInit {
         this.linkInternal(this.collection);
     }
 
+    public unlink(image, collection) {
+        this.collectionSvc.unlink(collection, [image]).subscribe(() => {
+            const index = image.collections.findIndex(c => c.id === collection.id);
+            image.collections.splice(index, 1);
+            this.alertSvc.info('Fiche retirée de la collection');
+        });
+    }
+
+    public createAndLink(): void {
+        this.collectionSvc.create(this.newCollection).subscribe(collection => {
+            this.linkInternal(collection);
+        });
+    }
+
     private linkInternal(collection): void {
         let observable;
         if (this.data.images) {
@@ -64,19 +78,5 @@ export class CollectionSelectorComponent implements OnInit {
             this.alertSvc.info('Fiches ajoutées');
         });
 
-    }
-
-    public unlink(image, collection) {
-        this.collectionSvc.unlink(collection, [image]).subscribe(() => {
-            const index = image.collections.findIndex(c => c.id === collection.id);
-            image.collections.splice(index, 1);
-            this.alertSvc.info('Fiche retirée de la collection');
-        });
-    }
-
-    public createAndLink(): void {
-        this.collectionSvc.create(this.newCollection).subscribe(collection => {
-            this.linkInternal(collection);
-        });
     }
 }

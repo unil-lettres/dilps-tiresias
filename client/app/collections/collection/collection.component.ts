@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CollectionService } from '../services/collection.service';
-import { AlertService } from '../../shared/components/alert/alert.service';
+import { findKey } from 'lodash';
 import { InstitutionService } from '../../institutions/services/institution.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
-import { UserService } from '../../users/services/user.service';
+import { AlertService } from '../../shared/components/alert/alert.service';
 import { CollectionVisibility, UserRole } from '../../shared/generated-types';
-import { findKey } from 'lodash';
+import { UserService } from '../../users/services/user.service';
+import { CollectionService } from '../services/collection.service';
 
 @Component({
     selector: 'app-collection',
@@ -45,26 +45,12 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         super(service, alertSvc, dialogRef, userSvc, data);
     }
 
-    protected postQuery() {
-        // Init visibility
-        this.visibility = +findKey(this.visibilities, (s) => {
-            return s.value === this.data.item.visibility;
-        });
-
-        this.institution = this.data.item.institution;
-    }
-
-    protected postUpdate(model) {
-        this.institution = model.institution;
-    }
-
     public updateVisibility(ev) {
         this.data.item.visibility = this.visibilities[ev.value].value;
     }
 
     /**
      * Visibility is seen by >=seniors if their are the creator, or by admins if visibility is set to admin.
-     * @returns {boolean}
      */
     public showVisibility() {
 
@@ -86,5 +72,18 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
         // If is admin and has visibility
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
+    }
+
+    protected postQuery() {
+        // Init visibility
+        this.visibility = +findKey(this.visibilities, (s) => {
+            return s.value === this.data.item.visibility;
+        });
+
+        this.institution = this.data.item.institution;
+    }
+
+    protected postUpdate(model) {
+        this.institution = model.institution;
     }
 }

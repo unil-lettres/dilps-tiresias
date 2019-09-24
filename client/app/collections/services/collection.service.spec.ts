@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockApolloProvider } from '../../shared/testing/MockApolloProvider';
+import { LinkMutationService } from '../../shared/services/link-mutation.service';
 import { AbstractModelServiceSpec } from '../../shared/testing/AbstractModelServiceSpec';
+import { DummyServices } from '../../shared/testing/DummyServices';
+import { MOCK_APOLLO_PROVIDER } from '../../shared/testing/MOCK_APOLLO_PROVIDER';
 import { userMetaTesting } from '../../shared/testing/userMetaTesting';
 import { CollectionService } from './collection.service';
-import { LinkMutationService } from '../../shared/services/link-mutation.service';
-import { DummyServices } from '../../shared/testing/DummyServices';
 
 describe('CollectionService', () => {
 
@@ -269,7 +269,7 @@ describe('CollectionService', () => {
             ],
             providers: [
                 CollectionService,
-                MockApolloProvider,
+                MOCK_APOLLO_PROVIDER,
                 {
                     provide: LinkMutationService,
                     class: DummyServices,

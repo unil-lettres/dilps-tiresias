@@ -3,10 +3,10 @@
     <!-- Collection existante -->
     <mat-tab label="Collection existante">
         <div class="padding" fxLayout="column">
-            <app-select [service]="collectionSvc" [(model)]="collection" placeholder="Sélectionnez la collection" [filters]="listFilters"
+            <app-select [(model)]="collection" [filters]="listFilters" [service]="collectionSvc" placeholder="Sélectionnez la collection"
             ></app-select>
-            <div fxLayout="row" fxFlexAlign="end">
-                <button mat-button [disabled]="!collection?.id" (click)="link()">Ajouter à la collection</button>
+            <div fxFlexAlign="end" fxLayout="row">
+                <button (click)="link()" [disabled]="!collection?.id" mat-button>Ajouter à la collection</button>
             </div>
         </div>
     </mat-tab>
@@ -15,22 +15,18 @@
     <mat-tab label="Nouvelle collection">
         <div class="padding" fxLayout="column">
             <mat-form-field>
-                <input matInput [(ngModel)]="newCollection.name" placeholder="Nom" >
+                <input [(ngModel)]="newCollection.name" matInput placeholder="Nom">
             </mat-form-field>
 
             <mat-form-field>
-                <textarea matInput [(ngModel)]="newCollection.description" placeholder="Description"></textarea>
+                <textarea [(ngModel)]="newCollection.description" matInput placeholder="Description"></textarea>
             </mat-form-field>
 
-            <app-select *ngIf="listFilters"
-                        [service]="collectionSvc"
-                        [(model)]="newCollection.parent"
-                        placeholder="Collection parente"
-                        [filters]="listFilters"
+            <app-select *ngIf="listFilters" [(model)]="newCollection.parent" [filters]="listFilters" [service]="collectionSvc" placeholder="Collection parente"
             ></app-select>
 
-            <div fxLayout="row" fxFlexAlign="end">
-                <button mat-button [disabled]="!newCollection.name" (click)="createAndLink()">
+            <div fxFlexAlign="end" fxLayout="row">
+                <button (click)="createAndLink()" [disabled]="!newCollection.name" mat-button>
                     Ajouter à une nouvelle collection privée
                 </button>
             </div>
@@ -39,11 +35,11 @@
 </mat-tab-group>
 
 <div fxLayout="column">
-    <div class="mat-subheading-2" *ngIf="image?.collections?.length">Collections liées à la fiche</div>
+    <div *ngIf="image?.collections?.length" class="mat-subheading-2">Collections liées à la fiche</div>
     <div *ngFor="let collection of image?.collections" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <mat-icon>collections</mat-icon>
         <div fxFlex>{{ collection.name }}</div>
-        <button mat-icon-button (click)="unlink(image, collection)" matTooltip="Retirer la fiche de la collection">
+        <button (click)="unlink(image, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
             <mat-icon>remove</mat-icon>
         </button>
     </div>

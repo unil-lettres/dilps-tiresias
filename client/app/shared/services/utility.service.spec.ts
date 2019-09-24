@@ -33,7 +33,7 @@ describe('UtilityService', () => {
                 prop6: 'val6',
             },
             file,
-            date: '2018-07-01T00:00:00.000Z',
+            date: date,
         };
 
         const result = NaturalUtility.relationsToIds(input);

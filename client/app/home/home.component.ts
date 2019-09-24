@@ -1,16 +1,16 @@
-import { forkJoin } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ThemeService } from '../shared/services/theme.service';
-import { UserService } from '../users/services/user.service';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlertService } from '../shared/components/alert/alert.service';
-import { UserComponent } from '../users/user/user.component';
-import { UploadService } from '../shared/services/upload.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CardService } from '../card/services/card.service';
+import { forkJoin } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CardService } from '../card/services/card.service';
+import { AlertService } from '../shared/components/alert/alert.service';
+import { NetworkActivityService } from '../shared/services/network-activity.service';
+import { ThemeService } from '../shared/services/theme.service';
+import { UploadService } from '../shared/services/upload.service';
+import { UserService } from '../users/services/user.service';
+import { UserComponent } from '../users/user/user.component';
 
 @Component({
     selector: 'app-home',
@@ -18,12 +18,11 @@ import { environment } from '../../environments/environment';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    private routeParamsSub;
-
     public environmentString = environment.environment;
     public errors = [];
     public user;
     public nav = 1;
+    private routeParamsSub;
 
     constructor(public themeSvc: ThemeService,
                 public route: ActivatedRoute,

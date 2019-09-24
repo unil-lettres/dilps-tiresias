@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockApolloProvider } from '../../shared/testing/MockApolloProvider';
 import { AbstractModelServiceSpec } from '../../shared/testing/AbstractModelServiceSpec';
+import { MOCK_APOLLO_PROVIDER } from '../../shared/testing/MOCK_APOLLO_PROVIDER';
 import { userMetaTesting } from '../../shared/testing/userMetaTesting';
 import { ArtistService } from './artist.service';
 
@@ -18,7 +18,7 @@ describe('ArtistService', () => {
         permissions: {
             update: true,
             delete: true,
-            __typename : 'Permissions'
+            __typename: 'Permissions',
         },
     };
 
@@ -60,7 +60,7 @@ describe('ArtistService', () => {
             ],
             providers: [
                 ArtistService,
-                MockApolloProvider,
+                MOCK_APOLLO_PROVIDER,
             ],
         });
     });

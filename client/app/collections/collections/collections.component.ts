@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CollectionService } from '../services/collection.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IncrementSubject } from '../../shared/services/increment-subject';
 import { MatDialog } from '@angular/material/dialog';
-import { CollectionComponent } from '../collection/collection.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isArray } from 'lodash';
+import { CollectionsQueryVariables, UserRole } from '../../shared/generated-types';
+import { IncrementSubject } from '../../shared/services/increment-subject';
 import { Literal } from '../../shared/types';
 import { UserService } from '../../users/services/user.service';
-import { CollectionsQueryVariables, UserRole } from '../../shared/generated-types';
-import { isArray } from 'lodash';
+import { CollectionComponent } from '../collection/collection.component';
+import { CollectionService } from '../services/collection.service';
 
 @Component({
     selector: 'app-collections',
@@ -17,16 +17,14 @@ import { isArray } from 'lodash';
 export class CollectionsComponent implements OnInit {
 
     public collections = [];
-    private queryVariables = new IncrementSubject<CollectionsQueryVariables>();
 
     /**
      * Show "unclassified" category on the top of the page
-     * @type {boolean}
      */
     public showUnclassified = false;
+
     /**
      * Show "my cards" category on the top of the page
-     * @type {boolean}
      */
     public showMyCards = false;
 
@@ -34,11 +32,12 @@ export class CollectionsComponent implements OnInit {
      * Can create permissions
      */
     public canCreate = false;
-
     public searchedTerm;
-
+    public user;
+    public hasMore = false;
+    public showEditButtons = true;
+    private queryVariables = new IncrementSubject<CollectionsQueryVariables>();
     private pageSize = 50;
-
     private defaultFilters = {
         filters: {
             search: '',
@@ -49,10 +48,6 @@ export class CollectionsComponent implements OnInit {
             pageSize: this.pageSize,
         },
     };
-
-    public user;
-    public hasMore = false;
-    public showEditButtons = true;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -97,27 +92,6 @@ export class CollectionsComponent implements OnInit {
 
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user) {
-
-        if (!allowedRoles || !user) {
-            return false;
-        }
-
-        if (allowedRoles === true) {
-            return true;
-        }
-
-        if (isArray(allowedRoles) && allowedRoles.length) {
-            for (const allowedRole of allowedRoles) {
-                if (allowedRole === user.role) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     public showEditionButtons() {
         const authorizedRoles = this.route.snapshot.data.editionButtonsForRoles;
         if (!authorizedRoles) {
@@ -157,6 +131,27 @@ export class CollectionsComponent implements OnInit {
         this.dialog.open(CollectionComponent, {
             width: '800px',
         });
+    }
+
+    private showCreateButton(allowedRoles: boolean | UserRole[], user) {
+
+        if (!allowedRoles || !user) {
+            return false;
+        }
+
+        if (allowedRoles === true) {
+            return true;
+        }
+
+        if (isArray(allowedRoles) && allowedRoles.length) {
+            for (const allowedRole of allowedRoles) {
+                if (allowedRole === user.role) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 }

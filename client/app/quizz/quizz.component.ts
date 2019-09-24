@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CardService } from '../card/services/card.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { isString, uniq } from 'lodash';
+import { debounceTime } from 'rxjs/operators';
+import { CardService } from '../card/services/card.service';
 import { CardQuery } from '../shared/generated-types';
 
 @Component({
@@ -13,16 +13,14 @@ import { CardQuery } from '../shared/generated-types';
 })
 export class QuizzComponent implements OnInit, OnDestroy {
 
-    private routeParamsSub;
-    private formChangeSub;
-
     public cards: string[] = [];
     public card: CardQuery['card'];
     public imageSrc;
     public currentIndex = 0;
     public attributes;
-
     public formCtrl: FormControl = new FormControl();
+    private routeParamsSub;
+    private formChangeSub;
 
     constructor(private route: ActivatedRoute,
                 private cardSvc: CardService) {
@@ -47,6 +45,16 @@ export class QuizzComponent implements OnInit, OnDestroy {
         });
     }
 
+    public goToNext() {
+        this.formCtrl.setValue('');
+        const index = this.cards.findIndex(c => c === this.card.id);
+        this.getCard(this.cards[index + 1]);
+    }
+
+    public getArtistsNames(artists) {
+        return artists.map(a => a.name).join(', ');
+    }
+
     private getCard(id: string) {
         if (!id) {
             return;
@@ -68,16 +76,6 @@ export class QuizzComponent implements OnInit, OnDestroy {
             institution: false,
             dating: false,
         };
-    }
-
-    public goToNext() {
-        this.formCtrl.setValue('');
-        const index = this.cards.findIndex(c => c === this.card.id);
-        this.getCard(this.cards[index + 1]);
-    }
-
-    public getArtistsNames(artists) {
-        return artists.map(a => a.name).join(', ');
     }
 
     private test(formValue: string): void {

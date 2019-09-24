@@ -1,37 +1,26 @@
-<div fxLayout="column" fxLayoutGap="20px" class="padding-v">
+<div class="padding-v" fxLayout="column" fxLayoutGap="20px">
     <div fxLayout="column" fxLayoutGap="10px">
-        <div *ngFor="let item of items"
-             fxLayout="row"
-             fxLayoutAlign="start center"
-             fxLayoutGap="10px"
-             (click)="selectItem(item)"
-             style="cursor:pointer"
+        <div (click)="selectItem(item)" *ngFor="let item of items" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" style="cursor:pointer"
         >
             <mat-icon>image</mat-icon>
             <div fxFlex>{{ item.name }}</div>
-            <button mat-icon-button (click)="unlink($event, item)" *ngIf="!disabled">
+            <button (click)="unlink($event, item)" *ngIf="!disabled" mat-icon-button>
                 <mat-icon>remove</mat-icon>
             </button>
         </div>
 
-        <div fxLayout="column" fxLacoyoutAlign="center center" class="margin" *ngIf="items.length === 0">
+        <div *ngIf="items.length === 0" class="margin" fxLacoyoutAlign="center center" fxLayout="column">
             <div i18n>Pas de résultats</div>
         </div>
     </div>
 
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
-        <app-select fxFlex
-                    fxFlex.gt-sm="none"
-                    *ngIf="!disabled"
-                    [service]="service"
-                    [(model)]="relation"
-                    [placeholder]="placeholder"
-                    [displayWith]="getDisplayFn()"
+        <app-select *ngIf="!disabled" [(model)]="relation" [displayWith]="getDisplayFn()" [placeholder]="placeholder" [service]="service" fxFlex fxFlex.gt-sm="none"
         ></app-select>
         <div fxLayout="row" fxLayoutAlign="end center">
-            <mat-progress-spinner *ngIf="loadingAdd" mode="indeterminate" [diameter]="24" [strokeWidth]="5"></mat-progress-spinner>
-            <button mat-button *ngIf="!disabled" (click)="link(relation)" [disabled]="!relation" fxLayout="row">
+            <mat-progress-spinner *ngIf="loadingAdd" [diameter]="24" [strokeWidth]="5" mode="indeterminate"></mat-progress-spinner>
+            <button (click)="link(relation)" *ngIf="!disabled" [disabled]="!relation" fxLayout="row" mat-button>
                 <mat-icon>add</mat-icon>
                 <span>Associer</span>
             </button>

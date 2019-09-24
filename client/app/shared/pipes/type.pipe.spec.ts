@@ -1,9 +1,9 @@
+import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '../../users/services/user.service';
 import { UserType } from '../generated-types';
-import { MockApolloProvider } from '../testing/MockApolloProvider';
+import { MOCK_APOLLO_PROVIDER } from '../testing/MOCK_APOLLO_PROVIDER';
 import { TypePipe } from './type.pipe';
-import { inject, TestBed } from '@angular/core/testing';
 
 describe('TypePipe', () => {
 
@@ -21,7 +21,7 @@ describe('TypePipe', () => {
                     provide: UserService,
                     useClass: UserService,
                 },
-                MockApolloProvider,
+                MOCK_APOLLO_PROVIDER,
             ],
         });
     });

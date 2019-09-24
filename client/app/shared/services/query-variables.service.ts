@@ -1,10 +1,12 @@
-import { Observable, BehaviorSubject } from 'rxjs';
-import { merge, isPlainObject } from 'lodash';
 import { Injectable } from '@angular/core';
 import { QueryRef } from 'apollo-angular';
+import { isPlainObject, merge } from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Literal } from '../types';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class QueryVariablesService {
 
     /**
@@ -36,10 +38,6 @@ export class QueryVariablesService {
         return result;
     }
 
-    private static defaultsVariables(variables: Literal, defaults: Literal, context: Literal): Literal {
-        return merge({}, defaults, context, variables);
-    }
-
     /**
      * Set the initial variables and optionally wire up automatic refetch if original variables were an observable
      */
@@ -52,5 +50,9 @@ export class QueryVariablesService {
         if (variables instanceof Observable) {
             variablesSubject.subscribe(v => queryRef.setVariables(v));
         }
+    }
+
+    private static defaultsVariables(variables: Literal, defaults: Literal, context: Literal): Literal {
+        return merge({}, defaults, context, variables);
     }
 }

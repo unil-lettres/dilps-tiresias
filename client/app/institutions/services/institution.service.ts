@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {
-    createInstitutionMutation,
-    deleteInstitutionsMutation,
-    institutionQuery,
-    institutionsQuery,
-    updateInstitutionMutation,
-} from './institutionQueries';
 
 import {
     CreateInstitutionMutation,
@@ -17,8 +10,17 @@ import {
     UpdateInstitutionMutation,
 } from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import {
+    createInstitutionMutation,
+    deleteInstitutionsMutation,
+    institutionQuery,
+    institutionsQuery,
+    updateInstitutionMutation,
+} from './institutionQueries';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class InstitutionService
     extends AbstractModelService<InstitutionQuery['institution'],
         InstitutionsQuery['institutions'],

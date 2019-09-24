@@ -5,18 +5,30 @@
  * we return a stream that contains only one set of data that doesn't change.
  */
 
-import { Observable } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
-import { BasicDataSource } from './basic.data.source';
 import { Inject } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as qs from 'qs';
 import { get, isEmpty, merge } from 'lodash';
+import * as qs from 'qs';
+import { Observable } from 'rxjs';
+import { Literal } from '../types';
+import { BasicDataSource } from './basic.data.source';
 import { UtilityService } from './utility.service';
-import { IncrementSubject } from './increment-subject';
 
 export class PaginatedDataSource extends BasicDataSource {
 
+    /**
+     * List of pagination options
+     */
+    public readonly pageSizeOptions = [
+        1,
+        5,
+        10,
+        25,
+        50,
+        100,
+        200,
+    ];
     private keyPrefix = 'listing-';
 
     /**
@@ -44,7 +56,6 @@ export class PaginatedDataSource extends BasicDataSource {
         },
         options: this.defaultOptions,
     };
-
     private encodeParams = {
         format: 'RFC1738',
         encode: false,
@@ -54,32 +65,17 @@ export class PaginatedDataSource extends BasicDataSource {
     };
 
     /**
-     * List of pagination options
-     * @type {[number , number , number , number , number]}
-     */
-    public readonly pageSizeOptions = [
-        1,
-        5,
-        10,
-        25,
-        50,
-        100,
-        200,
-    ];
-
-    /**
      *
-     * @param {Observable<any> | any} data List of items
-     * @param {IncrementSubject} listingOptions Observable that represents filter and pagination. Should be sent to apollo to update query.
-     * @param {Observable<any> | Object} defaultOptions Listing options default values. Prevent those values to be displayed in url/storage
-     * @param {boolean} persist Wherever listing options should be stored in url and localstorage
-     * @param {Router} router
-     * @param {ActivatedRoute} route Current route
-     * @param {string} key Identifier to store listing options in localstorage
+     * @param data List of items
+     * @param listingOptions Observable that represents filter and pagination. Should be sent to apollo to update query.
+     * @param defaultOptions Listing options default values. Prevent those values to be displayed in url/storage
+     * @param persist Wherever listing options should be stored in url and localstorage
+     * @param route Current route
+     * @param key Identifier to store listing options in localstorage
      */
     constructor(data: Observable<any> | any,
                 private listingOptions = null,
-                defaultOptions: Observable<any> | Object = {},
+                defaultOptions: Observable<any> | Literal = {},
                 private persist: boolean = false,
                 @Inject(Router) private router: Router = null,
                 @Inject(ActivatedRoute) private route: ActivatedRoute = null,
@@ -112,7 +108,7 @@ export class PaginatedDataSource extends BasicDataSource {
         return this.snapshot.data;
     }
 
-    public getOption(path): Observable<Object> {
+    public getOption(path): Observable<Literal> {
         return this.listingOptions.map(o => get(o, path));
     }
 
@@ -132,7 +128,6 @@ export class PaginatedDataSource extends BasicDataSource {
 
     /**
      * Helper to simplify pagination setting (shortcut for updateOptions({pagination: {...}});
-     * @param {PageEvent} event
      */
     public paging(event: PageEvent) {
         this.updateOptions({
@@ -169,7 +164,6 @@ export class PaginatedDataSource extends BasicDataSource {
     /**
      * Persist option in url and local storage
      * Is called each time this.optionsObs change
-     * @param options
      */
     private saveOptions(options) {
 
@@ -198,7 +192,6 @@ export class PaginatedDataSource extends BasicDataSource {
 
     /**
      * Get local storage key
-     * @returns {string}
      */
     private getKey() {
         return this.keyPrefix + this.key;

@@ -24,8 +24,6 @@ export class UtilityService {
 
     /**
      * Returns the plural form of the given name
-     * @param {string} name
-     * @returns {string}
      */
     public static makePlural(name: string): string {
         const plural = name + 's';
@@ -35,8 +33,6 @@ export class UtilityService {
 
     /**
      * Returns the string with the first letter as capital
-     * @param {string} string
-     * @returns {string}
      */
     public static upperCaseFirstLetter(string: string): string {
         return string.charAt(0).toUpperCase() + string.slice(1);

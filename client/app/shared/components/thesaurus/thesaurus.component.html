@@ -1,26 +1,17 @@
 <mat-form-field class="innerSpacing">
 
     <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
-        <mat-chip *ngFor="let item of items" [removable]="!readonly" (removed)="removeTerm(item)" fxLayoutRow="row">
-            <mat-icon *ngIf="previewComponent" class="mat-chip-remove" (click)="openItem(item)">remove_red_eye</mat-icon>
+        <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayoutRow="row">
+            <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove">remove_red_eye</mat-icon>
             <span>
                 <span>{{ item.name }}</span>
                 <br *ngIf="item.locality && !readonly">
                 <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
             </span>
 
-            <mat-icon matChipRemove *ngIf="!readonly">cancel</mat-icon>
+            <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input #input
-               [fxShow]="!readonly || items.length === 0"
-               [readonly]="readonly"
-               [formControl]="formCtrl"
-               [placeholder]="placeholder"
-               [matChipInputFor]="chipList"
-               [matAutocomplete]="autocomplete"
-               (ngModelChange)="onSearch($event)"
-               (focus)="startSearch()"
-               (keydown.enter)="onEnter($event)"
+        <input #input (focus)="startSearch()" (keydown.enter)="onEnter($event)" (ngModelChange)="onSearch($event)" [formControl]="formCtrl" [fxShow]="!readonly || items.length === 0" [matAutocomplete]="autocomplete" [matChipInputFor]="chipList" [placeholder]="placeholder" [readonly]="readonly"
         />
     </mat-chip-list>
 
@@ -32,7 +23,7 @@
                 <div *ngIf="item?.locality" class="mat-caption">{{ item.locality }}</div>
             </div>
         </mat-option>
-        <div style="padding:5px 10px" class="mat-caption" *ngIf="moreNbItems > 0" i18n>{{ moreNbItems }} élément(s) supplémentaire(s)</div>
+        <div *ngIf="moreNbItems > 0" class="mat-caption" i18n style="padding:5px 10px">{{ moreNbItems }} élément(s) supplémentaire(s)</div>
     </mat-autocomplete>
 
 </mat-form-field>

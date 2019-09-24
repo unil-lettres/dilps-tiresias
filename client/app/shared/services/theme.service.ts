@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ThemeService {
-
-    private darkActivated: boolean;
 
     public readonly themes = [
         'default',
     ];
-
     public readonly theme: BehaviorSubject<string> = new BehaviorSubject(this.themes[0]);
+    private darkActivated: boolean;
 
     constructor() {
         const theme = localStorage.getItem('dilps-theme');

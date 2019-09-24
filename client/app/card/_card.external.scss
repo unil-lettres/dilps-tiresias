@@ -2,8 +2,7 @@ app-card {
     :not(mat-form-field).innerSpacing,
     mat-form-field.innerSpacing .mat-form-field-infix,
     app-address mat-form-field .mat-form-field-infix,
-    app-select mat-form-field .mat-form-field-infix
-    {
+    app-select mat-form-field .mat-form-field-infix {
         margin-left: 10px;
         margin-right: 10px;
     }

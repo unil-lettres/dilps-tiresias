@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ArtistService } from '../services/artist.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { ArtistComponent } from '../artist/artist.component';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
     selector: 'app-artists',

@@ -1,20 +1,20 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { ThemeService } from '../shared/services/theme.service';
-import { CardService } from './services/card.service';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
+import { ArtistComponent } from '../artists/artist/artist.component';
+import { ArtistService } from '../artists/services/artist.service';
+import { ChangeService } from '../changes/services/change.service';
+import { InstitutionComponent } from '../institutions/institution/institution.component';
 import { InstitutionService } from '../institutions/services/institution.service';
 import { AlertService } from '../shared/components/alert/alert.service';
-import { ArtistService } from '../artists/services/artist.service';
-import { ArtistComponent } from '../artists/artist/artist.component';
-import { InstitutionComponent } from '../institutions/institution/institution.component';
-import { ChangeService } from '../changes/services/change.service';
-import { UploadService } from '../shared/services/upload.service';
-import { CardVisibility, UserRole } from '../shared/generated-types';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
-import { MatDialog } from '@angular/material/dialog';
-import { UserService } from '../users/services/user.service';
 import { DownloadComponent } from '../shared/components/download/download.component';
+import { CardVisibility, UserRole } from '../shared/generated-types';
+import { ThemeService } from '../shared/services/theme.service';
+import { UploadService } from '../shared/services/upload.service';
+import { UserService } from '../users/services/user.service';
+import { CardService } from './services/card.service';
 
 @Component({
     selector: 'app-card',
@@ -35,8 +35,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     @Input() public imageData;
     @Input() public imageSrc;
     @Input() public imageSrcFull;
-
-    private edit = false;
     public visibility = 1;
     public visibilities = {
         1: {
@@ -55,20 +53,13 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             color: 'primary',
         },
     };
-
     public institutionComponent = InstitutionComponent;
     public artistComponent = ArtistComponent;
-    private uploadSub;
-
     public institution;
     public artists;
     public user;
-
-    @Input()
-    set editable(val: boolean) {
-        this.edit = val;
-        this.updateUploadWatching();
-    }
+    private edit = false;
+    private uploadSub;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -81,6 +72,12 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private uploadSvc: UploadService,
                 private dialog: MatDialog,
                 private userSvc: UserService) {
+    }
+
+    @Input()
+    set editable(val: boolean) {
+        this.edit = val;
+        this.updateUploadWatching();
     }
 
     ngOnInit() {
@@ -153,19 +150,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             this.uploadSub.unsubscribe();
             this.uploadSub = null;
         }
-    }
-
-    private getBase64(file) {
-
-        if (!file) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.addEventListener('load', (ev: any) => {
-            this.imageData = btoa(ev.target.result);
-        });
-        reader.readAsBinaryString(file);
     }
 
     public initCard() {
@@ -311,5 +295,18 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestDelete() {
         return this.canSuggestUpdate();
+    }
+
+    private getBase64(file) {
+
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.addEventListener('load', (ev: any) => {
+            this.imageData = btoa(ev.target.result);
+        });
+        reader.readAsBinaryString(file);
     }
 }

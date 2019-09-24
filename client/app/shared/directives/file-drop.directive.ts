@@ -35,7 +35,6 @@ export class FileDropDirective extends ngfDrop {
 
     /**
      * Prevent drag and drop if disabled or if nobody is waiting for files
-     * @param {Event} event
      */
     @HostListener('dragover', ['$event']) onDragOver(event: Event): void {
         if (this.fileDropDisabled || this.uploadSvc.filesChanged.observers.length === 0) {
@@ -48,8 +47,6 @@ export class FileDropDirective extends ngfDrop {
     /**
      * The original eventToTransfer can return null, but eventToFiles try to access an attribute on that potential null causing error.
      * This overrides eventToFiles to prevent this error, but todo should report bug on original repo and remove this fn when fixed.
-     * @param {Event} event
-     * @returns {any[]}
      */
     public eventToFiles(event) {
         const transfer = this.eventToTransfer(event);

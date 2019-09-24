@@ -544,7 +544,6 @@ describe('QueryVariablesManager', () => {
             },
         };
 
-
         const naturalSearch2 = {
             filter: {
                 groups: [
@@ -557,7 +556,6 @@ describe('QueryVariablesManager', () => {
                 ],
             },
         };
-
 
         const resultC = {
             filter: {

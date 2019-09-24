@@ -12,6 +12,7 @@ import {
     UpdateCardMutation,
 } from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { Literal } from '../../shared/types';
 import {
     cardQuery,
     cardsQuery,
@@ -21,14 +22,19 @@ import {
     validateData,
     validateImage,
 } from './cardQueries';
-import { Literal } from '../../shared/types';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class CardService extends AbstractModelService<CardQuery['card'],
     CardsQuery['cards'],
     CreateCardMutation['createCard'],
     UpdateCardMutation['updateCard'],
     DeleteCardsMutation['deleteCards']> {
+
+    constructor(apollo: Apollo) {
+        super(apollo, 'card', cardQuery, cardsQuery, createCardMutation, updateCardMutation, deleteCardsMutation);
+    }
 
     public static getImageFormat(card, height): any {
         height = card.height ? Math.min(card.height, height) : height;
@@ -55,9 +61,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
 
     /**
      * Merge image src on src attribute of given gard
-     * @param card
-     * @param height
-     * @returns {{} & any & {src: *}}
      */
     public static formatImage(card, height) {
         if (!card) {
@@ -66,10 +69,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
 
         const fields = {src: this.getImageLink(card, height)};
         return merge({}, card, fields);
-    }
-
-    constructor(apollo: Apollo) {
-        super(apollo, 'card', cardQuery, cardsQuery, createCardMutation, updateCardMutation, deleteCardsMutation);
     }
 
     public getEmptyObject(): CardInput {
@@ -106,18 +105,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
         };
     }
 
-    protected getInput(object: Literal): Literal {
-
-        const input = super.getInput(object);
-
-        // If file is undefined or null, prevent to send attribute to server
-        if (!object.file) {
-            delete input.file;
-        }
-
-        return input;
-    }
-
     public validateData(card: { id }) {
         return this.apollo.mutate({
             mutation: validateData,
@@ -148,6 +135,18 @@ export class CardService extends AbstractModelService<CardQuery['card'],
                 return c;
             },
         ));
+    }
+
+    protected getInput(object: Literal): Literal {
+
+        const input = super.getInput(object);
+
+        // If file is undefined or null, prevent to send attribute to server
+        if (!object.file) {
+            delete input.file;
+        }
+
+        return input;
     }
 
 }

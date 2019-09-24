@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs';
 import { merge } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 import { Literal } from '../types';
 
 /**

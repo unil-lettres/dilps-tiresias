@@ -47,20 +47,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArtistComponent } from './artists/artist/artist.component';
 import { ArtistsComponent } from './artists/artists/artists.component';
-import { ArtistService } from './artists/services/artist.service';
 import { CardComponent } from './card/card.component';
-import { CardResolver } from './card/services/card.resolver';
-import { CardService } from './card/services/card.service';
 import { ChangeComponent } from './changes/change/change.component';
 import { ChangesComponent } from './changes/changes/changes.component';
-import { ChangeService } from './changes/services/change.service';
 import { CollectionComponent } from './collections/collection/collection.component';
 import { CollectionsComponent } from './collections/collections/collections.component';
-import { CollectionService } from './collections/services/collection.service';
 import { HomeComponent } from './home/home.component';
 import { InstitutionComponent } from './institutions/institution/institution.component';
 import { InstitutionsComponent } from './institutions/institutions/institutions.component';
-import { InstitutionService } from './institutions/services/institution.service';
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { TermsAgreementComponent } from './login/terms-agreement.component';
@@ -84,18 +78,11 @@ import { FileDropDirective } from './shared/directives/file-drop.directive';
 import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
 import { TypePipe } from './shared/pipes/type.pipe';
-import { AuthAdminGuard } from './shared/services/auth.admin.guard';
-import { AuthGuard } from './shared/services/auth.guard';
-import { LinkMutationService } from './shared/services/link-mutation.service';
 import { NetworkActivityService } from './shared/services/network-activity.service';
-import { ThemeService } from './shared/services/theme.service';
-import { UploadService } from './shared/services/upload.service';
-import { UserResolver } from './users/services/user.resolver';
-import { UserService } from './users/services/user.service';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
 
-/** Custom options to configure the form field's look and feel */
+    /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
     appearance: 'legacy',
 };
@@ -194,21 +181,6 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         }),
     ],
     providers: [
-        AuthGuard,
-        AuthAdminGuard,
-        ThemeService,
-        NetworkActivityService,
-        CollectionService,
-        UserService,
-        UserResolver,
-        CardResolver,
-        CardService,
-        AlertService,
-        InstitutionService,
-        ArtistService,
-        ChangeService,
-        UploadService,
-        LinkMutationService,
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
     ],
     bootstrap: [AppComponent],

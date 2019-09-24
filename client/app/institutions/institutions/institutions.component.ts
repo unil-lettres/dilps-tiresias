@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { InstitutionService } from '../services/institution.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { InstitutionComponent } from '../institution/institution.component';
+import { InstitutionService } from '../services/institution.service';
 
 @Component({
     selector: 'app-institutions',

@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {
-    createArtistMutation,
-    deleteArtistsMutation,
-    artistQuery,
-    artistsQuery,
-    updateArtistMutation,
-} from './artistQueries';
 
 import {
-    CreateArtistMutation,
-    DeleteArtistsMutation,
+    ArtistInput,
     ArtistQuery,
     ArtistsQuery,
+    CreateArtistMutation,
+    DeleteArtistsMutation,
     UpdateArtistMutation,
-    ArtistInput,
 } from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { artistQuery, artistsQuery, createArtistMutation, deleteArtistsMutation, updateArtistMutation } from './artistQueries';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ArtistService
     extends AbstractModelService<ArtistQuery['artist'],
         ArtistsQuery['artists'],

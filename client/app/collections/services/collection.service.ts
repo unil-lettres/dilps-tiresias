@@ -1,28 +1,30 @@
-import { forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { forkJoin } from 'rxjs';
+import {
+    CollectionInput,
+    CollectionQuery,
+    CollectionsQuery,
+    CollectionVisibility,
+    CreateCollectionMutation,
+    DeleteCollectionsMutation,
+    UpdateCollectionMutation,
+} from '../../shared/generated-types';
+import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { LinkMutationService } from '../../shared/services/link-mutation.service';
+
 import {
     collectionQuery,
     collectionsQuery,
     createCollectionMutation,
     deleteCollectionsMutation,
-    updateCollectionMutation,
     linkCollectionToCollectionMutation,
+    updateCollectionMutation,
 } from './collectionQueries';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import {
-    CollectionInput,
-    CollectionQuery,
-    CollectionsQuery,
-    CreateCollectionMutation,
-    DeleteCollectionsMutation,
-    UpdateCollectionMutation,
-    CollectionVisibility,
-} from '../../shared/generated-types';
 
-import { LinkMutationService } from '../../shared/services/link-mutation.service';
-
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class CollectionService
     extends AbstractModelService<CollectionQuery['collection'],
         CollectionsQuery['collections'],

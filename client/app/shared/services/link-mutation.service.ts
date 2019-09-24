@@ -27,13 +27,11 @@ export class LinkMutationService {
 
     /**
      * Mutation name pattern
-     * @type {string}
      */
     private readonly mutationName = `#action#upperName1#upperName2`;
 
     /**
      * Mutation pattern
-     * @type {string}
      */
     private readonly mutationModel = `mutation linkAndUnlink {
         #function(#name1: #id1, #name2: #id2) {
@@ -51,9 +49,6 @@ export class LinkMutationService {
 
     /**
      * Link two objects together
-     * @param obj1
-     * @param obj2
-     * @returns {Observable<FetchResult<any>>}
      */
     public link(obj1, obj2): Observable<FetchResult<any>> {
         const mutation = this.getMutation('link', obj1, obj2);
@@ -63,9 +58,6 @@ export class LinkMutationService {
 
     /**
      * Unlink two objects
-     * @param obj1
-     * @param obj2
-     * @returns {Observable<FetchResult<any>>}
      */
     public unlink(obj1, obj2): Observable<FetchResult<any>> {
         const mutation = this.getMutation('unlink', obj1, obj2);
@@ -75,11 +67,6 @@ export class LinkMutationService {
 
     /**
      * Generate mutation using patters and replacing variables
-     * @param action
-     * @param obj1
-     * @param obj2
-     * @param {boolean} tryReverse
-     * @returns {string}
      */
     private getMutation(action: string, obj1, obj2, tryReverse = true): string {
         const name = this.replaceVars(this.mutationName, obj1, obj2).replace('#action', action);
@@ -99,10 +86,6 @@ export class LinkMutationService {
 
     /**
      * Execute mutation
-     * @param mutation
-     * @param obj1
-     * @param obj2
-     * @returns {Observable<FetchResult<any>>}
      */
     private execute(mutation, obj1, obj2): Observable<FetchResult<any>> {
 
@@ -118,9 +101,6 @@ export class LinkMutationService {
 
     /**
      * Replace name and ids in mutation(Name) pattern.
-     * @param string
-     * @param obj1
-     * @param obj2
      */
     private replaceVars(string: string, obj1, obj2): string {
 

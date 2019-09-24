@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { UserService } from '../users/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
-import { TermsAgreementComponent } from './terms-agreement.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'lodash';
+import { Subscription } from 'rxjs';
+import { NetworkActivityService } from '../shared/services/network-activity.service';
+import { UserService } from '../users/services/user.service';
+import { TermsAgreementComponent } from './terms-agreement.component';
 
 @Component({
     selector: 'app-login',
