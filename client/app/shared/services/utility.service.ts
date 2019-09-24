@@ -1,24 +1,7 @@
-import { isEmpty, isObject, pickBy } from 'lodash';
+import { isEmpty } from 'lodash';
 import { Literal } from '../types';
 
 export class UtilityService {
-
-    public static relationsToIds(object: Literal): Literal {
-        const newObj = {};
-        Object.keys(object).forEach((key) => {
-            let value = object[key];
-            if (isObject(value) && value.id) {
-                value = object[key].id;
-            } else if (isObject(value) && value instanceof Date) {
-                value =  value.toISOString();
-            } else if (isObject(value) && !(value instanceof File)) {
-                value = pickBy(value, (v, k) => k !== '__typename');
-            }
-
-            newObj[key] = value;
-        });
-        return newObj;
-    }
 
     /**
      * Remove from source object the attributes with same value as modified

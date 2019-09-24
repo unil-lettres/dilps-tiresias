@@ -15,8 +15,8 @@
         >
             <natural-search fxFlex
                             class="searchField"
-                            [configurations]="config"
-                            [(selections)]="selections"
+                            [facets]="config"
+                            [selections]="selections"
                             (selectionChange)="search($event)"
             ></natural-search>
             <button mat-icon-button mat-button [matMenuTriggerFor]="sortingMenu" matTooltip="Trier">

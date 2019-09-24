@@ -6,7 +6,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 import { BasicDataSource } from './basic.data.source';
 import { Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';

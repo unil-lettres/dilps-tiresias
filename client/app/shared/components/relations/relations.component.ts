@@ -19,7 +19,7 @@ import { LinkMutationService } from '../../services/link-mutation.service';
 })
 export class RelationsComponent implements OnInit {
 
-    @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>;
+    @ContentChild(TemplateRef, {static: true}) itemTemplate: TemplateRef<any>;
 
     @Output() select = new EventEmitter();
 

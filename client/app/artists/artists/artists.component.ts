@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ArtistService } from '../services/artist.service';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { ArtistComponent } from '../artist/artist.component';

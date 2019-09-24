@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { ChangeService } from '../services/change.service';
 import { UserService } from '../../users/services/user.service';

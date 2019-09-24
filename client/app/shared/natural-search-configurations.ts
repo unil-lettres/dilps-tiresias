@@ -1,26 +1,14 @@
 import {
-    NaturalSearchConfiguration,
-    Selection,
-    TypeNumericRangeComponent,
+    NaturalSearchFacets,
+    replaceOperatorByField,
+    TypeNumberComponent,
     TypeSelectComponent,
-} from '@ecodev/natural-search';
+    TypeTextComponent,
+    wrapLike,
+} from '@ecodev/natural';
 import { CardVisibility } from './generated-types';
 
-function wrapLike(s: Selection): Selection {
-    s.condition.like.value = '%' + s.condition.like.value + '%';
-    return s;
-}
-
-function replaceOperatorByField(s: Selection): Selection {
-    const oldOperator = s.condition.like ? 'like' : 'between';
-
-    s.condition[s.field] = s.condition[oldOperator];
-    delete s.condition[oldOperator];
-
-    return s;
-}
-
-export const adminConfig: NaturalSearchConfiguration = [
+export const adminConfig: NaturalSearchFacets = [
     {
         display: 'Visibilité',
         field: 'visibility',
@@ -36,51 +24,59 @@ export const adminConfig: NaturalSearchConfiguration = [
     },
 ];
 
-export const cardsConfiguration: NaturalSearchConfiguration = [
+export const cardsConfiguration: NaturalSearchFacets = [
     {
         display: 'Titre',
         field: 'nameOrExpandedName',
+        component: TypeTextComponent,
         transform: replaceOperatorByField,
     },
     {
         display: 'Artistes',
         field: 'artistOrTechniqueAuthor',
+        component: TypeTextComponent,
         transform: replaceOperatorByField,
     },
     {
         display: 'Supplément',
         field: 'addition',
+        component: TypeTextComponent,
         transform: wrapLike,
     },
     {
         display: 'Datation',
         field: 'yearRange',
-        component: TypeNumericRangeComponent,
+        component: TypeNumberComponent,
         transform: replaceOperatorByField,
     },
     {
         display: 'Technique',
         field: 'technique',
+        component: TypeTextComponent,
         transform: wrapLike,
     },
     {
         display: 'Matériel',
         field: 'material',
+        component: TypeTextComponent,
         transform: wrapLike,
     },
     {
         display: 'Localité',
         field: 'localityOrInstitutionLocality',
+        component: TypeTextComponent,
         transform: replaceOperatorByField,
     },
     {
         display: 'Institution',
         field: 'institution.name',
+        component: TypeTextComponent,
         transform: wrapLike,
     },
     {
         display: 'Source',
         field: 'literature',
+        component: TypeTextComponent,
         transform: wrapLike,
     },
 ];

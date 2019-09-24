@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CollectionService } from '../../../collections/services/collection.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArtistComponent } from '../../../artists/artist/artist.component';
 
 import { UserService } from '../../../users/services/user.service';

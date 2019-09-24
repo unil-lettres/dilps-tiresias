@@ -1,16 +1,13 @@
-import {
-    Component, ContentChild, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef,
-    ViewChild,
-} from '@angular/core';
-import { IncrementSubject } from '../../services/increment-subject';
+import { Component, ContentChild, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { isObject, merge } from 'lodash';
-import { filter, map, sampleTime, startWith } from 'rxjs/operators';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { QueryRef } from 'apollo-angular';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { isObject, merge } from 'lodash';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Literal } from '../../types';
+import { filter, map, sampleTime, startWith } from 'rxjs/operators';
 import { AbstractModelService } from '../../services/abstract-model.service';
+import { IncrementSubject } from '../../services/increment-subject';
+import { Literal } from '../../types';
 
 /**
  * Default usage:
@@ -37,9 +34,9 @@ import { AbstractModelService } from '../../services/abstract-model.service';
 })
 export class SelectComponent implements OnInit {
 
-    @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger;
-    @ViewChild('input') input: ElementRef;
-    @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>;
+    @ViewChild(MatAutocompleteTrigger, {static: true}) autoTrigger: MatAutocompleteTrigger;
+    @ViewChild('input', {static: true}) input: ElementRef;
+    @ContentChild(TemplateRef, {static: true}) itemTemplate: TemplateRef<any>;
 
     /**
      * Service with watchAll function that accepts queryVariables.
@@ -216,12 +213,12 @@ export class SelectComponent implements OnInit {
         });
 
         this.filteredItems = this.formCtrl.valueChanges
-            .pipe(
-                startWith(''),
-                map((searchedTerm: any) => {
-                    return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
-                }),
-            );
+                                 .pipe(
+                                     startWith(''),
+                                     map((searchedTerm: any) => {
+                                         return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
+                                     }),
+                                 );
     }
 
     private filterList(searchedTerm) {

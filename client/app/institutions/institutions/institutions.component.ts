@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { InstitutionService } from '../services/institution.service';
 import { AbstractList } from '../../shared/components/AbstractList';
 import { InstitutionComponent } from '../institution/institution.component';

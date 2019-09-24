@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CollectionService } from '../services/collection.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IncrementSubject } from '../../shared/services/increment-subject';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CollectionComponent } from '../collection/collection.component';
 import { Literal } from '../../shared/types';
 import { UserService } from '../../users/services/user.service';

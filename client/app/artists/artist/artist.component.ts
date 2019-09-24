@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { ArtistService } from '../services/artist.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';

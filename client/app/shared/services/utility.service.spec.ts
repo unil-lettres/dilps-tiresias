@@ -1,3 +1,4 @@
+import { NaturalUtility } from '@ecodev/natural';
 import { UtilityService } from './utility.service';
 
 describe('UtilityService', () => {
@@ -35,7 +36,7 @@ describe('UtilityService', () => {
             date: '2018-07-01T00:00:00.000Z',
         };
 
-        const result = UtilityService.relationsToIds(input);
+        const result = NaturalUtility.relationsToIds(input);
         expect(result).toEqual(expected);
 
         // The original object must not be touched

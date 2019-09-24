@@ -1,12 +1,18 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatAutocompleteTrigger, MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { IncrementSubject } from '../../services/increment-subject';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
 import { QueryRef } from 'apollo-angular';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Literal } from '../../types';
-import { filter, map, sampleTime } from 'rxjs/operators';
 import { clone, isArray, isObject, merge } from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, sampleTime } from 'rxjs/operators';
+import { IncrementSubject } from '../../services/increment-subject';
+import { Literal } from '../../types';
+
+interface ThesaurusModel {
+    name: string;
+    locality?: string;
+}
 
 @Component({
     selector: 'app-thesaurus',
@@ -16,8 +22,8 @@ import { clone, isArray, isObject, merge } from 'lodash';
 })
 export class ThesaurusComponent implements OnInit {
 
-    @ViewChild(MatAutocompleteTrigger) public autocomplete: MatAutocompleteTrigger;
-    @ViewChild('input') input;
+    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete: MatAutocompleteTrigger;
+    @ViewChild('input', {static: true}) input;
 
     @Input() readonly = false;
     @Input() service;
@@ -25,8 +31,8 @@ export class ThesaurusComponent implements OnInit {
     @Input() multiple = true;
     @Input() previewComponent;
 
-    private _model;
-    @Input() set model(val) {
+    private _model: ThesaurusModel;
+    @Input() set model(val: ThesaurusModel) {
         this._model = val;
         this.convertModel();
     }

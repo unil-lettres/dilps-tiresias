@@ -20,7 +20,7 @@ import {} from 'googlemaps';
 })
 export class AddressComponent implements OnInit {
 
-    @ViewChild('input') public inputRef: ElementRef;
+    @ViewChild('input', {static: true}) public inputRef: ElementRef;
 
     @Input() vertical = false;
     @Input() readonly = false;

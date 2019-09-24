@@ -12,7 +12,7 @@ import { ChangeService } from '../changes/services/change.service';
 import { UploadService } from '../shared/services/upload.service';
 import { CardVisibility, UserRole } from '../shared/generated-types';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UserService } from '../users/services/user.service';
 import { DownloadComponent } from '../shared/components/download/download.component';
 

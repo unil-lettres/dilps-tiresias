@@ -1,3 +1,4 @@
+import { NaturalUtility } from '@ecodev/natural';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { Observable, BehaviorSubject, OperatorFunction } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -209,7 +210,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
     protected getInput(object: Literal): Literal {
 
         // Convert relations to their IDs for mutation
-        object = UtilityService.relationsToIds(object);
+        object = NaturalUtility.relationsToIds(object);
 
         // Pick only attributes that we can find in the empty object
         // In other words, prevent to select data that has unwanted attributes

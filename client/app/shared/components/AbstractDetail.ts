@@ -1,6 +1,6 @@
 import { ArtistComponent } from '../../artists/artist/artist.component';
 import { AlertService } from './alert/alert.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { OnInit } from '@angular/core';
 import { merge } from 'lodash';
 import { UserService } from '../../users/services/user.service';

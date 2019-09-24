@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MatDialog, MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ConfirmComponent } from './confirm.component';
 import { Observable } from 'rxjs';
 
