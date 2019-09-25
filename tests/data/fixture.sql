@@ -15,8 +15,8 @@ INSERT INTO `artist` (`id`, `name`) VALUES
 INSERT INTO `tag` (`id`, `name`) VALUES
   (4000, 'Test tag 4000');
 
-INSERT INTO `institution` (`id`, `country_id`, `name`, `street`, `postcode`, `locality`, `area`) VALUES
-  (5000, 1, 'Test institution 5000', '5th Avenue 1000', '10028', 'New York', 'USA | north america');
+INSERT INTO `institution` (`id`, `country_id`, `name`) VALUES
+  (5000, 1, 'Test institution 5000');
 
 INSERT INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, `name`, `filename`, `width`, `height`, file_size, dating) VALUES
   (6000, 1003, 1003, NULL, 'private', 'Test card 6000', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '2000'),
