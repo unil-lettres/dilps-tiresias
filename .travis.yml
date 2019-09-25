@@ -1,11 +1,11 @@
 language: php
-dist: trusty
+dist: xenial
 
 php:
   - "7.3"
 
 addons:
-    mariadb: "10.1"
+    mariadb: "10.3"
 
 cache:
   directories:
