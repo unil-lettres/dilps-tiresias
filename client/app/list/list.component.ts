@@ -1,39 +1,28 @@
-import { forkJoin } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CardService } from '../card/services/card.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
 import { fromUrl, NaturalSearchFacets, NaturalSearchSelections, toGraphQLDoctrineFilter, toUrl } from '@ecodev/natural';
 import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
-import { DownloadComponent } from '../shared/components/download/download.component';
+import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import { forkJoin } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { CardService } from '../card/services/card.service';
+import { CollectionService } from '../collections/services/collection.service';
+import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
+import { QueryVariablesManager } from '../shared/classes/query-variables-manager';
+import { AlertService } from '../shared/components/alert/alert.service';
+import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
+import { DownloadComponent } from '../shared/components/download/download.component';
+import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
+import { CardFilter, CardSortingField, SortingOrder, UserRole, ViewerQuery } from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { MatDialog } from '@angular/material';
-import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
-import { CollectionService } from '../collections/services/collection.service';
-import { AlertService } from '../shared/components/alert/alert.service';
-import { UserService } from '../users/services/user.service';
-import { UtilityService } from '../shared/services/utility.service';
-import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
-import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
-
-import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
-import {
-    fromUrl,
-    NaturalSearchConfiguration,
-    NaturalSearchSelections,
-    toGraphQLDoctrineFilter,
-    toUrl,
-} from '@ecodev/natural-search';
-import { QueryVariablesManager } from '../shared/classes/query-variables-manager';
-import { CardFilter, CardSortingField, SortingOrder, UserRole, ViewerQuery } from '../shared/generated-types';
 import { PersistenceService } from '../shared/services/persistence.service';
-import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
+import { UtilityService } from '../shared/services/utility.service';
+import { UserService } from '../users/services/user.service';
 
 @Component({
     selector: 'app-list',

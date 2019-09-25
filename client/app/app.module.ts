@@ -32,7 +32,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
-import { NaturalIconModule, NaturalSearchModule } from '@ecodev/natural';
+import { NaturalDropdownComponentsModule, NaturalIconModule, NaturalSearchModule } from '@ecodev/natural';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
@@ -174,11 +174,12 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         MatNativeDateModule,
         MatChipsModule,
         ngfModule,
-        NaturalIconModule.forRoot({}),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBIBMlG6xXDmpPERQgKdo_Dwhtz5SX5dto',
             libraries: ['places'],
         }),
+        NaturalDropdownComponentsModule,
+        NaturalIconModule.forRoot({}),
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
