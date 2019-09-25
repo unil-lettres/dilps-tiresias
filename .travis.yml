@@ -1,11 +1,11 @@
 language: php
-dist: trusty
+dist: bionic
 
 php:
   - "7.3"
 
 addons:
-    mariadb: "10.1"
+    mariadb: "10.3"
 
 cache:
   directories:
@@ -21,7 +21,8 @@ before_install:
   - export PATH=$HOME/.yarn/bin:$PATH
 
 before_script:
-  - mysql -e 'CREATE DATABASE dilps;'
+  - mysql -e 'create database dilps;'
+  - mysql -e "SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';"
   - cp config/autoload/local.php.dist config/autoload/local.php
   - composer install --classmap-authoritative $NO_PROGRESS
   - ./bin/load-test-data.php
