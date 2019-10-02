@@ -5,7 +5,7 @@
  */
 const execFileSync = require('child_process').execFileSync;
 const fs = require('fs');
-var shell = require('shelljs');
+const shell = require('shelljs');
 const utilities = require('graphql/utilities');
 
 const query = utilities.getIntrospectionQuery();
