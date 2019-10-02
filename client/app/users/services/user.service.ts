@@ -4,24 +4,24 @@ import { Apollo } from 'apollo-angular';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    CreateUserMutation,
-    DeleteUsersMutation,
-    LoginMutation,
-    LogoutMutation,
-    UpdateUserMutation,
-    UserQuery,
+    CreateUser,
+    DeleteUsers,
+    Login,
+    Logout,
+    UpdateUser,
+    User,
     UserRole,
-    UsersQuery,
+    Users,
     UserType,
-    ViewerQuery,
+    Viewer,
 } from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import {
-    createUserMutation,
-    deleteUsersMutation,
+    createUser,
+    deleteUsers,
     loginMutation,
     logoutMutation,
-    updateUserMutation,
+    updateUser,
     userQuery,
     usersQuery,
     viewerQuery,
@@ -30,14 +30,14 @@ import {
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends AbstractModelService<UserQuery['user'],
-    UsersQuery['users'],
-    CreateUserMutation['createUser'],
-    UpdateUserMutation['updateUser'],
-    DeleteUsersMutation['deleteUsers']> {
+export class UserService extends AbstractModelService<User['user'],
+    Users['users'],
+    CreateUser['createUser'],
+    UpdateUser['updateUser'],
+    DeleteUsers['deleteUsers']> {
 
     constructor(apollo: Apollo, private router: Router) {
-        super(apollo, 'user', userQuery, usersQuery, createUserMutation, updateUserMutation, deleteUsersMutation);
+        super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers);
     }
 
     public getConsolidatedForClient() {
@@ -57,8 +57,8 @@ export class UserService extends AbstractModelService<UserQuery['user'],
         };
     }
 
-    public getCurrentUser(): Observable<ViewerQuery['viewer']> {
-        return this.apollo.query<ViewerQuery>({
+    public getCurrentUser(): Observable<Viewer['viewer']> {
+        return this.apollo.query<Viewer>({
             query: viewerQuery,
             fetchPolicy: 'network-only',
         }).pipe(map(result => result.data ? result.data.viewer : null));
@@ -110,18 +110,18 @@ export class UserService extends AbstractModelService<UserQuery['user'],
         ];
     }
 
-    public login(loginData): Observable<LoginMutation['login']> {
-        return this.apollo.mutate<LoginMutation>({
+    public login(loginData): Observable<Login['login']> {
+        return this.apollo.mutate<Login>({
             mutation: loginMutation,
             variables: loginData,
         }).pipe(map(result => result.data.login));
     }
 
-    public logout(): Observable<LogoutMutation['logout']> {
-        const subject = new Subject<LogoutMutation['logout']>();
+    public logout(): Observable<Logout['logout']> {
+        const subject = new Subject<Logout['logout']>();
 
         this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
-            this.apollo.mutate<LogoutMutation>({
+            this.apollo.mutate<Logout>({
                 mutation: logoutMutation,
             }).pipe(map(result => result.data.logout)).subscribe((v) => (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
                 subject.next(v);

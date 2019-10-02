@@ -1,12 +1,12 @@
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MOCK_APOLLO_PROVIDER } from '../testing/MOCK_APOLLO_PROVIDER';
-import { LinkMutationService } from './link-mutation.service';
+import { LinkService } from './link-mutation.service';
 
-describe('LinkMutationService', () => {
+describe('LinkService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
-                LinkMutationService,
+                LinkService,
                 MOCK_APOLLO_PROVIDER,
             ],
         });
@@ -33,7 +33,7 @@ describe('LinkMutationService', () => {
         },
     };
 
-    it('should be able to link', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should be able to link', fakeAsync(inject([LinkService], (service: LinkService) => {
         let actual = null;
         tick();
         service.link(collection, card).subscribe(v => actual = v);
@@ -41,7 +41,7 @@ describe('LinkMutationService', () => {
         expect(actual).toEqual(expectedLink);
     })));
 
-    it('should be able to link in reverse order', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should be able to link in reverse order', fakeAsync(inject([LinkService], (service: LinkService) => {
         let actual = null;
         tick();
         service.link(collection, card).subscribe(v => actual = v);
@@ -49,7 +49,7 @@ describe('LinkMutationService', () => {
         expect(actual).toEqual(expectedLink);
     })));
 
-    it('should be able to unlink', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should be able to unlink', fakeAsync(inject([LinkService], (service: LinkService) => {
         let actual = null;
         tick();
         service.unlink(card, collection).subscribe(v => actual = v);
@@ -58,7 +58,7 @@ describe('LinkMutationService', () => {
         expect(actual).toEqual(expectedUnlink);
     })));
 
-    it('should be able to unlink in reverse order', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should be able to unlink in reverse order', fakeAsync(inject([LinkService], (service: LinkService) => {
         let actual = null;
         tick();
         service.unlink(collection, card).subscribe(v => actual = v);
@@ -67,13 +67,13 @@ describe('LinkMutationService', () => {
         expect(actual).toEqual(expectedUnlink);
     })));
 
-    it('should throw for non-existing link mutation', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should throw for non-existing link mutation', fakeAsync(inject([LinkService], (service: LinkService) => {
         tick();
         expect(() => service.link(card, company).subscribe()).toThrowError('API does not allow to link Company and Card');
         tick();
     })));
 
-    it('should throw for non-existing unlink mutation', fakeAsync(inject([LinkMutationService], (service: LinkMutationService) => {
+    it('should throw for non-existing unlink mutation', fakeAsync(inject([LinkService], (service: LinkService) => {
         tick();
         expect(() => service.unlink(card, company).subscribe()).toThrowError('API does not allow to unlink Company and Card');
         tick();

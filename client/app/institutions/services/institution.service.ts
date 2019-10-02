@@ -2,39 +2,39 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
-    CreateInstitutionMutation,
-    DeleteInstitutionsMutation,
-    InstitutionQuery,
-    InstitutionsQuery,
-    UpdateInstitutionMutation,
+    CreateInstitution,
+    DeleteInstitutions,
+    Institution,
+    Institutions,
+    UpdateInstitution,
 } from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import {
-    createInstitutionMutation,
-    deleteInstitutionsMutation,
+    createInstitution,
+    deleteInstitutions,
     institutionQuery,
     institutionsQuery,
-    updateInstitutionMutation,
+    updateInstitution,
 } from './institutionQueries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class InstitutionService
-    extends AbstractModelService<InstitutionQuery['institution'],
-        InstitutionsQuery['institutions'],
-        CreateInstitutionMutation['createInstitution'],
-        UpdateInstitutionMutation['updateInstitution'],
-        DeleteInstitutionsMutation['deleteInstitutions']> {
+    extends AbstractModelService<Institution['institution'],
+        Institutions['institutions'],
+        CreateInstitution['createInstitution'],
+        UpdateInstitution['updateInstitution'],
+        DeleteInstitutions['deleteInstitutions']> {
 
     constructor(apollo: Apollo) {
         super(apollo,
             'institution',
             institutionQuery,
             institutionsQuery,
-            createInstitutionMutation,
-            updateInstitutionMutation,
-            deleteInstitutionsMutation);
+            createInstitution,
+            updateInstitution,
+            deleteInstitutions);
     }
 
     public getConsolidatedForClient() {

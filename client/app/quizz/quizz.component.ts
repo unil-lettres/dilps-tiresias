@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { isString, uniq } from 'lodash';
 import { debounceTime } from 'rxjs/operators';
 import { CardService } from '../card/services/card.service';
-import { CardQuery } from '../shared/generated-types';
+import { Card } from '../shared/generated-types';
 
 @Component({
     selector: 'app-quizz',
@@ -14,7 +14,7 @@ import { CardQuery } from '../shared/generated-types';
 export class QuizzComponent implements OnInit, OnDestroy {
 
     public cards: string[] = [];
-    public card: CardQuery['card'];
+    public card: Card['card'];
     public imageSrc;
     public currentIndex = 0;
     public attributes;
@@ -67,7 +67,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         });
     }
 
-    private selectCard(card: CardQuery['card']) {
+    private selectCard(card: Card['card']) {
         this.card = card;
         this.imageSrc = CardService.getImageLink(card, 2000);
         this.attributes = {
@@ -130,7 +130,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         return false;
     }
 
-    private testDate(formValue: string, datings: CardQuery['card']['datings']) {
+    private testDate(formValue: string, datings: Card['card']['datings']) {
 
         const years: string[] = uniq(formValue.match(/(-?\d+)/));
         if (years) {

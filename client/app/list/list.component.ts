@@ -13,11 +13,11 @@ import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.comp
 import {
     CardFilter,
     CardSortingField,
-    CardsQuery,
-    CardsQueryVariables,
+    Cards,
+    CardsVariables,
     SortingOrder,
     UserRole,
-    ViewerQuery,
+    Viewer,
 } from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
@@ -43,7 +43,7 @@ enum ViewMode {
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent extends NaturalAbstractList<CardsQuery['cards'], CardsQueryVariables> implements OnInit {
+export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVariables> implements OnInit {
 
     /**
      * Reference to grid component
@@ -89,7 +89,7 @@ export class ListComponent extends NaturalAbstractList<CardsQuery['cards'], Card
     /**
      * Current user
      */
-    public user: ViewerQuery['viewer'];
+    public user: Viewer['viewer'];
 
     /**
      * True if button for archive download has permissions to be displayed

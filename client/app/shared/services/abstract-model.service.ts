@@ -41,7 +41,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      */
     public getOne(id: string): Observable<Tone> {
         this.throwIfObservable(id);
-        this.throwIfNotQuery(this.oneQuery);
+        this.throwIfNot(this.oneQuery);
         return this.apollo.query({
             query: this.oneQuery,
             variables: this.getVariablesForOne(id),
@@ -49,7 +49,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
     }
 
     public getAll(variables: Literal = {}): Observable<Tall> {
-        this.throwIfNotQuery(this.allQuery);
+        this.throwIfNot(this.allQuery);
 
         const variableSubject = this.getVariablesForAll(variables);
 
@@ -63,7 +63,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      * Watch a query considering an observable question id
      */
     public watchOne(id: string | Observable<string>): Observable<Tone> {
-        this.throwIfNotQuery(this.oneQuery);
+        this.throwIfNot(this.oneQuery);
 
         const queryRef = this.apollo.watchQuery({
             query: this.oneQuery,
@@ -79,7 +79,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      * Watch query considering an observable variables set
      */
     public watchAll(variables: Literal | Observable<Literal> = {}): QueryRef<any> {
-        this.throwIfNotQuery(this.allQuery);
+        this.throwIfNot(this.allQuery);
 
         const queryRef = this.apollo.watchQuery({
             query: this.allQuery,
@@ -97,7 +97,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      */
     public create(object: Literal): Observable<Tcreate> {
         this.throwIfObservable(object);
-        this.throwIfNotQuery(this.createMutation);
+        this.throwIfNot(this.createMutation);
 
         const variables = merge({}, {input: this.getInput(object)}, this.getContextForCreation(object));
 
@@ -113,7 +113,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      */
     public update(object: { id }): Observable<Tupdate> {
         this.throwIfObservable(object);
-        this.throwIfNotQuery(this.updateMutation);
+        this.throwIfNot(this.updateMutation);
 
         return this.apollo.mutate({
             mutation: this.updateMutation,
@@ -130,7 +130,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
      */
     public delete(objects: { id } | { id }[]): Observable<Tdelete> {
         this.throwIfObservable(objects);
-        this.throwIfNotQuery(this.deleteMutation);
+        this.throwIfNot(this.deleteMutation);
 
         if (!Array.isArray(objects)) {
             objects = [objects];
@@ -292,7 +292,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
     /**
      * Throw exception to prevent executing null queries
      */
-    private throwIfNotQuery(query): void {
+    private throwIfNot(query): void {
         if (!query) {
             throw new Error('GraphQL query for this method was not configured in this service constructor');
         }

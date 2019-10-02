@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
-import { ChangesQuery } from '../../shared/generated-types';
+import {
+    AcceptChange,
+    Changes,
+    RejectChange,
+    SuggestCreation,
+    SuggestDeletion,
+    SuggestUpdate,
+} from '../../shared/generated-types';
 import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import { acceptChange, changeQuery, changesQuery, rejectChange, suggestCreation, suggestDeletion, suggestUpdate } from './changeQueries';
 
@@ -10,7 +17,7 @@ import { acceptChange, changeQuery, changesQuery, rejectChange, suggestCreation,
 })
 export class ChangeService
     extends AbstractModelService<null,
-        ChangesQuery['changes'],
+        Changes['changes'],
         null,
         null,
         null> {
@@ -23,7 +30,7 @@ export class ChangeService
     }
 
     public acceptChange(change: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<AcceptChange>({
             mutation: acceptChange,
             variables: {
                 id: change.id,
@@ -33,7 +40,7 @@ export class ChangeService
     }
 
     public rejectChange(change: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<RejectChange>({
             mutation: rejectChange,
             variables: {
                 id: change.id,
@@ -43,7 +50,7 @@ export class ChangeService
     }
 
     public suggestDeletion(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestDeletion>({
             mutation: suggestDeletion,
             variables: {
                 id: card.id,
@@ -53,7 +60,7 @@ export class ChangeService
     }
 
     public suggestCreation(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestCreation>({
             mutation: suggestCreation,
             variables: {
                 id: card.id,
@@ -63,7 +70,7 @@ export class ChangeService
     }
 
     public suggestUpdate(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestUpdate>({
             mutation: suggestUpdate,
             variables: {
                 id: card.id,

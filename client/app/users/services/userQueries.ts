@@ -54,7 +54,7 @@ export const userQuery = gql`
         }
     }${userDetailsFragment}`;
 
-export const createUserMutation = gql`
+export const createUser = gql`
     mutation CreateUser ($input: UserInput!) {
         createUser (input: $input) {
             id
@@ -65,7 +65,7 @@ export const createUserMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const updateUserMutation = gql`
+export const updateUser = gql`
     mutation UpdateUser($id: UserID!, $input: UserPartialInput!) {
         updateUser(id: $id, input: $input) {
             updateDate
@@ -80,7 +80,7 @@ export const updateUserMutation = gql`
     ${userMetaFragment}
 ${institutionDetails}`;
 
-export const deleteUsersMutation = gql`
+export const deleteUsers = gql`
     mutation DeleteUsers ($ids: [UserID!]!){
         deleteUsers(ids: $ids)
     }`;

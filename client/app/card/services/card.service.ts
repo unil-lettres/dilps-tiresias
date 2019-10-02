@@ -4,23 +4,23 @@ import { Apollo } from 'apollo-angular';
 import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
 import {
-    CardQuery,
-    CardQueryVariables,
-    CardsQuery,
-    CardsQueryVariables,
+    Card,
+    CardVariables,
+    Cards,
+    CardsVariables,
     CardVisibility,
-    CreateCardMutation,
-    CreateCardMutationVariables,
-    DeleteCardsMutation,
-    UpdateCardMutation,
-    UpdateCardMutationVariables,
+    CreateCard,
+    CreateCardVariables,
+    DeleteCards,
+    UpdateCard,
+    UpdateCardVariables, ValidateData, ValidateImage,
 } from '../../shared/generated-types';
 import {
     cardQuery,
     cardsQuery,
-    createCardMutation,
-    deleteCardsMutation,
-    updateCardMutation,
+    createCard,
+    deleteCards,
+    updateCard,
     validateData,
     validateImage,
 } from './cardQueries';
@@ -28,18 +28,18 @@ import {
 @Injectable({
     providedIn: 'root',
 })
-export class CardService extends NaturalAbstractModelService<CardQuery['card'],
-    CardQueryVariables,
-    CardsQuery['cards'],
-    CardsQueryVariables,
-    CreateCardMutation['createCard'],
-    CreateCardMutationVariables,
-    UpdateCardMutation['updateCard'],
-    UpdateCardMutationVariables,
-    DeleteCardsMutation['deleteCards']> {
+export class CardService extends NaturalAbstractModelService<Card['card'],
+    CardVariables,
+    Cards['cards'],
+    CardsVariables,
+    CreateCard['createCard'],
+    CreateCardVariables,
+    UpdateCard['updateCard'],
+    UpdateCardVariables,
+    DeleteCards['deleteCards']> {
 
     constructor(apollo: Apollo) {
-        super(apollo, 'card', cardQuery, cardsQuery, createCardMutation, updateCardMutation, deleteCardsMutation);
+        super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards);
     }
 
     public static getImageFormat(card, height): any {
@@ -116,7 +116,7 @@ export class CardService extends NaturalAbstractModelService<CardQuery['card'],
     }
 
     public validateData(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<ValidateData>({
             mutation: validateData,
             variables: {
                 id: card.id,
@@ -131,7 +131,7 @@ export class CardService extends NaturalAbstractModelService<CardQuery['card'],
     }
 
     public validateImage(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<ValidateImage>({
             mutation: validateImage,
             variables: {
                 id: card.id,

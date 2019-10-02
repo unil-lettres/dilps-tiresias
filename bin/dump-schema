@@ -3,23 +3,33 @@
 /**
  * This script will dump the GraphQL schema to a module
  */
-const execFileSync = require('child_process').execFileSync;
+const {execFileSync} = require('child_process');
 const fs = require('fs');
 const shell = require('shelljs');
 const utilities = require('graphql/utilities');
+const {buildClientSchema, printSchema} = require('graphql');
 
-const query = utilities.getIntrospectionQuery();
-const introspectedSchema = execFileSync('./bin/graphql.php', [query]).toString();
+function write(filename, content) {
 const folder = 'data/tmp/schema/';
-const filename = 'index.ts';
 
 if (!fs.existsSync(folder)) {
     shell.mkdir('-p', folder);
 }
 
-const disableTsLintMessage = '/* tslint:disable */\n';
-fs.writeFileSync(folder + filename, disableTsLintMessage + 'export const schema = ' + introspectedSchema + ';');
-fs.writeFileSync(folder + 'schema.json', introspectedSchema);
+    const fullPath = folder + filename;
+    fs.writeFileSync(fullPath, content);
+    process.stdout.write(fullPath + ' was written\n');
+}
 
-process.stdout.write(folder + filename + ' was written\n');
+const query = utilities.getIntrospectionQuery();
+const schemaJsonString = execFileSync('./bin/graphql.php', [query]).toString();
+const schemaLiteral = JSON.parse(schemaJsonString).data;
+const schemaObject = buildClientSchema(schemaLiteral);
+const schemaSdlString = printSchema(schemaObject);
+
+const disableTsLintMessage = '/* tslint:disable */\n';
+write('index.ts', disableTsLintMessage + 'export const schema = ' + schemaJsonString + ';');
+write('schema.json', schemaJsonString);
+write('schema.graphql', schemaSdlString);
+
 

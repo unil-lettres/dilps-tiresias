@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
 import { isArray } from 'lodash';
-import { CollectionsQueryVariables, UserRole } from '../../shared/generated-types';
+import { CollectionsVariables, UserRole } from '../../shared/generated-types';
 import { Literal } from '../../shared/types';
 import { UserService } from '../../users/services/user.service';
 import { CollectionComponent } from '../collection/collection.component';
@@ -35,10 +35,10 @@ export class CollectionsComponent extends NaturalAbstractController implements O
     public user;
     public hasMore = false;
     public showEditButtons = true;
-    private queryVariables = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
+    private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
     private pageSize = 50;
 
-    private defaultVariables: CollectionsQueryVariables = {
+    private defaultVariables: CollectionsVariables = {
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 

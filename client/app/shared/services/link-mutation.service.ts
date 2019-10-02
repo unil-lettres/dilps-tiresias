@@ -3,13 +3,13 @@ import { Apollo } from 'apollo-angular';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
 import { Observable } from 'rxjs';
-import { MutationsQuery } from '../generated-types';
+import { Mutations } from '../generated-types';
 import { UtilityService } from './utility.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class LinkMutationService {
+export class LinkService {
 
     /**
      * Query to get list of mutations
@@ -25,7 +25,7 @@ export class LinkMutationService {
     /**
      * Receives the list of available mutation names
      */
-    private mutationNames: MutationsQuery['__type']['fields'];
+    private mutationNames: Mutations['__type']['fields'];
 
     /**
      * Mutation name pattern
@@ -42,7 +42,7 @@ export class LinkMutationService {
     }`;
 
     constructor(private apollo: Apollo) {
-        this.apollo.query<MutationsQuery>({
+        this.apollo.query<Mutations>({
             query: this.queriesQuery,
         }).subscribe(({data}) => {
             this.mutationNames = data.__type.fields;

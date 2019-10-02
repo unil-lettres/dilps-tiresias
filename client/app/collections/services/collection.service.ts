@@ -3,50 +3,50 @@ import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import {
-    CollectionQuery,
-    CollectionQueryVariables,
-    CollectionsQuery,
-    CollectionsQueryVariables,
+    Collection,
+    CollectionVariables,
+    Collections,
+    CollectionsVariables,
     CollectionVisibility,
-    CreateCollectionMutation,
-    CreateCollectionMutationVariables,
-    DeleteCollectionsMutation,
-    UpdateCollectionMutation,
-    UpdateCollectionMutationVariables,
+    CreateCollection,
+    CreateCollectionVariables,
+    DeleteCollections,
+    UpdateCollection,
+    UpdateCollectionVariables,
 } from '../../shared/generated-types';
-import { LinkMutationService } from '../../shared/services/link-mutation.service';
+import { LinkService } from '../../shared/services/link-mutation.service';
 
 import {
     collectionQuery,
     collectionsQuery,
-    createCollectionMutation,
-    deleteCollectionsMutation,
-    linkCollectionToCollectionMutation,
-    updateCollectionMutation,
+    createCollection,
+    deleteCollections,
+    linkCollectionToCollection,
+    updateCollection,
 } from './collectionQueries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CollectionService
-    extends NaturalAbstractModelService<CollectionQuery['collection'],
-        CollectionQueryVariables,
-        CollectionsQuery['collections'],
-        CollectionsQueryVariables,
-        CreateCollectionMutation['createCollection'],
-        CreateCollectionMutationVariables,
-        UpdateCollectionMutation['updateCollection'],
-        UpdateCollectionMutationVariables,
-        DeleteCollectionsMutation['deleteCollections']> {
+    extends NaturalAbstractModelService<Collection['collection'],
+        CollectionVariables,
+        Collections['collections'],
+        CollectionsVariables,
+        CreateCollection['createCollection'],
+        CreateCollectionVariables,
+        UpdateCollection['updateCollection'],
+        UpdateCollectionVariables,
+        DeleteCollections['deleteCollections']> {
 
-    constructor(apollo: Apollo, private linkSvc: LinkMutationService) {
+    constructor(apollo: Apollo, private linkSvc: LinkService) {
         super(apollo,
             'collection',
             collectionQuery,
             collectionsQuery,
-            createCollectionMutation,
-            updateCollectionMutation,
-            deleteCollectionsMutation);
+            createCollection,
+            updateCollection,
+            deleteCollections);
     }
 
     public getConsolidatedForClient() {
@@ -84,7 +84,7 @@ export class CollectionService
 
     public linkCollectionToCollection(sourceCollection, targetCollection) {
         return this.apollo.mutate({
-            mutation: linkCollectionToCollectionMutation,
+            mutation: linkCollectionToCollection,
             variables: {
                 sourceCollection: sourceCollection.id,
                 targetCollection: targetCollection.id,

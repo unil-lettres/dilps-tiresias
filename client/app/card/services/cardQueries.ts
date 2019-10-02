@@ -116,7 +116,7 @@ export const cardQuery = gql`
         }
     }${cardDetailsFragment}`;
 
-export const createCardMutation = gql`
+export const createCard = gql`
     mutation CreateCard ($input: CardInput!) {
         createCard (input: $input) {
             id
@@ -127,7 +127,7 @@ export const createCardMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const updateCardMutation = gql`
+export const updateCard = gql`
     mutation UpdateCard($id: CardID!, $input: CardPartialInput!) {
         updateCard(id: $id, input: $input) {
             institution {
@@ -146,7 +146,7 @@ export const updateCardMutation = gql`
     ${userMetaFragment}
 ${institutionDetails}`;
 
-export const deleteCardsMutation = gql`
+export const deleteCards = gql`
     mutation DeleteCards ($ids: [CardID!]!){
         deleteCards(ids: $ids)
     }`;

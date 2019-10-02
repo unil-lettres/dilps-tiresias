@@ -34,7 +34,7 @@ export const artistQuery = gql`
         }
     }${userMetaFragment}`;
 
-export const createArtistMutation = gql`
+export const createArtist = gql`
     mutation CreateArtist ($input: ArtistInput!) {
         createArtist (input: $input) {
             id
@@ -45,7 +45,7 @@ export const createArtistMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const updateArtistMutation = gql`
+export const updateArtist = gql`
     mutation UpdateArtist($id: ArtistID!, $input: ArtistPartialInput!) {
         updateArtist(id: $id, input: $input) {
             updateDate
@@ -55,7 +55,7 @@ export const updateArtistMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const deleteArtistsMutation = gql`
+export const deleteArtists = gql`
     mutation DeleteArtists ($ids: [ArtistID!]!){
         deleteArtists(ids: $ids)
     }`;

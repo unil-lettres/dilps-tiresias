@@ -59,7 +59,7 @@ export const collectionQuery = gql`
         }
     }${userMetaFragment}`;
 
-export const createCollectionMutation = gql`
+export const createCollection = gql`
     mutation CreateCollection ($input: CollectionInput!) {
         createCollection (input: $input) {
             id
@@ -70,7 +70,7 @@ export const createCollectionMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const updateCollectionMutation = gql`
+export const updateCollection = gql`
     mutation UpdateCollection($id: CollectionID!, $input: CollectionPartialInput!) {
         updateCollection(id: $id, input: $input) {
             updateDate
@@ -85,12 +85,12 @@ export const updateCollectionMutation = gql`
     ${userMetaFragment}
 ${institutionDetails}`;
 
-export const deleteCollectionsMutation = gql`
+export const deleteCollections = gql`
     mutation DeleteCollections ($ids: [CollectionID!]!){
         deleteCollections(ids: $ids)
     }`;
 
-export const linkCollectionToCollectionMutation = gql`
+export const linkCollectionToCollection = gql`
     mutation LinkCollectionToCollection ($sourceCollection: CollectionID!, $targetCollection: CollectionID!) {
         linkCollectionToCollection(sourceCollection: $sourceCollection, targetCollection: $targetCollection) {
             id

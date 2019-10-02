@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { } from 'googlemaps';
 import { merge } from 'lodash';
 import { CountryService } from '../../../countries/services/country.service';
-import { CountriesQuery } from '../../generated-types';
+import { Countries } from '../../generated-types';
 import { AddressService } from './address.service';
 
 @Component({
@@ -193,7 +193,7 @@ export class AddressComponent implements OnInit {
             ],
         },
     ];
-    public countries: CountriesQuery['countries']['items'];
+    public countries: Countries['countries']['items'];
     private autocomplete;
 
     constructor(private mapsAPILoader: MapsAPILoader,

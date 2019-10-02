@@ -1,6 +1,6 @@
 import { Component, ContentChild, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { IncrementSubject } from '../../services/increment-subject';
-import { LinkMutationService } from '../../services/link-mutation.service';
+import { LinkService } from '../../services/link-mutation.service';
 import { PaginatedDataSource } from '../../services/paginated.data.source';
 
 /**
@@ -71,7 +71,7 @@ export class RelationsComponent implements OnInit {
      */
     private listingOptions = new IncrementSubject();
 
-    constructor(private linkMutationService: LinkMutationService) {
+    constructor(private linkMutationService: LinkService) {
     }
 
     @Input() set filters(filters) {

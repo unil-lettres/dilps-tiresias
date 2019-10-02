@@ -52,7 +52,7 @@ export const institutionQuery = gql`
     ${userMetaFragment}
 ${institutionDetails}`;
 
-export const createInstitutionMutation = gql`
+export const createInstitution = gql`
     mutation CreateInstitution ($input: InstitutionInput!) {
         createInstitution (input: $input) {
             id
@@ -63,7 +63,7 @@ export const createInstitutionMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const updateInstitutionMutation = gql`
+export const updateInstitution = gql`
     mutation UpdateInstitution($id: InstitutionID!, $input: InstitutionPartialInput!) {
         updateInstitution(id: $id, input: $input) {
             updateDate
@@ -73,7 +73,7 @@ export const updateInstitutionMutation = gql`
         }
     }${userMetaFragment}`;
 
-export const deleteInstitutionsMutation = gql`
+export const deleteInstitutions = gql`
     mutation DeleteInstitutions ($ids: [InstitutionID!]!){
         deleteInstitutions(ids: $ids)
     }`;
