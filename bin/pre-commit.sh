@@ -2,12 +2,11 @@
 
 pass=true
 
-files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts|html)$')
-if [ "$files" != "" ]; then
+files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts)$' | xargs printf -- '--files=%s\n')
+if [ "$files" != "--files=" ]; then
 
     # Run TypeScript syntax check before commit
-    # TODO: For now we run on the entire project, it would be best to only run on changed files
-    ./node_modules/.bin/ng lint
+    echo "$files" | xargs ./node_modules/.bin/ng lint chez-emmy --
     if [ $? -ne 0 ]; then
         pass=false
     fi
