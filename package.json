@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "dev": "yarn codegen && ng serve --port 4300",
+    "dev": "yarn codegen && ng serve",
     "prod": "yarn codegen && ng build --prod --configuration=production",
     "staging": "yarn codegen && ng build --prod --configuration=staging",
     "test": "yarn codegen && ng test",
