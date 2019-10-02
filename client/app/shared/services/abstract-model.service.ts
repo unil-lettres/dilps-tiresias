@@ -28,12 +28,11 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
                 protected readonly deleteMutation: DocumentNode) {
     }
 
-    /**
-     * Return empty object with some default values
-     *
-     * This is typically useful when showing a form for creation
-     */
-    public getEmptyObject(): Literal {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {};
     }
 
@@ -209,7 +208,7 @@ export abstract class AbstractModelService<Tone, Tall, Tcreate, Tupdate, Tdelete
 
         // Pick only attributes that we can find in the empty object
         // In other words, prevent to select data that has unwanted attributes
-        const emptyObject = this.getEmptyObject();
+        const emptyObject = this.getDefaultForServer();
         let input = pick(object, Object.keys(emptyObject));
 
         // Complete a potentially uncompleted object with default values

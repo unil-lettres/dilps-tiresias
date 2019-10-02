@@ -4,7 +4,6 @@ import { Apollo } from 'apollo-angular';
 import {
     CreateInstitutionMutation,
     DeleteInstitutionsMutation,
-    InstitutionInput,
     InstitutionQuery,
     InstitutionsQuery,
     UpdateInstitutionMutation,
@@ -19,7 +18,7 @@ import {
 } from './institutionQueries';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class InstitutionService
     extends AbstractModelService<InstitutionQuery['institution'],
@@ -38,7 +37,11 @@ export class InstitutionService
             deleteInstitutionsMutation);
     }
 
-    public getEmptyObject(): InstitutionInput {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {
             name: '',
             street: '',

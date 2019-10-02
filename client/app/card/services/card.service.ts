@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
 import {
-    CardInput,
     CardQuery,
+    CardQueryVariables,
     CardsQuery,
+    CardsQueryVariables,
     CardVisibility,
     CreateCardMutation,
+    CreateCardMutationVariables,
     DeleteCardsMutation,
     UpdateCardMutation,
+    UpdateCardMutationVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import { Literal } from '../../shared/types';
 import {
     cardQuery,
     cardsQuery,
@@ -24,12 +26,16 @@ import {
 } from './cardQueries';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-export class CardService extends AbstractModelService<CardQuery['card'],
+export class CardService extends NaturalAbstractModelService<CardQuery['card'],
+    CardQueryVariables,
     CardsQuery['cards'],
+    CardsQueryVariables,
     CreateCardMutation['createCard'],
+    CreateCardMutationVariables,
     UpdateCardMutation['updateCard'],
+    UpdateCardMutationVariables,
     DeleteCardsMutation['deleteCards']> {
 
     constructor(apollo: Apollo) {
@@ -71,7 +77,11 @@ export class CardService extends AbstractModelService<CardQuery['card'],
         return merge({}, card, fields);
     }
 
-    public getEmptyObject(): CardInput {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {
             file: null,
             dating: '',
@@ -111,7 +121,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
         }).pipe(map(data => {
                 const c = data.data.validateData;
                 merge(card, c);
@@ -127,7 +136,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
         }).pipe(map(data => {
                 const c = data.data.validateImage;
                 merge(card, c);
@@ -137,7 +145,7 @@ export class CardService extends AbstractModelService<CardQuery['card'],
         ));
     }
 
-    protected getInput(object: Literal): Literal {
+    public getInput(object) {
 
         const input = super.getInput(object);
 

@@ -9,7 +9,6 @@ import {
     LoginMutation,
     LogoutMutation,
     UpdateUserMutation,
-    UserInput,
     UserQuery,
     UserRole,
     UsersQuery,
@@ -29,7 +28,7 @@ import {
 } from './userQueries';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserService extends AbstractModelService<UserQuery['user'],
     UsersQuery['users'],
@@ -41,7 +40,11 @@ export class UserService extends AbstractModelService<UserQuery['user'],
         super(apollo, 'user', userQuery, usersQuery, createUserMutation, updateUserMutation, deleteUsersMutation);
     }
 
-    public getEmptyObject(): UserInput {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {
             login: '',
             email: '',

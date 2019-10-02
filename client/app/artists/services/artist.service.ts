@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
-    ArtistInput,
     ArtistQuery,
     ArtistsQuery,
     CreateArtistMutation,
@@ -13,7 +12,7 @@ import { AbstractModelService } from '../../shared/services/abstract-model.servi
 import { artistQuery, artistsQuery, createArtistMutation, deleteArtistsMutation, updateArtistMutation } from './artistQueries';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ArtistService
     extends AbstractModelService<ArtistQuery['artist'],
@@ -32,7 +31,11 @@ export class ArtistService
             deleteArtistsMutation);
     }
 
-    public getEmptyObject(): ArtistInput {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {
             name: '',
         };

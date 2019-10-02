@@ -19,7 +19,7 @@ export class AbstractDetail implements OnInit {
                 public userSvc: UserService,
                 data: any) {
 
-        this.data = merge({item: this.service.getEmptyObject()}, data);
+        this.data = merge({item: this.service.getConsolidatedForClient()}, data);
     }
 
     ngOnInit() {

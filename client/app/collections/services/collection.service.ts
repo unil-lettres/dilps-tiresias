@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import {
-    CollectionInput,
     CollectionQuery,
+    CollectionQueryVariables,
     CollectionsQuery,
+    CollectionsQueryVariables,
     CollectionVisibility,
     CreateCollectionMutation,
+    CreateCollectionMutationVariables,
     DeleteCollectionsMutation,
     UpdateCollectionMutation,
+    UpdateCollectionMutationVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import { LinkMutationService } from '../../shared/services/link-mutation.service';
 
 import {
@@ -26,10 +29,14 @@ import {
     providedIn: 'root',
 })
 export class CollectionService
-    extends AbstractModelService<CollectionQuery['collection'],
+    extends NaturalAbstractModelService<CollectionQuery['collection'],
+        CollectionQueryVariables,
         CollectionsQuery['collections'],
+        CollectionsQueryVariables,
         CreateCollectionMutation['createCollection'],
+        CreateCollectionMutationVariables,
         UpdateCollectionMutation['updateCollection'],
+        UpdateCollectionMutationVariables,
         DeleteCollectionsMutation['deleteCollections']> {
 
     constructor(apollo: Apollo, private linkSvc: LinkMutationService) {
@@ -42,7 +49,11 @@ export class CollectionService
             deleteCollectionsMutation);
     }
 
-    public getEmptyObject(): CollectionInput {
+    public getConsolidatedForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer() {
         return {
             name: '',
             description: '',
