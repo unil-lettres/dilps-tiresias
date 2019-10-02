@@ -69,7 +69,8 @@
           "options": {
             "browserTarget": "dilps:build",
             "host": "dilps.lan",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "port": 4400
           },
           "configurations": {
             "production": {
