@@ -67,6 +67,7 @@ import { BootLoaderComponent } from './shared/components/boot-loader/boot-loader
 import { CollectionSelectorComponent } from './shared/components/collection-selector/collection-selector.component';
 import { DialogFooterComponent } from './shared/components/dialog-footer/dialog-footer.component';
 import { DownloadComponent } from './shared/components/download/download.component';
+import { EmptyComponent } from './shared/components/empty/empty.component';
 import { MassEditComponent } from './shared/components/mass-edit/mass-edit.component';
 import { RelationsComponent } from './shared/components/relations/relations.component';
 import { SelectComponent } from './shared/components/select/select.component';
@@ -81,8 +82,11 @@ import { TypePipe } from './shared/pipes/type.pipe';
 import { NetworkActivityService } from './shared/services/network-activity.service';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
+import { ViewGridComponent } from './view-grid/view-grid.component';
+import { ViewListComponent } from './view-list/view-list.component';
+import { ViewMapComponent } from './view-map/view-map.component';
 
-    /** Custom options to configure the form field's look and feel */
+/** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
     appearance: 'fill',
 };
@@ -123,6 +127,10 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         NumberSelectorComponent,
         MassEditComponent,
         RelationsComponent,
+        EmptyComponent,
+        ViewGridComponent,
+        ViewMapComponent,
+        ViewListComponent
     ],
     entryComponents: [
         ConfirmComponent,

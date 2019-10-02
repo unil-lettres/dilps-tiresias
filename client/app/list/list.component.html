@@ -1,19 +1,34 @@
 <mat-menu #sortingMenu="matMenu" [overlapTrigger]="false">
-    <div (click)="sort('name', SortingOrder.ASC)" mat-menu-item>Titre</div>
-    <div (click)="sort('creationDate', SortingOrder.DESC)" mat-menu-item>Date d'insertion en tête</div>
-    <div (click)="sort('dating', SortingOrder.ASC)" mat-menu-item>Datation</div>
-    <div (click)="sort('locality', SortingOrder.ASC)" mat-menu-item>Lieu</div>
-    <div (click)="sort('artists', SortingOrder.ASC)" mat-menu-item>Artistes</div>
+    <div (click)="sorting([{active: 'name', direction: SortingOrder.ASC}])" mat-menu-item>Titre</div>
+    <div (click)="sorting([{active: 'creationDate', direction: SortingOrder.DESC}])" mat-menu-item>Date d'insertion en tête</div>
+    <div (click)="sorting([{active: 'dating', direction: SortingOrder.ASC}])" mat-menu-item>Datation</div>
+    <div (click)="sorting([{active: 'locality', direction: SortingOrder.ASC}])" mat-menu-item>Lieu</div>
+    <div (click)="sorting([{active: 'artists', direction: SortingOrder.ASC}])" mat-menu-item>Artistes</div>
 </mat-menu>
 
 <div class="containerWithToolbar" fxFlex fxLayout="column">
 
-    <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <img *ngIf="showLogo" src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center" id="natural-search-container"
-        >
-            <natural-search (selectionChange)="search($event)" [facets]="config" [selections]="selections" class="searchField" fxFlex
+        <button (click)="setViewMode(ViewMode.grid)" mat-icon-button matTooltip="Grille" *ngIf="viewMode !== ViewMode.grid">
+            <mat-icon>view_compact</mat-icon>
+        </button>
+
+        <button (click)="setViewMode(ViewMode.list)" mat-icon-button matTooltip="Liste" *ngIf="viewMode !== ViewMode.list">
+            <mat-icon>view_list</mat-icon>
+        </button>
+
+        <button (click)="setViewMode(ViewMode.map)" mat-icon-button matTooltip="Carte" *ngIf="viewMode !== ViewMode.map">
+            <mat-icon>map</mat-icon>
+        </button>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" id="natural-search-container">
+            <natural-search (selectionChange)="search($event)"
+                            [facets]="naturalSearchFacets"
+                            [selections]="naturalSearchSelections"
+                            class="searchField"
+                            fxFlex
             ></natural-search>
             <button [matMenuTriggerFor]="sortingMenu" mat-button mat-icon-button matTooltip="Trier">
                 <mat-icon>sort</mat-icon>
@@ -44,7 +59,11 @@
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button (click)="delete(selected)" *ngIf="user?.role === 'administrator'" color="warn" mat-icon-button matTooltip="Supprimer la fiche définitivement"
+            <button (click)="delete(selected)"
+                    *ngIf="user?.role === 'administrator'"
+                    color="warn"
+                    mat-icon-button
+                    matTooltip="Supprimer la fiche définitivement"
             >
                 <mat-icon>delete_forever</mat-icon>
             </button>
@@ -52,12 +71,18 @@
         </ng-container>
 
         <ng-container *ngIf="!selected?.length && user">
-            <button (click)="linkCollectionToCollection(collection)" *ngIf="collection?.id" mat-icon-button matTooltip="Ajouter la collection à une autre collection"
+            <button (click)="linkCollectionToCollection(collection)"
+                    *ngIf="collection?.id"
+                    mat-icon-button
+                    matTooltip="Ajouter la collection à une autre collection"
             >
                 <mat-icon>library_add</mat-icon>
             </button>
 
-            <button (click)="downloadCollection(collection)" *ngIf="showDownloadCollection" mat-icon-button matTooltip="Télécharger la collection"
+            <button (click)="downloadCollection(collection)"
+                    *ngIf="showDownloadCollection"
+                    mat-icon-button
+                    matTooltip="Télécharger la collection"
             >
                 <mat-icon>file_download</mat-icon>
             </button>
@@ -71,17 +96,26 @@
             <mat-icon>select_all</mat-icon>
         </button>
 
-        <button (click)="selectAll()" *ngIf="!selected?.length" mat-icon-button matTooltip="Sélectionner les images visibles"
-        >
+        <button (click)="selectAll()" *ngIf="!selected?.length" mat-icon-button matTooltip="Sélectionner les images visibles">
             <mat-icon>select_all</mat-icon>
         </button>
 
     </mat-toolbar>
 
-    <perfect-scrollbar #scrollable>
-        <div class="scrolled" fxFlex fxLayout="row">
-            <natural-gallery #gallery (activate)="activate($event)" (pagination)="loadMore($event)" (select)="select($event)" [options]="options" [scrollable]="scrollable.directiveRef.elementRef.nativeElement" class="padding" fxFlex
-            ></natural-gallery>
-        </div>
-    </perfect-scrollbar>
+    <app-view-grid [style.height]="'100%'"
+                   #view
+                   *ngIf="viewMode === ViewMode.grid"
+                   (selection)="select($event)"
+                   [dataSource]="dataSource"
+                   (pagination)="pagination($event)"
+    ></app-view-grid>
+
+    <app-view-list *ngIf="viewMode === ViewMode.list"
+                   #view
+                   (selection)="select($event)"
+                   [dataSource]="dataSource"
+                   (pagination)="pagination($event)"
+    ></app-view-list>
+
+    <app-view-map #view *ngIf="viewMode === ViewMode.map"></app-view-map>
 </div>

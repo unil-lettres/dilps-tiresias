@@ -104,6 +104,7 @@ export const cardsQuery = gql`
             }
             pageSize
             pageIndex
+            offset
             length
         }
     }${cardDetailsFragment}`;

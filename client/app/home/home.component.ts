@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                 private snackBar: MatSnackBar,
                 private alertSvc: AlertService,
                 private dialog: MatDialog,
-                public uploadSvc: UploadService,
                 private cardSvc: CardService) {
 
         this.network.errors.next([]);
@@ -65,13 +64,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     public uploadPhoto(files) {
         const observables = [];
         for (const file of files) {
-            const card = this.cardSvc.getEmptyObject();
+            const card = this.cardSvc.getConsolidatedForClient();
             card.file = file;
             observables.push(this.cardSvc.create(card));
         }
         files.length = 0;
         forkJoin(observables).subscribe(() => {
-            this.router.navigateByUrl('my-collection;upload=' + Date.now());
+            this.router.navigateByUrl('/empty', {skipLocationChange: true})
+                .then(() => this.router.navigateByUrl('my-collection'));
         });
 
         files.length = 0;

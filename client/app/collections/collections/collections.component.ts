@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
 import { isArray } from 'lodash';
 import { CollectionsQueryVariables, UserRole } from '../../shared/generated-types';
-import { IncrementSubject } from '../../shared/services/increment-subject';
 import { Literal } from '../../shared/types';
 import { UserService } from '../../users/services/user.service';
 import { CollectionComponent } from '../collection/collection.component';
@@ -14,7 +14,7 @@ import { CollectionService } from '../services/collection.service';
     templateUrl: './collections.component.html',
     styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit {
+export class CollectionsComponent extends NaturalAbstractController implements OnInit {
 
     public collections = [];
 
@@ -32,28 +32,22 @@ export class CollectionsComponent implements OnInit {
      * Can create permissions
      */
     public canCreate = false;
-    public searchedTerm;
     public user;
     public hasMore = false;
     public showEditButtons = true;
-    private queryVariables = new IncrementSubject<CollectionsQueryVariables>();
+    private queryVariables = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
     private pageSize = 50;
-    private defaultFilters = {
-        filters: {
-            search: '',
-            parents: [],
-        },
-        pagination: {
-            pageIndex: 0,
-            pageSize: this.pageSize,
-        },
+
+    private defaultVariables: CollectionsQueryVariables = {
+        filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
-                private collectionsSvc: CollectionService,
+                private collectionsService: CollectionService,
                 private dialog: MatDialog,
                 private userSvc: UserService) {
+        super();
     }
 
     ngOnInit() {
@@ -65,23 +59,23 @@ export class CollectionsComponent implements OnInit {
 
         });
 
-        this.queryVariables.patch(this.defaultFilters);
+        this.queryVariables.set('variables', this.defaultVariables);
+        this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
+
         this.route.data.subscribe((data: Literal) => {
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, this.user);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
 
-            const filters = data.filters ? data.filters : {};
+            this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
             if (data.creator) {
-                filters.creators = [data.creator.id];
+                this.queryVariables.set('creator', {filter: {groups: [{conditions: [{creator: {in: {values: [data.creator.id]}}}]}]}});
             }
 
-            this.queryVariables.patch({filters: filters});
         });
 
-        const queryRef = this.collectionsSvc.watchAll(this.queryVariables);
-        queryRef.valueChanges.subscribe((collections: any) => {
+        this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe((collections: any) => {
             if (collections.pageIndex === 0) {
                 this.collections = collections.items;
             } else {
@@ -102,12 +96,12 @@ export class CollectionsComponent implements OnInit {
     }
 
     public search(term) {
-        this.queryVariables.patch({filters: {search: term}});
+        this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});
     }
 
     public more() {
-        const nextPage = this.queryVariables.getValue().pagination.pageIndex + 1;
-        this.queryVariables.patch({pagination: {pageIndex: nextPage}});
+        const nextPage = this.queryVariables.variables.value.pagination.pageIndex + 1;
+        this.queryVariables.set('pagination', {pagination: {pageIndex: nextPage}});
     }
 
     public edit(event, collection) {
@@ -128,9 +122,7 @@ export class CollectionsComponent implements OnInit {
     }
 
     public add() {
-        this.dialog.open(CollectionComponent, {
-            width: '800px',
-        });
+        this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
     private showCreateButton(allowedRoles: boolean | UserRole[], user) {

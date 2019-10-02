@@ -1,77 +1,141 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { Sort } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
-import { fromUrl, NaturalSearchFacets, NaturalSearchSelections, toGraphQLDoctrineFilter, toUrl } from '@ecodev/natural';
-import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
+import { NaturalAbstractList, NaturalPageEvent, NaturalQueryVariablesManager, Sorting } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { forkJoin } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
 import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
-import { QueryVariablesManager } from '../shared/classes/query-variables-manager';
-import { AlertService } from '../shared/components/alert/alert.service';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
-import { CardFilter, CardSortingField, SortingOrder, UserRole, ViewerQuery } from '../shared/generated-types';
+import {
+    CardFilter,
+    CardSortingField,
+    CardsQuery,
+    CardsQueryVariables,
+    SortingOrder,
+    UserRole,
+    ViewerQuery,
+} from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
-import { PersistenceService } from '../shared/services/persistence.service';
 import { UtilityService } from '../shared/services/utility.service';
 import { UserService } from '../users/services/user.service';
+import { ViewGridComponent } from '../view-grid/view-grid.component';
+import { ViewListComponent } from '../view-list/view-list.component';
+import { ViewMapComponent } from '../view-map/view-map.component';
+
+export interface ViewInterface {
+    selectAll: () => any[];
+    unselectAll: () => void;
+}
+
+enum ViewMode {
+    grid = 'grid',
+    list = 'list',
+    map = 'map',
+}
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends NaturalAbstractList<CardsQuery['cards'], CardsQueryVariables> implements OnInit {
 
-    @ViewChild('gallery', {static: true}) gallery: NaturalGalleryComponent;
+    /**
+     * Reference to grid component
+     */
+    @ViewChild(ViewGridComponent, {static: false}) gridComponent: ViewGridComponent;
+
+    /**
+     * Reference to list component
+     */
+    @ViewChild(ViewListComponent, {static: false}) listComponent: ViewListComponent;
+
+    /**
+     * Reference to map component
+     */
+    @ViewChild(ViewMapComponent, {static: false}) mapComponent: ViewMapComponent;
+
+    /**
+     * Expose enum for template
+     */
+    public ViewMode = ViewMode;
+
+    /**
+     * Expose enum for template
+     */
     public SortingOrder = SortingOrder;
-    public galleryCollection = null;
-    public selected;
-    public showLogo = true;
-    public collection;
-    public user: ViewerQuery['viewer'];
-    public searchedTerm;
-    public lastUpload;
-    public showDownloadCollection = true;
-    public config: NaturalSearchFacets = cardsConfiguration;
-    public selections: NaturalSearchSelections = [[]];
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
-    private thumbnailHeight = 300;
-    public options: NaturalGalleryOptions = {
-        cover: true,
-        gap: 5,
-        showLabels: 'always',
-        rowHeight: this.thumbnailHeight,
-        activable: true,
-        selectable: true,
-        lightbox: true,
-        infiniteScrollOffset: -200,
-    };
-    private enlargedHeight = 2000;
-    private sub;
-    private variablesManager: QueryVariablesManager = new QueryVariablesManager();
 
-    constructor(private router: Router,
-                private route: ActivatedRoute,
-                private cardSvc: CardService,
+    /**
+     * Checked content for selection
+     */
+    public selected;
+
+    /**
+     * Show logo on top left corner
+     */
+    public showLogo = true;
+
+    /**
+     * Contextual collection
+     * Used to link
+     */
+    public collection;
+
+    /**
+     * Current user
+     */
+    public user: ViewerQuery['viewer'];
+
+    /**
+     * True if button for archive download has permissions to be displayed
+     */
+    public showDownloadCollection = true;
+
+    protected defaultSorting: Array<Sorting> = [
+        {
+            field: CardSortingField.creationDate,
+            order: SortingOrder.DESC,
+        },
+        {
+            field: CardSortingField.id,
+            order: SortingOrder.ASC,
+        },
+    ];
+
+    /**
+     * Enum that specified the displayed list
+     */
+    public viewMode: ViewMode = ViewMode.grid;
+
+    constructor(private cardService: CardService,
+                private collectionService: CollectionService,
+                private userService: UserService,
                 private dialog: MatDialog,
-                private collectionSvc: CollectionService,
-                private alertSvc: AlertService,
-                private userSvc: UserService,
-                private persistenceSvc: PersistenceService) {
+                injector: Injector) {
+
+        super(cardService, injector);
+
+        this.naturalSearchFacets = cardsConfiguration;
     }
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        super.ngOnInit();
+
+        // Init view from last selection Defaults on grid
+        const viewMode = sessionStorage.getItem('view-mode');
+        if (viewMode) {
+            this.viewMode = viewMode as ViewMode;
+        }
+
+        // Setup admin features
+        this.userService.getCurrentUser().subscribe(user => {
+
             this.user = user;
             this.updateShowDownloadCollection();
 
@@ -81,43 +145,39 @@ export class ListComponent implements OnInit {
 
         });
 
-        this.route.queryParams.subscribe(() => {
-            this.initFromUrl();
+        const containAdminSelection = this.naturalSearchSelections.some(selection => {
+            return selection.some(value => {
+                return adminConfig.some(config => {
+                    return config.field === value.field;
+                });
+            });
         });
 
-        this.route.params.subscribe(params => {
+        if (containAdminSelection) {
+            this.pushAdminConfig();
+        }
 
-            if (params.upload && params.upload !== this.lastUpload) {
-                this.reload();
-            }
-
-            if (params.collectionId) {
-
-                this.collection = {
-                    id: params.collectionId,
-                    __typename: 'Collection',
-                };
-
-                const filter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [params.collectionId]}}}]}]};
-                this.variablesManager.set('collection', {filter: filter});
-                this.reset();
-            }
-        });
-
+        // Listen to route data and resolved data
+        // Required because when /:id change, the route stays the same, and component is not re-initialized
         this.route.data.subscribe(data => {
 
             this.showLogo = data.showLogo;
             this.updateShowDownloadCollection();
 
+            if (data.collection) {
+                const filter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [data.collection.id]}}}]}]};
+                this.variablesManager.set('collection', {filter: filter});
+            }
+
             if (data.filter) {
                 this.variablesManager.set('route-context', {filter: data.filter});
             }
 
-            // const contextFields: CardFilterConditionFields[] = [{filename: {equal: {value: '', not: true}}}];
             const filters: CardFilter = {
                 groups: [{conditions: [{filename: {equal: {value: '', not: true}}}]}],
             };
 
+            // Setup own page, with self created cards
             if (data.creator && !this.collection) {
                 filters.groups[filters.groups.length - 1].conditions[0].creator = {equal: {value: data.creator.id}};
             }
@@ -128,58 +188,45 @@ export class ListComponent implements OnInit {
 
     }
 
-    public sort(field: string, direction: SortingOrder) {
+    public pagination(event: NaturalPageEvent) {
 
-        this.reset();
-
-        let sorting = {
-            sorting: [
-                {
-                    field: 'creationDate',
-                    order: SortingOrder.DESC,
-                },
-                {
-                    field: 'id',
-                    order: SortingOrder.ASC,
-                },
-            ],
-        };
-
-        // If field but different from default (creationDate), don't add to url
-        if (field && field !== 'creationDate') {
-            sorting = {
-                sorting: [
-                    {
-                        field: field,
-                        order: direction,
-                    },
-                    {
-                        field: 'id',
-                        order: SortingOrder.ASC,
-                    },
-                ],
-            };
-            this.persistenceSvc.persistInUrl('sorting', sorting, this.route);
+        if (this.viewMode === ViewMode.grid) {
+            this.persistSearch = false;
+            super.pagination(event);
+            this.persistSearch = true;
         } else {
-            this.persistenceSvc.persistInUrl('sorting', null, this.route);
+            super.pagination(event);
         }
-
-        this.variablesManager.set('sorting', sorting);
     }
 
+    /**
+     * Persist list rendering in session storage.
+     */
+    public setViewMode(mode: ViewMode) {
+        this.viewMode = mode;
+        sessionStorage.setItem('view-mode', mode);
+    }
+
+    public sorting(event: Sort[]) {
+        // this.reset();
+        super.sorting(event);
+    }
+
+    /**
+     * Return the only activated View Component
+     */
+    private getViewComponent() {
+        return this.gridComponent || this.listComponent || this.mapComponent;
+    }
+
+    /**
+     * Show a button to download a collection, considering permissions
+     */
     public updateShowDownloadCollection() {
         const roles = this.route.snapshot.data.showDownloadCollectionForRoles;
         const roleIsAllowed = this.user && this.user.role && (!roles || roles && roles.indexOf(this.user.role) > -1);
         const hasCollection = this.collection && this.collection.id;
         this.showDownloadCollection = hasCollection && roleIsAllowed;
-    }
-
-    public activate(event) {
-        console.log('activate', event);
-        this.router.navigate([
-            'card',
-            event.model.id,
-        ]);
     }
 
     public select(items) {
@@ -188,36 +235,19 @@ export class ListComponent implements OnInit {
 
     public reset() {
         this.selected = [];
-        if (this.gallery && this.gallery.gallery) {
-            this.gallery.gallery.clear();
-        }
+        // if (this.gallery && this.gallery.gallery) {
+        //     this.gallery.gallery.clear();
+        // }
     }
 
     public reload() {
-        if (this.sub) {
-            this.reset();
-            this.sub.refetch();
-        }
-    }
+        // if (this.sub) {
+        // this.reset();
+        // this.sub.refetch();
+        // }
 
-    public search(selections: NaturalSearchSelections) {
-        // Persist in url before translation to graphql
-        this.persistenceSvc.persistInUrl('natural-search', toUrl(selections), this.route);
-        this.translateSearchAndUpdate(selections);
-    }
-
-    public loadMore(ev) {
-
-        this.variablesManager.set('pagination', {pagination: {offset: ev.offset, pageSize: ev.limit}});
-
-        if (!this.sub) {
-            this.sub = this.cardSvc.watchAll(this.variablesManager.variables.pipe(debounceTime(5)));
-            this.sub.valueChanges.subscribe(data => {
-                if (this.gallery) {
-                    this.gallery.gallery.addItems(this.formatImages(data.items));
-                }
-            });
-        }
+        this.router.navigateByUrl('/empty', {skipLocationChange: true})
+            .then(() => this.router.navigate(['.'], {relativeTo: this.route}));
     }
 
     public linkSelectionToCollection(selection) {
@@ -242,18 +272,18 @@ export class ListComponent implements OnInit {
             return;
         }
 
-        this.collectionSvc.unlink(this.collection, selection).subscribe(() => {
-            this.alertSvc.info('Les images ont été retirées');
+        this.collectionService.unlink(this.collection, selection).subscribe(() => {
+            this.alertService.info('Les images ont été retirées');
             this.reload();
         });
     }
 
     public delete(selection) {
-        this.alertSvc.confirm('Suppression', 'Voulez-vous supprimer définitivement cet/ces élément(s) ?', 'Supprimer définitivement')
+        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet/ces élément(s) ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardSvc.delete(selection).subscribe(() => {
-                        this.alertSvc.info('Supprimé');
+                    this.cardService.delete(selection).subscribe(() => {
+                        this.alertService.info('Supprimé');
                         this.reload();
                     });
                 }
@@ -275,11 +305,10 @@ export class ListComponent implements OnInit {
                 },
             }).afterClosed().subscribe(number => {
                 if (number > 0) {
-                    const quizzVars = clone(this.variablesManager.variables.value);
-                    quizzVars.sorting = [{field: CardSortingField.random}];
-                    quizzVars.pagination.pageIndex = 0;
-                    quizzVars.pagination.pageSize = +number;
-                    this.cardSvc.getAll(quizzVars).subscribe(cards => {
+                    const quizzVars = new NaturalQueryVariablesManager(this.variablesManager);
+                    quizzVars.set('sorting', {sorting: [{field: CardSortingField.random}]});
+                    quizzVars.set('pagination', {pagination: {pageIndex: 0, pageSize: +number}});
+                    this.cardService.getAll(quizzVars).subscribe(cards => {
                         this.router.navigateByUrl('quizz;cards=' + cards.items.map(e => e.id).join(','));
                     });
                 }
@@ -312,11 +341,11 @@ export class ListComponent implements OnInit {
                 if (changes.institution) {
                     changes.institution = changes.institution.name ? changes.institution.name : changes.institution;
                 }
-                observables.push(this.cardSvc.update(changes as { id: any }));
+                observables.push(this.cardService.update(changes));
             }
 
             forkJoin(observables).subscribe(() => {
-                this.alertSvc.info('Mis à jour');
+                this.alertService.info('Mis à jour');
                 this.reload();
             });
         });
@@ -324,95 +353,12 @@ export class ListComponent implements OnInit {
     }
 
     public selectAll() {
-        this.selected = this.gallery.gallery.selectVisibleItems();
+        this.selected = this.getViewComponent().selectAll();
     }
 
     public unselectAll() {
-        this.gallery.gallery.unselectAllItems();
         this.selected.length = [];
-    }
-
-    private initFromUrl() {
-        let naturalSearchSelections = this.persistenceSvc.getFromUrl('natural-search', this.route);
-        const sorting = this.persistenceSvc.getFromUrl('sorting', this.route);
-
-        // prevent null value that is actually not supported
-        naturalSearchSelections = naturalSearchSelections ? fromUrl(naturalSearchSelections) : [[]];
-
-        const containAdminSelection = naturalSearchSelections.some(selection => {
-            return selection.some(value => {
-                return adminConfig.some(config => {
-                    return config.field === value.field;
-                });
-            });
-        });
-
-        if (containAdminSelection) {
-            this.pushAdminConfig();
-        }
-
-        this.selections = naturalSearchSelections;
-        if (this.hasSelections(this.selections)) {
-            this.translateSearchAndUpdate(naturalSearchSelections);
-        }
-        this.variablesManager.set('sorting', sorting);
-    }
-
-    private formatImages(cards) {
-
-        cards = cards.map(card => {
-            let thumb = CardService.formatImage(card, this.thumbnailHeight);
-            let big = CardService.formatImage(card, this.enlargedHeight);
-
-            thumb = {
-                thumbnailSrc: thumb.src,
-                thumbnailWidth: thumb.width,
-                thumbnailHeight: thumb.height,
-            };
-
-            big = {
-                enlargedSrc: big.src,
-                enlargedWidth: big.width,
-                enlargedHeight: big.height,
-            };
-
-            let title = card.name ? card.name : null;
-            const artists = card.artists.map(a => a.name).join('<br/>');
-
-            if (artists && title) {
-                title = '[ ' + artists + ' ] ' + title;
-            } else if (artists && !title) {
-                title = artists;
-            }
-
-            const fields: any = {
-                title: title ? title : 'Voir le détail',
-            };
-
-            return merge({}, card, thumb, big, fields);
-        });
-
-        return cards;
-    }
-
-    /**
-     *
-     */
-    private translateSearchAndUpdate(selections: NaturalSearchSelections) {
-
-        // Convert to graphql and update query variables
-        const translatedSelection = toGraphQLDoctrineFilter(this.config, selections);
-
-        this.reset();
-        this.variablesManager.set('natural-search', {filter: translatedSelection});
-    }
-
-    /**
-     * Return true wherever natural-search has selection or not.
-     * Natural-search actual "no value" equals [[]]
-     */
-    private hasSelections(selections): boolean {
-        return !!selections.filter(e => e.length).length; // because empty natural search return [[]]
+        this.getViewComponent().unselectAll();
     }
 
     private linkToCollection(selection) {
@@ -439,8 +385,8 @@ export class ListComponent implements OnInit {
      * Push admin config, but only if it does not already exist
      */
     private pushAdminConfig(): void {
-        if (!this.config.some(conf => conf === adminConfig[0])) {
-            this.config = cardsConfiguration.concat(adminConfig);
+        if (!this.naturalSearchFacets.some(conf => conf === adminConfig[0])) {
+            this.naturalSearchFacets = cardsConfiguration.concat(adminConfig);
         }
     }
 

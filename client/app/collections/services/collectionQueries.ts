@@ -3,8 +3,8 @@ import { institutionDetails } from '../../institutions/services/institutionQueri
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const collectionsQuery = gql`
-    query Collections($filters: OldCollectionFilter, $pagination: PaginationInput) {
-        collections(filters: $filters, pagination: $pagination) {
+    query Collections($filter: CollectionFilter, $pagination: PaginationInput) {
+        collections(filter: $filter, pagination: $pagination) {
             items {
                 id
                 name
