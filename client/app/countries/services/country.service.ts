@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Countries, CountriesVariables, Country, CountryVariables } from '../../shared/generated-types';
-import { countriesQuery, countryQuery } from './countryQueries';
+import { countriesQuery, countryQuery } from './country.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({

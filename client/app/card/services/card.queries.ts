@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { institutionDetails } from '../../institutions/services/institutionQueries';
+import { institutionDetails } from '../../institutions/services/institution.queries';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const cardDetailsFragment = gql`

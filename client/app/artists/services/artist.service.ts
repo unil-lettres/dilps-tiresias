@@ -8,7 +8,7 @@ import {
     DeleteArtists,
     UpdateArtist, UpdateArtistVariables,
 } from '../../shared/generated-types';
-import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artistQueries';
+import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artist.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({

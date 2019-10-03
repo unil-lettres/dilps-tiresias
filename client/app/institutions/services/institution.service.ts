@@ -18,7 +18,7 @@ import {
     institutionQuery,
     institutionsQuery,
     updateInstitution,
-} from './institutionQueries';
+} from './institution.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({

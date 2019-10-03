@@ -23,7 +23,7 @@ import {
     updateCard,
     validateData,
     validateImage,
-} from './cardQueries';
+} from './card.queries';
 
 @Injectable({
     providedIn: 'root',

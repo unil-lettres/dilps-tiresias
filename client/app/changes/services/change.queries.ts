@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { cardDetailsFragment } from '../../card/services/cardQueries';
+import { cardDetailsFragment } from '../../card/services/card.queries';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const changesQuery = gql`

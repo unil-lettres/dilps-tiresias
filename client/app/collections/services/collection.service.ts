@@ -23,7 +23,7 @@ import {
     deleteCollections,
     linkCollectionToCollection,
     updateCollection,
-} from './collectionQueries';
+} from './collection.queries';
 
 @Injectable({
     providedIn: 'root',

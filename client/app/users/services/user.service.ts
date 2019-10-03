@@ -24,7 +24,7 @@ import {
     userQuery,
     usersQuery,
     viewerQuery,
-} from './userQueries';
+} from './user.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({

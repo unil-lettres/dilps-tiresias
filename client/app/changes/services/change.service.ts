@@ -17,7 +17,7 @@ import {
     suggestCreation,
     suggestDeletion,
     suggestUpdate,
-} from './changeQueries';
+} from './change.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({
