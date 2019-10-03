@@ -64,7 +64,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private changeService: ChangeService,
-                public themeService: ThemeService,
                 public cardService: CardService,
                 private alertService: AlertService,
                 public artistService: ArtistService,

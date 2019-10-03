@@ -242,19 +242,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     public reset() {
         this.selected = [];
-        // if (this.gallery && this.gallery.gallery) {
-        //     this.gallery.gallery.clear();
-        // }
-    }
-
-    public reload() {
-        // if (this.sub) {
-        // this.reset();
-        // this.sub.refetch();
-        // }
-
-        this.router.navigateByUrl('/empty', {skipLocationChange: true})
-            .then(() => this.router.navigate(['.'], {relativeTo: this.route}));
+        this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
     }
 
     public linkSelectionToCollection(selection) {
@@ -281,7 +269,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
         this.collectionService.unlink(this.collection, selection).subscribe(() => {
             this.alertService.info('Les images ont été retirées');
-            this.reload();
+            this.reset();
         });
     }
 
@@ -291,7 +279,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 if (confirmed) {
                     this.cardService.delete(selection).subscribe(() => {
                         this.alertService.info('Supprimé');
-                        this.reload();
+                        this.reset();
                     });
                 }
             });
@@ -353,7 +341,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
             forkJoin(observables).subscribe(() => {
                 this.alertService.info('Mis à jour');
-                this.reload();
+                this.reset();
             });
         });
 
