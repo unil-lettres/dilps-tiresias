@@ -8,7 +8,6 @@ import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
-import { UploadService } from '../shared/services/upload.service';
 import { UserService } from '../users/services/user.service';
 import { UserComponent } from '../users/user/user.component';
 

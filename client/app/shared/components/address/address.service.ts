@@ -12,7 +12,7 @@ export interface Address {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AddressService {
 

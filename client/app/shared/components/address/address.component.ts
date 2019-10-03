@@ -280,7 +280,7 @@ export class AddressComponent implements OnInit {
         const iconSize = 48;
         const icon: any = {
             path: 'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
-                  '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
+                '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
             fillOpacity: 1,
             strokeWeight: 0,
             scale: 1,

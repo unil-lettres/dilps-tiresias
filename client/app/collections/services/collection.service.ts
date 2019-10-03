@@ -11,9 +11,10 @@ import {
     CreateCollection,
     CreateCollectionVariables,
     DeleteCollections,
+    LinkCollectionToCollection,
+    LinkCollectionToCollectionVariables,
     UpdateCollection,
     UpdateCollectionVariables,
-    LinkCollectionToCollection, LinkCollectionToCollectionVariables,
 } from '../../shared/generated-types';
 
 import {

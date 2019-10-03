@@ -13,7 +13,12 @@ import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
-import { CardFilterGroupCondition, CollectionFilterGroupCondition, CollectionVisibility, UserRole } from './shared/generated-types';
+import {
+    CardFilterGroupCondition,
+    CollectionFilterGroupCondition,
+    CollectionVisibility,
+    UserRole,
+} from './shared/generated-types';
 import { AuthAdminGuard } from './shared/services/auth.admin.guard';
 import { AuthGuard } from './shared/services/auth.guard';
 import { UserResolver } from './users/services/user.resolver';
@@ -36,7 +41,7 @@ export const routes: Routes = [
             {
                 path: '',
                 redirectTo: 'home',
-                pathMatch: 'full'
+                pathMatch: 'full',
             },
             {
                 path: 'home',

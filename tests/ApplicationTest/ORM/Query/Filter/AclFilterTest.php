@@ -13,7 +13,6 @@ use Application\Model\Dating;
 use Application\Model\Institution;
 use Application\Model\Tag;
 use Application\Model\User;
-
 use Application\ORM\Query\Filter\AclFilter;
 use PHPUnit\Framework\TestCase;
 

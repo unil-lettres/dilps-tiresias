@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CardService } from './card.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CardResolver implements Resolve<any> {
 

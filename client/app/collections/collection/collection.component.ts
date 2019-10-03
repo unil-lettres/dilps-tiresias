@@ -68,7 +68,7 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         }
 
         const collectionIsNotPrivate = this.data.item.visibility === CollectionVisibility.administrator ||
-                                       this.data.item.visibility === CollectionVisibility.member;
+            this.data.item.visibility === CollectionVisibility.member;
 
         // If is admin and has visibility
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;

@@ -3,10 +3,14 @@ import { Apollo } from 'apollo-angular';
 
 import {
     Artist,
-    Artists, ArtistsVariables, ArtistVariables,
-    CreateArtist, CreateArtistVariables,
+    Artists,
+    ArtistsVariables,
+    ArtistVariables,
+    CreateArtist,
+    CreateArtistVariables,
     DeleteArtists,
-    UpdateArtist, UpdateArtistVariables,
+    UpdateArtist,
+    UpdateArtistVariables,
 } from '../../shared/generated-types';
 import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artist.queries';
 import { NaturalAbstractModelService } from '@ecodev/natural';

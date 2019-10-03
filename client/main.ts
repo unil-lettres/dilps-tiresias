@@ -6,8 +6,8 @@ import { environment } from './environments/environment';
 import 'hammerjs';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
-  enableProdMode();
+    enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+    .catch(err => console.log(err));

@@ -4,15 +4,19 @@ import { Apollo } from 'apollo-angular';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    CreateUser, CreateUserVariables,
+    CreateUser,
+    CreateUserVariables,
     DeleteUsers,
     Login,
     Logout,
-    UpdateUser, UpdateUserVariables,
+    UpdateUser,
+    UpdateUserVariables,
     User,
     UserRole,
-    Users, UsersVariables,
-    UserType, UserVariables,
+    Users,
+    UsersVariables,
+    UserType,
+    UserVariables,
     Viewer,
 } from '../../shared/generated-types';
 import {

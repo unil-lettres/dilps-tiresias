@@ -5,15 +5,17 @@ import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
 import {
     Card,
-    CardVariables,
     Cards,
     CardsVariables,
+    CardVariables,
     CardVisibility,
     CreateCard,
     CreateCardVariables,
     DeleteCards,
     UpdateCard,
-    UpdateCardVariables, ValidateData, ValidateImage,
+    UpdateCardVariables,
+    ValidateData,
+    ValidateImage,
 } from '../../shared/generated-types';
 import {
     cardQuery,

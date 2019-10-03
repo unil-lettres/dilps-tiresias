@@ -12,8 +12,8 @@ import { DownloadComponent } from '../shared/components/download/download.compon
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
-    CardSortingField,
     Cards,
+    CardSortingField,
     CardsVariables,
     SortingOrder,
     UserRole,

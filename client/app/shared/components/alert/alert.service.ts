@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ConfirmComponent } from './confirm.component';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AlertService {
 

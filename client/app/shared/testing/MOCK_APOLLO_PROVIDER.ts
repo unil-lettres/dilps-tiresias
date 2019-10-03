@@ -12,7 +12,7 @@ import { apolloDefaultOptions } from '../config/apollo.default.options';
  * A mock Apollo to be used in tests only
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 class MockApollo extends Apollo {
     constructor(_ngZone: NgZone) {

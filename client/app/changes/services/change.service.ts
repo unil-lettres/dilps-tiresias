@@ -3,7 +3,8 @@ import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import {
     AcceptChange,
-    Changes, ChangesVariables,
+    Changes,
+    ChangesVariables,
     RejectChange,
     SuggestCreation,
     SuggestDeletion,

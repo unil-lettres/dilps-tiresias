@@ -10,11 +10,11 @@ const utilities = require('graphql/utilities');
 const {buildClientSchema, printSchema} = require('graphql');
 
 function write(filename, content) {
-const folder = 'data/tmp/schema/';
+    const folder = 'data/tmp/schema/';
 
-if (!fs.existsSync(folder)) {
-    shell.mkdir('-p', folder);
-}
+    if (!fs.existsSync(folder)) {
+        shell.mkdir('-p', folder);
+    }
 
     const fullPath = folder + filename;
     fs.writeFileSync(fullPath, content);

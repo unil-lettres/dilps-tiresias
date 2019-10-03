@@ -5,7 +5,7 @@ import { Viewer } from '../../shared/generated-types';
 import { UserService } from './user.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserResolver implements Resolve<any> {
 

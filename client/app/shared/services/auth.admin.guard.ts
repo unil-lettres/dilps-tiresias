@@ -6,7 +6,7 @@ import { UserService } from '../../users/services/user.service';
 import { UserRole } from '../generated-types';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthAdminGuard implements CanActivate {
 

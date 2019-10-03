@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { UserService } from '../../users/services/user.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 

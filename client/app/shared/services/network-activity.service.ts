@@ -3,7 +3,7 @@ import { NgProgress } from '@ngx-progressbar/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class NetworkActivityService {
 
