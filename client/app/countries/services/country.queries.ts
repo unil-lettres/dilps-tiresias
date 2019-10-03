@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const countriesQuery = gql`
-    query Countries($pagination: PaginationInput) {
-        countries(pagination: $pagination) {
+    query Countries($filter : CountryFilter, $pagination: PaginationInput) {
+        countries(filter: $filter, pagination: $pagination) {
             items {
                 id
                 code

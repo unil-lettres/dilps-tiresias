@@ -4,8 +4,7 @@ import { ArtistComponent } from '../../../artists/artist/artist.component';
 import { CollectionService } from '../../../collections/services/collection.service';
 
 import { UserService } from '../../../users/services/user.service';
-import { UserRole } from '../../generated-types';
-import { Literal } from '@ecodev/natural';
+import { CollectionFilter, UserRole } from '../../generated-types';
 import { AlertService } from '../alert/alert.service';
 
 @Component({
@@ -15,7 +14,7 @@ import { AlertService } from '../alert/alert.service';
 })
 export class CollectionSelectorComponent implements OnInit {
 
-    public listFilters: Literal;
+    public listFilter: CollectionFilter;
     public collection;
     public image;
     public newCollection: any = {
@@ -35,7 +34,7 @@ export class CollectionSelectorComponent implements OnInit {
 
         this.userSvc.getCurrentUser().subscribe(user => {
             if (user.role !== UserRole.administrator) {
-                this.listFilters = {creators: [user.id]};
+                this.listFilter = {groups: [{conditions: [{creator: {equal: {value: user.id}}}]}]};
             }
         });
 

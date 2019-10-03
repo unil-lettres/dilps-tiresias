@@ -12,11 +12,7 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-    MAT_FORM_FIELD_DEFAULT_OPTIONS,
-    MatFormFieldDefaultOptions,
-    MatFormFieldModule,
-} from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -36,7 +32,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
-import { NaturalDropdownComponentsModule, NaturalIconModule, NaturalSearchModule } from '@ecodev/natural';
+import {
+    NaturalDropdownComponentsModule,
+    NaturalIconModule,
+    NaturalRelationsModule,
+    NaturalSearchModule,
+    NaturalSelectModule,
+    NaturalTableButtonModule,
+} from '@ecodev/natural';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
@@ -73,8 +76,6 @@ import { DialogFooterComponent } from './shared/components/dialog-footer/dialog-
 import { DownloadComponent } from './shared/components/download/download.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
 import { MassEditComponent } from './shared/components/mass-edit/mass-edit.component';
-import { RelationsComponent } from './shared/components/relations/relations.component';
-import { SelectComponent } from './shared/components/select/select.component';
 import { StampComponent } from './shared/components/stamp/stamp.component';
 import { TableButtonComponent } from './shared/components/table-button/table-button.component';
 import { ThesaurusComponent } from './shared/components/thesaurus/thesaurus.component';
@@ -110,7 +111,6 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         ConfirmComponent,
         FocusDirective,
         CollectionComponent,
-        SelectComponent,
         TermsAgreementComponent,
         InstitutionsComponent,
         InstitutionComponent,
@@ -130,7 +130,6 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         QuizzComponent,
         NumberSelectorComponent,
         MassEditComponent,
-        RelationsComponent,
         EmptyComponent,
         ViewGridComponent,
         ViewMapComponent,
@@ -192,6 +191,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         }),
         NaturalDropdownComponentsModule,
         NaturalIconModule.forRoot({}),
+        NaturalRelationsModule,
+        NaturalSelectModule,
+        NaturalTableButtonModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

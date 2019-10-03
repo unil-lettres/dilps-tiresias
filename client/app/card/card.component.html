@@ -1,8 +1,14 @@
 <div *ngIf="model" [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="row">
 
     <div [ngClass]="{'containerWithToolbar': !hideToolbar}" fxFlex="400px" fxLayout="column">
-        <mat-toolbar *ngIf="!hideToolbar" [ngClass]="isEdit() ? 'edition' : ''" color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
-            <img *ngIf="showLogo" src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+        <mat-toolbar *ngIf="!hideToolbar"
+                     [ngClass]="isEdit() ? 'edition' : ''"
+                     color="app"
+                     fxFlex="none"
+                     fxLayout="row"
+                     fxLayoutAlign="start center"
+        >
+            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg" />
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -27,19 +33,41 @@
 
             <ng-container *ngIf="!hideTools">
 
-                <button (click)="toggleEdit()" *ngIf="!isEdit() && model.id && model?.permissions?.update" [matTooltip]="'Passer en mode édition'" mat-icon-button>
+                <button (click)="toggleEdit()"
+                        *ngIf="!isEdit() && model.id && model?.permissions?.update"
+                        [matTooltip]="'Passer en mode édition'"
+                        mat-icon-button
+                >
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button (click)="update()" *ngIf="isEdit() && model.id && model?.permissions?.update" color="primary" mat-icon-button mat-raised-button matTooltip="Enregistrer">
+                <button (click)="update()"
+                        *ngIf="isEdit() && model.id && model?.permissions?.update"
+                        color="primary"
+                        mat-icon-button
+                        mat-raised-button
+                        matTooltip="Enregistrer"
+                >
                     <mat-icon>save</mat-icon>
                 </button>
 
-                <button *ngIf="user && !isEdit() && (canSuggestUpdate() || canSuggestDelete())" [matMenuTriggerFor]="changeMenu" color="primary" mat-button mat-icon-button matTooltip="Soumettre">
+                <button *ngIf="user && !isEdit() && (canSuggestUpdate() || canSuggestDelete())"
+                        [matMenuTriggerFor]="changeMenu"
+                        color="primary"
+                        mat-button
+                        mat-icon-button
+                        matTooltip="Soumettre"
+                >
                     <mat-icon>add_alert</mat-icon>
                 </button>
 
-                <button (click)="suggestCreation()" *ngIf="user && !isEdit() && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()" color="primary" mat-button mat-icon-button matTooltip="Soumettre">
+                <button (click)="suggestCreation()"
+                        *ngIf="user && !isEdit() && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()"
+                        color="primary"
+                        mat-button
+                        mat-icon-button
+                        matTooltip="Soumettre"
+                >
                     <mat-icon>add_alert</mat-icon>
                 </button>
 
@@ -47,7 +75,11 @@
                     <mat-icon>add</mat-icon>
                 </button>
 
-                <button *ngIf="model.id && user?.role === 'administrator'" [matMenuTriggerFor]="validationMenu" mat-icon-button matTooltip="Valider">
+                <button *ngIf="model.id && user?.role === 'administrator'"
+                        [matMenuTriggerFor]="validationMenu"
+                        mat-icon-button
+                        matTooltip="Valider"
+                >
                     <mat-icon>spellcheck</mat-icon>
                 </button>
 
@@ -59,7 +91,12 @@
                     <mat-icon>library_add</mat-icon>
                 </button>
 
-                <button (click)="confirmDelete()" *ngIf="model.id && model?.permissions?.delete" color="warn" mat-icon-button matTooltip="Supprimer">
+                <button (click)="confirmDelete()"
+                        *ngIf="model.id && model?.permissions?.delete"
+                        color="warn"
+                        mat-icon-button
+                        matTooltip="Supprimer"
+                >
                     <mat-icon>delete_forever</mat-icon>
                 </button>
             </ng-container>
@@ -71,49 +108,151 @@
                 <div *ngIf="user?.role === 'administrator'" class="innerSpacing" fxLayout="column">
                     <div fxLayout="row">{{ visibilities[visibility] ? 'Visible ' + visibilities[visibility].text : 'Visibilité inchangée' }}
                     </div>
-                    <mat-slider (input)="updateVisibility($event);visibility = $event.value" [color]="visibilities[visibility] ? visibilities[visibility].color : null" [disabled]="!isEdit()" [max]="3" [min]="1" [ngModel]="visibility"></mat-slider>
+                    <mat-slider (input)="updateVisibility($event);visibility = $event.value"
+                                [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                                [disabled]="!isEdit()"
+                                [max]="3"
+                                [min]="1"
+                                [ngModel]="visibility"
+                    ></mat-slider>
                 </div>
 
-                <mat-form-field *ngIf="isEdit() || !!model.name" [matTooltip]="!isEdit() ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.name" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Titre"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.name"
+                                [matTooltip]="!isEdit() ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.name"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Titre"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name" [matTooltip]="!isEdit() ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.expandedName" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Titre étendu"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name"
+                                [matTooltip]="!isEdit() ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.expandedName"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Titre étendu"
+                    ></textarea>
                 </mat-form-field>
 
-                <app-thesaurus (modelChange)="model.artists = $event" *ngIf="isEdit() || !!artists?.length" [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'" [model]="artists" [previewComponent]="artistComponent" [readonly]="!isEdit()" [service]="artistService" matTooltipPosition="after" placeholder="Artistes"></app-thesaurus>
+                <app-thesaurus (modelChange)="model.artists = $event"
+                               *ngIf="isEdit() || !!artists?.length"
+                               [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
+                               [model]="artists"
+                               [previewComponent]="artistComponent"
+                               [readonly]="!isEdit()"
+                               [service]="artistService"
+                               matTooltipPosition="after"
+                               placeholder="Artistes"
+                ></app-thesaurus>
 
                 <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
-                    <textarea [(ngModel)]="model.techniqueAuthor" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Auteur technique"></textarea>
+                    <textarea [(ngModel)]="model.techniqueAuthor"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Auteur technique"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.addition" [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.addition" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Supplément"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.addition"
+                                [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.addition"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Supplément"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.dating" [matTooltip]="!isEdit() ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.dating" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Datation"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.dating"
+                                [matTooltip]="!isEdit() ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.dating"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Datation"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.technique" [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.technique" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Technique"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.technique"
+                                [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.technique"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Technique"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.material" [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.material" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Matériel"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.material"
+                                [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.material"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Matériel"
+                    ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.format" [matTooltip]="!isEdit() ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'" class="innerSpacing" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.format" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Dimensions"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.format"
+                                [matTooltip]="!isEdit() ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.format"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Dimensions"
+                    ></textarea>
                 </mat-form-field>
 
                 <div *ngIf="isEdit() || !!institution" class="mat-title innerSpacing">Lieu</div>
 
-                <app-thesaurus (modelChange)="model.institution = $event" *ngIf="isEdit() || !!institution" [matTooltip]="!isEdit() ? '' : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'" [model]="institution" [multiple]="false" [previewComponent]="institutionComponent" [readonly]="!isEdit()" [service]="institutionSvc" matTooltipPosition="after" placeholder="Institution"></app-thesaurus>
+                <app-thesaurus (modelChange)="model.institution = $event"
+                               *ngIf="isEdit() || !!institution"
+                               [matTooltip]="!isEdit() ? '' : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'"
+                               [model]="institution"
+                               [multiple]="false"
+                               [previewComponent]="institutionComponent"
+                               [readonly]="!isEdit()"
+                               [service]="institutionSvc"
+                               matTooltipPosition="after"
+                               placeholder="Institution"
+                ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="!(model.locality || isEdit())" [(model)]="institution" [readonly]="!isEdit()" [vertical]="true"></app-address>
+                <app-address *ngIf="!(model.locality || isEdit())" [(model)]="institution" [readonly]="!isEdit()" [vertical]="true"
+                ></app-address>
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || isEdit()">
@@ -121,8 +260,18 @@
                     <app-address [(model)]="model" [readonly]="!isEdit()" [vertical]="true"></app-address>
                 </div>
 
-                <mat-form-field *ngIf="isEdit() || !!model.literature" [matTooltip]="!isEdit() ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'" class="innerSpacing padding-top" matTooltipPosition="after">
-                    <textarea [(ngModel)]="model.literature" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Source"></textarea>
+                <mat-form-field *ngIf="isEdit() || !!model.literature"
+                                [matTooltip]="!isEdit() ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
+                                class="innerSpacing padding-top"
+                                matTooltipPosition="after"
+                >
+                    <textarea [(ngModel)]="model.literature"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Source"
+                    ></textarea>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.page" class="innerSpacing">
@@ -137,12 +286,22 @@
                     <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput placeholder="Planche">
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.isbn" [matTooltip]="!isEdit() ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'" class="innerSpacing" matTooltipPosition="after">
+                <mat-form-field *ngIf="isEdit() || !!model.isbn"
+                                [matTooltip]="!isEdit() ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
+                                class="innerSpacing"
+                                matTooltipPosition="after"
+                >
                     <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput placeholder="ISBN">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.rights" class="innerSpacing">
-                    <textarea [(ngModel)]="model.rights" [readonly]="!isEdit()" matAutosizeMinRows="1" matInput matTextareaAutosize placeholder="Droits d'auteur"></textarea>
+                    <textarea [(ngModel)]="model.rights"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Droits d'auteur"
+                    ></textarea>
                 </mat-form-field>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
@@ -151,7 +310,17 @@
                     <div class="mat-title innerSpacing">Fiches additionnelles</div>
 
                     <div class="innerSpacing">
-                        <app-relations (select)="goToCard($event)" [disabled]="!isEdit()" [items]="model.cards" [main]="model" [service]="cardSvc" placeholder="Chercher une fiche"></app-relations>
+                        <natural-relations [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
+                                           [disabled]="!isEdit()"
+                                           [main]="model"
+                                           [service]="cardSvc"
+                                           placeholder="Chercher une fiche"
+                        >
+                            <ng-template let-item="item">
+                                <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"
+                                ></natural-table-button>
+                            </ng-template>
+                        </natural-relations>
                     </div>
                 </div>
 

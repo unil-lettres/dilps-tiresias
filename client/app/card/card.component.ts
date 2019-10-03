@@ -270,10 +270,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public goToCard(card) {
-        this.router.navigateByUrl('/card/' + card.id);
-    }
-
     public getSuggestAddLabel() {
         if (this.user.role === UserRole.junior || this.user.role === UserRole.senior) {
             return 'Soumettre';

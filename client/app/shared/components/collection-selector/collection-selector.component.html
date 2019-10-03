@@ -3,10 +3,13 @@
     <!-- Collection existante -->
     <mat-tab label="Collection existante">
         <div class="padding" fxLayout="column">
-            <app-select [(model)]="collection" [filters]="listFilters" [service]="collectionSvc" placeholder="Sélectionnez la collection"
-            ></app-select>
+            <natural-select [(ngModel)]="collection"
+                            [filter]="listFilter"
+                            [service]="collectionSvc"
+                            placeholder="Sélectionnez la collection"
+            ></natural-select>
             <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="link()" [disabled]="!collection?.id" mat-button>Ajouter à la collection</button>
+                <button (click)="link()" [disabled]="!collection?.id" mat-flat-button color="primary">Ajouter à la collection</button>
             </div>
         </div>
     </mat-tab>
@@ -22,11 +25,15 @@
                 <textarea [(ngModel)]="newCollection.description" matInput placeholder="Description"></textarea>
             </mat-form-field>
 
-            <app-select *ngIf="listFilters" [(model)]="newCollection.parent" [filters]="listFilters" [service]="collectionSvc" placeholder="Collection parente"
-            ></app-select>
+            <natural-select *ngIf="listFilter"
+                            [(ngModel)]="newCollection.parent"
+                            [filter]="listFilter"
+                            [service]="collectionSvc"
+                            placeholder="Collection parente"
+            ></natural-select>
 
             <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="createAndLink()" [disabled]="!newCollection.name" mat-button>
+                <button (click)="createAndLink()" [disabled]="!newCollection.name" mat-flat-button color="primary">
                     Ajouter à une nouvelle collection privée
                 </button>
             </div>
