@@ -23,9 +23,6 @@
             "dom"
         ],
         "paths": {
-            "PhotoSwipeUI_Default": [
-                "node_modules/photoswipe/dist/photoswipe-ui-default.js"
-            ]
         }
     }
 }
