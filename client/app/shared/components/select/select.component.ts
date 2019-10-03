@@ -1,13 +1,22 @@
-import { Component, ContentChild, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { QueryRef } from 'apollo-angular';
 import { isObject, merge } from 'lodash';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, sampleTime, startWith } from 'rxjs/operators';
-import { AbstractModelService } from '../../services/abstract-model.service';
 import { IncrementSubject } from '../../services/increment-subject';
-import { Literal } from '../../types';
+import { Literal, NaturalAbstractModelService } from '@ecodev/natural';
 
 /**
  * Default usage:
@@ -229,11 +238,11 @@ export class SelectComponent implements OnInit {
 
         if (!this.service) {
             return false;
-        } else if (this.service && this.service instanceof AbstractModelService) {
+        } else if (this.service && this.service instanceof NaturalAbstractModelService) {
             return true;
         }
 
-        throw new TypeError('Service does not inherit AbstractModelService');
+        throw new TypeError('Service does not inherit NaturalAbstractModelService');
     }
 
     private useList() {
@@ -284,12 +293,12 @@ export class SelectComponent implements OnInit {
         });
 
         this.filteredItems = this.formCtrl.valueChanges
-                                 .pipe(
-                                     startWith(''),
-                                     map((searchedTerm: any) => {
-                                         return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
-                                     }),
-                                 );
+            .pipe(
+                startWith(''),
+                map((searchedTerm: any) => {
+                    return searchedTerm ? this.filterList(searchedTerm) : this.items.slice();
+                }),
+            );
     }
 
     private filterList(searchedTerm) {

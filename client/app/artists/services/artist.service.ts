@@ -3,22 +3,26 @@ import { Apollo } from 'apollo-angular';
 
 import {
     Artist,
-    Artists,
-    CreateArtist,
+    Artists, ArtistsVariables, ArtistVariables,
+    CreateArtist, CreateArtistVariables,
     DeleteArtists,
-    UpdateArtist,
+    UpdateArtist, UpdateArtistVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artistQueries';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ArtistService
-    extends AbstractModelService<Artist['artist'],
+    extends NaturalAbstractModelService<Artist['artist'],
+        ArtistVariables,
         Artists['artists'],
+        ArtistsVariables,
         CreateArtist['createArtist'],
+        CreateArtistVariables,
         UpdateArtist['updateArtist'],
+        UpdateArtistVariables,
         DeleteArtists['deleteArtists']> {
 
     constructor(apollo: Apollo) {

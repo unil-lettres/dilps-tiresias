@@ -21,7 +21,7 @@ import {
 } from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
-import { UtilityService } from '../shared/services/utility.service';
+import { shuffleArray } from '../shared/services/utility';
 import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
@@ -293,7 +293,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public goToQuizz(selected = null) {
 
         if (selected) {
-            selected = UtilityService.shuffleArray(selected.map(e => e.id)).join(',');
+            selected = shuffleArray(selected.map(e => e.id)).join(',');
             this.router.navigateByUrl('/quizz;cards=' + selected);
         } else {
             // open box, ask for number of items to display in quizz, and get randomized list pageIndex:0, pageSize:nbItems; sort: random'

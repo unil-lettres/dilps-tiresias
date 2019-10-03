@@ -3,12 +3,15 @@ import { Apollo } from 'apollo-angular';
 
 import {
     CreateInstitution,
+    CreateInstitutionVariables,
     DeleteInstitutions,
     Institution,
     Institutions,
+    InstitutionsVariables,
+    InstitutionVariables,
     UpdateInstitution,
+    UpdateInstitutionVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import {
     createInstitution,
     deleteInstitutions,
@@ -16,15 +19,20 @@ import {
     institutionsQuery,
     updateInstitution,
 } from './institutionQueries';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
 })
 export class InstitutionService
-    extends AbstractModelService<Institution['institution'],
+    extends NaturalAbstractModelService<Institution['institution'],
+        InstitutionVariables,
         Institutions['institutions'],
+        InstitutionsVariables,
         CreateInstitution['createInstitution'],
+        CreateInstitutionVariables,
         UpdateInstitution['updateInstitution'],
+        UpdateInstitutionVariables,
         DeleteInstitutions['deleteInstitutions']> {
 
     constructor(apollo: Apollo) {

@@ -5,7 +5,7 @@ import { CollectionService } from '../../../collections/services/collection.serv
 
 import { UserService } from '../../../users/services/user.service';
 import { UserRole } from '../../generated-types';
-import { Literal } from '../../types';
+import { Literal } from '@ecodev/natural';
 import { AlertService } from '../alert/alert.service';
 
 @Component({

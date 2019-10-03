@@ -7,7 +7,7 @@ import { clone, isArray, isObject, merge } from 'lodash';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, sampleTime } from 'rxjs/operators';
 import { IncrementSubject } from '../../services/increment-subject';
-import { Literal } from '../../types';
+import { Literal } from '@ecodev/natural';
 
 interface ThesaurusModel {
     name: string;

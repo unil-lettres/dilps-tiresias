@@ -6,7 +6,7 @@ files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts)$' | x
 if [ "$files" != "--files=" ]; then
 
     # Run TypeScript syntax check before commit
-    echo "$files" | xargs ./node_modules/.bin/ng lint chez-emmy --
+    echo "$files" | xargs ./node_modules/.bin/ng lint dilps --
     if [ $? -ne 0 ]; then
         pass=false
     fi

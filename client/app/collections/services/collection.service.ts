@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { NaturalAbstractModelService, NaturalLinkMutationService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import {
     Collection,
-    CollectionVariables,
     Collections,
     CollectionsVariables,
+    CollectionVariables,
     CollectionVisibility,
     CreateCollection,
     CreateCollectionVariables,
     DeleteCollections,
     UpdateCollection,
     UpdateCollectionVariables,
+    LinkCollectionToCollection, LinkCollectionToCollectionVariables,
 } from '../../shared/generated-types';
-import { LinkService } from '../../shared/services/link-mutation.service';
 
 import {
     collectionQuery,
@@ -39,7 +39,7 @@ export class CollectionService
         UpdateCollectionVariables,
         DeleteCollections['deleteCollections']> {
 
-    constructor(apollo: Apollo, private linkSvc: LinkService) {
+    constructor(apollo: Apollo, private linkSvc: NaturalLinkMutationService) {
         super(apollo,
             'collection',
             collectionQuery,
@@ -83,7 +83,7 @@ export class CollectionService
     }
 
     public linkCollectionToCollection(sourceCollection, targetCollection) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
             mutation: linkCollectionToCollection,
             variables: {
                 sourceCollection: sourceCollection.id,

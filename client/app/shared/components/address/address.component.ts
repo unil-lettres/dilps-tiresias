@@ -5,8 +5,9 @@ import { FormControl } from '@angular/forms';
 import { } from 'googlemaps';
 import { merge } from 'lodash';
 import { CountryService } from '../../../countries/services/country.service';
-import { Countries } from '../../generated-types';
+import { Countries, CountriesVariables } from '../../generated-types';
 import { AddressService } from './address.service';
+import { NaturalQueryVariablesManager } from '@ecodev/natural';
 
 @Component({
     selector: 'app-address',
@@ -204,7 +205,10 @@ export class AddressComponent implements OnInit {
 
     ngOnInit() {
 
-        this.countryService.getAll({pagination: {pageSize: 9999}}).subscribe(countries => this.countries = countries.items);
+        const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
+        qvm.set('pagination', {pagination: {pageSize: 9999}});
+
+        this.countryService.getAll(qvm).subscribe(countries => this.countries = countries.items);
 
         if (this.model && this.model.latitude && this.model.longitude) {
             this.latitude = this.model.latitude;

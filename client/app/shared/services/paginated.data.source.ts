@@ -11,9 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { get, isEmpty, merge } from 'lodash';
 import * as qs from 'qs';
 import { Observable } from 'rxjs';
-import { Literal } from '../types';
+import { Literal, NaturalUtility } from '@ecodev/natural';
 import { BasicDataSource } from './basic.data.source';
-import { UtilityService } from './utility.service';
 
 export class PaginatedDataSource extends BasicDataSource {
 
@@ -171,7 +170,7 @@ export class PaginatedDataSource extends BasicDataSource {
         this.snapshot.options = options;
 
         // Remove default values from options, to prevent useless data in url that shows up unconditionally
-        const cleanedOptions = UtilityService.cleanSameValues(merge({}, options), this.defaultOptions);
+        const cleanedOptions = NaturalUtility.cleanSameValues(merge({}, options), this.defaultOptions);
         const serialized = qs.stringify(cleanedOptions, this.encodeParams);
 
         // Merge options with other matrix params, and clean options key if empty string

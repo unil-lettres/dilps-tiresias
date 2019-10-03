@@ -4,18 +4,17 @@ import { Apollo } from 'apollo-angular';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    CreateUser,
+    CreateUser, CreateUserVariables,
     DeleteUsers,
     Login,
     Logout,
-    UpdateUser,
+    UpdateUser, UpdateUserVariables,
     User,
     UserRole,
-    Users,
-    UserType,
+    Users, UsersVariables,
+    UserType, UserVariables,
     Viewer,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
 import {
     createUser,
     deleteUsers,
@@ -26,14 +25,19 @@ import {
     usersQuery,
     viewerQuery,
 } from './userQueries';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends AbstractModelService<User['user'],
+export class UserService extends NaturalAbstractModelService<User['user'],
+    UserVariables,
     Users['users'],
+    UsersVariables,
     CreateUser['createUser'],
+    CreateUserVariables,
     UpdateUser['updateUser'],
+    UpdateUserVariables,
     DeleteUsers['deleteUsers']> {
 
     constructor(apollo: Apollo, private router: Router) {
