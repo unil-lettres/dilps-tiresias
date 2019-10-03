@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import {
+    NaturalAlertModule,
     NaturalDropdownComponentsModule,
     NaturalIconModule,
     NaturalRelationsModule,
@@ -194,6 +195,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         NaturalRelationsModule,
         NaturalSelectModule,
         NaturalTableButtonModule,
+        NaturalAlertModule
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
