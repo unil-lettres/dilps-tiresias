@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
-import { NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
+import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
 import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
 import { merge } from 'lodash';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import { takeUntil } from 'rxjs/operators';
 import { CardService } from '../card/services/card.service';
 import { ViewInterface } from '../list/list.component';
 
@@ -13,7 +14,7 @@ import { ViewInterface } from '../list/list.component';
     templateUrl: './view-grid.component.html',
     styleUrls: ['./view-grid.component.scss'],
 })
-export class ViewGridComponent implements OnInit, ViewInterface {
+export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface {
 
     /**
      * Reference to gallery
@@ -40,7 +41,7 @@ export class ViewGridComponent implements OnInit, ViewInterface {
      */
     @Output() public selection: EventEmitter<any[]> = new EventEmitter<any[]>();
 
-    private thumbnailHeight = 450;
+    private thumbnailHeight = 300;
     private enlargedHeight = 2000;
 
     public options: NaturalGalleryOptions = {
@@ -55,11 +56,12 @@ export class ViewGridComponent implements OnInit, ViewInterface {
     };
 
     constructor(private router: Router) {
+        super();
     }
 
     ngOnInit() {
 
-        this.dataSource.internalDataObservable.subscribe(result => {
+        this.dataSource.internalDataObservable.pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
 
             if (!this.gallery) {
                 return;

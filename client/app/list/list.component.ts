@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractList, NaturalPageEvent, NaturalQueryVariablesManager, Sorting } from '@ecodev/natural';
+import { NaturalAbstractList, NaturalPageEvent, NaturalQueryVariablesManager, PaginationInput, Sorting } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
 import { forkJoin } from 'rxjs';
 import { CardService } from '../card/services/card.service';
@@ -101,11 +101,13 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             field: CardSortingField.creationDate,
             order: SortingOrder.DESC,
         },
-        {
-            field: CardSortingField.id,
-            order: SortingOrder.ASC,
-        },
     ];
+
+    protected defaultPagination: PaginationInput = {
+        pageSize: 15,
+        pageIndex: 0,
+        offset: null,
+    };
 
     /**
      * Enum that specified the displayed list
@@ -188,6 +190,10 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
+    protected getDataObservable() {
+        return this.service.watchAll(this.variablesManager, this.ngUnsubscribe, 'network-only');
+    }
+
     public pagination(event: NaturalPageEvent) {
 
         if (this.viewMode === ViewMode.grid) {
@@ -205,6 +211,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public setViewMode(mode: ViewMode) {
         this.viewMode = mode;
         sessionStorage.setItem('view-mode', mode);
+        this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
     }
 
     public sorting(event: Sort[]) {
