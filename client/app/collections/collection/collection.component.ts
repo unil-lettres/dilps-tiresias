@@ -35,14 +35,14 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     public institution;
 
-    constructor(public institutionSvc: InstitutionService,
+    constructor(public institutionService: InstitutionService,
                 service: CollectionService,
-                userSvc: UserService,
-                alertSvc: AlertService,
+                userService: UserService,
+                alertService: AlertService,
                 dialogRef: MatDialogRef<CollectionComponent>,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
-        super(service, alertSvc, dialogRef, userSvc, data);
+        super(service, alertService, dialogRef, userService, data);
     }
 
     public updateVisibility(ev) {

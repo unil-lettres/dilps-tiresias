@@ -18,7 +18,7 @@
                     <input [(ngModel)]="data.item.description" matInput placeholder="Description">
                 </mat-form-field>
 
-                <app-thesaurus (modelChange)="data.item.institution = $event" [model]="institution" [multiple]="false" [service]="institutionSvc" placeholder="Institution"
+                <app-thesaurus (modelChange)="data.item.institution = $event" [model]="institution" [multiple]="false" [service]="institutionService" placeholder="Institution"
                 ></app-thesaurus>
 
                 <mat-slide-toggle *ngIf="user?.role == 'administrator'" [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>

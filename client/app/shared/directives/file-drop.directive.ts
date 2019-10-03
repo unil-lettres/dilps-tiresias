@@ -8,7 +8,7 @@ import { UploadService } from '../services/upload.service';
 })
 export class FileDropDirective extends ngfDrop {
 
-    constructor(element: ElementRef, private uploadSvc: UploadService) {
+    constructor(element: ElementRef, private uploadService: UploadService) {
         super(element);
 
         const overlay: HTMLElement = document.createElement('div');
@@ -29,7 +29,7 @@ export class FileDropDirective extends ngfDrop {
             });
 
         this.filesChange.subscribe((data: File[]) => {
-            uploadSvc.filesChanged.next(data);
+            uploadService.filesChanged.next(data);
         });
     }
 
@@ -37,7 +37,7 @@ export class FileDropDirective extends ngfDrop {
      * Prevent drag and drop if disabled or if nobody is waiting for files
      */
     @HostListener('dragover', ['$event']) onDragOver(event: Event): void {
-        if (this.fileDropDisabled || this.uploadSvc.filesChanged.observers.length === 0) {
+        if (this.fileDropDisabled || this.uploadService.filesChanged.observers.length === 0) {
             return;
         }
 

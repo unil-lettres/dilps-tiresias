@@ -245,7 +245,7 @@
                                [multiple]="false"
                                [previewComponent]="institutionComponent"
                                [readonly]="!isEdit()"
-                               [service]="institutionSvc"
+                               [service]="institutionService"
                                matTooltipPosition="after"
                                placeholder="Institution"
                 ></app-thesaurus>
@@ -313,7 +313,7 @@
                         <natural-relations [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
                                            [disabled]="!isEdit()"
                                            [main]="model"
-                                           [service]="cardSvc"
+                                           [service]="cardService"
                                            placeholder="Chercher une fiche"
                         >
                             <ng-template let-item="item">

@@ -19,15 +19,15 @@ export class AppComponent implements OnInit {
      */
     public initialized: boolean;
 
-    constructor(private themeSvc: ThemeService, private overlayContainer: OverlayContainer) {
+    constructor(private themeService: ThemeService, private overlayContainer: OverlayContainer) {
     }
 
     public ngOnInit() {
 
-        this.themeSvc.theme.subscribe(newTheme => {
+        this.themeService.theme.subscribe(newTheme => {
 
             // Remove old theme class from overlay (dialogs, snackbars, etc...)
-            this.themeSvc.themes.forEach(them => {
+            this.themeService.themes.forEach(them => {
                 this.overlayContainer.getContainerElement().classList.remove(them);
                 this.overlayContainer.getContainerElement().classList.remove(them + 'Dark');
             });

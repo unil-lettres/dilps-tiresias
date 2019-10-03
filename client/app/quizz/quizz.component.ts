@@ -23,7 +23,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
     private formChangeSub;
 
     constructor(private route: ActivatedRoute,
-                private cardSvc: CardService) {
+                private cardService: CardService) {
     }
 
     ngOnDestroy() {
@@ -61,7 +61,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         }
 
         const index = this.cards.findIndex(c => c === id);
-        this.cardSvc.getOne(id).subscribe((card: any) => {
+        this.cardService.getOne(id).subscribe((card: any) => {
             this.currentIndex = index;
             this.selectCard(card);
         });

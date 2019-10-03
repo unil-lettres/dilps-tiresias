@@ -5,7 +5,7 @@
         <div class="padding" fxLayout="column">
             <natural-select [(ngModel)]="collection"
                             [filter]="listFilter"
-                            [service]="collectionSvc"
+                            [service]="collectionService"
                             placeholder="Sélectionnez la collection"
             ></natural-select>
             <div fxFlexAlign="end" fxLayout="row">
@@ -28,7 +28,7 @@
             <natural-select *ngIf="listFilter"
                             [(ngModel)]="newCollection.parent"
                             [filter]="listFilter"
-                            [service]="collectionSvc"
+                            [service]="collectionService"
                             placeholder="Collection parente"
             ></natural-select>
 

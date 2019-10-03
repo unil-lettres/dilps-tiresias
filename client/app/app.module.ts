@@ -202,8 +202,8 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
 })
 export class AppModule {
     constructor(apollo: Apollo,
-                networkActivitySvc: NetworkActivityService,
-                alertSvc: AlertService,
+                networkActivityService: NetworkActivityService,
+                alertService: AlertService,
                 private dateAdapter: DateAdapter<Date>) {
 
         dateAdapter.setLocale('fr-ch');
@@ -214,9 +214,9 @@ export class AppModule {
         });
 
         const middleware = new ApolloLink((operation, forward) => {
-            networkActivitySvc.increase();
+            networkActivityService.increase();
             return forward(operation).map(response => {
-                networkActivitySvc.decrease();
+                networkActivityService.decrease();
                 return response;
             });
         });
@@ -225,16 +225,16 @@ export class AppModule {
 
             // Network errors seems not to be catched by above middleware, and we need to be informed to decrease pending queries
             if (networkError) {
-                alertSvc.error('Une erreur est survenue sur le réseau');
-                networkActivitySvc.decrease();
+                alertService.error('Une erreur est survenue sur le réseau');
+                networkActivityService.decrease();
             }
 
             // Graphql responses with errors are valid responses and are catched by the above middleware.
             // There seems to be no need to do something here
             // Seems we have no need to deal
             if (graphQLErrors) {
-                alertSvc.error('Une erreur est survenue du côté du serveur');
-                networkActivitySvc.updateErrors(graphQLErrors);
+                alertService.error('Une erreur est survenue du côté du serveur');
+                networkActivityService.updateErrors(graphQLErrors);
             }
         });
 

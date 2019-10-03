@@ -25,12 +25,12 @@ export class ChangeComponent implements OnInit {
                 private router: Router,
                 private changeService: ChangeService,
                 private cardService: CardService,
-                private userSvc: UserService) {
+                private userService: UserService) {
     }
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => this.user = user);
+        this.userService.getCurrentUser().subscribe(user => this.user = user);
 
         if (this.route.snapshot.params['changeId']) {
             this.changeService.getOne(this.route.snapshot.params['changeId']).subscribe(change => {

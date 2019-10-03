@@ -45,13 +45,13 @@ export class CollectionsComponent extends NaturalAbstractController implements O
                 private router: Router,
                 private collectionsService: CollectionService,
                 private dialog: MatDialog,
-                private userSvc: UserService) {
+                private userService: UserService) {
         super();
     }
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
             this.showEditButtons = this.showEditionButtons();
             this.canCreate = this.showCreateButton(this.route.snapshot.data.creationButtonForRoles, this.user);

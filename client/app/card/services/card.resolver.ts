@@ -8,7 +8,7 @@ import { CardService } from './card.service';
 })
 export class CardResolver implements Resolve<any> {
 
-    constructor(private cardSvc: CardService) {
+    constructor(private cardService: CardService) {
     }
 
     /**
@@ -17,7 +17,7 @@ export class CardResolver implements Resolve<any> {
     public resolve(route: ActivatedRouteSnapshot): Observable<any> {
 
         if (route.params['cardId']) {
-            return this.cardSvc.getOne(route.params['cardId']);
+            return this.cardService.getOne(route.params['cardId']);
         }
 
     }

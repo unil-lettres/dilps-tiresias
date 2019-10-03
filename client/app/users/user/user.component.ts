@@ -35,12 +35,12 @@ export class UserComponent extends AbstractDetail {
 
     constructor(public institutionService: InstitutionService,
                 service: UserService,
-                alertSvc: AlertService,
-                userSvc: UserService,
+                alertService: AlertService,
+                userService: UserService,
                 dialogRef: MatDialogRef<ArtistComponent>,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
-        super(service, alertSvc, dialogRef, userSvc, data);
+        super(service, alertService, dialogRef, userService, data);
 
         this.roles = service.getRoles();
 

@@ -10,8 +10,8 @@ export class MassEditComponent implements OnInit {
 
     public card;
 
-    constructor(private cardSvc: CardService) {
-        const card = cardSvc.getConsolidatedForClient();
+    constructor(private cardService: CardService) {
+        const card = cardService.getConsolidatedForClient();
         card.visibility = null;
         this.card = card;
     }

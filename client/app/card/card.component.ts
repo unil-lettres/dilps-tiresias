@@ -63,15 +63,15 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
-                private changeSvc: ChangeService,
-                public themeSvc: ThemeService,
-                public cardSvc: CardService,
-                private alertSvc: AlertService,
+                private changeService: ChangeService,
+                public themeService: ThemeService,
+                public cardService: CardService,
+                private alertService: AlertService,
                 public artistService: ArtistService,
-                public institutionSvc: InstitutionService,
-                private uploadSvc: UploadService,
+                public institutionService: InstitutionService,
+                private uploadService: UploadService,
                 private dialog: MatDialog,
-                private userSvc: UserService) {
+                private userService: UserService) {
     }
 
     @Input()
@@ -82,7 +82,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
 
@@ -138,7 +138,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public watchUpload() {
-        this.uploadSub = this.uploadSvc.filesChanged.subscribe(files => {
+        this.uploadSub = this.uploadService.filesChanged.subscribe(files => {
             const file = files[files.length - 1];
             this.model.file = file;
             this.getBase64(file);
@@ -188,8 +188,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public update() {
-        this.cardSvc.update(this.model).subscribe((card: any) => {
-            this.alertSvc.info('Mis à jour');
+        this.cardService.update(this.model).subscribe((card: any) => {
+            this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
             this.edit = false;
@@ -197,8 +197,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public create() {
-        this.cardSvc.create(this.model).subscribe(card => {
-            this.alertSvc.info('Créé');
+        this.cardService.create(this.model).subscribe(card => {
+            this.alertService.info('Créé');
             this.router.navigate([
                 '..',
                 card.id,
@@ -207,11 +207,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public confirmDelete() {
-        this.alertSvc.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardSvc.delete(this.model).subscribe(() => {
-                        this.alertSvc.info('Supprimé');
+                    this.cardService.delete(this.model).subscribe(() => {
+                        this.alertService.info('Supprimé');
                         this.router.navigateByUrl('/');
                     });
                 }
@@ -223,13 +223,13 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public suggestDeletion() {
-        this.changeSvc.suggestDeletion(this.model).subscribe(() => {
+        this.changeService.suggestDeletion(this.model).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
     public suggestCreation() {
-        this.changeSvc.suggestCreation(this.model).subscribe(() => {
+        this.changeService.suggestCreation(this.model).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
@@ -249,14 +249,14 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public validateData() {
-        this.cardSvc.validateData(this.model).subscribe(() => {
-            this.alertSvc.info('Donnée validée');
+        this.cardService.validateData(this.model).subscribe(() => {
+            this.alertService.info('Donnée validée');
         });
     }
 
     public validateImage() {
-        this.cardSvc.validateImage(this.model).subscribe(() => {
-            this.alertSvc.info('Image validée');
+        this.cardService.validateImage(this.model).subscribe(() => {
+            this.alertService.info('Image validée');
         });
     }
 

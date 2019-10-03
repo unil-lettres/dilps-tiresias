@@ -23,16 +23,16 @@ export class CollectionSelectorComponent implements OnInit {
         parent: null,
     };
 
-    constructor(public collectionSvc: CollectionService,
+    constructor(public collectionService: CollectionService,
                 private dialogRef: MatDialogRef<ArtistComponent>,
-                private userSvc: UserService,
-                private alertSvc: AlertService,
+                private userService: UserService,
+                private alertService: AlertService,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             if (user.role !== UserRole.administrator) {
                 this.listFilter = {groups: [{conditions: [{creator: {equal: {value: user.id}}}]}]};
             }
@@ -48,15 +48,15 @@ export class CollectionSelectorComponent implements OnInit {
     }
 
     public unlink(image, collection) {
-        this.collectionSvc.unlink(collection, [image]).subscribe(() => {
+        this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
             image.collections.splice(index, 1);
-            this.alertSvc.info('Fiche retirée de la collection');
+            this.alertService.info('Fiche retirée de la collection');
         });
     }
 
     public createAndLink(): void {
-        this.collectionSvc.create(this.newCollection).subscribe(collection => {
+        this.collectionService.create(this.newCollection).subscribe(collection => {
             this.linkInternal(collection);
         });
     }
@@ -64,9 +64,9 @@ export class CollectionSelectorComponent implements OnInit {
     private linkInternal(collection): void {
         let observable;
         if (this.data.images) {
-            observable = this.collectionSvc.link(collection, this.data.images);
+            observable = this.collectionService.link(collection, this.data.images);
         } else {
-            observable = this.collectionSvc.linkCollectionToCollection(this.data.collection, collection);
+            observable = this.collectionService.linkCollectionToCollection(this.data.collection, collection);
         }
 
         observable.subscribe(() => {
@@ -74,7 +74,7 @@ export class CollectionSelectorComponent implements OnInit {
                 this.data.images[0].collections.push(collection);
             }
             this.dialogRef.close(collection);
-            this.alertSvc.info('Fiches ajoutées');
+            this.alertService.info('Fiches ajoutées');
         });
 
     }

@@ -76,7 +76,7 @@
                             </a>
 
                             <!-- Logout -->
-                            <a (click)="userSvc.logout()" mat-list-item matTooltip="Se déconnecter" matTooltipPosition="after">
+                            <a (click)="userService.logout()" mat-list-item matTooltip="Se déconnecter" matTooltipPosition="after">
                                 <mat-icon mat-list-icon>exit_to_app</mat-icon>
                             </a>
                         </mat-nav-list>
@@ -92,7 +92,7 @@
                         </a>
 
                         <!-- Logout -->
-                        <a (click)="userSvc.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
+                        <a (click)="userService.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
                             <mat-icon mat-list-icon>account_circle</mat-icon>
                         </a>
                     </mat-nav-list>
@@ -105,7 +105,7 @@
 
                     <mat-nav-list>
                         <!-- Theme -->
-                        <a (click)="themeSvc.toggle()" mat-list-item>
+                        <a (click)="themeService.toggle()" mat-list-item>
                             <mat-icon mat-list-icon>invert_colors</mat-icon>
                             <span matLine>Changer couleurs</span>
                         </a>

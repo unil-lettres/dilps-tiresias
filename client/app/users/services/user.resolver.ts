@@ -9,14 +9,14 @@ import { UserService } from './user.service';
 })
 export class UserResolver implements Resolve<any> {
 
-    constructor(private userSvc: UserService) {
+    constructor(private userService: UserService) {
     }
 
     /**
      * Resolve sites for routing service only at the moment
      */
     public resolve(route: ActivatedRouteSnapshot): Observable<Viewer['viewer']> {
-        return this.userSvc.getCurrentUser();
+        return this.userService.getCurrentUser();
     }
 
 }

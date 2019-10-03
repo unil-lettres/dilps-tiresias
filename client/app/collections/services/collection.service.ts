@@ -40,7 +40,7 @@ export class CollectionService
         UpdateCollectionVariables,
         DeleteCollections['deleteCollections']> {
 
-    constructor(apollo: Apollo, private linkSvc: NaturalLinkMutationService) {
+    constructor(apollo: Apollo, private linkService: NaturalLinkMutationService) {
         super(apollo,
             'collection',
             collectionQuery,
@@ -68,7 +68,7 @@ export class CollectionService
     public link(collection, images) {
         const observables = [];
         images.forEach(image => {
-            observables.push(this.linkSvc.link(collection, image));
+            observables.push(this.linkService.link(collection, image));
         });
 
         return forkJoin(observables);
@@ -77,7 +77,7 @@ export class CollectionService
     public unlink(collection, images) {
         const observables = [];
         images.forEach(image => {
-            observables.push(this.linkSvc.unlink(collection, image));
+            observables.push(this.linkService.unlink(collection, image));
         });
 
         return forkJoin(observables);

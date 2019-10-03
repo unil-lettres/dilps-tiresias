@@ -23,15 +23,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     public nav = 1;
     private routeParamsSub;
 
-    constructor(public themeSvc: ThemeService,
+    constructor(public themeService: ThemeService,
                 public route: ActivatedRoute,
                 public router: Router,
-                public userSvc: UserService,
+                public userService: UserService,
                 private network: NetworkActivityService,
                 private snackBar: MatSnackBar,
-                private alertSvc: AlertService,
+                private alertService: AlertService,
                 private dialog: MatDialog,
-                private cardSvc: CardService) {
+                private cardService: CardService) {
 
         this.network.errors.next([]);
     }
@@ -45,11 +45,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.network.errors.subscribe(errors => {
             this.errors = this.errors.concat(errors);
             if (errors.length) {
-                this.alertSvc.error('Quelque chose s\'est mal passé !');
+                this.alertService.error('Quelque chose s\'est mal passé !');
             }
         });
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
 
@@ -63,9 +63,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     public uploadPhoto(files) {
         const observables = [];
         for (const file of files) {
-            const card = this.cardSvc.getConsolidatedForClient();
+            const card = this.cardService.getConsolidatedForClient();
             card.file = file;
-            observables.push(this.cardSvc.create(card));
+            observables.push(this.cardService.create(card));
         }
         files.length = 0;
         forkJoin(observables).subscribe(() => {
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     public editUser() {
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.dialog.open(UserComponent, {
                 width: '800px',
                 data: {item: user},
