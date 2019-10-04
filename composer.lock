@@ -1143,16 +1143,16 @@
         },
         {
             "name": "ecodev/graphql-doctrine",
-            "version": "6.1.0",
+            "version": "6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/graphql-doctrine.git",
-                "reference": "9f92ed5804db741673cef2d0e6bd3a9c44eee5cd"
+                "reference": "4db4c633f44db7db20f70470bf98b9864e4a9907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/9f92ed5804db741673cef2d0e6bd3a9c44eee5cd",
-                "reference": "9f92ed5804db741673cef2d0e6bd3a9c44eee5cd",
+                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/4db4c633f44db7db20f70470bf98b9864e4a9907",
+                "reference": "4db4c633f44db7db20f70470bf98b9864e4a9907",
                 "shasum": ""
             },
             "require": {
@@ -1184,7 +1184,7 @@
                 "doctrine-orm",
                 "graphql"
             ],
-            "time": "2019-02-07T05:19:50+00:00"
+            "time": "2019-10-04T19:38:33+00:00"
         },
         {
             "name": "ecodev/graphql-upload",
