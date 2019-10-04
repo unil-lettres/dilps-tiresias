@@ -56,8 +56,8 @@ class TypesFactory
             'aliases' => $aliases,
             'services' => [
 //                // This is not quite right because it allow to compare a string with a json array.
-//                // TODO: either hide the json_array filter or find a cleaner solution
-//                'json_array' => GraphQL\Type\Definition\Type::string(),
+//                // TODO: either hide the json filter or find a cleaner solution
+                'json' => \GraphQL\Type\Definition\Type::string(),
             ],
             'abstract_factories' => [
                 \Application\Api\Output\PaginationTypeFactory::class,

@@ -11,7 +11,13 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
+use Application\Model\DocumentType;
+use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\Material;
+use Application\Model\News;
+use Application\Model\Period;
+use Application\Model\Statistic;
 use Application\Model\User;
 use GraphQL\Type\Definition\ObjectType;
 
@@ -32,7 +38,13 @@ class QueryType extends ObjectType
             Standard::buildQuery(Card::class),
             Standard::buildQuery(Institution::class),
             Standard::buildQuery(User::class),
-            Standard::buildQuery(Country::class)
+            Standard::buildQuery(Country::class),
+            Standard::buildQuery(DocumentType::class),
+            Standard::buildQuery(Domain::class),
+            Standard::buildQuery(Material::class),
+            Standard::buildQuery(News::class),
+            Standard::buildQuery(Period::class),
+            Standard::buildQuery(Statistic::class),
         );
 
         $config = [

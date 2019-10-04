@@ -18,7 +18,12 @@ use Application\Api\Field\Standard;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Collection;
+use Application\Model\DocumentType;
+use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\Material;
+use Application\Model\News;
+use Application\Model\Period;
 use Application\Model\User;
 use GraphQL\Type\Definition\ObjectType;
 
@@ -47,8 +52,14 @@ class MutationType extends ObjectType
             Standard::buildMutation(Institution::class),
             Standard::buildMutation(Card::class),
             Standard::buildMutation(User::class),
+            Standard::buildMutation(DocumentType::class),
+            Standard::buildMutation(Domain::class),
+            Standard::buildMutation(Material::class),
+            Standard::buildMutation(News::class),
+            Standard::buildMutation(Period::class),
             Standard::buildRelationMutation(Collection::class, Card::class),
-            Standard::buildRelationMutation(Card::class, Card::class)
+            Standard::buildRelationMutation(Card::class, Card::class),
+            Standard::buildRelationMutation(Card::class, Material::class),
         );
 
         $config = [

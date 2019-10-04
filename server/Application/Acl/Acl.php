@@ -16,7 +16,13 @@ use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\Dating;
+use Application\Model\DocumentType;
+use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\Material;
+use Application\Model\News;
+use Application\Model\Period;
+use Application\Model\Statistic;
 use Application\Model\Tag;
 use Application\Model\User;
 use Doctrine\Common\Util\ClassUtils;
@@ -48,12 +54,24 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->addResource(new ModelResource(Tag::class));
         $this->addResource(new ModelResource(User::class));
 
+        $this->addResource(new ModelResource(DocumentType::class));
+        $this->addResource(new ModelResource(Domain::class));
+        $this->addResource(new ModelResource(Material::class));
+        $this->addResource(new ModelResource(News::class));
+        $this->addResource(new ModelResource(Period::class));
+        $this->addResource(new ModelResource(Statistic::class));
+
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Artist::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Card::class), 'read', new Visibility([Card::VISIBILITY_PUBLIC]));
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Country::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Dating::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Institution::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Tag::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(DocumentType::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Domain::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Material::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(News::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Period::class), 'read');
 
         $this->allow(User::ROLE_STUDENT, new ModelResource(Artist::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'create');
@@ -85,6 +103,12 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(DocumentType::class));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Domain::class));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Material::class));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(News::class));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Period::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read');
     }
 
     /**
