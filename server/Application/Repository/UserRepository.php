@@ -76,9 +76,9 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      */
     public function getOneByLogin(?string $login): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneByLogin($login);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($login) {
+            return $this->findOneByLogin($login);
+        });
 
         return $user;
     }
@@ -94,9 +94,9 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      */
     public function getOneById(int $id): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneById($id);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($id) {
+            return $this->findOneById($id);
+        });
 
         return $user;
     }
@@ -106,15 +106,15 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      *
      * This should only be used in tests or controlled environment.
      *
-     * @param null|string $mail
+     * @param null|string $email
      *
      * @return null|User
      */
-    public function getOneByEmail(?string $mail): ?User
+    public function getOneByEmail(?string $email): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneBy(['email' => $mail]);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($email) {
+            return $this->findOneByEmail($email);
+        });
 
         return $user;
     }
