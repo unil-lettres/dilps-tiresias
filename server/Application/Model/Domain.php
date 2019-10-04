@@ -12,19 +12,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A tag
+ * A domain
  *
- * @ORM\Entity(repositoryClass="Application\Repository\TagRepository")
+ * @ORM\Entity(repositoryClass="Application\Repository\DomainRepository")
  */
-class Tag extends AbstractModel implements HasParentInterface
+class Domain extends AbstractModel implements HasParentInterface
 {
     use HasName;
     use HasParent;
 
     /**
-     * @var Tag
+     * @var Domain
      *
-     * @ORM\ManyToOne(targetEntity="Tag", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Domain", inversedBy="children")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="CASCADE")
      * })
@@ -34,7 +34,7 @@ class Tag extends AbstractModel implements HasParentInterface
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Domain", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})
      */
     private $children;

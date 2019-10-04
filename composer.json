@@ -27,6 +27,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.3",
+        "ext-calendar": "*",
         "ext-fileinfo": "*",
         "ext-json": "*",
         "ext-gd": "*",

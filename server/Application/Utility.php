@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application;
 
 use DateTimeImmutable;
+use DateTimeZone;
 
 abstract class Utility
 {
@@ -59,5 +60,19 @@ abstract class Utility
             echo '    ' . escapeshellarg($file) . PHP_EOL;
         }
         echo PHP_EOL;
+    }
+
+    public static function dateToJulian(DateTimeImmutable $date): int
+    {
+        return gregoriantojd((int) $date->format('m'), (int) $date->format('d'), (int) $date->format('Y'));
+    }
+
+    public static function julianToDate(int $date): DateTimeImmutable
+    {
+        $parts = explode('/', jdtogregorian($date));
+
+        $result = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+
+        return $result->setDate((int) $parts[2], (int) $parts[0], (int) $parts[1])->setTime(0, 0, 0, 0);
     }
 }

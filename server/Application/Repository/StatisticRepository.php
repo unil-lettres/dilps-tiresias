@@ -1,0 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Application\Repository;
+
+class StatisticRepository extends AbstractRepository
+{
+}

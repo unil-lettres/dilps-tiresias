@@ -46,15 +46,27 @@ trait CardSimpleProperties
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=60, options={"default" = ""})
+     */
+    private $techniqueDate = '';
+
+    /**
+     * @var string
      * @ORM\Column(type="string", options={"default" = ""})
      */
     private $format = '';
 
     /**
      * @var string
-     * @ORM\Column(type="string", options={"default" = ""})
+     * @ORM\Column(type="text", options={"default" = ""})
      */
     private $literature = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", options={"default" = ""})
+     */
+    private $objectReference = '';
 
     /**
      * @var string
@@ -76,7 +88,7 @@ trait CardSimpleProperties
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20, options={"default" = ""})
+     * @ORM\Column(type="string", length=30, options={"default" = ""})
      */
     private $isbn = '';
 
@@ -103,6 +115,12 @@ trait CardSimpleProperties
      * @ORM\Column(type="string", options={"default" = ""})
      */
     private $muserisCote = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=60, options={"default" = ""})
+     */
+    private $productionPlace = '';
 
     /**
      * @return string
@@ -187,6 +205,22 @@ trait CardSimpleProperties
     /**
      * @return string
      */
+    public function getTechniqueDate(): string
+    {
+        return $this->techniqueDate;
+    }
+
+    /**
+     * @param string $techniqueDate
+     */
+    public function setTechniqueDate(string $techniqueDate): void
+    {
+        $this->techniqueDate = $techniqueDate;
+    }
+
+    /**
+     * @return string
+     */
     public function getFormat(): string
     {
         return $this->format;
@@ -214,6 +248,22 @@ trait CardSimpleProperties
     public function setLiterature(string $literature): void
     {
         $this->literature = $literature;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectReference(): string
+    {
+        return $this->objectReference;
+    }
+
+    /**
+     * @param string $objectReference
+     */
+    public function setObjectReference(string $objectReference): void
+    {
+        $this->objectReference = $objectReference;
     }
 
     /**
@@ -342,5 +392,21 @@ trait CardSimpleProperties
     public function setMuserisCote(string $muserisCote): void
     {
         $this->muserisCote = $muserisCote;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductionPlace(): string
+    {
+        return $this->productionPlace;
+    }
+
+    /**
+     * @param string $productionPlace
+     */
+    public function setProductionPlace(string $productionPlace): void
+    {
+        $this->productionPlace = $productionPlace;
     }
 }
