@@ -4,7 +4,6 @@
 --
 -- A quick way to ensure all those assumptions and do the migration are the following commands:
 --
---     ./vendor/bin/doctrine orm:schema-tool:drop --full-database --force
 --     ./vendor/bin/doctrine-migrations migrations:migrate --no-interaction
 --     echo 'RENAME TABLE news TO new_news;' | mysql -u dilps -p dilps
 --     more data/cache/tiresias_dump.sql | mysql -u dilps -p dilps
@@ -316,7 +315,7 @@ FROM matimg;
 -- Link card to tag
 INSERT INTO card_tag (card_id, tag_id)
 SELECT img_id + @card_offset,
-    keyword_id
+    keyword_id + @tag_offset
 FROM kwimg;
 
 -- Link card to collection
@@ -339,3 +338,23 @@ FROM old_news;
 COMMIT;
 
 DROP PROCEDURE createRelationBetweenCollectionAndCard;
+
+-- Drop migrated tables
+DROP TABLE `city`;
+DROP TABLE `contributors`;
+DROP TABLE `domaines`;
+DROP TABLE `fonds`;
+DROP TABLE `kwimg`;
+DROP TABLE `lieux`;
+DROP TABLE `login`;
+DROP TABLE `materiaux`;
+DROP TABLE `matimg`;
+DROP TABLE `meta`;
+DROP TABLE `motscles`;
+DROP TABLE `musees`;
+DROP TABLE `old_news`;
+DROP TABLE `panier`;
+DROP TABLE `periodes`;
+DROP TABLE `restitutiontypes`;
+DROP TABLE `stats`;
+DROP TABLE `users`;
