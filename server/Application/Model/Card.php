@@ -281,7 +281,7 @@ class Card extends AbstractModel
         }
         $this->dating = $dating;
 
-        $this->computeDatings($dating);
+        $this->computeDatings();
     }
 
     /**

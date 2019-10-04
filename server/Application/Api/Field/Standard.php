@@ -87,7 +87,6 @@ abstract class Standard
         $reflect = new ReflectionClass($class);
         $name = $reflect->getShortName();
         $plural = self::makePlural($name);
-        $lowerName = lcfirst($name);
 
         return [
             [
@@ -97,7 +96,7 @@ abstract class Standard
                 'args' => [
                     'input' => Type::nonNull(_types()->getInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($class, $lowerName): AbstractModel {
+                'resolve' => function ($root, array $args) use ($class): AbstractModel {
                     // Check ACL
                     $object = new $class();
                     Helper::throwIfDenied($object, 'create');
@@ -119,7 +118,7 @@ abstract class Standard
                     'id' => Type::nonNull(_types()->getId($class)),
                     'input' => Type::nonNull(_types()->getPartialInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): AbstractModel {
+                'resolve' => function ($root, array $args): AbstractModel {
                     $object = $args['id']->getEntity();
 
                     // Check ACL
@@ -141,7 +140,7 @@ abstract class Standard
                 'args' => [
                     'ids' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getId($class)))),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): bool {
+                'resolve' => function ($root, array $args): bool {
                     foreach ($args['ids'] as $id) {
                         $object = $id->getEntity();
 

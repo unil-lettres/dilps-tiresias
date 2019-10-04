@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppTest\Api;
+namespace ApplicationTest\Api;
 
 use Application\Api\Server;
 use Application\Model\User;

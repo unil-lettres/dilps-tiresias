@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ApplicationTest\ORM\Query\Filter;
+namespace ApplicationTest\Api;
 
 use Application\Api\DefaultFieldResolver;
 use Application\Api\Schema;
