@@ -17,7 +17,7 @@ return [
         'variables' => [
             'inputUser' => [
                 'login' => 'testlogin',
-                'email' => 'test email',
+                'email' => 'test@email.com',
                 'type' => User::TYPE_DEFAULT,
                 'role' => User::ROLE_STUDENT,
             ],
@@ -28,7 +28,7 @@ return [
             'updateUser' => [
                 'id' => 1003,
                 'login' => 'testlogin',
-                'email' => 'test email',
+                'email' => 'test@email.com',
                 'type' => User::TYPE_DEFAULT,
             ],
         ],

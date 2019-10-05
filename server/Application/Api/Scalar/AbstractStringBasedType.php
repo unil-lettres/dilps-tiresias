@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace Application\Api\Scalar;
 
-use DateTimeImmutable;
-use DateTimeInterface;
 use GraphQL\Error\Error;
 use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Utils\Utils;
 
-class DateTimeType extends ScalarType
+abstract class AbstractStringBasedType extends ScalarType
 {
     /**
-     * @var string
+     * Validate value
+     *
+     * @param mixed $value
+     *
+     * @return bool
      */
-    public $description = 'A date with time and timezone.';
+    abstract protected function isValid($value): bool;
 
     /**
      * Serializes an internal value to include in a response.
@@ -28,10 +30,7 @@ class DateTimeType extends ScalarType
      */
     public function serialize($value)
     {
-        if ($value instanceof DateTimeInterface) {
-            return $value->format('c');
-        }
-
+        // Assuming internal representation of url is always correct:
         return $value;
     }
 
@@ -44,24 +43,17 @@ class DateTimeType extends ScalarType
      */
     public function parseValue($value)
     {
-        if (!is_string($value)) {
-            throw new \UnexpectedValueException('Cannot represent value as date: ' . Utils::printSafe($value));
+        if (!$this->isValid($value)) {
+            throw new \UnexpectedValueException('Query error: Not a valid ' . $this->name . ': ' . Utils::printSafe($value));
         }
 
-        if ($value === '') {
-            return null;
-        }
-
-        $date = new DateTimeImmutable($value);
-        $date = $date->setTimezone(new \DateTimeZone(date_default_timezone_get()));
-
-        return $date;
+        return $value;
     }
 
     /**
      * Parses an externally provided literal value to use as an input (e.g. in Query AST)
      *
-     * @param Node $ast
+     * @param $ast Node
      * @param null|array $variables
      *
      * @return null|string
@@ -72,6 +64,10 @@ class DateTimeType extends ScalarType
         // error location in query:
         if (!($ast instanceof StringValueNode)) {
             throw new Error('Query error: Can only parse strings got: ' . $ast->kind, [$ast]);
+        }
+
+        if (!$this->isValid($ast->value)) {
+            throw new Error('Query error: Not a valid ' . $this->name, [$ast]);
         }
 
         return $ast->value;

@@ -181,6 +181,8 @@ class User extends AbstractModel
     /**
      * Set email
      *
+     * @API\Input(type="Email")
+     *
      * @param string $email
      */
     public function setEmail(string $email): void
@@ -190,6 +192,8 @@ class User extends AbstractModel
 
     /**
      * Get email
+     *
+     * @API\Field(type="Email")
      *
      * @return string
      */

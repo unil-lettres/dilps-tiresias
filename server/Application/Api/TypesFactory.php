@@ -36,6 +36,8 @@ class TypesFactory
             \Application\Api\QueryType::class,
             \Application\Api\Scalar\DateTimeType::class,
             \Application\Api\Scalar\LoginType::class,
+            \Application\Api\Scalar\EmailType::class,
+            \Application\Api\Scalar\UrlType::class,
             \GraphQL\Upload\UploadType::class,
         ];
 

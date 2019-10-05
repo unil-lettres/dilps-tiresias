@@ -8,6 +8,7 @@ use Application\Traits\HasImage;
 use Application\Traits\HasName;
 use Application\Traits\HasSorting;
 use Doctrine\ORM\Mapping as ORM;
+use GraphQL\Doctrine\Annotation as API;
 
 /**
  * A news
@@ -66,6 +67,8 @@ class News extends AbstractModel
     }
 
     /**
+     * @API\Field(type="Url")
+     *
      * @return string
      */
     public function getUrl(): string
@@ -74,6 +77,8 @@ class News extends AbstractModel
     }
 
     /**
+     * @API\Input(type="Url")
+     *
      * @param string $url
      */
     public function setUrl(string $url): void
