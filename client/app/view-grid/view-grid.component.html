@@ -3,7 +3,7 @@
         <natural-gallery #gallery
                          (activate)="activate($event)"
                          (pagination)="loadMore($event)"
-                         (select)="selection.emit($event)"
+                         (select)="selectionChange.emit($event)"
                          [options]="options"
                          [scrollable]="scrollable.directiveRef.elementRef.nativeElement"
                          class="padding"

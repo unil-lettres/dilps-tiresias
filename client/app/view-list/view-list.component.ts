@@ -1,5 +1,7 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
+import { PageEvent } from '@angular/material';
+import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { ViewInterface } from '../list/list.component';
 
@@ -8,7 +10,7 @@ import { ViewInterface } from '../list/list.component';
     templateUrl: './view-list.component.html',
     styleUrls: ['./view-list.component.scss'],
 })
-export class ViewListComponent implements OnInit, ViewInterface {
+export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
 
     /**
      * Reference to scrollable element
@@ -28,26 +30,29 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Emits when some cards are selected
      */
-    @Output() public selection: EventEmitter<any[]> = new EventEmitter<any[]>();
+    @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
+
+    public selectionModel = new SelectionModel(true);
 
     constructor() {
+        super();
     }
 
     ngOnInit() {
+        this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));
     }
 
-    public loadMore(event: NaturalPageEvent) {
-        this.pagination.emit(event);
-    }
-
-    public trackFn(item) {
-        return item.id;
+    public loadMore(event: PageEvent) {
+        this.selectionModel.clear();
+        this.pagination.emit(event as NaturalPageEvent);
     }
 
     public selectAll(): any[] {
-        return [];
+        this.selectionModel.select(...this.dataSource.data.items);
+        return this.selectionModel.selected;
     }
 
     public unselectAll(): void {
+        this.selectionModel.clear();
     }
 }

@@ -1,15 +1,24 @@
 <perfect-scrollbar #scrollable>
 
-    <div fxFlex fxLayout="column" class="padding mat-body">
+    <div class="padding scrolled">
 
+        <div *ngFor="let item of dataSource.data.items" class="line">
 
-        <div class="scrolled" fxFlex fxLayout="column">
-            <pre class="debug">dataSource.data.items.length : {{ dataSource.data.items.length | json }}</pre>
-
-            <div *ngFor="let item of dataSource.data.items; trackBy: trackFn; let i = index">
-                {{ i }} - {{ item.name }}
+            <div class="image-wrapper">
+                <div class="image" [ngStyle]="{'background-image': 'url(/image/'+ item.id + '/200)'}"></div>
             </div>
 
+            <div class="line-body">
+                <div>{{ item.name }}</div>
+                <div>{{ item.expandedName }}</div>
+                <a mat-flat-button [routerLink]="['/card', item.id]">Voir fiche</a>
+            </div>
+            <div>
+                <mat-checkbox (change)="$event ? selectionModel.toggle(item) : null"
+                              (click)="$event.stopPropagation()"
+                              [checked]="selectionModel.isSelected(item)"
+                ></mat-checkbox>
+            </div>
         </div>
 
         <mat-paginator *ngIf="dataSource.data?.length"
@@ -19,6 +28,7 @@
                        [pageSizeOptions]="[5, 10, 20, 50]"
                        (page)="loadMore($event)"
         ></mat-paginator>
+
     </div>
 
 </perfect-scrollbar>

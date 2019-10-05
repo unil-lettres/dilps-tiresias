@@ -102,17 +102,18 @@
 
     </mat-toolbar>
 
-    <app-view-grid [style.height]="'100%'"
+    <app-view-grid *ngIf="viewMode === ViewMode.grid"
+                   [style.height]="'100%'"
                    #view
-                   *ngIf="viewMode === ViewMode.grid"
-                   (selection)="select($event)"
+                   (selectionChange)="select($event)"
                    [dataSource]="dataSource"
                    (pagination)="pagination($event)"
     ></app-view-grid>
 
     <app-view-list *ngIf="viewMode === ViewMode.list"
+                   [style.height]="'100%'"
                    #view
-                   (selection)="select($event)"
+                   (selectionChange)="select($event)"
                    [dataSource]="dataSource"
                    (pagination)="pagination($event)"
     ></app-view-list>

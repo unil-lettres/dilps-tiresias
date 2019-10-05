@@ -17,15 +17,7 @@ import {
     ValidateData,
     ValidateImage,
 } from '../../shared/generated-types';
-import {
-    cardQuery,
-    cardsQuery,
-    createCard,
-    deleteCards,
-    updateCard,
-    validateData,
-    validateImage,
-} from './card.queries';
+import { cardQuery, cardsQuery, createCard, deleteCards, updateCard, validateData, validateImage } from './card.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -44,7 +36,7 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards);
     }
 
-    public static getImageFormat(card, height): any {
+    public static getImageFormat(card, height): { height: number, width: number } {
         height = card.height ? Math.min(card.height, height) : height;
         const ratio = card.width / card.height;
         return {
@@ -53,7 +45,7 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
         };
     }
 
-    public static getImageLink(card, height) {
+    public static getImageLink(card, height): string {
         if (!card || !card.id || !card.hasImage) {
             return null;
         }

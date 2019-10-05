@@ -39,7 +39,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when some cards are selected
      */
-    @Output() public selection: EventEmitter<any[]> = new EventEmitter<any[]>();
+    @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
 
     private thumbnailHeight = 300;
     private enlargedHeight = 2000;
