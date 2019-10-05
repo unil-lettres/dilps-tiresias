@@ -32,8 +32,6 @@ export class DownloadComponent implements OnInit {
 
     constructor(private dialogRef: MatDialogRef<ArtistComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
-        console.log('denyLegends', data.denyLegendsDownload);
-
         this.denyLegendsDownload = data.denyLegendsDownload;
         this.includeLegend = !this.denyLegendsDownload;
     }
