@@ -286,7 +286,9 @@ abstract class Standard
     /**
      * Return arguments used for the list
      *
-     * @param string $class
+     * @param ClassMetadata $class
+     * @param string $classs
+     * @param string $name
      *
      * @return array
      */
