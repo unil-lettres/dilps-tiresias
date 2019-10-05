@@ -947,9 +947,9 @@
   integrity sha512-5Bl37A2ktk1YQF9zjrcAuDl/AUjQPMw/dCbG2ZaQGOe8gA3ScRxBWJPZpStc1NZTiTQ85aIhAwNFaYCCNFGzhg==
 
 "@ecodev/natural@^8.0.0":
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-8.1.0.tgz#2eab7c26f33518639b2e2fed1477a8f857b61161"
-  integrity sha512-Q/gxflBKCtKP+7I42wUFqLNgi0Efd4fgGdw/Rl1MopUnpmhRnqyDeUdU/wfe7sHP12hbE/ff0cBkM4+5BTseaQ==
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-8.1.2.tgz#bd252fb0d87bffb1c9043aa3c70cf6edead8d752"
+  integrity sha512-d07cEhCvLt8jw6/WGRkJJ+ZEdZbp2wLVRjpsqz/98EdfLgV+MC3uwNNOcX14rfIUqTnkt2XVpCitYPOqdetlWQ==
   dependencies:
     tslib "^1.9.0"
 
