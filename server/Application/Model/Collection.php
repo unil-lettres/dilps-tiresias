@@ -59,50 +59,10 @@ class Collection extends AbstractModel implements HasParentInterface
     private $copyrights = '';
 
     /**
-     * Set copyrights
-     *
-     * @param string $copyrights
-     */
-    public function setCopyrights(string $copyrights): void
-    {
-        $this->copyrights = $copyrights;
-    }
-
-    /**
-     * Get copyrights
-     *
-     * @return string
-     */
-    public function getCopyrights(): string
-    {
-        return $this->copyrights;
-    }
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=191)
      */
     private $usageRights = '';
-
-    /**
-     * Set usageRights
-     *
-     * @param string $usageRights
-     */
-    public function setUsageRights($usageRights): void
-    {
-        $this->usageRights = $usageRights;
-    }
-
-    /**
-     * Get usageRights
-     *
-     * @return string
-     */
-    public function getUsageRights(): string
-    {
-        return $this->usageRights;
-    }
 
     /**
      * @var Collection
@@ -130,12 +90,19 @@ class Collection extends AbstractModel implements HasParentInterface
     private $cards;
 
     /**
+     * @var DoctrineCollection
+     * @ORM\ManyToMany(targetEntity="User")
+     */
+    private $users;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->cards = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -201,6 +168,46 @@ class Collection extends AbstractModel implements HasParentInterface
     }
 
     /**
+     * Set copyrights
+     *
+     * @param string $copyrights
+     */
+    public function setCopyrights(string $copyrights): void
+    {
+        $this->copyrights = $copyrights;
+    }
+
+    /**
+     * Get copyrights
+     *
+     * @return string
+     */
+    public function getCopyrights(): string
+    {
+        return $this->copyrights;
+    }
+
+    /**
+     * Set usageRights
+     *
+     * @param string $usageRights
+     */
+    public function setUsageRights($usageRights): void
+    {
+        $this->usageRights = $usageRights;
+    }
+
+    /**
+     * Get usageRights
+     *
+     * @return string
+     */
+    public function getUsageRights(): string
+    {
+        return $this->usageRights;
+    }
+
+    /**
      * Add card
      *
      * @param Card $card
@@ -234,5 +241,39 @@ class Collection extends AbstractModel implements HasParentInterface
     public function getCards(): DoctrineCollection
     {
         return $this->cards;
+    }
+
+    /**
+     * Get users
+     *
+     * @API\Field(type="User[]")
+     *
+     * @return DoctrineCollection
+     */
+    public function getUsers(): DoctrineCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * Add User
+     *
+     * @param User $user
+     */
+    public function addUser(User $user): void
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+    }
+
+    /**
+     * Remove User
+     *
+     * @param User $user
+     */
+    public function removeUser(User $user): void
+    {
+        $this->users->removeElement($user);
     }
 }

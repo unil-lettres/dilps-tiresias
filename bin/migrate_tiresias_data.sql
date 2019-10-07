@@ -138,11 +138,12 @@ SELECT id,
 FROM periodes;
 
 -- Migrate panier into collection
-INSERT INTO collection (id, creation_date, name, visibility)
+INSERT INTO collection (id, creation_date, name, visibility, site)
 SELECT id + @collection_offset,
     date,
     nom,
-    'private'
+    'private',
+    'tiresias'
 FROM panier;
 
 -- Link collection to creator
@@ -182,7 +183,7 @@ SELECT IFNULL(MAX(id), 0)
 INTO @collection_offset_for_fonds
 FROM collection;
 
-INSERT INTO collection (id, name, description, copyrights, usage_rights, is_source, visibility)
+INSERT INTO collection (id, name, description, copyrights, usage_rights, is_source, visibility, site)
 SELECT id + @collection_offset_for_fonds,
     fond,
     description,
@@ -193,7 +194,8 @@ SELECT id + @collection_offset_for_fonds,
         ),
     droits,
     TRUE,
-    'member'
+    'member',
+    'tiresias'
 FROM fonds;
 
 INSERT INTO institution (id, name, locality, site)
@@ -328,10 +330,9 @@ SELECT img_id + @card_offset,
 FROM kwimg;
 
 -- Link card to collection
-INSERT INTO collection_card (collection_id, card_id, site)
+INSERT INTO collection_card (collection_id, card_id)
 SELECT fonds.id + @collection_offset_for_fonds,
-    meta.id + @card_offset,
-    'tiresias'
+    meta.id + @card_offset
 FROM fonds
          INNER JOIN meta ON fonds.id = meta.fond;
 
@@ -344,6 +345,12 @@ SELECT id,
     tri,
     'tiresias'
 FROM old_news;
+
+INSERT INTO collection_user (user_id, collection_id)
+SELECT user_id + @user_offset,
+    fond_id + @collection_offset_for_fonds
+FROM contributors
+WHERE user_id IN (SELECT id FROM users) AND fond_id IN (SELECT id FROM fonds);
 
 
 COMMIT;

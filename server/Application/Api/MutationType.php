@@ -58,6 +58,7 @@ class MutationType extends ObjectType
             Standard::buildMutation(News::class),
             Standard::buildMutation(Period::class),
             Standard::buildRelationMutation(Collection::class, Card::class),
+            Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
