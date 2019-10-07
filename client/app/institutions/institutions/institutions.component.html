@@ -1,67 +1,57 @@
-<perfect-scrollbar>
-    <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+<mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
-        <div fxFlex>
-            <mat-form-field class="searchField width-auto no-padding" floatLabel="never" fxFlex
-            >
-                <input (change)="dataSource.filter({search : $event.target.value})" (keyup.esc)="dataSource.filter({search : ''})" [ngModel]="dataSource.snapshot.options?.filters?.search" appFocus matInput placeholder="Rechercher"
-                >
-                <mat-icon matPrefix>search</mat-icon>
-                <button (click)="dataSource.filter({search : ''})" mat-icon-button matSuffix>
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-form-field>
-        </div>
+    <natural-search fxFlex
+                    [facets]="naturalSearchFacets"
+                    [selections]="naturalSearchSelections"
+                    (selectionChange)="search($event)"
+                    [multipleGroups]="false"
+    >
 
-        <div>
-            <button (click)="add()" mat-icon-button matTooltip="Ajouter une institution">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-    </mat-toolbar>
+    </natural-search>
+</mat-toolbar>
 
-    <div class="padding">
+<div class="padding padding-fab">
 
-        <div class="mat-headline">Institutions</div>
+    <div class="mat-headline">Institutions</div>
 
-        <mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource">
 
-            <!-- Id Column -->
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
-            </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"
+                ></app-table-button>
+            </mat-cell>
+        </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"
-                    ></app-table-button>
-                </mat-cell>
-            </ng-container>
+        <ng-container matColumnDef="locality">
+            <mat-header-cell *matHeaderCellDef>Localité</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{ element.locality }}
+            </mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="locality">
-                <mat-header-cell *matHeaderCellDef>Localité</mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    {{ element.locality }}
-                </mat-cell>
-            </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-
-        <div *ngIf="dataSource.snapshot.data.length === 0" class="margin" fxLayout="column" fxLayoutAlign="center center">
-            <div i18n>Pas de résultats</div>
-        </div>
-
-        <div *ngIf="!dataSource.snapshot.data.items" class="margin" fxLayout="column" fxLayoutAlign="center center">
-            <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
-        </div>
-
-        <mat-paginator (page)="dataSource.paging($event)" *ngIf="dataSource.snapshot.data.length > 0" [length]="dataSource.snapshot.data.length" [pageIndex]="dataSource.snapshot.options.pagination.pageIndex" [pageSizeOptions]="dataSource.pageSizeOptions" [pageSize]="dataSource.snapshot.options.pagination.pageSize"
-        ></mat-paginator>
+    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === 0">
+        <div>Pas de résultats</div>
     </div>
-</perfect-scrollbar>
+
+    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === null">
+        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+    </div>
+
+    <mat-paginator *ngIf="dataSource.data?.length"
+                   [length]="dataSource.data?.length"
+                   [pageSize]="dataSource.data?.pageSize"
+                   [pageIndex]="dataSource.data?.pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pagination($event)"
+    ></mat-paginator>
+</div>
+
+<natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>
