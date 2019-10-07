@@ -7,10 +7,6 @@ php:
 addons:
   mariadb: "10.3"
 
-node_js:
-  - "10"
-  - "12"
-
 cache:
   directories:
     - vendor
@@ -19,6 +15,8 @@ cache:
     - node_modules
 
 before_install:
+  - nvm install 12
+  - nvm use 12
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
 
@@ -38,3 +36,8 @@ script:
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
+
+notifications:
+  email: false
+  slack:
+    secure: Pr28FXAGr1DxRyMEboPZuzW2ftxIwz8T5eNeFA6exVsZAbiEifPhNvVDQy5BmlvgUCy8MUungTiwDF0lca6PJN1kAEE/jhjsWd4ISbw21Xdlguf7XmfFGskUY8GNi0qKFnOJE139PQIhLeSxzW4CE4bhj67/e3sChR1zfCQE5ebKzx82RZQFJWXz8HcpyX+nMkQ3BXdvjnRnGKI8r7VAjP0LdLmOq7X5mbh1DOjDv0X5IF4W4Dh5TalBULZzFTa3W8+gRfvNMTvuaNUU0AAXyXutxXltxM7h9lAZtaGE99WnBx5HulEN4qxC7LMaiskJZki2CJc0txdGO87wMWl5aquM9QobpB/1pbWQ7DmndlWmu/r1KtY2dKarqWHG1qLugvi/IHYIx7fm68jS6qz46V8xKo1v4Q9dOIXBJz/U5R2r+Ax9unCc92tp9ts4F+x4xwVUuMv/u7XLdTsw/ECZyDR9KqcT7zoa+u5TJhym61RQUmlkwNSAnP2t1kUqOl+NCKyJQgAIsb9Ij0PH8+sNLWmsiAT60F+PCqcXezywCfrgSkoO2xavUnYCArDlaVgzy0OjJs99bVHq5soSGyNcxqwgyx8iSNEq3sM13M1PtiLAiEHk0aRrpEtkYx+fT7nmiR68n/phfNJLrDECaDeoql6aJGmx0XZDV6SB8Lxou70=
