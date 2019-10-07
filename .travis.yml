@@ -9,6 +9,7 @@ addons:
 
 node_js:
   - "10"
+  - "12"
 
 cache:
   directories:
