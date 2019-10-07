@@ -28,20 +28,40 @@
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input (focus)="snackBar.dismiss()" [(ngModel)]="loginForm.login" [disabled]="loading" autofocus matInput name="login" placeholder="login" required="required"
+                            <input (focus)="snackBar.dismiss()"
+                                   [(ngModel)]="loginForm.login"
+                                   [disabled]="loading"
+                                   autofocus
+                                   matInput
+                                   name="login"
+                                   placeholder="login"
+                                   required="required"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input (focus)="snackBar.dismiss()" [(ngModel)]="loginForm.password" [disabled]="loading" color="warn" matInput name="password" placeholder="password" required="required" type="password"
+                            <input (focus)="snackBar.dismiss()"
+                                   [(ngModel)]="loginForm.password"
+                                   [disabled]="loading"
+                                   color="warn"
+                                   matInput
+                                   name="password"
+                                   placeholder="password"
+                                   required="required"
+                                   type="password"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
-                        <button (click)="login()" [disabled]="loading || !loginForm.login || !loginForm.password" color="primary" mat-button mat-raised-button type="submit"
+                        <button (click)="login()"
+                                [disabled]="loading || !loginForm.login || !loginForm.password"
+                                color="primary"
+                                mat-button
+                                mat-raised-button
+                                type="submit"
                         >Se connecter
                         </button>
                     </div>
@@ -51,6 +71,9 @@
 
                 <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
             </div>
+
+            <app-carousel [ngStyle]="{width: '800px', height: '400px'}"></app-carousel>
+
         </div>
 
     </perfect-scrollbar>

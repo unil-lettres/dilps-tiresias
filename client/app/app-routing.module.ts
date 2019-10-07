@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { InstitutionsComponent } from './institutions/institutions/institutions.component';
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
+import { NewsesComponent } from './news/newses/newses.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
 import {
@@ -80,6 +81,11 @@ export const routes: Routes = [
             {
                 path: 'artist',
                 component: ArtistsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'newses',
+                component: NewsesComponent,
                 canActivate: [AuthGuard],
             },
             {

@@ -37,6 +37,7 @@ import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
     NaturalDropdownComponentsModule,
+    NaturalFixedButtonModule,
     NaturalIconModule,
     NaturalRelationsModule,
     NaturalSearchModule,
@@ -51,6 +52,7 @@ import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -68,6 +70,9 @@ import { InstitutionsComponent } from './institutions/institutions/institutions.
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { TermsAgreementComponent } from './login/terms-agreement.component';
+import { CarouselComponent } from './news/carousel/carousel.component';
+import { NewsComponent } from './news/news/news.component';
+import { NewsesComponent } from './news/newses/newses.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { NumberSelectorComponent } from './quizz/shared/number-selector/number-selector.component';
 import { AddressComponent } from './shared/components/address/address.component';
@@ -137,6 +142,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         ViewGridComponent,
         ViewMapComponent,
         ViewListComponent,
+        CarouselComponent,
+        NewsesComponent,
+        NewsComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -149,6 +157,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         CollectionComponent,
         NumberSelectorComponent,
         MassEditComponent,
+        NewsComponent,
     ],
     imports: [
         BrowserModule,
@@ -199,7 +208,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         NaturalRelationsModule,
         NaturalSelectModule,
         NaturalTableButtonModule,
-        NaturalAlertModule
+        NaturalAlertModule,
+        NaturalFixedButtonModule,
+        SwiperModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

@@ -1,7 +1,13 @@
 <div [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="column">
 
     <mat-sidenav-container #navContainer fxFlex fxLayout="column">
-        <mat-sidenav *ngIf="showNavigationMenu()" [ngStyle]="{ 'backgroundColor': environmentColor() }" class="menuMinimized" id="menu" mode="side" opened="true" position="start"
+        <mat-sidenav *ngIf="showNavigationMenu()"
+                     [ngStyle]="{ 'backgroundColor': environmentColor() }"
+                     class="menuMinimized"
+                     id="menu"
+                     mode="side"
+                     opened="true"
+                     position="start"
         >
             <div fxFlex fxFlexAlign="start center" fxLayout="row">
                 <perfect-scrollbar fxLayout="column">
@@ -10,20 +16,32 @@
 
                         <mat-nav-list>
                             <!-- Dashboard -->
-                            <a [queryParams]="null" [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active"
+                            <a [queryParams]="null"
+                               [routerLinkActiveOptions]="{ exact: true }"
+                               mat-list-item
+                               routerLink="/"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>home</mat-icon>
                                 <span matLine>Accueil</span>
                             </a>
 
                             <!-- Collections publiques -->
-                            <a mat-list-item matTooltip="Collections publiques" matTooltipPosition="after" routerLink="/collection" routerLinkActive="active"
+                            <a mat-list-item
+                               matTooltip="Collections publiques"
+                               matTooltipPosition="after"
+                               routerLink="/collection"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>collections</mat-icon>
                             </a>
 
                             <!-- Mes collections privées -->
-                            <a mat-list-item matTooltip="Mes collections" matTooltipPosition="after" routerLink="/my-collection" routerLinkActive="active"
+                            <a mat-list-item
+                               matTooltip="Mes collections"
+                               matTooltipPosition="after"
+                               routerLink="/my-collection"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>collections_bookmark</mat-icon>
                             </a>
@@ -35,19 +53,35 @@
                             </a>
 
                             <!-- Users -->
-                            <a *ngIf="user.role === 'administrator'" mat-list-item matTooltip="Liste des utilisateurs" matTooltipPosition="after" routerLink="/user" routerLinkActive="active"
+                            <a *ngIf="user.role === 'administrator'"
+                               mat-list-item
+                               matTooltip="Liste des utilisateurs"
+                               matTooltipPosition="after"
+                               routerLink="/user"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>group</mat-icon>
                             </a>
 
                             <!-- Notifications -->
-                            <a mat-list-item matTooltip="Notifications" matTooltipPosition="after" routerLink="/notification" routerLinkActive="active"
+                            <a mat-list-item
+                               matTooltip="Notifications"
+                               matTooltipPosition="after"
+                               routerLink="/notification"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>notifications</mat-icon>
                             </a>
 
                             <!-- Add photos -->
-                            <a (filesChange)="uploadPhoto($event)" *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'" [ngfFixOrientation]="false" mat-list-item matTooltip="Ajouter une image" matTooltipPosition="after" multiple="1" ngfSelect
+                            <a (filesChange)="uploadPhoto($event)"
+                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                               [ngfFixOrientation]="false"
+                               mat-list-item
+                               matTooltip="Ajouter une image"
+                               matTooltipPosition="after"
+                               multiple="1"
+                               ngfSelect
                             >
                                 <mat-icon mat-list-icon>file_upload</mat-icon>
                             </a>
@@ -56,7 +90,11 @@
                         <mat-nav-list *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
 
                             <!-- Institutions -->
-                            <a mat-list-item matTooltip="Institutions" matTooltipPosition="after" routerLink="/institution" routerLinkActive="active"
+                            <a mat-list-item
+                               matTooltip="Institutions"
+                               matTooltipPosition="after"
+                               routerLink="/institution"
+                               routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>place</mat-icon>
                             </a>
@@ -65,6 +103,11 @@
                             <a mat-list-item matTooltip="Artistes" matTooltipPosition="after" routerLink="/artist" routerLinkActive="active"
                             >
                                 <mat-icon mat-list-icon>copyright</mat-icon>
+                            </a>
+
+                            <!-- Carousel -->
+                            <a mat-list-item matTooltip="News" matTooltipPosition="after" routerLink="/newses" routerLinkActive="active">
+                                <mat-icon mat-list-icon>view_carousel</mat-icon>
                             </a>
 
                         </mat-nav-list>
@@ -98,7 +141,12 @@
                     </mat-nav-list>
 
                     <!-- Bottom nav -->
-                    <a *ngIf="errors.length" [matMenuTriggerFor]="errorsMenu" color="warn" mat-icon-button mat-raised-button style="margin:0 11px"
+                    <a *ngIf="errors.length"
+                       [matMenuTriggerFor]="errorsMenu"
+                       color="warn"
+                       mat-icon-button
+                       mat-raised-button
+                       style="margin:0 11px"
                     >
                         <mat-icon>error</mat-icon>
                     </a>
@@ -123,7 +171,12 @@
 </div>
 
 <mat-menu #errorsMenu="matMenu" [overlapTrigger]="false" class="padding error-menu" fxLayout="column" fxLayoutGap="60px">
-    <div (click)="$event.stopPropagation()" *ngFor="let error of errors" class="error" fxLayout="column" mat-menu-item style="user-select: text"
+    <div (click)="$event.stopPropagation()"
+         *ngFor="let error of errors"
+         class="error"
+         fxLayout="column"
+         mat-menu-item
+         style="user-select: text"
     >
         <span class="mat-caption" style="font-weight:bold">{{ error.category }}</span>
         <span class="mat-caption">{{ error.message }}</span>

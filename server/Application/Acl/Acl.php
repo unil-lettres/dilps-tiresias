@@ -103,6 +103,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(DocumentType::class));
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Domain::class));
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Material::class));
