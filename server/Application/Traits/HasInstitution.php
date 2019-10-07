@@ -46,6 +46,6 @@ trait HasInstitution
             return;
         }
 
-        $this->institution = _em()->getRepository(Institution::class)->getOrCreateByName($institutionName);
+        $this->institution = _em()->getRepository(Institution::class)->getOrCreateByName($institutionName, $this->getSite());
     }
 }

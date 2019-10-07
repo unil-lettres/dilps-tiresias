@@ -8,6 +8,7 @@ use Application\Acl\Acl;
 use Application\Api\Exception;
 use Application\ORM\Query\Filter\AclFilter;
 use Application\Traits\HasInstitution;
+use Application\Traits\HasSite;
 use Application\Utility;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,10 +18,14 @@ use GraphQL\Doctrine\Annotation as API;
  * User
  *
  * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"})
+ * })
  */
 class User extends AbstractModel
 {
     use HasInstitution;
+    use HasSite;
 
     /**
      * Someone who is a normal user, not part of UNIL
@@ -75,7 +80,7 @@ class User extends AbstractModel
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=50)
      */
     private $login = '';
 

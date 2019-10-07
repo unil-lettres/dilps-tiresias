@@ -22,7 +22,7 @@ class SuggestCreation implements FieldInterface
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function ($root, array $args): Change {
+            'resolve' => function (string $site, array $args): Change {
                 $suggestion = $args['id']->getEntity();
                 $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_CREATE, $suggestion, $args['request']);
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
@@ -27,7 +28,7 @@ class ChangeRepositoryTest extends AbstractRepositoryTest
 
     public function testGetOpenChange(): void
     {
-        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin('administrator'));
+        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin('administrator', SiteType::DILPS));
         $request = '';
         $creationSuggestion = _em()->getReference(Card::class, 6001);
         $updateSuggestion = _em()->getReference(Card::class, 6002);

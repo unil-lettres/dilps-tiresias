@@ -23,13 +23,13 @@ abstract class Login implements FieldInterface
                 'login' => Type::nonNull(_types()->get(LoginType::class)),
                 'password' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function ($root, array $args, SessionInterface $session): User {
+            'resolve' => function (string $site, array $args, SessionInterface $session): User {
 
                 // Logout
                 $session->clear();
                 User::setCurrent(null);
 
-                $user = _em()->getRepository(User::class)->getLoginPassword($args['login'], $args['password']);
+                $user = _em()->getRepository(User::class)->getLoginPassword($args['login'], $args['password'], $site);
 
                 // If we successfully authenticated or we already were logged in, keep going
                 if ($user) {

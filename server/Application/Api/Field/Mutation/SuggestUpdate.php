@@ -23,7 +23,7 @@ class SuggestUpdate implements FieldInterface
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function ($root, array $args): Change {
+            'resolve' => function (string $site, array $args): Change {
                 $suggestion = $args['id']->getEntity();
                 $original = $suggestion->getOriginal();
 

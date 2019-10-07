@@ -46,6 +46,7 @@ return [
         'types' => [
             'UserType' => Application\DBAL\Types\UserTypeType::class,
             'Precision' => Application\DBAL\Types\PrecisionType::class,
+            'Site' => Application\DBAL\Types\SiteType::class,
             'UserRole' => Application\DBAL\Types\UserRoleType::class,
             'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
             'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,

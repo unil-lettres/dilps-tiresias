@@ -23,6 +23,7 @@ return [
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
+            'site' => \Application\Service\SiteFactory::class,
             \Zend\Expressive\Application::class => \Zend\Expressive\Container\ApplicationFactory::class,
             \Zend\Expressive\Helper\ServerUrlMiddleware::class => \Zend\Expressive\Helper\ServerUrlMiddlewareFactory::class,
             \Zend\Expressive\Helper\UrlHelper::class => \Zend\Expressive\Helper\UrlHelperFactory::class,

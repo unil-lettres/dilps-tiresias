@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
+use Application\Traits\HasSite;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +21,8 @@ class Tag extends AbstractModel implements HasParentInterface
 {
     use HasName;
     use HasParent;
+
+    use HasSite;
 
     /**
      * @var Tag

@@ -6,6 +6,7 @@ namespace Application\Model;
 
 use Application\Traits\HasImage;
 use Application\Traits\HasName;
+use Application\Traits\HasSite;
 use Application\Traits\HasSorting;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
@@ -22,6 +23,7 @@ class News extends AbstractModel
     use HasName;
     use HasSorting;
     use HasImage;
+    use HasSite;
 
     /**
      * @var string

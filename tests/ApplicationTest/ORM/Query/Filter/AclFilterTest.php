@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\ORM\Query\Filter;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Change;
@@ -103,7 +104,7 @@ class AclFilterTest extends TestCase
      */
     public function testFilter(?string $login, string $class, string $expected): void
     {
-        $user = _em()->getRepository(User::class)->getOneByLogin($login);
+        $user = _em()->getRepository(User::class)->getOneByLogin($login, SiteType::DILPS);
         $filter = new AclFilter(_em());
         $filter->setUser($user);
         $targetEntity = _em()->getMetadataFactory()->getMetadataFor($class);

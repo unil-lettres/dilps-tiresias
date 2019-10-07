@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Traits\HasSite;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,15 +17,20 @@ use Doctrine\ORM\Mapping as ORM;
  * - "UniqueLogin" is a when a unique user logs in (so only one time per user)
  *
  * @ORM\Entity(repositoryClass="Application\Repository\StatisticRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_date", columns={"date", "site"})
+ * })
  */
 class Statistic extends AbstractModel
 {
+    use HasSite;
+
     /**
      * A year and month, eg: '2019-02'
      *
      * @var string
      *
-     * @ORM\Column(type="string", length=7, unique=true)
+     * @ORM\Column(type="string", length=7)
      */
     private $date;
 

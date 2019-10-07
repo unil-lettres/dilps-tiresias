@@ -20,7 +20,7 @@ class RejectChange implements FieldInterface
             'args' => [
                 'id' => Type::nonNull(_types()->getId(Change::class)),
             ],
-            'resolve' => function ($root, array $args): bool {
+            'resolve' => function (string $site, array $args): bool {
                 /** @var Change $change */
                 $change = $args['id']->getEntity();
 

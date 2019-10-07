@@ -11,6 +11,7 @@ use Application\Traits\HasAddress;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
+use Application\Traits\HasSite;
 use Application\Traits\HasValidation;
 use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,6 +51,7 @@ class Card extends AbstractModel
     use CardSimpleProperties;
     use HasValidation;
     use HasYearRange;
+    use HasSite;
     use HasImage {
         setFile as traitSetFile;
     }

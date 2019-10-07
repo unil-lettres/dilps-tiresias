@@ -16,9 +16,15 @@ class GraphQLAction implements MiddlewareInterface
 {
     private $entityManger;
 
-    public function __construct(EntityManager $entityManager)
+    /**
+     * @var string
+     */
+    private $site;
+
+    public function __construct(EntityManager $entityManager, string $site)
     {
         $this->entityManger = $entityManager;
+        $this->site = $site;
     }
 
     /**
@@ -32,7 +38,7 @@ class GraphQLAction implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $server = new Server(true);
+        $server = new Server(true, $this->site);
 
         $response = $server->execute($request);
 

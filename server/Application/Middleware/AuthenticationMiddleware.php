@@ -21,9 +21,15 @@ class AuthenticationMiddleware implements MiddlewareInterface
      */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    /**
+     * @var string
+     */
+    private $site;
+
+    public function __construct(UserRepository $userRepository, string $site)
     {
         $this->userRepository = $userRepository;
+        $this->site = $site;
     }
 
     /**
@@ -68,7 +74,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if (array_key_exists('Shib-Identity-Provider', $serverParams) && !$session->has('user')) {
             // User has Shibboleth session but no user session
             if (array_key_exists('mail', $serverParams)) {
-                $user = $this->userRepository->getOneByEmail($serverParams['mail']);
+                $user = $this->userRepository->getOneByEmail($serverParams['mail'], $this->site);
 
                 if (!$user) {
                     $login = array_key_exists('uid', $serverParams) ?
@@ -76,7 +82,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
                     $user = $this->userRepository->createShibboleth(
                         $login,
-                        $serverParams['mail']
+                        $serverParams['mail'],
+                        $this->site
                     );
                 }
 

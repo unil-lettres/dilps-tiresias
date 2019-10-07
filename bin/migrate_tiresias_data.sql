@@ -104,7 +104,7 @@ INTO @user_offset
 FROM user;
 
 -- Migrate users into user
-INSERT INTO user (id, creation_date, login, password, email, role, active_until, type)
+INSERT INTO user (id, creation_date, login, password, email, role, active_until, type, site)
 SELECT id + @user_offset,
     creation_date,
     username,
@@ -123,9 +123,9 @@ SELECT id + @user_offset,
             THEN 'student'
         END,
     IF(valid_date = '', NULL, CONCAT(valid_date, '-01')),
-    IF(type = 'externe', 'default', 'unil')
-FROM users
-WHERE users.username NOT IN (SELECT login FROM user);
+    IF(type = 'externe', 'default', 'unil'),
+    'tiresias'
+FROM users;
 
 -- Migrate periode into period
 INSERT INTO period (id, name, `from`, `to`, sorting, parent_id)
@@ -154,10 +154,11 @@ SET collection.owner_id   = user.id,
     collection.creator_id = user.id;
 
 -- Migrate motscles into tag
-INSERT INTO tag (id, name, parent_id)
+INSERT INTO tag (id, name, parent_id, site)
 SELECT id + @tag_offset,
     motcle,
-    IF(parentid = 0, NULL, parentid + @tag_offset)
+    IF(parentid = 0, NULL, parentid + @tag_offset),
+    'tiresias'
 FROM motscles
 ORDER BY parentid;
 
@@ -195,18 +196,19 @@ SELECT id + @collection_offset_for_fonds,
     'member'
 FROM fonds;
 
-INSERT INTO institution (id, name, locality)
+INSERT INTO institution (id, name, locality, site)
 SELECT musees.id + @institution_offset,
     -- Make institution name as unique as possible, according to https://support.ecodev.ch/issues/5779
     CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), '')),
-    city.city
+    city.city,
+    'tiresias'
 FROM musees
          LEFT JOIN city on musees.city_id = city.id;
 
 
 INSERT INTO statistic (`date`, anonymous_page_count, default_page_count, unil_page_count, anonymous_search_count,
                        default_search_count, unil_search_count, anonymous_detail_count, default_detail_count,
-                       unil_detail_count, default_login_count, unil_login_count, default_logins, unil_logins)
+                       unil_detail_count, default_login_count, unil_login_count, default_logins, unil_logins, site)
 SELECT date,
     page_guest,
     page_ext,
@@ -222,7 +224,8 @@ SELECT date,
 
     -- Transform into JSON
     CONCAT('[', REPLACE(TRIM(REPLACE(login_ext_users, '|', ' ')), ' ', ','), ']'),
-    CONCAT('[', REPLACE(TRIM(REPLACE(login_unil_users, '|', ' ')), ' ', ','), ']')
+    CONCAT('[', REPLACE(TRIM(REPLACE(login_unil_users, '|', ' ')), ' ', ','), ']'),
+    'tiresias'
 FROM stats
 ORDER BY date;
 
@@ -245,7 +248,7 @@ VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affe
 INSERT INTO card (id, filename, visibility, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
                   institution_id, literature, isbn, object_reference, `from`, `to`, production_place,
-                  locality)
+                  locality, site)
 SELECT meta.id + @card_offset,
     CONCAT('tiresias-', meta.id, '.jpg'),
     CASE statut
@@ -291,7 +294,8 @@ SELECT meta.id + @card_offset,
     IF(TRIM(t3_date_precise_debut) = '', NULL, REPLACE(t3_date_precise_debut, ' ', '')),
     IF(TRIM(t4_date_precise_fin) = '', NULL, REPLACE(t4_date_precise_fin, ' ', '')),
     m3_lieu_production,
-    locality.lieu
+    locality.lieu,
+    'tiresias'
 FROM meta
          LEFT JOIN lieux AS locality ON locality.id = l2_lieux;
 
@@ -324,19 +328,21 @@ SELECT img_id + @card_offset,
 FROM kwimg;
 
 -- Link card to collection
-INSERT INTO collection_card (collection_id, card_id)
+INSERT INTO collection_card (collection_id, card_id, site)
 SELECT fonds.id + @collection_offset_for_fonds,
-    meta.id + @card_offset
+    meta.id + @card_offset,
+    'tiresias'
 FROM fonds
          INNER JOIN meta ON fonds.id = meta.fond;
 
-INSERT INTO news (id, name, description, filename, url, sorting)
+INSERT INTO news (id, name, description, filename, url, sorting, site)
 SELECT id,
     titre,
     description,
     CONCAT(image, '.jpg'),
     lien,
-    tri
+    tri,
+    'tiresias'
 FROM old_news;
 
 

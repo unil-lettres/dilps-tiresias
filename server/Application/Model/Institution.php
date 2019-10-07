@@ -6,6 +6,7 @@ namespace Application\Model;
 
 use Application\Traits\HasAddress;
 use Application\Traits\HasName;
+use Application\Traits\HasSite;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,11 +20,12 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\Index(name="institution_longitude_idx", columns={"longitude"}),
  * },
  * uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_name", columns={"name"})
+ *     @ORM\UniqueConstraint(name="unique_name", columns={"name", "site"})
  * })
  */
 class Institution extends AbstractModel
 {
     use HasName;
     use HasAddress;
+    use HasSite;
 }

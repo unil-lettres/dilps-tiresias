@@ -20,7 +20,7 @@ class ValidateImage implements FieldInterface
             'args' => [
                 'id' => Type::nonNull(_types()->getId(Card::class)),
             ],
-            'resolve' => function ($root, array $args): Card {
+            'resolve' => function (string $site, array $args): Card {
                 $card = $args['id']->getEntity();
 
                 Helper::throwIfDenied($card, 'validate');

@@ -23,6 +23,7 @@ class TypesFactory
             \Application\Api\Enum\UserRoleType::class,
             \Application\Api\Enum\UserTypeType::class,
             \Application\Api\Enum\PrecisionType::class,
+            \Application\Api\Enum\SiteType::class,
             \Application\Api\Input\Filter\OldArtistFilterType::class,
             \Application\Api\Input\Filter\OldCardFilterType::class,
             \Application\Api\Input\Filter\OldCollectionFilterType::class,

@@ -22,7 +22,7 @@ class SuggestDeletion implements FieldInterface
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function ($root, array $args): Change {
+            'resolve' => function (string $site, array $args): Change {
                 $original = $args['id']->getEntity();
                 $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_DELETE, $original, $args['request']);
 

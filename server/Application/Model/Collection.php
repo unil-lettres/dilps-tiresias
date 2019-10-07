@@ -8,6 +8,7 @@ use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
+use Application\Traits\HasSite;
 use Application\Traits\HasSorting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
@@ -26,6 +27,7 @@ class Collection extends AbstractModel implements HasParentInterface
     use HasInstitution;
     use HasSorting;
     use HasParent;
+    use HasSite;
 
     const VISIBILITY_PRIVATE = 'private';
     const VISIBILITY_ADMINISTRATOR = 'administrator';

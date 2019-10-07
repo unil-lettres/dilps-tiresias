@@ -23,10 +23,11 @@ class InstitutionRepository extends AbstractRepository
      * Get or create an institution by its name
      *
      * @param null|string $name
+     * @param string $site
      *
      * @return Institution
      */
-    public function getOrCreateByName(?string $name): ?Institution
+    public function getOrCreateByName(?string $name, string $site): ?Institution
     {
         $name = trim($name ?? '');
 
@@ -34,11 +35,16 @@ class InstitutionRepository extends AbstractRepository
             return null;
         }
 
-        $institution = $this->findOneByName($name);
+        $institution = $this->findOneBy([
+            'name' => $name,
+            'site' => $site,
+        ]);
+
         if (!$institution) {
             $institution = new Institution();
             $this->getEntityManager()->persist($institution);
             $institution->setName($name);
+            $institution->setSite($site);
         }
 
         return $institution;
