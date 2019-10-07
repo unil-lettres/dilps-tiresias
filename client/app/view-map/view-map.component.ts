@@ -4,6 +4,7 @@ import { NaturalAbstractController } from '@ecodev/natural';
 import { Cards, Precision } from '../shared/generated-types';
 import Icon = google.maps.Icon;
 import LatLngBounds = google.maps.LatLngBounds;
+import {} from 'googlemaps';
 
 @Component({
     selector: 'app-view-map',

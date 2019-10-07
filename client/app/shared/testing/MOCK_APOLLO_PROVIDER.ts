@@ -45,6 +45,7 @@ class MockApollo extends Apollo {
             UserRole: () => 'student',
             CardVisibility: () => 'private',
             CollectionVisibility: () => 'private',
+            Url: () => 'https://ecodev.ch',
         };
 
         addMockFunctionsToSchema({schema, mocks});
