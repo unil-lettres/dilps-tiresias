@@ -244,7 +244,7 @@ VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affe
 
 INSERT INTO card (id, filename, visibility, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
-                  institution_id, literature, isbn, object_reference, period_id, `from`, `to`, production_place,
+                  institution_id, literature, isbn, object_reference, `from`, `to`, production_place,
                   locality)
 SELECT meta.id + @card_offset,
     CONCAT('tiresias-', meta.id, '.jpg'),
@@ -288,10 +288,6 @@ SELECT meta.id + @card_offset,
     bibl_ref_image,
     bibl_ref_isbn_issn,
     bibl_ref_objet,
-    IF(t2_periode != 0, t2_periode,
-       IF(t1_civilisation != 0, t1_civilisation,
-          NULL)
-        ),
     IF(TRIM(t3_date_precise_debut) = '', NULL, REPLACE(t3_date_precise_debut, ' ', '')),
     IF(TRIM(t4_date_precise_fin) = '', NULL, REPLACE(t4_date_precise_fin, ' ', '')),
     m3_lieu_production,
@@ -311,6 +307,15 @@ INSERT INTO card_material (card_id, material_id)
 SELECT img_id + @card_offset,
     mat_id
 FROM matimg;
+
+INSERT INTO card_period (card_id, period_id)
+SELECT id + @card_offset,
+    IF(t2_periode IN (SELECT id FROM periodes), t2_periode,
+       IF(t1_civilisation IN (SELECT id FROM periodes), t1_civilisation,
+          NULL)
+        )
+FROM meta
+WHERE t2_periode IN (SELECT id FROM periodes) OR t1_civilisation IN (SELECT id FROM periodes);
 
 -- Link card to tag
 INSERT INTO card_tag (card_id, tag_id)

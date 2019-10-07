@@ -147,13 +147,10 @@ class Card extends AbstractModel
     private $domain;
 
     /**
-     * @var null|Period
-     * @ORM\ManyToOne(targetEntity="Period")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
+     * @var DoctrineCollection
+     * @ORM\ManyToMany(targetEntity="Period")
      */
-    private $period;
+    private $periods;
 
     /**
      * @var DoctrineCollection
@@ -189,6 +186,7 @@ class Card extends AbstractModel
         $this->tags = new ArrayCollection();
         $this->datings = new ArrayCollection();
         $this->cards = new ArrayCollection();
+        $this->periods = new ArrayCollection();
         $this->materials = new ArrayCollection();
     }
 
@@ -412,19 +410,37 @@ class Card extends AbstractModel
     }
 
     /**
-     * @return null|Period
+     * Get periods
+     *
+     * @API\Field(type="Period[]")
+     *
+     * @return DoctrineCollection
      */
-    public function getPeriod(): ?Period
+    public function getPeriods(): DoctrineCollection
     {
-        return $this->period;
+        return $this->periods;
     }
 
     /**
-     * @param null|Period $period
+     * Add Period
+     *
+     * @param Period $period
      */
-    public function setPeriod(?Period $period): void
+    public function addPeriod(Period $period): void
     {
-        $this->period = $period;
+        if (!$this->periods->contains($period)) {
+            $this->periods[] = $period;
+        }
+    }
+
+    /**
+     * Remove Period
+     *
+     * @param Period $period
+     */
+    public function removePeriod(Period $period): void
+    {
+        $this->periods->removeElement($period);
     }
 
     /**
