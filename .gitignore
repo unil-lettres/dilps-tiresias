@@ -10,6 +10,7 @@
 /data/cache/DoctrineORMModule/*
 /data/cache/images/*
 /data/images/*
+/htdocs/news/*
 !/data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg
 /htdocs/favicon.ico
 /htdocs/*.html
