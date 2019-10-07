@@ -9,6 +9,11 @@ return [
         'recursive' => true,
     ],
     [
+        'path' => 'data/dump',
+        'permissions' => '0770',
+        'recursive' => true,
+    ],
+    [
         'path' => 'data/cache',
         'permissions' => '0770',
         'recursive' => true,
