@@ -2,7 +2,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
+import { intersectionBy } from 'lodash';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import { takeUntil } from 'rxjs/operators';
 import { ViewInterface } from '../list/list.component';
 
 @Component({
@@ -32,13 +34,24 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      */
     @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
 
+    @Input() selected = [];
+
     public selectionModel = new SelectionModel(true);
+
+    public cards = [];
 
     constructor() {
         super();
+
     }
 
     ngOnInit() {
+
+        this.dataSource.connect().pipe(takeUntil(this.ngUnsubscribe)).subscribe(cards => {
+            this.cards = cards;
+            this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));
+        });
+
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));
     }
 

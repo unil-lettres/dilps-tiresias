@@ -19,7 +19,11 @@
             <mat-icon>view_list</mat-icon>
         </button>
 
-        <button (click)="setViewMode(ViewMode.map)" mat-icon-button matTooltip="Carte" *ngIf="viewMode !== ViewMode.map">
+        <button (click)="setViewMode(ViewMode.map)"
+                mat-icon-button
+                matTooltip="Carte"
+                *ngIf="selected?.length && viewMode !== ViewMode.map"
+        >
             <mat-icon>map</mat-icon>
         </button>
 
@@ -105,6 +109,7 @@
     <app-view-grid *ngIf="viewMode === ViewMode.grid"
                    [style.height]="'100%'"
                    #view
+                   [selected]="selected"
                    (selectionChange)="select($event)"
                    [dataSource]="dataSource"
                    (pagination)="pagination($event)"
@@ -113,10 +118,12 @@
     <app-view-list *ngIf="viewMode === ViewMode.list"
                    [style.height]="'100%'"
                    #view
+                   [selected]="selected"
                    (selectionChange)="select($event)"
                    [dataSource]="dataSource"
                    (pagination)="pagination($event)"
     ></app-view-list>
 
-    <app-view-map #view *ngIf="viewMode === ViewMode.map"></app-view-map>
+    <app-view-map #view *ngIf="viewMode === ViewMode.map" [style.height]="'100%'" [cards]="selected"
+    ></app-view-map>
 </div>

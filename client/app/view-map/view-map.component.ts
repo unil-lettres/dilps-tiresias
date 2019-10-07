@@ -1,46 +1,62 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { ViewInterface } from '../list/list.component';
+import { MapsAPILoader } from '@agm/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NaturalAbstractController } from '@ecodev/natural';
+import { Cards, Precision } from '../shared/generated-types';
+import Icon = google.maps.Icon;
+import LatLngBounds = google.maps.LatLngBounds;
 
 @Component({
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
     styleUrls: ['./view-map.component.scss'],
 })
-export class ViewMapComponent implements OnInit, ViewInterface {
+export class ViewMapComponent extends NaturalAbstractController implements OnInit {
 
-    /**
-     * Reference to scrollable element
-     */
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
+    @Input() cards: Cards;
 
-    /**
-     * DataSource containing cards
-     */
-    @Input() public dataSource: NaturalDataSource;
+    public markers;
+    public bounds: LatLngBounds;
 
-    /**
-     * Emits when data is required
-     */
-    @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
+    constructor(private mapsAPILoader: MapsAPILoader) {
+        super();
+    }
 
-    /**
-     * Emits when some cards are selected
-     */
-    @Output() public selection: EventEmitter<any[]> = new EventEmitter<any[]>();
+    public static getIcon(iconName: Precision): Icon {
 
-    constructor() {
+        return {
+            url: 'assets/icons/gmap_' + iconName + '.png',
+            size: new google.maps.Size(32, 37),
+            anchor: new google.maps.Point(16, 37),
+        };
     }
 
     ngOnInit() {
+
+        this.mapsAPILoader.load().then(() => {
+            this.markers = this.convertIntoMarkers(this.cards);
+            this.updateBounds(this.markers);
+        });
+
     }
 
-    public selectAll(): any[] {
-        return [];
+    public convertIntoMarkers(cards) {
+        return cards.filter(c => c.latitude && c.longitude).map(c => {
+            return {
+                id: c.id,
+                name: c.name,
+                latitude: c.latitude,
+                longitude: c.longitude,
+                icon: ViewMapComponent.getIcon(c.precision),
+            };
+        });
     }
 
-    public unselectAll(): void {
+    public updateBounds(markers) {
+
+        this.bounds = new google.maps.LatLngBounds();
+        markers.forEach(marker => {
+            this.bounds.extend({lat: marker.latitude, lng: marker.longitude});
+        });
     }
 
 }

@@ -1,5 +1,4 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { Sort } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
 import { NaturalAbstractList, NaturalPageEvent, NaturalQueryVariablesManager, PaginationInput, Sorting } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
@@ -10,15 +9,7 @@ import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
-import {
-    CardFilter,
-    Cards,
-    CardSortingField,
-    CardsVariables,
-    SortingOrder,
-    UserRole,
-    Viewer,
-} from '../shared/generated-types';
+import { CardFilter, Cards, CardSortingField, CardsVariables, SortingOrder, UserRole, Viewer } from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
 import { shuffleArray } from '../shared/services/utility';
@@ -210,20 +201,18 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
      */
     public setViewMode(mode: ViewMode) {
         this.viewMode = mode;
-        sessionStorage.setItem('view-mode', mode);
-        this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
-    }
 
-    public sorting(event: Sort[]) {
-        // this.reset();
-        super.sorting(event);
+        if (mode !== ViewMode.map) {
+            sessionStorage.setItem('view-mode', mode);
+            this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
+        }
     }
 
     /**
      * Return the only activated View Component
      */
-    private getViewComponent() {
-        return this.gridComponent || this.listComponent || this.mapComponent;
+    private getViewComponent(): ViewInterface {
+        return this.gridComponent || this.listComponent;
     }
 
     /**
@@ -236,8 +225,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.showDownloadCollection = hasCollection && roleIsAllowed;
     }
 
-    public select(items) {
-        this.selected = items;
+    public select(cards: Cards) {
+        this.selected = cards;
     }
 
     public reset() {

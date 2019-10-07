@@ -50,6 +50,8 @@
              [scrollwheel]="false"
              [styles]="mapStyles"
              [zoom]="zoom"
+             [mapTypeControl]="true"
+             [mapTypeControlOptions]="{position: 10}"
              style="height:300px;"
     >
         <agm-marker (dragEnd)="onMarkerDrag($event)"

@@ -1,9 +1,11 @@
 import { AgmCoreModule } from '@agm/core';
+import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -185,7 +187,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         MatDatepickerModule,
         MatNativeDateModule,
         MatChipsModule,
+        MatCardModule,
         ngfModule,
+        AgmSnazzyInfoWindowModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBIBMlG6xXDmpPERQgKdo_Dwhtz5SX5dto',
             libraries: ['places'],

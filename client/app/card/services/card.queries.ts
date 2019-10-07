@@ -12,6 +12,7 @@ export const cardDetailsFragment = gql`
         width
         visibility
         dating
+        precision
         datings {
             from
             to

@@ -32,6 +32,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     @Input() public dataSource: NaturalDataSource;
 
     /**
+     *
+     */
+    @Input() selected = [];
+
+    /**
      * Emits when data is required
      */
     @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
@@ -94,6 +99,8 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     private formatImages(cards) {
 
+        const selected = this.selected.map(c => c.id);
+
         cards = cards.map(card => {
             let thumb = CardService.formatImage(card, this.thumbnailHeight);
             let big = CardService.formatImage(card, this.enlargedHeight);
@@ -121,6 +128,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
             const fields: any = {
                 title: title ? title : 'Voir le détail',
+                selected: selected.indexOf(card.id) > -1,
             };
 
             return merge({}, card, thumb, big, fields);
