@@ -30,6 +30,7 @@
 /vendor/
 client/app/shared/generated-types.ts
 .DS_Store
+*.sql.gz
 
 
 # keep it at the end of the file
