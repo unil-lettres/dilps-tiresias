@@ -19,6 +19,14 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
+            <!-- Image Column -->
+            <ng-container matColumnDef="image">
+                <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <div class="image" [style.background-image]="'url(' + element.imageUrl + ')'"></div>
+                </mat-cell>
+            </ng-container>
+
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>

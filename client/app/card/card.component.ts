@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
 import { ArtistComponent } from '../artists/artist/artist.component';
@@ -11,8 +12,8 @@ import { AlertService } from '../shared/components/alert/alert.service';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { CardVisibility, UserRole } from '../shared/generated-types';
-import { ThemeService } from '../shared/services/theme.service';
 import { UploadService } from '../shared/services/upload.service';
+import { getBase64 } from '../shared/services/utility';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
 
@@ -70,7 +71,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 public institutionService: InstitutionService,
                 private uploadService: UploadService,
                 private dialog: MatDialog,
-                private userService: UserService) {
+                private userService: UserService,
+                private sanitizer: DomSanitizer,
+    ) {
     }
 
     @Input()
@@ -279,9 +282,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user && this.model.creator
-            && this.model.owner.id === this.user.id
-            && this.model.creator.id === this.user.id
-            && this.model.visibility === CardVisibility.private;
+               && this.model.owner.id === this.user.id
+               && this.model.creator.id === this.user.id
+               && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
@@ -293,15 +296,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private getBase64(file) {
-
-        if (!file) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.addEventListener('load', (ev: any) => {
-            this.imageData = btoa(ev.target.result);
+        getBase64(file).then(result => {
+            this.imageData = result;
         });
-        reader.readAsBinaryString(file);
     }
 }

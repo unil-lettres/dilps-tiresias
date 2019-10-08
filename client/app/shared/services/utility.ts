@@ -5,3 +5,20 @@ export function shuffleArray(a) {
     }
     return a;
 }
+
+export function getBase64(file): Promise<null | string> {
+
+    return new Promise((resolve, reject) => {
+
+        if (!file) {
+            reject(null);
+        }
+
+        const reader = new FileReader();
+        reader.addEventListener('load', (ev: any) => {
+            resolve('data:image;base64,' + btoa(ev.target.result));
+        });
+        reader.readAsBinaryString(file);
+    });
+
+}

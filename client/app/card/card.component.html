@@ -342,7 +342,7 @@
             </a>
         </mat-toolbar>
         <div *ngIf="imageSrc && !imageData" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
-        <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(data:image;base64,' + imageData + ')'}" class="image" fxFlex></div>
+        <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image" fxFlex></div>
     </div>
 
 </div>

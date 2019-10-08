@@ -33,6 +33,16 @@
                     >
                 </mat-form-field>
 
+                <input (change)="upload($event.target.files[0])"
+                       [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                       name="Image"
+                       placeholder="lien"
+                       type="file"
+                >
+
+                <img [attr.src]="data?.item?.imageUrl" *ngIf="!imageData && data?.item?.imageUrl">
+                <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image"></div>
+
             </div>
         </mat-tab>
     </mat-tab-group>
