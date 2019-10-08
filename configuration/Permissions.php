@@ -29,7 +29,7 @@ return [
         'recursive' => false,
     ],
     [
-        'path' => 'htdocs/news',
+        'path' => 'htdocs/news-images',
         'permissions' => '0770',
         'recursive' => false,
     ],

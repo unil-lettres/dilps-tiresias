@@ -18,7 +18,7 @@ use GraphQL\Doctrine\Annotation as API;
  */
 class News extends AbstractModel
 {
-    private const IMAGE_PATH = 'htdocs/news/';
+    private const IMAGE_PATH = 'htdocs/news-images/';
 
     use HasName;
     use HasSorting;
@@ -65,7 +65,7 @@ class News extends AbstractModel
      */
     public function getImageUrl(): string
     {
-        return '/news/' . $this->getFilename();
+        return '/news-images/' . $this->getFilename();
     }
 
     /**
