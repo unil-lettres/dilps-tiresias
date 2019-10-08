@@ -15,9 +15,13 @@ export class CarouselComponent implements OnInit {
         direction: 'horizontal',
         autoplay: true,
         speed: 1000,
+        a11y: true,
+        loop: true,
+        slidesPerView: 1,
+        navigation: true,
     };
 
-    public slides;
+    public newses;
 
     constructor(public newsService: NewsService) {
     }
@@ -26,12 +30,7 @@ export class CarouselComponent implements OnInit {
 
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();
         this.newsService.getAll(qvm).subscribe(result => {
-
-            this.slides = result.items.map(news => {
-                /* tslint:disable */
-                return 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyOTN9'; //news.imageUrl;
-            });
-
+            this.newses = result.items;
         });
 
     }

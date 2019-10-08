@@ -1,5 +1,8 @@
-<swiper [config]="swiperConfig">
-    <div *ngFor="let item of slides">
-        <img [src]="item" alt="">
-    </div>
+<swiper [config]="swiperConfig" *ngIf="newses">
+    <a *ngFor="let news of newses" class="news" [attr.href]="news.url" [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}">
+        <div class="label">
+            <div class="name mat-title"> {{ news.name  }}</div>
+            <div class="description mat-body-2">{{ news.description }}</div>
+        </div>
+    </a>
 </swiper>
