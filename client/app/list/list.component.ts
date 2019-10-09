@@ -158,24 +158,24 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             this.updateShowDownloadCollection();
 
             if (data.collection) {
-                const filter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [data.collection.id]}}}]}]};
-                this.variablesManager.set('collection', {filter: filter});
+                const collectionFilter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [data.collection.id]}}}]}]};
+                this.variablesManager.set('collection', {filter: collectionFilter});
             }
 
             if (data.filter) {
                 this.variablesManager.set('route-context', {filter: data.filter});
             }
 
-            const filters: CardFilter = {
+            const filter: CardFilter = {
                 groups: [{conditions: [{filename: {equal: {value: '', not: true}}}]}],
             };
 
             // Setup own page, with self created cards
             if (data.creator && !this.collection) {
-                filters.groups[filters.groups.length - 1].conditions[0].creator = {equal: {value: data.creator.id}};
+                filter.groups[filter.groups.length - 1].conditions[0].creator = {equal: {value: data.creator.id}};
             }
 
-            this.variablesManager.set('controller-variables', {filter: filters});
+            this.variablesManager.set('controller-variables', {filter: filter});
             this.reset();
         });
 

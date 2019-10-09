@@ -98,8 +98,8 @@ export const cardDetailsFragment = gql`
     }${userMetaFragment}`;
 
 export const cardsQuery = gql`
-    query Cards($filter: CardFilter, $filters: OldCardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
-        cards(filter: $filter, filters: $filters, pagination: $pagination, sorting: $sorting) {
+    query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
+        cards(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
                 ...cardDetails
             }
