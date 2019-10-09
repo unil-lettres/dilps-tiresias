@@ -7,6 +7,7 @@ namespace Application\Acl;
 use Application\Acl\Assertion\IsMyself;
 use Application\Acl\Assertion\IsNotSuggestion;
 use Application\Acl\Assertion\IsOwner;
+use Application\Acl\Assertion\IsResponsible;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\Visibility;
 use Application\Model\AbstractModel;
@@ -77,7 +78,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), ['update'], new IsSuggestion());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'read', new Visibility([Card::VISIBILITY_MEMBER]));
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'read', new Visibility([Collection::VISIBILITY_MEMBER]));
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'read', new IsResponsible([Collection::VISIBILITY_MEMBER]));
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'read', new IsOwner());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'create');
@@ -97,7 +98,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Change::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), 'create');
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR]));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new IsResponsible([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR]));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Country::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Dating::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class));

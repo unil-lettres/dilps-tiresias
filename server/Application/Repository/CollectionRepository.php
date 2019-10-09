@@ -77,15 +77,18 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
             $visibility[] = Collection::VISIBILITY_ADMINISTRATOR;
         }
 
-        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
+        $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+
+        $qb = $this->getEntityManager()
+            ->getConnection()
+            ->createQueryBuilder()
             ->select('collection.id')
             ->from('collection')
-            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')');
+            ->leftJoin('collection', 'collection_user', 'cu', 'collection.id = cu.collection_id')
+            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')')
+            ->orWhere('cu.user_id = ' . $userId);
 
-        if ($user) {
-            $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-            $qb->orWhere('collection.owner_id = ' . $userId . ' OR collection.creator_id = ' . $userId);
-        }
+        $qb->orWhere('collection.owner_id = ' . $userId . ' OR collection.creator_id = ' . $userId);
 
         return $qb->getSQL();
     }

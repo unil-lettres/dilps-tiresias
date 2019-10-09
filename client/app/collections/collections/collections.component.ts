@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
 import { isArray } from 'lodash';
-import { CollectionsVariables, UserRole } from '../../shared/generated-types';
+import { CollectionsVariables, LogicalOperator, UserRole } from '../../shared/generated-types';
 import { UserService } from '../../users/services/user.service';
 import { CollectionComponent } from '../collection/collection.component';
 import { CollectionService } from '../services/collection.service';
@@ -68,7 +68,17 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
             if (data.creator) {
-                this.queryVariables.set('creator', {filter: {groups: [{conditions: [{creator: {in: {values: [data.creator.id]}}}]}]}});
+                this.queryVariables.set('creator', {
+                    filter: {
+                        groups: [
+                            {conditions: [{creator: {in: {values: [data.creator.id]}}}]},
+                            {
+                                groupLogic: LogicalOperator.OR,
+                                conditions: [{users: {have: {values: [this.user.id]}}}],
+                            },
+                        ],
+                    },
+                });
             }
 
         });
