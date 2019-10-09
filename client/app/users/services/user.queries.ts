@@ -30,8 +30,8 @@ const userDetailsFragment = gql`
     }${userMetaFragment}`;
 
 export const usersQuery = gql`
-    query Users($filters: OldUserFilter, $pagination: PaginationInput) {
-        users(filters: $filters, pagination: $pagination) {
+    query Users($filter: UserFilter, $filters: OldUserFilter, $pagination: PaginationInput) {
+        users(filter: $filter, filters: $filters, pagination: $pagination) {
             items {
                 id
                 login
