@@ -91,7 +91,7 @@ class Collection extends AbstractModel implements HasParentInterface
 
     /**
      * @var DoctrineCollection
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
     private $users;
 
