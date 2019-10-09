@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
     CreateUser,
@@ -19,17 +20,7 @@ import {
     UserVariables,
     Viewer,
 } from '../../shared/generated-types';
-import {
-    createUser,
-    deleteUsers,
-    loginMutation,
-    logoutMutation,
-    updateUser,
-    userQuery,
-    usersQuery,
-    viewerQuery,
-} from './user.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { createUser, deleteUsers, loginMutation, logoutMutation, updateUser, userQuery, usersQuery, viewerQuery } from './user.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -43,6 +34,8 @@ export class UserService extends NaturalAbstractModelService<User['user'],
     UpdateUser['updateUser'],
     UpdateUserVariables,
     DeleteUsers['deleteUsers']> {
+
+    private currentUser: Viewer['viewer'] | null = null;
 
     constructor(apollo: Apollo, private router: Router) {
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers);
@@ -66,10 +59,17 @@ export class UserService extends NaturalAbstractModelService<User['user'],
     }
 
     public getCurrentUser(): Observable<Viewer['viewer']> {
+
+        if (this.currentUser) {
+            return of(this.currentUser);
+        }
+
         return this.apollo.query<Viewer>({
             query: viewerQuery,
-            fetchPolicy: 'network-only',
-        }).pipe(map(result => result.data ? result.data.viewer : null));
+        }).pipe(map(({data: {viewer}}) => {
+            this.currentUser = viewer;
+            return viewer;
+        }));
     }
 
     public getRole(role: UserRole) {
@@ -131,9 +131,12 @@ export class UserService extends NaturalAbstractModelService<User['user'],
         this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
             this.apollo.mutate<Logout>({
                 mutation: logoutMutation,
-            }).pipe(map(result => result.data.logout)).subscribe((v) => (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
-                subject.next(v);
-            }));
+            }).pipe(map(result => result.data.logout)).subscribe((v) => {
+                this.currentUser = null;
+                (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
+                    subject.next(v);
+                });
+            });
         });
 
         return subject;
