@@ -165,7 +165,7 @@ export const routes: Routes = [
                         path: '',
                         component: ListComponent,
                         data: {
-                            filter: {groups: [{conditions: [{collections: {empty: {not: false}}} as CardFilterGroupCondition]}]},
+                            filter: {groups: [{conditions: [{collections: {empty: {}}} as CardFilterGroupCondition]}]},
                         },
                     },
                     {
