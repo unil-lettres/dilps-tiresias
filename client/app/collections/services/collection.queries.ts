@@ -8,22 +8,6 @@ export const collectionsQuery = gql`
             items {
                 id
                 name
-                children {
-                    id
-                    name
-                    children {
-                        id
-                        name
-                        children {
-                            id
-                            name
-                            children {
-                                id
-                                name
-                            }
-                        }
-                    }
-                }
             }
             pageSize
             pageIndex

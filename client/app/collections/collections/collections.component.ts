@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Literal, NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
+import { NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
 import { isArray } from 'lodash';
 import { CollectionsVariables, UserRole } from '../../shared/generated-types';
 import { UserService } from '../../users/services/user.service';
@@ -55,13 +55,12 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             this.user = user;
             this.showEditButtons = this.showEditionButtons();
             this.canCreate = this.showCreateButton(this.route.snapshot.data.creationButtonForRoles, this.user);
-
         });
 
         this.queryVariables.set('variables', this.defaultVariables);
         this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
 
-        this.route.data.subscribe((data: Literal) => {
+        this.route.data.subscribe(data => {
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, this.user);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
@@ -83,6 +82,12 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             this.hasMore = collections.length > this.collections.length;
         });
 
+    }
+
+    public getChildren(collection) {
+        const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
+        qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
+        this.collectionsService.getAll(qvm).subscribe(results => collection.children = results.items);
     }
 
     public showEditionButtons() {
