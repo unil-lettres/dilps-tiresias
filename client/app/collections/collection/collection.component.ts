@@ -36,13 +36,13 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
     public institution;
 
     constructor(public institutionService: InstitutionService,
-                service: CollectionService,
-                userService: UserService,
+                public collectionService: CollectionService,
+                public userService: UserService,
                 alertService: AlertService,
                 dialogRef: MatDialogRef<CollectionComponent>,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
-        super(service, alertService, dialogRef, userService, data);
+        super(collectionService, alertService, dialogRef, userService, data);
     }
 
     public updateVisibility(ev) {
@@ -68,7 +68,7 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         }
 
         const collectionIsNotPrivate = this.data.item.visibility === CollectionVisibility.administrator ||
-            this.data.item.visibility === CollectionVisibility.member;
+                                       this.data.item.visibility === CollectionVisibility.member;
 
         // If is admin and has visibility
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
@@ -85,5 +85,9 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     protected postUpdate(model) {
         this.institution = model.institution;
+    }
+
+    public displayFn(item) {
+        return item ? item.login : null;
     }
 }

@@ -37,7 +37,7 @@ import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
     NaturalDropdownComponentsModule,
-    NaturalFixedButtonModule,
+    NaturalFixedButtonModule, NaturalHierarchicSelectorModule,
     NaturalIconModule,
     NaturalRelationsModule,
     NaturalSearchModule,
@@ -211,6 +211,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         NaturalAlertModule,
         NaturalFixedButtonModule,
         SwiperModule,
+        NaturalHierarchicSelectorModule
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

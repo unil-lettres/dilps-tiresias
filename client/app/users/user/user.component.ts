@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NaturalHierarchicConfiguration } from '@ecodev/natural';
 import { ArtistComponent } from '../../artists/artist/artist.component';
+import { CollectionService } from '../../collections/services/collection.service';
 import { InstitutionService } from '../../institutions/services/institution.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
 import { AlertService } from '../../shared/components/alert/alert.service';
@@ -33,11 +35,21 @@ export class UserComponent extends AbstractDetail {
 
     public institution;
 
+    public collectionsHierarchicConfig: NaturalHierarchicConfiguration[] = [
+        {
+            service: CollectionService,
+            parentsFilters: ['parent'],
+            childrenFilters: ['parent'],
+            selectableAtKey: 'collections'
+        },
+    ];
+
     constructor(public institutionService: InstitutionService,
                 service: UserService,
                 alertService: AlertService,
                 userService: UserService,
                 dialogRef: MatDialogRef<ArtistComponent>,
+                public collectionService: CollectionService,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
         super(service, alertService, dialogRef, userService, data);

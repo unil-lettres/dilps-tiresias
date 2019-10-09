@@ -53,6 +53,18 @@
             </div>
         </mat-tab>
 
+        <mat-tab label="Collections">
+
+            <natural-relations [service]="collectionService"
+                               class="margin"
+                               [main]="data.item"
+                               placeholder="Ajouter une collection"
+                               [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
+                               [hierarchicSelectorConfig]="collectionsHierarchicConfig"
+            ></natural-relations>
+
+        </mat-tab>
+
     </mat-tab-group>
 </mat-dialog-content>
 

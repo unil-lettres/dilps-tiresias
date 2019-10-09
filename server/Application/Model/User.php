@@ -11,6 +11,8 @@ use Application\Traits\HasInstitution;
 use Application\Traits\HasSite;
 use Application\Utility;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -52,6 +54,13 @@ class User extends AbstractModel
      * @var User
      */
     private static $currentUser;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
+     */
+    private $collections;
 
     /**
      * Set currently logged in user
@@ -128,6 +137,7 @@ class User extends AbstractModel
      */
     public function __construct(string $role = self::ROLE_STUDENT)
     {
+        $this->collections = new ArrayCollection();
         $this->role = $role;
     }
 
@@ -371,5 +381,27 @@ class User extends AbstractModel
         self::setCurrent($previousUser);
 
         return $result;
+    }
+
+    /**
+     * Notify the Card that it was added to a Collection.
+     * This should only be called by Collection::addCard()
+     *
+     * @param Collection $collection
+     */
+    public function collectionAdded(Collection $collection): void
+    {
+        $this->collections->add($collection);
+    }
+
+    /**
+     * Notify the Card that it was removed from a Collection.
+     * This should only be called by Collection::removeCard()
+     *
+     * @param Collection $collection
+     */
+    public function collectionRemoved(Collection $collection): void
+    {
+        $this->collections->removeElement($collection);
     }
 }
