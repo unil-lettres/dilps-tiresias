@@ -1,5 +1,8 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { environment } from '../environments/environment';
+import { SITE } from './app.config';
+import { Site } from './shared/generated-types';
 import { ThemeService } from './shared/services/theme.service';
 
 @Component({
@@ -19,22 +22,28 @@ export class AppComponent implements OnInit {
      */
     public initialized: boolean;
 
-    constructor(private themeService: ThemeService, private overlayContainer: OverlayContainer) {
+    private lastTheme;
+
+    constructor(private themeService: ThemeService, private overlayContainer: OverlayContainer, @Inject(SITE) private site: Site) {
+        themeService.set(site + '-' + environment.environment);
     }
 
     public ngOnInit() {
 
         this.themeService.theme.subscribe(newTheme => {
+            document.body.classList.remove(this.lastTheme);
 
             // Remove old theme class from overlay (dialogs, snackbars, etc...)
-            this.themeService.themes.forEach(them => {
-                this.overlayContainer.getContainerElement().classList.remove(them);
-                this.overlayContainer.getContainerElement().classList.remove(them + 'Dark');
+            this.themeService.themes.forEach(theme => {
+                this.overlayContainer.getContainerElement().classList.remove(theme);
+                this.overlayContainer.getContainerElement().classList.remove(theme + '-dark');
             });
 
             // set new theme class
             this.overlayContainer.getContainerElement().classList.add(newTheme);
-            this.theme = newTheme;
+            // this.theme = newTheme;
+            this.lastTheme = newTheme;
+            document.body.classList.add(newTheme);
         });
 
     }

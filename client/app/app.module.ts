@@ -37,7 +37,8 @@ import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
     NaturalDropdownComponentsModule,
-    NaturalFixedButtonModule, NaturalHierarchicSelectorModule,
+    NaturalFixedButtonModule,
+    NaturalHierarchicSelectorModule,
     NaturalIconModule,
     NaturalRelationsModule,
     NaturalSearchModule,
@@ -57,6 +58,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { SITE } from './app.config';
 import { ArtistComponent } from './artists/artist/artist.component';
 import { ArtistsComponent } from './artists/artists/artists.component';
 import { CardComponent } from './card/card.component';
@@ -98,6 +100,9 @@ import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
+
+// Defined the most early possible : in index.html
+declare var APP_SITE;
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -211,10 +216,11 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         NaturalAlertModule,
         NaturalFixedButtonModule,
         SwiperModule,
-        NaturalHierarchicSelectorModule
+        NaturalHierarchicSelectorModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
+        {provide: SITE, useValue: APP_SITE},
     ],
     bootstrap: [AppComponent],
 })

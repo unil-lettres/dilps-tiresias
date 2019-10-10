@@ -68,6 +68,7 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
+                        "disableHostCheck": true,
                         "browserTarget": "dilps:build",
                         "host": "dilps.lan",
                         "proxyConfig": "proxy.conf.json",

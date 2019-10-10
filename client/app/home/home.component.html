@@ -1,14 +1,7 @@
 <div [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="column">
 
     <mat-sidenav-container #navContainer fxFlex fxLayout="column">
-        <mat-sidenav *ngIf="showNavigationMenu()"
-                     [ngStyle]="{ 'backgroundColor': environmentColor() }"
-                     class="menuMinimized"
-                     id="menu"
-                     mode="side"
-                     opened="true"
-                     position="start"
-        >
+        <mat-sidenav *ngIf="showNavigationMenu()" class="menuMinimized" id="menu" mode="side" opened="true" position="start">
             <div fxFlex fxFlexAlign="start center" fxLayout="row">
                 <perfect-scrollbar fxLayout="column">
 
@@ -153,11 +146,12 @@
 
                     <mat-nav-list>
                         <!-- Theme -->
-                        <a (click)="themeService.toggle()" mat-list-item>
+                        <a (click)="themeService.toggleNightMode()" mat-list-item>
                             <mat-icon mat-list-icon>invert_colors</mat-icon>
                             <span matLine>Changer couleurs</span>
                         </a>
                     </mat-nav-list>
+
                 </perfect-scrollbar>
             </div>
         </mat-sidenav>

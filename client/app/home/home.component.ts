@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
+import { Site } from '../shared/generated-types';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
@@ -17,7 +18,6 @@ import { UserComponent } from '../users/user/user.component';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    public environmentString = environment.environment;
     public errors = [];
     public user;
     public nav = 1;
@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy {
                 private snackBar: MatSnackBar,
                 private alertService: AlertService,
                 private dialog: MatDialog,
-                private cardService: CardService) {
+                private cardService: CardService,
+                @Inject(SITE) private site: Site) {
 
         this.network.errors.next([]);
     }
@@ -89,14 +90,4 @@ export class HomeComponent implements OnInit, OnDestroy {
         return !!this.nav;
     }
 
-    public environmentColor() {
-        switch (this.environmentString) {
-            case 'development':
-                return '#2ca02c';
-            case 'staging':
-                return '#ee7f00';
-            default:
-                return '';
-        }
-    }
 }

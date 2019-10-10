@@ -1,0 +1,18 @@
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-orange);
+$warn: mat-palette($mat-red);
+
+.dilps-staging {
+    $theme-light: mat-light-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-light, foreground), base);
+    @include angular-material-theme($theme-light);
+    @include components-theme($theme-light);
+}
+
+.dilps-staging-dark {
+    $theme-dark: mat-dark-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-dark, foreground), base);
+    @include angular-material-theme($theme-dark);
+    @include components-theme($theme-dark);
+}
+

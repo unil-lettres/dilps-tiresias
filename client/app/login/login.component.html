@@ -1,73 +1,78 @@
-<div class="login" fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div class="login" fxLayout="column">
 
-    <div fxLayout="column" fxLayoutGap="15px">
-        <img src="assets/images/logo-bleu.svg" />
+        <div fxLayout="column" fxLayoutGap="15px">
+            <img src="assets/images/logo-bleu.svg" />
 
-        <div class="login-info" fxLayout="column" fxLayoutGap="15px">
-            Veuillez choisir une méthode d'authentification ou
-            <br>
-            utiliser le bouton "Accès public"
+            <div class="login-info" fxLayout="column" fxLayoutGap="15px">
+                Veuillez choisir une méthode d'authentification ou
+                <br>
+                utiliser le bouton "Accès public"
+            </div>
+
+            <a class="shib-link" href="/auth" mat-raised-button>
+                <img src="assets/images/logo-unil-bleu.svg" />
+            </a>
+
+            <mat-divider></mat-divider>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Utilisateur externe
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <form>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <mat-form-field class="width-auto">
+                            <input (focus)="snackBar.dismiss()"
+                                   [(ngModel)]="loginForm.login"
+                                   [disabled]="loading"
+                                   autofocus
+                                   matInput
+                                   name="login"
+                                   placeholder="login"
+                                   required="required"
+                            >
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <mat-form-field class="width-auto">
+                            <input (focus)="snackBar.dismiss()"
+                                   [(ngModel)]="loginForm.password"
+                                   [disabled]="loading"
+                                   color="warn"
+                                   matInput
+                                   name="password"
+                                   placeholder="password"
+                                   required="required"
+                                   type="password"
+                            >
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <button (click)="login()"
+                                [disabled]="loading || !loginForm.login || !loginForm.password"
+                                color="primary"
+                                mat-button
+                                mat-raised-button
+                                type="submit"
+                        >Se connecter
+                        </button>
+                    </div>
+                </form>
+
+            </mat-expansion-panel>
+
+            <mat-divider></mat-divider>
+
+            <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
         </div>
 
-        <a class="shib-link" href="/auth" mat-raised-button>
-            <img src="assets/images/logo-unil-bleu.svg" />
-        </a>
-
-        <mat-divider></mat-divider>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Utilisateur externe
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div fxLayout="column" fxLayoutGap="10px">
-                <mat-form-field class="width-auto">
-                    <input (focus)="snackBar.dismiss()"
-                           [(ngModel)]="loginForm.login"
-                           [disabled]="loading"
-                           autofocus
-                           matInput
-                           name="login"
-                           placeholder="login"
-                           required="required"
-                    >
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="column" fxLayoutGap="10px">
-                <mat-form-field class="width-auto">
-                    <input (focus)="snackBar.dismiss()"
-                           [(ngModel)]="loginForm.password"
-                           [disabled]="loading"
-                           color="warn"
-                           matInput
-                           name="password"
-                           placeholder="password"
-                           required="required"
-                           type="password"
-                    >
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="column" fxLayoutGap="10px">
-                <button (click)="login()"
-                        [disabled]="loading || !loginForm.login || !loginForm.password"
-                        color="primary"
-                        mat-button
-                        mat-raised-button
-                        type="submit"
-                >Se connecter
-                </button>
-            </div>
-        </mat-expansion-panel>
-
-        <mat-divider></mat-divider>
-
-        <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
     </div>
 
+    <app-carousel></app-carousel>
 </div>
-
-<app-carousel></app-carousel>
