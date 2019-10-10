@@ -266,7 +266,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet/ces élément(s) ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardService.delete(selection).subscribe(() => {
+                    this.cardService.delete([selection]).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.reset();
                     });

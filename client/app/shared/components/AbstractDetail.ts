@@ -52,7 +52,7 @@ export class AbstractDetail implements OnInit {
         this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.service.delete(this.data.item).subscribe(() => {
+                    this.service.delete([this.data.item]).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.dialogRef.close(null);
                     });

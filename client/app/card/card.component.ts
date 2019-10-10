@@ -212,7 +212,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardService.delete(this.model).subscribe(() => {
+                    this.cardService.delete([this.model]).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.router.navigateByUrl('/');
                     });
