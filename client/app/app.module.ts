@@ -40,6 +40,7 @@ import {
     NaturalFixedButtonModule,
     NaturalHierarchicSelectorModule,
     NaturalIconModule,
+    NaturalIconsConfig,
     NaturalRelationsModule,
     NaturalSearchModule,
     NaturalSelectModule,
@@ -107,6 +108,12 @@ declare var APP_SITE;
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
     appearance: 'fill',
+};
+
+const icons: NaturalIconsConfig = {
+    material: {
+        svg: 'assets/icons/diamond.svg',
+    },
 };
 
 @NgModule({
@@ -209,7 +216,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
             libraries: ['places'],
         }),
         NaturalDropdownComponentsModule,
-        NaturalIconModule.forRoot({}),
+        NaturalIconModule.forRoot(icons),
         NaturalRelationsModule,
         NaturalSelectModule,
         NaturalTableButtonModule,

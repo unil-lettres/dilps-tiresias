@@ -18,6 +18,9 @@ import { UserComponent } from '../users/user/user.component';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+    public Site = Site;
+
     public errors = [];
     public user;
     public nav = 1;
