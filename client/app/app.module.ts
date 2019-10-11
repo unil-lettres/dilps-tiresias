@@ -67,6 +67,8 @@ import { ChangeComponent } from './changes/change/change.component';
 import { ChangesComponent } from './changes/changes/changes.component';
 import { CollectionComponent } from './collections/collection/collection.component';
 import { CollectionsComponent } from './collections/collections/collections.component';
+import { DomainComponent } from './domains/domain/domain.component';
+import { DomainsComponent } from './domains/domains/domains.component';
 import { HomeComponent } from './home/home.component';
 import { InstitutionComponent } from './institutions/institution/institution.component';
 import { InstitutionsComponent } from './institutions/institutions/institutions.component';
@@ -157,6 +159,8 @@ const icons: NaturalIconsConfig = {
         CarouselComponent,
         NewsesComponent,
         NewsComponent,
+        DomainComponent,
+        DomainsComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -170,6 +174,7 @@ const icons: NaturalIconsConfig = {
         NumberSelectorComponent,
         MassEditComponent,
         NewsComponent,
+        DomainComponent,
     ],
     imports: [
         BrowserModule,

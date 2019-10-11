@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 private alertService: AlertService,
                 private dialog: MatDialog,
                 private cardService: CardService,
-                @Inject(SITE) private site: Site) {
+                @Inject(SITE) public site: Site) {
 
         this.network.errors.next([]);
     }

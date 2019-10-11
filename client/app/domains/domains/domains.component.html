@@ -1,0 +1,53 @@
+<mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+
+    <natural-search fxFlex
+                    [facets]="naturalSearchFacets"
+                    [selections]="naturalSearchSelections"
+                    (selectionChange)="search($event)"
+                    [multipleGroups]="false"
+    ></natural-search>
+
+</mat-toolbar>
+
+<div class="padding padding-fab">
+
+    <div class="mat-headline">Domaines</div>
+
+    <div class="responsive-table">
+
+        <mat-table [dataSource]="dataSource">
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"
+                    ></app-table-button>
+                </mat-cell>
+            </ng-container>
+
+        </mat-table>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === 0">
+        <div>Pas de résultats</div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === null">
+        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+    </div>
+
+    <mat-paginator *ngIf="dataSource.data?.length"
+                   [length]="dataSource.data?.length"
+                   [pageSize]="dataSource.data?.pageSize"
+                   [pageIndex]="dataSource.data?.pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pagination($event)"
+    ></mat-paginator>
+</div>
+
+<natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>

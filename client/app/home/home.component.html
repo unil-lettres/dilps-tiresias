@@ -26,7 +26,7 @@
                                routerLink="/collection"
                                routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>collections</mat-icon>
+                                <natural-icon  mat-list-icon name="collections"></natural-icon>
                             </a>
 
                             <!-- Mes collections privées -->
@@ -36,13 +36,12 @@
                                routerLink="/my-collection"
                                routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>collections_bookmark</mat-icon>
+                                <natural-icon  mat-list-icon name="collections_bookmark"></natural-icon>
                             </a>
 
                             <!-- Fonds -->
-                            <a mat-list-item matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active"
-                            >
-                                <mat-icon mat-list-icon>folder_special</mat-icon>
+                            <a mat-list-item matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active">
+                                <natural-icon  mat-list-icon name="folder_special"></natural-icon>
                             </a>
 
                             <!-- Users -->
@@ -53,7 +52,7 @@
                                routerLink="/user"
                                routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>group</mat-icon>
+                                <natural-icon  mat-list-icon name="group"></natural-icon>
                             </a>
 
                             <!-- Notifications -->
@@ -63,7 +62,7 @@
                                routerLink="/notification"
                                routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>notifications</mat-icon>
+                                <natural-icon  mat-list-icon name="notifications"></natural-icon>
                             </a>
 
                             <!-- Add photos -->
@@ -76,9 +75,10 @@
                                multiple="1"
                                ngfSelect
                             >
-                                <mat-icon mat-list-icon>file_upload</mat-icon>
+                                <natural-icon  mat-list-icon name="file_upload"></natural-icon>
                             </a>
                         </mat-nav-list>
+
                         <mat-divider *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"></mat-divider>
                         <mat-nav-list *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
 
@@ -89,18 +89,68 @@
                                routerLink="/institution"
                                routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>place</mat-icon>
+                                <natural-icon  mat-list-icon name="place"></natural-icon>
                             </a>
 
-                            <!-- Authors -->
-                            <a mat-list-item matTooltip="Artistes" matTooltipPosition="after" routerLink="/artist" routerLinkActive="active"
+                            <!-- Artists -->
+                            <a *ngIf="site === Site.dilps"
+                               mat-list-item
+                               matTooltip="Artistes"
+                               matTooltipPosition="after"
+                               routerLink="/artist"
+                               routerLinkActive="active"
                             >
-                                <mat-icon mat-list-icon>copyright</mat-icon>
+                                <natural-icon  mat-list-icon name="copyright"></natural-icon>
+
                             </a>
+
+                            <ng-container *ngIf="site === Site.tiresias">
+
+                                <!-- Periods -->
+                                <a mat-list-item
+                                   matTooltip="Périodes"
+                                   matTooltipPosition="after"
+                                   routerLink="/period"
+                                   routerLinkActive="active"
+                                >
+                                    <natural-icon  mat-list-icon name="date_range"></natural-icon>
+                                </a>
+
+                                <!-- Domain -->
+                                <a mat-list-item
+                                   matTooltip="Domaines"
+                                   matTooltipPosition="after"
+                                   routerLink="/domain"
+                                   routerLinkActive="active"
+                                >
+                                    <natural-icon  mat-list-icon name="work"></natural-icon>
+                                </a>
+
+                                <!-- Material -->
+                                <a mat-list-item
+                                   matTooltip="Matériaux"
+                                   matTooltipPosition="after"
+                                   routerLink="/material"
+                                   routerLinkActive="active"
+                                >
+                                    <natural-icon  mat-list-icon name="material"></natural-icon>
+                                </a>
+
+                                <!-- Document type -->
+                                <a mat-list-item
+                                   matTooltip="Type de documents"
+                                   matTooltipPosition="after"
+                                   routerLink="/document-type"
+                                   routerLinkActive="active"
+                                >
+                                    <natural-icon  mat-list-icon name="insert_drive_file"></natural-icon>
+                                </a>
+
+                            </ng-container>
 
                             <!-- Carousel -->
                             <a mat-list-item matTooltip="News" matTooltipPosition="after" routerLink="/newses" routerLinkActive="active">
-                                <mat-icon mat-list-icon>view_carousel</mat-icon>
+                                <natural-icon  mat-list-icon name="view_carousel"></natural-icon>
                             </a>
 
                         </mat-nav-list>
@@ -108,12 +158,13 @@
                         <mat-nav-list fxFlex>
                             <!-- Account -->
                             <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
-                                <mat-icon mat-list-icon>account_circle</mat-icon>
+                                <natural-icon  mat-list-icon name="account_circle"></natural-icon>
+
                             </a>
 
                             <!-- Logout -->
                             <a (click)="userService.logout()" mat-list-item matTooltip="Se déconnecter" matTooltipPosition="after">
-                                <mat-icon mat-list-icon>exit_to_app</mat-icon>
+                                <natural-icon  mat-list-icon name="exit_to_app"></natural-icon>
                             </a>
                         </mat-nav-list>
 
@@ -123,13 +174,13 @@
 
                         <!-- Dashboard -->
                         <a [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active">
-                            <mat-icon mat-list-icon>home</mat-icon>
+                            <natural-icon  mat-list-icon name="home"></natural-icon>
                             <span matLine>Accueil</span>
                         </a>
 
                         <!-- Logout -->
                         <a (click)="userService.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
-                            <mat-icon mat-list-icon>account_circle</mat-icon>
+                            <natural-icon  mat-list-icon name="account_circle"></natural-icon>
                         </a>
                     </mat-nav-list>
 
@@ -147,7 +198,7 @@
                     <mat-nav-list>
                         <!-- Theme -->
                         <a (click)="themeService.toggleNightMode()" mat-list-item>
-                            <mat-icon mat-list-icon>invert_colors</mat-icon>
+                            <natural-icon  mat-list-icon name="invert_colors"></natural-icon>
                             <span matLine>Changer couleurs</span>
                         </a>
                     </mat-nav-list>
