@@ -14,6 +14,7 @@ import { InstitutionsComponent } from './institutions/institutions/institutions.
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { NewsesComponent } from './news/newses/newses.component';
+import { PeriodsComponent } from './periods/periods/periods.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
 import {
@@ -88,6 +89,11 @@ export const routes: Routes = [
             {
                 path: 'domain',
                 component: DomainsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'period',
+                component: PeriodsComponent,
                 canActivate: [AuthGuard],
             },
             {

@@ -80,6 +80,8 @@ import { TermsAgreementComponent } from './login/terms-agreement.component';
 import { CarouselComponent } from './news/carousel/carousel.component';
 import { NewsComponent } from './news/news/news.component';
 import { NewsesComponent } from './news/newses/newses.component';
+import { PeriodComponent } from './periods/period/period.component';
+import { PeriodsComponent } from './periods/periods/periods.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { NumberSelectorComponent } from './quizz/shared/number-selector/number-selector.component';
 import { AddressComponent } from './shared/components/address/address.component';
@@ -117,6 +119,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
 const icons: NaturalIconsConfig = {
     material: {
         svg: 'assets/icons/diamond.svg',
+    },
+    period: {
+        font: 'date_range',
     },
 };
 
@@ -165,6 +170,8 @@ const icons: NaturalIconsConfig = {
         DomainsComponent,
         DocumentTypesComponent,
         DocumentTypeComponent,
+        PeriodComponent,
+        PeriodsComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -180,6 +187,7 @@ const icons: NaturalIconsConfig = {
         NewsComponent,
         DomainComponent,
         DocumentTypeComponent,
+        PeriodComponent,
     ],
     imports: [
         BrowserModule,
