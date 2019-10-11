@@ -13,16 +13,12 @@ import { HomeComponent } from './home/home.component';
 import { InstitutionsComponent } from './institutions/institutions/institutions.component';
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
+import { MaterialsComponent } from './materials/materials/materials.component';
 import { NewsesComponent } from './news/newses/newses.component';
 import { PeriodsComponent } from './periods/periods/periods.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
-import {
-    CardFilterGroupCondition,
-    CollectionFilterGroupCondition,
-    CollectionVisibility,
-    UserRole,
-} from './shared/generated-types';
+import { CardFilterGroupCondition, CollectionFilterGroupCondition, CollectionVisibility, UserRole } from './shared/generated-types';
 import { AuthAdminGuard } from './shared/services/auth.admin.guard';
 import { AuthGuard } from './shared/services/auth.guard';
 import { TagsComponent } from './tags/tags/tags.component';
@@ -90,6 +86,11 @@ export const routes: Routes = [
             {
                 path: 'tag',
                 component: TagsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'material',
+                component: MaterialsComponent,
                 canActivate: [AuthGuard],
             },
             {

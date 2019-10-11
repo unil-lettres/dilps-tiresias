@@ -1,0 +1,66 @@
+<mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+
+    <natural-search fxFlex
+                    [facets]="naturalSearchFacets"
+                    [selections]="naturalSearchSelections"
+                    (selectionChange)="search($event)"
+                    [multipleGroups]="false"
+    ></natural-search>
+
+</mat-toolbar>
+
+<div class="padding padding-fab">
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+        <div class="mat-headline no-margin">Matériaux</div>
+        <div fxLayout="row wrap">
+            <a *ngFor="let item of breadcrumbs;" [routerLink]="goToChildLink(item)" class="no-padding" mat-button>
+                <natural-icon name="chevron_right"></natural-icon>
+                <natural-icon name="material"></natural-icon>
+                <span>{{ item.name }}</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="responsive-table">
+
+        <table mat-table [dataSource]="dataSource">
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <ng-container matColumnDef="navigation">
+                <th mat-header-cell *matHeaderCellDef natural-3em-column></th>
+                <td mat-cell *matCellDef="let element">
+                    <natural-table-button [navigate]="goToChildLink(element)" icon="chevron_right" matTooltip="Déployer"
+                    ></natural-table-button>
+                </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nom</th>
+                <td mat-cell *matCellDef="let element">
+                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
+                </td>
+            </ng-container>
+
+        </table>
+    </div>
+
+    <div *ngIf="showNoResults()" fxLayout="column" fxLayoutAlign="center center" i18n class="margin-v">Pas de résultats</div>
+    <div *ngIf="dataSource?.data?.length === null" fxLayout="column" fxLayoutAlign="center center">
+        <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <mat-paginator (page)="pagination($event)"
+                   *ngIf="dataSource.data?.length"
+                   [length]="dataSource.data?.length"
+                   [pageIndex]="dataSource.data?.pageIndex"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="dataSource.data?.pageSize"
+    ></mat-paginator>
+
+</div>
+
+<natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>

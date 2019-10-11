@@ -77,6 +77,8 @@ import { InstitutionsComponent } from './institutions/institutions/institutions.
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { TermsAgreementComponent } from './login/terms-agreement.component';
+import { MaterialComponent } from './materials/material/material.component';
+import { MaterialsComponent } from './materials/materials/materials.component';
 import { CarouselComponent } from './news/carousel/carousel.component';
 import { NewsComponent } from './news/news/news.component';
 import { NewsesComponent } from './news/newses/newses.component';
@@ -179,6 +181,8 @@ const icons: NaturalIconsConfig = {
         PeriodsComponent,
         TagComponent,
         TagsComponent,
+        MaterialComponent,
+        MaterialsComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -196,6 +200,7 @@ const icons: NaturalIconsConfig = {
         DocumentTypeComponent,
         PeriodComponent,
         TagComponent,
+        MaterialComponent,
     ],
     imports: [
         BrowserModule,
