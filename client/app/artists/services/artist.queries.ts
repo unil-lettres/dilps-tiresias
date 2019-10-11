@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const artistsQuery = gql`
-    query Artists($filters: OldArtistFilter, $pagination: PaginationInput) {
-        artists(filters: $filters, pagination: $pagination) {
+    query Artists($filter:ArtistFilter, $pagination: PaginationInput) {
+        artists(filter: $filter, pagination: $pagination) {
             items {
                 id
                 name
