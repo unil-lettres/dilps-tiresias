@@ -25,6 +25,7 @@ import {
 } from './shared/generated-types';
 import { AuthAdminGuard } from './shared/services/auth.admin.guard';
 import { AuthGuard } from './shared/services/auth.guard';
+import { TagsComponent } from './tags/tags/tags.component';
 import { UserResolver } from './users/services/user.resolver';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
@@ -84,6 +85,11 @@ export const routes: Routes = [
             {
                 path: 'artist',
                 component: ArtistsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'tag',
+                component: TagsComponent,
                 canActivate: [AuthGuard],
             },
             {

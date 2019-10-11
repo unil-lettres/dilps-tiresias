@@ -102,6 +102,8 @@ import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
 import { TypePipe } from './shared/pipes/type.pipe';
 import { NetworkActivityService } from './shared/services/network-activity.service';
+import { TagComponent } from './tags/tag/tag.component';
+import { TagsComponent } from './tags/tags/tags.component';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
@@ -122,6 +124,9 @@ const icons: NaturalIconsConfig = {
     },
     period: {
         font: 'date_range',
+    },
+    tag: {
+        font: 'label',
     },
 };
 
@@ -172,6 +177,8 @@ const icons: NaturalIconsConfig = {
         DocumentTypeComponent,
         PeriodComponent,
         PeriodsComponent,
+        TagComponent,
+        TagsComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -188,6 +195,7 @@ const icons: NaturalIconsConfig = {
         DomainComponent,
         DocumentTypeComponent,
         PeriodComponent,
+        TagComponent,
     ],
     imports: [
         BrowserModule,

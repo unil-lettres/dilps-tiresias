@@ -18,6 +18,7 @@ use Application\Model\Material;
 use Application\Model\News;
 use Application\Model\Period;
 use Application\Model\Statistic;
+use Application\Model\Tag;
 use Application\Model\User;
 use GraphQL\Type\Definition\ObjectType;
 
@@ -45,6 +46,7 @@ class QueryType extends ObjectType
             Standard::buildQuery(News::class),
             Standard::buildQuery(Period::class),
             Standard::buildQuery(Statistic::class),
+            Standard::buildQuery(Tag::class),
         );
 
         $config = [

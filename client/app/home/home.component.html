@@ -15,7 +15,7 @@
                                routerLink="/"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="home"></natural-icon>
+                                <natural-icon mat-list-icon name="home"></natural-icon>
                                 <span matLine>Accueil</span>
                             </a>
 
@@ -26,7 +26,7 @@
                                routerLink="/collection"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="collections"></natural-icon>
+                                <natural-icon mat-list-icon name="collections"></natural-icon>
                             </a>
 
                             <!-- Mes collections privées -->
@@ -36,12 +36,12 @@
                                routerLink="/my-collection"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="collections_bookmark"></natural-icon>
+                                <natural-icon mat-list-icon name="collections_bookmark"></natural-icon>
                             </a>
 
                             <!-- Fonds -->
                             <a mat-list-item matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active">
-                                <natural-icon  mat-list-icon name="folder_special"></natural-icon>
+                                <natural-icon mat-list-icon name="folder_special"></natural-icon>
                             </a>
 
                             <!-- Users -->
@@ -52,7 +52,7 @@
                                routerLink="/user"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="group"></natural-icon>
+                                <natural-icon mat-list-icon name="group"></natural-icon>
                             </a>
 
                             <!-- Notifications -->
@@ -62,7 +62,7 @@
                                routerLink="/notification"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="notifications"></natural-icon>
+                                <natural-icon mat-list-icon name="notifications"></natural-icon>
                             </a>
 
                             <!-- Add photos -->
@@ -75,7 +75,7 @@
                                multiple="1"
                                ngfSelect
                             >
-                                <natural-icon  mat-list-icon name="file_upload"></natural-icon>
+                                <natural-icon mat-list-icon name="file_upload"></natural-icon>
                             </a>
                         </mat-nav-list>
 
@@ -89,7 +89,7 @@
                                routerLink="/institution"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="place"></natural-icon>
+                                <natural-icon mat-list-icon name="place"></natural-icon>
                             </a>
 
                             <!-- Artists -->
@@ -100,7 +100,7 @@
                                routerLink="/artist"
                                routerLinkActive="active"
                             >
-                                <natural-icon  mat-list-icon name="copyright"></natural-icon>
+                                <natural-icon mat-list-icon name="copyright"></natural-icon>
 
                             </a>
 
@@ -113,7 +113,12 @@
                                    routerLink="/period"
                                    routerLinkActive="active"
                                 >
-                                    <natural-icon  mat-list-icon name="period"></natural-icon>
+                                    <natural-icon mat-list-icon name="period"></natural-icon>
+                                </a>
+
+                                <!-- Tags -->
+                                <a mat-list-item matTooltip="Tags" matTooltipPosition="after" routerLink="/tag" routerLinkActive="active">
+                                    <natural-icon mat-list-icon name="tag"></natural-icon>
                                 </a>
 
                                 <!-- Domain -->
@@ -123,7 +128,7 @@
                                    routerLink="/domain"
                                    routerLinkActive="active"
                                 >
-                                    <natural-icon  mat-list-icon name="work"></natural-icon>
+                                    <natural-icon mat-list-icon name="work"></natural-icon>
                                 </a>
 
                                 <!-- Material -->
@@ -133,7 +138,7 @@
                                    routerLink="/material"
                                    routerLinkActive="active"
                                 >
-                                    <natural-icon  mat-list-icon name="material"></natural-icon>
+                                    <natural-icon mat-list-icon name="material"></natural-icon>
                                 </a>
 
                                 <!-- Document type -->
@@ -143,14 +148,14 @@
                                    routerLink="/document-type"
                                    routerLinkActive="active"
                                 >
-                                    <natural-icon  mat-list-icon name="insert_drive_file"></natural-icon>
+                                    <natural-icon mat-list-icon name="insert_drive_file"></natural-icon>
                                 </a>
 
                             </ng-container>
 
                             <!-- Carousel -->
                             <a mat-list-item matTooltip="News" matTooltipPosition="after" routerLink="/newses" routerLinkActive="active">
-                                <natural-icon  mat-list-icon name="view_carousel"></natural-icon>
+                                <natural-icon mat-list-icon name="view_carousel"></natural-icon>
                             </a>
 
                         </mat-nav-list>
@@ -158,13 +163,13 @@
                         <mat-nav-list fxFlex>
                             <!-- Account -->
                             <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
-                                <natural-icon  mat-list-icon name="account_circle"></natural-icon>
+                                <natural-icon mat-list-icon name="account_circle"></natural-icon>
 
                             </a>
 
                             <!-- Logout -->
                             <a (click)="userService.logout()" mat-list-item matTooltip="Se déconnecter" matTooltipPosition="after">
-                                <natural-icon  mat-list-icon name="exit_to_app"></natural-icon>
+                                <natural-icon mat-list-icon name="exit_to_app"></natural-icon>
                             </a>
                         </mat-nav-list>
 
@@ -174,13 +179,13 @@
 
                         <!-- Dashboard -->
                         <a [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active">
-                            <natural-icon  mat-list-icon name="home"></natural-icon>
+                            <natural-icon mat-list-icon name="home"></natural-icon>
                             <span matLine>Accueil</span>
                         </a>
 
                         <!-- Logout -->
                         <a (click)="userService.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
-                            <natural-icon  mat-list-icon name="account_circle"></natural-icon>
+                            <natural-icon mat-list-icon name="account_circle"></natural-icon>
                         </a>
                     </mat-nav-list>
 
@@ -198,7 +203,7 @@
                     <mat-nav-list>
                         <!-- Theme -->
                         <a (click)="themeService.toggleNightMode()" mat-list-item>
-                            <natural-icon  mat-list-icon name="invert_colors"></natural-icon>
+                            <natural-icon mat-list-icon name="invert_colors"></natural-icon>
                             <span matLine>Changer couleurs</span>
                         </a>
                     </mat-nav-list>

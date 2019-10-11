@@ -138,6 +138,9 @@ export const viewerQuery = gql`
                 material {
                     create
                 }
+                tag {
+                    create
+                }
             }
         }
     }${userDetailsFragment}`;

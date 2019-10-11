@@ -24,6 +24,7 @@ use Application\Model\Institution;
 use Application\Model\Material;
 use Application\Model\News;
 use Application\Model\Period;
+use Application\Model\Tag;
 use Application\Model\User;
 use GraphQL\Type\Definition\ObjectType;
 
@@ -57,6 +58,7 @@ class MutationType extends ObjectType
             Standard::buildMutation(Material::class),
             Standard::buildMutation(News::class),
             Standard::buildMutation(Period::class),
+            Standard::buildMutation(Tag::class),
             Standard::buildRelationMutation(Collection::class, Card::class),
             Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),
