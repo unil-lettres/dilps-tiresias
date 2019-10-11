@@ -7,6 +7,7 @@ import { ChangeComponent } from './changes/change/change.component';
 import { ChangesComponent } from './changes/changes/changes.component';
 import { CollectionsComponent } from './collections/collections/collections.component';
 import { FakeCollectionResolver } from './collections/services/fake-collection.resolver';
+import { DocumentTypesComponent } from './document-types/document-types/document-types.component';
 import { DomainsComponent } from './domains/domains/domains.component';
 import { HomeComponent } from './home/home.component';
 import { InstitutionsComponent } from './institutions/institutions/institutions.component';
@@ -87,6 +88,11 @@ export const routes: Routes = [
             {
                 path: 'domain',
                 component: DomainsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'document-type',
+                component: DocumentTypesComponent,
                 canActivate: [AuthGuard],
             },
             {
