@@ -360,6 +360,11 @@ class User extends AbstractModel
             Dating::class,
             Institution::class,
             Tag::class,
+            Domain::class,
+            DocumentType::class,
+            News::class,
+            Period::class,
+            Material::class,
             self::class,
         ];
 

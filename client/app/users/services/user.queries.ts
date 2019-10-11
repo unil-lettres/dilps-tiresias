@@ -123,6 +123,21 @@ export const viewerQuery = gql`
                 user {
                     create
                 }
+                domain {
+                    create
+                }
+                documentType {
+                    create
+                }
+                news {
+                    create
+                }
+                period {
+                    create
+                }
+                material {
+                    create
+                }
             }
         }
     }${userDetailsFragment}`;
