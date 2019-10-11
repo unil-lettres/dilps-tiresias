@@ -8,30 +8,30 @@
 
     <div class="responsive-table">
 
-        <mat-table [dataSource]="dataSource">
+        <table mat-table [dataSource]="dataSource">
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]"></mat-row>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]"></tr>
 
             <!-- Type -->
             <ng-container matColumnDef="type">
-                <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{ element.type }}</mat-cell>
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let element">{{ element.type }}</td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="original">
-                <mat-header-cell *matHeaderCellDef>Originale</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{ element.original?.name }}</mat-cell>
+                <th mat-header-cell *matHeaderCellDef>Originale</th>
+                <td mat-cell *matCellDef="let element">{{ element.original?.name }}</td>
             </ng-container>
 
             <!-- Suggestion -->
             <ng-container matColumnDef="suggestion">
-                <mat-header-cell *matHeaderCellDef>Suggestion</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{ element.suggestion?.name }}</mat-cell>
+                <th mat-header-cell *matHeaderCellDef>Suggestion</th>
+                <td mat-cell *matCellDef="let element">{{ element.suggestion?.name }}</td>
             </ng-container>
 
-        </mat-table>
+        </table>
     </div>
 
     <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === 0">

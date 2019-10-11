@@ -14,33 +14,33 @@
     <div class="mat-headline">Actualités</div>
 
     <div class="responsive-table">
-        <mat-table [dataSource]="dataSource">
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <table mat-table [dataSource]="dataSource">
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             <!-- Image Column -->
             <ng-container matColumnDef="image">
-                <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-                <mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef>Image</th>
+                <td mat-cell *matCellDef="let element">
                     <div class="image" [style.background-image]="'url(' + element.imageUrl + ')'"></div>
-                </mat-cell>
+                </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
-                <mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef>Nom</th>
+                <td mat-cell *matCellDef="let element">
                     <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
-                </mat-cell>
+                </td>
             </ng-container>
 
             <!-- Link Column -->
             <ng-container matColumnDef="url">
-                <mat-header-cell *matHeaderCellDef>Lien</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{ element.url }}</mat-cell>
+                <th mat-header-cell *matHeaderCellDef>Lien</th>
+                <td mat-cell *matCellDef="let element">{{ element.url }}</td>
             </ng-container>
 
-        </mat-table>
+        </table>
     </div>
 
     <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === 0">
