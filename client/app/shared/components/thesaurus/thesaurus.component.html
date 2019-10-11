@@ -1,6 +1,7 @@
 <mat-form-field class="innerSpacing">
 
     <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
+
         <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayoutRow="row">
             <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove">remove_red_eye</mat-icon>
             <span>
@@ -11,13 +12,21 @@
 
             <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input #input (focus)="startSearch()" (keydown.enter)="onEnter($event)" (ngModelChange)="onSearch($event)" [formControl]="formCtrl" [fxShow]="!readonly || items.length === 0" [matAutocomplete]="autocomplete" [matChipInputFor]="chipList" [placeholder]="placeholder" [readonly]="readonly"
+
+        <input (focus)="startSearch()"
+               (keydown.enter)="onEnter($event)"
+               [formControl]="formControl"
+               [fxShow]="!readonly || items.length === 0"
+               [matAutocomplete]="autocomplete"
+               [matChipInputFor]="chipList"
+               [placeholder]="placeholder"
+               [readonly]="readonly"
         />
     </mat-chip-list>
 
     <!-- Autocomplete menu -->
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">
-        <mat-option *ngFor="let item of suggestionsObs | async" [value]="item" class="multiline">
+        <mat-option *ngFor="let item of suggestions" [value]="item" class="multiline">
             <div fxLayout="column">
                 <div>{{ item.name }}</div>
                 <div *ngIf="item?.locality" class="mat-caption">{{ item.locality }}</div>

@@ -2,12 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { QueryRef } from 'apollo-angular';
-import { clone, isArray, isObject, merge } from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, sampleTime } from 'rxjs/operators';
-import { IncrementSubject } from '../../services/increment-subject';
-import { Literal } from '@ecodev/natural';
+import { Literal, NaturalAbstractController, NaturalAbstractModelService, NaturalQueryVariablesManager } from '@ecodev/natural';
+import { clone, isArray, isObject, isString, merge } from 'lodash';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
 
 interface ThesaurusModel {
     name: string;
@@ -20,27 +18,63 @@ interface ThesaurusModel {
     styleUrls: ['./thesaurus.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThesaurusComponent implements OnInit {
+export class ThesaurusComponent extends NaturalAbstractController implements OnInit {
 
+    /**
+     * Reference to autocomplete
+     */
     @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete: MatAutocompleteTrigger;
-    @ViewChild('input', {static: true}) input;
 
+    /**
+     * If true, manipulations are forbidden
+     */
     @Input() readonly = false;
-    @Input() service;
-    @Input() placeholder;
+
+    /**
+     * Service used as data source
+     */
+    @Input() service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any>;
+
+    /**
+     * Input label name
+     */
+    @Input() placeholder: string;
+
+    /**
+     * If multi selection is allowed
+     */
     @Input() multiple = true;
+
+    /**
+     * Component that renders the detail view of an entry
+     */
     @Input() previewComponent;
+
+    /**
+     * Emits when a selection is done
+     */
     @Output() modelChange = new EventEmitter();
-    public formCtrl: FormControl = new FormControl();
 
     /**
      * Number of items not shown in result list
      * Shows a message after list if positive
      */
     public moreNbItems = 0;
-    public suggestionsObs: Observable<any>;
+
+    /**
+     * List of suggestions for autocomplete dropdown
+     */
+    public suggestions: any[];
+
+    /**
+     * List of selected items
+     */
     public items: ThesaurusModel[] = [];
-    private queryRef: QueryRef<any>;
+
+    /**
+     * Cache to init search watching only once
+     */
+    private resultsCache: Observable<any>;
 
     /**
      * Default page size
@@ -48,17 +82,18 @@ export class ThesaurusComponent implements OnInit {
     private pageSize = 10;
 
     /**
-     * Init search options
+     * Query variables manger
      */
-    private options: IncrementSubject;
+    private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
 
     /**
-     * Filter options debounced.
-     * Used by the query
+     * <input> controller
      */
-    private optionsFiltered: BehaviorSubject<Literal>;
+    public formControl: FormControl = new FormControl();
 
     constructor(private dialog: MatDialog) {
+        super();
+        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
     }
 
     private _model: ThesaurusModel;
@@ -72,25 +107,11 @@ export class ThesaurusComponent implements OnInit {
 
         this.convertModel();
 
-        const options = {
-            filters: {
-                search: null,
-            },
-            pagination: {
-                pageIndex: 0,
-                pageSize: 10,
-            },
-        };
-
-        this.options = new IncrementSubject(options);
-        this.optionsFiltered = new BehaviorSubject<Literal>(options);
-
-        // Debounce search...
-        // ...and filter only string search terms (when an item is selected, the value is an object)
-        this.options.pipe(sampleTime(400), filter(val => {
-            return !isObject(val.filters.search); // prevent to emit when value is an object
-        })).subscribe(data => {
-            this.optionsFiltered.next(data);
+        this.formControl.valueChanges.pipe(takeUntil(this.ngUnsubscribe),
+            distinctUntilChanged(),
+            filter(val => isString(val)),
+            debounceTime(300)).subscribe(val => {
+            this.variablesManager.set('search', {filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]}});
         });
     }
 
@@ -111,23 +132,19 @@ export class ThesaurusComponent implements OnInit {
         /**
          * Start search only once
          */
-        if (this.queryRef) {
+        if (this.resultsCache) {
             return;
         }
 
-        // Init query
-        this.queryRef = this.service.watchAll(this.optionsFiltered);
+        this.resultsCache = this.service.watchAll(this.variablesManager, this.ngUnsubscribe);
 
-        // When query results arrive, start loading, and count items
-        this.queryRef.valueChanges.subscribe((data: any) => {
+        // Init query
+        this.resultsCache.subscribe(data => {
             const nbTotal = data.length;
             const nbListed = Math.min(data.length, this.pageSize);
             this.moreNbItems = nbTotal - nbListed;
+            this.suggestions = data.items.filter(item => this.items.findIndex(term => term.name === item.name));
         });
-
-        this.suggestionsObs = this.queryRef.valueChanges.pipe(map((data: any) => {
-            return data.items.filter(item => this.items.findIndex(term => term.name === item.name));
-        }));
     }
 
     public removeTerm(term: Literal): void {
@@ -136,10 +153,6 @@ export class ThesaurusComponent implements OnInit {
             this.items.splice(index, 1);
             this.notifyModel();
         }
-    }
-
-    public onSearch(ev) {
-        this.options.patch({filters: {search: ev}});
     }
 
     /**
