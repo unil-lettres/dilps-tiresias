@@ -1,3 +1,4 @@
 export const environment = {
-  environment: 'production'
+    environment: 'production',
+    shibbolethEndpoint: 'dilps.unil.ch'
 };
