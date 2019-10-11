@@ -63,4 +63,19 @@ class Period extends AbstractModel implements HasParentInterface
     {
         return $this->children;
     }
+
+    /**
+     * @return Period[]
+     */
+    public function getParentHierarchy(): array
+    {
+        $list = [];
+        $parent = $this->getParent();
+
+        if ($parent) {
+            return array_merge($parent->getParentHierarchy(), [$parent]);
+        }
+
+        return $list;
+    }
 }

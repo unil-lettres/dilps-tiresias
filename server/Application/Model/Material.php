@@ -43,4 +43,19 @@ class Material extends AbstractModel implements HasParentInterface
     {
         $this->children = new ArrayCollection();
     }
+
+    /**
+     * @return Material[]
+     */
+    public function getParentHierarchy(): array
+    {
+        $list = [];
+        $parent = $this->getParent();
+
+        if ($parent) {
+            return array_merge($parent->getParentHierarchy(), [$parent]);
+        }
+
+        return $list;
+    }
 }
