@@ -37,8 +37,10 @@ use Psr\Http\Message\UploadedFileInterface;
  * })
  * @API\Filters({
  *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
- *     @API\Filter(field="artistOrTechniqueAuthor", operator="Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType", type="string"),
- *     @API\Filter(field="localityOrInstitutionLocality", operator="Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType", type="string"),
+ *     @API\Filter(field="artistOrTechniqueAuthor", operator="Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType",
+ *     type="string"),
+ *     @API\Filter(field="localityOrInstitutionLocality", operator="Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType",
+ *     type="string"),
  *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\YearRangeOperatorType", type="string"),
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
@@ -141,6 +143,7 @@ class Card extends AbstractModel
 
     /**
      * @var null|Domain
+     *
      * @ORM\ManyToOne(targetEntity="Domain")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="SET NULL")
@@ -150,12 +153,14 @@ class Card extends AbstractModel
 
     /**
      * @var DoctrineCollection
+     *
      * @ORM\ManyToMany(targetEntity="Period")
      */
     private $periods;
 
     /**
      * @var DoctrineCollection
+     *
      * @ORM\ManyToMany(targetEntity="Material")
      */
     private $materials;
@@ -310,6 +315,63 @@ class Card extends AbstractModel
         $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames);
         foreach ($artistNames as $a) {
             $this->artists->add($a);
+        }
+    }
+
+    /**
+     * Set all materials at once by their names.
+     *
+     * @param Material[] $materials
+     */
+    public function setMaterials(array $materials): void
+    {
+        $this->materials->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $materials);
+
+        $materials = _em()->getRepository(Material::class)->findById($ids);
+        foreach ($materials as $material) {
+            $this->materials->add($material);
+        }
+    }
+
+    /**
+     * Set all periods at once by their names.
+     *
+     * @param Period[] $periods
+     */
+    public function setPeriods(array $periods): void
+    {
+        $this->periods->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $periods);
+
+        $periods = _em()->getRepository(Period::class)->findById($ids);
+        foreach ($periods as $period) {
+            $this->periods->add($period);
+        }
+    }
+
+    /**
+     * Set all tags at once by their names.
+     *
+     * @param Tag[] $tags
+     */
+    public function setTags(array $tags): void
+    {
+        $this->tags->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $tags);
+
+        $tags = _em()->getRepository(Tag::class)->findById($ids);
+        foreach ($tags as $tag) {
+            $this->tags->add($tag);
         }
     }
 

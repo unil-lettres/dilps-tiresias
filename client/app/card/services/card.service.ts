@@ -5,6 +5,7 @@ import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
 import {
     Card,
+    CardInput,
     Cards,
     CardsVariables,
     CardVariables,
@@ -12,6 +13,7 @@ import {
     CreateCard,
     CreateCardVariables,
     DeleteCards,
+    Precision,
     UpdateCard,
     UpdateCardVariables,
     ValidateData,
@@ -75,7 +77,7 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): CardInput {
         return {
             file: null,
             dating: '',
@@ -96,7 +98,13 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
             muserisCote: '',
             name: '',
             visibility: CardVisibility.private,
+            precision: Precision.site,
             artists: [],
+            materials: [],
+            periods: [],
+            tags: [],
+            domain: null,
+            documentType: null,
             institution: null,
             street: '',
             postcode: '',

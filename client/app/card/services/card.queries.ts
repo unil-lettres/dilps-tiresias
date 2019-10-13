@@ -42,6 +42,26 @@ export const cardDetailsFragment = gql`
         }
         addition
         material
+        materials {
+            id
+            name
+        }
+        periods {
+            id
+            name
+        }
+        documentType {
+            id
+            name
+        }
+        tags {
+            id
+            name
+        }
+        domain {
+            id
+            name
+        }
         technique
         techniqueAuthor
         format
@@ -135,6 +155,26 @@ export const updateCard = gql`
                 ...institutionDetails
             }
             artists {
+                id
+                name
+            }
+            domain {
+                id
+                name
+            }
+            materials {
+                id
+                name
+            }
+            periods {
+                id
+                name
+            }
+            documentType {
+                id
+                name
+            }
+            tags {
                 id
                 name
             }

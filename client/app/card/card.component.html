@@ -145,16 +145,80 @@
                     ></textarea>
                 </mat-form-field>
 
-                <app-thesaurus (modelChange)="model.artists = $event"
-                               *ngIf="isEdit() || !!artists?.length"
-                               [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
-                               [model]="artists"
-                               [previewComponent]="artistComponent"
-                               [readonly]="!isEdit()"
-                               [service]="artistService"
-                               matTooltipPosition="after"
-                               placeholder="Artistes"
-                ></app-thesaurus>
+                <!-- Specific dilps fields -->
+                <ng-container *ngIf="site === Site.dilps">
+
+                    <app-thesaurus (modelChange)="model.artists = $event"
+                                   *ngIf="isEdit() || !!artists?.length"
+                                   [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
+                                   [model]="artists"
+                                   [previewComponent]="artistComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="artistService"
+                                   matTooltipPosition="after"
+                                   placeholder="Artistes"
+                    ></app-thesaurus>
+                </ng-container>
+
+                <!-- Specific tiresias fields -->
+                <ng-container *ngIf="site === Site.tiresias">
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.materials?.length"
+                                   [(model)]="model.materials"
+                                   [previewComponent]="materialComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="materialService"
+                                   matTooltipPosition="after"
+                                   placeholder="Matériaux"
+                                   [allowFreeText]="false"
+                                   [multiple]="true"
+                    ></app-thesaurus>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.periods?.length"
+                                   [(model)]="model.periods"
+                                   [previewComponent]="periodComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="periodService"
+                                   matTooltipPosition="after"
+                                   placeholder="Périodes"
+                                   [allowFreeText]="false"
+                                   [multiple]="true"
+                    ></app-thesaurus>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
+                                   [(model)]="model.tags"
+                                   [previewComponent]="tagComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="tagService"
+                                   matTooltipPosition="after"
+                                   placeholder="Mots clés"
+                                   [allowFreeText]="false"
+                                   [multiple]="true"
+                    ></app-thesaurus>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.documentType"
+                                   [(model)]="model.documentType"
+                                   [previewComponent]="documentTypeComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="documentTypeService"
+                                   matTooltipPosition="after"
+                                   placeholder="Type de document"
+                                   [multiple]="false"
+                                   [allowFreeText]="false"
+                    ></app-thesaurus>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.domain"
+                                   [(model)]="model.domain"
+                                   [previewComponent]="domainComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="domainService"
+                                   matTooltipPosition="after"
+                                   placeholder="Domaine"
+                                   [multiple]="false"
+                                   [allowFreeText]="false"
+                    ></app-thesaurus>
+
+                </ng-container>
 
                 <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
                     <textarea [(ngModel)]="model.techniqueAuthor"

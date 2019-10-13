@@ -1,19 +1,29 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
+import { SITE } from '../app.config';
 import { ArtistComponent } from '../artists/artist/artist.component';
 import { ArtistService } from '../artists/services/artist.service';
 import { ChangeService } from '../changes/services/change.service';
+import { DocumentTypeComponent } from '../document-types/document-type/document-type.component';
+import { DocumentTypeService } from '../document-types/services/document-type.service';
+import { DomainComponent } from '../domains/domain/domain.component';
+import { DomainService } from '../domains/services/domain.service';
 import { InstitutionComponent } from '../institutions/institution/institution.component';
 import { InstitutionService } from '../institutions/services/institution.service';
+import { MaterialComponent } from '../materials/material/material.component';
+import { MaterialService } from '../materials/services/material.service';
+import { PeriodComponent } from '../periods/period/period.component';
+import { PeriodService } from '../periods/services/period.service';
 import { AlertService } from '../shared/components/alert/alert.service';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
-import { CardVisibility, UserRole } from '../shared/generated-types';
+import { CardVisibility, Site, UserRole } from '../shared/generated-types';
 import { UploadService } from '../shared/services/upload.service';
 import { getBase64 } from '../shared/services/utility';
+import { TagService } from '../tags/services/tag.service';
+import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
 
@@ -54,13 +64,32 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             color: 'primary',
         },
     };
+
     public institutionComponent = InstitutionComponent;
     public artistComponent = ArtistComponent;
-    public institution;
-    public artists;
+    public materialComponent = MaterialComponent;
+    public periodComponent = PeriodComponent;
+    public tagComponent = TagComponent;
+    public documentTypeComponent = DocumentTypeComponent;
+    public domainComponent = DomainComponent;
+
     public user;
     private edit = false;
     private uploadSub;
+
+    public Site = Site;
+
+    /**
+     * Cache institution data from server
+     * this.model is here considered as CardInput and should receive string, not object
+     */
+    public institution;
+
+    /**
+     * Cache artists data from server
+     * this.model is here considered as CardInput and should receive string array, not array of objects
+     */
+    public artists;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -69,10 +98,15 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private alertService: AlertService,
                 public artistService: ArtistService,
                 public institutionService: InstitutionService,
+                public materialService: MaterialService,
+                public tagService: TagService,
+                public documentTypeService: DocumentTypeService,
+                public domainService: DomainService,
+                public periodService: PeriodService,
                 private uploadService: UploadService,
                 private dialog: MatDialog,
                 private userService: UserService,
-                private sanitizer: DomSanitizer,
+                @Inject(SITE) public site: Site,
     ) {
     }
 
@@ -162,8 +196,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 return s.value === this.model.visibility;
             });
 
-            this.artists = this.model.artists;
-            this.institution = this.model.institution;
+            this.institution = this.model.institution; // cache, see attribute docs
+            this.artists = this.model.artists; // cache, see attribute docs
 
             const src = CardService.getImageLink(this.model, 2000);
             if (src) {
