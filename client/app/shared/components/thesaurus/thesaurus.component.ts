@@ -46,6 +46,11 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     @Input() multiple = true;
 
     /**
+     * If multi selection is allowed
+     */
+    @Input() allowFreeText = true;
+
+    /**
      * Component that renders the detail view of an entry
      */
     @Input() previewComponent;
@@ -161,11 +166,12 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * If not add the term as is. If it does, add the selected option.
      */
     public onEnter(event) {
-        if (!this.autocomplete.activeOption) {
+        if (!this.autocomplete.activeOption && this.allowFreeText) {
             this.addTerm({name: event.target.value});
             event.target.value = '';
-        } else {
+        } else if (this.autocomplete.activeOption) {
             this.addTerm(this.autocomplete.activeOption.value);
+            event.target.value = '';
         }
     }
 
@@ -194,10 +200,14 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     }
 
     private notifyModel() {
-        if (!this.multiple) {
-            this.modelChange.emit(this.items[0] ? this.items[0].name : null);
-        } else {
+        if (this.multiple && this.allowFreeText) {
             this.modelChange.emit(this.items.map(v => v.name));
+        } else if (!this.multiple && this.allowFreeText) {
+            this.modelChange.emit(this.items[0] ? this.items[0].name : null);
+        } else if (this.multiple && !this.allowFreeText) {
+            this.modelChange.emit(this.items);
+        } else if (!this.multiple && !this.allowFreeText) {
+            this.modelChange.emit(this.items[0] || null);
         }
     }
 
