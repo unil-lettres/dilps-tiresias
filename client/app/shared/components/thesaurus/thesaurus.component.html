@@ -13,7 +13,7 @@
             <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
         </mat-chip>
 
-        <input (focus)="startSearch()"
+        <input (focus)="focus()"
                (keydown.enter)="onEnter($event)"
                [formControl]="formControl"
                [fxShow]="!readonly || items.length === 0"

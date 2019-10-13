@@ -35,14 +35,6 @@ export class UserComponent extends AbstractDetail {
 
     public institution;
 
-    public collectionsHierarchicConfig: NaturalHierarchicConfiguration[] = [
-        {
-            service: CollectionService,
-            parentsFilters: ['parent'],
-            childrenFilters: ['parent'],
-            selectableAtKey: 'collections'
-        },
-    ];
 
     constructor(public institutionService: InstitutionService,
                 service: UserService,

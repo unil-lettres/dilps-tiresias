@@ -20,6 +20,10 @@ import { AlertService } from '../shared/components/alert/alert.service';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { CardVisibility, Site, UserRole } from '../shared/generated-types';
+import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
+import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
+import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
+import { tagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
 import { UploadService } from '../shared/services/upload.service';
 import { getBase64 } from '../shared/services/utility';
 import { TagService } from '../tags/services/tag.service';
@@ -65,19 +69,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         },
     };
 
-    public institutionComponent = InstitutionComponent;
-    public artistComponent = ArtistComponent;
-    public materialComponent = MaterialComponent;
-    public periodComponent = PeriodComponent;
-    public tagComponent = TagComponent;
-    public documentTypeComponent = DocumentTypeComponent;
-    public domainComponent = DomainComponent;
-
     public user;
     private edit = false;
     private uploadSub;
-
-    public Site = Site;
 
     /**
      * Cache institution data from server
@@ -90,6 +84,66 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
     public artists;
+
+    /**
+     * Template exposed variable
+     */
+    public InstitutionComponent = InstitutionComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public ArtistComponent = ArtistComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public MaterialComponent = MaterialComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public PeriodComponent = PeriodComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public TagComponent = TagComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public DocumentTypeComponent = DocumentTypeComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public DomainComponent = DomainComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public domainHierarchicConfig = domainHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public tagHierarchicConfig = tagHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public periodHierarchicConfig = periodHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public materialHierarchicConfig = materialHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public Site = Site;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,

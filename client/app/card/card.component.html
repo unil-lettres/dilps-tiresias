@@ -152,7 +152,7 @@
                                    *ngIf="isEdit() || !!artists?.length"
                                    [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
                                    [model]="artists"
-                                   [previewComponent]="artistComponent"
+                                   [previewComponent]="ArtistComponent"
                                    [readonly]="!isEdit()"
                                    [service]="artistService"
                                    matTooltipPosition="after"
@@ -165,40 +165,44 @@
 
                     <app-thesaurus *ngIf="isEdit() || !!model.materials?.length"
                                    [(model)]="model.materials"
-                                   [previewComponent]="materialComponent"
+                                   [previewComponent]="MaterialComponent"
                                    [readonly]="!isEdit()"
                                    [service]="materialService"
                                    matTooltipPosition="after"
                                    placeholder="Matériaux"
                                    [allowFreeText]="false"
                                    [multiple]="true"
+                                   [hierarchicSelectorConfig]="materialHierarchicConfig"
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.periods?.length"
                                    [(model)]="model.periods"
-                                   [previewComponent]="periodComponent"
+                                   [previewComponent]="PeriodComponent"
                                    [readonly]="!isEdit()"
                                    [service]="periodService"
                                    matTooltipPosition="after"
                                    placeholder="Périodes"
                                    [allowFreeText]="false"
                                    [multiple]="true"
+                                   [hierarchicSelectorConfig]="periodHierarchicConfig"
+
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
                                    [(model)]="model.tags"
-                                   [previewComponent]="tagComponent"
+                                   [previewComponent]="TagComponent"
                                    [readonly]="!isEdit()"
                                    [service]="tagService"
                                    matTooltipPosition="after"
                                    placeholder="Mots clés"
                                    [allowFreeText]="false"
                                    [multiple]="true"
+                                   [hierarchicSelectorConfig]="tagHierarchicConfig"
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.documentType"
                                    [(model)]="model.documentType"
-                                   [previewComponent]="documentTypeComponent"
+                                   [previewComponent]="DocumentTypeComponent"
                                    [readonly]="!isEdit()"
                                    [service]="documentTypeService"
                                    matTooltipPosition="after"
@@ -209,13 +213,14 @@
 
                     <app-thesaurus *ngIf="isEdit() || !!model.domain"
                                    [(model)]="model.domain"
-                                   [previewComponent]="domainComponent"
+                                   [previewComponent]="DomainComponent"
                                    [readonly]="!isEdit()"
                                    [service]="domainService"
                                    matTooltipPosition="after"
                                    placeholder="Domaine"
                                    [multiple]="false"
                                    [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="domainHierarchicConfig"
                     ></app-thesaurus>
 
                 </ng-container>
@@ -307,7 +312,7 @@
                                [matTooltip]="!isEdit() ? '' : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'"
                                [model]="institution"
                                [multiple]="false"
-                               [previewComponent]="institutionComponent"
+                               [previewComponent]="InstitutionComponent"
                                [readonly]="!isEdit()"
                                [service]="institutionService"
                                matTooltipPosition="after"

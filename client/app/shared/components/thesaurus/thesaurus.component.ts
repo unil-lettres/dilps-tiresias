@@ -1,8 +1,17 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatDialog } from '@angular/material/dialog';
-import { Literal, NaturalAbstractController, NaturalAbstractModelService, NaturalQueryVariablesManager } from '@ecodev/natural';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+    HierarchicDialogConfig,
+    HierarchicDialogResult,
+    Literal,
+    NaturalAbstractController,
+    NaturalAbstractModelService,
+    NaturalHierarchicConfiguration,
+    NaturalHierarchicSelectorDialogService,
+    NaturalQueryVariablesManager,
+} from '@ecodev/natural';
 import { clone, isArray, isObject, isString, merge } from 'lodash';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
@@ -61,6 +70,11 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     @Output() modelChange = new EventEmitter();
 
     /**
+     * Configuration for hierarchic relations
+     */
+    @Input() hierarchicSelectorConfig: NaturalHierarchicConfiguration[];
+
+    /**
      * Number of items not shown in result list
      * Shows a message after list if positive
      */
@@ -96,7 +110,9 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      */
     public formControl: FormControl = new FormControl();
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog,
+                private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
+    ) {
         super();
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
     }
@@ -129,6 +145,16 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         });
     }
 
+    public focus() {
+
+        if (!this.hierarchicSelectorConfig) {
+            this.startSearch();
+        } else {
+            this.openDialog();
+        }
+
+    }
+
     /**
      * Start search only when focusing on the input
      */
@@ -150,6 +176,66 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             this.moreNbItems = nbTotal - nbListed;
             this.suggestions = data.items.filter(item => this.items.findIndex(term => term.name === item.name));
         });
+    }
+
+    public openDialog(): void {
+
+        // if (this.lockOpenDialog) {
+        //     return;
+        // }
+        //
+        // this.lockOpenDialog = true;
+
+        if (this.readonly || !this.hierarchicSelectorConfig) {
+            return;
+        }
+
+        const selectAtKey = this.getSelectKey();
+
+        if (!selectAtKey) {
+            return;
+        }
+
+        const selected = {};
+
+        if (this.items) {
+            selected[selectAtKey] = this.items;
+        }
+
+        const hierarchicConfig: HierarchicDialogConfig = {
+            hierarchicConfig: this.hierarchicSelectorConfig,
+            hierarchicSelection: selected,
+            // hierarchicFilters: this.hierarchicSelectorFilters,
+            multiple: this.multiple,
+        };
+
+        const dialogFocus: MatDialogConfig = {
+            restoreFocus: false,
+        };
+
+        this.hierarchicSelectorDialogService.open(hierarchicConfig, dialogFocus)
+            .afterClosed()
+            .subscribe((result: HierarchicDialogResult) => {
+                // this.lockOpenDialog = false;
+                if (result && result.hierarchicSelection) {
+
+                    // Find the only selection amongst all possible keys
+                    const keyWithSelection = Object.keys(result.hierarchicSelection).find(key => result.hierarchicSelection[key][0]);
+                    const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : null;
+
+                    if (this.multiple) {
+                        this.items = selection;
+                        this.notifyModel();
+                    } else {
+                        this.addTerm(selection[0]);
+                    }
+
+                }
+            });
+    }
+
+    private getSelectKey() {
+        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
     }
 
     public removeTerm(term: Literal): void {
