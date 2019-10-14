@@ -1,12 +1,14 @@
 import {
+    DropdownFacet,
     NaturalSearchFacets,
     replaceOperatorByField,
     TypeNumberComponent,
     TypeSelectComponent,
+    TypeSelectConfiguration,
     TypeTextComponent,
     wrapLike,
 } from '@ecodev/natural';
-import { CardVisibility } from './generated-types';
+import { CardVisibility, Site } from './generated-types';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -25,6 +27,18 @@ export const adminConfig: NaturalSearchFacets = [
 ];
 
 export const cardsConfiguration: NaturalSearchFacets = [
+    {
+        display: 'Site',
+        field: 'site',
+        component: TypeSelectComponent,
+        configuration: {
+            items: [
+                Site.dilps,
+                Site.tiresias,
+            ],
+            multiple: true,
+        },
+    } as DropdownFacet<TypeSelectConfiguration>,
     {
         display: 'Titre',
         field: 'nameOrExpandedName',
