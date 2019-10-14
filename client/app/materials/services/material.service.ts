@@ -46,6 +46,7 @@ export class MaterialService
     public getDefaultForServer() {
         return {
             name: '',
+            parent: null,
         };
     }
 

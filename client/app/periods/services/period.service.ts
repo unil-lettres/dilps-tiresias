@@ -46,6 +46,7 @@ export class PeriodService
     public getDefaultForServer() {
         return {
             name: '',
+            parent: null
         };
     }
 

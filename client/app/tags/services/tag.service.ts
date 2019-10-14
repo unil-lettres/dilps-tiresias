@@ -46,6 +46,7 @@ export class TagService
     public getDefaultForServer() {
         return {
             name: '',
+            parent: null
         };
     }
 

@@ -3,15 +3,34 @@
         <mat-tab label="Periode">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput name="name" placeholder="Nom" type="text"
+                    <input [(ngModel)]="data.item.name"
+                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                           matInput
+                           name="name"
+                           placeholder="Nom"
+                           type="text"
                     >
                 </mat-form-field>
+
+                <natural-select (selectionChange)="data.item.parent = $event"
+                                [hierarchicSelectorConfig]="hierarchicConfig"
+                                [showIcon]="false"
+                                clearLabel="Dissocier"
+                                placeholder="Parent"
+                                selectLabel="Associer au parent"
+                ></natural-select>
+
             </div>
         </mat-tab>
     </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer (create)="create()" (delete)="delete()" (update)="update()" [canCreate]="user?.globalPermissions?.period?.create" [item]="data.item" fxFlex
+    <app-dialog-footer (create)="create()"
+                       (delete)="delete()"
+                       (update)="update()"
+                       [canCreate]="user?.globalPermissions?.period?.create"
+                       [item]="data.item"
+                       fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

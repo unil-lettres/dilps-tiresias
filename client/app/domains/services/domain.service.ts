@@ -46,6 +46,7 @@ export class DomainService
     public getDefaultForServer() {
         return {
             name: '',
+            parent: null
         };
     }
 
