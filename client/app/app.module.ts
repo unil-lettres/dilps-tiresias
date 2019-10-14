@@ -112,9 +112,6 @@ import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
 
-// Defined the most early possible : in index.html
-declare var APP_SITE;
-
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
     appearance: 'fill',
@@ -258,7 +255,7 @@ const icons: NaturalIconsConfig = {
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
-        {provide: SITE, useValue: APP_SITE},
+        {provide: SITE, useValue: window.location.hostname.indexOf('tiresias.') > -1 ? 'tiresias' : 'dilps'},
     ],
     bootstrap: [AppComponent],
 })

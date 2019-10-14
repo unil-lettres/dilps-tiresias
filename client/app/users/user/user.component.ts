@@ -1,13 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NaturalHierarchicConfiguration } from '@ecodev/natural';
 import { ArtistComponent } from '../../artists/artist/artist.component';
 import { CollectionService } from '../../collections/services/collection.service';
 import { InstitutionService } from '../../institutions/services/institution.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserType } from '../../shared/generated-types';
+import { collectionsHierarchicConfig } from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import { UserService } from '../services/user.service';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
@@ -27,6 +27,8 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 })
 export class UserComponent extends AbstractDetail {
 
+    public collectionsHierarchicConfig = collectionsHierarchicConfig;
+
     public roles = [];
 
     public passwordGroupCtrl: FormGroup;
@@ -34,7 +36,6 @@ export class UserComponent extends AbstractDetail {
     public passwordConfirmationCtrl: FormControl;
 
     public institution;
-
 
     constructor(public institutionService: InstitutionService,
                 service: UserService,
