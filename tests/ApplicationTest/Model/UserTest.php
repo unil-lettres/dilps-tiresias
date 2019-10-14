@@ -46,6 +46,21 @@ class UserTest extends TestCase
             'user' => [
                 'create' => false,
             ],
+            'domain' => [
+                'create' => false,
+            ],
+            'documentType' => [
+                'create' => false,
+            ],
+            'news' => [
+                'create' => false,
+            ],
+            'period' => [
+                'create' => false,
+            ],
+            'material' => [
+                'create' => false,
+            ],
         ];
 
         self::assertEquals($expected, $actual);
@@ -76,6 +91,21 @@ class UserTest extends TestCase
                 'create' => true,
             ],
             'user' => [
+                'create' => true,
+            ],
+            'domain' => [
+                'create' => true,
+            ],
+            'documentType' => [
+                'create' => true,
+            ],
+            'news' => [
+                'create' => true,
+            ],
+            'period' => [
+                'create' => true,
+            ],
+            'material' => [
                 'create' => true,
             ],
         ];

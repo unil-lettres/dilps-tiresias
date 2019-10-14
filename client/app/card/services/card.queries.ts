@@ -158,26 +158,6 @@ export const updateCard = gql`
                 id
                 name
             }
-            domain {
-                id
-                name
-            }
-            materials {
-                id
-                name
-            }
-            periods {
-                id
-                name
-            }
-            documentType {
-                id
-                name
-            }
-            tags {
-                id
-                name
-            }
             updateDate
             updater {
                 ...userMeta
