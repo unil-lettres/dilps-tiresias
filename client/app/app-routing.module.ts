@@ -183,7 +183,6 @@ export const routes: Routes = [
                     showUnclassified: true,
                     showMyCards: true,
                     filter: {groups: [{conditions: [{isSource: {equal: {value: false}}} as CollectionFilterGroupCondition]}]},
-
                 },
                 children: [
                     {
@@ -214,7 +213,6 @@ export const routes: Routes = [
                     creationButtonForRoles: [UserRole.administrator],
                     editionButtonsForRoles: [UserRole.administrator],
                     filter: {groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}]},
-
                 },
                 children: [
                     {

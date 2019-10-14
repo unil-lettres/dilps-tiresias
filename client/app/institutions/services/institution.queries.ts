@@ -19,8 +19,8 @@ export const institutionDetails = gql`
     }`;
 
 export const institutionsQuery = gql`
-    query Institutions($filters: OldInstitutionFilter, $pagination: PaginationInput) {
-        institutions(filters: $filters, pagination: $pagination) {
+    query Institutions($filter: InstitutionFilter, $pagination: PaginationInput) {
+        institutions(filter: $filter, pagination: $pagination) {
             items {
                 id
                 name

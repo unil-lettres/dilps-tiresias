@@ -17,7 +17,7 @@ return [
     [
         'data' => [
             'cards' => [
-                'length' => 7,
+                'length' => 14,
                 'pageIndex' => 1,
                 'items' => [
                     [

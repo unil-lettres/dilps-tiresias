@@ -25,7 +25,7 @@ export class ViewMapComponent extends NaturalAbstractController implements OnIni
     public static getIcon(iconName: Precision): Icon {
 
         return {
-            url: 'assets/icons/gmap_' + iconName + '.png',
+            url: 'assets/icons/gmap_' + (iconName || Precision.site) + '.png',
             size: new google.maps.Size(32, 37),
             anchor: new google.maps.Point(16, 37),
         };
