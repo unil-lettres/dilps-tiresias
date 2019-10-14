@@ -1,7 +1,8 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SITE } from '../../app.config';
 import { UserService } from '../../users/services/user.service';
-import { UserRole } from '../generated-types';
+import { Site, UserRole } from '../generated-types';
 import { MOCK_APOLLO_PROVIDER } from '../testing/MOCK_APOLLO_PROVIDER';
 import { RolePipe } from './role.pipe';
 
@@ -22,6 +23,7 @@ describe('RolePipe', () => {
                     useClass: UserService,
                 },
                 MOCK_APOLLO_PROVIDER,
+                {provide: SITE, useValue: Site.tiresias},
             ],
         });
     });

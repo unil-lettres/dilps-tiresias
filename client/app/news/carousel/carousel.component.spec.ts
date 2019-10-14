@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SITE } from '../../app.config';
+import { Site } from '../../shared/generated-types';
 import { MOCK_APOLLO_PROVIDER } from '../../shared/testing/MOCK_APOLLO_PROVIDER';
 
 import { CarouselComponent } from './carousel.component';
@@ -12,7 +14,10 @@ describe('CarouselComponent', () => {
         TestBed.configureTestingModule({
             declarations: [CarouselComponent],
             imports: [SwiperModule],
-            providers: [MOCK_APOLLO_PROVIDER],
+            providers: [
+                MOCK_APOLLO_PROVIDER,
+                {provide: SITE, useValue: Site.tiresias},
+            ],
         }).compileComponents();
     }));
 
