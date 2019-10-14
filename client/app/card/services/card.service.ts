@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
+import { SITE } from '../../app.config';
 import {
     Card,
     CardInput,
@@ -14,17 +14,19 @@ import {
     CreateCardVariables,
     DeleteCards,
     Precision,
+    Site,
     UpdateCard,
     UpdateCardVariables,
     ValidateData,
     ValidateImage,
 } from '../../shared/generated-types';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 import { cardQuery, cardsQuery, createCard, deleteCards, updateCard, validateData, validateImage } from './card.queries';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CardService extends NaturalAbstractModelService<Card['card'],
+export class CardService extends AbstractContextualizedService<Card['card'],
     CardVariables,
     Cards['cards'],
     CardsVariables,
@@ -34,8 +36,8 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
     UpdateCardVariables,
     DeleteCards['deleteCards']> {
 
-    constructor(apollo: Apollo) {
-        super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards);
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+        super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
     public static getImageFormat(card, height): { height: number, width: number } {
@@ -157,6 +159,11 @@ export class CardService extends NaturalAbstractModelService<Card['card'],
         }
 
         return input;
+    }
+
+    // In Card specific case, don't context lists
+    protected getContextForAll() {
+        return {};
     }
 
 }

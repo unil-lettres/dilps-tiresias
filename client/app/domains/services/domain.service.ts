@@ -1,25 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { SITE } from '../../app.config';
 
 import {
+    CreateDomain,
+    CreateDomainVariables,
+    DeleteDomains,
     Domain,
     Domains,
     DomainsVariables,
     DomainVariables,
-    CreateDomain,
-    CreateDomainVariables,
-    DeleteDomains,
+    Site,
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
-import { domainQuery, domainsQuery, createDomain, deleteDomains, updateDomain } from './domain.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain } from './domain.queries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DomainService
-    extends NaturalAbstractModelService<Domain['domain'],
+    extends AbstractContextualizedService<Domain['domain'],
         DomainVariables,
         Domains['domains'],
         DomainsVariables,
@@ -29,14 +31,15 @@ export class DomainService
         UpdateDomainVariables,
         DeleteDomains['deleteDomains']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'domain',
             domainQuery,
             domainsQuery,
             createDomain,
             updateDomain,
-            deleteDomains);
+            deleteDomains,
+            site);
     }
 
     public getConsolidatedForClient() {
@@ -46,7 +49,7 @@ export class DomainService
     public getDefaultForServer() {
         return {
             name: '',
-            parent: null
+            parent: null,
         };
     }
 

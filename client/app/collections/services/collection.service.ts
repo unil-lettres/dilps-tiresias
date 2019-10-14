@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService, NaturalLinkMutationService } from '@ecodev/natural';
+import { Inject, Injectable } from '@angular/core';
+import { NaturalLinkMutationService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
+import { SITE } from '../../app.config';
 import {
     Collection,
     Collections,
@@ -13,9 +14,11 @@ import {
     DeleteCollections,
     LinkCollectionToCollection,
     LinkCollectionToCollectionVariables,
+    Site,
     UpdateCollection,
     UpdateCollectionVariables,
 } from '../../shared/generated-types';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 
 import {
     collectionQuery,
@@ -30,7 +33,7 @@ import {
     providedIn: 'root',
 })
 export class CollectionService
-    extends NaturalAbstractModelService<Collection['collection'],
+    extends AbstractContextualizedService<Collection['collection'],
         CollectionVariables,
         Collections['collections'],
         CollectionsVariables,
@@ -40,14 +43,15 @@ export class CollectionService
         UpdateCollectionVariables,
         DeleteCollections['deleteCollections']> {
 
-    constructor(apollo: Apollo, private linkService: NaturalLinkMutationService) {
+    constructor(apollo: Apollo, private linkService: NaturalLinkMutationService, @Inject(SITE) site: Site) {
         super(apollo,
             'collection',
             collectionQuery,
             collectionsQuery,
             createCollection,
             updateCollection,
-            deleteCollections);
+            deleteCollections,
+            site);
     }
 
     public getConsolidatedForClient() {

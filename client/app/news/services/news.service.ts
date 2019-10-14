@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { SITE } from '../../app.config';
 
 import {
     CreateNews,
@@ -15,13 +15,14 @@ import {
     UpdateNews,
     UpdateNewsVariables,
 } from '../../shared/generated-types';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 import { createNews, deleteNewses, newsesQuery, newsQuery, updateNews } from './news.queries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class NewsService
-    extends NaturalAbstractModelService<News['news'],
+    extends AbstractContextualizedService<News['news'],
         NewsVariables,
         Newses['newses'],
         NewsesVariables,
@@ -31,14 +32,15 @@ export class NewsService
         UpdateNewsVariables,
         DeleteNewses['deleteNewses']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'news',
             newsQuery,
             newsesQuery,
             createNews,
             updateNews,
-            deleteNewses);
+            deleteNewses,
+            site);
     }
 
     public getConsolidatedForClient() {

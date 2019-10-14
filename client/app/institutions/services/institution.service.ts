@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { SITE } from '../../app.config';
 
 import {
     CreateInstitution,
@@ -9,23 +10,18 @@ import {
     Institutions,
     InstitutionsVariables,
     InstitutionVariables,
+    Site,
     UpdateInstitution,
     UpdateInstitutionVariables,
 } from '../../shared/generated-types';
-import {
-    createInstitution,
-    deleteInstitutions,
-    institutionQuery,
-    institutionsQuery,
-    updateInstitution,
-} from './institution.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { createInstitution, deleteInstitutions, institutionQuery, institutionsQuery, updateInstitution } from './institution.queries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class InstitutionService
-    extends NaturalAbstractModelService<Institution['institution'],
+    extends AbstractContextualizedService<Institution['institution'],
         InstitutionVariables,
         Institutions['institutions'],
         InstitutionsVariables,
@@ -35,14 +31,15 @@ export class InstitutionService
         UpdateInstitutionVariables,
         DeleteInstitutions['deleteInstitutions']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'institution',
             institutionQuery,
             institutionsQuery,
             createInstitution,
             updateInstitution,
-            deleteInstitutions);
+            deleteInstitutions,
+            site);
     }
 
     public getConsolidatedForClient() {

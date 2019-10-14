@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SITE } from '../../app.config';
 import {
     CreateUser,
     CreateUserVariables,
     DeleteUsers,
     Login,
     Logout,
+    Site,
     UpdateUser,
     UpdateUserVariables,
     User,
@@ -20,12 +21,13 @@ import {
     UserVariables,
     Viewer,
 } from '../../shared/generated-types';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 import { createUser, deleteUsers, loginMutation, logoutMutation, updateUser, userQuery, usersQuery, viewerQuery } from './user.queries';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends NaturalAbstractModelService<User['user'],
+export class UserService extends AbstractContextualizedService<User['user'],
     UserVariables,
     Users['users'],
     UsersVariables,
@@ -37,8 +39,8 @@ export class UserService extends NaturalAbstractModelService<User['user'],
 
     private currentUser: Viewer['viewer'] | null = null;
 
-    constructor(apollo: Apollo, private router: Router) {
-        super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers);
+    constructor(apollo: Apollo, private router: Router, @Inject(SITE) site: Site) {
+        super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
     public getConsolidatedForClient() {

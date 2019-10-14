@@ -1,25 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { SITE } from '../../app.config';
 
 import {
+    CreateTag,
+    CreateTagVariables,
+    DeleteTags,
+    Site,
     Tag,
     Tags,
     TagsVariables,
     TagVariables,
-    CreateTag,
-    CreateTagVariables,
-    DeleteTags,
     UpdateTag,
     UpdateTagVariables,
 } from '../../shared/generated-types';
-import { tagQuery, tagsQuery, createTag, deleteTags, updateTag } from './tag.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { createTag, deleteTags, tagQuery, tagsQuery, updateTag } from './tag.queries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class TagService
-    extends NaturalAbstractModelService<Tag['tag'],
+    extends AbstractContextualizedService<Tag['tag'],
         TagVariables,
         Tags['tags'],
         TagsVariables,
@@ -29,14 +31,15 @@ export class TagService
         UpdateTagVariables,
         DeleteTags['deleteTags']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'tag',
             tagQuery,
             tagsQuery,
             createTag,
             updateTag,
-            deleteTags);
+            deleteTags,
+            site);
     }
 
     public getConsolidatedForClient() {
@@ -46,7 +49,7 @@ export class TagService
     public getDefaultForServer() {
         return {
             name: '',
-            parent: null
+            parent: null,
         };
     }
 

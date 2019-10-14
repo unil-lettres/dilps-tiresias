@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 
 import {
+    CreatePeriod,
+    CreatePeriodVariables,
+    DeletePeriods,
     Period,
     Periods,
     PeriodsVariables,
     PeriodVariables,
-    CreatePeriod,
-    CreatePeriodVariables,
-    DeletePeriods,
     UpdatePeriod,
     UpdatePeriodVariables,
 } from '../../shared/generated-types';
-import { periodQuery, periodsQuery, createPeriod, deletePeriods, updatePeriod } from './period.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod } from './period.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -46,7 +46,7 @@ export class PeriodService
     public getDefaultForServer() {
         return {
             name: '',
-            parent: null
+            parent: null,
         };
     }
 
