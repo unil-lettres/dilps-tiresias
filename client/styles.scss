@@ -5,7 +5,6 @@
 @import 'app/collections/collections/collections.external';
 @import 'app/shared/components/thesaurus/thesaurus.external';
 @import 'styles/layout';
-@import 'app/card/card.external';
 @import 'app/list/list.external';
 @import 'app/view-grid/view-grid.external';
 
@@ -33,6 +32,11 @@ pre.debug {
     border: 1px solid rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.2);
     font-family: Courrier, monospace;
+}
+
+.tox-statusbar,
+.tox-notifications-container {
+    display: none !important;
 }
 
 [debug] {
@@ -69,6 +73,7 @@ perfect-scrollbar {
 
 #appContent {
     height: 100vh;
+
     router-outlet + * {
         height: 100vh;
         min-height: 0;

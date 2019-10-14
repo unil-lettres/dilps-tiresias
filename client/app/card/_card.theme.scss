@@ -11,6 +11,14 @@
             background: mat-color($accent, 0.4);
         }
 
+        .richTextPreview {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            background: mat-color($fg, base, if(map-get($theme, is-dark), 0.1, 0.04)); // match official mat-form-field component style
+            padding: 10px 10px 0 10px;
+            border-bottom: 1px solid mat-color($fg, base, 0.5);
+        }
+
     }
 
 }

@@ -39,18 +39,64 @@ import { CardService } from './services/card.service';
 })
 export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
+    /**
+     * External card data
+     */
     @Input() public model;
+
+    /**
+     * Show/Hide toolbar
+     */
     @Input() public hideToolbar = false;
+
+    /**
+     * Show/Hide the right side of the card (image and actions in toolbar)
+     */
     @Input() public hideImage = false;
+
+    /**
+     * Hide related cards
+     */
     @Input() public hideCards = false;
+
+    /**
+     * Hide some toolbar actions
+     */
     @Input() public hideTools = false;
+
+    /**
+     * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if car is source or surggestion
+     */
     @Input() public title: string;
+
+    /**
+     * Show logo on top of the page if true
+     */
     @Input() public showLogo = false;
 
-    @Input() public imageData;
-    @Input() public imageSrc;
-    @Input() public imageSrcFull;
+    /**
+     * Base 64 image data for display usage before effective upload
+     */
+    @Input() public imageData: string;
+
+    /**
+     * Url of resized images (2000px) to be displayed
+     */
+    @Input() public imageSrc: string;
+
+    /**
+     * Url of full sized image (for download purpose)
+     */
+    @Input() public imageSrcFull: string;
+
+    /**
+     * Default visibility
+     */
     public visibility = 1;
+
+    /**
+     * List of visibilities
+     */
     public visibilities = {
         1: {
             value: CardVisibility.private,
@@ -69,9 +115,32 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         },
     };
 
+    /**
+     * Currently logged user
+     */
     public user;
+
+    /**
+     * Edition mode if true
+     */
     private edit = false;
+
+    /**
+     * Cache for upload subscription
+     * Usefull for (de)activation toggle
+     */
     private uploadSub;
+
+    /**
+     * Tiny MCE settings
+     */
+    public tinyInit = {
+        height: 100,
+        menubar: false,
+        toolbar: 'bold italic underline | removeformat',
+        // toolbar: 'formatselect bold italic underline | removeformat',
+        // block_formats: 'Paragraph=p; Header 1=h1;'
+    };
 
     /**
      * Cache institution data from server
