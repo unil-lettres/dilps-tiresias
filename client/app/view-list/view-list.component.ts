@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material';
-import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
+import { NaturalAbstractController, NaturalDataSource } from '@ecodev/natural';
 import { intersectionBy } from 'lodash';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +27,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
+    @Output() public pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
     /**
      * Emits when some cards are selected
@@ -57,7 +57,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
 
     public loadMore(event: PageEvent) {
         this.selectionModel.clear();
-        this.pagination.emit(event as NaturalPageEvent);
+        this.pagination.emit(event);
     }
 
     public selectAll(): any[] {

@@ -162,7 +162,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     }
 
     // In Card specific case, don't context lists
-    protected getContextForAll() {
+    public getContextForAll() {
         return {};
     }
 

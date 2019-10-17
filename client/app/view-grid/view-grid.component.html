@@ -1,13 +1,13 @@
-<perfect-scrollbar #scrollable>
+<div #scrollable id="scrollable">
     <div class="scrolled" fxFlex fxLayout="row">
         <natural-gallery #gallery
                          (activate)="activate($event)"
                          (pagination)="loadMore($event)"
                          (select)="selectionChange.emit($event)"
                          [options]="options"
-                         [scrollable]="scrollable.directiveRef.elementRef.nativeElement"
+                         [scrollable]="scrollable"
                          class="padding"
                          fxFlex
         ></natural-gallery>
     </div>
-</perfect-scrollbar>
+</div>

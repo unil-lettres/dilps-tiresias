@@ -5,20 +5,12 @@ import { NaturalAbstractList, PaginatedData, QueryVariables } from '@ecodev/natu
 export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVariables> extends NaturalAbstractList<Tall, Vall>
     implements OnInit {
 
-    public displayedColumns = [
-        'name',
-    ];
-
-    public dataSource;
+    public displayedColumns = ['name'];
 
     protected dialog: MatDialog;
 
-    constructor(protected service,
-                private component,
-                injector: Injector) {
-
+    constructor(service, private component, injector: Injector) {
         super(service, injector);
-
         this.dialog = injector.get(MatDialog);
     }
 

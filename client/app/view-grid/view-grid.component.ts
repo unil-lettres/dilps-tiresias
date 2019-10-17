@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
 import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
@@ -24,7 +24,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to scrollable element
      */
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
+    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
 
     /**
      * DataSource containing cards
@@ -58,6 +58,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         selectable: true,
         lightbox: true,
         infiniteScrollOffset: -200,
+        // ratioLimit: {
+        //     min: 0.5,
+        //     max: 2
+        // }
     };
 
     constructor(private router: Router) {
@@ -82,7 +86,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public loadMore(ev) {
-        this.pagination.emit({offset: ev.offset, pageSize: ev.limit, pageIndex: null, length: null});
+        this.pagination.emit({offset: ev.offset, pageSize: ev.limit, pageIndex: null});
     }
 
     public activate(event) {

@@ -6,22 +6,15 @@ export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends
     extends NaturalAbstractNavigableList<Tall, Vall>
     implements OnInit {
 
-    public displayedColumns = [
-        'navigation',
-        'name',
-    ];
+    public displayedColumns = ['navigation', 'name'];
 
     /**
      * Dialog to open detail view
      */
     protected dialog: MatDialog;
 
-    constructor(protected service,
-                private component,
-                injector: Injector) {
-
+    constructor(public service, private component, injector: Injector) {
         super(service, injector);
-
         this.dialog = injector.get(MatDialog);
     }
 
