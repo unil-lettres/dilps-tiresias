@@ -4,7 +4,6 @@ import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
 import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
 import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
 import { merge } from 'lodash';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { takeUntil } from 'rxjs/operators';
 import { CardService } from '../card/services/card.service';
 import { ViewInterface } from '../list/list.component';
@@ -20,35 +19,27 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      * Reference to gallery
      */
     @ViewChild('gallery', {static: false}) gallery: NaturalGalleryComponent;
-
-    /**
-     * Reference to scrollable element
-     */
-    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
-
     /**
      * DataSource containing cards
      */
     @Input() public dataSource: NaturalDataSource;
-
     /**
      *
      */
     @Input() selected = [];
-
     /**
      * Emits when data is required
      */
     @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
-
     /**
      * Emits when some cards are selected
      */
     @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
-
+    /**
+     * Reference to scrollable element
+     */
+    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
     private thumbnailHeight = 300;
-    private enlargedHeight = 2000;
-
     public options: NaturalGalleryOptions = {
         cover: true,
         gap: 5,
@@ -63,6 +54,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         //     max: 2
         // }
     };
+    private enlargedHeight = 2000;
 
     constructor(private router: Router) {
         super();

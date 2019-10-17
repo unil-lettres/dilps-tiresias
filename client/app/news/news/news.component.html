@@ -40,7 +40,7 @@
                        type="file"
                 >
 
-                <img [attr.src]="data?.item?.imageUrl" *ngIf="!imageData && data?.item?.imageUrl">
+                <img *ngIf="!imageData && data?.item?.imageUrl" [attr.src]="data?.item?.imageUrl">
                 <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image"></div>
 
             </div>

@@ -119,18 +119,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * Currently logged user
      */
     public user;
-
-    /**
-     * Edition mode if true
-     */
-    private edit = false;
-
-    /**
-     * Cache for upload subscription
-     * Usefull for (de)activation toggle
-     */
-    private uploadSub;
-
     /**
      * Tiny MCE settings
      */
@@ -141,78 +129,73 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         // toolbar: 'formatselect bold italic underline | removeformat',
         // block_formats: 'Paragraph=p; Header 1=h1;'
     };
-
     /**
      * Cache institution data from server
      * this.model is here considered as CardInput and should receive string, not object
      */
     public institution;
-
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
     public artists;
-
     /**
      * Template exposed variable
      */
     public InstitutionComponent = InstitutionComponent;
-
     /**
      * Template exposed variable
      */
     public ArtistComponent = ArtistComponent;
-
     /**
      * Template exposed variable
      */
     public MaterialComponent = MaterialComponent;
-
     /**
      * Template exposed variable
      */
     public PeriodComponent = PeriodComponent;
-
     /**
      * Template exposed variable
      */
     public TagComponent = TagComponent;
-
     /**
      * Template exposed variable
      */
     public DocumentTypeComponent = DocumentTypeComponent;
-
     /**
      * Template exposed variable
      */
     public DomainComponent = DomainComponent;
-
     /**
      * Template exposed variable
      */
     public domainHierarchicConfig = domainHierarchicConfig;
-
     /**
      * Template exposed variable
      */
     public tagHierarchicConfig = tagHierarchicConfig;
-
     /**
      * Template exposed variable
      */
     public periodHierarchicConfig = periodHierarchicConfig;
-
     /**
      * Template exposed variable
      */
     public materialHierarchicConfig = materialHierarchicConfig;
-
     /**
      * Template exposed variable
      */
     public Site = Site;
+    /**
+     * Edition mode if true
+     */
+    private edit = false;
+    /**
+     * Cache for upload subscription
+     * Usefull for (de)activation toggle
+     */
+    private uploadSub;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,

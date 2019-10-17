@@ -47,6 +47,7 @@ import {
     NaturalTableButtonModule,
 } from '@ecodev/natural';
 import { NgProgressModule } from '@ngx-progressbar/core';
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -111,7 +112,6 @@ import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
-import { EditorModule } from '@tinymce/tinymce-angular';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -253,7 +253,7 @@ const icons: NaturalIconsConfig = {
         NaturalFixedButtonModule,
         SwiperModule,
         NaturalHierarchicSelectorModule,
-        EditorModule
+        EditorModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

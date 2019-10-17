@@ -12,30 +12,58 @@
                     <input [(ngModel)]="data.item.email" matInput name="email" placeholder="Email" type="email">
                 </mat-form-field>
 
-                <div *ngIf="(user?.globalPermissions?.user?.create || data.item?.permissions?.update) && !isShibbolethUser()" [formGroup]="passwordGroupCtrl" fxLayout="column" fxLayoutGap="10px">
+                <div *ngIf="(user?.globalPermissions?.user?.create || data.item?.permissions?.update) && !isShibbolethUser()"
+                     [formGroup]="passwordGroupCtrl"
+                     fxLayout="column"
+                     fxLayoutGap="10px"
+                >
                     <mat-form-field>
-                        <input [(ngModel)]="data.item.password" [formControl]="passwordCtrl" matInput name="password" placeholder="Mot de passe" type="password">
+                        <input [(ngModel)]="data.item.password"
+                               [formControl]="passwordCtrl"
+                               matInput
+                               name="password"
+                               placeholder="Mot de passe"
+                               type="password"
+                        >
                     </mat-form-field>
 
                     <mat-form-field>
-                        <input [formControl]="passwordConfirmationCtrl" matInput name="password_confirmation" placeholder="Confirmation du mot passe" type="password">
+                        <input [formControl]="passwordConfirmationCtrl"
+                               matInput
+                               name="password_confirmation"
+                               placeholder="Confirmation du mot passe"
+                               type="password"
+                        >
 
                         <mat-error *ngIf="passwordConfirmationCtrl.hasError('password')">Le mot de passe n'est pas identique</mat-error>
                     </mat-form-field>
                 </div>
 
-                <app-thesaurus (modelChange)="data.item.institution = $event" [model]="institution" [multiple]="false" [service]="institutionService" placeholder="Institution"
+                <app-thesaurus (modelChange)="data.item.institution = $event"
+                               [model]="institution"
+                               [multiple]="false"
+                               [service]="institutionService"
+                               placeholder="Institution"
                 ></app-thesaurus>
 
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.activeUntil" [matDatepicker]="picker" matInput name="activeUntil" placeholder="Active jusqu'au"
+                    <input [(ngModel)]="data.item.activeUntil"
+                           [matDatepicker]="picker"
+                           matInput
+                           name="activeUntil"
+                           placeholder="Active jusqu'au"
                     >
                     <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="data.item.id">
-                    <input [(ngModel)]="data.item.termsAgreement" [matDatepicker]="picker2" disabled matInput name="termsAgreement" placeholder="Licence"
+                    <input [(ngModel)]="data.item.termsAgreement"
+                           [matDatepicker]="picker2"
+                           disabled
+                           matInput
+                           name="termsAgreement"
+                           placeholder="Licence"
                     >
                     <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
@@ -55,12 +83,12 @@
 
         <mat-tab label="Collections">
 
-            <natural-relations [service]="collectionService"
-                               class="margin"
-                               [main]="data.item"
-                               placeholder="Ajouter une collection"
-                               [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
+            <natural-relations [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
                                [hierarchicSelectorConfig]="collectionsHierarchicConfig"
+                               [main]="data.item"
+                               [service]="collectionService"
+                               class="margin"
+                               placeholder="Ajouter une collection"
             ></natural-relations>
 
         </mat-tab>
@@ -69,6 +97,12 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer (create)="create()" (delete)="delete()" (update)="update()" [canCreate]="user?.globalPermissions?.user?.create" [formCtrl]="passwordConfirmationCtrl" [item]="data.item" fxFlex
+    <app-dialog-footer (create)="create()"
+                       (delete)="delete()"
+                       (update)="update()"
+                       [canCreate]="user?.globalPermissions?.user?.create"
+                       [formCtrl]="passwordConfirmationCtrl"
+                       [item]="data.item"
+                       fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

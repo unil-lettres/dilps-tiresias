@@ -20,9 +20,9 @@
         <!-- Todo : fix search on country -->
         <natural-select (keyup.enter)="search()"
                         *ngIf="countries && (!readonly || !!model?.postcode)"
-                        [service]="countryService"
                         [(ngModel)]="model.country"
                         [disabled]="readonly"
+                        [service]="countryService"
                         [showIcon]="false"
                         placeholder="Pays"
         ></natural-select>
@@ -47,11 +47,11 @@
     <agm-map *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
              [latitude]="model?.latitude"
              [longitude]="model?.longitude"
+             [mapTypeControlOptions]="{position: 10}"
+             [mapTypeControl]="true"
              [scrollwheel]="false"
              [styles]="mapStyles"
              [zoom]="zoom"
-             [mapTypeControl]="true"
-             [mapTypeControlOptions]="{position: 10}"
              style="height:300px;"
     >
         <agm-marker (dragEnd)="onMarkerDrag($event)"

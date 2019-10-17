@@ -1,11 +1,11 @@
 <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
     <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
-    <natural-search fxFlex
+    <natural-search (selectionChange)="search($event)"
                     [facets]="naturalSearchFacets"
-                    [selections]="naturalSearchSelections"
-                    (selectionChange)="search($event)"
                     [multipleGroups]="false"
+                    [selections]="naturalSearchSelections"
+                    fxFlex
     >
 
     </natural-search>
@@ -15,42 +15,42 @@
 
     <div class="mat-headline">Institutions</div>
 
-    <table mat-table [dataSource]="dataSource">
+    <table [dataSource]="dataSource" mat-table>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nom</th>
-            <td mat-cell *matCellDef="let element">
+            <th *matHeaderCellDef mat-header-cell>Nom</th>
+            <td *matCellDef="let element" mat-cell>
                 <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"
                 ></app-table-button>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="locality">
-            <th mat-header-cell *matHeaderCellDef>Localité</th>
-            <td mat-cell *matCellDef="let element">
+            <th *matHeaderCellDef mat-header-cell>Localité</th>
+            <td *matCellDef="let element" mat-cell>
                 {{ element.locality }}
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
 
-    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === 0">
+    <div *ngIf="dataSource.length === 0" class="margin" fxLayout="column" fxLayoutAlign="center center">
         <div>Pas de résultats</div>
     </div>
 
-    <div fxLayout="column" fxLayoutAlign="center center" class="margin" *ngIf="dataSource.length === null">
-        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+    <div *ngIf="dataSource.length === null" class="margin" fxLayout="column" fxLayoutAlign="center center">
+        <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
     </div>
 
-    <mat-paginator *ngIf="dataSource.data?.length"
+    <mat-paginator (page)="pagination($event)"
+                   *ngIf="dataSource.data?.length"
                    [length]="dataSource.data?.length"
-                   [pageSize]="dataSource.data?.pageSize"
                    [pageIndex]="dataSource.data?.pageIndex"
                    [pageSizeOptions]="pageSizeOptions"
-                   (page)="pagination($event)"
+                   [pageSize]="dataSource.data?.pageSize"
     ></mat-paginator>
 </div>
 

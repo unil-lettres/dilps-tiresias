@@ -35,12 +35,12 @@
         </mat-tab>
         <mat-tab label="Responsables">
 
-            <natural-relations [service]="userService"
+            <natural-relations [displayWith]="displayFn"
+                               [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
                                [main]="data.item"
+                               [service]="userService"
                                class="margin"
                                placeholder="Ajouter un responsable"
-                               [displayWith]="displayFn"
-                               [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
             ></natural-relations>
 
         </mat-tab>

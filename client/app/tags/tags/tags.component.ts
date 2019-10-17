@@ -1,8 +1,8 @@
 import { Component, Injector } from '@angular/core';
 import { AbstractNavigableList } from '../../shared/components/AbstractNavigableList';
 import { Tags, TagsVariables } from '../../shared/generated-types';
-import { TagComponent } from '../tag/tag.component';
 import { TagService } from '../services/tag.service';
+import { TagComponent } from '../tag/tag.component';
 
 @Component({
     selector: 'app-tags',

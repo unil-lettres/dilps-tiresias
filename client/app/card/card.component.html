@@ -134,7 +134,7 @@
                 <div *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name" class="margin-bottom">
                     <div class="richTextPreview">
                         <div class="mat-body-2">Titre étendu</div>
-                        <div [innerHTML]="model.expandedName" *ngIf="!isEdit() && !!model.expandedName && model.expandedName != model.name"
+                        <div *ngIf="!isEdit() && !!model.expandedName && model.expandedName != model.name" [innerHTML]="model.expandedName"
                         ></div>
                     </div>
                     <editor *ngIf="isEdit()"
@@ -164,62 +164,62 @@
 
                     <app-thesaurus *ngIf="isEdit() || !!model.materials?.length"
                                    [(model)]="model.materials"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="materialHierarchicConfig"
+                                   [multiple]="true"
                                    [previewComponent]="MaterialComponent"
                                    [readonly]="!isEdit()"
                                    [service]="materialService"
                                    matTooltipPosition="after"
                                    placeholder="Matériaux"
-                                   [allowFreeText]="false"
-                                   [multiple]="true"
-                                   [hierarchicSelectorConfig]="materialHierarchicConfig"
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.periods?.length"
                                    [(model)]="model.periods"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="periodHierarchicConfig"
+                                   [multiple]="true"
                                    [previewComponent]="PeriodComponent"
                                    [readonly]="!isEdit()"
                                    [service]="periodService"
                                    matTooltipPosition="after"
                                    placeholder="Périodes"
-                                   [allowFreeText]="false"
-                                   [multiple]="true"
-                                   [hierarchicSelectorConfig]="periodHierarchicConfig"
 
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
                                    [(model)]="model.tags"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="tagHierarchicConfig"
+                                   [multiple]="true"
                                    [previewComponent]="TagComponent"
                                    [readonly]="!isEdit()"
                                    [service]="tagService"
                                    matTooltipPosition="after"
                                    placeholder="Mots clés"
-                                   [allowFreeText]="false"
-                                   [multiple]="true"
-                                   [hierarchicSelectorConfig]="tagHierarchicConfig"
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.documentType"
                                    [(model)]="model.documentType"
+                                   [allowFreeText]="false"
+                                   [multiple]="false"
                                    [previewComponent]="DocumentTypeComponent"
                                    [readonly]="!isEdit()"
                                    [service]="documentTypeService"
                                    matTooltipPosition="after"
                                    placeholder="Type de document"
-                                   [multiple]="false"
-                                   [allowFreeText]="false"
                     ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.domain"
                                    [(model)]="model.domain"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="domainHierarchicConfig"
+                                   [multiple]="false"
                                    [previewComponent]="DomainComponent"
                                    [readonly]="!isEdit()"
                                    [service]="domainService"
                                    matTooltipPosition="after"
                                    placeholder="Domaine"
-                                   [multiple]="false"
-                                   [allowFreeText]="false"
-                                   [hierarchicSelectorConfig]="domainHierarchicConfig"
                     ></app-thesaurus>
 
                 </ng-container>
@@ -332,7 +332,7 @@
                 <div *ngIf="isEdit() || !!model.literature && model.literature != model.name" class="margin-v">
                     <div class="richTextPreview">
                         <div class="mat-body-2">Source</div>
-                        <div [innerHTML]="model.literature" *ngIf="!isEdit() && !!model.literature && model.literature != model.name"></div>
+                        <div *ngIf="!isEdit() && !!model.literature && model.literature != model.name" [innerHTML]="model.literature"></div>
                     </div>
                     <editor *ngIf="isEdit()"
                             [(ngModel)]="model.literature"
@@ -377,8 +377,8 @@
                     <div class="mat-title innerSpacing">Fiches additionnelles</div>
 
                     <div class="innerSpacing">
-                        <natural-relations [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
-                                           [disabled]="!isEdit()"
+                        <natural-relations [disabled]="!isEdit()"
+                                           [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
                                            [main]="model"
                                            [service]="cardService"
                                            placeholder="Chercher une fiche"

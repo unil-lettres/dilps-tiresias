@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import {
@@ -10,16 +11,7 @@ import {
     SuggestDeletion,
     SuggestUpdate,
 } from '../../shared/generated-types';
-import {
-    acceptChange,
-    changeQuery,
-    changesQuery,
-    rejectChange,
-    suggestCreation,
-    suggestDeletion,
-    suggestUpdate,
-} from './change.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { acceptChange, changeQuery, changesQuery, rejectChange, suggestCreation, suggestDeletion, suggestUpdate } from './change.queries';
 
 @Injectable({
     providedIn: 'root',

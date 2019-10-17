@@ -1,5 +1,5 @@
-<swiper [config]="swiperConfig" *ngIf="newses?.length">
-    <a *ngFor="let news of newses" class="news" [attr.href]="news.url" [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}">
+<swiper *ngIf="newses?.length" [config]="swiperConfig">
+    <a *ngFor="let news of newses" [attr.href]="news.url" [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}" class="news">
         <div class="label">
             <div class="name mat-title"> {{ news.name  }}</div>
             <div class="description mat-body-2">{{ news.description }}</div>

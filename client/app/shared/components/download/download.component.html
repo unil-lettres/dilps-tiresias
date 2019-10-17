@@ -12,9 +12,9 @@
 
                 <mat-checkbox [(ngModel)]="includeLegend" [disabled]="denyLegendsDownload">Inclure les légendes au format HTML
                 </mat-checkbox>
-                <br/>
+                <br />
                 <div fxFlexAlign="end" fxLayout="row">
-                    <button (click)="downloadZip()" mat-flat-button color="primary">Télécharger en ZIP</button>
+                    <button (click)="downloadZip()" color="primary" mat-flat-button>Télécharger en ZIP</button>
                 </div>
             </div>
         </mat-tab>
@@ -29,7 +29,7 @@
                     <span [style.background]="textColor" class="color" matSuffix></span>
                 </mat-form-field>
                 <div fxFlexAlign="end" fxLayout="row">
-                    <button (click)="downloadPowerPoint()" mat-flat-button color="primary">Télécharger en PowerPoint</button>
+                    <button (click)="downloadPowerPoint()" color="primary" mat-flat-button>Télécharger en PowerPoint</button>
                 </div>
             </div>
         </mat-tab>

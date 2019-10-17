@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -13,7 +14,6 @@ import {
     UpdateArtistVariables,
 } from '../../shared/generated-types';
 import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artist.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',

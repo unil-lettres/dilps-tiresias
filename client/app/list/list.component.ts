@@ -86,24 +86,21 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
      * True if button for archive download has permissions to be displayed
      */
     public showDownloadCollection = true;
-
+    /**
+     * Enum that specified the displayed list
+     */
+    public viewMode: ViewMode = ViewMode.grid;
     protected defaultSorting: Array<Sorting> = [
         {
             field: CardSortingField.creationDate,
             order: SortingOrder.DESC,
         },
     ];
-
     protected defaultPagination: PaginationInput = {
         pageSize: 15,
         pageIndex: 0,
         offset: null,
     };
-
-    /**
-     * Enum that specified the displayed list
-     */
-    public viewMode: ViewMode = ViewMode.grid;
 
     constructor(private cardService: CardService,
                 private collectionService: CollectionService,
@@ -181,10 +178,6 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
-    protected getDataObservable() {
-        return this.service.watchAll(this.variablesManager, this.ngUnsubscribe, 'network-only');
-    }
-
     public pagination(event: NaturalPageEvent) {
 
         if (this.viewMode === ViewMode.grid) {
@@ -206,13 +199,6 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             sessionStorage.setItem('view-mode', mode);
             this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
         }
-    }
-
-    /**
-     * Return the only activated View Component
-     */
-    private getViewComponent(): ViewInterface {
-        return this.gridComponent || this.listComponent;
     }
 
     /**
@@ -343,6 +329,17 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public unselectAll() {
         this.selected.length = [];
         this.getViewComponent().unselectAll();
+    }
+
+    protected getDataObservable() {
+        return this.service.watchAll(this.variablesManager, this.ngUnsubscribe, 'network-only');
+    }
+
+    /**
+     * Return the only activated View Component
+     */
+    private getViewComponent(): ViewInterface {
+        return this.gridComponent || this.listComponent;
     }
 
     private linkToCollection(selection) {

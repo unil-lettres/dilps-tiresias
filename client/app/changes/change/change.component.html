@@ -13,11 +13,21 @@
             </button>
         </ng-container>
 
-        <button (click)="update()" *ngIf="original" color="primary" mat-icon-button mat-raised-button matTooltip="Soumettre la suggestion à validation"
+        <button (click)="update()"
+                *ngIf="original"
+                color="primary"
+                mat-icon-button
+                mat-raised-button
+                matTooltip="Soumettre la suggestion à validation"
         >
             <mat-icon>save</mat-icon>
         </button>
-        <button (click)="create()" *ngIf="!original && suggestion" color="primary" mat-icon-button mat-raised-button matTooltip="Soumettre l'ajout de cette fiche à validation"
+        <button (click)="create()"
+                *ngIf="!original && suggestion"
+                color="primary"
+                mat-icon-button
+                mat-raised-button
+                matTooltip="Soumettre l'ajout de cette fiche à validation"
         >
             <mat-icon>add</mat-icon>
         </button>

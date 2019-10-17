@@ -5,13 +5,13 @@
         <div *ngFor="let item of cards" class="line">
 
             <div class="image-wrapper">
-                <div class="image" [ngStyle]="{'background-image': 'url(/image/'+ item.id + '/200)'}"></div>
+                <div [ngStyle]="{'background-image': 'url(/image/'+ item.id + '/200)'}" class="image"></div>
             </div>
 
             <div class="line-body">
                 <div>{{ item.name }}</div>
                 <div>{{ item.expandedName }}</div>
-                <a mat-flat-button [routerLink]="['/card', item.id]">Voir fiche</a>
+                <a [routerLink]="['/card', item.id]" mat-flat-button>Voir fiche</a>
             </div>
             <div>
                 <mat-checkbox (change)="$event ? selectionModel.toggle(item) : null"
@@ -21,12 +21,12 @@
             </div>
         </div>
 
-        <mat-paginator *ngIf="dataSource.data?.length"
+        <mat-paginator (page)="loadMore($event)"
+                       *ngIf="dataSource.data?.length"
                        [length]="dataSource.data?.length"
-                       [pageSize]="dataSource.data?.pageSize"
                        [pageIndex]="dataSource.data?.pageIndex"
                        [pageSizeOptions]="[5, 10, 20, 50]"
-                       (page)="loadMore($event)"
+                       [pageSize]="dataSource.data?.pageSize"
         ></mat-paginator>
 
     </div>

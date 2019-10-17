@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 
 import {
+    CreateDocumentType,
+    CreateDocumentTypeVariables,
+    DeleteDocumentTypes,
     DocumentType,
     DocumentTypes,
     DocumentTypesVariables,
     DocumentTypeVariables,
-    CreateDocumentType,
-    CreateDocumentTypeVariables,
-    DeleteDocumentTypes,
     UpdateDocumentType,
     UpdateDocumentTypeVariables,
 } from '../../shared/generated-types';
-import { documentTypeQuery, documentTypesQuery, createDocumentType, deleteDocumentTypes, updateDocumentType } from './document-type.queries';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import {
+    createDocumentType,
+    deleteDocumentTypes,
+    documentTypeQuery,
+    documentTypesQuery,
+    updateDocumentType,
+} from './document-type.queries';
 
 @Injectable({
     providedIn: 'root',

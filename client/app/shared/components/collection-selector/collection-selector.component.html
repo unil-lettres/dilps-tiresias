@@ -9,7 +9,7 @@
                             placeholder="Sélectionnez la collection"
             ></natural-select>
             <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="link()" [disabled]="!collection?.id" mat-flat-button color="primary">Ajouter à la collection</button>
+                <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>Ajouter à la collection</button>
             </div>
         </div>
     </mat-tab>
@@ -33,7 +33,7 @@
             ></natural-select>
 
             <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="createAndLink()" [disabled]="!newCollection.name" mat-flat-button color="primary">
+                <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
                     Ajouter à une nouvelle collection privée
                 </button>
             </div>

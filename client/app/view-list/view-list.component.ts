@@ -15,30 +15,24 @@ import { ViewInterface } from '../list/list.component';
 export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
 
     /**
-     * Reference to scrollable element
-     */
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
-
-    /**
      * DataSource containing cards
      */
     @Input() public dataSource: NaturalDataSource;
-
     /**
      * Emits when data is required
      */
     @Output() public pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
-
     /**
      * Emits when some cards are selected
      */
     @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
-
     @Input() selected = [];
-
     public selectionModel = new SelectionModel(true);
-
     public cards = [];
+    /**
+     * Reference to scrollable element
+     */
+    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
 
     constructor() {
         super();

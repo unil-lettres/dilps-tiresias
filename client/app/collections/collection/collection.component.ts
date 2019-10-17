@@ -74,6 +74,10 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
+    public displayFn(item) {
+        return item ? item.login : null;
+    }
+
     protected postQuery() {
         // Init visibility
         this.visibility = +findKey(this.visibilities, (s) => {
@@ -85,9 +89,5 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     protected postUpdate(model) {
         this.institution = model.institution;
-    }
-
-    public displayFn(item) {
-        return item ? item.login : null;
     }
 }

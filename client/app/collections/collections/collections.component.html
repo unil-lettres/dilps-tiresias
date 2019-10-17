@@ -30,7 +30,7 @@
 
                 <mat-nav-list>
                     <ng-container *ngFor="let item of collections">
-                        <a [routerLink]="item.id" (click)="getChildren(item)" mat-list-item routerLinkActive="active">
+                        <a (click)="getChildren(item)" [routerLink]="item.id" mat-list-item routerLinkActive="active">
                             <mat-icon mat-list-icon>collections</mat-icon>
                             <span fxLayout="row" fxLayoutAlign="start center" matLine>{{ item.name }}</span>
                             <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
@@ -39,8 +39,8 @@
                         </a>
 
                         <ng-container *ngFor="let item of item.children">
-                            <a [routerLink]="item.id"
-                               (click)="getChildren(item)"
+                            <a (click)="getChildren(item)"
+                               [routerLink]="item.id"
                                mat-list-item
                                routerLinkActive="active"
                                style="padding-left:20px;"
@@ -53,8 +53,8 @@
                             </a>
 
                             <ng-container *ngFor="let item of item.children">
-                                <a [routerLink]="item.id"
-                                   (click)="getChildren(item)"
+                                <a (click)="getChildren(item)"
+                                   [routerLink]="item.id"
                                    mat-list-item
                                    routerLinkActive="active"
                                    style="padding-left:40px;"
@@ -67,8 +67,8 @@
                                 </a>
 
                                 <ng-container *ngFor="let item of item.children">
-                                    <a [routerLink]="item.id"
-                                       (click)="getChildren(item)"
+                                    <a (click)="getChildren(item)"
+                                       [routerLink]="item.id"
                                        mat-list-item
                                        routerLinkActive="active"
                                        style="padding-left:60px;"

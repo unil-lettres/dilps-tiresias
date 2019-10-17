@@ -11,18 +11,15 @@
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <img *ngIf="showLogo" src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
 
-        <button (click)="setViewMode(ViewMode.grid)" mat-icon-button matTooltip="Grille" *ngIf="viewMode !== ViewMode.grid">
+        <button (click)="setViewMode(ViewMode.grid)" *ngIf="viewMode !== ViewMode.grid" mat-icon-button matTooltip="Grille">
             <mat-icon>view_compact</mat-icon>
         </button>
 
-        <button (click)="setViewMode(ViewMode.list)" mat-icon-button matTooltip="Liste" *ngIf="viewMode !== ViewMode.list">
+        <button (click)="setViewMode(ViewMode.list)" *ngIf="viewMode !== ViewMode.list" mat-icon-button matTooltip="Liste">
             <mat-icon>view_list</mat-icon>
         </button>
 
-        <button (click)="setViewMode(ViewMode.map)"
-                mat-icon-button
-                matTooltip="Carte"
-                *ngIf="selected?.length && viewMode !== ViewMode.map"
+        <button (click)="setViewMode(ViewMode.map)" *ngIf="selected?.length && viewMode !== ViewMode.map" mat-icon-button matTooltip="Carte"
         >
             <mat-icon>map</mat-icon>
         </button>
@@ -106,24 +103,24 @@
 
     </mat-toolbar>
 
-    <app-view-grid *ngIf="viewMode === ViewMode.grid"
-                   [style.height]="'100%'"
-                   #view
-                   [selected]="selected"
-                   (selectionChange)="select($event)"
-                   [dataSource]="dataSource"
+    <app-view-grid #view
                    (pagination)="pagination($event)"
+                   (selectionChange)="select($event)"
+                   *ngIf="viewMode === ViewMode.grid"
+                   [dataSource]="dataSource"
+                   [selected]="selected"
+                   [style.height]="'100%'"
     ></app-view-grid>
 
-    <app-view-list *ngIf="viewMode === ViewMode.list"
-                   [style.height]="'100%'"
-                   #view
-                   [selected]="selected"
-                   (selectionChange)="select($event)"
-                   [dataSource]="dataSource"
+    <app-view-list #view
                    (pagination)="pagination($event)"
+                   (selectionChange)="select($event)"
+                   *ngIf="viewMode === ViewMode.list"
+                   [dataSource]="dataSource"
+                   [selected]="selected"
+                   [style.height]="'100%'"
     ></app-view-list>
 
-    <app-view-map #view *ngIf="viewMode === ViewMode.map" [style.height]="'100%'" [cards]="selected"
+    <app-view-map #view *ngIf="viewMode === ViewMode.map" [cards]="selected" [style.height]="'100%'"
     ></app-view-map>
 </div>

@@ -89,26 +89,22 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * List of selected items
      */
     public items: ThesaurusModel[] = [];
-
-    /**
-     * Cache to init search watching only once
-     */
-    private resultsCache: Observable<any>;
-
-    /**
-     * Default page size
-     */
-    private pageSize = 10;
-
-    /**
-     * Query variables manger
-     */
-    private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
-
     /**
      * <input> controller
      */
     public formControl: FormControl = new FormControl();
+    /**
+     * Cache to init search watching only once
+     */
+    private resultsCache: Observable<any>;
+    /**
+     * Default page size
+     */
+    private pageSize = 10;
+    /**
+     * Query variables manger
+     */
+    private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
 
     constructor(private dialog: MatDialog,
                 private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
@@ -234,10 +230,6 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             });
     }
 
-    private getSelectKey() {
-        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
-    }
-
     public removeTerm(term: Literal): void {
         const index = this.items.findIndex(item => item.name === term.name);
         if (index >= 0) {
@@ -266,6 +258,10 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      */
     public selectSuggestion(event) {
         this.addTerm(event.option.value);
+    }
+
+    private getSelectKey() {
+        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
     }
 
     /**
