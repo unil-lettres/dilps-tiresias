@@ -144,6 +144,13 @@
                     ></editor>
                 </div>
 
+                <!--
+                    TODO :
+                    * comment : model + query ready since 2018, but missing in template
+                    * museris_url : same
+                    * museris_cote : same
+                -->
+
                 <!-- Specific dilps fields -->
                 <ng-container *ngIf="site === Site.dilps">
 
@@ -224,16 +231,6 @@
 
                 </ng-container>
 
-                <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
-                    <textarea [(ngModel)]="model.techniqueAuthor"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Auteur technique"
-                    ></textarea>
-                </mat-form-field>
-
                 <mat-form-field *ngIf="isEdit() || !!model.addition"
                                 [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
                                 class="innerSpacing"
@@ -262,6 +259,11 @@
                     ></textarea>
                 </mat-form-field>
 
+                <div *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor" class="margin-v">
+                    <mat-divider></mat-divider>
+                    <div class=" margin-top mat-document">Référence du document / Technique</div>
+                </div>
+
                 <mat-form-field *ngIf="isEdit() || !!model.technique"
                                 [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
                                 class="innerSpacing"
@@ -275,6 +277,30 @@
                               placeholder="Technique"
                     ></textarea>
                 </mat-form-field>
+
+                <mat-form-field *ngIf="isEdit() || !!model.techniqueDate" class="innerSpacing">
+                    <textarea [(ngModel)]="model.techniqueDate"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Date"
+                    ></textarea>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
+                    <textarea [(ngModel)]="model.techniqueAuthor"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Auteur technique"
+                    ></textarea>
+                </mat-form-field>
+
+                <mat-divider *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor"
+                             class="margin-bottom"
+                ></mat-divider>
 
                 <mat-form-field *ngIf="isEdit() || !!model.material"
                                 [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"

@@ -65,6 +65,7 @@ export const cardDetailsFragment = gql`
         }
         technique
         techniqueAuthor
+        techniqueDate
         format
         literature
         page
