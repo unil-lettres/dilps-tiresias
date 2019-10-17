@@ -29,6 +29,7 @@ export const cardDetailsFragment = gql`
             postcode
             latitude
             longitude
+            precision
             country {
                 id
                 code

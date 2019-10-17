@@ -63,3 +63,10 @@
     </agm-map>
 
 </div>
+
+<!-- Todo : allow to nullify -->
+<natural-select-enum *ngIf="!readonly || !!model?.precision"
+                     [(ngModel)]="model.precision"
+                     enumName="Precision"
+                     placeholder="Précision"
+></natural-select-enum>

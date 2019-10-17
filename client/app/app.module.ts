@@ -42,7 +42,7 @@ import {
     NaturalIconModule,
     NaturalIconsConfig,
     NaturalRelationsModule,
-    NaturalSearchModule,
+    NaturalSearchModule, NaturalSelectEnumModule,
     NaturalSelectModule,
     NaturalTableButtonModule,
 } from '@ecodev/natural';
@@ -254,6 +254,7 @@ const icons: NaturalIconsConfig = {
         SwiperModule,
         NaturalHierarchicSelectorModule,
         EditorModule,
+        NaturalSelectEnumModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

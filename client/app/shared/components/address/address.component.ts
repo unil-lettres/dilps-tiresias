@@ -3,7 +3,6 @@ import { Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angula
 import { FormControl } from '@angular/forms';
 import { NaturalQueryVariablesManager } from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
-import { } from 'googlemaps';
 import { merge } from 'lodash';
 import { CountryService } from '../../../countries/services/country.service';
 import { Countries, CountriesVariables } from '../../generated-types';
@@ -24,6 +23,10 @@ export class AddressComponent implements OnInit {
 
     @Input() vertical = false;
     @Input() readonly = false;
+
+    /**
+     * Object reference is directly modified
+     */
     @Input() model;
 
     public formCtrl = new FormControl();
