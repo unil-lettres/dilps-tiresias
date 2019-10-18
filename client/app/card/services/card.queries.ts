@@ -81,6 +81,8 @@ export const cardDetailsFragment = gql`
         postcode
         latitude
         longitude
+        objectReference
+        productionPlace
         cards {
             id
             name

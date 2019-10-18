@@ -149,73 +149,73 @@
                     * comment : model + query ready since 2018, but missing in template
                     * museris_url : same
                     * museris_cote : same
+                    * url_http : has been dropped from tiresias without validation
+                    * url_description : same
+                    * altitude : same
+                    * reference : not included yet
+                    * old reference : not included yet
                 -->
+
+                <app-thesaurus (modelChange)="model.artists = $event"
+                               *ngIf="isEdit() || !!artists?.length"
+                               [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
+                               [model]="artists"
+                               [previewComponent]="ArtistComponent"
+                               [readonly]="!isEdit()"
+                               [service]="artistService"
+                               matTooltipPosition="after"
+                               placeholder="Artistes"
+                ></app-thesaurus>
 
                 <!-- Specific dilps fields -->
                 <ng-container *ngIf="site === Site.dilps">
 
-                    <app-thesaurus (modelChange)="model.artists = $event"
-                                   *ngIf="isEdit() || !!artists?.length"
-                                   [matTooltip]="!isEdit() ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
-                                   [model]="artists"
-                                   [previewComponent]="ArtistComponent"
-                                   [readonly]="!isEdit()"
-                                   [service]="artistService"
-                                   matTooltipPosition="after"
-                                   placeholder="Artistes"
-                    ></app-thesaurus>
+                    <mat-form-field *ngIf="isEdit() || !!model.addition"
+                                    [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
+                                    class="innerSpacing"
+                                    matTooltipPosition="after"
+                    >
+                    <textarea [(ngModel)]="model.addition"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Supplément"
+                    ></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="(isEdit() || !!model.dating) "
+                                    [matTooltip]="!isEdit() ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'"
+                                    class="innerSpacing"
+                                    matTooltipPosition="after"
+                    >
+                    <textarea [(ngModel)]="model.dating"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Datation"
+                    ></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="isEdit() || !!model.material"
+                                    [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
+                                    class="innerSpacing"
+                                    matTooltipPosition="after"
+                    >
+                    <textarea [(ngModel)]="model.material"
+                              [readonly]="!isEdit()"
+                              matAutosizeMinRows="1"
+                              matInput
+                              matTextareaAutosize
+                              placeholder="Matériel"
+                    ></textarea>
+                    </mat-form-field>
+
                 </ng-container>
 
                 <!-- Specific tiresias fields -->
                 <ng-container *ngIf="site === Site.tiresias">
-
-                    <app-thesaurus *ngIf="isEdit() || !!model.materials?.length"
-                                   [(model)]="model.materials"
-                                   [allowFreeText]="false"
-                                   [hierarchicSelectorConfig]="materialHierarchicConfig"
-                                   [multiple]="true"
-                                   [previewComponent]="MaterialComponent"
-                                   [readonly]="!isEdit()"
-                                   [service]="materialService"
-                                   matTooltipPosition="after"
-                                   placeholder="Matériaux"
-                    ></app-thesaurus>
-
-                    <app-thesaurus *ngIf="isEdit() || !!model.periods?.length"
-                                   [(model)]="model.periods"
-                                   [allowFreeText]="false"
-                                   [hierarchicSelectorConfig]="periodHierarchicConfig"
-                                   [multiple]="true"
-                                   [previewComponent]="PeriodComponent"
-                                   [readonly]="!isEdit()"
-                                   [service]="periodService"
-                                   matTooltipPosition="after"
-                                   placeholder="Périodes"
-
-                    ></app-thesaurus>
-
-                    <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
-                                   [(model)]="model.tags"
-                                   [allowFreeText]="false"
-                                   [hierarchicSelectorConfig]="tagHierarchicConfig"
-                                   [multiple]="true"
-                                   [previewComponent]="TagComponent"
-                                   [readonly]="!isEdit()"
-                                   [service]="tagService"
-                                   matTooltipPosition="after"
-                                   placeholder="Mots clés"
-                    ></app-thesaurus>
-
-                    <app-thesaurus *ngIf="isEdit() || !!model.documentType"
-                                   [(model)]="model.documentType"
-                                   [allowFreeText]="false"
-                                   [multiple]="false"
-                                   [previewComponent]="DocumentTypeComponent"
-                                   [readonly]="!isEdit()"
-                                   [service]="documentTypeService"
-                                   matTooltipPosition="after"
-                                   placeholder="Type de document"
-                    ></app-thesaurus>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.domain"
                                    [(model)]="model.domain"
@@ -229,42 +229,83 @@
                                    placeholder="Domaine"
                     ></app-thesaurus>
 
+                    <app-thesaurus *ngIf="isEdit() || !!model.periods?.length"
+                                   [(model)]="model.periods"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="periodHierarchicConfig"
+                                   [multiple]="true"
+                                   [previewComponent]="PeriodComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="periodService"
+                                   matTooltipPosition="after"
+                                   placeholder="Périodes"
+                    ></app-thesaurus>
+
+                    <div fxLayout="row" fxLayoutGap="20px">
+                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
+                            <mat-label>A partir de</mat-label>
+                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput />
+                        </mat-form-field>
+
+                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
+                            <mat-label>Jusqu'à</mat-label>
+                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput />
+                        </mat-form-field>
+                    </div>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.materials?.length"
+                                   [(model)]="model.materials"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="materialHierarchicConfig"
+                                   [multiple]="true"
+                                   [previewComponent]="MaterialComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="materialService"
+                                   matTooltipPosition="after"
+                                   placeholder="Matériaux"
+                    ></app-thesaurus>
+
+                    <mat-form-field *ngIf="isEdit() || !!model.productionPlace">
+                        <mat-label>Lieu de production</mat-label>
+                        <input [(ngModel)]="model.productionPlace" [readonly]="!isEdit()" matInput />
+                    </mat-form-field>
+
+                    <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
+                                   [(model)]="model.tags"
+                                   [allowFreeText]="false"
+                                   [hierarchicSelectorConfig]="tagHierarchicConfig"
+                                   [multiple]="true"
+                                   [previewComponent]="TagComponent"
+                                   [readonly]="!isEdit()"
+                                   [service]="tagService"
+                                   matTooltipPosition="after"
+                                   placeholder="Mots clés"
+                    ></app-thesaurus>
+
+                    <mat-form-field *ngIf="isEdit() || !!model.objectReference">
+                        <mat-label>Référence de l'objet</mat-label>
+                        <input [(ngModel)]="model.objectReference" [readonly]="!isEdit()" matInput />
+                    </mat-form-field>
+
                 </ng-container>
 
-                <mat-form-field *ngIf="isEdit() || !!model.addition"
-                                [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
-                                class="innerSpacing"
-                                matTooltipPosition="after"
-                >
-                    <textarea [(ngModel)]="model.addition"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Supplément"
-                    ></textarea>
-                </mat-form-field>
-
-                <mat-form-field *ngIf="isEdit() || !!model.dating"
-                                [matTooltip]="!isEdit() ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'"
-                                class="innerSpacing"
-                                matTooltipPosition="after"
-                >
-                    <textarea [(ngModel)]="model.dating"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Datation"
-                    ></textarea>
-                </mat-form-field>
-
-                <div *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor" class="margin-v">
-                    <mat-divider></mat-divider>
-                    <div class=" margin-top mat-document">Référence du document / Technique</div>
+                <div *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor"
+                     class="mat-title innerSpacing"
+                >Référence du document / Technique
                 </div>
 
-                <mat-form-field *ngIf="isEdit() || !!model.technique"
+                <app-thesaurus *ngIf="(isEdit() || !!model.documentType) && site === Site.tiresias"
+                               [(model)]="model.documentType"
+                               [allowFreeText]="false"
+                               [multiple]="false"
+                               [previewComponent]="DocumentTypeComponent"
+                               [readonly]="!isEdit()"
+                               [service]="documentTypeService"
+                               matTooltipPosition="after"
+                               placeholder="Type de document"
+                ></app-thesaurus>
+
+                <mat-form-field *ngIf="(isEdit() || !!model.technique) && site === Site.dilps"
                                 [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
                                 class="innerSpacing"
                                 matTooltipPosition="after"
@@ -298,25 +339,7 @@
                     ></textarea>
                 </mat-form-field>
 
-                <mat-divider *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor"
-                             class="margin-bottom"
-                ></mat-divider>
-
-                <mat-form-field *ngIf="isEdit() || !!model.material"
-                                [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-                                class="innerSpacing"
-                                matTooltipPosition="after"
-                >
-                    <textarea [(ngModel)]="model.material"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Matériel"
-                    ></textarea>
-                </mat-form-field>
-
-                <mat-form-field *ngIf="isEdit() || !!model.format"
+                <mat-form-field *ngIf="(isEdit() || !!model.format) && site === Site.dilps"
                                 [matTooltip]="!isEdit() ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
                                 class="innerSpacing"
                                 matTooltipPosition="after"
@@ -354,6 +377,11 @@
                     <app-address [(model)]="model" [readonly]="!isEdit()" [vertical]="true"></app-address>
                 </div>
 
+                <div *ngIf="isEdit() || (!!model.literature && model.literature != model.name) || !!model.page || !!model.figure || !!model.table|| !!model.isbn"
+                     class="mat-title innerSpacing"
+                >Référence de l'image
+                </div>
+
                 <!-- Literature / source -->
                 <div *ngIf="isEdit() || !!model.literature && model.literature != model.name" class="margin-v">
                     <div class="richTextPreview">
@@ -371,20 +399,22 @@
                     <input [(ngModel)]="model.page" [readonly]="!isEdit()" matInput placeholder="Page">
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.figure" class="innerSpacing">
-                    <input [(ngModel)]="model.figure" [readonly]="!isEdit()" matInput placeholder="Figure">
-                </mat-form-field>
+                <ng-container *ngIf="site === Site.dilps">
+                    <mat-form-field *ngIf="isEdit() || !!model.figure" class="innerSpacing">
+                        <input [(ngModel)]="model.figure" [readonly]="!isEdit()" matInput placeholder="Figure">
+                    </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.table" class="innerSpacing">
-                    <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput placeholder="Planche">
-                </mat-form-field>
+                    <mat-form-field *ngIf="isEdit() || !!model.table" class="innerSpacing">
+                        <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput placeholder="Planche">
+                    </mat-form-field>
+                </ng-container>
 
                 <mat-form-field *ngIf="isEdit() || !!model.isbn"
                                 [matTooltip]="!isEdit() ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
                                 class="innerSpacing"
                                 matTooltipPosition="after"
                 >
-                    <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput placeholder="ISBN">
+                    <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput placeholder="ISBN / ISSN">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.rights" class="innerSpacing">
