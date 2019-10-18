@@ -1,23 +1,19 @@
 <div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
-        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput name="street" placeholder="Rue">
+        <mat-label>Rue</mat-label>
+        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput>
     </mat-form-field>
 
     <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column': 'row'">
         <mat-form-field *ngIf="!readonly || !!model?.postcode">
-            <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput name="postcode" placeholder="NPA">
+            <mat-label>NPA</mat-label>
+            <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput>
         </mat-form-field>
         <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
-            <input (keyup.enter)="search()"
-                   [(ngModel)]="model.locality"
-                   [readonly]="readonly"
-                   matInput
-                   name="locality"
-                   placeholder="Localité"
-            >
+            <mat-label>Localité</mat-label>
+            <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput>
         </mat-form-field>
 
-        <!-- Todo : fix search on country -->
         <natural-select (keyup.enter)="search()"
                         *ngIf="countries && (!readonly || !!model?.postcode)"
                         [(ngModel)]="model.country"
@@ -31,16 +27,8 @@
 
 <div id="mapZone">
     <mat-form-field [fxShow]="!readonly" class="mat-elevation-z4" floatLabel="never" id="search">
-        <input #input
-               [formControl]="formCtrl"
-               autocapitalize="off"
-               autocorrect="off"
-               class="form-control"
-               matInput
-               placeholder="Chercher"
-               spellcheck="off"
-               type="text"
-        >
+        <mat-label>Chercher</mat-label>
+        <input #input [formControl]="formCtrl" autocapitalize="off" autocorrect="off" class="form-control" matInput spellcheck="off">
     </mat-form-field>
 
     <!-- Map -->
@@ -64,10 +52,6 @@
 
 </div>
 
-<!-- Todo : allow to nullify -->
-<!-- Todo : test this component suggestion system, that is new in project -->
-<natural-select-enum *ngIf="!readonly || !!model?.precision"
-                     [(ngModel)]="model.precision"
-                     enumName="Precision"
-                     placeholder="Précision"
+<!-- Todo : allow to nullify --><!-- Todo : test this component suggestion system, that is new in project -->
+<natural-select-enum *ngIf="!readonly || !!model?.precision" [(ngModel)]="model.precision" enumName="Precision" placeholder="Précision"
 ></natural-select-enum>

@@ -4,39 +4,27 @@
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
 
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.name"
-                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
-                           matInput
-                           name="name"
-                           placeholder="Nom"
-                           type="text"
-                    >
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
                 </mat-form-field>
 
                 <mat-form-field>
+                    <mat-label>Description</mat-label>
                     <input [(ngModel)]="data.item.description"
                            [readonly]="data?.item?.permissions && !data.item.permissions.update"
                            matInput
-                           name="description"
-                           placeholder="Description"
-                           type="text"
                     >
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.url"
-                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
-                           matInput
-                           name="url"
-                           placeholder="lien"
-                           type="text"
-                    >
+                    <mat-label>Lien</mat-label>
+                    <input [(ngModel)]="data.item.url" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
                 </mat-form-field>
 
                 <input (change)="upload($event.target.files[0])"
                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
                        name="Image"
-                       placeholder="lien"
+                       placeholder="Lien"
                        type="file"
                 >
 

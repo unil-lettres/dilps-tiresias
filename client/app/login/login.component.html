@@ -26,13 +26,12 @@
                 <form>
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
+                            <mat-label>Login</mat-label>
                             <input (focus)="snackBar.dismiss()"
                                    [(ngModel)]="loginForm.login"
                                    [disabled]="loading"
                                    autofocus
                                    matInput
-                                   name="login"
-                                   placeholder="login"
                                    required="required"
                             >
                         </mat-form-field>
@@ -40,13 +39,12 @@
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
+                            <mat-label>Password</mat-label>
                             <input (focus)="snackBar.dismiss()"
                                    [(ngModel)]="loginForm.password"
                                    [disabled]="loading"
                                    color="warn"
                                    matInput
-                                   name="password"
-                                   placeholder="password"
                                    required="required"
                                    type="password"
                             >

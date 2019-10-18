@@ -18,11 +18,13 @@
     <mat-tab label="Nouvelle collection">
         <div class="padding" fxLayout="column">
             <mat-form-field>
-                <input [(ngModel)]="newCollection.name" matInput placeholder="Nom">
+                <mat-label>Nom</mat-label>
+                <input [(ngModel)]="newCollection.name" matInput>
             </mat-form-field>
 
             <mat-form-field>
-                <textarea [(ngModel)]="newCollection.description" matInput placeholder="Description"></textarea>
+                <mat-label>Description</mat-label>
+                <textarea [(ngModel)]="newCollection.description" matInput></textarea>
             </mat-form-field>
 
             <natural-select *ngIf="listFilter"

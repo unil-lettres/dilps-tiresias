@@ -122,13 +122,8 @@
                                 class="innerSpacing"
                                 matTooltipPosition="after"
                 >
-                    <textarea [(ngModel)]="model.name"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Titre"
-                    ></textarea>
+                    <mat-label>Titre</mat-label>
+                    <input [(ngModel)]="model.name" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <div *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name" class="margin-bottom">
@@ -175,13 +170,8 @@
                                     class="innerSpacing"
                                     matTooltipPosition="after"
                     >
-                    <textarea [(ngModel)]="model.addition"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Supplément"
-                    ></textarea>
+                        <mat-label>Supplément</mat-label>
+                        <input [(ngModel)]="model.addition" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                     <mat-form-field *ngIf="(isEdit() || !!model.dating) "
@@ -189,13 +179,8 @@
                                     class="innerSpacing"
                                     matTooltipPosition="after"
                     >
-                    <textarea [(ngModel)]="model.dating"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Datation"
-                    ></textarea>
+                        <mat-label>Datation</mat-label>
+                        <input [(ngModel)]="model.dating" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                     <mat-form-field *ngIf="isEdit() || !!model.material"
@@ -203,13 +188,8 @@
                                     class="innerSpacing"
                                     matTooltipPosition="after"
                     >
-                    <textarea [(ngModel)]="model.material"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Matériel"
-                    ></textarea>
+                        <mat-label>Matériel</mat-label>
+                        <input [(ngModel)]="model.material" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                 </ng-container>
@@ -244,12 +224,12 @@
                     <div fxLayout="row" fxLayoutGap="20px">
                         <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
                             <mat-label>A partir de</mat-label>
-                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput />
+                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput>
                         </mat-form-field>
 
                         <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
                             <mat-label>Jusqu'à</mat-label>
-                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput />
+                            <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput>
                         </mat-form-field>
                     </div>
 
@@ -267,7 +247,7 @@
 
                     <mat-form-field *ngIf="isEdit() || !!model.productionPlace">
                         <mat-label>Lieu de production</mat-label>
-                        <input [(ngModel)]="model.productionPlace" [readonly]="!isEdit()" matInput />
+                        <input [(ngModel)]="model.productionPlace" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                     <app-thesaurus *ngIf="isEdit() || !!model.tags?.length"
@@ -284,7 +264,7 @@
 
                     <mat-form-field *ngIf="isEdit() || !!model.objectReference">
                         <mat-label>Référence de l'objet</mat-label>
-                        <input [(ngModel)]="model.objectReference" [readonly]="!isEdit()" matInput />
+                        <input [(ngModel)]="model.objectReference" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                 </ng-container>
@@ -310,33 +290,18 @@
                                 class="innerSpacing"
                                 matTooltipPosition="after"
                 >
-                    <textarea [(ngModel)]="model.technique"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Technique"
-                    ></textarea>
+                    <mat-label>Technique</mat-label>
+                    <input [(ngModel)]="model.technique" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.techniqueDate" class="innerSpacing">
-                    <textarea [(ngModel)]="model.techniqueDate"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Date"
-                    ></textarea>
+                    <mat-label>Date</mat-label>
+                    <input [(ngModel)]="model.techniqueDate" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
-                    <textarea [(ngModel)]="model.techniqueAuthor"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Auteur technique"
-                    ></textarea>
+                    <mat-label>Auteur technique</mat-label>
+                    <input [(ngModel)]="model.techniqueAuthor" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="(isEdit() || !!model.format) && site === Site.dilps"
@@ -344,13 +309,8 @@
                                 class="innerSpacing"
                                 matTooltipPosition="after"
                 >
-                    <textarea [(ngModel)]="model.format"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Dimensions"
-                    ></textarea>
+                    <mat-label>Dimensions</mat-label>
+                    <input [(ngModel)]="model.format" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <div *ngIf="isEdit() || !!institution" class="mat-title innerSpacing">Lieu</div>
@@ -396,16 +356,19 @@
                 </div>
 
                 <mat-form-field *ngIf="isEdit() || !!model.page" class="innerSpacing">
-                    <input [(ngModel)]="model.page" [readonly]="!isEdit()" matInput placeholder="Page">
+                    <mat-label>Page</mat-label>
+                    <input [(ngModel)]="model.page" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <ng-container *ngIf="site === Site.dilps">
                     <mat-form-field *ngIf="isEdit() || !!model.figure" class="innerSpacing">
-                        <input [(ngModel)]="model.figure" [readonly]="!isEdit()" matInput placeholder="Figure">
+                        <mat-label>Figure</mat-label>
+                        <input [(ngModel)]="model.figure" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
                     <mat-form-field *ngIf="isEdit() || !!model.table" class="innerSpacing">
-                        <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput placeholder="Planche">
+                        <mat-label>Planche</mat-label>
+                        <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
                 </ng-container>
 
@@ -414,17 +377,13 @@
                                 class="innerSpacing"
                                 matTooltipPosition="after"
                 >
-                    <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput placeholder="ISBN / ISSN">
+                    <mat-label>ISBN / ISSN</mat-label>
+                    <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="isEdit() || !!model.rights" class="innerSpacing">
-                    <textarea [(ngModel)]="model.rights"
-                              [readonly]="!isEdit()"
-                              matAutosizeMinRows="1"
-                              matInput
-                              matTextareaAutosize
-                              placeholder="Droits d'auteur"
-                    ></textarea>
+                    <mat-label>Droits d'auteur</mat-label>
+                    <input [(ngModel)]="model.rights" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->

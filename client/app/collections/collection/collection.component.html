@@ -15,11 +15,13 @@
                 </div>
 
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.name" matInput placeholder="Nom">
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" matInput>
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.description" matInput placeholder="Description">
+                    <mat-label>Description</mat-label>
+                    <input [(ngModel)]="data.item.description" matInput>
                 </mat-form-field>
 
                 <app-thesaurus (modelChange)="data.item.institution = $event"

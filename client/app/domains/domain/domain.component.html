@@ -3,13 +3,8 @@
         <mat-tab label="Domaine">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.name"
-                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
-                           matInput
-                           name="name"
-                           placeholder="Nom"
-                           type="text"
-                    >
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
                 </mat-form-field>
 
                 <natural-select (selectionChange)="data.item.parent = $event"

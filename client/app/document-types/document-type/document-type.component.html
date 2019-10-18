@@ -3,13 +3,8 @@
         <mat-tab label="DocumentTypee">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
-                    <input [(ngModel)]="data.item.name"
-                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
-                           matInput
-                           name="name"
-                           placeholder="Nom"
-                           type="text"
-                    >
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
                 </mat-form-field>
             </div>
         </mat-tab>
