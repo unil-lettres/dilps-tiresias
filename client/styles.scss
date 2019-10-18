@@ -39,6 +39,10 @@ pre.debug {
     display: none !important;
 }
 
+.tox-tinymce-inline.tox-toolbar-dock-transition {
+    z-index: 999;
+}
+
 [debug] {
     border: 2px solid red;
 }

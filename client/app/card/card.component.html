@@ -126,14 +126,11 @@
                     <input [(ngModel)]="model.name" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
-                <div *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name" class="margin-bottom">
-                    <div class="richTextPreview">
-                        <div class="mat-body-2">Titre étendu</div>
-                        <div *ngIf="!isEdit() && !!model.expandedName && model.expandedName != model.name" [innerHTML]="model.expandedName"
-                        ></div>
-                    </div>
-                    <editor *ngIf="isEdit()"
+                <div *ngIf="isEdit() || !!model.expandedName && model.expandedName != model.name" class="margin-bottom rich-text">
+                    <div class="mat-body-2">Titre étendu</div>
+                    <editor *ngIf="isEdit() || !!model.expandedName"
                             [(ngModel)]="model.expandedName"
+                            [disabled]="!isEdit()"
                             [init]="tinyInit"
                             [matTooltip]="!isEdit() ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
                     ></editor>
@@ -343,13 +340,11 @@
                 </div>
 
                 <!-- Literature / source -->
-                <div *ngIf="isEdit() || !!model.literature && model.literature != model.name" class="margin-v">
-                    <div class="richTextPreview">
-                        <div class="mat-body-2">Source</div>
-                        <div *ngIf="!isEdit() && !!model.literature && model.literature != model.name" [innerHTML]="model.literature"></div>
-                    </div>
-                    <editor *ngIf="isEdit()"
+                  <div *ngIf="isEdit() || !!model.literature" class="margin-v rich-text">
+                    <div class="mat-body-2">Source</div>
+                    <editor *ngIf="isEdit() || !!model.literature"
                             [(ngModel)]="model.literature"
+                            [disabled]="!isEdit()"
                             [init]="tinyInit"
                             [matTooltip]="!isEdit() ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
                     ></editor>

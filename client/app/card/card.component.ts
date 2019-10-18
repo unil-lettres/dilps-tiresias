@@ -119,34 +119,51 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * Currently logged user
      */
     public user;
+
     /**
      * Tiny MCE settings
      */
     public tinyInit = {
+
         height: 100,
         menubar: false,
+        inline: true,
+
+        // Force a single root <p> wrap and <br> inside
+        // This prevent multiple <p> for each enter
+        forced_root_block: false,
+        force_br_newlines: true,
+        force_p_newlines: false,
+
         toolbar: 'bold italic underline | removeformat',
+
+        // to add header :
         // toolbar: 'formatselect bold italic underline | removeformat',
         // block_formats: 'Paragraph=p; Header 1=h1;'
     };
+
     /**
      * Cache institution data from server
      * this.model is here considered as CardInput and should receive string, not object
      */
     public institution;
+
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
     public artists;
+
     /**
      * Template exposed variable
      */
     public InstitutionComponent = InstitutionComponent;
+
     /**
      * Template exposed variable
      */
     public ArtistComponent = ArtistComponent;
+
     /**
      * Template exposed variable
      */
@@ -155,42 +172,52 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * Template exposed variable
      */
     public PeriodComponent = PeriodComponent;
+
     /**
      * Template exposed variable
      */
     public TagComponent = TagComponent;
+
     /**
      * Template exposed variable
      */
     public DocumentTypeComponent = DocumentTypeComponent;
+
     /**
      * Template exposed variable
      */
     public DomainComponent = DomainComponent;
+
     /**
      * Template exposed variable
      */
     public domainHierarchicConfig = domainHierarchicConfig;
+
     /**
      * Template exposed variable
      */
     public tagHierarchicConfig = tagHierarchicConfig;
+
     /**
      * Template exposed variable
      */
     public periodHierarchicConfig = periodHierarchicConfig;
+
     /**
      * Template exposed variable
      */
     public materialHierarchicConfig = materialHierarchicConfig;
+
     /**
      * Template exposed variable
      */
     public Site = Site;
+
     /**
      * Edition mode if true
      */
     private edit = false;
+
     /**
      * Cache for upload subscription
      * Usefull for (de)activation toggle
