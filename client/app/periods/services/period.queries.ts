@@ -7,6 +7,8 @@ export const periodsQuery = gql`
             items {
                 id
                 name
+                from
+                to
             }
             pageSize
             pageIndex
@@ -19,6 +21,8 @@ export const periodQuery = gql`
         period(id: $id) {
             id
             name
+            from
+            to
             parentHierarchy {
                 id
                 name

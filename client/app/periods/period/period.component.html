@@ -12,6 +12,19 @@
                     >
                 </mat-form-field>
 
+                <div fxLayout="row" fxLayoutGap="20px">
+                    <mat-form-field [style.width]="'45%'">
+                        <mat-label>A partir de</mat-label>
+                        <input [(ngModel)]="data.item.from" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field [style.width]="'45%'">
+                        <mat-label>Jusqu'à</mat-label>
+                        <input [(ngModel)]="data.item.to" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput />
+                    </mat-form-field>
+                </div>
+
                 <natural-select (selectionChange)="data.item.parent = $event"
                                 [hierarchicSelectorConfig]="hierarchicConfig"
                                 [showIcon]="false"

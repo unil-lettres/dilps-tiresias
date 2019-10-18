@@ -46,6 +46,18 @@
                 </td>
             </ng-container>
 
+            <!-- From Column -->
+            <ng-container matColumnDef="from">
+                <th *matHeaderCellDef mat-header-cell>A partir de</th>
+                <td *matCellDef="let element" mat-cell>{{ element.from }}</td>
+            </ng-container>
+
+            <!-- To Column -->
+            <ng-container matColumnDef="to">
+                <th *matHeaderCellDef mat-header-cell>Jusqu'à</th>
+                <td *matCellDef="let element" mat-cell>{{ element.to }}</td>
+            </ng-container>
+
         </table>
     </div>
 

@@ -47,6 +47,8 @@ export class PeriodService
         return {
             name: '',
             parent: null,
+            from: null,
+            to: null,
         };
     }
 
