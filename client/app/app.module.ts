@@ -91,6 +91,7 @@ import { AddressComponent } from './shared/components/address/address.component'
 import { AlertService } from './shared/components/alert/alert.service';
 import { ConfirmComponent } from './shared/components/alert/confirm.component';
 import { BootLoaderComponent } from './shared/components/boot-loader/boot-loader.component';
+import { CardSelectorComponent } from './shared/components/card-selector/card-selector.component';
 import { CollectionSelectorComponent } from './shared/components/collection-selector/collection-selector.component';
 import { DialogFooterComponent } from './shared/components/dialog-footer/dialog-footer.component';
 import { DownloadComponent } from './shared/components/download/download.component';
@@ -181,6 +182,7 @@ const icons: NaturalIconsConfig = {
         TagsComponent,
         MaterialComponent,
         MaterialsComponent,
+        CardSelectorComponent
     ],
     entryComponents: [
         ConfirmComponent,
@@ -199,6 +201,7 @@ const icons: NaturalIconsConfig = {
         PeriodComponent,
         TagComponent,
         MaterialComponent,
+        CardSelectorComponent
     ],
     imports: [
         BrowserModule,

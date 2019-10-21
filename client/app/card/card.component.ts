@@ -17,6 +17,7 @@ import { MaterialService } from '../materials/services/material.service';
 import { PeriodComponent } from '../periods/period/period.component';
 import { PeriodService } from '../periods/services/period.service';
 import { AlertService } from '../shared/components/alert/alert.service';
+import { CardSelectorComponent } from '../shared/components/card-selector/card-selector.component';
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { CardVisibility, Site, UserRole } from '../shared/generated-types';
@@ -269,7 +270,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
                     const card = this.route.snapshot.data['card'];
-                    this.institution = card.institution;
                     this.model = merge({}, card);
                     this.initCard();
                 } else if (!params.cardId && this.model && this.model.id) {
@@ -289,6 +289,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.unwatchUpload();
     }
 
+    /**
+     * Todo : drop function, no added value
+     */
     public isEdit() {
         return this.edit;
     }
@@ -414,6 +417,26 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             data: {
                 images: [this.model],
             },
+        });
+    }
+
+    public copy() {
+        this.router.navigate(['/card/new', {cardId: this.model.id}]);
+    }
+
+    public complete() {
+
+        this.dialog.open(CardSelectorComponent, {
+            width: '400px',
+            position: {
+                top: '74px',
+                left: '74px',
+            },
+        }).afterClosed().subscribe(selection => {
+            if (selection) {
+                this.model = Object.assign(selection, {id: this.model.id, visibility: this.model.visibility});
+                this.initCard();
+            }
         });
     }
 

@@ -83,6 +83,10 @@
                     <mat-icon>spellcheck</mat-icon>
                 </button>
 
+                <button *ngIf="isEdit()" (click)="complete()" mat-icon-button matTooltip="Importer les données d'autre fiche">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+
                 <button (click)="download(model)" mat-icon-button matTooltip="Télécharger">
                     <mat-icon>file_download</mat-icon>
                 </button>
