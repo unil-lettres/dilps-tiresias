@@ -289,13 +289,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.unwatchUpload();
     }
 
-    /**
-     * Todo : drop function, no added value
-     */
-    public isEdit() {
-        return this.edit;
-    }
-
     public toggleEdit() {
         this.edit = !this.edit;
         this.updateUploadWatching();
