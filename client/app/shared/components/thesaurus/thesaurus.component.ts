@@ -176,6 +176,8 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
 
     public openDialog(): void {
 
+        // todo : test on firefox, watch app-select (or relations) for details about lockOpenDialog on firefox
+
         // if (this.lockOpenDialog) {
         //     return;
         // }
