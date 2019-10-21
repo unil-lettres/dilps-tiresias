@@ -105,7 +105,7 @@
         <perfect-scrollbar fxFlex>
             <div class="padding scrolled" fxLayout="column" fxLayoutAlign="start stretch">
 
-                <div *ngIf="user?.role === 'administrator'" class="innerSpacing" fxLayout="column">
+                <div *ngIf="user?.role === 'administrator'" fxLayout="column">
                     <div fxLayout="row">{{ visibilities[visibility] ? 'Visible ' + visibilities[visibility].text : 'Visibilité inchangée' }}
                     </div>
                     <mat-slider (input)="updateVisibility($event);visibility = $event.value"
@@ -119,7 +119,7 @@
 
                 <mat-form-field *ngIf="isEdit() || !!model.name"
                                 [matTooltip]="!isEdit() ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
-                                class="innerSpacing"
+
                                 matTooltipPosition="after"
                 >
                     <mat-label>Titre</mat-label>
@@ -164,16 +164,16 @@
 
                     <mat-form-field *ngIf="isEdit() || !!model.addition"
                                     [matTooltip]="!isEdit() ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
-                                    class="innerSpacing"
+
                                     matTooltipPosition="after"
                     >
                         <mat-label>Supplément</mat-label>
                         <input [(ngModel)]="model.addition" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="(isEdit() || !!model.dating) "
+                    <mat-form-field *ngIf="(isEdit() || !!model.dating)"
                                     [matTooltip]="!isEdit() ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'"
-                                    class="innerSpacing"
+
                                     matTooltipPosition="after"
                     >
                         <mat-label>Datation</mat-label>
@@ -182,7 +182,7 @@
 
                     <mat-form-field *ngIf="isEdit() || !!model.material"
                                     [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-                                    class="innerSpacing"
+
                                     matTooltipPosition="after"
                     >
                         <mat-label>Matériel</mat-label>
@@ -219,12 +219,12 @@
                     ></app-thesaurus>
 
                     <div fxLayout="row" fxLayoutGap="20px">
-                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
+                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'">
                             <mat-label>A partir de</mat-label>
                             <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput>
                         </mat-form-field>
 
-                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'" class="innerSpacing">
+                        <mat-form-field *ngIf="isEdit() || !!model.from" [style.width]="'45%'">
                             <mat-label>Jusqu'à</mat-label>
                             <input [(ngModel)]="model.from" [readonly]="!isEdit()" matInput>
                         </mat-form-field>
@@ -266,8 +266,7 @@
 
                 </ng-container>
 
-                <div *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor"
-                     class="mat-title innerSpacing"
+                <div *ngIf="isEdit() || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor" class="mat-title"
                 >Référence du document / Technique
                 </div>
 
@@ -284,33 +283,33 @@
 
                 <mat-form-field *ngIf="(isEdit() || !!model.technique) && site === Site.dilps"
                                 [matTooltip]="!isEdit() ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-                                class="innerSpacing"
+
                                 matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
                     <input [(ngModel)]="model.technique" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.techniqueDate" class="innerSpacing">
+                <mat-form-field *ngIf="isEdit() || !!model.techniqueDate">
                     <mat-label>Date</mat-label>
                     <input [(ngModel)]="model.techniqueDate" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor" class="innerSpacing">
+                <mat-form-field *ngIf="isEdit() || !!model.techniqueAuthor">
                     <mat-label>Auteur technique</mat-label>
                     <input [(ngModel)]="model.techniqueAuthor" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <mat-form-field *ngIf="(isEdit() || !!model.format) && site === Site.dilps"
                                 [matTooltip]="!isEdit() ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
-                                class="innerSpacing"
+
                                 matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
                     <input [(ngModel)]="model.format" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
-                <div *ngIf="isEdit() || !!institution" class="mat-title innerSpacing">Lieu</div>
+                <div *ngIf="isEdit() || !!institution" class="mat-title">Lieu</div>
 
                 <app-thesaurus (modelChange)="model.institution = $event"
                                *ngIf="isEdit() || !!institution"
@@ -330,17 +329,17 @@
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || isEdit()">
-                    <div class="mat-title innerSpacing">Adresse de l'oeuvre</div>
+                    <div class="mat-title">Adresse de l'oeuvre</div>
                     <app-address [(model)]="model" [readonly]="!isEdit()" [vertical]="true"></app-address>
                 </div>
 
                 <div *ngIf="isEdit() || (!!model.literature && model.literature != model.name) || !!model.page || !!model.figure || !!model.table|| !!model.isbn"
-                     class="mat-title innerSpacing"
+                     class="mat-title"
                 >Référence de l'image
                 </div>
 
                 <!-- Literature / source -->
-                  <div *ngIf="isEdit() || !!model.literature" class="margin-v rich-text">
+                <div *ngIf="isEdit() || !!model.literature" class="margin-v rich-text">
                     <div class="mat-body-2">Source</div>
                     <editor *ngIf="isEdit() || !!model.literature"
                             [(ngModel)]="model.literature"
@@ -350,18 +349,18 @@
                     ></editor>
                 </div>
 
-                <mat-form-field *ngIf="isEdit() || !!model.page" class="innerSpacing">
+                <mat-form-field *ngIf="isEdit() || !!model.page">
                     <mat-label>Page</mat-label>
                     <input [(ngModel)]="model.page" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
                 <ng-container *ngIf="site === Site.dilps">
-                    <mat-form-field *ngIf="isEdit() || !!model.figure" class="innerSpacing">
+                    <mat-form-field *ngIf="isEdit() || !!model.figure">
                         <mat-label>Figure</mat-label>
                         <input [(ngModel)]="model.figure" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="isEdit() || !!model.table" class="innerSpacing">
+                    <mat-form-field *ngIf="isEdit() || !!model.table">
                         <mat-label>Planche</mat-label>
                         <input [(ngModel)]="model.table" [readonly]="!isEdit()" matInput>
                     </mat-form-field>
@@ -369,14 +368,14 @@
 
                 <mat-form-field *ngIf="isEdit() || !!model.isbn"
                                 [matTooltip]="!isEdit() ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
-                                class="innerSpacing"
+
                                 matTooltipPosition="after"
                 >
                     <mat-label>ISBN / ISSN</mat-label>
                     <input [(ngModel)]="model.isbn" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isEdit() || !!model.rights" class="innerSpacing">
+                <mat-form-field *ngIf="isEdit() || !!model.rights">
                     <mat-label>Droits d'auteur</mat-label>
                     <input [(ngModel)]="model.rights" [readonly]="!isEdit()" matInput>
                 </mat-form-field>
@@ -384,9 +383,9 @@
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id">
                     <br />
-                    <div class="mat-title innerSpacing">Fiches additionnelles</div>
+                    <div class="mat-title">Fiches additionnelles</div>
 
-                    <div class="innerSpacing">
+                    <div>
                         <natural-relations [disabled]="!isEdit()"
                                            [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
                                            [main]="model"
