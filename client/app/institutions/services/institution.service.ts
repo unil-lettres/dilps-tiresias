@@ -42,7 +42,7 @@ export class InstitutionService
             site);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

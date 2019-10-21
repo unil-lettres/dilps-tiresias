@@ -39,7 +39,7 @@ export class ArtistService
             deleteArtists);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

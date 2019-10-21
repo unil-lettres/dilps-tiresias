@@ -43,7 +43,7 @@ export class UserService extends AbstractContextualizedService<User['user'],
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

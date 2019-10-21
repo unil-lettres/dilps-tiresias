@@ -39,7 +39,7 @@ export class DomainService
             deleteDomains);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

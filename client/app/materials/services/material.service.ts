@@ -39,7 +39,7 @@ export class MaterialService
             deleteMaterials);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

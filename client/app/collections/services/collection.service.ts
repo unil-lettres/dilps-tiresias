@@ -54,7 +54,7 @@ export class CollectionService
             site);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 

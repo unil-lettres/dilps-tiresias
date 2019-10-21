@@ -75,7 +75,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
         return merge({}, card, fields);
     }
 
-    public getConsolidatedForClient() {
+    public getDefaultForClient() {
         return this.getDefaultForServer();
     }
 
