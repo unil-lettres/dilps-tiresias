@@ -6,7 +6,7 @@ import { forkJoin } from 'rxjs';
 import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
-import { Site } from '../shared/generated-types';
+import { CardInput, Site } from '../shared/generated-types';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         for (const file of files) {
             const card = this.cardService.getConsolidatedForClient();
             card.file = file;
-            observables.push(this.cardService.create(card));
+            observables.push(this.cardService.create(card as CardInput));
         }
         files.length = 0;
         forkJoin(observables).subscribe(() => {
