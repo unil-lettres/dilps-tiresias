@@ -7,7 +7,6 @@ namespace Application\Service;
 use Application\DBAL\Types\SiteType;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Container\ServerRequestFactoryFactory;
 
 class SiteFactory
 {
@@ -16,14 +15,14 @@ class SiteFactory
      *
      * @param ContainerInterface $container
      *
-     * @return ImageService
+     * @return string
      */
     public function __invoke(ContainerInterface $container): string
     {
-        /** @var ServerRequestFactoryFactory $imagine */
-        $imagine = $container->get(ServerRequestInterface::class);
+        /** @var callable $requestFactory */
+        $requestFactory = $container->get(ServerRequestInterface::class);
         /** @var ServerRequestInterface $request */
-        $request = $imagine();
+        $request = $requestFactory();
 
         $serverName = $request->getServerParams()['SERVER_NAME'] ?? 'dilps.lan';
 
