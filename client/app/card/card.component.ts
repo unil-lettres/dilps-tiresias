@@ -137,10 +137,21 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         force_p_newlines: false,
 
         toolbar: 'bold italic underline | removeformat',
+    };
 
-        // to add header :
-        // toolbar: 'formatselect bold italic underline | removeformat',
-        // block_formats: 'Paragraph=p; Header 1=h1;'
+    public tinyInitSingleLine = {
+        ...this.tinyInit,
+        setup: (editor: any) => {
+            editor.on('keydown',
+                (event: any) => {
+                    if (event.keyCode === 13) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        return false;
+                    }
+                    return true;
+                });
+        },
     };
 
     /**
@@ -465,9 +476,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-               && this.model.owner && this.model.owner.id === this.user.id
-               && this.model.creator && this.model.creator.id === this.user.id
-               && this.model.visibility === CardVisibility.private;
+            && this.model.owner && this.model.owner.id === this.user.id
+            && this.model.creator && this.model.creator.id === this.user.id
+            && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {

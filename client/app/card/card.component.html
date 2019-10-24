@@ -121,14 +121,15 @@
                     ></mat-slider>
                 </div>
 
-                <mat-form-field *ngIf="edit || !!model.name"
-                                [matTooltip]="!edit ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
-
-                                matTooltipPosition="after"
-                >
-                    <mat-label>Titre</mat-label>
-                    <input [(ngModel)]="model.name" [readonly]="!edit" matInput>
-                </mat-form-field>
+                <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
+                    <div class="mat-body-2">Titre</div>
+                    <editor *ngIf="edit || !!model.name"
+                            [(ngModel)]="model.name"
+                            [disabled]="!edit"
+                            [init]="tinyInitSingleLine"
+                            [matTooltip]="!edit ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                    ></editor>
+                </div>
 
                 <div *ngIf="edit || !!model.expandedName && model.expandedName != model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre étendu</div>

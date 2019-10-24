@@ -209,6 +209,8 @@ class PptxAction extends AbstractAction
             return;
         }
 
+        $value = strip_tags($value);
+
         if ($this->needSeparator) {
             $textRun = $shape->createTextRun(', ');
             $this->setFont($textRun, $big, false, false);
