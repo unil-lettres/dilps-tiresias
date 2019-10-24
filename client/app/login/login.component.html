@@ -16,12 +16,12 @@
 
                 <mat-grid-list cols="2" rowHeight="80px">
                     <mat-grid-tile>
-                        <a mat-raised-button href="https://{{ shibbolethEndpoint }}/Shibboleth.sso/Login?target=https%3A%2F%2F{{ shibbolethEndpoint }}%2Fauth&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
+                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
                             <img src="assets/images/logo-unil-bleu.svg" width="130" />
                         </a>
                     </mat-grid-tile>
                     <mat-grid-tile>
-                        <a mat-raised-button href="https://{{ shibbolethEndpoint }}/Shibboleth.sso/Login?target=https%3A%2F%2F{{ shibbolethEndpoint }}%2Fauth&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
+                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
                             <img src="assets/images/logo-unine.svg" width="90" />
                         </a>
                     </mat-grid-tile>

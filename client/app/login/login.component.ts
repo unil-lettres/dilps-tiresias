@@ -6,7 +6,6 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { TermsAgreementComponent } from './terms-agreement.component';
 import { merge } from 'lodash';
-import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public loading = false;
 
     public status = 'default';
-    public shibbolethEndpoint = environment.shibbolethEndpoint;
+    public baseUrl = window.location.origin;
 
     /**
      * Stores the received redirect URL until we need to use it (when login is successfull)
@@ -112,4 +111,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl(this.returnUrl || '/');
     }
 
+    /**
+     * Serializes and parses an URL to encode it.
+     */
+    public encodeUrl(url): string {
+        return encodeURIComponent(url);
+    }
 }
