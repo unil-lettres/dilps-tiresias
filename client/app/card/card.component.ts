@@ -101,12 +101,12 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public visibilities = {
         1: {
             value: CardVisibility.private,
-            text: 'par moi',
+            text: 'par moi et les responsables des collections',
             color: null,
         },
         2: {
             value: CardVisibility.member,
-            text: 'par les membres',
+            text: 'par tous les membres',
             color: 'accent',
         },
         3: {

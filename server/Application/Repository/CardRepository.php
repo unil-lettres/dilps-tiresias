@@ -57,6 +57,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card is public
      * - card is member and user is logged in
      * - card owner or creator is the user
+     * - card's collection responsible is the user
      *
      * @param null|User $user
      *
@@ -78,7 +79,11 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
         if ($user) {
             $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-            $qb->orWhere('card.owner_id = ' . $userId . ' OR card.creator_id = ' . $userId);
+            $qb->leftJoin('card', 'collection_card', 'collection_card', 'collection_card.card_id = card.id')
+                ->leftJoin('collection_card', 'collection_user', 'collection_user', 'collection_card.collection_id = collection_user.collection_id')
+                ->orWhere('card.owner_id = ' . $userId)
+                ->orWhere('card.creator_id = ' . $userId)
+                ->orWhere('collection_user.user_id = ' . $userId);
         }
 
         return $qb->getSQL();

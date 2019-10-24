@@ -65,7 +65,7 @@ class AclFilterTest extends TestCase
             'student can access cards that are his own or are public or member' => [
                 'student',
                 Card::class,
-                'test.id IN (SELECT card.id FROM card WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = \'1003\' OR card.creator_id = \'1003\'))',
+                'test.id IN (SELECT card.id FROM card LEFT JOIN collection_card collection_card ON collection_card.card_id = card.id LEFT JOIN collection_user collection_user ON collection_card.collection_id = collection_user.collection_id WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = \'1003\') OR (card.creator_id = \'1003\') OR (collection_user.user_id = \'1003\'))',
             ],
             'collections are invisible to anonymous' => [
                 null,
@@ -75,12 +75,12 @@ class AclFilterTest extends TestCase
             'student can access collections that are his own or are member' => [
                 'student',
                 Collection::class,
-                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\')) OR (cu.user_id = \'1003\') OR (collection.owner_id = \'1003\' OR collection.creator_id = \'1003\'))',
+                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\')) OR (collection.owner_id = \'1003\') OR (collection.creator_id = \'1003\') OR (cu.user_id = \'1003\'))',
             ],
             'administrator can access collections that are his own or are administrator or member' => [
                 'administrator',
                 Collection::class,
-                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\', \'administrator\')) OR (cu.user_id = \'1000\') OR (collection.owner_id = \'1000\' OR collection.creator_id = \'1000\'))',
+                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\', \'administrator\')) OR (collection.owner_id = \'1000\') OR (collection.creator_id = \'1000\') OR (cu.user_id = \'1000\'))',
             ],
             'changes are invisible to anonymous' => [
                 null,

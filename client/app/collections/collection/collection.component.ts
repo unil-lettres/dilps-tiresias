@@ -18,12 +18,12 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
     public visibilities = {
         1: {
             value: CollectionVisibility.private,
-            text: 'par moi',
+            text: 'par moi et les responsables',
             color: null,
         },
         2: {
             value: CollectionVisibility.administrator,
-            text: 'par moi et les admins',
+            text: 'par moi, les responsables et les admins',
             color: 'accent',
         },
         3: {

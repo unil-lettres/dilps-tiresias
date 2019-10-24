@@ -9,22 +9,25 @@ use Zend\Permissions\Acl\Assertion\AssertionInterface;
 use Zend\Permissions\Acl\Resource\ResourceInterface;
 use Zend\Permissions\Acl\Role\RoleInterface;
 
-class Visibility implements AssertionInterface
+class All implements AssertionInterface
 {
     /**
-     * @var string[]
+     * @var AssertionInterface[]
      */
-    private $allowedVisibilities;
+    private $asserts;
 
-    public function __construct(array $visibilities)
+    /**
+     * Check if all asserts are true
+     *
+     * @param AssertionInterface[] $asserts
+     */
+    public function __construct(AssertionInterface ...$asserts)
     {
-        $this->allowedVisibilities = $visibilities;
+        $this->asserts = $asserts;
     }
 
     /**
-     * Assert that the object is the given visibility,
-     * or belongs to the current user,
-     * or has been created by the current user.
+     * Assert that all given assert are correct (AND logic)
      *
      * @param Acl $acl
      * @param RoleInterface $role
@@ -35,8 +38,12 @@ class Visibility implements AssertionInterface
      */
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
-        $object = $resource->getInstance();
+        foreach ($this->asserts as $assert) {
+            if (!$assert->assert($acl, $role, $resource, $privilege)) {
+                return false;
+            }
+        }
 
-        return in_array($object->getVisibility(), $this->allowedVisibilities, true);
+        return true;
     }
 }

@@ -187,7 +187,7 @@ class CardTest extends TestCase
         $actual = $card->getPermissions();
         $expected = [
             'create' => false,
-            'read' => false,
+            'read' => true,
             'update' => false,
             'delete' => false,
         ];

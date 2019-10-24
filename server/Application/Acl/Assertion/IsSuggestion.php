@@ -24,8 +24,7 @@ class IsSuggestion implements AssertionInterface
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
         $object = $resource->getInstance();
-        $isOwner = new IsOwner();
 
-        return (bool) $object->getChange() && $isOwner->assert($acl, $role, $resource, $privilege);
+        return (bool) $object->getChange();
     }
 }

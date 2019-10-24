@@ -60,7 +60,7 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      *
      * - collection is member and user is logged in
      * - collection is admin and user is admin
-     * - collection owner or creator is the user
+     * - collection owner, creator or responsible is the user
      *
      * @param null|User $user
      *
@@ -86,9 +86,9 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
             ->from('collection')
             ->leftJoin('collection', 'collection_user', 'cu', 'collection.id = cu.collection_id')
             ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')')
+            ->orWhere('collection.owner_id = ' . $userId)
+            ->orWhere('collection.creator_id = ' . $userId)
             ->orWhere('cu.user_id = ' . $userId);
-
-        $qb->orWhere('collection.owner_id = ' . $userId . ' OR collection.creator_id = ' . $userId);
 
         return $qb->getSQL();
     }
