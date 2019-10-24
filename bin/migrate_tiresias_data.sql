@@ -247,7 +247,7 @@ WHERE code = 'PS';
 INSERT INTO country (code, name)
 VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affected to anything, see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-INSERT INTO card (id, filename, visibility, expanded_name, domain_id, document_type_id, technique_author,
+INSERT INTO card (id, filename, visibility, name, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
                   institution_id, literature, isbn, object_reference, `from`, `to`, production_place,
                   locality, site)
@@ -261,7 +261,65 @@ SELECT meta.id + @card_offset,
         WHEN 2
             THEN 'public'
         END,
-    description,
+    -- Extract name from description
+    TRIM(
+            REPLACE(
+                    REPLACE(
+                            REPLACE(
+                                    REPLACE(
+                                            REPLACE(
+                                                    REPLACE(
+                                                            REPLACE(
+                                                                    REPLACE(
+                                                                            REPLACE(
+                                                                                    REPLACE(
+                                                                                            REGEXP_SUBSTR(description, '\\[t\\].*\\[/t\\]'),
+                                                                                            '[t]',
+                                                                                            ''),
+                                                                                    '[/t].',
+                                                                                    ''),
+                                                                            '[/t]',
+                                                                            ''),
+                                                                    '[b]',
+                                                                    '<strong>'),
+                                                            '[/b]',
+                                                            '</strong>'),
+                                                    '[i]',
+                                                    '<em>'),
+                                            '[/i]',
+                                            '</em>'),
+                                    '[u]',
+                                    '<span style="text-decoration: underline;">'),
+                            '[/u]',
+                            '</span>'),
+                    '[nl]',
+                    '<br>')
+        ),
+    -- Remove name from description
+    TRIM(
+            REPLACE(
+                    REPLACE(
+                            REPLACE(
+                                    REPLACE(
+                                            REPLACE(
+                                                    REPLACE(
+                                                            REPLACE(
+                                                                    REGEXP_REPLACE(description, '\\[t\\].*\\[/t\\]\\.?', ''),
+                                                                    '[b]',
+                                                                    '<strong>'),
+                                                            '[/b]',
+                                                            '</strong>'),
+                                                    '[i]',
+                                                    '<em>'),
+                                            '[/i]',
+                                            '</em>'),
+                                    '[u]',
+                                    '<span style="text-decoration: underline;">'),
+                            '[/u]',
+                            '</span>'),
+                    '[nl]',
+                    '<br>')
+        ),
     IF(d3_domaine IN (SELECT id FROM domain), d3_domaine,
        IF(d2_domaine IN (SELECT id FROM domain), d2_domaine,
           IF(d1_domaine IN (SELECT id FROM domain), d1_domaine,
@@ -290,7 +348,28 @@ SELECT meta.id + @card_offset,
             NULL
         END,
     IF(musee = 0, NULL, musee + @institution_offset),
-    bibl_ref_image,
+    REPLACE(
+            REPLACE(
+                    REPLACE(
+                            REPLACE(
+                                    REPLACE(
+                                            REPLACE(
+                                                    REPLACE(
+                                                            bibl_ref_image,
+                                                            '[b]',
+                                                            '<strong>'),
+                                                    '[/b]',
+                                                    '</strong>'),
+                                            '[i]',
+                                            '<em>'),
+                                    '[/i]',
+                                    '</em>'),
+                            '[u]',
+                            '<span style="text-decoration: underline;">'),
+                    '[/u]',
+                    '</span>'),
+            '[nl]',
+            '<br>'),
     bibl_ref_isbn_issn,
     bibl_ref_objet,
     IF(TRIM(t3_date_precise_debut) = '', NULL, REPLACE(t3_date_precise_debut, ' ', '')),

@@ -9,8 +9,8 @@
             </div>
 
             <div class="line-body">
-                <div>{{ item.name }}</div>
-                <div>{{ item.expandedName }}</div>
+                <div [innerHTML]="item.name"></div>
+                <div [innerHTML]="item.expandedName"></div>
                 <a [routerLink]="['/card', item.id]" mat-flat-button>Voir fiche</a>
             </div>
             <div>
