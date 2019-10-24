@@ -35,6 +35,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatExpansionModule,
+    MatGridListModule,
 } from '@angular/material';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
@@ -187,6 +188,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         MatExpansionModule,
         MatSlideToggleModule,
         MatSliderModule,
+        MatGridListModule,
         MatTabsModule,
         MatAutocompleteModule,
         MatDatepickerModule,

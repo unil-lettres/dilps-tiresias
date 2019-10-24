@@ -1,8 +1,16 @@
 :host {
-  .shib-link img {
-    margin-top: 8px;
-    width: 250px;
+  .shib-link {
+    flex: auto;
+
+    img {
+      height: 100px;
+    }
   }
+
+  .dilps-logo {
+    height: 140px;
+  }
+
   .login-info {
     text-align: center;
   }

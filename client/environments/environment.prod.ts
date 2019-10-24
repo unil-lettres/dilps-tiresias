@@ -1,3 +1,3 @@
 export const environment = {
-  environment: 'production'
+    environment: 'production'
 };

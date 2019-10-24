@@ -5,16 +5,27 @@
         <div class="login padding-v centered-content" fxFlex fxLayout="column" fxLayoutAlign="center center">
 
             <div fxLayout="column" fxLayoutGap="15px">
-                <img src="assets/images/logo-bleu.svg" />
+                <img src="assets/images/logo-bleu.svg" class="dilps-logo" />
+
+                <mat-divider></mat-divider>
 
                 <div fxLayout="column" fxLayoutGap="15px" class="login-info">
                     Veuillez choisir une méthode d'authentification ou<br>
                     utiliser le bouton "Accès public"
                 </div>
 
-                <a mat-raised-button href="/auth" class="shib-link">
-                    <img src="assets/images/logo-unil-bleu.svg" />
-                </a>
+                <mat-grid-list cols="2" rowHeight="80px">
+                    <mat-grid-tile>
+                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
+                            <img src="assets/images/logo-unil-bleu.svg" width="130" />
+                        </a>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
+                            <img src="assets/images/logo-unine.svg" width="90" />
+                        </a>
+                    </mat-grid-tile>
+                </mat-grid-list>
 
                 <mat-divider></mat-divider>
 
