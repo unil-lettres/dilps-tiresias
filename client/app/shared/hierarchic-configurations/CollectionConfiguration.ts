@@ -4,8 +4,8 @@ import { CollectionService } from '../../collections/services/collection.service
 export const collectionsHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
         service: CollectionService,
-        parentsFilters: ['parent'],
-        childrenFilters: ['parent'],
+        parentsRelationNames: ['parent'],
+        childrenRelationNames: ['parent'],
         selectableAtKey: 'collection',
     },
 ];

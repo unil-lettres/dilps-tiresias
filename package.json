@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "^8.2.7",
     "@angular/router": "^8.2.7",
     "@ecodev/angular-natural-gallery": "^5.0.1",
-    "@ecodev/natural": "^9.0.0",
+    "@ecodev/natural": "^10.0.0",
     "@ngx-progressbar/core": "^5.3.2",
     "@tinymce/tinymce-angular": "^3.3.1",
     "@types/swiper": "^4.4.5",

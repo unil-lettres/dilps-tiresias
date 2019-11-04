@@ -4,8 +4,8 @@ import { TagService } from '../../tags/services/tag.service';
 export const tagHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
         service: TagService,
-        parentsFilters: ['parent'],
-        childrenFilters: ['parent'],
+        parentsRelationNames: ['parent'],
+        childrenRelationNames: ['parent'],
         selectableAtKey: 'tag',
     },
 ];

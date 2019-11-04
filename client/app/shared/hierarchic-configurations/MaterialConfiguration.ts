@@ -4,8 +4,8 @@ import { MaterialService } from '../../materials/services/material.service';
 export const materialHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
         service: MaterialService,
-        parentsFilters: ['parent'],
-        childrenFilters: ['parent'],
+        parentsRelationNames: ['parent'],
+        childrenRelationNames: ['parent'],
         selectableAtKey: 'material',
     },
 ];

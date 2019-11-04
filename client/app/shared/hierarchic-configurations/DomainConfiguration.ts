@@ -4,8 +4,8 @@ import { DomainService } from '../../domains/services/domain.service';
 export const domainHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
         service: DomainService,
-        parentsFilters: ['parent'],
-        childrenFilters: ['parent'],
+        parentsRelationNames: ['parent'],
+        childrenRelationNames: ['parent'],
         selectableAtKey: 'domain',
     },
 ];
