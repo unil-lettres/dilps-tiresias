@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CardService } from '../../../card/services/card.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { CardService } from '../../../card/services/card.service';
     templateUrl: './mass-edit.component.html',
     styleUrls: ['./mass-edit.component.scss'],
 })
-export class MassEditComponent implements OnInit {
+export class MassEditComponent {
 
     public card;
 
@@ -14,9 +14,6 @@ export class MassEditComponent implements OnInit {
         const card = cardService.getConsolidatedForClient();
         card.visibility = null;
         this.card = card;
-    }
-
-    ngOnInit() {
     }
 
 }

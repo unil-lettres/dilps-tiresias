@@ -305,12 +305,35 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             for (const s of selection) {
                 const changes = clone(changeAttributes);
                 defaults(changes, s);
+
                 if (changes.artists) {
                     changes.artists = changes.artists.map(a => a.name ? a.name : a);
                 }
+
+                if (changes.periods) {
+                    changes.periods = changes.periods.map(a => a.name ? a.name : a);
+                }
+
+                if (changes.materials) {
+                    changes.materials = changes.materials.map(a => a.name ? a.name : a);
+                }
+
+                if (changes.tags) {
+                    changes.tags = changes.tags.map(a => a.name ? a.name : a);
+                }
+
                 if (changes.institution) {
                     changes.institution = changes.institution.name ? changes.institution.name : changes.institution;
                 }
+
+                if (changes.domain) {
+                    changes.domain = changes.domain.name ? changes.domain.name : changes.domain;
+                }
+
+                if (changes.documentType) {
+                    changes.documentType = changes.documentType.name ? changes.documentType.name : changes.documentType;
+                }
+
                 observables.push(this.cardService.update(changes));
             }
 
