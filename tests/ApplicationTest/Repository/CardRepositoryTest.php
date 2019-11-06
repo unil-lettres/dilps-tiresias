@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
 use Application\Model\User;
 use Application\Repository\CardRepository;
@@ -28,6 +29,7 @@ class CardRepositoryTest extends AbstractRepositoryTest
     {
         $card = new Card('test card');
 
+        $card->setSite(SiteType::DILPS);
         $card->setFilename('test card.jpg');
         $this->getEntityManager()->persist($card);
         $this->getEntityManager()->flush();

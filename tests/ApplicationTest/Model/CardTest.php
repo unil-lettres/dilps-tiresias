@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
@@ -70,6 +71,7 @@ class CardTest extends TestCase
         User::setCurrent($admin);
 
         $suggestion = new Card();
+        $suggestion->setSite(SiteType::DILPS);
         $suggestion->setVisibility(Card::VISIBILITY_MEMBER);
         $suggestion->setName('test name');
         $suggestion->setDating('2010');
@@ -274,6 +276,7 @@ class CardTest extends TestCase
     public function testSetInstitution(): void
     {
         $card = new Card();
+        $card->setSite(SiteType::DILPS);
         self::assertNull($card->getInstitution());
 
         $card->setInstitution('foo');
