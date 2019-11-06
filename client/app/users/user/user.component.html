@@ -67,7 +67,7 @@
             </div>
         </mat-tab>
 
-        <mat-tab label="Collections">
+        <mat-tab label="Collections" *ngIf="data.item.id">
 
             <natural-relations [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
                                [hierarchicSelectorConfig]="collectionsHierarchicConfig"

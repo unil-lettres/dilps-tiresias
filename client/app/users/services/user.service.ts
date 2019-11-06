@@ -13,7 +13,7 @@ import {
     Site,
     UpdateUser,
     UpdateUserVariables,
-    User,
+    User, UserInput,
     UserRole,
     Users,
     UsersVariables,
@@ -47,8 +47,9 @@ export class UserService extends AbstractContextualizedService<User['user'],
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): UserInput {
         return {
+            site: this.site,
             login: '',
             email: '',
             activeUntil: '',

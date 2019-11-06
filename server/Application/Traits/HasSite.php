@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
-use Application\DBAL\Types\SiteType;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -17,7 +16,7 @@ trait HasSite
      * @var string
      * @ORM\Column(type="Site")
      */
-    private $site = SiteType::DILPS; // Temporary default value, but should be removed
+    private $site;
 
     /**
      * @API\Field(type="Site")

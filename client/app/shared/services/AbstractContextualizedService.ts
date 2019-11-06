@@ -39,18 +39,4 @@ export class AbstractContextualizedService<Tone,
 
         return {};
     }
-
-    /**
-     * Returns an additional context to be used when creating an object
-     *
-     * This is typically a site or state ID
-     */
-    protected getContextForCreation(object: Literal): Partial<Vcreate> {
-
-        if (this.site) {
-            return {input: {site: this.site}} as any; // todo : why as any ?
-        }
-
-        return {};
-    }
 }

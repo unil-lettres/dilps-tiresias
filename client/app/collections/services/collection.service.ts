@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import { SITE } from '../../app.config';
 import {
-    Collection,
+    Collection, CollectionInput,
     Collections,
     CollectionsVariables,
     CollectionVariables,
@@ -58,8 +58,9 @@ export class CollectionService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): CollectionInput {
         return {
+            site: this.site,
             name: '',
             description: '',
             isSource: false,

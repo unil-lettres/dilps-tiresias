@@ -103,6 +103,12 @@ abstract class Standard
 
                     // Do it
                     $input = $args['input'];
+
+                    // Be sure that site is set first
+                    if ($input['site'] ?? false) {
+                        Helper::hydrate($object, ['site' => $input['site']]);
+                    }
+
                     Helper::hydrate($object, $input);
                     _em()->persist($object);
                     _em()->flush();

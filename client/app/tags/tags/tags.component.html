@@ -15,9 +15,9 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center">
         <div class="mat-headline no-margin">Tags</div>
         <div fxLayout="row wrap">
-            <a *ngFor="let item of breadcrumbs;" [routerLink]="goToChildLink(item)" class="no-padding" mat-button>
+            <a *ngFor="let item of breadcrumbs;" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
                 <natural-icon name="chevron_right"></natural-icon>
-                <natural-icon name="date_range"></natural-icon>
+                <natural-icon name="tag"></natural-icon>
                 <span>{{ item.name }}</span>
             </a>
         </div>
@@ -33,7 +33,7 @@
             <ng-container matColumnDef="navigation">
                 <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
                 <td *matCellDef="let element" mat-cell>
-                    <natural-table-button [navigate]="goToChildLink(element)" icon="chevron_right" matTooltip="Déployer"
+                    <natural-table-button [navigate]="getChildLink(element)" icon="chevron_right" matTooltip="Déployer"
                     ></natural-table-button>
                 </td>
             </ng-container>

@@ -6,7 +6,7 @@ import {
     CreateInstitution,
     CreateInstitutionVariables,
     DeleteInstitutions,
-    Institution,
+    Institution, InstitutionInput,
     Institutions,
     InstitutionsVariables,
     InstitutionVariables,
@@ -46,8 +46,9 @@ export class InstitutionService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): InstitutionInput {
         return {
+            site: this.site,
             name: '',
             street: '',
             postcode: '',

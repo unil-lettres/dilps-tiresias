@@ -6,7 +6,7 @@ import {
     CreateDocumentType,
     CreateDocumentTypeVariables,
     DeleteDocumentTypes,
-    DocumentType,
+    DocumentType, DocumentTypeInput,
     DocumentTypes,
     DocumentTypesVariables,
     DocumentTypeVariables,
@@ -49,7 +49,7 @@ export class DocumentTypeService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): DocumentTypeInput {
         return {
             name: '',
         };

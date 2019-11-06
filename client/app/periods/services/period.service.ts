@@ -6,7 +6,7 @@ import {
     CreatePeriod,
     CreatePeriodVariables,
     DeletePeriods,
-    Period,
+    Period, PeriodInput,
     Periods,
     PeriodsVariables,
     PeriodVariables,
@@ -43,7 +43,7 @@ export class PeriodService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): PeriodInput {
         return {
             name: '',
             parent: null,

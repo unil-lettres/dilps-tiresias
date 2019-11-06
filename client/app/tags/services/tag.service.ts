@@ -7,7 +7,7 @@ import {
     CreateTagVariables,
     DeleteTags,
     Site,
-    Tag,
+    Tag, TagInput,
     Tags,
     TagsVariables,
     TagVariables,
@@ -46,8 +46,9 @@ export class TagService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): TagInput {
         return {
+            site: this.site,
             name: '',
             parent: null,
         };

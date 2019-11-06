@@ -21,7 +21,15 @@ import {
     ValidateImage,
 } from '../../shared/generated-types';
 import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
-import { cardQuery, cardsQuery, createCard, deleteCards, updateCard, validateData, validateImage } from './card.queries';
+import {
+    cardQuery,
+    cardsQuery,
+    createCard,
+    deleteCards,
+    updateCard,
+    validateData,
+    validateImage,
+} from './card.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -81,6 +89,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
 
     public getDefaultForServer(): CardInput {
         return {
+            site: this.site,
             file: null,
             dating: '',
             addition: '',

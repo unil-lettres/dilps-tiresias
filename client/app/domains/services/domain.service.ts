@@ -6,7 +6,7 @@ import {
     CreateDomain,
     CreateDomainVariables,
     DeleteDomains,
-    Domain,
+    Domain, DomainInput,
     Domains,
     DomainsVariables,
     DomainVariables,
@@ -43,7 +43,7 @@ export class DomainService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): DomainInput {
         return {
             name: '',
             parent: null,

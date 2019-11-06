@@ -6,7 +6,7 @@ import {
     CreateMaterial,
     CreateMaterialVariables,
     DeleteMaterials,
-    Material,
+    Material, MaterialInput,
     Materials,
     MaterialsVariables,
     MaterialVariables,
@@ -43,7 +43,7 @@ export class MaterialService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): MaterialInput {
         return {
             name: '',
             parent: null,

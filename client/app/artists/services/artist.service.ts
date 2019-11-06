@@ -3,7 +3,7 @@ import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
 
 import {
-    Artist,
+    Artist, ArtistInput,
     Artists,
     ArtistsVariables,
     ArtistVariables,
@@ -43,7 +43,7 @@ export class ArtistService
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer() {
+    public getDefaultForServer(): ArtistInput {
         return {
             name: '',
         };

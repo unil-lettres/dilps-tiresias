@@ -52,7 +52,7 @@ export class NewsService
             name: '',
             description: '',
             file: null,
-            site: Site.dilps,
+            site: this.site,
             url: '',
         };
     }
