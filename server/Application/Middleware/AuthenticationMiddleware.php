@@ -68,12 +68,34 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if (array_key_exists('Shib-Identity-Provider', $serverParams) && !$session->has('user')) {
             // User has Shibboleth session but no user session
             if (array_key_exists('mail', $serverParams)) {
+                // Check for the user in the db
                 $user = $this->userRepository->getOneByEmail($serverParams['mail']);
 
                 if (!$user) {
-                    $login = array_key_exists('uid', $serverParams) ?
-                        '-aai-' . $serverParams['uid'] : $serverParams['mail'];
+                    if (array_key_exists('uid', $serverParams)) {
+                        if (array_key_exists('swissEduPersonHomeOrganization', $serverParams)) {
+                            switch ($serverParams['swissEduPersonHomeOrganization']) {
+                                case 'unil.ch':
+                                    $login = '-unil-' . $serverParams['uid'];
 
+                                    break;
+                                case 'unine.ch':
+                                    $login = '-unine-' . $serverParams['uid'];
+
+                                    break;
+                                default:
+                                    $login = '-aai-' . $serverParams['uid'];
+
+                                    break;
+                            }
+                        } else {
+                            $login = '-aai-' . $serverParams['uid'];
+                        }
+                    } else {
+                        $login = $serverParams['mail'];
+                    }
+
+                    // Create user if a Shibboleth session is found but user cannot be found in the db
                     $user = $this->userRepository->createShibboleth(
                         $login,
                         $serverParams['mail']
