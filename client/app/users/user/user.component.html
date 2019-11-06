@@ -61,7 +61,7 @@
                 </mat-form-field>
 
                 <mat-form-field *ngIf="data.item.id">
-                    <input matInput disabled name="type" placeholder="Type d'utilisateur" [(ngModel)]="data.item.type" >
+                    <input matInput disabled name="type" placeholder="Type d'utilisateur" value="{{ data.item.type | type }}">
                 </mat-form-field>
             </div>
         </mat-tab>

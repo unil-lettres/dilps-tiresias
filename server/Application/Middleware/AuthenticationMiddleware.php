@@ -62,6 +62,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
      * Check if Shibboleth session is available and if the user is already created in the database
      *
      * @param SessionInterface $session
+     * @param array $serverParams
      */
     private function shibboleth(SessionInterface $session, array $serverParams): void
     {
@@ -72,28 +73,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
                 $user = $this->userRepository->getOneByEmail($serverParams['mail']);
 
                 if (!$user) {
-                    if (array_key_exists('uid', $serverParams)) {
-                        if (array_key_exists('homeOrganization', $serverParams)) {
-                            switch ($serverParams['homeOrganization']) {
-                                case 'unil.ch':
-                                    $login = '-unil-' . $serverParams['uid'];
-
-                                    break;
-                                case 'unine.ch':
-                                    $login = '-unine-' . $serverParams['uid'];
-
-                                    break;
-                                default:
-                                    $login = '-aai-' . $serverParams['uid'];
-
-                                    break;
-                            }
-                        } else {
-                            $login = '-aai-' . $serverParams['uid'];
-                        }
-                    } else {
-                        $login = $serverParams['mail'];
-                    }
+                    $login = $this->generateShibbolethLogin($serverParams);
 
                     // Create user if a Shibboleth session is found but user cannot be found in the db
                     $user = $this->userRepository->createShibboleth(
@@ -105,5 +85,40 @@ class AuthenticationMiddleware implements MiddlewareInterface
                 $session->set('user', $user->getId());
             }
         }
+    }
+
+    /**
+     * Generate login for aai users based on received attributes
+     *
+     * @param array $serverParams
+     *
+     * @return string $login
+     */
+    private function generateShibbolethLogin(array $serverParams): string
+    {
+        if (array_key_exists('uid', $serverParams)) {
+            if (array_key_exists('homeOrganization', $serverParams)) {
+                switch ($serverParams['homeOrganization']) {
+                    case 'unil.ch':
+                        $login = '-unil-' . $serverParams['uid'];
+
+                        break;
+                    case 'unine.ch':
+                        $login = '-unine-' . $serverParams['uid'];
+
+                        break;
+                    default:
+                        $login = '-aai-' . $serverParams['uid'];
+
+                        break;
+                }
+            } else {
+                $login = '-aai-' . $serverParams['uid'];
+            }
+        } else {
+            $login = $serverParams['mail'];
+        }
+
+        return $login;
     }
 }
