@@ -73,8 +73,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
                 if (!$user) {
                     if (array_key_exists('uid', $serverParams)) {
-                        if (array_key_exists('swissEduPersonHomeOrganization', $serverParams)) {
-                            switch ($serverParams['swissEduPersonHomeOrganization']) {
+                        if (array_key_exists('homeOrganization', $serverParams)) {
+                            switch ($serverParams['homeOrganization']) {
                                 case 'unil.ch':
                                     $login = '-unil-' . $serverParams['uid'];
 
