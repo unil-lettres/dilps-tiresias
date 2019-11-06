@@ -7,6 +7,9 @@ php:
 addons:
     mariadb: "10.3"
 
+services:
+  - mysql
+
 cache:
   directories:
     - vendor
