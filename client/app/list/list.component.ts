@@ -1,6 +1,13 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractList, NaturalPageEvent, NaturalQueryVariablesManager, PaginationInput, Sorting } from '@ecodev/natural';
+import {
+    NaturalAbstractList,
+    NaturalPageEvent,
+    NaturalQueryVariablesManager,
+    PaginationInput,
+    Sorting,
+    NaturalSearchSelections,
+} from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
 import { forkJoin } from 'rxjs';
 import { CardService } from '../card/services/card.service';
@@ -9,7 +16,15 @@ import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-
 import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
-import { CardFilter, Cards, CardSortingField, CardsVariables, SortingOrder, UserRole, Viewer } from '../shared/generated-types';
+import {
+    CardFilter,
+    Cards,
+    CardSortingField,
+    CardsVariables,
+    SortingOrder,
+    UserRole,
+    Viewer,
+} from '../shared/generated-types';
 
 import { adminConfig, cardsConfiguration } from '../shared/natural-search-configurations';
 import { shuffleArray } from '../shared/services/utility';
@@ -17,6 +32,7 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { ViewMapComponent } from '../view-map/view-map.component';
+import { StatisticService } from '../statistics/services/statistic.service';
 
 export interface ViewInterface {
     selectAll: () => any[];
@@ -106,7 +122,9 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 private collectionService: CollectionService,
                 private userService: UserService,
                 private dialog: MatDialog,
-                injector: Injector) {
+                injector: Injector,
+                private statisticService: StatisticService,
+    ) {
 
         super(cardService, injector);
 
@@ -394,4 +412,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         }
     }
 
+    public search(naturalSearchSelections: NaturalSearchSelections): void {
+        super.search(naturalSearchSelections);
+        this.statisticService.recordSearch();
+    }
 }

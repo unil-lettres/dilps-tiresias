@@ -14,7 +14,11 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions, MatFormFieldModule } from '@angular/material/form-field';
+import {
+    MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MatFormFieldDefaultOptions,
+    MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -113,6 +117,12 @@ import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
+import { StatisticsComponent } from './statistics/statistics/statistics.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { StatisticComponent } from './statistics/statistic/statistic.component';
+import { Router, NavigationEnd } from '@angular/router';
+import { StatisticService } from './statistics/services/statistic.service';
+import { filter } from 'rxjs/operators';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -172,6 +182,8 @@ const icons: NaturalIconsConfig = {
         CarouselComponent,
         NewsesComponent,
         NewsComponent,
+        StatisticsComponent,
+        StatisticComponent,
         DomainComponent,
         DomainsComponent,
         DocumentTypesComponent,
@@ -182,7 +194,7 @@ const icons: NaturalIconsConfig = {
         TagsComponent,
         MaterialComponent,
         MaterialsComponent,
-        CardSelectorComponent
+        CardSelectorComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -201,7 +213,7 @@ const icons: NaturalIconsConfig = {
         PeriodComponent,
         TagComponent,
         MaterialComponent,
-        CardSelectorComponent
+        CardSelectorComponent,
     ],
     imports: [
         BrowserModule,
@@ -258,6 +270,7 @@ const icons: NaturalIconsConfig = {
         NaturalHierarchicSelectorModule,
         EditorModule,
         NaturalSelectEnumModule,
+        HighchartsChartModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
@@ -269,7 +282,15 @@ export class AppModule {
     constructor(apollo: Apollo,
                 networkActivityService: NetworkActivityService,
                 alertService: AlertService,
-                private dateAdapter: DateAdapter<Date>) {
+                dateAdapter: DateAdapter<Date>,
+                statisticService: StatisticService,
+                router: Router,
+    ) {
+
+        // On each page change, record in stats
+        router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
+            statisticService.recordPage();
+        });
 
         dateAdapter.setLocale('fr-ch');
 

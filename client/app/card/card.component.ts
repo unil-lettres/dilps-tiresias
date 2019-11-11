@@ -31,6 +31,7 @@ import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
+import { StatisticService } from '../statistics/services/statistic.service';
 
 @Component({
     selector: 'app-card',
@@ -252,6 +253,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private dialog: MatDialog,
                 private userService: UserService,
                 @Inject(SITE) public site: Site,
+                private statisticService: StatisticService,
     ) {
     }
 
@@ -290,6 +292,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.updateUploadWatching();
+        this.statisticService.recordDetail();
     }
 
     ngOnChanges(changes: SimpleChanges) {

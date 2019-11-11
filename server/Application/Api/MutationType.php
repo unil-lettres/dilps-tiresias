@@ -8,6 +8,9 @@ use Application\Api\Field\Mutation\AcceptChange;
 use Application\Api\Field\Mutation\LinkCollectionToCollection;
 use Application\Api\Field\Mutation\Login;
 use Application\Api\Field\Mutation\Logout;
+use Application\Api\Field\Mutation\RecordDetail;
+use Application\Api\Field\Mutation\RecordPage;
+use Application\Api\Field\Mutation\RecordSearch;
 use Application\Api\Field\Mutation\RejectChange;
 use Application\Api\Field\Mutation\SuggestCreation;
 use Application\Api\Field\Mutation\SuggestDeletion;
@@ -43,6 +46,9 @@ class MutationType extends ObjectType
             ValidateData::build(),
             ValidateImage::build(),
             LinkCollectionToCollection::build(),
+            RecordPage::build(),
+            RecordDetail::build(),
+            RecordSearch::build(),
         ];
 
         $fields = array_merge(

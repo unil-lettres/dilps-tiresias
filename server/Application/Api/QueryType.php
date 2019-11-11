@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\Viewer;
 use Application\Api\Field\Standard;
 use Application\Model\Artist;
@@ -28,6 +29,7 @@ class QueryType extends ObjectType
     {
         $specializedFields = [
             Viewer::build(),
+            ExtraStatistics::build(),
         ];
 
         $fields = array_merge(

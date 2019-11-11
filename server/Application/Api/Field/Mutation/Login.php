@@ -7,6 +7,7 @@ namespace Application\Api\Field\Mutation;
 use Application\Api\Exception;
 use Application\Api\Field\FieldInterface;
 use Application\Api\Scalar\LoginType;
+use Application\Model\Statistic;
 use Application\Model\User;
 use GraphQL\Type\Definition\Type;
 use Zend\Expressive\Session\SessionInterface;
@@ -36,6 +37,12 @@ abstract class Login implements FieldInterface
                     $session->regenerate();
                     $session->set('user', $user->getId());
                     User::setCurrent($user);
+
+                    /** @var Statistic $statistic */
+                    $statistic = _em()->getRepository(Statistic::class)->getOrCreate($site);
+                    $statistic->recordLogin();
+
+                    _em()->flush();
 
                     return $user;
                 }

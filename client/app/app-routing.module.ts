@@ -25,6 +25,7 @@ import { TagsComponent } from './tags/tags/tags.component';
 import { UserResolver } from './users/services/user.resolver';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
+import { StatisticsComponent } from './statistics/statistics/statistics.component';
 
 export const routes: Routes = [
     {
@@ -111,6 +112,11 @@ export const routes: Routes = [
             {
                 path: 'newses',
                 component: NewsesComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'statistic',
+                component: StatisticsComponent,
                 canActivate: [AuthGuard],
             },
             {
