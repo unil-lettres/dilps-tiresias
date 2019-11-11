@@ -110,7 +110,7 @@ export const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
-                path: 'newses',
+                path: 'news',
                 component: NewsesComponent,
                 canActivate: [AuthGuard],
             },
