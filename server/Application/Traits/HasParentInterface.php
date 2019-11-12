@@ -12,6 +12,13 @@ use Doctrine\Common\Collections\Collection;
 interface HasParentInterface
 {
     /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
      * Returns the parent, or null if this is a root object
      *
      * @return null|HasParentInterface

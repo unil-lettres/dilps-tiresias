@@ -398,7 +398,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         const data = merge({denyLegendsDownload: !this.user}, selection);
 
         this.dialog.open(DownloadComponent, {
-            width: '400px',
+            width: '600px',
             data,
         });
     }

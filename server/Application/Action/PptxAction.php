@@ -74,7 +74,7 @@ class PptxAction extends AbstractAction
         $this->textColor = $request->getAttribute('textColor', $this->textColor);
         $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);
         $cards = $request->getAttribute('cards');
-        //w(count($cards));
+
         $title = 'DILPS ' . date('c', time());
         $presentation = $this->export($cards, $title);
 

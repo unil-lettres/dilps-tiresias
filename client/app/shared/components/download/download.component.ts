@@ -44,6 +44,11 @@ export class DownloadComponent implements OnInit {
         (window.document.location as any) = url;
         this.dialogRef.close();
     }
+    public downloadExcel() {
+        const url = '/xlsx/' + this.getIds();
+        (window.document.location as any) = url;
+        this.dialogRef.close();
+    }
 
     public downloadZip() {
         const url = '/zip/' + this.getIds() + '/' + (this.includeLegend ? '1' : '0') + (this.size ? '/' + this.size : '');

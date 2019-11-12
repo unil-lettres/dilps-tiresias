@@ -36,5 +36,12 @@
                 </div>
             </div>
         </mat-tab>
+        <mat-tab label="Excel">
+            <div class="padding" fxLayout="column">
+                <div fxFlexAlign="end" fxLayout="row">
+                    <button (click)="downloadExcel()" color="primary" mat-flat-button>Télécharger en Excel</button>
+                </div>
+            </div>
+        </mat-tab>
     </mat-tab-group>
 </mat-dialog-content>

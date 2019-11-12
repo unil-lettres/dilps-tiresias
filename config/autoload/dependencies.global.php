@@ -36,6 +36,7 @@ return [
             \Application\Action\GraphQLAction::class => \Application\Action\GraphQLFactory::class,
             \Application\Action\ImageAction::class => \Application\Action\ImageFactory::class,
             \Application\Action\PptxAction::class => \Application\Action\PptxFactory::class,
+            \Application\Action\XlsxAction::class => \Application\Action\XlsxFactory::class,
             \Application\Action\ZipAction::class => \Application\Action\ZipFactory::class,
             \Application\Middleware\CardsFetcherMiddleware::class => \Application\Middleware\CardsFetcherFactory::class,
             \Application\Middleware\CollectionFetcherMiddleware::class => \Application\Middleware\CollectionFetcherFactory::class,

@@ -461,7 +461,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public download(card) {
         this.dialog.open(DownloadComponent, {
-            width: '400px',
+            width: '600px',
             data: {
                 images: [card],
                 denyLegendsDownload: !this.user,

@@ -15,6 +15,10 @@
         "target": "https://dilps.lan",
         "secure": false
     },
+    "/xlsx": {
+        "target": "https://dilps.lan",
+        "secure": false
+    },
     "/zip": {
         "target": "https://dilps.lan",
         "secure": false
