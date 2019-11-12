@@ -26,7 +26,7 @@ abstract class ExtraStatistics implements FieldInterface
                 'resolve' => function (string $site, array $args): string {
                     /** @var StatisticRepository $repository */
                     $repository = _em()->getRepository(Statistic::class);
-                    $user = $args['user'] ? $args['user']->getEntity() : null;
+                    $user = @$args['user'] ? $args['user']->getEntity() : null;
 
                     $result = $repository->getExtraStatistics($site, $args['period'], $user);
 
