@@ -1,4 +1,6 @@
-INSERT INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
+START TRANSACTION;
+
+REPLACE INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
   (1000, 'administrator', 'administrator-dilps@example.com', MD5('administrator'), 'administrator', 'dilps'),
   (1001, 'senior', 'senior-dilps@example.com', MD5('senior'), 'senior', 'dilps'),
   (1002, 'junior', 'junior-dilps@example.com', MD5('junior'), 'junior', 'dilps'),
@@ -8,7 +10,7 @@ INSERT INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
   (1006, 'junior', 'junior-tiresias@example.com', MD5('junior'), 'junior', 'tiresias'),
   (1007, 'student', 'student-tiresias@example.com', MD5('student'), 'student', 'tiresias');
 
-INSERT INTO `collection` (`id`, owner_id, visibility, `name`, `description`, `site`) VALUES
+REPLACE INTO `collection` (`id`, owner_id, visibility, `name`, `description`, `site`) VALUES
   (2000, 1003, 'private', 'Test collection 2000', 'Roads? Where we''re going we don''t need roads.', 'dilps'),
   (2001, NULL, 'member', 'Test collection 2001', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'dilps'),
   (2002, 1002, 'member', 'Test collection 2002', 'You''re gonna need a bigger boat.', 'dilps'),
@@ -16,20 +18,20 @@ INSERT INTO `collection` (`id`, owner_id, visibility, `name`, `description`, `si
   (2004, NULL, 'member', 'Test collection 2004', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'tiresias'),
   (2005, 1006, 'member', 'Test collection 2005', 'You''re gonna need a bigger boat.', 'tiresias');
 
-INSERT INTO `artist` (`id`, `name`) VALUES
+REPLACE INTO `artist` (`id`, `name`) VALUES
   (3000, 'Test artist 3000');
 
-INSERT INTO `tag` (`id`, `parent_id`, `name`, `site`) VALUES
+REPLACE INTO `tag` (`id`, `parent_id`, `name`, `site`) VALUES
   (4000, NULL, 'Test root tag 4000', 'dilps'),
   (4001, 4000, 'Test child tag 40001', 'dilps'),
   (4002, NULL, 'Test root tag 4002', 'tiresias'),
   (4003, 4002, 'Test child tag 4003', 'tiresias');
 
-INSERT INTO `institution` (`id`, `country_id`, `name`, `site`) VALUES
+REPLACE INTO `institution` (`id`, `country_id`, `name`, `site`) VALUES
   (5000, 1, 'Test institution 5000', 'dilps'),
   (5001, 1, 'Test institution 5001', 'tiresias');
 
-INSERT INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site, `name`, `filename`, `width`, `height`, `file_size`, `dating`, `latitude`, `longitude`, `precision`) VALUES
+REPLACE INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site, `name`, `filename`, `width`, `height`, `file_size`, `dating`, `latitude`, `longitude`, `precision`) VALUES
   (6000, 1003, 1003, NULL, 'private', 'dilps', 'Test card 6000', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '2000', '46.9937969', '6.9301', NULL),
   (6001, 1003, 1003, NULL, 'private', 'dilps', 'Test suggestion card 6001', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '46.5210895', '6.5779666', NULL),
   (6002, 1003, 1003, 6000, 'private', 'dilps', 'Test suggestion card 6002', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '46.5214586', '6.5814212', NULL),
@@ -45,45 +47,47 @@ INSERT INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site,
   (6012, NULL, NULL, 6007, 'public', 'tiresias', 'Test related card 6012', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8916832', '12.4917557', 'site'),
   (6013, 1006, 1006, NULL, 'member', 'tiresias', 'Test junior card 6013', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906832', '12.4927557', 'site');
 
-INSERT INTO `card_artist` (`card_id`, `artist_id`) VALUES
+REPLACE INTO `card_artist` (`card_id`, `artist_id`) VALUES
   (6000, 3000);
 
-INSERT INTO `card_tag` (`card_id`, `tag_id`) VALUES
+REPLACE INTO `card_tag` (`card_id`, `tag_id`) VALUES
   (6000, 4000);
 
-INSERT INTO `collection_card` (`collection_id`, `card_id`) VALUES
+REPLACE INTO `collection_card` (`collection_id`, `card_id`) VALUES
   (2000, 6000),
   (2001, 6001),
   (2001, 6002);
 
-INSERT INTO `change` (`id`, `original_id`, `suggestion_id`, `type`, `request`) VALUES
+REPLACE INTO `change` (`id`, `original_id`, `suggestion_id`, `type`, `request`) VALUES
   (7000, NULL, 6001, 'create', 'I want to add new card to collection'),
   (7001, 6000, 6002, 'update', 'I want to edit existing card'),
   (7002, 6000, NULL, 'delete', 'I want to delete existing card');
 
-INSERT INTO `dating` (`id`, `card_id`, `from`, `to`) VALUES
+REPLACE INTO `dating` (`id`, `card_id`, `from`, `to`) VALUES
   (8000, 6000, '2451545', '2451545');
 
-INSERT INTO `card_card` (`card_source`, `card_target`) VALUES
+REPLACE INTO `card_card` (`card_source`, `card_target`) VALUES
   (6000, 6005),
   (6005, 6000);
 
-INSERT INTO `period` (`id`, `parent_id`, `name`) VALUES
+REPLACE INTO `period` (`id`, `parent_id`, `name`) VALUES
   (7000, NULL, 'Test root period 7000'),
   (7001, 7000, 'Test child period 7001');
 
-INSERT INTO `material` (`id`, `parent_id`, `name`) VALUES
+REPLACE INTO `material` (`id`, `parent_id`, `name`) VALUES
   (8000, NULL, 'Test root material 8000'),
   (8001, 8000, 'Test child material 8001');
 
-INSERT INTO `domain` (`id`, `name`) VALUES
+REPLACE INTO `domain` (`id`, `name`) VALUES
   (9000, 'Test domain 9000'),
   (9001, 'Test domain 9001');
 
-INSERT INTO `document_type` (`id`, `name`) VALUES
+REPLACE INTO `document_type` (`id`, `name`) VALUES
   (9000, 'Test domain 9000'),
   (9001, 'Test domain 9001');
 
-INSERT INTO `news` (`id`, `site`, `name`, `description`) VALUES
+REPLACE INTO `news` (`id`, `site`, `name`, `description`) VALUES
   (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.'),
   (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.');
+
+COMMIT ;
