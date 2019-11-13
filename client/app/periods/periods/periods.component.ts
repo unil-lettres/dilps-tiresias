@@ -12,7 +12,7 @@ import { PeriodService } from '../services/period.service';
 })
 export class PeriodsComponent extends AbstractNavigableList<Periods['periods'], PeriodsVariables> {
 
-    public displayedColumns = ['name', 'from', 'to'];
+    public displayedColumns = ['navigation', 'name', 'from', 'to'];
 
     constructor(service: PeriodService, injector: Injector) {
         super(service, PeriodComponent, injector);
