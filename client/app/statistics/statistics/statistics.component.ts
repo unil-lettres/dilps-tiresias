@@ -228,16 +228,16 @@ export class StatisticsComponent extends NaturalAbstractController {
     private buildOneSeries(seriesData, key: keyof Values): void {
         this.series.set(key, [
             {
-                name: this.data.unil.name,
-                data: seriesData.unil[key],
+                name: this.data.anonymous.name,
+                data: seriesData.anonymous[key],
             },
             {
                 name: this.data.default.name,
                 data: seriesData.default[key],
             },
             {
-                name: this.data.anonymous.name,
-                data: seriesData.anonymous[key],
+                name: this.data.unil.name,
+                data: seriesData.unil[key],
             },
         ]);
     }
