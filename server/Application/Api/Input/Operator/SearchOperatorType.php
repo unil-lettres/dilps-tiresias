@@ -70,6 +70,8 @@ class SearchOperatorType extends AbstractOperator
             'addition',
             'login',
             'email',
+            'dating',
+            'id',
         ];
 
         // Find most textual fields for the entity
