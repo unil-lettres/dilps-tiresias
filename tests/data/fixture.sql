@@ -86,8 +86,8 @@ REPLACE INTO `document_type` (`id`, `name`) VALUES
   (9000, 'Test domain 9000'),
   (9001, 'Test domain 9001');
 
-REPLACE INTO `news` (`id`, `site`, `name`, `description`) VALUES
-  (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.'),
-  (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.');
+REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
+  (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
+  (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg');
 
 COMMIT ;
