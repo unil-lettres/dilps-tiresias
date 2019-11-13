@@ -12,7 +12,16 @@
 
 <div class="padding padding-fab">
 
-    <div class="mat-headline">Domaines</div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+        <div class="mat-headline no-margin">Domaines</div>
+        <div fxLayout="row wrap">
+            <a *ngFor="let item of breadcrumbs;" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
+                <natural-icon name="chevron_right"></natural-icon>
+                <natural-icon name="work"></natural-icon>
+                <span>{{ item.name }}</span>
+            </a>
+        </div>
+    </div>
 
     <div class="responsive-table" [fxShow]="showTable()">
 
@@ -20,6 +29,14 @@
 
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+            <ng-container matColumnDef="navigation">
+                <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
+                <td *matCellDef="let element" mat-cell>
+                    <natural-table-button [navigate]="getChildLink(element)" icon="chevron_right" matTooltip="Déployer"
+                    ></natural-table-button>
+                </td>
+            </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">

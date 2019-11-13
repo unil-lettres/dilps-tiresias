@@ -19,6 +19,10 @@ export const domainQuery = gql`
         domain(id: $id) {
             id
             name
+            parentHierarchy {
+                id
+                name
+            }
             creationDate
             creator {
                 ...userMeta

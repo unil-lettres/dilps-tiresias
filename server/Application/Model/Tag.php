@@ -46,19 +46,4 @@ class Tag extends AbstractModel implements HasParentInterface
     {
         $this->children = new ArrayCollection();
     }
-
-    /**
-     * @return Tag[]
-     */
-    public function getParentHierarchy(): array
-    {
-        $list = [];
-        $parent = $this->getParent();
-
-        if ($parent) {
-            return array_merge($parent->getParentHierarchy(), [$parent]);
-        }
-
-        return $list;
-    }
 }

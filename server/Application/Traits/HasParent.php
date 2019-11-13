@@ -93,4 +93,19 @@ trait HasParent
 
         return $allChildren;
     }
+
+    /**
+     * @return self[]
+     */
+    public function getParentHierarchy(): array
+    {
+        $list = [];
+        $parent = $this->getParent();
+
+        if ($parent) {
+            return array_merge($parent->getParentHierarchy(), [$parent]);
+        }
+
+        return $list;
+    }
 }
