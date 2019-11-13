@@ -6,4 +6,5 @@ namespace Application\Repository;
 
 class MaterialRepository extends AbstractRepository
 {
+    use HasParent;
 }

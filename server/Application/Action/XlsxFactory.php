@@ -10,6 +10,6 @@ class XlsxFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        return new XlsxAction();
+        return new TemplateAction();
     }
 }

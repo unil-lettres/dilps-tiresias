@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Application\Action;
 
-use Application\Model\AbstractModel;
+use Application\DBAL\Types\PrecisionType;
 use Application\Model\Card;
 use Application\Model\User;
+use Application\Repository\CountryRepository;
+use Application\Repository\DocumentTypeRepository;
+use Application\Repository\DomainRepository;
+use Application\Repository\MaterialRepository;
+use Application\Repository\PeriodRepository;
 use Application\Stream\TemporaryFile;
-use Application\Traits\HasParentInterface;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
+use PhpOffice\PhpSpreadsheet\NamedRange;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -18,9 +24,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response;
 
 /**
- * Serve multiples cards as XLSX file
+ * Serve XLSX template file
  */
-class XlsxAction extends AbstractAction
+class TemplateAction extends AbstractAction
 {
     /**
      * @var int
@@ -32,8 +38,38 @@ class XlsxAction extends AbstractAction
      */
     private $col = 1;
 
-    public function __construct()
+    /**
+     * @var DomainRepository
+     */
+    private $domainRepository;
+
+    /**
+     * @var PeriodRepository
+     */
+    private $periodRepository;
+
+    /**
+     * @var CountryRepository
+     */
+    private $countryRepository;
+
+    /**
+     * @var MaterialRepository
+     */
+    private $materialRepository;
+
+    /**
+     * @var DocumentTypeRepository
+     */
+    private $documentTypeRepository;
+
+    public function __construct(DomainRepository $domainRepository, PeriodRepository $periodRepository, CountryRepository $countryRepository, MaterialRepository $materialRepository, DocumentTypeRepository $documentTypeRepository)
     {
+        $this->domainRepository = $domainRepository;
+        $this->periodRepository = $periodRepository;
+        $this->countryRepository = $countryRepository;
+        $this->materialRepository = $materialRepository;
+        $this->documentTypeRepository = $documentTypeRepository;
     }
 
     /**
@@ -46,10 +82,8 @@ class XlsxAction extends AbstractAction
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $cards = $request->getAttribute('cards');
-
         $title = 'DILPS ' . date('c', time());
-        $spreadsheet = $this->export($cards, $title);
+        $spreadsheet = $this->export($title);
 
         // Write to disk
         $tempFile = tempnam('data/tmp/', 'xlsx');
@@ -76,7 +110,7 @@ class XlsxAction extends AbstractAction
      *
      * @return Spreadsheet
      */
-    private function export(array $cards, string $title): Spreadsheet
+    private function export(string $title): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
 
@@ -94,8 +128,46 @@ class XlsxAction extends AbstractAction
 
         $this->headers($sheet);
 
-        foreach ($cards as $card) {
-            $this->exportCard($sheet, $card);
+        $domainName = 'Domaines';
+        $domains = $this->domainRepository->getFullNames();
+        $this->createList($spreadsheet, array_keys($domains), $domainName);
+
+        $materialName = 'Matériaux';
+        $materials = $this->materialRepository->getFullNames();
+        $this->createList($spreadsheet, array_keys($materials), $materialName);
+
+        $periodName = 'Périodes';
+        $periods = $this->periodRepository->getFullNames();
+        $this->createList($spreadsheet, array_keys($periods), $periodName);
+
+        $documentTypeName = 'Document';
+        $documentTypes = $this->documentTypeRepository->getNames();
+        $this->createList($spreadsheet, array_keys($documentTypes), $documentTypeName);
+
+        $countryName = 'Pays';
+        $countries = $this->countryRepository->getNames();
+        $this->createList($spreadsheet, array_keys($countries), $countryName);
+
+        $precisionName = 'Précisions';
+        $precisions = [
+            PrecisionType::LOCALITY,
+            PrecisionType::SITE,
+            PrecisionType::BUILDING,
+        ];
+        $this->createList($spreadsheet, $precisions, $precisionName);
+
+        foreach (range(1, 100) as $row) {
+            $this->col = 4;
+            $this->writeSelect($sheet, $domainName);
+            $this->writeSelect($sheet, $materialName);
+            $this->writeSelect($sheet, $periodName);
+            $this->col += 2;
+            $this->writeSelect($sheet, $countryName);
+            $this->col += 3;
+            $this->writeSelect($sheet, $documentTypeName);
+            $this->col = 18;
+            $this->writeSelect($sheet, $precisionName);
+            ++$this->row;
         }
 
         $style = $sheet->getStyleByColumnAndRow(1, 1, $this->col, $this->row);
@@ -109,10 +181,11 @@ class XlsxAction extends AbstractAction
      */
     private function headers(Worksheet $sheet): void
     {
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Id');
+        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Fichier image (avec ou sans extension)');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre étendu');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Domaine');
+        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Matériaux');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Période');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise début');
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise fin');
@@ -144,54 +217,42 @@ class XlsxAction extends AbstractAction
         ++$this->row;
     }
 
-    private function exportCard(Worksheet $sheet, Card $card): void
+    private function createList(Spreadsheet $spreadsheet, array $data, string $name): string
     {
-        $this->col = 1;
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getId());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getName());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getExpandedName());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableFullName($card->getDomain()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getPeriods()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getFrom());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTo());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getCountry()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLocality());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getProductionPlace());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getObjectReference());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getDocumentType()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueAuthor());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueDate());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLatitude());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLongitude());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getPrecision());
+        $sheet = $spreadsheet->createSheet();
+        $sheet->setTitle($name);
+        $row = 1;
+        foreach ($data as $d) {
+            $sheet->setCellValueByColumnAndRow(1, $row++, $d);
+        }
 
-        ++$this->row;
+        $spreadsheet->addNamedRange(
+            new NamedRange(
+                $name,
+                $sheet,
+                'A1:A' . ($row - 1)
+            )
+        );
+
+        return $name;
     }
 
-    private function nullableName(?AbstractModel $model): string
+    private function writeSelect(Worksheet $sheet, string $name): void
     {
-        return $model ? $model->getName() : '';
-    }
+        $validation = $sheet
+            ->getCellByColumnAndRow($this->col++, $this->row)
+            ->getDataValidation();
 
-    private function nullableFullName(?HasParentInterface $model): string
-    {
-        return $model ? $model->getFullName() : '';
-    }
-
-    private function collection(\Doctrine\Common\Collections\Collection $collection): string
-    {
-        $lines = $collection->map(function ($model) {
-            if ($model instanceof HasParentInterface) {
-                $name = $model->getFullName();
-            } else {
-                $name = $model->getName();
-            }
-
-            return '• ' . $name;
-        })->toArray();
-
-        sort($lines);
-
-        return implode(PHP_EOL, $lines);
+        $validation->setType(DataValidation::TYPE_LIST)
+            ->setErrorStyle(DataValidation::STYLE_INFORMATION)
+            ->setAllowBlank(true)
+            ->setShowInputMessage(true)
+            ->setShowErrorMessage(true)
+            ->setShowDropDown(true)
+            ->setErrorTitle('Erreur de saisie')
+            ->setError('Cette valeur est introuvable dans la liste.')
+            ->setPromptTitle('Choisissez dans la liste')
+            ->setPrompt('Choisissez un élément de la liste.')
+            ->setFormula1('=' . $name);
     }
 }

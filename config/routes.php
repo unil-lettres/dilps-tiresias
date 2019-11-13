@@ -78,5 +78,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\ZipAction::class,
     ], 'zip/collection');
 
+    $app->get('/template', [
+        \Application\Action\TemplateAction::class,
+    ], 'template');
+
     $app->get('/auth', \Application\Middleware\ShibbolethMiddleware::class);
 };

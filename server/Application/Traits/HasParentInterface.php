@@ -18,6 +18,8 @@ interface HasParentInterface
      */
     public function getName(): string;
 
+    public function getFullName(): string;
+
     /**
      * Returns the parent, or null if this is a root object
      *

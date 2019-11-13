@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Doctrine\Common\Collections\Collection;
+use GraphQL\Doctrine\Annotation as API;
 use InvalidArgumentException;
 
 /**
@@ -92,6 +93,24 @@ trait HasParent
         }
 
         return $allChildren;
+    }
+
+    /**
+     * @API\Exclude
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        $object = $this;
+        $result = [];
+
+        while ($object) {
+            $result[] = $object->getName();
+            $object = $object->getParent();
+        }
+
+        return implode(' > ', array_reverse($result));
     }
 
     /**

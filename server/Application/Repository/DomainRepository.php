@@ -6,4 +6,5 @@ namespace Application\Repository;
 
 class DomainRepository extends AbstractRepository
 {
+    use HasParent;
 }

@@ -6,4 +6,5 @@ namespace Application\Repository;
 
 class PeriodRepository extends AbstractRepository
 {
+    use HasParent;
 }

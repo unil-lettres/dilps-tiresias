@@ -6,4 +6,5 @@ namespace Application\Repository;
 
 class DocumentTypeRepository extends AbstractRepository
 {
+    use HasName;
 }

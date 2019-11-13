@@ -130,7 +130,7 @@ FROM users;
 -- Migrate periode into period
 INSERT INTO period (id, name, `from`, `to`, sorting, parent_id)
 SELECT id,
-    periode,
+    TRIM(periode),
     debut,
     fin,
     tri,
@@ -141,7 +141,7 @@ FROM periodes;
 INSERT INTO collection (id, creation_date, name, visibility, site)
 SELECT id + @collection_offset,
     date,
-    nom,
+    TRIM(nom),
     'private',
     'tiresias'
 FROM panier;
@@ -157,7 +157,7 @@ SET collection.owner_id   = user.id,
 -- Migrate motscles into tag
 INSERT INTO tag (id, name, parent_id, site)
 SELECT id + @tag_offset,
-    motcle,
+    TRIM(motcle),
     IF(parentid = 0, NULL, parentid + @tag_offset),
     'tiresias'
 FROM motscles
@@ -166,7 +166,7 @@ ORDER BY parentid;
 -- Migrate domaines into domain
 INSERT INTO domain (id, name, parent_id)
 SELECT id,
-    domaine,
+    TRIM(domaine),
     IF(parentid = 0, NULL, parentid)
 FROM domaines
 ORDER BY parentid;
@@ -174,7 +174,7 @@ ORDER BY parentid;
 -- Migrate domaines into domain
 INSERT INTO material (id, name, parent_id)
 SELECT id,
-    materiau,
+    TRIM(materiau),
     IF(parentid = 0, NULL, parentid)
 FROM materiaux
 ORDER BY parentid;
@@ -185,8 +185,8 @@ FROM collection;
 
 INSERT INTO collection (id, name, description, copyrights, usage_rights, is_source, visibility, site)
 SELECT id + @collection_offset_for_fonds,
-    fond,
-    description,
+    TRIM(fond),
+    TRIM(description),
     IF(id IN (35, 34), TRIM(CONCAT(TRIM(proprietaire), ' ', copyright)),
        IF(id IN (2), TRIM(CONCAT(TRIM(proprietaire), ' © ', copyright)),
           copyright
@@ -201,7 +201,7 @@ FROM fonds;
 INSERT INTO institution (id, name, locality, site)
 SELECT musees.id + @institution_offset,
     -- Make institution name as unique as possible, according to https://support.ecodev.ch/issues/5779
-    CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), '')),
+    TRIM(CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), ''))),
     city.city,
     'tiresias'
 FROM musees
@@ -234,7 +234,7 @@ ORDER BY date;
 
 INSERT INTO document_type(id, name)
 SELECT id,
-    restitutiontype
+    TRIM(restitutiontype)
 FROM restitutiontypes;
 
 -- Fix our known countries
@@ -417,8 +417,8 @@ FROM fonds
 
 INSERT INTO news (id, name, description, filename, url, sorting, site)
 SELECT id,
-    titre,
-    description,
+    TRIM(titre),
+    TRIM(description),
     CONCAT(image, '.jpg'),
     lien,
     tri,
