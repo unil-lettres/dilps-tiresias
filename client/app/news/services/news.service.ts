@@ -66,6 +66,10 @@ export class NewsService
             delete input.file;
         }
 
+        if (input.url === '') {
+            delete input.url;
+        }
+
         return input;
     }
 
