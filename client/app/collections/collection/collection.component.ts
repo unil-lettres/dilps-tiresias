@@ -5,6 +5,7 @@ import { InstitutionService } from '../../institutions/services/institution.serv
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
 import { AlertService } from '../../shared/components/alert/alert.service';
 import { CollectionVisibility, UserRole } from '../../shared/generated-types';
+import { collectionsHierarchicConfig } from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import { UserService } from '../../users/services/user.service';
 import { CollectionService } from '../services/collection.service';
 
@@ -34,6 +35,8 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
     };
 
     public institution;
+
+    public hierarchicConfig = collectionsHierarchicConfig;
 
     constructor(public institutionService: InstitutionService,
                 public collectionService: CollectionService,

@@ -24,6 +24,10 @@ export const collectionQuery = gql`
             isSource
             sorting
             visibility
+            parent {
+                id
+                name
+            }
             institution {
                 id
                 name

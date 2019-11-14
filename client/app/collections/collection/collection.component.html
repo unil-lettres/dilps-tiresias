@@ -29,13 +29,22 @@
                                [multiple]="false"
                                [service]="institutionService"
                                placeholder="Institution"
+                               rent
                 ></app-thesaurus>
+
+                <natural-select [(ngModel)]="data.item.parent"
+                                [hierarchicSelectorConfig]="hierarchicConfig"
+                                [showIcon]="false"
+                                clearLabel="Dissocier"
+                                placeholder="Collection parente"
+                                selectLabel="Associer au parent"
+                ></natural-select>
 
                 <mat-slide-toggle *ngIf="user?.role == 'administrator'" [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
             </div>
 
         </mat-tab>
-        <mat-tab label="Responsables" *ngIf="data.item.id">
+        <mat-tab *ngIf="data.item.id" label="Responsables">
 
             <natural-relations [displayWith]="displayFn"
                                [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"

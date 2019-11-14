@@ -4,7 +4,8 @@ import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import { SITE } from '../../app.config';
 import {
-    Collection, CollectionInput,
+    Collection,
+    CollectionInput,
     Collections,
     CollectionsVariables,
     CollectionVariables,
@@ -67,6 +68,7 @@ export class CollectionService
             sorting: 0,
             visibility: CollectionVisibility.private,
             institution: null,
+            parent: null,
         };
     }
 
