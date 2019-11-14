@@ -90,6 +90,7 @@ export const cardDetailsFragment = gql`
         collections {
             id
             name
+            isSource
         }
         country {
             id

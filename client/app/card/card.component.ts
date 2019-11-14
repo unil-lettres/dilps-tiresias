@@ -6,6 +6,7 @@ import { SITE } from '../app.config';
 import { ArtistComponent } from '../artists/artist/artist.component';
 import { ArtistService } from '../artists/services/artist.service';
 import { ChangeService } from '../changes/services/change.service';
+import { CollectionService } from '../collections/services/collection.service';
 import { DocumentTypeComponent } from '../document-types/document-type/document-type.component';
 import { DocumentTypeService } from '../document-types/services/document-type.service';
 import { DomainComponent } from '../domains/domain/domain.component';
@@ -27,11 +28,11 @@ import { periodHierarchicConfig } from '../shared/hierarchic-configurations/Peri
 import { tagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
 import { UploadService } from '../shared/services/upload.service';
 import { getBase64 } from '../shared/services/utility';
+import { StatisticService } from '../statistics/services/statistic.service';
 import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
-import { StatisticService } from '../statistics/services/statistic.service';
 
 @Component({
     selector: 'app-card',
@@ -237,6 +238,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      */
     private uploadSub;
 
+    /**
+     * List of linked collections that are sources
+     */
+    private sources;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private changeService: ChangeService,
@@ -254,6 +260,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private userService: UserService,
                 @Inject(SITE) public site: Site,
                 private statisticService: StatisticService,
+                private collectionService: CollectionService,
     ) {
     }
 
@@ -351,6 +358,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             if (srcFull) {
                 this.imageSrcFull = srcFull;
             }
+
+            this.sources = this.model.collections.filter(c => c.isSource);
         }
     }
 
@@ -479,9 +488,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-            && this.model.owner && this.model.owner.id === this.user.id
-            && this.model.creator && this.model.creator.id === this.user.id
-            && this.model.visibility === CardVisibility.private;
+               && this.model.owner && this.model.owner.id === this.user.id
+               && this.model.creator && this.model.creator.id === this.user.id
+               && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {

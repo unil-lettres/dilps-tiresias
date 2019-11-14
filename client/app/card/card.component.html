@@ -83,7 +83,7 @@
                     <mat-icon>spellcheck</mat-icon>
                 </button>
 
-                <button *ngIf="edit" (click)="complete()" mat-icon-button matTooltip="Importer les données d'autre fiche">
+                <button (click)="complete()" *ngIf="edit" mat-icon-button matTooltip="Importer les données d'autre fiche">
                     <mat-icon>content_copy</mat-icon>
                 </button>
 
@@ -119,6 +119,10 @@
                                 [min]="1"
                                 [ngModel]="visibility"
                     ></mat-slider>
+                </div>
+
+                <div *ngIf="sources" class="padding mat-body-2">
+                    <div *ngFor="let source of sources"> {{source.name}} </div>
                 </div>
 
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
@@ -390,19 +394,17 @@
                     <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
-                    <div>
-                        <natural-relations [disabled]="!edit"
-                                           [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
-                                           [main]="model"
-                                           [service]="cardService"
-                                           placeholder="Chercher une fiche"
-                        >
-                            <ng-template let-item="item">
-                                <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"
-                                ></natural-table-button>
-                            </ng-template>
-                        </natural-relations>
-                    </div>
+                    <natural-relations [disabled]="!edit"
+                                       [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
+                                       [main]="model"
+                                       [service]="cardService"
+                                       placeholder="Chercher une fiche"
+                    >
+                        <ng-template let-item="item">
+                            <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"
+                            ></natural-table-button>
+                        </ng-template>
+                    </natural-relations>
                 </div>
 
             </div>
