@@ -50,8 +50,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (!logout) {
             this.currentUser = this.userService.getCurrentUser().subscribe(user => {
                 if (user) {
-                    this.redirect();
-                }
+                    if (!user.termsAgreement) {
+                        this.showTerms(user);
+                    } else {
+                        this.redirect();
+                    }                }
             });
         }
 
