@@ -14,90 +14,41 @@
 
                 <mat-nav-list *ngIf="showUnclassified">
                     <a [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['.']" mat-list-item routerLinkActive="active">
-                        <mat-icon mat-list-icon>collections</mat-icon>
                         <span fxLayout="row" fxLayoutAlign="start center" matLine>Non classé</span>
                     </a>
                 </mat-nav-list>
 
                 <mat-nav-list *ngIf="showMyCards">
                     <a [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['my-cards']" mat-list-item routerLinkActive="active">
-                        <mat-icon mat-list-icon>collections</mat-icon>
                         <span fxLayout="row" fxLayoutAlign="start center" matLine>Mes images</span>
                     </a>
                 </mat-nav-list>
 
                 <mat-divider *ngIf="showUnclassified"></mat-divider>
 
-                <mat-nav-list>
-                    <ng-container *ngFor="let item of collections">
-                        <a (click)="toggle(item)" [routerLink]="item.id" mat-list-item routerLinkActive="active">
-                            <mat-icon mat-list-icon>collections</mat-icon>
+                <ng-template #recursiveList let-collections let-padding="padding">
+                    <ng-container *ngFor="let collection of collections">
+                        <a (click)="toggle(collection)"
+                           [routerLink]="collection.id"
+                           [style.padding-left.px]="padding"
+                           mat-list-item
+                           routerLinkActive="active"
+                        >
                             <span fxLayout="row" fxLayoutAlign="start center" matLine>
-                                {{ item.name }}
-                                <span *ngIf="item.hasUsers">&nbsp;(*)</span>
+                                {{collection.name}}
+                                <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
-                            <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
+                            <button (click)="edit($event, collection)" *ngIf="showEditButtons" mat-icon-button>
                                 <mat-icon>edit</mat-icon>
                             </button>
                         </a>
-
-                        <ng-container *ngFor="let item of item.children">
-                            <a (click)="toggle(item)"
-                               [routerLink]="item.id"
-                               mat-list-item
-                               routerLinkActive="active"
-                               style="padding-left:20px;"
-                            >
-                                <mat-icon mat-list-icon>collections</mat-icon>
-                                <span fxLayout="row" fxLayoutAlign="start center" matLine>
-                                    {{ item.name }}
-                                    <span *ngIf="item.hasUsers">&nbsp;(*)</span>
-                                </span>
-                                <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                            </a>
-
-                            <ng-container *ngFor="let item of item.children">
-                                <a (click)="toggle(item)"
-                                   [routerLink]="item.id"
-                                   mat-list-item
-                                   routerLinkActive="active"
-                                   style="padding-left:40px;"
-                                >
-                                    <mat-icon mat-list-icon>collections</mat-icon>
-                                    <span fxLayout="row" fxLayoutAlign="start center" matLine>
-                                        {{ item.name }}
-                                        <span *ngIf="item.hasUsers">&nbsp;(*)</span>
-                                    </span>
-                                    <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                </a>
-
-                                <ng-container *ngFor="let item of item.children">
-                                    <a (click)="toggle(item)"
-                                       [routerLink]="item.id"
-                                       mat-list-item
-                                       routerLinkActive="active"
-                                       style="padding-left:60px;"
-                                    >
-                                        <mat-icon mat-list-icon>collections</mat-icon>
-                                        <span fxLayout="row" fxLayoutAlign="start center" matLine>
-                                            {{ item.name }}
-                                            <span *ngIf="item.hasUsers">&nbsp;(*)</span>
-                                        </span>
-                                        <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
-                                    </a>
-                                </ng-container>
-
-                            </ng-container>
-
-                        </ng-container>
-
+                        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: collection.children, padding: padding + 20 }"></ng-container>
                     </ng-container>
+                </ng-template>
+
+                <mat-nav-list>
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: collections, padding: 0 }"></ng-container>
+
                     <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
                         <mat-icon mat-list-icon>keyboard_arrow_down</mat-icon>
                         <span matLine>Afficher d'avantage</span>
