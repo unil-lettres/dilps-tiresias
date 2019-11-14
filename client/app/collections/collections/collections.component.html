@@ -30,7 +30,7 @@
 
                 <mat-nav-list>
                     <ng-container *ngFor="let item of collections">
-                        <a (click)="getChildren(item)" [routerLink]="item.id" mat-list-item routerLinkActive="active">
+                        <a (click)="toggle(item)" [routerLink]="item.id" mat-list-item routerLinkActive="active">
                             <mat-icon mat-list-icon>collections</mat-icon>
                             <span fxLayout="row" fxLayoutAlign="start center" matLine>{{ item.name }}</span>
                             <button (click)="edit($event, item)" *ngIf="showEditButtons" mat-icon-button>
@@ -39,7 +39,7 @@
                         </a>
 
                         <ng-container *ngFor="let item of item.children">
-                            <a (click)="getChildren(item)"
+                            <a (click)="toggle(item)"
                                [routerLink]="item.id"
                                mat-list-item
                                routerLinkActive="active"
@@ -53,7 +53,7 @@
                             </a>
 
                             <ng-container *ngFor="let item of item.children">
-                                <a (click)="getChildren(item)"
+                                <a (click)="toggle(item)"
                                    [routerLink]="item.id"
                                    mat-list-item
                                    routerLinkActive="active"
@@ -67,7 +67,7 @@
                                 </a>
 
                                 <ng-container *ngFor="let item of item.children">
-                                    <a (click)="getChildren(item)"
+                                    <a (click)="toggle(item)"
                                        [routerLink]="item.id"
                                        mat-list-item
                                        routerLinkActive="active"

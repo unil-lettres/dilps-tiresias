@@ -94,10 +94,24 @@ export class CollectionsComponent extends NaturalAbstractController implements O
 
     }
 
+    public toggle(collection) {
+        if (collection.children) {
+            this.removeChildren(collection);
+        } else {
+            this.getChildren(collection);
+        }
+    }
+
+    public removeChildren(collection) {
+        collection.children = null;
+    }
+
     public getChildren(collection) {
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
-        this.collectionsService.getAll(qvm).subscribe(results => collection.children = results.items);
+        this.collectionsService.getAll(qvm).subscribe(results => {
+            collection.children = results.items;
+        });
     }
 
     public showEditionButtons() {
