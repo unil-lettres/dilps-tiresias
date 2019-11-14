@@ -145,31 +145,19 @@
                     ></editor>
                 </div>
 
-                <!--
-                    TODO :
-                    * comment : model + query ready since 2018, but missing in template
-                    * museris_url : same
-                    * museris_cote : same
-                    * url_http : has been dropped from tiresias without validation
-                    * url_description : same
-                    * altitude : same
-                    * reference : not included yet
-                    * old reference : not included yet
-                -->
-
-                <app-thesaurus (modelChange)="model.artists = $event"
-                               *ngIf="edit || !!artists?.length"
-                               [matTooltip]="!edit ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
-                               [model]="artists"
-                               [previewComponent]="ArtistComponent"
-                               [readonly]="!edit"
-                               [service]="artistService"
-                               matTooltipPosition="after"
-                               placeholder="Artistes"
-                ></app-thesaurus>
-
                 <!-- Specific dilps fields -->
                 <ng-container *ngIf="site === Site.dilps">
+
+                    <app-thesaurus (modelChange)="model.artists = $event"
+                                   *ngIf="edit || !!artists?.length"
+                                   [matTooltip]="!edit ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
+                                   [model]="artists"
+                                   [previewComponent]="ArtistComponent"
+                                   [readonly]="!edit"
+                                   [service]="artistService"
+                                   matTooltipPosition="after"
+                                   placeholder="Artistes"
+                    ></app-thesaurus>
 
                     <mat-form-field *ngIf="edit || !!model.addition"
                                     [matTooltip]="!edit ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
