@@ -8,6 +8,7 @@ export const collectionsQuery = gql`
             items {
                 id
                 name
+                hasUsers
             }
             pageSize
             pageIndex
