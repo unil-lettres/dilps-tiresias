@@ -221,9 +221,9 @@
                             <input [(ngModel)]="model.from" [readonly]="!edit" matInput>
                         </mat-form-field>
 
-                        <mat-form-field *ngIf="edit || !!model.from" [style.width]="'45%'">
+                        <mat-form-field *ngIf="edit || !!model.to" [style.width]="'45%'">
                             <mat-label>Jusqu'à</mat-label>
-                            <input [(ngModel)]="model.from" [readonly]="!edit" matInput>
+                            <input [(ngModel)]="model.to" [readonly]="!edit" matInput>
                         </mat-form-field>
                     </div>
 

@@ -6,7 +6,6 @@ import { SITE } from '../app.config';
 import { ArtistComponent } from '../artists/artist/artist.component';
 import { ArtistService } from '../artists/services/artist.service';
 import { ChangeService } from '../changes/services/change.service';
-import { CollectionService } from '../collections/services/collection.service';
 import { DocumentTypeComponent } from '../document-types/document-type/document-type.component';
 import { DocumentTypeService } from '../document-types/services/document-type.service';
 import { DomainComponent } from '../domains/domain/domain.component';
@@ -260,7 +259,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private userService: UserService,
                 @Inject(SITE) public site: Site,
                 private statisticService: StatisticService,
-                private collectionService: CollectionService,
     ) {
     }
 
