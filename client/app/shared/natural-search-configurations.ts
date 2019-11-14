@@ -1,14 +1,13 @@
 import {
-    DropdownFacet,
+    FlagFacet,
     NaturalSearchFacets,
     replaceOperatorByField,
     TypeNumberComponent,
     TypeSelectComponent,
-    TypeSelectConfiguration,
     TypeTextComponent,
     wrapLike,
 } from '@ecodev/natural';
-import { CardVisibility, Site } from './generated-types';
+import { CardFilterGroupCondition, CardVisibility, Site } from './generated-types';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -28,17 +27,15 @@ export const adminConfig: NaturalSearchFacets = [
 
 export const cardsConfiguration: NaturalSearchFacets = [
     {
-        display: 'Site',
+        display: 'Dilps uniquement',
         field: 'site',
-        component: TypeSelectComponent,
-        configuration: {
-            items: [
-                Site.dilps,
-                Site.tiresias,
-            ],
-            multiple: true,
-        },
-    } as DropdownFacet<TypeSelectConfiguration>,
+        condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
+    } as FlagFacet,
+    {
+        display: 'Tiresias uniquement',
+        field: 'site',
+        condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
+    } as FlagFacet,
     {
         display: 'Titre',
         field: 'nameOrExpandedName',
