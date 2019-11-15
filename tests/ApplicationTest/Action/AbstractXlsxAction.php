@@ -32,7 +32,7 @@ class AbstractXlsxAction extends TestCase
         $filename = tempnam(sys_get_temp_dir(), 'test');
         file_put_contents($filename, $body);
 
-        $size = mb_strlen($body);
+        $size = filesize($filename);
         $this->assertEquals($size, $response->getHeaderLine('content-length'));
 
         // Assert that it is a valid ZIP file to prevent PhpSpreadsheet from hanging
@@ -44,8 +44,8 @@ class AbstractXlsxAction extends TestCase
         // Re-read it
         $reader = new Xlsx();
         $spreadsheet = $reader->load($filename);
+        unlink($filename);
 
-//        unlink($filename);
         return $spreadsheet;
     }
 }
