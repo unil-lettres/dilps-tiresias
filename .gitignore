@@ -5,6 +5,7 @@
 /data/tmp/*.*
 /data/tmp/pptx*
 /data/tmp/zip*
+/data/tmp/xlsx*
 /data/tmp/*/*
 /data/cache/*.*
 /data/cache/DoctrineORMModule/*
