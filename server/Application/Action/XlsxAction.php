@@ -6,21 +6,17 @@ namespace Application\Action;
 
 use Application\Model\AbstractModel;
 use Application\Model\Card;
-use Application\Model\User;
-use Application\Stream\TemporaryFile;
 use Application\Traits\HasParentInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response;
 
 /**
  * Serve multiples cards as XLSX file
  */
-class XlsxAction extends AbstractAction
+class XlsxAction extends AbstractXlsx
 {
     /**
      * @var int
@@ -47,49 +43,21 @@ class XlsxAction extends AbstractAction
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $cards = $request->getAttribute('cards');
+        $spreadsheet = $this->export($cards);
 
-        $title = 'DILPS ' . date('c', time());
-        $spreadsheet = $this->export($cards, $title);
-
-        // Write to disk
-        $tempFile = tempnam('data/tmp/', 'xlsx');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($tempFile);
-
-        $headers = [
-            'content-type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'content-length' => filesize($tempFile),
-            'content-disposition' => 'inline; filename="' . $title . '.xlsx"',
-        ];
-        $stream = new TemporaryFile($tempFile);
-        $response = new Response($stream, 200, $headers);
-
-        return $response;
+        return $this->createResponse($spreadsheet);
     }
 
     /**
      * Export all cards into a presentation
      *
      * @param Card[] $cards
-     * @param string $title
      *
      * @return Spreadsheet
      */
-    private function export(array $cards, string $title): Spreadsheet
+    private function export(array $cards): Spreadsheet
     {
-        $spreadsheet = new Spreadsheet();
-
-        // Set a few meta data
-        $properties = $spreadsheet->getProperties();
-        $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
-        $properties->setLastModifiedBy('DILPS');
-        $properties->setTitle($title);
-        $properties->setSubject('Généré par le système DILPS');
-        $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
-        $properties->setKeywords("Université de Lausanne, Section d'Histoire de l'art");
-        $properties->setCategory("Histoire de l'art");
-
+        $spreadsheet = $this->createSpreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $this->headers($sheet);
