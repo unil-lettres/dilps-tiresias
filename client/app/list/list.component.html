@@ -41,7 +41,7 @@
             <!--<div *ngIf="selected.length === 1" class="mat-body-1">{{ selected.length }} élément sélectionné</div>-->
             <!--<div *ngIf="selected.length > 1" class="mat-body-1">{{ selected.length }} éléments sélectionnés</div>-->
 
-            <button (click)="linkSelectionToCollection(selected)" mat-icon-button matTooltip="Ajouter à une collection">
+            <button (click)="linkSelectionToCollection(selected)" *ngIf="!!user" mat-icon-button matTooltip="Ajouter à une collection">
                 <mat-icon>library_add</mat-icon>
             </button>
             <button (click)="unlinkFromCollection(selected)" *ngIf="collection?.id" mat-icon-button matTooltip="Supprimer de la collection">

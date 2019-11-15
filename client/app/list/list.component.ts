@@ -140,7 +140,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             this.user = user;
             this.updateShowDownloadCollection();
 
-            if (this.user.role === UserRole.administrator) {
+            if (this.user && this.user.role === UserRole.administrator) {
                 this.pushAdminConfig();
             }
 
