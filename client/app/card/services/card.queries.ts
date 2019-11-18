@@ -13,6 +13,31 @@ export const cardDetailsFragment = gql`
         visibility
         dating
         precision
+        documentSize
+        technique
+        techniqueAuthor
+        techniqueDate
+        format
+        literature
+        page
+        figure
+        table
+        isbn
+        comment
+        rights
+        muserisUrl
+        muserisCote
+        locality
+        street
+        postcode
+        latitude
+        longitude
+        objectReference
+        productionPlace
+        cards {
+            id
+            name
+        }
         datings {
             from
             to
@@ -20,21 +45,6 @@ export const cardDetailsFragment = gql`
         artists {
             id
             name
-        }
-        institution {
-            id
-            name
-            locality
-            street
-            postcode
-            latitude
-            longitude
-            precision
-            country {
-                id
-                code
-                name
-            }
         }
         original {
             id
@@ -63,30 +73,6 @@ export const cardDetailsFragment = gql`
             id
             name
         }
-        technique
-        techniqueAuthor
-        techniqueDate
-        format
-        literature
-        page
-        figure
-        table
-        isbn
-        comment
-        rights
-        muserisUrl
-        muserisCote
-        locality
-        street
-        postcode
-        latitude
-        longitude
-        objectReference
-        productionPlace
-        cards {
-            id
-            name
-        }
         collections {
             id
             name
@@ -96,6 +82,21 @@ export const cardDetailsFragment = gql`
             id
             code
             name
+        }
+        institution {
+            id
+            name
+            locality
+            street
+            postcode
+            latitude
+            longitude
+            precision
+            country {
+                id
+                code
+                name
+            }
         }
         owner {
             ...userMeta

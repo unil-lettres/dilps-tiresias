@@ -161,7 +161,6 @@
 
                     <mat-form-field *ngIf="edit || !!model.addition"
                                     [matTooltip]="!edit ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
-
                                     matTooltipPosition="after"
                     >
                         <mat-label>Supplément</mat-label>
@@ -179,7 +178,6 @@
 
                     <mat-form-field *ngIf="edit || !!model.material"
                                     [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-
                                     matTooltipPosition="after"
                     >
                         <mat-label>Matériel</mat-label>
@@ -280,7 +278,6 @@
 
                 <mat-form-field *ngIf="(edit || !!model.technique) && site === Site.dilps"
                                 [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-
                                 matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
@@ -299,11 +296,15 @@
 
                 <mat-form-field *ngIf="(edit || !!model.format) && site === Site.dilps"
                                 [matTooltip]="!edit ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
-
                                 matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
                     <input [(ngModel)]="model.format" [readonly]="!edit" matInput>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="(edit || !!model.documentSize) && site === Site.tiresias" matTooltipPosition="after">
+                    <mat-label>Dimensions du document</mat-label>
+                    <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput>
                 </mat-form-field>
 
                 <div *ngIf="edit || !!institution" class="mat-title">Lieu</div>

@@ -180,6 +180,12 @@ class Card extends AbstractModel
     private $change;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=191)
+     */
+    private $documentSize = '';
+
+    /**
      * Constructor
      *
      * @param string $name
@@ -821,5 +827,25 @@ class Card extends AbstractModel
     public function changeAdded(?Change $change): void
     {
         $this->change = $change;
+    }
+
+    /**
+     * Set documentSize
+     *
+     * @param string $documentSize
+     */
+    public function setDocumentSize(string $documentSize): void
+    {
+        $this->documentSize = $documentSize;
+    }
+
+    /**
+     * Get documentSize
+     *
+     * @return string
+     */
+    public function getDocumentSize(): string
+    {
+        return $this->documentSize;
     }
 }
