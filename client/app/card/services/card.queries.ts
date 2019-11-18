@@ -158,6 +158,13 @@ export const createCard = gql`
         }
     }${userMetaFragment}`;
 
+export const createCards = gql`
+    mutation CreateCards ($excel: Upload!, $images: [Upload!]!) {
+        createCards (excel: $excel, images: $images) {
+            id
+        }
+    }`;
+
 export const updateCard = gql`
     mutation UpdateCard($id: CardID!, $input: CardPartialInput!) {
         updateCard(id: $id, input: $input) {

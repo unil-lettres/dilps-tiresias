@@ -21,7 +21,16 @@ import {
     ValidateImage,
 } from '../../shared/generated-types';
 import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
-import { cardQuery, cardsQuery, createCard, deleteCards, updateCard, validateData, validateImage } from './card.queries';
+import {
+    cardQuery,
+    cardsQuery,
+    createCard,
+    createCards,
+    deleteCards,
+    updateCard,
+    validateData,
+    validateImage,
+} from './card.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -170,6 +179,16 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     // In Card specific case, don't context lists
     public getContextForAll() {
         return {};
+    }
+
+    public createWithExcel(excel: File, images: File[]) {
+        return this.apollo.mutate({
+            mutation: createCards,
+            variables: {
+                excel,
+                images,
+            },
+        }).pipe(map(result => result.data));
     }
 
 }

@@ -83,8 +83,8 @@ REPLACE INTO `domain` (`id`, `name`) VALUES
   (9001, 'Test domain 9001');
 
 REPLACE INTO `document_type` (`id`, `name`) VALUES
-  (9000, 'Test domain 9000'),
-  (9001, 'Test domain 9001');
+  (11000, 'Test document type 11000'),
+  (11001, 'Test document type 11001');
 
 REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
   (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),

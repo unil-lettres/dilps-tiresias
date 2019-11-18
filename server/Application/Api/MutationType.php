@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Api;
 
 use Application\Api\Field\Mutation\AcceptChange;
+use Application\Api\Field\Mutation\CreateCards;
 use Application\Api\Field\Mutation\LinkCollectionToCollection;
 use Application\Api\Field\Mutation\Login;
 use Application\Api\Field\Mutation\Logout;
@@ -50,6 +51,7 @@ class MutationType extends ObjectType
             RecordPage::build(),
             RecordDetail::build(),
             RecordSearch::build(),
+            CreateCards::build(),
         ];
 
         $fields = array_merge(

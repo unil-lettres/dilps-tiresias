@@ -23,6 +23,28 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class TemplateAction extends AbstractXlsx
 {
+    const HEADERS = [
+
+        'Fichier image (avec ou sans extension)',
+        'Titre',
+        'Titre étendu',
+        'Domaine',
+        'Matériaux',
+        'Période',
+        'Date précise début',
+        'Date précise fin',
+        'Pays de découverte',
+        'Site/Lieu de découverte',
+        'Lieu de production',
+        'Référence de l\'objet',
+        'Type de document',
+        'Auteur du document',
+        'Année du document',
+        'Latitude',
+        'Longitude',
+        'Précision',
+    ];
+
     /**
      * @var int
      */
@@ -147,24 +169,9 @@ class TemplateAction extends AbstractXlsx
      */
     private function headers(Worksheet $sheet): void
     {
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Fichier image (avec ou sans extension)');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre étendu');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Domaine');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Matériaux');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Période');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise début');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise fin');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Pays de découverte');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Site/Lieu de découverte');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Lieu de production');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Référence de l\'objet');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Type de document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Auteur du document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Année du document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Latitude');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Longitude');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Précision');
+        foreach (self::HEADERS as $header) {
+            $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $header);
+        }
 
         $style = $sheet->getStyleByColumnAndRow(1, $this->row, $this->col, $this->row);
         $style->getFont()->setBold(true);

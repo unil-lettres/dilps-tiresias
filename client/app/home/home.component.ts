@@ -12,6 +12,10 @@ import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
 import { UserComponent } from '../users/user/user.component';
 
+function isExcel(file: File): boolean {
+    return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+}
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -64,7 +68,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    public uploadPhoto(files) {
+    public uploadImages(files: File[]): void {
+        const excel = files.find(isExcel);
+        if (excel) {
+            this.uploadImagesAndExcel(excel, files.filter(f => !isExcel(f)));
+        } else {
+            this.uploadImagesOnly(files);
+        }
+
+        files.length = 0;
+    }
+
+    public uploadImagesOnly(files: File[]): void {
         const observables = [];
         for (const file of files) {
             const card = this.cardService.getConsolidatedForClient();
@@ -76,8 +91,13 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.router.navigateByUrl('/empty', {skipLocationChange: true})
                 .then(() => this.router.navigateByUrl('my-collection'));
         });
+    }
 
-        files.length = 0;
+    public uploadImagesAndExcel(excel: File, images: File[]): void {
+        this.cardService.createWithExcel(excel, images).subscribe(() => {
+            this.router.navigateByUrl('/empty', {skipLocationChange: true})
+                .then(() => this.router.navigateByUrl('my-collection'));
+        });
     }
 
     public editUser() {
