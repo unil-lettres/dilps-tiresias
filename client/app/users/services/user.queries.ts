@@ -129,6 +129,9 @@ export const viewerQuery = gql`
                 documentType {
                     create
                 }
+                antiqueName {
+                    create
+                }
                 news {
                     create
                 }

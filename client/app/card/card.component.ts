@@ -2,6 +2,8 @@ import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges }
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
+import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
+import { AntiqueNameService } from '../antique-names/services/antique-name.service';
 import { SITE } from '../app.config';
 import { ArtistComponent } from '../artists/artist/artist.component';
 import { ArtistService } from '../artists/services/artist.service';
@@ -204,6 +206,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Template exposed variable
      */
+    public AntiqueNameComponent = AntiqueNameComponent;
+
+    /**
+     * Template exposed variable
+     */
     public domainHierarchicConfig = domainHierarchicConfig;
 
     /**
@@ -253,6 +260,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 public tagService: TagService,
                 public documentTypeService: DocumentTypeService,
                 public domainService: DomainService,
+                public antiqueNameService: AntiqueNameService,
                 public periodService: PeriodService,
                 private uploadService: UploadService,
                 private dialog: MatDialog,

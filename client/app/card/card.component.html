@@ -233,8 +233,17 @@
                                    [previewComponent]="MaterialComponent"
                                    [readonly]="!edit"
                                    [service]="materialService"
-                                   matTooltipPosition="after"
                                    placeholder="Matériaux"
+                    ></app-thesaurus>
+
+                    <app-thesaurus *ngIf="edit || !!model.antiqueNames?.length"
+                                   [(model)]="model.antiqueNames"
+                                   [allowFreeText]="false"
+                                   [multiple]="true"
+                                   [previewComponent]="AntiqueNameComponent"
+                                   [readonly]="!edit"
+                                   [service]="antiqueNameService"
+                                   placeholder="Nom antique"
                     ></app-thesaurus>
 
                     <mat-form-field *ngIf="edit || !!model.productionPlace">

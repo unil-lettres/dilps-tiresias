@@ -61,6 +61,9 @@ class UserTest extends TestCase
             'material' => [
                 'create' => false,
             ],
+            'antiqueName' => [
+                'create' => false,
+            ],
         ];
 
         self::assertEquals($expected, $actual);
@@ -106,6 +109,9 @@ class UserTest extends TestCase
                 'create' => true,
             ],
             'material' => [
+                'create' => true,
+            ],
+            'antiqueName' => [
                 'create' => true,
             ],
         ];

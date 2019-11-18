@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AntiqueNamesComponent } from './antique-names/antique-names/antique-names.component';
 import { ArtistsComponent } from './artists/artists/artists.component';
 import { CardComponent } from './card/card.component';
 import { CardResolver } from './card/services/card.resolver';
@@ -82,6 +83,11 @@ export const routes: Routes = [
             {
                 path: 'artist',
                 component: ArtistsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'antique-name',
+                component: AntiqueNamesComponent,
                 canActivate: [AuthGuard],
             },
             {

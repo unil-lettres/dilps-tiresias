@@ -90,4 +90,8 @@ REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
   (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
   (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg');
 
+REPLACE INTO `antique_name` (`id`, `name`) VALUES
+  (11000, 'Test antique name 11000'),
+  (11001, 'Test antique name 11001');
+
 COMMIT ;

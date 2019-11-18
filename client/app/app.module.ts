@@ -14,11 +14,7 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-    MAT_FORM_FIELD_DEFAULT_OPTIONS,
-    MatFormFieldDefaultOptions,
-    MatFormFieldModule,
-} from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -36,6 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavigationEnd, Router } from '@angular/router';
 
 import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import {
@@ -46,7 +43,8 @@ import {
     NaturalIconModule,
     NaturalIconsConfig,
     NaturalRelationsModule,
-    NaturalSearchModule, NaturalSelectEnumModule,
+    NaturalSearchModule,
+    NaturalSelectEnumModule,
     NaturalSelectModule,
     NaturalTableButtonModule,
 } from '@ecodev/natural';
@@ -58,8 +56,12 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
+import { HighchartsChartModule } from 'highcharts-angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SwiperModule } from 'ngx-swiper-wrapper';
+import { filter } from 'rxjs/operators';
+import { AntiqueNameComponent } from './antique-names/antique-name/antique-name.component';
+import { AntiqueNamesComponent } from './antique-names/antique-names/antique-names.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -110,6 +112,9 @@ import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
 import { TypePipe } from './shared/pipes/type.pipe';
 import { NetworkActivityService } from './shared/services/network-activity.service';
+import { StatisticService } from './statistics/services/statistic.service';
+import { StatisticComponent } from './statistics/statistic/statistic.component';
+import { StatisticsComponent } from './statistics/statistics/statistics.component';
 import { TagComponent } from './tags/tag/tag.component';
 import { TagsComponent } from './tags/tags/tags.component';
 import { UserComponent } from './users/user/user.component';
@@ -117,12 +122,6 @@ import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
-import { StatisticsComponent } from './statistics/statistics/statistics.component';
-import { HighchartsChartModule } from 'highcharts-angular';
-import { StatisticComponent } from './statistics/statistic/statistic.component';
-import { Router, NavigationEnd } from '@angular/router';
-import { StatisticService } from './statistics/services/statistic.service';
-import { filter } from 'rxjs/operators';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -138,6 +137,9 @@ const icons: NaturalIconsConfig = {
     },
     tag: {
         font: 'label',
+    },
+    'antique-name': {
+        svg: 'assets/icons/fire.svg',
     },
 };
 
@@ -195,6 +197,8 @@ const icons: NaturalIconsConfig = {
         MaterialComponent,
         MaterialsComponent,
         CardSelectorComponent,
+        AntiqueNamesComponent,
+        AntiqueNameComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -214,6 +218,7 @@ const icons: NaturalIconsConfig = {
         TagComponent,
         MaterialComponent,
         CardSelectorComponent,
+        AntiqueNameComponent,
     ],
     imports: [
         BrowserModule,

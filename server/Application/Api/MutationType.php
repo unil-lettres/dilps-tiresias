@@ -18,6 +18,7 @@ use Application\Api\Field\Mutation\SuggestUpdate;
 use Application\Api\Field\Mutation\ValidateData;
 use Application\Api\Field\Mutation\ValidateImage;
 use Application\Api\Field\Standard;
+use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Collection;
@@ -65,6 +66,7 @@ class MutationType extends ObjectType
             Standard::buildMutation(News::class),
             Standard::buildMutation(Period::class),
             Standard::buildMutation(Tag::class),
+            Standard::buildMutation(AntiqueName::class),
             Standard::buildRelationMutation(Collection::class, Card::class),
             Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),

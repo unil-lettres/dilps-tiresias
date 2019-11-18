@@ -13,6 +13,7 @@ use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\One;
 use Application\Acl\Assertion\Visibility;
 use Application\Model\AbstractModel;
+use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Change;
@@ -60,6 +61,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->addResource(new ModelResource(DocumentType::class));
         $this->addResource(new ModelResource(Domain::class));
         $this->addResource(new ModelResource(Material::class));
+        $this->addResource(new ModelResource(AntiqueName::class));
         $this->addResource(new ModelResource(News::class));
         $this->addResource(new ModelResource(Period::class));
         $this->addResource(new ModelResource(Statistic::class));
@@ -73,6 +75,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(DocumentType::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Domain::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Material::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(AntiqueName::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(News::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Period::class), 'read');
 
@@ -110,6 +113,7 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(DocumentType::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Domain::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Material::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(AntiqueName::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Period::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read');

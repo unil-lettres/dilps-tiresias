@@ -38,6 +38,10 @@ export const cardDetailsFragment = gql`
             id
             name
         }
+        antiqueNames {
+            id
+            name
+        }
         datings {
             from
             to

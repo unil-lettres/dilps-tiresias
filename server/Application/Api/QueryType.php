@@ -7,6 +7,7 @@ namespace Application\Api;
 use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\Viewer;
 use Application\Api\Field\Standard;
+use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Change;
@@ -49,6 +50,7 @@ class QueryType extends ObjectType
             Standard::buildQuery(Period::class),
             Standard::buildQuery(Statistic::class),
             Standard::buildQuery(Tag::class),
+            Standard::buildQuery(AntiqueName::class),
         );
 
         $config = [

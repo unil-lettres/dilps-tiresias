@@ -365,6 +365,7 @@ class User extends AbstractModel
             News::class,
             Period::class,
             Material::class,
+            AntiqueName::class,
             self::class,
         ];
 

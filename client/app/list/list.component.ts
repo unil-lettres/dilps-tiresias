@@ -329,6 +329,10 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     changes.materials = changes.materials.map(a => a.name ? a.name : a);
                 }
 
+                if (changes.antiqueNames) {
+                    changes.antiqueNames = changes.antiqueNames.map(a => a.name ? a.name : a);
+                }
+
                 if (changes.tags) {
                     changes.tags = changes.tags.map(a => a.name ? a.name : a);
                 }

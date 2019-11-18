@@ -112,6 +112,13 @@ class Card extends AbstractModel
     /**
      * @var DoctrineCollection
      *
+     * @ORM\ManyToMany(targetEntity="AntiqueName")
+     */
+    private $antiqueNames;
+
+    /**
+     * @var DoctrineCollection
+     *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
     private $tags;
@@ -196,6 +203,7 @@ class Card extends AbstractModel
 
         $this->collections = new ArrayCollection();
         $this->artists = new ArrayCollection();
+        $this->antiqueNames = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->datings = new ArrayCollection();
         $this->cards = new ArrayCollection();
@@ -344,6 +352,27 @@ class Card extends AbstractModel
     }
 
     /**
+     * Set all antiqueNames at once by their names.
+     *
+     * Non-existing antiqueNames will be created automatically.
+     *
+     * @param AntiqueName[] $antiqueNames
+     */
+    public function setAntiqueNames(array $antiqueNames): void
+    {
+        $this->antiqueNames->clear();
+
+        $ids = array_map(function ($n) {
+            return $n->getId();
+        }, $antiqueNames);
+
+        $antiqueNames = _em()->getRepository(AntiqueName::class)->findById($ids);
+        foreach ($antiqueNames as $material) {
+            $this->antiqueNames->add($material);
+        }
+    }
+
+    /**
      * Set all periods at once by their names.
      *
      * @param Period[] $periods
@@ -391,6 +420,18 @@ class Card extends AbstractModel
     public function getArtists(): DoctrineCollection
     {
         return $this->artists;
+    }
+
+    /**
+     * Get antiqueNames
+     *
+     * @API\Field(type="AntiqueName[]")
+     *
+     * @return DoctrineCollection
+     */
+    public function getAntiqueNames(): DoctrineCollection
+    {
+        return $this->antiqueNames;
     }
 
     /**
