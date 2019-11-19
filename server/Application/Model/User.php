@@ -21,7 +21,8 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
  * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"})
+ *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"}),
+ *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
  * })
  */
 class User extends AbstractModel
@@ -89,7 +90,7 @@ class User extends AbstractModel
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=191)
      */
     private $login = '';
 
@@ -101,8 +102,8 @@ class User extends AbstractModel
     private $password = '';
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=191)
+     * @var null|string
+     * @ORM\Column(type="string", length=191, nullable=true)
      */
     private $email;
 
@@ -196,11 +197,11 @@ class User extends AbstractModel
     /**
      * Set email
      *
-     * @API\Input(type="Email")
+     * @API\Input(type="?Email")
      *
-     * @param string $email
+     * @param null|string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -208,11 +209,11 @@ class User extends AbstractModel
     /**
      * Get email
      *
-     * @API\Field(type="Email")
+     * @API\Field(type="?Email")
      *
-     * @return string
+     * @return null|string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }

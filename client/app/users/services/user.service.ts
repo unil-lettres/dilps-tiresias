@@ -51,7 +51,7 @@ export class UserService extends AbstractContextualizedService<User['user'],
         return {
             site: this.site,
             login: '',
-            email: '',
+            email: null,
             activeUntil: '',
             termsAgreement: null,
             type: UserType.default,
