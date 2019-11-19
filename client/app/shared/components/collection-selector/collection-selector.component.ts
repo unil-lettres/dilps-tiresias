@@ -4,8 +4,23 @@ import { ArtistComponent } from '../../../artists/artist/artist.component';
 import { CollectionService } from '../../../collections/services/collection.service';
 
 import { UserService } from '../../../users/services/user.service';
-import { CollectionFilter, UserRole } from '../../generated-types';
+import {
+    Cards_cards_items,
+    CollectionFilter,
+    Collections_collections_items,
+    CreateCollection_createCollection,
+    UserRole,
+} from '../../generated-types';
 import { AlertService } from '../alert/alert.service';
+import { FakeCollection } from '../../../collections/services/fake-collection.resolver';
+
+export type CollectionSelectorData = {
+    images: Cards_cards_items[],
+    collection?: never,
+} | {
+    images?: never,
+    collection: FakeCollection,
+};
 
 @Component({
     selector: 'app-collection-selector',
@@ -15,8 +30,8 @@ import { AlertService } from '../alert/alert.service';
 export class CollectionSelectorComponent implements OnInit {
 
     public listFilter: CollectionFilter;
-    public collection;
-    public image;
+    public collection: Collections_collections_items;
+    public image: Cards_cards_items | undefined;
     public newCollection: any = {
         name: '',
         description: '',
@@ -27,10 +42,10 @@ export class CollectionSelectorComponent implements OnInit {
                 private dialogRef: MatDialogRef<ArtistComponent>,
                 private userService: UserService,
                 private alertService: AlertService,
-                @Inject(MAT_DIALOG_DATA) public data: any) {
+                @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData) {
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
         this.userService.getCurrentUser().subscribe(user => {
             if (user.role !== UserRole.administrator) {
@@ -47,7 +62,7 @@ export class CollectionSelectorComponent implements OnInit {
         this.linkInternal(this.collection);
     }
 
-    public unlink(image, collection) {
+    public unlink(image: Cards_cards_items, collection): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
             image.collections.splice(index, 1);
@@ -61,7 +76,7 @@ export class CollectionSelectorComponent implements OnInit {
         });
     }
 
-    private linkInternal(collection): void {
+    private linkInternal(collection: Collections_collections_items | CreateCollection_createCollection): void {
         let observable;
         if (this.data.images) {
             observable = this.collectionService.link(collection, this.data.images);

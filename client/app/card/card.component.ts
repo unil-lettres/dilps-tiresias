@@ -20,7 +20,10 @@ import { PeriodComponent } from '../periods/period/period.component';
 import { PeriodService } from '../periods/services/period.service';
 import { AlertService } from '../shared/components/alert/alert.service';
 import { CardSelectorComponent } from '../shared/components/card-selector/card-selector.component';
-import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+} from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { CardVisibility, Site, UserRole } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
@@ -430,7 +433,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public linkToCollection() {
 
-        this.dialog.open(CollectionSelectorComponent, {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',
@@ -494,9 +497,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-               && this.model.owner && this.model.owner.id === this.user.id
-               && this.model.creator && this.model.creator.id === this.user.id
-               && this.model.visibility === CardVisibility.private;
+            && this.model.owner && this.model.owner.id === this.user.id
+            && this.model.creator && this.model.creator.id === this.user.id
+            && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {

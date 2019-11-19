@@ -7,6 +7,7 @@ import { merge } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { CardService } from '../card/services/card.service';
 import { ViewInterface } from '../list/list.component';
+import { Cards_cards_items } from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-grid',
@@ -22,11 +23,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource: NaturalDataSource;
+    @Input() public dataSource: NaturalDataSource<Cards_cards_items>;
     /**
      *
      */
-    @Input() selected = [];
+    @Input() selected: Cards_cards_items[] = [];
     /**
      * Emits when data is required
      */
@@ -34,7 +35,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when some cards are selected
      */
-    @Output() public selectionChange: EventEmitter<any[]> = new EventEmitter<any[]>();
+    @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
     /**
      * Reference to scrollable element
      */
@@ -85,7 +86,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.router.navigate(['card', event.model.id]);
     }
 
-    public selectAll(): any[] {
+    public selectAll(): Cards_cards_items[] {
         return this.gallery.gallery.selectVisibleItems();
     }
 

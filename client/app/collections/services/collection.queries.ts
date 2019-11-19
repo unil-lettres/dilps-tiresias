@@ -9,6 +9,7 @@ export const collectionsQuery = gql`
                 id
                 name
                 hasUsers
+                isSource
             }
             pageSize
             pageIndex
@@ -52,6 +53,8 @@ export const createCollection = gql`
     mutation CreateCollection ($input: CollectionInput!) {
         createCollection (input: $input) {
             id
+            name
+            isSource
             creationDate
             creator {
                 ...userMeta

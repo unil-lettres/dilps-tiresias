@@ -4,6 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { forkJoin } from 'rxjs';
 import { SITE } from '../../app.config';
 import {
+    Cards_cards_items,
     Collection,
     CollectionInput,
     Collections,
@@ -29,6 +30,7 @@ import {
     linkCollectionToCollection,
     updateCollection,
 } from './collection.queries';
+import { FakeCollection } from './fake-collection.resolver';
 
 @Injectable({
     providedIn: 'root',
@@ -81,7 +83,7 @@ export class CollectionService
         return forkJoin(observables);
     }
 
-    public unlink(collection, images) {
+    public unlink(collection: FakeCollection, images: Cards_cards_items[]) {
         const observables = [];
         images.forEach(image => {
             observables.push(this.linkService.unlink(collection, image));

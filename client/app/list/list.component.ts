@@ -13,10 +13,22 @@ import { forkJoin } from 'rxjs';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
 import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
-import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+} from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
-import { CardFilter, Cards, CardSortingField, CardsVariables, SortingOrder, UserRole, Viewer } from '../shared/generated-types';
+import {
+    CardFilter,
+    Cards,
+    Cards_cards_items,
+    CardSortingField,
+    CardsVariables,
+    SortingOrder,
+    UserRole,
+    Viewer,
+} from '../shared/generated-types';
 
 import { adminConfig, NaturalSearchFacetsService } from '../shared/natural-search-configurations';
 import { shuffleArray } from '../shared/services/utility';
@@ -25,9 +37,10 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { ViewMapComponent } from '../view-map/view-map.component';
+import { FakeCollection } from '../collections/services/fake-collection.resolver';
 
 export interface ViewInterface {
-    selectAll: () => any[];
+    selectAll: () => Cards_cards_items[];
     unselectAll: () => void;
 }
 
@@ -72,7 +85,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Checked content for selection
      */
-    public selected;
+    public selected: Cards_cards_items[];
 
     /**
      * Show logo on top left corner
@@ -83,7 +96,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
      * Contextual collection
      * Used to link
      */
-    public collection;
+    public collection: FakeCollection | undefined;
 
     /**
      * Current user
@@ -165,8 +178,9 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             this.showLogo = data.showLogo;
             this.updateShowDownloadCollection();
 
-            if (data.collection) {
-                const collectionFilter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [data.collection.id]}}}]}]};
+            this.collection = data.collection;
+            if (this.collection) {
+                const collectionFilter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [this.collection.id]}}}]}]};
                 this.variablesManager.set('collection', {filter: collectionFilter});
             }
 
@@ -222,7 +236,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.showDownloadCollection = hasCollection && roleIsAllowed;
     }
 
-    public select(cards: Cards) {
+    public select(cards: Cards_cards_items[]) {
         this.selected = cards;
     }
 
@@ -231,11 +245,11 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
     }
 
-    public linkSelectionToCollection(selection) {
+    public linkSelectionToCollection(selection: Cards_cards_items[]) {
         this.linkToCollection({images: selection});
     }
 
-    public linkCollectionToCollection(collection) {
+    public linkCollectionToCollection(collection: FakeCollection) {
         this.linkToCollection({collection});
     }
 
@@ -360,12 +374,12 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
-    public selectAll() {
+    public selectAll(): void {
         this.selected = this.getViewComponent().selectAll();
     }
 
-    public unselectAll() {
-        this.selected.length = [];
+    public unselectAll(): void {
+        this.selected = [];
         this.getViewComponent().unselectAll();
     }
 
@@ -380,8 +394,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         return this.gridComponent || this.listComponent;
     }
 
-    private linkToCollection(selection) {
-        this.dialog.open(CollectionSelectorComponent, {
+    private linkToCollection(selection: CollectionSelectorData) {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',
