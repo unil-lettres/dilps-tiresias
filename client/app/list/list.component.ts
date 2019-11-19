@@ -9,7 +9,7 @@ import {
     Sorting,
 } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
 import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
@@ -18,7 +18,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import { DownloadComponent } from '../shared/components/download/download.component';
+import { DownloadComponent, DownloadComponentData } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
@@ -138,7 +138,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.naturalSearchFacets = facetService.getFacets();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
 
         super.ngOnInit();
 
@@ -204,7 +204,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
-    public pagination(event: NaturalPageEvent) {
+    public pagination(event: NaturalPageEvent): void {
 
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
@@ -218,7 +218,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Persist list rendering in session storage.
      */
-    public setViewMode(mode: ViewMode) {
+    public setViewMode(mode: ViewMode): void {
         this.viewMode = mode;
 
         if (mode !== ViewMode.map) {
@@ -230,39 +230,39 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Show a button to download a collection, considering permissions
      */
-    public updateShowDownloadCollection() {
+    public updateShowDownloadCollection(): void {
         const roles = this.route.snapshot.data.showDownloadCollectionForRoles;
         const roleIsAllowed = this.user && this.user.role && (!roles || roles && roles.indexOf(this.user.role) > -1);
         const hasCollection = this.collection && this.collection.id;
         this.showDownloadCollection = hasCollection && roleIsAllowed;
     }
 
-    public select(cards: Cards_cards_items[]) {
+    public select(cards: Cards_cards_items[]): void {
         this.selected = cards;
     }
 
-    public reset() {
+    public reset(): void {
         this.selected = [];
         this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
     }
 
-    public linkSelectionToCollection(selection: Cards_cards_items[]) {
+    public linkSelectionToCollection(selection: Cards_cards_items[]): void {
         this.linkToCollection({images: selection});
     }
 
-    public linkCollectionToCollection(collection: FakeCollection) {
+    public linkCollectionToCollection(collection: FakeCollection): void {
         this.linkToCollection({collection});
     }
 
-    public downloadSelection(selection) {
+    public downloadSelection(selection: Cards_cards_items[]): void {
         this.download({images: selection});
     }
 
-    public downloadCollection(collection) {
+    public downloadCollection(collection): void {
         this.download({collection});
     }
 
-    public unlinkFromCollection(selection) {
+    public unlinkFromCollection(selection: Cards_cards_items[]): void {
 
         if (!this.collection) {
             return;
@@ -274,11 +274,11 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         });
     }
 
-    public delete(selection) {
+    public delete(selection: Cards_cards_items[]): void {
         this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet/ces élément(s) ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardService.delete([selection]).subscribe(() => {
+                    this.cardService.delete(selection).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.reset();
                     });
@@ -286,7 +286,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             });
     }
 
-    public goToQuizz(selected = null) {
+    public goToQuizz(selected: Cards_cards_items[] | null = null): void {
 
         if (selected) {
             selected = shuffleArray(selected.map(e => e.id)).join(',');
@@ -312,7 +312,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         }
     }
 
-    public edit(selected) {
+    public edit(selected: Cards_cards_items[]): void {
         const selection = selected.filter(card => card.permissions.update);
 
         this.dialog.open(MassEditComponent, {
@@ -384,7 +384,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.getViewComponent().unselectAll();
     }
 
-    protected getDataObservable() {
+    protected getDataObservable(): Observable<Cards['cards']> {
         return this.service.watchAll(this.variablesManager, this.ngUnsubscribe, 'network-only');
     }
 
@@ -395,18 +395,18 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         return this.gridComponent || this.listComponent;
     }
 
-    private linkToCollection(selection: CollectionSelectorData) {
+    private linkToCollection(data: CollectionSelectorData): void {
         this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',
                 right: '10px',
             },
-            data: selection,
+            data: data,
         });
     }
 
-    private download(selection) {
+    private download(selection: Partial<DownloadComponentData>): void {
         const data = merge({denyLegendsDownload: !this.user}, selection);
 
         this.dialog.open(DownloadComponent, {

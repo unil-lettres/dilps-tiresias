@@ -1,6 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArtistComponent } from '../../../artists/artist/artist.component';
+import { Cards_cards_items } from '../../generated-types';
+import { FakeCollection } from '../../../collections/services/fake-collection.resolver';
+
+export type DownloadComponentData = {
+    denyLegendsDownload: boolean;
+    images: Cards_cards_items[],
+    collection?: never,
+} | {
+    denyLegendsDownload: boolean;
+    images?: never,
+    collection: FakeCollection,
+};
 
 @Component({
     selector: 'app-download',
@@ -31,7 +43,7 @@ export class DownloadComponent implements OnInit {
     public denyLegendsDownload = false;
 
     constructor(private dialogRef: MatDialogRef<ArtistComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) {
+                @Inject(MAT_DIALOG_DATA) public data: DownloadComponentData) {
         this.denyLegendsDownload = data.denyLegendsDownload;
         this.includeLegend = !this.denyLegendsDownload;
     }
@@ -44,6 +56,7 @@ export class DownloadComponent implements OnInit {
         (window.document.location as any) = url;
         this.dialogRef.close();
     }
+
     public downloadExcel() {
         const url = '/xlsx/' + this.getIds();
         (window.document.location as any) = url;
