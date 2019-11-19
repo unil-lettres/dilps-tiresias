@@ -13,8 +13,9 @@
 
     <div class="mat-headline">Actualités</div>
 
-    <div class="responsive-table" [fxShow]="showTable()">
-        <table [dataSource]="dataSource" mat-table>
+    <div [fxShow]="showTable()" class="responsive-table">
+
+        <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
 
@@ -28,7 +29,7 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell>Nom</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
                     <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
                 </td>

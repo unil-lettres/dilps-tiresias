@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const domainsQuery = gql`
-    query Domains($filter: DomainFilter, $pagination: PaginationInput) {
-        domains(filter: $filter, pagination: $pagination) {
+    query Domains($filter: DomainFilter, $sorting: [DomainSorting!], $pagination: PaginationInput) {
+        domains(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

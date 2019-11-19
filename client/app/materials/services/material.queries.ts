@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const materialsQuery = gql`
-    query Materials($filter:MaterialFilter, $pagination: PaginationInput) {
-        materials(filter: $filter, pagination: $pagination) {
+    query Materials($filter:MaterialFilter, $sorting: [MaterialSorting!], $pagination: PaginationInput) {
+        materials(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

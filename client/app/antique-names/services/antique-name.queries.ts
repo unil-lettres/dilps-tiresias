@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const antiqueNamesQuery = gql`
-    query AntiqueNames($filter:AntiqueNameFilter, $pagination: PaginationInput) {
-        antiqueNames(filter: $filter, pagination: $pagination) {
+    query AntiqueNames($filter:AntiqueNameFilter, $sorting: [AntiqueNameSorting!], $pagination: PaginationInput) {
+        antiqueNames(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

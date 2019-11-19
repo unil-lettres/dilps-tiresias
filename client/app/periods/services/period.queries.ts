@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const periodsQuery = gql`
-    query Periods($filter:PeriodFilter, $pagination: PaginationInput) {
-        periods(filter: $filter, pagination: $pagination) {
+    query Periods($filter:PeriodFilter, $sorting: [PeriodSorting!], $pagination: PaginationInput) {
+        periods(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

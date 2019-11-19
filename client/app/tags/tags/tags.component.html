@@ -12,8 +12,8 @@
 
 <div class="padding padding-fab">
 
-    <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <div class="mat-headline no-margin">Tags</div>
+    <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
+        <div [routerLink]="getChildLink(null)" class="mat-headline no-margin">Tags</div>
         <div fxLayout="row wrap">
             <a *ngFor="let item of breadcrumbs;" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
                 <natural-icon name="chevron_right"></natural-icon>
@@ -23,9 +23,9 @@
         </div>
     </div>
 
-    <div class="responsive-table" [fxShow]="showTable()">
+    <div [fxShow]="showTable()" class="responsive-table">
 
-        <table [dataSource]="dataSource" mat-table>
+        <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
 
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
@@ -33,14 +33,17 @@
             <ng-container matColumnDef="navigation">
                 <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
                 <td *matCellDef="let element" mat-cell>
-                    <natural-table-button [navigate]="getChildLink(element)" icon="chevron_right" matTooltip="Déployer"
+                    <natural-table-button *ngIf="element.hasNavigation"
+                                          [navigate]="getChildLink(element)"
+                                          icon="chevron_right"
+                                          matTooltip="Déployer"
                     ></natural-table-button>
                 </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell>Nom</th>
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
                     <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
                 </td>

@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const tagsQuery = gql`
-    query Tags($filter:TagFilter, $pagination: PaginationInput) {
-        tags(filter: $filter, pagination: $pagination) {
+    query Tags($filter:TagFilter, $sorting: [TagSorting!], $pagination: PaginationInput) {
+        tags(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

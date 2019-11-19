@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const newsesQuery = gql`
-    query Newses($filter: NewsFilter, $pagination: PaginationInput) {
-        newses(filter: $filter, pagination: $pagination) {
+    query Newses($filter: NewsFilter, $sorting: [NewsSorting!], $pagination: PaginationInput) {
+        newses(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name

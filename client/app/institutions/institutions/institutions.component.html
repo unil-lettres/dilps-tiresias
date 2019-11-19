@@ -15,11 +15,11 @@
 
     <div class="mat-headline">Institutions</div>
 
-    <table [dataSource]="dataSource" mat-table>
+    <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th *matHeaderCellDef mat-header-cell>Nom</th>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
             <td *matCellDef="let element" mat-cell>
                 <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"
                 ></app-table-button>

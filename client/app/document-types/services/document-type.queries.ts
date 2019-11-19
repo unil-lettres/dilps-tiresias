@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const documentTypesQuery = gql`
-    query DocumentTypes($filter: DocumentTypeFilter, $pagination: PaginationInput) {
-        documentTypes(filter: $filter, pagination: $pagination) {
+    query DocumentTypes($filter: DocumentTypeFilter, $sorting: [DocumentTypeSorting!], $pagination: PaginationInput) {
+        documentTypes(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
                 name
