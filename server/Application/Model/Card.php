@@ -333,7 +333,7 @@ class Card extends AbstractModel
     }
 
     /**
-     * Set all materials at once by their names.
+     * Set all materials at once.
      *
      * @param Material[] $materials
      */
@@ -352,9 +352,7 @@ class Card extends AbstractModel
     }
 
     /**
-     * Set all antiqueNames at once by their names.
-     *
-     * Non-existing antiqueNames will be created automatically.
+     * Set all antiqueNames at once.
      *
      * @param AntiqueName[] $antiqueNames
      */
@@ -373,7 +371,7 @@ class Card extends AbstractModel
     }
 
     /**
-     * Set all periods at once by their names.
+     * Set all periods at once.
      *
      * @param Period[] $periods
      */
@@ -392,7 +390,7 @@ class Card extends AbstractModel
     }
 
     /**
-     * Set all tags at once by their names.
+     * Set all tags at once.
      *
      * @param Tag[] $tags
      */

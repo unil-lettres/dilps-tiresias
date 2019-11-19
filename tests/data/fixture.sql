@@ -91,7 +91,7 @@ REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
   (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg');
 
 REPLACE INTO `antique_name` (`id`, `name`) VALUES
-  (11000, 'Test antique name 11000'),
-  (11001, 'Test antique name 11001');
+  (12000, 'Test antique name 12000'),
+  (12001, 'Test antique name 12001');
 
 COMMIT ;
