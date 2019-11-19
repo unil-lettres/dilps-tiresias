@@ -77,6 +77,16 @@
                             >
                                 <natural-icon mat-list-icon name="file_upload"></natural-icon>
                             </a>
+
+                            <!-- Export template -->
+                            <a href="/template"
+                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                               mat-list-item
+                               matTooltip="Télécharger le modèle pour import Excel"
+                               matTooltipPosition="after"
+                            >
+                                <natural-icon mat-list-icon name="file_download"></natural-icon>
+                            </a>
                         </mat-nav-list>
 
                         <mat-divider *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"></mat-divider>
