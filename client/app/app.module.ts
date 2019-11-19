@@ -102,6 +102,8 @@ import { RelationsComponent } from './shared/components/relations/relations.comp
 import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
 import { NaturalSearchModule } from '@ecodev/natural-search';
 
+import { environment } from '../environments/environment';
+
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
     appearance: 'legacy'
@@ -196,7 +198,7 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         MatChipsModule,
         ngfModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyBIBMlG6xXDmpPERQgKdo_Dwhtz5SX5dto',
+            apiKey: environment.agmApiKey,
             libraries: ['places'],
         }),
     ],
