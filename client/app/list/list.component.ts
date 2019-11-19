@@ -16,6 +16,7 @@ import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
+    CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { MassEditComponent } from '../shared/components/mass-edit/mass-edit.component';
@@ -395,7 +396,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     }
 
     private linkToCollection(selection: CollectionSelectorData) {
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',

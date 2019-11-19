@@ -23,6 +23,7 @@ import { CardSelectorComponent } from '../shared/components/card-selector/card-s
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
+    CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { CardVisibility, Site, UserRole } from '../shared/generated-types';
@@ -433,7 +434,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public linkToCollection() {
 
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',

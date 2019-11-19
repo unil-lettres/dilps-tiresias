@@ -6,11 +6,16 @@ import { forkJoin } from 'rxjs';
 import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
-import { CardInput, Site } from '../shared/generated-types';
+import { CardInput, Collections_collections_items, Site } from '../shared/generated-types';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
 import { UserComponent } from '../users/user/user.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+    CollectionSelectorResult,
+} from '../shared/components/collection-selector/collection-selector.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -94,10 +99,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     public uploadImagesAndExcel(excel: File, images: File[]): void {
-        this.cardService.createWithExcel(excel, images).subscribe(() => {
-            this.router.navigateByUrl('/empty', {skipLocationChange: true})
-                .then(() => this.router.navigateByUrl('my-collection'));
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
+            width: '400px',
+            data: {},
+        }).afterClosed().subscribe(collection => {
+
+            this.cardService.createWithExcel(excel, images, collection).subscribe(() => {
+                this.router.navigateByUrl('/empty', {skipLocationChange: true})
+                    .then(() => this.router.navigateByUrl('my-collection/' + collection.id));
+            });
         });
+
     }
 
     public editUser() {

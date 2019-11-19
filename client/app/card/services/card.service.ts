@@ -9,9 +9,9 @@ import {
     Cards,
     CardsVariables,
     CardVariables,
-    CardVisibility,
-    CreateCard,
-    CreateCardVariables,
+    CardVisibility, Collections_collections_items,
+    CreateCard, CreateCards, CreateCards_createCards, CreateCardsVariables,
+    CreateCardVariables, CreateCollection_createCollection,
     DeleteCards,
     Precision,
     Site,
@@ -31,6 +31,7 @@ import {
     validateData,
     validateImage,
 } from './card.queries';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -130,7 +131,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
             country: null,
             original: null,
             documentSize: '',
-            antiqueNames: null
+            antiqueNames: [],
         };
     }
 
@@ -181,14 +182,19 @@ export class CardService extends AbstractContextualizedService<Card['card'],
         return {};
     }
 
-    public createWithExcel(excel: File, images: File[]) {
-        return this.apollo.mutate({
+    public createWithExcel(
+        excel: File,
+        images: File[],
+        collection: Collections_collections_items | CreateCollection_createCollection,
+    ): Observable<CreateCards_createCards[]> {
+        return this.apollo.mutate<CreateCards, CreateCardsVariables>({
             mutation: createCards,
             variables: {
                 excel,
                 images,
+                collection: collection.id,
             },
-        }).pipe(map(result => result.data));
+        }).pipe(map(result => result.data.createCards));
     }
 
 }

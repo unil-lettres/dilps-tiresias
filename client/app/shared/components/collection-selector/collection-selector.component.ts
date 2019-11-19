@@ -14,13 +14,24 @@ import {
 import { AlertService } from '../alert/alert.service';
 import { FakeCollection } from '../../../collections/services/fake-collection.resolver';
 
+/**
+ * Exclusive fields:
+ * If `images` is given will link all images to the selected collection.
+ * If `collection` is given will link the collection's images to the selected collection.
+ * If nothing is given will do nothing and return the selected collection.
+ */
 export type CollectionSelectorData = {
     images: Cards_cards_items[],
     collection?: never,
 } | {
     images?: never,
     collection: FakeCollection,
+} | {
+    images?: never,
+    collection?: never,
 };
+
+export type CollectionSelectorResult = Collections_collections_items | CreateCollection_createCollection ;
 
 @Component({
     selector: 'app-collection-selector',
@@ -39,7 +50,7 @@ export class CollectionSelectorComponent implements OnInit {
     };
 
     constructor(public collectionService: CollectionService,
-                private dialogRef: MatDialogRef<ArtistComponent>,
+                private dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
                 private userService: UserService,
                 private alertService: AlertService,
                 @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData) {
@@ -80,8 +91,12 @@ export class CollectionSelectorComponent implements OnInit {
         let observable;
         if (this.data.images) {
             observable = this.collectionService.link(collection, this.data.images);
-        } else {
+        } else if (this.data.collection) {
             observable = this.collectionService.linkCollectionToCollection(this.data.collection, collection);
+        } else {
+            this.dialogRef.close(collection);
+
+            return;
         }
 
         observable.subscribe(() => {

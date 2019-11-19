@@ -159,8 +159,8 @@ export const createCard = gql`
     }${userMetaFragment}`;
 
 export const createCards = gql`
-    mutation CreateCards ($excel: Upload!, $images: [Upload!]!) {
-        createCards (excel: $excel, images: $images) {
+    mutation CreateCards ($excel: Upload!, $images: [Upload!]!, $collection: CollectionID) {
+        createCards (excel: $excel, images: $images, collection: $collection) {
             id
         }
     }`;

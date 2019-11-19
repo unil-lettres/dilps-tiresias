@@ -8,6 +8,7 @@ use Application\Action\TemplateAction;
 use Application\DBAL\Types\PrecisionType;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
+use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
@@ -36,6 +37,11 @@ class Importer
      */
     private $site;
 
+    /**
+     * @var null|Collection
+     */
+    private $collection;
+
     public function __construct()
     {
         $this->domains = _em()->getRepository(Domain::class)->getFullNames();
@@ -45,9 +51,10 @@ class Importer
         $this->documentTypes = _em()->getRepository(DocumentType::class)->getNames();
     }
 
-    public function import(UploadedFileInterface $file, array $files, string $site): array
+    public function import(UploadedFileInterface $file, array $files, string $site, ?Collection $collection): array
     {
         $this->site = $site;
+        $this->collection = $collection;
         $tempFile = tempnam('data/tmp/', 'import');
         $file->moveTo($tempFile);
         $spreadsheet = IOFactory::load($tempFile);
@@ -131,6 +138,10 @@ class Importer
     {
         $card = new Card();
         $card->setSite($this->site);
+        if ($this->collection) {
+            $this->collection->addCard($card);
+        }
+
         _em()->persist($card);
         $col = 2;
 
