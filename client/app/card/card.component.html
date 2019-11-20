@@ -164,7 +164,7 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Supplément</mat-label>
-                        <input [(ngModel)]="model.addition" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.addition" [readonly]="!edit" matInput maxlength="255">
                     </mat-form-field>
 
                     <mat-form-field *ngIf="(edit || !!model.dating)"
@@ -173,7 +173,7 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Datation</mat-label>
-                        <input [(ngModel)]="model.dating" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.dating" [readonly]="!edit" matInput maxlength="255">
                     </mat-form-field>
 
                     <mat-form-field *ngIf="edit || !!model.material"
@@ -181,7 +181,7 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Matériel</mat-label>
-                        <input [(ngModel)]="model.material" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.material" [readonly]="!edit" matInput maxlength="255">
                     </mat-form-field>
 
                 </ng-container>
@@ -216,12 +216,12 @@
                     <div fxLayout="row" fxLayoutGap="20px">
                         <mat-form-field *ngIf="edit || !!model.from" [style.width]="'45%'">
                             <mat-label>A partir de</mat-label>
-                            <input [(ngModel)]="model.from" [readonly]="!edit" matInput>
+                            <input [(ngModel)]="model.from" [readonly]="!edit" matInput type="number" step="1">
                         </mat-form-field>
 
                         <mat-form-field *ngIf="edit || !!model.to" [style.width]="'45%'">
                             <mat-label>Jusqu'à</mat-label>
-                            <input [(ngModel)]="model.to" [readonly]="!edit" matInput>
+                            <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1">
                         </mat-form-field>
                     </div>
 
@@ -248,7 +248,7 @@
 
                     <mat-form-field *ngIf="edit || !!model.productionPlace">
                         <mat-label>Lieu de production</mat-label>
-                        <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput maxlength="60">
                     </mat-form-field>
 
                     <app-thesaurus *ngIf="edit || !!model.tags?.length"
@@ -265,7 +265,13 @@
 
                     <mat-form-field *ngIf="edit || !!model.objectReference">
                         <mat-label>Référence de l'objet</mat-label>
-                        <input [(ngModel)]="model.objectReference" [readonly]="!edit" matInput>
+                        <textarea [(ngModel)]="model.objectReference"
+                                  [readonly]="!edit"
+                                  matAutosizeMinRows="1"
+                                  matInput
+                                  matTextareaAutosize
+                                  placeholder="Titre étendu"
+                        ></textarea>
                     </mat-form-field>
 
                 </ng-container>
@@ -290,17 +296,17 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
-                    <input [(ngModel)]="model.technique" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.technique" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="edit || !!model.techniqueDate">
                     <mat-label>Date</mat-label>
-                    <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput maxlength="60">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="edit || !!model.techniqueAuthor">
                     <mat-label>Auteur technique</mat-label>
-                    <input [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="(edit || !!model.format) && site === Site.dilps"
@@ -308,12 +314,12 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
-                    <input [(ngModel)]="model.format" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="(edit || !!model.documentSize) && site === Site.tiresias" matTooltipPosition="after">
                     <mat-label>Dimensions du document</mat-label>
-                    <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191">
                 </mat-form-field>
 
                 <div *ngIf="edit || !!institution" class="mat-title">Lieu</div>
@@ -358,18 +364,18 @@
 
                 <mat-form-field *ngIf="edit || !!model.page">
                     <mat-label>Page</mat-label>
-                    <input [(ngModel)]="model.page" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10">
                 </mat-form-field>
 
                 <ng-container *ngIf="site === Site.dilps">
                     <mat-form-field *ngIf="edit || !!model.figure">
                         <mat-label>Figure</mat-label>
-                        <input [(ngModel)]="model.figure" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10">
                     </mat-form-field>
 
                     <mat-form-field *ngIf="edit || !!model.table">
                         <mat-label>Planche</mat-label>
-                        <input [(ngModel)]="model.table" [readonly]="!edit" matInput>
+                        <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10">
                     </mat-form-field>
                 </ng-container>
 
@@ -379,12 +385,12 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>ISBN / ISSN</mat-label>
-                    <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30">
                 </mat-form-field>
 
                 <mat-form-field *ngIf="edit || !!model.rights">
                     <mat-label>Droits d'auteur</mat-label>
-                    <input [(ngModel)]="model.rights" [readonly]="!edit" matInput>
+                    <input [(ngModel)]="model.rights" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->

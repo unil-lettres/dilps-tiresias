@@ -1,17 +1,17 @@
 <div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
         <mat-label>Rue</mat-label>
-        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput>
+        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput maxlength="255">
     </mat-form-field>
 
     <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column': 'row'">
         <mat-form-field *ngIf="!readonly || !!model?.postcode">
             <mat-label>NPA</mat-label>
-            <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput>
+            <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput maxlength="20">
         </mat-form-field>
         <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
             <mat-label>Localité</mat-label>
-            <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput>
+            <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput maxlength="191">
         </mat-form-field>
 
         <natural-select (keyup.enter)="search()"
