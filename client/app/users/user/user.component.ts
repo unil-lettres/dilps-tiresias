@@ -64,7 +64,7 @@ export class UserComponent extends AbstractDetail {
     }
 
     public isShibbolethUser() {
-        return this.data.item.type === UserType.unil;
+        return this.data.item.type === UserType.aai;
     }
 
     protected postQuery() {

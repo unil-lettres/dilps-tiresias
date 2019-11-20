@@ -142,7 +142,7 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
         $user = new User();
         $user->setLogin($login);
         $user->setEmail($email);
-        $user->setType(User::TYPE_UNIL);
+        $user->setType(User::TYPE_AAI);
         $user->setRole(User::ROLE_STUDENT);
 
         _em()->persist($user);

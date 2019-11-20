@@ -146,7 +146,7 @@ $userClause
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $query = "SELECT
-SUM(CASE WHEN type = 'unil' THEN 1 ELSE 0 END) AS 'UNIL',
+SUM(CASE WHEN type = 'aai' THEN 1 ELSE 0 END) AS 'AAI',
 SUM(CASE WHEN type = 'default' THEN 1 ELSE 0 END) AS 'Externe',
 SUM(CASE WHEN type = 'legacy' THEN 1 ELSE 0 END) AS 'Legacy'
 FROM user

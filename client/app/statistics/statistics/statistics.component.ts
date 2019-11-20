@@ -40,7 +40,7 @@ interface Stat {
 interface Data {
     anonymous: Stat;
     default: Stat;
-    unil: Stat;
+    aai: Stat;
     total: Stat;
 }
 
@@ -125,7 +125,7 @@ export class StatisticsComponent extends NaturalAbstractController {
                     searchCount: [],
                     uniqueLoginCount: [],
                 },
-                unil: {
+                aai: {
                     pageCount: [],
                     detailCount: [],
                     searchCount: [],
@@ -134,45 +134,44 @@ export class StatisticsComponent extends NaturalAbstractController {
             };
 
             result.items.map(s => {
-                this.data.total.values.detailCount += s.anonymousDetailCount + s.defaultDetailCount + s.unilDetailCount;
-                this.data.total.values.pageCount += s.anonymousPageCount + s.defaultPageCount + s.unilPageCount;
-                this.data.total.values.searchCount += s.anonymousSearchCount + s.defaultSearchCount + s.unilSearchCount;
-                this.data.total.values.uniqueLoginCount += s.defaultUniqueLoginCount + s.unilUniqueLoginCount;
+                this.data.total.values.detailCount += s.anonymousDetailCount + s.defaultDetailCount + s.aaiDetailCount;
+                this.data.total.values.pageCount += s.anonymousPageCount + s.defaultPageCount + s.aaiPageCount;
+                this.data.total.values.searchCount += s.anonymousSearchCount + s.defaultSearchCount + s.aaiSearchCount;
+                this.data.total.values.uniqueLoginCount += s.defaultUniqueLoginCount + s.aaiUniqueLoginCount;
 
                 this.data.anonymous.values.detailCount += s.anonymousDetailCount;
                 this.data.default.values.detailCount += s.defaultDetailCount;
-                this.data.unil.values.detailCount += s.unilDetailCount;
+                this.data.aai.values.detailCount += s.aaiDetailCount;
 
                 this.data.anonymous.values.pageCount += s.anonymousPageCount;
                 this.data.default.values.pageCount += s.defaultPageCount;
-                this.data.unil.values.pageCount += s.unilPageCount;
+                this.data.aai.values.pageCount += s.aaiPageCount;
 
                 this.data.anonymous.values.searchCount += s.anonymousSearchCount;
                 this.data.default.values.searchCount += s.defaultSearchCount;
-                this.data.unil.values.searchCount += s.unilSearchCount;
+                this.data.aai.values.searchCount += s.aaiSearchCount;
 
                 this.data.default.values.uniqueLoginCount += s.defaultUniqueLoginCount;
-                this.data.unil.values.uniqueLoginCount += s.unilUniqueLoginCount;
+                this.data.aai.values.uniqueLoginCount += s.aaiUniqueLoginCount;
 
                 this.categories.push(s.date);
 
                 seriesData.anonymous.pageCount.push(s.anonymousPageCount);
                 seriesData.default.pageCount.push(s.defaultPageCount);
-                seriesData.unil.pageCount.push(s.unilPageCount);
+                seriesData.aai.pageCount.push(s.aaiPageCount);
 
                 seriesData.anonymous.detailCount.push(s.anonymousDetailCount);
                 seriesData.default.detailCount.push(s.defaultDetailCount);
-                seriesData.unil.detailCount.push(s.unilDetailCount);
+                seriesData.aai.detailCount.push(s.aaiDetailCount);
 
                 seriesData.anonymous.searchCount.push(s.anonymousSearchCount);
                 seriesData.default.searchCount.push(s.defaultSearchCount);
-                seriesData.unil.searchCount.push(s.unilSearchCount);
+                seriesData.aai.searchCount.push(s.aaiSearchCount);
 
                 seriesData.default.uniqueLoginCount.push(s.defaultUniqueLoginCount);
-                seriesData.unil.uniqueLoginCount.push(s.unilUniqueLoginCount);
+                seriesData.aai.uniqueLoginCount.push(s.aaiUniqueLoginCount);
             });
 
-            console.log(seriesData);
             this.buildOneSeries(seriesData, 'pageCount');
             this.buildOneSeries(seriesData, 'detailCount');
             this.buildOneSeries(seriesData, 'searchCount');
@@ -204,8 +203,8 @@ export class StatisticsComponent extends NaturalAbstractController {
                     uniqueLoginCount: 0,
                 },
             },
-            unil: {
-                name: 'Utilisateurs UNIL',
+            aai: {
+                name: 'Utilisateurs AAI',
                 values: {
                     pageCount: 0,
                     detailCount: 0,
@@ -236,8 +235,8 @@ export class StatisticsComponent extends NaturalAbstractController {
                 data: seriesData.default[key],
             },
             {
-                name: this.data.unil.name,
-                data: seriesData.unil[key],
+                name: this.data.aai.name,
+                data: seriesData.aai[key],
             },
         ]);
     }
@@ -290,7 +289,7 @@ export class StatisticsComponent extends NaturalAbstractController {
             tables: [{
                 name: this.availableTypes[this.statType],
                 rows: [
-                    {name: this.data.unil.name, value: this.data.unil.values[this.statType]},
+                    {name: this.data.aai.name, value: this.data.aai.values[this.statType]},
                     {name: this.data.default.name, value: this.data.default.values[this.statType]},
                     {name: this.data.anonymous.name, value: this.data.anonymous.values[this.statType]},
                 ],

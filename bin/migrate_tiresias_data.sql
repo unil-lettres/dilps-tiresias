@@ -123,7 +123,7 @@ SELECT id + @user_offset,
             THEN 'student'
         END,
     IF(valid_date = '', NULL, CONCAT(valid_date, '-01')),
-    IF(type = 'externe', 'default', 'unil'),
+    IF(type = 'externe', 'default', 'aai'),
     'tiresias'
 FROM users;
 
@@ -208,9 +208,9 @@ FROM musees
          LEFT JOIN city on musees.city_id = city.id;
 
 
-INSERT INTO statistic (`date`, anonymous_page_count, default_page_count, unil_page_count, anonymous_search_count,
-                       default_search_count, unil_search_count, anonymous_detail_count, default_detail_count,
-                       unil_detail_count, default_login_count, unil_login_count, default_logins, unil_logins, site)
+INSERT INTO statistic (`date`, anonymous_page_count, default_page_count, aai_page_count, anonymous_search_count,
+                       default_search_count, aai_search_count, anonymous_detail_count, default_detail_count,
+                       aai_detail_count, default_login_count, aai_login_count, default_logins, aai_logins, site)
 SELECT date,
     page_guest,
     page_ext,

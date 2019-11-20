@@ -30,7 +30,7 @@ class UserTypeTypeTest extends TestCase
 
     public function testEnum(): void
     {
-        self::assertSame("ENUM('default', 'unil', 'legacy')", $this->type->getSqlDeclaration(['foo'], $this->platform));
+        self::assertSame("ENUM('default', 'aai', 'legacy')", $this->type->getSqlDeclaration(['foo'], $this->platform));
 
         // Should always return string
         self::assertSame('default', $this->type->convertToPHPValue('default', $this->platform));

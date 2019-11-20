@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const statisticDetails = gql`
     fragment statisticDetails on Statistic {
@@ -7,17 +6,17 @@ export const statisticDetails = gql`
         date
         anonymousPageCount
         defaultPageCount
-        unilPageCount
+        aaiPageCount
         anonymousDetailCount
         defaultDetailCount
-        unilDetailCount
+        aaiDetailCount
         anonymousSearchCount
         defaultSearchCount
-        unilSearchCount
+        aaiSearchCount
         defaultLoginCount
-        unilLoginCount
+        aaiLoginCount
         defaultUniqueLoginCount
-        unilUniqueLoginCount
+        aaiUniqueLoginCount
     }`;
 
 export const statisticsQuery = gql`

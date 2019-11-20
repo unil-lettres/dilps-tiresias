@@ -107,7 +107,7 @@ export class UserService extends AbstractContextualizedService<User['user'],
     public getTypes() {
         return [
             {
-                name: UserType.unil,
+                name: UserType.aai,
                 text: 'AAI',
             },
             {

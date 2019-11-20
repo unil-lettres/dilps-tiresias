@@ -31,14 +31,14 @@ class User extends AbstractModel
     use HasSite;
 
     /**
-     * Someone who is a normal user, not part of UNIL
+     * Someone who is a normal user, not part of AAI
      */
     const TYPE_DEFAULT = 'default';
 
     /**
-     * Someone who log in via UNIL system
+     * Someone who log in via AAI system
      */
-    const TYPE_UNIL = 'unil';
+    const TYPE_AAI = 'aai';
 
     /**
      * Empty shell used for legacy

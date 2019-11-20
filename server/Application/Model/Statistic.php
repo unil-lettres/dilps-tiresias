@@ -53,7 +53,7 @@ class Statistic extends AbstractModel
      *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $unilPageCount = 0;
+    private $aaiPageCount = 0;
 
     /**
      * @var int
@@ -74,7 +74,7 @@ class Statistic extends AbstractModel
      *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $unilDetailCount = 0;
+    private $aaiDetailCount = 0;
 
     /**
      * @var int
@@ -95,7 +95,7 @@ class Statistic extends AbstractModel
      *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $unilSearchCount = 0;
+    private $aaiSearchCount = 0;
 
     /**
      * @var int
@@ -109,7 +109,7 @@ class Statistic extends AbstractModel
      *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $unilLoginCount = 0;
+    private $aaiLoginCount = 0;
 
     /**
      * @var array
@@ -123,7 +123,7 @@ class Statistic extends AbstractModel
      *
      * @ORM\Column(type="json")
      */
-    private $unilLogins = [];
+    private $aaiLogins = [];
 
     /**
      * @return string
@@ -160,9 +160,9 @@ class Statistic extends AbstractModel
     /**
      * @return int
      */
-    public function getUnilPageCount(): int
+    public function getAaiPageCount(): int
     {
-        return $this->unilPageCount;
+        return $this->aaiPageCount;
     }
 
     /**
@@ -184,9 +184,9 @@ class Statistic extends AbstractModel
     /**
      * @return int
      */
-    public function getUnilDetailCount(): int
+    public function getAaiDetailCount(): int
     {
-        return $this->unilDetailCount;
+        return $this->aaiDetailCount;
     }
 
     /**
@@ -208,9 +208,9 @@ class Statistic extends AbstractModel
     /**
      * @return int
      */
-    public function getUnilSearchCount(): int
+    public function getAaiSearchCount(): int
     {
-        return $this->unilSearchCount;
+        return $this->aaiSearchCount;
     }
 
     /**
@@ -224,9 +224,9 @@ class Statistic extends AbstractModel
     /**
      * @return int
      */
-    public function getUnilLoginCount(): int
+    public function getAaiLoginCount(): int
     {
-        return $this->unilLoginCount;
+        return $this->aaiLoginCount;
     }
 
     /**
@@ -240,9 +240,9 @@ class Statistic extends AbstractModel
     /**
      * @return int
      */
-    public function getUnilUniqueLoginCount(): int
+    public function getAaiUniqueLoginCount(): int
     {
-        return count($this->unilLogins);
+        return count($this->aaiLogins);
     }
 
     public function recordPage(): void
@@ -252,8 +252,8 @@ class Statistic extends AbstractModel
             ++$this->anonymousPageCount;
         } elseif ($user->getType() === User::TYPE_DEFAULT) {
             ++$this->defaultPageCount;
-        } elseif ($user->getType() === User::TYPE_UNIL) {
-            ++$this->unilPageCount;
+        } elseif ($user->getType() === User::TYPE_AAI) {
+            ++$this->aaiPageCount;
         } else {
             throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
         }
@@ -266,8 +266,8 @@ class Statistic extends AbstractModel
             ++$this->anonymousDetailCount;
         } elseif ($user->getType() === User::TYPE_DEFAULT) {
             ++$this->defaultDetailCount;
-        } elseif ($user->getType() === User::TYPE_UNIL) {
-            ++$this->unilDetailCount;
+        } elseif ($user->getType() === User::TYPE_AAI) {
+            ++$this->aaiDetailCount;
         } else {
             throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
         }
@@ -280,8 +280,8 @@ class Statistic extends AbstractModel
             ++$this->anonymousSearchCount;
         } elseif ($user->getType() === User::TYPE_DEFAULT) {
             ++$this->defaultSearchCount;
-        } elseif ($user->getType() === User::TYPE_UNIL) {
-            ++$this->unilSearchCount;
+        } elseif ($user->getType() === User::TYPE_AAI) {
+            ++$this->aaiSearchCount;
         } else {
             throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
         }
@@ -296,11 +296,11 @@ class Statistic extends AbstractModel
             if (!in_array($user->getId(), $this->defaultLogins, true)) {
                 $this->defaultLogins[] = $user->getId();
             }
-        } elseif ($user->getType() === User::TYPE_UNIL) {
-            ++$this->unilLoginCount;
+        } elseif ($user->getType() === User::TYPE_AAI) {
+            ++$this->aaiLoginCount;
 
-            if (!in_array($user->getId(), $this->unilLogins, true)) {
-                $this->unilLogins[] = $user->getId();
+            if (!in_array($user->getId(), $this->aaiLogins, true)) {
+                $this->aaiLogins[] = $user->getId();
             }
         } else {
             throw new \InvalidArgumentException('User type not supported: ' . $user->getType());

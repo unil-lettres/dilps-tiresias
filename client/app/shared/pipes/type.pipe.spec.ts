@@ -31,7 +31,7 @@ describe('TypePipe', () => {
     it('create an instance', inject([TypePipe], (pipe: TypePipe) => {
         expect(pipe).toBeTruthy();
         expect(pipe.transform(UserType.default)).toBe('Externe');
-        expect(pipe.transform(UserType.unil)).toBe('AAI');
+        expect(pipe.transform(UserType.aai)).toBe('AAI');
         expect(pipe.transform(UserType.legacy)).toBe('Legacy');
         expect(pipe.transform('non-existing-type')).toBe('');
     }));
