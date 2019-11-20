@@ -39,6 +39,12 @@ class News extends AbstractModel
     private $url = '';
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean", options={"default" = false})
+     */
+    private $isActive = false;
+
+    /**
      * Set description
      *
      * @param string $description
@@ -86,5 +92,21 @@ class News extends AbstractModel
     public function setUrl(string $url): void
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 }

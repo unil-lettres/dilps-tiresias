@@ -3,6 +3,9 @@
         <mat-tab label="Actualité">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
 
+                <mat-checkbox [(ngModel)]="data.item.isActive">Actif
+                </mat-checkbox>
+
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>

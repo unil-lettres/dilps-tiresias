@@ -1,5 +1,5 @@
 <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;"/>
 
     <natural-search (selectionChange)="search($event)"
                     [facets]="naturalSearchFacets"
@@ -18,6 +18,14 @@
         <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+            <!-- Active Column -->
+            <ng-container matColumnDef="isActive">
+                <th *matHeaderCellDef mat-header-cell natural-3em-column>Actif</th>
+                <td *matCellDef="let element" mat-cell>
+                    <mat-icon *ngIf="element.isActive">check</mat-icon>
+                </td>
+            </ng-container>
 
             <!-- Image Column -->
             <ng-container matColumnDef="image">

@@ -11,6 +11,7 @@ export const newsesQuery = gql`
                 imageUrl
                 url
                 hasImage
+                isActive
             }
             pageSize
             pageIndex
@@ -27,6 +28,7 @@ export const newsQuery = gql`
             imageUrl
             url
             hasImage
+            isActive
             creationDate
             creator {
                 ...userMeta

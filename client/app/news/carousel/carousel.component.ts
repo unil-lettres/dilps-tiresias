@@ -29,6 +29,8 @@ export class CarouselComponent implements OnInit {
     ngOnInit() {
 
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();
+        qvm.set('search', {filter: {groups: [{conditions: [{isActive: {equal: {value: true}}}]}]}});
+
         this.newsService.getAll(qvm).subscribe(result => {
             this.newses = result.items;
         });

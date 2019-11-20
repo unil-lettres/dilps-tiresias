@@ -12,7 +12,7 @@ import { NewsService } from '../services/news.service';
 })
 export class NewsesComponent extends AbstractList<Newses['newses'], NewsesVariables> {
 
-    public displayedColumns = ['image', 'name', 'url'];
+    public displayedColumns = ['isActive', 'image', 'name', 'url'];
 
     constructor(service: NewsService, injector: Injector) {
         super(service, NewsComponent, injector);

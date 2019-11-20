@@ -54,6 +54,7 @@ export class NewsService
             file: null,
             site: this.site,
             url: '',
+            isActive: false,
         };
     }
 
