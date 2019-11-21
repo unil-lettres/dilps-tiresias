@@ -89,7 +89,6 @@ export class NaturalSearchFacetsService {
             display: 'Datation',
             field: 'yearRange',
             component: TypeNumberComponent,
-            transform: replaceOperatorByField,
         },
     ];
 
