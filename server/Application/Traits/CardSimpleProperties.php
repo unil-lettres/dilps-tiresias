@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait CardSimpleProperties
 {
+    use HasUrl;
+
     /**
      * @var string
      * @ORM\Column(type="string", options={"default" = ""})
@@ -121,6 +123,12 @@ trait CardSimpleProperties
      * @ORM\Column(type="string", length=60, options={"default" = ""})
      */
     private $productionPlace = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="text", options={"default" = ""})
+     */
+    private $urlDescription = '';
 
     /**
      * @return string
@@ -408,5 +416,21 @@ trait CardSimpleProperties
     public function setProductionPlace(string $productionPlace): void
     {
         $this->productionPlace = $productionPlace;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlDescription(): string
+    {
+        return $this->urlDescription;
+    }
+
+    /**
+     * @param string $urlDescription
+     */
+    public function setUrlDescription(string $urlDescription): void
+    {
+        $this->urlDescription = $urlDescription;
     }
 }

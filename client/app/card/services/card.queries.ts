@@ -19,6 +19,8 @@ export const cardDetailsFragment = gql`
         techniqueAuthor
         techniqueDate
         format
+        url
+        urlDescription
         literature
         page
         figure

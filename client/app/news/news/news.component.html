@@ -21,7 +21,7 @@
 
                 <mat-form-field>
                     <mat-label>Lien</mat-label>
-                    <input [(ngModel)]="data.item.url" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
+                    <input [(ngModel)]="data.item.url" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput maxlength="255" type="url">
                 </mat-form-field>
 
                 <input (change)="upload($event.target.files[0])"

@@ -134,6 +134,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
             antiqueNames: [],
             from: null,
             to: null,
+            url: '',
+            urlDescription: '',
         };
     }
 
@@ -174,6 +176,10 @@ export class CardService extends AbstractContextualizedService<Card['card'],
         // If file is undefined or null, prevent to send attribute to server
         if (!object.file) {
             delete input.file;
+        }
+
+        if (input.url === '') {
+            delete input.url;
         }
 
         return input;

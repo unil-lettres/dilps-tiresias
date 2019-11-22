@@ -8,7 +8,7 @@
                      fxLayout="row"
                      fxLayoutAlign="start center"
         >
-            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg" />
+            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg"/>
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -274,6 +274,28 @@
                         ></textarea>
                     </mat-form-field>
 
+                    <div *ngIf="edit || !!model.url" class="mat-title"
+                    >Référence web
+                    </div>
+
+                    <mat-form-field *ngIf="edit">
+                        <mat-label>URL</mat-label>
+                        <input [(ngModel)]="model.url" [readonly]="!edit" matInput maxlength="255" type="url">
+                    </mat-form-field>
+
+                    <div *ngIf="edit" class="margin-bottom rich-text">
+                        <div class="mat-body-2">Description</div>
+                        <editor *ngIf="edit || !!model.urlDescription"
+                                [(ngModel)]="model.urlDescription"
+                                [disabled]="!edit"
+                                [init]="tinyInit"
+                        ></editor>
+                    </div>
+
+                    <div *ngIf="!edit && model.url">
+                        <a href="{{model.url}}" [innerHTML]="model.urlDescription || model.url"></a>
+                    </div>
+
                 </ng-container>
 
                 <div *ngIf="edit || !!model.technique || !!model.techniqueDate || !!model.techniqueAuthor" class="mat-title"
@@ -395,7 +417,7 @@
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id">
-                    <br />
+                    <br/>
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations [disabled]="!edit"

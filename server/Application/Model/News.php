@@ -8,8 +8,8 @@ use Application\Traits\HasImage;
 use Application\Traits\HasName;
 use Application\Traits\HasSite;
 use Application\Traits\HasSorting;
+use Application\Traits\HasUrl;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
 
 /**
  * A news
@@ -24,6 +24,7 @@ class News extends AbstractModel
     use HasSorting;
     use HasImage;
     use HasSite;
+    use HasUrl;
 
     /**
      * @var string
@@ -31,12 +32,6 @@ class News extends AbstractModel
      * @ORM\Column(type="text")
      */
     private $description = '';
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", options={"default" = ""})
-     */
-    private $url = '';
 
     /**
      * @var bool
@@ -72,26 +67,6 @@ class News extends AbstractModel
     public function getImageUrl(): string
     {
         return '/news-images/' . $this->getFilename();
-    }
-
-    /**
-     * @API\Field(type="Url")
-     *
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @API\Input(type="Url")
-     *
-     * @param string $url
-     */
-    public function setUrl(string $url): void
-    {
-        $this->url = $url;
     }
 
     /**
