@@ -10,60 +10,6 @@
 --     echo 'RENAME TABLE news TO old_news; RENAME TABLE new_news TO news;' | mysql -u dilps -p dilps
 --     more bin/migrate_tiresias_data.sql | mysql -u dilps -p dilps
 
-
--- Procedure to try as best as we can to explode concatenated ID and migrate them into proper FK
--- However some of those IDs don't exist anymore and will thus be ignored
-DROP PROCEDURE IF EXISTS createRelationBetweenCollectionAndCard;
-DELIMITER //
-
-CREATE PROCEDURE createRelationBetweenCollectionAndCard()
-BEGIN
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE collectionId INT;
-    DECLARE imageIds TEXT;
-    DECLARE cur1 CURSOR FOR SELECT 4000 + id,
-                                imageid
-                            FROM panier
-                            WHERE imageid != '';
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
-    OPEN cur1;
-
-    read_loop:
-    LOOP
-        FETCH cur1
-            INTO collectionId, imageIds;
-        IF done
-        THEN
-            LEAVE read_loop;
-        END IF;
-
-        -- Build a string like "(1, 2001),(2, 2001),(3, 2001)"
-        SET @values = REPLACE(REPLACE(REPLACE(REPLACE(imageIds, 'x', ''), ' ', ''), '\n', ''), ',',
-                              CONCAT(', ', collectionId, '),('));
-        SET @values = CONCAT('(', @values, ', ', collectionId, ')');
-
-        -- Debug
-        SELECT @values;
-
-        -- Build INSERT statement
-        SET @insert = CONCAT('INSERT IGNORE INTO collection_card (card_id, collection_id) VALUES ', @values);
-
-        -- Execute INSERT statement
-        PREPARE stmt FROM @insert;
-        EXECUTE stmt;
-        DEALLOCATE PREPARE stmt;
-
-
-    END LOOP;
-
-    CLOSE cur1;
-END;
-//
-
-DELIMITER ;
-
-
 START TRANSACTION;
 
 -- Get offset to inset after existing data
@@ -434,8 +380,6 @@ WHERE user_id IN (SELECT id FROM users) AND fond_id IN (SELECT id FROM fonds);
 
 
 COMMIT;
-
-DROP PROCEDURE createRelationBetweenCollectionAndCard;
 
 -- Drop migrated tables
 DROP TABLE `city`;
