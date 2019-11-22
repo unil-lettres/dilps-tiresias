@@ -85,14 +85,14 @@ export class NaturalSearchFacetsService {
             component: TypeTextComponent,
             transform: wrapLike,
         },
-        {
-            display: 'Datation',
-            field: 'yearRange',
-            component: TypeNumberComponent,
-        },
     ];
 
     private dilpsFacets: NaturalSearchFacets = [
+        {
+            display: 'Datation',
+            field: 'dating',
+            component: TypeNumberComponent,
+        },
         {
             display: 'Artistes',
             field: 'artistOrTechniqueAuthor',
@@ -124,6 +124,11 @@ export class NaturalSearchFacetsService {
                 service: this.periodService,
                 config: periodHierarchicConfig,
             },
+        },
+        {
+            display: 'Datation',
+            field: 'yearRange',
+            component: TypeNumberComponent,
         },
         {
             display: 'Matériaux',

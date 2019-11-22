@@ -39,11 +39,16 @@ use Psr\Http\Message\UploadedFileInterface;
  *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
  *     @API\Filter(field="artistOrTechniqueAuthor", operator="Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType", type="string"),
  *     @API\Filter(field="localityOrInstitutionLocality", operator="Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType", type="string"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\DatingYearRange\EqualOperatorType", type="Email"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOperatorType", type="Email"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOrEqualOperatorType", type="Email"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\DatingYearRange\LessOperatorType", type="Email"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\DatingYearRange\LessOrEqualOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\EqualOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOrEqualOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\LessOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\LessOrEqualOperatorType", type="Email"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\EqualOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\GreaterOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\GreaterOrEqualOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOrEqualOperatorType", type="Login"),
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
  */

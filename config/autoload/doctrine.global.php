@@ -40,6 +40,7 @@ return [
                 ],
                 'numeric_functions' => [
                     'rand' => \DoctrineExtensions\Query\Mysql\Rand::class,
+                    'native_in' => \Application\ORM\Query\NativeIn::class,
                 ],
             ],
         ],

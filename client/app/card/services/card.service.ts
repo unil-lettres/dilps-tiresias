@@ -132,6 +132,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
             original: null,
             documentSize: '',
             antiqueNames: [],
+            from: null,
+            to: null,
         };
     }
 
