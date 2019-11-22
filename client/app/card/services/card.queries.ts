@@ -5,6 +5,7 @@ import { userMetaFragment } from '../../shared/queries/fragments';
 export const cardDetailsFragment = gql`
     fragment cardDetails on Card {
         id
+        site
         name
         expandedName
         hasImage

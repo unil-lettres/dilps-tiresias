@@ -146,7 +146,7 @@
                 </div>
 
                 <!-- Specific dilps fields -->
-                <ng-container *ngIf="site === Site.dilps">
+                <ng-container *ngIf="model.site === Site.dilps">
 
                     <app-thesaurus (modelChange)="model.artists = $event"
                                    *ngIf="edit || !!artists?.length"
@@ -187,7 +187,7 @@
                 </ng-container>
 
                 <!-- Specific tiresias fields -->
-                <ng-container *ngIf="site === Site.tiresias">
+                <ng-container *ngIf="model.site === Site.tiresias">
 
                     <app-thesaurus *ngIf="edit || !!model.domain"
                                    [(model)]="model.domain"
@@ -280,7 +280,7 @@
                 >Référence du document / Technique
                 </div>
 
-                <app-thesaurus *ngIf="(edit || !!model.documentType) && site === Site.tiresias"
+                <app-thesaurus *ngIf="(edit || !!model.documentType) && model.site === Site.tiresias"
                                [(model)]="model.documentType"
                                [allowFreeText]="false"
                                [multiple]="false"
@@ -291,7 +291,7 @@
                                placeholder="Type de document"
                 ></app-thesaurus>
 
-                <mat-form-field *ngIf="(edit || !!model.technique) && site === Site.dilps"
+                <mat-form-field *ngIf="(edit || !!model.technique) && model.site === Site.dilps"
                                 [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
                                 matTooltipPosition="after"
                 >
@@ -309,7 +309,7 @@
                     <input [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
-                <mat-form-field *ngIf="(edit || !!model.format) && site === Site.dilps"
+                <mat-form-field *ngIf="(edit || !!model.format) && model.site === Site.dilps"
                                 [matTooltip]="!edit ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
                                 matTooltipPosition="after"
                 >
@@ -317,7 +317,7 @@
                     <input [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255">
                 </mat-form-field>
 
-                <mat-form-field *ngIf="(edit || !!model.documentSize) && site === Site.tiresias" matTooltipPosition="after">
+                <mat-form-field *ngIf="(edit || !!model.documentSize) && model.site === Site.tiresias" matTooltipPosition="after">
                     <mat-label>Dimensions du document</mat-label>
                     <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191">
                 </mat-form-field>
@@ -367,7 +367,7 @@
                     <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10">
                 </mat-form-field>
 
-                <ng-container *ngIf="site === Site.dilps">
+                <ng-container *ngIf="model.site === Site.dilps">
                     <mat-form-field *ngIf="edit || !!model.figure">
                         <mat-label>Figure</mat-label>
                         <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10">

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
 import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
 import { AntiqueNameService } from '../antique-names/services/antique-name.service';
-import { SITE } from '../app.config';
 import { ArtistComponent } from '../artists/artist/artist.component';
 import { ArtistService } from '../artists/services/artist.service';
 import { ChangeService } from '../changes/services/change.service';
@@ -26,7 +25,7 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
-import { CardVisibility, Site, UserRole } from '../shared/generated-types';
+import { Card_card, CardVisibility, Site, UserRole } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
 import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
 import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
@@ -50,7 +49,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * External card data
      */
-    @Input() public model;
+    @Input() public model: Card_card & { artists: string[]; file: any; institution: string };
 
     /**
      * Show/Hide toolbar
@@ -269,7 +268,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 private uploadService: UploadService,
                 private dialog: MatDialog,
                 private userService: UserService,
-                @Inject(SITE) public site: Site,
                 private statisticService: StatisticService,
     ) {
     }
