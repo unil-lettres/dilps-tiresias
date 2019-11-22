@@ -6,6 +6,7 @@ const userDetailsFragment = gql`
     fragment userDetails on User {
         id
         email
+        name
         login
         activeUntil
         role
@@ -35,6 +36,7 @@ export const usersQuery = gql`
             items {
                 id
                 login
+                name
                 email
                 role
                 type

@@ -18,8 +18,8 @@
 
         <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
+            <!-- Login Column -->
+            <ng-container matColumnDef="login">
                 <th *matHeaderCellDef mat-header-cell>Login</th>
                 <td *matCellDef="let element" mat-cell>
                     <app-table-button (click)="isLegacyUser(element) || edit(element)"
@@ -28,6 +28,12 @@
                                       icon="edit"
                     ></app-table-button>
                 </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell>Nom</th>
+                <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
             </ng-container>
 
             <!-- Email Column -->

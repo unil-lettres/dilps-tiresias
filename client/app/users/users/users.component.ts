@@ -12,6 +12,7 @@ import { UserComponent } from '../user/user.component';
 export class UsersComponent extends AbstractList<Users['users'], UsersVariables> {
 
     public displayedColumns = [
+        'login',
         'name',
         'email',
         'role',

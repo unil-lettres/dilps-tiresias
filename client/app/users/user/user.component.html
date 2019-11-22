@@ -9,6 +9,11 @@
                     <input [(ngModel)]="data.item.login" [disabled]="!!data.item.id" matInput name="login">
                 </mat-form-field>
 
+                <mat-form-field class="width-auto">
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" matInput name="name">
+                </mat-form-field>
+
                 <mat-form-field *ngIf="!isShibbolethUser()">
                     <mat-label>Email</mat-label>
                     <input [(ngModel)]="data.item.email" matInput name="email" type="email">

@@ -8,6 +8,7 @@ use Application\Acl\Acl;
 use Application\Api\Exception;
 use Application\ORM\Query\Filter\AclFilter;
 use Application\Traits\HasInstitution;
+use Application\Traits\HasName;
 use Application\Traits\HasSite;
 use Application\Utility;
 use DateTimeImmutable;
@@ -29,6 +30,7 @@ class User extends AbstractModel
 {
     use HasInstitution;
     use HasSite;
+    use HasName;
 
     /**
      * Someone who is a normal user, not part of AAI
