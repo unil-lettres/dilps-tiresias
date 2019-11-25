@@ -29,14 +29,26 @@ describe('Quizz tester', () => {
         institution: {
             name: 'Lausanne',
         },
-        // dating: 'Dès 1603',
-        dating: 'Dès 1603',
+        dating: '1603',
         datings: [
             {
                 from: '1603-01-01T00:00:00+00:00',
                 to: '1603-01-01T00:00:00+00:00',
             },
         ],
+    } as Card['card'];
+
+    const cardWithoutDatings = {
+        name: 'balloon',
+        artists: [
+            {name: 'John'},
+            {name: 'Jane'},
+        ],
+        institution: {
+            name: 'Lausanne',
+        },
+        dating: 'Dès 1603',
+        datings: [],
     } as Card['card'];
 
     it('simple match', () => {
@@ -116,5 +128,12 @@ describe('Quizz tester', () => {
             institution: false,
             dating: true,
         }, 'year should match with some margin');
+
+        expect(test('1603', cardWithoutDatings)).toEqual({
+            name: false,
+            artists: false,
+            institution: false,
+            dating: true,
+        }, 'year should match raw dating even if datings is absent');
     });
 });

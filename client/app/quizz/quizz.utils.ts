@@ -26,7 +26,7 @@ export function test(formValue: string, card: Card['card']): Result {
         } else if (attribute === 'artists') {
             result[attribute] = testMultipleThesaurus(words, value);
         } else if (attribute === 'dating') {
-            result[attribute] = testDate(formValue, card.datings);
+            result[attribute] = testString(words, value) || testDate(formValue, card.datings);
         } else if (isString(value)) {
             result[attribute] = testString(words, value);
         }
