@@ -1,5 +1,20 @@
 import { QuillConfig } from 'ngx-quill';
-import { filter, pick } from 'lodash';
+import { pick } from 'lodash';
+
+export function keepOnlyTextAndBasicFormatting(node, delta) {
+    const ops = [];
+    delta.ops.forEach(op => {
+        if (op.insert && typeof op.insert === 'string') {
+            ops.push({
+                insert: op.insert,
+                attributes: pick(op.attributes, ['bold', 'italic', 'underline']),
+            });
+        }
+    });
+
+    delta.ops = ops;
+    return delta;
+}
 
 export const quillConfig: QuillConfig = {
     theme: 'bubble',
@@ -13,21 +28,7 @@ export const quillConfig: QuillConfig = {
             matchers: [
                 [
                     Node.ELEMENT_NODE,
-                    (node, delta) => {
-                        const ops = [];
-                        delta.ops.forEach(op => {
-                            // Keep only text and basic formatting
-                            if (op.insert && typeof op.insert === 'string') {
-                                ops.push({
-                                    insert: op.insert,
-                                    attributes: pick(op.attributes, ['bold', 'italic', 'underline']),
-                                });
-                            }
-                        });
-
-                        delta.ops = ops;
-                        return delta;
-                    },
+                    keepOnlyTextAndBasicFormatting,
                 ],
             ],
         },
