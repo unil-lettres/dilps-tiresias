@@ -75,4 +75,18 @@ abstract class Utility
 
         return $result->setDate((int) $parts[2], (int) $parts[0], (int) $parts[1])->setTime(0, 0, 0, 0);
     }
+
+    public static function sanitizeRichText(string $string): string
+    {
+        $sanitized = strip_tags($string, '<p><br><strong><em><u>');
+
+        return $sanitized;
+    }
+
+    public static function sanitizeSingleLineRichText(string $string): string
+    {
+        $sanitized = strip_tags($string, '<strong><em><u>');
+
+        return $sanitized;
+    }
 }

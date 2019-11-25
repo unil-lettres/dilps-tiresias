@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -159,7 +160,7 @@ trait CardSimpleProperties
      */
     public function setExpandedName(string $expandedName): void
     {
-        $this->expandedName = $expandedName;
+        $this->expandedName = Utility::sanitizeRichText($expandedName);
     }
 
     /**
@@ -255,7 +256,7 @@ trait CardSimpleProperties
      */
     public function setLiterature(string $literature): void
     {
-        $this->literature = $literature;
+        $this->literature = Utility::sanitizeRichText($literature);
     }
 
     /**
@@ -431,6 +432,6 @@ trait CardSimpleProperties
      */
     public function setUrlDescription(string $urlDescription): void
     {
-        $this->urlDescription = $urlDescription;
+        $this->urlDescription = Utility::sanitizeRichText($urlDescription);
     }
 }

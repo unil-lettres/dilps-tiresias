@@ -37,6 +37,8 @@ import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
+import { QuillModules, QuillEditorComponent } from 'ngx-quill';
+import { quillConfig } from '../shared/config/quill.options';
 
 @Component({
     selector: 'app-card',
@@ -127,36 +129,20 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      */
     public user;
 
-    /**
-     * Tiny MCE settings
-     */
-    public tinyInit = {
-
-        height: 100,
-        menubar: false,
-        inline: true,
-
-        // Force a single root <p> wrap and <br> inside
-        // This prevent multiple <p> for each enter
-        forced_root_block: false,
-        force_br_newlines: true,
-        force_p_newlines: false,
-
-        toolbar: 'bold italic underline | removeformat',
-    };
-
-    public tinyInitSingleLine = {
-        ...this.tinyInit,
-        setup: (editor: any) => {
-            editor.on('keydown',
-                (event: any) => {
-                    if (event.keyCode === 13) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        return false;
-                    }
-                    return true;
-                });
+    public singleLine: QuillModules = {
+        ...quillConfig.modules,
+        keyboard: {
+            bindings: {
+                enter: {
+                    key: 13,
+                    handler: () => false,
+                },
+                shiftEnter: {
+                    key: 13,
+                    shiftKey: true,
+                    handler: () => false,
+                },
+            },
         },
     };
 

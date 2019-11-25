@@ -14,7 +14,11 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions, MatFormFieldModule } from '@angular/material/form-field';
+import {
+    MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MatFormFieldDefaultOptions,
+    MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -49,7 +53,6 @@ import {
     NaturalTableButtonModule,
 } from '@ecodev/natural';
 import { NgProgressModule } from '@ngx-progressbar/core';
-import { EditorModule } from '@tinymce/tinymce-angular';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -122,6 +125,8 @@ import { UsersComponent } from './users/users/users.component';
 import { ViewGridComponent } from './view-grid/view-grid.component';
 import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
+import { QuillModule } from 'ngx-quill';
+import { quillConfig } from './shared/config/quill.options';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -273,10 +278,10 @@ const icons: NaturalIconsConfig = {
         NaturalFixedButtonModule,
         SwiperModule,
         NaturalHierarchicSelectorModule,
-        EditorModule,
         NaturalSelectEnumModule,
         HighchartsChartModule,
-        MatSortModule
+        MatSortModule,
+        QuillModule.forRoot(quillConfig),
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
