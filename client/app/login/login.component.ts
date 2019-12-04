@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public loading = false;
 
     public status = 'default';
+    public baseUrl = window.location.origin;
 
     /**
      * Stores the received redirect URL until we need to use it (when login is successfull)
@@ -114,4 +115,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl(this.returnUrl || '/');
     }
 
+    /**
+     * Serializes and parses an URL to encode it.
+     */
+    public encodeUrl(url): string {
+        return encodeURIComponent(url);
+    }
 }

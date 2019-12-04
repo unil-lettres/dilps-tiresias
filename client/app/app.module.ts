@@ -34,6 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationEnd, Router } from '@angular/router';
@@ -127,6 +128,8 @@ import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
 import { QuillModule } from 'ngx-quill';
 import { quillConfig } from './shared/config/quill.options';
+
+import { environment } from '../environments/environment';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -257,6 +260,7 @@ const icons: NaturalIconsConfig = {
         MatExpansionModule,
         MatSlideToggleModule,
         MatSliderModule,
+        MatGridListModule,
         MatTabsModule,
         MatAutocompleteModule,
         MatDatepickerModule,
@@ -266,7 +270,7 @@ const icons: NaturalIconsConfig = {
         ngfModule,
         AgmSnazzyInfoWindowModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyBIBMlG6xXDmpPERQgKdo_Dwhtz5SX5dto',
+            apiKey: environment.agmApiKey,
             libraries: ['places'],
         }),
         NaturalDropdownComponentsModule,
@@ -284,7 +288,7 @@ const icons: NaturalIconsConfig = {
         QuillModule.forRoot(quillConfig),
     ],
     providers: [
-        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults },
         {provide: SITE, useValue: window.location.hostname.indexOf('tiresias.') > -1 ? 'tiresias' : 'dilps'},
     ],
     bootstrap: [AppComponent],

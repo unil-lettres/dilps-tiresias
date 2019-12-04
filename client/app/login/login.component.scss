@@ -13,12 +13,19 @@
         margin-left: 50px;
     }
 
-    .shib-link img {
-        margin-top: 8px;
-        width: 250px;
+    .shib-link {
+        flex: auto;
+
+        img {
+            height: 100px;
+        }
     }
 
     .login-info {
         text-align: center;
+    }
+
+    .dilps-logo {
+        height: 140px;
     }
 }

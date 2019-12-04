@@ -32,7 +32,7 @@
                     <mat-form-field>
                         <mat-label>Confirmation du mot passe</mat-label>
                         <input [formControl]="passwordConfirmationCtrl" matInput type="password">
-                        <mat-error *ngIf="passwordConfirmationCtrl.hasError('password')">Le mot de passe n'est pas identique</mat-error>
+                        <mat-error  *ngIf="passwordConfirmationCtrl.hasError('password')">Le mot de passe n'est pas identique</mat-error>
                     </mat-form-field>
                 </div>
 
@@ -67,7 +67,7 @@
 
                 <mat-form-field *ngIf="data.item.id">
                     <mat-label>Type d'utilisateur</mat-label>
-                    <input [(ngModel)]="data.item.type" disabled matInput name="type">
+                    <input [(ngModel)]="data.item.type" disabled matInput name="type" value="{{ data.item.type | type }}">
                 </mat-form-field>
             </div>
         </mat-tab>
