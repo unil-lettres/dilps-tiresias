@@ -22,7 +22,7 @@ function write(filename, content) {
 }
 
 const query = utilities.getIntrospectionQuery();
-const schemaJsonString = execFileSync('./bin/graphql.php', [query]).toString();
+const schemaJsonString = execFileSync('./bin/graphql.php', [query], {maxBuffer: 10 * 1024 * 1024}).toString();
 const schemaLiteral = JSON.parse(schemaJsonString).data;
 const schemaObject = buildClientSchema(schemaLiteral);
 const schemaSdlString = printSchema(schemaObject);
