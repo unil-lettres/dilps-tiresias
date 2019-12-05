@@ -44,7 +44,7 @@ class DateTimeType extends ScalarType
      */
     public function parseValue($value)
     {
-        if (!is_string($value)) { // quite naive, but after all this is example
+        if (!is_string($value)) {
             throw new \UnexpectedValueException('Cannot represent value as date: ' . Utils::printSafe($value));
         }
 
@@ -61,7 +61,7 @@ class DateTimeType extends ScalarType
     /**
      * Parses an externally provided literal value to use as an input (e.g. in Query AST)
      *
-     * @param $ast Node
+     * @param Node $ast
      * @param null|array $variables
      *
      * @return null|string

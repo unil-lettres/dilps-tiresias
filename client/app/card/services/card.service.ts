@@ -1,36 +1,56 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { merge } from 'lodash';
 import { map } from 'rxjs/operators';
+import { SITE } from '../../app.config';
 import {
+    Card,
     CardInput,
-    CardQuery,
-    CardsQuery,
-    CardVisibility,
-    CreateCardMutation,
-    DeleteCardsMutation,
-    UpdateCardMutation,
+    Cards,
+    CardsVariables,
+    CardVariables,
+    CardVisibility, Collections_collections_items,
+    CreateCard, CreateCards, CreateCards_createCards, CreateCardsVariables,
+    CreateCardVariables, CreateCollection_createCollection,
+    DeleteCards,
+    Precision,
+    Site,
+    UpdateCard,
+    UpdateCardVariables,
+    ValidateData,
+    ValidateImage,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 import {
     cardQuery,
     cardsQuery,
-    createCardMutation,
-    deleteCardsMutation,
-    updateCardMutation,
+    createCard,
+    createCards,
+    deleteCards,
+    updateCard,
     validateData,
     validateImage,
-} from './cardQueries';
-import { Literal } from '../../shared/types';
+} from './card.queries';
+import { Observable } from 'rxjs';
 
-@Injectable()
-export class CardService extends AbstractModelService<CardQuery['card'],
-    CardsQuery['cards'],
-    CreateCardMutation['createCard'],
-    UpdateCardMutation['updateCard'],
-    DeleteCardsMutation['deleteCards']> {
+@Injectable({
+    providedIn: 'root',
+})
+export class CardService extends AbstractContextualizedService<Card['card'],
+    CardVariables,
+    Cards['cards'],
+    CardsVariables,
+    CreateCard['createCard'],
+    CreateCardVariables,
+    UpdateCard['updateCard'],
+    UpdateCardVariables,
+    DeleteCards['deleteCards']> {
 
-    public static getImageFormat(card, height): any {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+        super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
+    }
+
+    public static getImageFormat(card, height): { height: number, width: number } {
         height = card.height ? Math.min(card.height, height) : height;
         const ratio = card.width / card.height;
         return {
@@ -39,7 +59,7 @@ export class CardService extends AbstractModelService<CardQuery['card'],
         };
     }
 
-    public static getImageLink(card, height) {
+    public static getImageLink(card, height): string {
         if (!card || !card.id || !card.hasImage) {
             return null;
         }
@@ -55,9 +75,6 @@ export class CardService extends AbstractModelService<CardQuery['card'],
 
     /**
      * Merge image src on src attribute of given gard
-     * @param card
-     * @param height
-     * @returns {{} & any & {src: *}}
      */
     public static formatImage(card, height) {
         if (!card) {
@@ -68,12 +85,13 @@ export class CardService extends AbstractModelService<CardQuery['card'],
         return merge({}, card, fields);
     }
 
-    constructor(apollo: Apollo) {
-        super(apollo, 'card', cardQuery, cardsQuery, createCardMutation, updateCardMutation, deleteCardsMutation);
+    public getDefaultForClient() {
+        return this.getDefaultForServer();
     }
 
-    public getEmptyObject(): CardInput {
+    public getDefaultForServer(): CardInput {
         return {
+            site: this.site,
             file: null,
             dating: '',
             addition: '',
@@ -81,6 +99,9 @@ export class CardService extends AbstractModelService<CardQuery['card'],
             material: '',
             technique: '',
             techniqueAuthor: '',
+            techniqueDate: '',
+            objectReference: '',
+            productionPlace: '',
             format: '',
             literature: '',
             page: '',
@@ -93,7 +114,13 @@ export class CardService extends AbstractModelService<CardQuery['card'],
             muserisCote: '',
             name: '',
             visibility: CardVisibility.private,
+            precision: Precision.site,
             artists: [],
+            materials: [],
+            periods: [],
+            tags: [],
+            domain: null,
+            documentType: null,
             institution: null,
             street: '',
             postcode: '',
@@ -103,28 +130,21 @@ export class CardService extends AbstractModelService<CardQuery['card'],
             longitude: null,
             country: null,
             original: null,
+            documentSize: '',
+            antiqueNames: [],
+            from: null,
+            to: null,
+            url: '',
+            urlDescription: '',
         };
     }
 
-    protected getInput(object: Literal): Literal {
-
-        const input = super.getInput(object);
-
-        // If file is undefined or null, prevent to send attribute to server
-        if (!object.file) {
-            delete input.file;
-        }
-
-        return input;
-    }
-
     public validateData(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<ValidateData>({
             mutation: validateData,
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
         }).pipe(map(data => {
                 const c = data.data.validateData;
                 merge(card, c);
@@ -135,12 +155,11 @@ export class CardService extends AbstractModelService<CardQuery['card'],
     }
 
     public validateImage(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<ValidateImage>({
             mutation: validateImage,
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
         }).pipe(map(data => {
                 const c = data.data.validateImage;
                 merge(card, c);
@@ -148,6 +167,42 @@ export class CardService extends AbstractModelService<CardQuery['card'],
                 return c;
             },
         ));
+    }
+
+    public getInput(object) {
+
+        const input = super.getInput(object);
+
+        // If file is undefined or null, prevent to send attribute to server
+        if (!object.file) {
+            delete input.file;
+        }
+
+        if (input.url === '') {
+            delete input.url;
+        }
+
+        return input;
+    }
+
+    // In Card specific case, don't context lists
+    public getContextForAll() {
+        return {};
+    }
+
+    public createWithExcel(
+        excel: File,
+        images: File[],
+        collection: Collections_collections_items | CreateCollection_createCollection,
+    ): Observable<CreateCards_createCards[]> {
+        return this.apollo.mutate<CreateCards, CreateCardsVariables>({
+            mutation: createCards,
+            variables: {
+                excel,
+                images,
+                collection: collection.id,
+            },
+        }).pipe(map(result => result.data.createCards));
     }
 
 }

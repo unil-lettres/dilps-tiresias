@@ -60,7 +60,7 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      *
      * - collection is member and user is logged in
      * - collection is admin and user is admin
-     * - collection owner or creator is the user
+     * - collection owner, creator or responsible is the user
      *
      * @param null|User $user
      *
@@ -77,15 +77,18 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
             $visibility[] = Collection::VISIBILITY_ADMINISTRATOR;
         }
 
-        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
+        $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+
+        $qb = $this->getEntityManager()
+            ->getConnection()
+            ->createQueryBuilder()
             ->select('collection.id')
             ->from('collection')
-            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')');
-
-        if ($user) {
-            $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-            $qb->orWhere('collection.owner_id = ' . $userId . ' OR collection.creator_id = ' . $userId);
-        }
+            ->leftJoin('collection', 'collection_user', 'cu', 'collection.id = cu.collection_id')
+            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')')
+            ->orWhere('collection.owner_id = ' . $userId)
+            ->orWhere('collection.creator_id = ' . $userId)
+            ->orWhere('cu.user_id = ' . $userId);
 
         return $qb->getSQL();
     }

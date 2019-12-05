@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { ArtistService } from '../services/artist.service';
+import { Component, Injector } from '@angular/core';
 import { AbstractList } from '../../shared/components/AbstractList';
+import { Artists, ArtistsVariables } from '../../shared/generated-types';
 import { ArtistComponent } from '../artist/artist.component';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
     selector: 'app-artists',
@@ -11,14 +10,10 @@ import { ArtistComponent } from '../artist/artist.component';
     styleUrls: ['./artists.component.scss'],
 
 })
-export class ArtistsComponent extends AbstractList {
+export class ArtistsComponent extends AbstractList<Artists['artists'], ArtistsVariables> {
 
-    constructor(service: ArtistService,
-                router: Router,
-                route: ActivatedRoute,
-                dialog: MatDialog) {
-
-        super('artists', service, ArtistComponent, router, route, dialog);
+    constructor(service: ArtistService, injector: Injector) {
+        super(service, ArtistComponent, injector);
     }
 
 }

@@ -36,11 +36,7 @@ class Visibility implements AssertionInterface
     public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
     {
         $object = $resource->getInstance();
-        $isOwner = new IsOwner();
-        $isCreator = new IsCreator();
 
-        return in_array($object->getVisibility(), $this->allowedVisibilities, true)
-            || $isOwner->assert($acl, $role, $resource, $privilege)
-            || $isCreator->assert($acl, $role, $resource, $privilege);
+        return in_array($object->getVisibility(), $this->allowedVisibilities, true);
     }
 }

@@ -12,7 +12,7 @@ class UserTypeType extends AbstractEnumType
     {
         return [
             User::TYPE_DEFAULT,
-            User::TYPE_UNIL,
+            User::TYPE_AAI,
             User::TYPE_LEGACY,
         ];
     }

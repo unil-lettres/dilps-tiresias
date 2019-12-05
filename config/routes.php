@@ -53,6 +53,11 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\PptxAction::class,
     ], 'pptx');
 
+    $app->get('/xlsx/{ids:\d+[,\d]*}', [
+        \Application\Middleware\CardsFetcherMiddleware::class,
+        \Application\Action\XlsxAction::class,
+    ], 'xlsx');
+
     $app->get('/zip/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
         \Application\Middleware\CardsFetcherMiddleware::class,
         \Application\Action\ZipAction::class,
@@ -63,10 +68,19 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\PptxAction::class,
     ], 'pptx/collection');
 
+    $app->get('/xlsx/collection/{ids:\d+[,\d]*}', [
+        \Application\Middleware\CollectionFetcherMiddleware::class,
+        \Application\Action\XlsxAction::class,
+    ], 'xlsx/collection');
+
     $app->get('/zip/collection/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
         \Application\Middleware\CollectionFetcherMiddleware::class,
         \Application\Action\ZipAction::class,
     ], 'zip/collection');
+
+    $app->get('/template', [
+        \Application\Action\TemplateAction::class,
+    ], 'template');
 
     $app->get('/auth', \Application\Middleware\ShibbolethMiddleware::class);
 };

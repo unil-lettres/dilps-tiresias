@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { UserService } from '../users/services/user.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
-import { TermsAgreementComponent } from './terms-agreement.component';
 import { merge } from 'lodash';
+import { Subscription } from 'rxjs';
+import { NetworkActivityService } from '../shared/services/network-activity.service';
+import { UserService } from '../users/services/user.service';
+import { TermsAgreementComponent } from './terms-agreement.component';
 
 @Component({
     selector: 'app-login',
@@ -50,8 +51,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (!logout) {
             this.currentUser = this.userService.getCurrentUser().subscribe(user => {
                 if (user) {
-                    this.redirect();
-                }
+                    if (!user.termsAgreement) {
+                        this.showTerms(user);
+                    } else {
+                        this.redirect();
+                    }                }
             });
         }
 

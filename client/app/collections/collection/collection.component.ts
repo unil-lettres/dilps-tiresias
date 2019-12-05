@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { CollectionService } from '../services/collection.service';
-import { AlertService } from '../../shared/components/alert/alert.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { findKey } from 'lodash';
 import { InstitutionService } from '../../institutions/services/institution.service';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
-import { UserService } from '../../users/services/user.service';
+import { AlertService } from '../../shared/components/alert/alert.service';
 import { CollectionVisibility, UserRole } from '../../shared/generated-types';
-import { findKey } from 'lodash';
+import { collectionsHierarchicConfig } from '../../shared/hierarchic-configurations/CollectionConfiguration';
+import { UserService } from '../../users/services/user.service';
+import { CollectionService } from '../services/collection.service';
 
 @Component({
     selector: 'app-collection',
@@ -18,12 +19,12 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
     public visibilities = {
         1: {
             value: CollectionVisibility.private,
-            text: 'par moi',
+            text: 'par moi et les responsables',
             color: null,
         },
         2: {
             value: CollectionVisibility.administrator,
-            text: 'par moi et les admins',
+            text: 'par moi, les responsables et les admins',
             color: 'accent',
         },
         3: {
@@ -35,27 +36,16 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     public institution;
 
-    constructor(public institutionSvc: InstitutionService,
-                service: CollectionService,
-                userSvc: UserService,
-                alertSvc: AlertService,
+    public hierarchicConfig = collectionsHierarchicConfig;
+
+    constructor(public institutionService: InstitutionService,
+                public collectionService: CollectionService,
+                public userService: UserService,
+                alertService: AlertService,
                 dialogRef: MatDialogRef<CollectionComponent>,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
-        super(service, alertSvc, dialogRef, userSvc, data);
-    }
-
-    protected postQuery() {
-        // Init visibility
-        this.visibility = +findKey(this.visibilities, (s) => {
-            return s.value === this.data.item.visibility;
-        });
-
-        this.institution = this.data.item.institution;
-    }
-
-    protected postUpdate(model) {
-        this.institution = model.institution;
+        super(collectionService, alertService, dialogRef, userService, data);
     }
 
     public updateVisibility(ev) {
@@ -64,7 +54,6 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     /**
      * Visibility is seen by >=seniors if their are the creator, or by admins if visibility is set to admin.
-     * @returns {boolean}
      */
     public showVisibility() {
 
@@ -86,5 +75,22 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
         // If is admin and has visibility
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
+    }
+
+    public displayFn(item) {
+        return item ? item.login : null;
+    }
+
+    protected postQuery() {
+        // Init visibility
+        this.visibility = +findKey(this.visibilities, (s) => {
+            return s.value === this.data.item.visibility;
+        });
+
+        this.institution = this.data.item.institution;
+    }
+
+    protected postUpdate(model) {
+        this.institution = model.institution;
     }
 }

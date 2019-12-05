@@ -8,9 +8,12 @@ use Application\Api\Exception;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
+use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
+use Application\Traits\HasSite;
 use Application\Traits\HasValidation;
+use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,7 +39,16 @@ use Psr\Http\Message\UploadedFileInterface;
  *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
  *     @API\Filter(field="artistOrTechniqueAuthor", operator="Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType", type="string"),
  *     @API\Filter(field="localityOrInstitutionLocality", operator="Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType", type="string"),
- *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\YearRangeOperatorType", type="string"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\EqualOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\GreaterOrEqualOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\LessOperatorType", type="Email"),
+ *     @API\Filter(field="dating", operator="Application\Api\Input\Operator\DatingYearRange\LessOrEqualOperatorType", type="Email"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\EqualOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\GreaterOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\GreaterOrEqualOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOperatorType", type="Login"),
+ *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOrEqualOperatorType", type="Login"),
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
  */
@@ -47,6 +59,11 @@ class Card extends AbstractModel
     use HasAddress;
     use CardSimpleProperties;
     use HasValidation;
+    use HasYearRange;
+    use HasSite;
+    use HasImage {
+        setFile as traitSetFile;
+    }
 
     private const IMAGE_PATH = 'data/images/';
 
@@ -59,45 +76,6 @@ class Card extends AbstractModel
      * @ORM\Column(type="CardVisibility", options={"default" = Card::VISIBILITY_PRIVATE})
      */
     private $visibility = self::VISIBILITY_PRIVATE;
-
-    /**
-     * Return whether this is publicly available to everybody, or only member, or only owner
-     *
-     * @API\Field(type="Application\Api\Enum\CardVisibilityType")
-     *
-     * @return string
-     */
-    public function getVisibility(): string
-    {
-        return $this->visibility;
-    }
-
-    /**
-     * Set whether this is publicly available to everybody, or only member, or only owner
-     *
-     * @API\Input(type="Application\Api\Enum\CardVisibilityType")
-     *
-     * @param string $visibility
-     */
-    public function setVisibility(string $visibility): void
-    {
-        if ($this->visibility === $visibility) {
-            return;
-        }
-
-        $user = User::getCurrent();
-        if ($visibility === self::VISIBILITY_PUBLIC && $user->getRole() !== User::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrator can make a card public');
-        }
-
-        $this->visibility = $visibility;
-    }
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=2000)
-     */
-    private $filename = '';
 
     /**
      * @var int
@@ -141,6 +119,13 @@ class Card extends AbstractModel
     /**
      * @var DoctrineCollection
      *
+     * @ORM\ManyToMany(targetEntity="AntiqueName")
+     */
+    private $antiqueNames;
+
+    /**
+     * @var DoctrineCollection
+     *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
     private $tags;
@@ -162,6 +147,39 @@ class Card extends AbstractModel
     private $original;
 
     /**
+     * @var null|DocumentType
+     * @ORM\ManyToOne(targetEntity="DocumentType")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(onDelete="SET NULL")
+     * })
+     */
+    private $documentType;
+
+    /**
+     * @var null|Domain
+     *
+     * @ORM\ManyToOne(targetEntity="Domain")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(onDelete="SET NULL")
+     * })
+     */
+    private $domain;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Period")
+     */
+    private $periods;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Material")
+     */
+    private $materials;
+
+    /**
      * @var DoctrineCollection
      *
      * @ORM\ManyToMany(targetEntity="Card")
@@ -176,6 +194,12 @@ class Card extends AbstractModel
     private $change;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=191)
+     */
+    private $documentSize = '';
+
+    /**
      * Constructor
      *
      * @param string $name
@@ -186,76 +210,45 @@ class Card extends AbstractModel
 
         $this->collections = new ArrayCollection();
         $this->artists = new ArrayCollection();
+        $this->antiqueNames = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->datings = new ArrayCollection();
         $this->cards = new ArrayCollection();
+        $this->periods = new ArrayCollection();
+        $this->materials = new ArrayCollection();
     }
 
     /**
-     * Set the image file
+     * Return whether this is publicly available to everybody, or only member, or only owner
      *
-     * @API\Input(type="?GraphQL\Upload\UploadType")
+     * @API\Field(type="Application\Api\Enum\CardVisibilityType")
      *
-     * @param UploadedFileInterface $file
-     *
-     * @throws \Exception
+     * @return string
      */
-    public function setFile(UploadedFileInterface $file): void
+    public function getVisibility(): string
     {
-        $this->generateUniqueFilename($file->getClientFilename());
+        return $this->visibility;
+    }
 
-        $path = $this->getPath();
-        if (file_exists($path)) {
-            throw new \Exception('A file already exist with the same name: ' . $this->getFilename());
+    /**
+     * Set whether this is publicly available to everybody, or only member, or only owner
+     *
+     * @API\Input(type="Application\Api\Enum\CardVisibilityType")
+     *
+     * @param string $visibility
+     */
+    public function setVisibility(string $visibility): void
+    {
+        if ($this->visibility === $visibility) {
+            return;
         }
-        $file->moveTo($path);
 
-        $this->validateMimeType();
-        $this->readFileInfo();
-    }
+        $user = User::getCurrent();
+        if ($visibility === self::VISIBILITY_PUBLIC && $user->getRole() !== User::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrator can make a card public');
+        }
 
-    /**
-     * Set filename (without path)
-     *
-     * @API\Exclude
-     *
-     * @param string $filename
-     */
-    public function setFilename(string $filename): void
-    {
-        $this->filename = $filename;
-    }
-
-    /**
-     * Get filename (without path)
-     *
-     * @API\Exclude
-     *
-     * @return string
-     */
-    public function getFilename(): string
-    {
-        return $this->filename;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasImage(): bool
-    {
-        return !empty($this->filename);
-    }
-
-    /**
-     * Get absolute path to image on disk
-     *
-     * @API\Exclude
-     *
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return realpath('.') . '/' . self::IMAGE_PATH . $this->getFilename();
+        $this->visibility = $visibility;
     }
 
     /**
@@ -268,26 +261,6 @@ class Card extends AbstractModel
     public function getCollections(): DoctrineCollection
     {
         return $this->collections;
-    }
-
-    /**
-     * Automatically called by Doctrine when the object is deleted
-     * Is called after database update because we can have issues on remove operation (like integrity test)
-     * and it's preferable to keep a related file on drive before removing it definitely.
-     *
-     * @ORM\PostRemove
-     */
-    public function deleteFile(): void
-    {
-        $path = $this->getPath();
-        $config = require 'config/autoload/local.php';
-        $unlink = $config['files']['unlink'];
-
-        if (file_exists($path) && is_file($path)) {
-            if ($this->getFilename() !== 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg' && $unlink) {
-                unlink($path);
-            }
-        }
     }
 
     /**
@@ -334,7 +307,7 @@ class Card extends AbstractModel
         }
         $this->dating = $dating;
 
-        $this->computeDatings($dating);
+        $this->computeDatings();
     }
 
     /**
@@ -367,6 +340,82 @@ class Card extends AbstractModel
     }
 
     /**
+     * Set all materials at once.
+     *
+     * @param Material[] $materials
+     */
+    public function setMaterials(array $materials): void
+    {
+        $this->materials->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $materials);
+
+        $materials = _em()->getRepository(Material::class)->findById($ids);
+        foreach ($materials as $material) {
+            $this->materials->add($material);
+        }
+    }
+
+    /**
+     * Set all antiqueNames at once.
+     *
+     * @param AntiqueName[] $antiqueNames
+     */
+    public function setAntiqueNames(array $antiqueNames): void
+    {
+        $this->antiqueNames->clear();
+
+        $ids = array_map(function ($n) {
+            return $n->getId();
+        }, $antiqueNames);
+
+        $antiqueNames = _em()->getRepository(AntiqueName::class)->findById($ids);
+        foreach ($antiqueNames as $material) {
+            $this->antiqueNames->add($material);
+        }
+    }
+
+    /**
+     * Set all periods at once.
+     *
+     * @param Period[] $periods
+     */
+    public function setPeriods(array $periods): void
+    {
+        $this->periods->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $periods);
+
+        $periods = _em()->getRepository(Period::class)->findById($ids);
+        foreach ($periods as $period) {
+            $this->periods->add($period);
+        }
+    }
+
+    /**
+     * Set all tags at once.
+     *
+     * @param Tag[] $tags
+     */
+    public function setTags(array $tags): void
+    {
+        $this->tags->clear();
+
+        $ids = array_map(function ($m) {
+            return $m->getId();
+        }, $tags);
+
+        $tags = _em()->getRepository(Tag::class)->findById($ids);
+        foreach ($tags as $tag) {
+            $this->tags->add($tag);
+        }
+    }
+
+    /**
      * Get artists
      *
      * @API\Field(type="Artist[]")
@@ -376,6 +425,18 @@ class Card extends AbstractModel
     public function getArtists(): DoctrineCollection
     {
         return $this->artists;
+    }
+
+    /**
+     * Get antiqueNames
+     *
+     * @API\Field(type="AntiqueName[]")
+     *
+     * @return DoctrineCollection
+     */
+    public function getAntiqueNames(): DoctrineCollection
+    {
+        return $this->antiqueNames;
     }
 
     /**
@@ -430,6 +491,106 @@ class Card extends AbstractModel
     public function setOriginal(?self $original): void
     {
         $this->original = $original;
+    }
+
+    /**
+     * @return null|DocumentType
+     */
+    public function getDocumentType(): ?DocumentType
+    {
+        return $this->documentType;
+    }
+
+    /**
+     * @param null|DocumentType $documentType
+     */
+    public function setDocumentType(?DocumentType $documentType): void
+    {
+        $this->documentType = $documentType;
+    }
+
+    /**
+     * @return null|Domain
+     */
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @param null|Domain $domain
+     */
+    public function setDomain(?Domain $domain): void
+    {
+        $this->domain = $domain;
+    }
+
+    /**
+     * Get periods
+     *
+     * @API\Field(type="Period[]")
+     *
+     * @return DoctrineCollection
+     */
+    public function getPeriods(): DoctrineCollection
+    {
+        return $this->periods;
+    }
+
+    /**
+     * Add Period
+     *
+     * @param Period $period
+     */
+    public function addPeriod(Period $period): void
+    {
+        if (!$this->periods->contains($period)) {
+            $this->periods[] = $period;
+        }
+    }
+
+    /**
+     * Remove Period
+     *
+     * @param Period $period
+     */
+    public function removePeriod(Period $period): void
+    {
+        $this->periods->removeElement($period);
+    }
+
+    /**
+     * Get materials
+     *
+     * @API\Field(type="Material[]")
+     *
+     * @return DoctrineCollection
+     */
+    public function getMaterials(): DoctrineCollection
+    {
+        return $this->materials;
+    }
+
+    /**
+     * Add Material
+     *
+     * @param Material $material
+     */
+    public function addMaterial(Material $material): void
+    {
+        if (!$this->materials->contains($material)) {
+            $this->materials[] = $material;
+        }
+    }
+
+    /**
+     * Remove Material
+     *
+     * @param Material $material
+     */
+    public function removeMaterial(Material $material): void
+    {
+        $this->materials->removeElement($material);
     }
 
     /**
@@ -543,45 +704,16 @@ class Card extends AbstractModel
     }
 
     /**
-     * Generate unique filename while trying to preserver original extension
+     * Set the image file
      *
-     * @param string $originalFilename
-     */
-    private function generateUniqueFilename(string $originalFilename): void
-    {
-        $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-        $filename = uniqid() . ($extension ? '.' . $extension : '');
-        $this->setFilename($filename);
-    }
-
-    /**
-     * Delete file and throw exception if MIME type is invalid
+     * @API\Input(type="?GraphQL\Upload\UploadType")
      *
-     * @throws \Exception
+     * @param UploadedFileInterface $file
      */
-    private function validateMimeType(): void
+    public function setFile(UploadedFileInterface $file): void
     {
-        $path = $this->getPath();
-        $mime = mime_content_type($path);
-
-        // Validate image mimetype
-        $acceptedMimeTypes = [
-            'image/bmp',
-            'image/gif',
-            'image/jpeg',
-            'image/pjpeg',
-            'image/png',
-            'image/svg+xml',
-            'image/tiff',
-            'image/vnd.adobe.photoshop',
-            'image/webp',
-        ];
-
-        if (!in_array($mime, $acceptedMimeTypes, true)) {
-            unlink($path);
-
-            throw new \Exception('Invalid file type of: ' . $mime);
-        }
+        $this->traitSetFile($file);
+        $this->readFileInfo();
     }
 
     /**
@@ -665,9 +797,12 @@ class Card extends AbstractModel
         // Copy a few collection and entities
         $original->artists = clone $this->artists;
         $original->tags = clone $this->tags;
+        $original->materials = clone $this->materials;
         $original->computeDatings();
         $original->institution = $this->institution;
         $original->country = $this->country;
+        $original->documentType = $this->documentType;
+        $original->domain = $this->domain;
 
         // Copy file on disk
         if ($this->filename) {
@@ -738,5 +873,25 @@ class Card extends AbstractModel
     public function changeAdded(?Change $change): void
     {
         $this->change = $change;
+    }
+
+    /**
+     * Set documentSize
+     *
+     * @param string $documentSize
+     */
+    public function setDocumentSize(string $documentSize): void
+    {
+        $this->documentSize = $documentSize;
+    }
+
+    /**
+     * Get documentSize
+     *
+     * @return string
+     */
+    public function getDocumentSize(): string
+    {
+        return $this->documentSize;
     }
 }

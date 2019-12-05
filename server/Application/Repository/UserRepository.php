@@ -35,13 +35,14 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      *
      * @param string $login
      * @param string $password
+     * @param string $site
      *
      * @return null|User
      */
-    public function getLoginPassword(string $login, string $password): ?User
+    public function getLoginPassword(string $login, string $password, string $site): ?User
     {
         /** @var User $user */
-        $user = $this->getOneByLogin($login);
+        $user = $this->getOneByLogin($login, $site);
 
         if (!$user || ($user->getActiveUntil() && $user->getActiveUntil() < new DateTimeImmutable())) {
             return null;
@@ -71,14 +72,18 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      * This should only be used in tests or controlled environment.
      *
      * @param null|string $login
+     * @param string $site
      *
      * @return null|User
      */
-    public function getOneByLogin(?string $login): ?User
+    public function getOneByLogin(?string $login, string $site): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneByLogin($login);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($login, $site) {
+            return $this->findOneBy([
+                'login' => $login,
+                'site' => $site,
+            ]);
+        });
 
         return $user;
     }
@@ -94,9 +99,9 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      */
     public function getOneById(int $id): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneById($id);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($id) {
+            return $this->findOneById($id);
+        });
 
         return $user;
     }
@@ -106,15 +111,19 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      *
      * This should only be used in tests or controlled environment.
      *
-     * @param null|string $mail
+     * @param null|string $email
+     * @param string $site
      *
      * @return null|User
      */
-    public function getOneByEmail(?string $mail): ?User
+    public function getOneByEmail(?string $email, string $site): ?User
     {
-        $this->getAclFilter()->setEnabled(false);
-        $user = $this->findOneBy(['email' => $mail]);
-        $this->getAclFilter()->setEnabled(true);
+        $user = $this->getAclFilter()->runWithoutAcl(function () use ($email, $site) {
+            return $this->findOneBy([
+                'email' => $email,
+                'site' => $site,
+            ]);
+        });
 
         return $user;
     }
@@ -123,16 +132,17 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      * Create new Shibboleth user.
      *
      * @param string $login
-     * @param string $mail
+     * @param string $email
+     * @param string $site
      *
      * @return User
      */
-    public function createShibboleth(string $login, string $mail): User
+    public function createShibboleth(string $login, string $email, string $site): User
     {
         $user = new User();
         $user->setLogin($login);
-        $user->setEmail($mail);
-        $user->setType(User::TYPE_UNIL);
+        $user->setEmail($email);
+        $user->setType(User::TYPE_AAI);
         $user->setRole(User::ROLE_STUDENT);
 
         _em()->persist($user);

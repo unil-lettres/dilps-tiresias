@@ -2,7 +2,8 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="htdocs/index.php"
-         colors="true">
+         colors="true"
+         cacheResultFile="data/tmp/.phpunit.result.cache">
     <testsuites>
         <testsuite name="Application\\Tests">
             <directory>./tests</directory>

@@ -6,6 +6,7 @@ namespace Application\Traits;
 
 use Application\Model\Country;
 use Doctrine\ORM\Mapping as ORM;
+use GraphQL\Doctrine\Annotation as API;
 
 /**
  * Common fields to represent an address.
@@ -23,6 +24,12 @@ trait HasAddress
      * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;
+
+    /**
+     * @var string
+     * @ORM\Column(name="`precision`", type="Precision", nullable=true)
+     */
+    private $precision;
 
     /**
      * @var string
@@ -93,6 +100,26 @@ trait HasAddress
     public function setLongitude(?float $longitude): void
     {
         $this->longitude = $longitude;
+    }
+
+    /**
+     * @API\Field(type="?Precision")
+     *
+     * @return null|string
+     */
+    public function getPrecision(): ?string
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @API\Input(type="?Precision")
+     *
+     * @param null|string $precision
+     */
+    public function setPrecision(?string $precision): void
+    {
+        $this->precision = $precision;
     }
 
     /**

@@ -44,7 +44,7 @@ STRING;
         $password = $dbConfig['password'];
 
         echo "dumping $dumpFile...\n";
-        $dumpCmd = "mysqldump -v --user=$username --password=$password --host=$host $database | gzip > data/dump/$dumpFile";
+        $dumpCmd = "mysqldump -v --user=$username --password=$password --host=$host $database | gzip > $dumpFile";
         self::executeLocalCommand($dumpCmd);
     }
 

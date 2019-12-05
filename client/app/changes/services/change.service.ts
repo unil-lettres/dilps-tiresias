@@ -1,24 +1,30 @@
 import { Injectable } from '@angular/core';
+import { NaturalAbstractModelService } from '@ecodev/natural';
 import { Apollo } from 'apollo-angular';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import {
-    acceptChange,
-    changeQuery,
-    changesQuery,
-    rejectChange,
-    suggestCreation,
-    suggestDeletion,
-    suggestUpdate,
-} from './changeQueries';
-import { ChangesQuery } from '../../shared/generated-types';
 import { map } from 'rxjs/operators';
+import {
+    AcceptChange,
+    Changes,
+    ChangesVariables,
+    RejectChange,
+    SuggestCreation,
+    SuggestDeletion,
+    SuggestUpdate,
+} from '../../shared/generated-types';
+import { acceptChange, changeQuery, changesQuery, rejectChange, suggestCreation, suggestDeletion, suggestUpdate } from './change.queries';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ChangeService
-    extends AbstractModelService<null,
-        ChangesQuery['changes'],
+    extends NaturalAbstractModelService<null,
+        never,
+        Changes['changes'],
+        ChangesVariables,
         null,
+        never,
         null,
+        never,
         null> {
 
     constructor(apollo: Apollo) {
@@ -29,53 +35,68 @@ export class ChangeService
     }
 
     public acceptChange(change: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<AcceptChange>({
             mutation: acceptChange,
             variables: {
                 id: change.id,
             },
-            refetchQueries: this.getRefetchQueries(),
-        }).pipe(map(data => data.data.acceptChange));
+        }).pipe(map(data => {
+            this.apollo.getClient().reFetchObservableQueries();
+
+            return data.data.acceptChange;
+        }));
     }
 
     public rejectChange(change: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<RejectChange>({
             mutation: rejectChange,
             variables: {
                 id: change.id,
             },
-            refetchQueries: this.getRefetchQueries(),
-        }).pipe(map(data => data.data.rejectChange));
+        }).pipe(map(data => {
+            this.apollo.getClient().reFetchObservableQueries();
+
+            return data.data.rejectChange;
+        }));
     }
 
     public suggestDeletion(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestDeletion>({
             mutation: suggestDeletion,
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
-        }).pipe(map(data => data.data.suggestDeletion));
+        }).pipe(map(data => {
+            this.apollo.getClient().reFetchObservableQueries();
+
+            return data.data.suggestDeletion;
+        }));
     }
 
     public suggestCreation(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestCreation>({
             mutation: suggestCreation,
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
-        }).pipe(map(data => data.data.suggestCreation));
+        }).pipe(map(data => {
+            this.apollo.getClient().reFetchObservableQueries();
+
+            return data.data.suggestCreation;
+        }));
     }
 
     public suggestUpdate(card: { id }) {
-        return this.apollo.mutate({
+        return this.apollo.mutate<SuggestUpdate>({
             mutation: suggestUpdate,
             variables: {
                 id: card.id,
             },
-            refetchQueries: this.getRefetchQueries(),
-        }).pipe(map(data => data.data.suggestUpdate));
+        }).pipe(map(data => {
+            this.apollo.getClient().reFetchObservableQueries();
+
+            return data.data.suggestUpdate;
+        }));
     }
 
 }

@@ -24,13 +24,14 @@ class Server
      */
     private $config;
 
-    public function __construct(bool $debug)
+    public function __construct(bool $debug, string $site)
     {
         GraphQL::setDefaultFieldResolver(new DefaultFieldResolver());
         $this->config = ServerConfig::create([
             'schema' => new Schema(),
             'queryBatching' => true,
             'debug' => $debug ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE : false,
+            'rootValue' => $site,
         ]);
         $this->server = new StandardServer($this->config);
     }

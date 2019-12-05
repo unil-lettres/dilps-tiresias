@@ -1,15 +1,25 @@
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SITE } from '../app.config';
+import { CardService } from '../card/services/card.service';
+import { AlertService } from '../shared/components/alert/alert.service';
+import { CardInput, Collections_collections_items, Site } from '../shared/generated-types';
+import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { AlertService } from '../shared/components/alert/alert.service';
 import { UserComponent } from '../users/user/user.component';
-import { UploadService } from '../shared/services/upload.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CardService } from '../card/services/card.service';
-import { environment } from '../../environments/environment';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+    CollectionSelectorResult,
+} from '../shared/components/collection-selector/collection-selector.component';
+
+function isExcel(file: File): boolean {
+    return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+}
 
 @Component({
     selector: 'app-home',
@@ -17,23 +27,24 @@ import { environment } from '../../environments/environment';
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    private routeParamsSub;
 
-    public environmentString = environment.environment;
+    public Site = Site;
+
     public errors = [];
     public user;
     public nav = 1;
+    private routeParamsSub;
 
-    constructor(public themeSvc: ThemeService,
+    constructor(public themeService: ThemeService,
                 public route: ActivatedRoute,
                 public router: Router,
-                public userSvc: UserService,
+                public userService: UserService,
                 private network: NetworkActivityService,
                 private snackBar: MatSnackBar,
-                private alertSvc: AlertService,
+                private alertService: AlertService,
                 private dialog: MatDialog,
-                public uploadSvc: UploadService,
-                private cardSvc: CardService) {
+                private cardService: CardService,
+                @Inject(SITE) public site: Site) {
 
         this.network.errors.next([]);
     }
@@ -47,11 +58,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.network.errors.subscribe(errors => {
             this.errors = this.errors.concat(errors);
             if (errors.length) {
-                this.alertSvc.error('Quelque chose s\'est mal passé !');
+                this.alertService.error('Quelque chose s\'est mal passé !');
             }
         });
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
 
@@ -62,23 +73,47 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    public uploadPhoto(files) {
-        const observables = [];
-        for (const file of files) {
-            const card = this.cardSvc.getEmptyObject();
-            card.file = file;
-            observables.push(this.cardSvc.create(card));
+    public uploadImages(files: File[]): void {
+        const excel = files.find(isExcel);
+        if (excel) {
+            this.uploadImagesAndExcel(excel, files.filter(f => !isExcel(f)));
+        } else {
+            this.uploadImagesOnly(files);
         }
-        files.length = 0;
-        forkJoin(observables).subscribe(() => {
-            this.router.navigateByUrl('my-collection;upload=' + Date.now());
-        });
 
         files.length = 0;
     }
 
+    public uploadImagesOnly(files: File[]): void {
+        const observables = [];
+        for (const file of files) {
+            const card = this.cardService.getConsolidatedForClient();
+            card.file = file;
+            observables.push(this.cardService.create(card as CardInput));
+        }
+        files.length = 0;
+        forkJoin(observables).subscribe(() => {
+            this.router.navigateByUrl('/empty', {skipLocationChange: true})
+                .then(() => this.router.navigateByUrl('my-collection'));
+        });
+    }
+
+    public uploadImagesAndExcel(excel: File, images: File[]): void {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
+            width: '400px',
+            data: {},
+        }).afterClosed().subscribe(collection => {
+
+            this.cardService.createWithExcel(excel, images, collection).subscribe(() => {
+                this.router.navigateByUrl('/empty', {skipLocationChange: true})
+                    .then(() => this.router.navigateByUrl('my-collection/' + collection.id));
+            });
+        });
+
+    }
+
     public editUser() {
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.dialog.open(UserComponent, {
                 width: '800px',
                 data: {item: user},
@@ -90,14 +125,4 @@ export class HomeComponent implements OnInit, OnDestroy {
         return !!this.nav;
     }
 
-    public environmentColor() {
-        switch (this.environmentString) {
-            case 'development':
-                return '#2ca02c';
-            case 'staging':
-                return '#ee7f00';
-            default:
-                return '';
-        }
-    }
 }

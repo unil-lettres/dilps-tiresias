@@ -1,29 +1,19 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { Component, Injector } from '@angular/core';
 import { AbstractList } from '../../shared/components/AbstractList';
+import { Changes, ChangesVariables } from '../../shared/generated-types';
 import { ChangeService } from '../services/change.service';
-import { UserService } from '../../users/services/user.service';
 
 @Component({
     selector: 'app-changes',
     templateUrl: './changes.component.html',
     styleUrls: ['./changes.component.scss'],
 })
-export class ChangesComponent extends AbstractList {
+export class ChangesComponent extends AbstractList<Changes['changes'], ChangesVariables> {
 
-    public displayedColumns = [
-        'type',
-        'original',
-        'suggestion'
-    ];
+    public displayedColumns = ['type', 'original', 'suggestion'];
 
-    constructor(service: ChangeService,
-                router: Router,
-                route: ActivatedRoute,
-                dialog: MatDialog) {
-
-        super('notifications', service, null, router, route, dialog);
+    constructor(service: ChangeService, injector: Injector) {
+        super(service, null, injector);
     }
 
 }

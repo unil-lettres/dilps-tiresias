@@ -1,48 +1,58 @@
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import {
-    CreateUserMutation,
-    DeleteUsersMutation,
-    LoginMutation,
-    LogoutMutation,
-    UpdateUserMutation,
-    UserInput,
-    UserQuery,
-    UserRole,
-    UsersQuery,
-    UserType,
-    ViewerQuery,
-} from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import {
-    createUserMutation,
-    deleteUsersMutation,
-    loginMutation,
-    logoutMutation,
-    updateUserMutation,
-    userQuery,
-    usersQuery,
-    viewerQuery,
-} from './userQueries';
+import { Apollo } from 'apollo-angular';
+import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SITE } from '../../app.config';
+import {
+    CreateUser,
+    CreateUserVariables,
+    DeleteUsers,
+    Login,
+    Logout,
+    Site,
+    UpdateUser,
+    UpdateUserVariables,
+    User, UserInput,
+    UserRole,
+    Users,
+    UsersVariables,
+    UserType,
+    UserVariables,
+    Viewer,
+} from '../../shared/generated-types';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { createUser, deleteUsers, loginMutation, logoutMutation, updateUser, userQuery, usersQuery, viewerQuery } from './user.queries';
 
-@Injectable()
-export class UserService extends AbstractModelService<UserQuery['user'],
-    UsersQuery['users'],
-    CreateUserMutation['createUser'],
-    UpdateUserMutation['updateUser'],
-    DeleteUsersMutation['deleteUsers']> {
+@Injectable({
+    providedIn: 'root',
+})
+export class UserService extends AbstractContextualizedService<User['user'],
+    UserVariables,
+    Users['users'],
+    UsersVariables,
+    CreateUser['createUser'],
+    CreateUserVariables,
+    UpdateUser['updateUser'],
+    UpdateUserVariables,
+    DeleteUsers['deleteUsers']> {
 
-    constructor(apollo: Apollo, private router: Router) {
-        super(apollo, 'user', userQuery, usersQuery, createUserMutation, updateUserMutation, deleteUsersMutation);
+    private currentUser: Viewer['viewer'] | null = null;
+
+    constructor(apollo: Apollo, private router: Router, @Inject(SITE) site: Site) {
+        super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
-    public getEmptyObject(): UserInput {
+    public getDefaultForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer(): UserInput {
         return {
+            site: this.site,
             login: '',
-            email: '',
+            name: '',
+            email: null,
             activeUntil: '',
             termsAgreement: null,
             type: UserType.default,
@@ -52,11 +62,18 @@ export class UserService extends AbstractModelService<UserQuery['user'],
         };
     }
 
-    public getCurrentUser(): Observable<ViewerQuery['viewer']> {
-        return this.apollo.query<ViewerQuery>({
+    public getCurrentUser(): Observable<Viewer['viewer']> {
+
+        if (this.currentUser) {
+            return of(this.currentUser);
+        }
+
+        return this.apollo.query<Viewer>({
             query: viewerQuery,
-            fetchPolicy: 'network-only',
-        }).pipe(map(result => result.data ? result.data.viewer : null));
+        }).pipe(map(({data: {viewer}}) => {
+            this.currentUser = viewer;
+            return viewer;
+        }));
     }
 
     public getRole(role: UserRole) {
@@ -91,7 +108,7 @@ export class UserService extends AbstractModelService<UserQuery['user'],
     public getTypes() {
         return [
             {
-                name: UserType.unil,
+                name: UserType.aai,
                 text: 'AAI',
             },
             {
@@ -105,22 +122,25 @@ export class UserService extends AbstractModelService<UserQuery['user'],
         ];
     }
 
-    public login(loginData): Observable<LoginMutation['login']> {
-        return this.apollo.mutate<LoginMutation>({
+    public login(loginData): Observable<Login['login']> {
+        return this.apollo.mutate<Login>({
             mutation: loginMutation,
             variables: loginData,
         }).pipe(map(result => result.data.login));
     }
 
-    public logout(): Observable<LogoutMutation['logout']> {
-        const subject = new Subject<LogoutMutation['logout']>();
+    public logout(): Observable<Logout['logout']> {
+        const subject = new Subject<Logout['logout']>();
 
         this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
-            this.apollo.mutate<LogoutMutation>({
+            this.apollo.mutate<Logout>({
                 mutation: logoutMutation,
-            }).pipe(map(result => result.data.logout)).subscribe((v) => (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
-                subject.next(v);
-            }));
+            }).pipe(map(result => result.data.logout)).subscribe((v) => {
+                this.currentUser = null;
+                (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
+                    subject.next(v);
+                });
+            });
         });
 
         return subject;

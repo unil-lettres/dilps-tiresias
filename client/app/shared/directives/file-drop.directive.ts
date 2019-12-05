@@ -8,7 +8,7 @@ import { UploadService } from '../services/upload.service';
 })
 export class FileDropDirective extends ngfDrop {
 
-    constructor(element: ElementRef, private uploadSvc: UploadService) {
+    constructor(element: ElementRef, private uploadService: UploadService) {
         super(element);
 
         const overlay: HTMLElement = document.createElement('div');
@@ -29,16 +29,15 @@ export class FileDropDirective extends ngfDrop {
             });
 
         this.filesChange.subscribe((data: File[]) => {
-            uploadSvc.filesChanged.next(data);
+            uploadService.filesChanged.next(data);
         });
     }
 
     /**
      * Prevent drag and drop if disabled or if nobody is waiting for files
-     * @param {Event} event
      */
     @HostListener('dragover', ['$event']) onDragOver(event: Event): void {
-        if (this.fileDropDisabled || this.uploadSvc.filesChanged.observers.length === 0) {
+        if (this.fileDropDisabled || this.uploadService.filesChanged.observers.length === 0) {
             return;
         }
 
@@ -48,8 +47,6 @@ export class FileDropDirective extends ngfDrop {
     /**
      * The original eventToTransfer can return null, but eventToFiles try to access an attribute on that potential null causing error.
      * This overrides eventToFiles to prevent this error, but todo should report bug on original repo and remove this fn when fixed.
-     * @param {Event} event
-     * @returns {any[]}
      */
     public eventToFiles(event) {
         const transfer = this.eventToTransfer(event);

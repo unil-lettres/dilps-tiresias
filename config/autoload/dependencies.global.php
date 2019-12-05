@@ -23,6 +23,7 @@ return [
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
+            'site' => \Application\Service\SiteFactory::class,
             \Zend\Expressive\Application::class => \Zend\Expressive\Container\ApplicationFactory::class,
             \Zend\Expressive\Helper\ServerUrlMiddleware::class => \Zend\Expressive\Helper\ServerUrlMiddlewareFactory::class,
             \Zend\Expressive\Helper\UrlHelper::class => \Zend\Expressive\Helper\UrlHelperFactory::class,
@@ -35,6 +36,8 @@ return [
             \Application\Action\GraphQLAction::class => \Application\Action\GraphQLFactory::class,
             \Application\Action\ImageAction::class => \Application\Action\ImageFactory::class,
             \Application\Action\PptxAction::class => \Application\Action\PptxFactory::class,
+            \Application\Action\XlsxAction::class => \Application\Action\XlsxFactory::class,
+            \Application\Action\TemplateAction::class => \Application\Action\TemplateFactory::class,
             \Application\Action\ZipAction::class => \Application\Action\ZipFactory::class,
             \Application\Middleware\CardsFetcherMiddleware::class => \Application\Middleware\CardsFetcherFactory::class,
             \Application\Middleware\CollectionFetcherMiddleware::class => \Application\Middleware\CollectionFetcherFactory::class,

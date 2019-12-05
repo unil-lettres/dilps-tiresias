@@ -34,7 +34,7 @@ abstract class AbstractRepository extends EntityRepository
         foreach ($sorting as $sort) {
             if ($sort['field'] === 'random') {
                 $random = new Random();
-                $random($qb, $sort['order']);
+                $random(new UniqueNameFactory(), $this->getClassMetadata(), $qb, $alias, $sort['order']);
             } else {
                 $qb->addOrderBy($alias . '.' . $sort['field'], $sort['order']);
             }
@@ -46,7 +46,7 @@ abstract class AbstractRepository extends EntityRepository
      *
      * @return AclFilter
      */
-    protected function getAclFilter(): AclFilter
+    public function getAclFilter(): AclFilter
     {
         return $this->getEntityManager()->getFilters()->getFilter(AclFilter::class);
     }

@@ -1,17 +1,31 @@
 :host {
-  .shib-link {
-    flex: auto;
 
-    img {
-      height: 100px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    & > div {
+        margin: auto;
     }
-  }
 
-  .dilps-logo {
-    height: 140px;
-  }
+    app-carousel {
+        margin-left: 50px;
+    }
 
-  .login-info {
-    text-align: center;
-  }
+    .shib-link {
+        flex: auto;
+
+        img {
+            height: 100px;
+        }
+    }
+
+    .login-info {
+        text-align: center;
+    }
+
+    .dilps-logo {
+        height: 140px;
+    }
 }

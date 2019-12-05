@@ -1,32 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { Component, Injector } from '@angular/core';
 import { AbstractList } from '../../shared/components/AbstractList';
+import { Users, UsersVariables, UserType } from '../../shared/generated-types';
 import { UserService } from '../services/user.service';
 import { UserComponent } from '../user/user.component';
-import {UserType} from '../../shared/generated-types';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
 })
-export class UsersComponent extends AbstractList implements OnInit {
+export class UsersComponent extends AbstractList<Users['users'], UsersVariables> {
 
     public displayedColumns = [
+        'login',
         'name',
         'email',
         'role',
         'type',
-        'activeUntil'
+        'activeUntil',
     ];
-    constructor(service: UserService,
-                router: Router,
-                route: ActivatedRoute,
-                dialog: MatDialog) {
 
-        super('users', service, UserComponent, router, route, dialog);
-
+    constructor(service: UserService, injector: Injector) {
+        super(service, UserComponent, injector);
     }
 
     public isLegacyUser(user) {

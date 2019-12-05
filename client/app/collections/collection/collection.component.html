@@ -2,46 +2,68 @@
     <mat-tab-group>
         <mat-tab label="Collection">
 
-            <div fxLayout="column" class="padding" fxLayoutGap="10px" class="padding-v">
+            <div class="padding" class="padding-v" fxLayout="column" fxLayoutGap="10px">
 
-                <div class="innerSpacing" fxLayout="column" style="max-width:300px" *ngIf="showVisibility()">
+                <div *ngIf="showVisibility()" class="innerSpacing" fxLayout="column" style="max-width:300px">
                     <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
-                    <mat-slider [min]="1"
-                                [max]="3"
-                                [ngModel]="visibility"
-                                (input)="updateVisibility($event);visibility = $event.value"
+                    <mat-slider (input)="updateVisibility($event);visibility = $event.value"
                                 [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                                [max]="3"
+                                [min]="1"
+                                [ngModel]="visibility"
                     ></mat-slider>
                 </div>
 
                 <mat-form-field>
-                    <input matInput [(ngModel)]="data.item.name" placeholder="Nom" >
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="data.item.name" matInput>
                 </mat-form-field>
 
                 <mat-form-field>
-                    <input matInput [(ngModel)]="data.item.description" placeholder="Description" >
+                    <mat-label>Description</mat-label>
+                    <input [(ngModel)]="data.item.description" matInput>
                 </mat-form-field>
 
-                <app-thesaurus [service]="institutionSvc"
-                               placeholder="Institution"
+                <app-thesaurus (modelChange)="data.item.institution = $event"
                                [model]="institution"
-                               (modelChange)="data.item.institution = $event"
                                [multiple]="false"
+                               [service]="institutionService"
+                               placeholder="Institution"
+                               rent
                 ></app-thesaurus>
 
-                <mat-slide-toggle [(ngModel)]="data.item.isSource" *ngIf="user?.role == 'administrator'">Est un fonds</mat-slide-toggle>
+                <natural-select [(ngModel)]="data.item.parent"
+                                [hierarchicSelectorConfig]="hierarchicConfig"
+                                [showIcon]="false"
+                                clearLabel="Dissocier"
+                                placeholder="Collection parente"
+                                selectLabel="Associer au parent"
+                ></natural-select>
+
+                <mat-slide-toggle *ngIf="user?.role == 'administrator'" [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
             </div>
+
+        </mat-tab>
+        <mat-tab *ngIf="data.item.id" label="Responsables">
+
+            <natural-relations [displayWith]="displayFn"
+                               [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
+                               [main]="data.item"
+                               [service]="userService"
+                               class="margin"
+                               placeholder="Ajouter un responsable"
+            ></natural-relations>
 
         </mat-tab>
     </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer fxFlex
+    <app-dialog-footer (create)="create()"
+                       (delete)="delete()"
+                       (update)="update()"
                        [canCreate]="user?.globalPermissions?.collection?.create"
                        [item]="data.item"
-                       (create)="create()"
-                       (update)="update()"
-                       (delete)="delete()"
+                       fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

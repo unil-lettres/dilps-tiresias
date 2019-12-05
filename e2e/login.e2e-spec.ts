@@ -5,7 +5,7 @@ describe('Login page', () => {
 
     const wrongCredentias = {
         username: 'wrongname',
-        password: 'wrongpasswd'
+        password: 'wrongpasswd',
     };
 
     beforeEach(() => {

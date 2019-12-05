@@ -5,8 +5,8 @@
  * we return a stream that contains only one set of data that doesn't change.
  */
 
-import { of, Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export class BasicDataSource extends DataSource<any> {

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AppTest\Api;
+namespace ApplicationTest\Api;
 
 use Application\Api\Server;
+use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use ApplicationTest\Traits\TestWithTransaction;
 use PHPUnit\Framework\TestCase;
@@ -25,13 +26,13 @@ class ServerTest extends TestCase
      */
     public function testQuery(?string $user, ServerRequest $request, array $expected): void
     {
-        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin($user));
+        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin($user, SiteType::DILPS));
 
         // Use this flag to easily debug API test issues
         $debug = false;
 
         // Configure server
-        $server = new Server($debug);
+        $server = new Server($debug, SiteType::DILPS);
 
         // Execute query
         $actual = $server->execute($request)->toArray();

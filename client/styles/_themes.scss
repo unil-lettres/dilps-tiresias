@@ -5,7 +5,7 @@
 // Import theming files full relative way or karma will display warning
 @import '../../node_modules/@angular/material/theming';
 @import '../../node_modules/@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
-@import '../../node_modules/@ecodev/natural-search/theming/natural-search.theme';
+@import '../../node_modules/@ecodev/natural/theming/natural.theme';
 @import 'typography';
 @import '../app/app.theme';
 @import '../app/shared/components/boot-loader/boot-loader.theme';
@@ -26,6 +26,7 @@
 
 // Include components themes
 @mixin components-theme($theme) {
+    @include natural($theme);
     @include app($theme);
     @include boot-loader($theme);
     @include scroll($theme);
@@ -40,62 +41,15 @@
     @include upload($theme);
     @include card($theme);
     @include quizz($theme);
-    @include natural-search-theme($theme);
 }
 
-$mat-dilps: (
-        50: #e3f2fd,
-        100: #bbdefb,
-        200: #90caf9,
-        300: #64b5f6,
-        400: #42a5f5,
-        500: #3C8BC7,
-        600: #1e88e5,
-        700: #1976d2,
-        800: #1565c0,
-        900: #0d47a1,
-        A100: #82b1ff,
-        A200: #448aff,
-        A400: #2979ff,
-        A700: #2962ff,
-        contrast: (
-                50: $black-87-opacity,
-                100: $black-87-opacity,
-                200: $black-87-opacity,
-                300: $black-87-opacity,
-                400: $black-87-opacity,
-                500: white,
-                600: white,
-                700: white,
-                800: $white-87-opacity,
-                900: $white-87-opacity,
-                A100: $black-87-opacity,
-                A200: white,
-                A400: white,
-                A700: white,
-        )
-);
+// Dilps
+@import 'themes/dilps-production';
+@import 'themes/dilps-development';
+@import 'themes/dilps-staging';
 
-// Configure themes
-$dilps-primary: mat-palette($mat-dilps);
-$dilps-accent: mat-palette($mat-orange);
-$dilps-warn: mat-palette($mat-red);
-$dilps-theme-light: mat-light-theme($dilps-primary, $dilps-accent, $dilps-warn);
-$dilps-theme-dark: mat-dark-theme($dilps-primary, $dilps-accent, $dilps-warn);
-
-$baseColorLight: mat-color(map-get($dilps-theme-light, foreground), base);
-$baseColorDark: mat-color(map-get($dilps-theme-dark, foreground), base);
-
-@include angular-material-theme($dilps-theme-light);
-
-.default {
-    color: $baseColorLight;
-    @include components-theme($dilps-theme-light);
-}
-
-.defaultDark {
-    color: $baseColorDark;
-    @include angular-material-theme($dilps-theme-dark);
-    @include components-theme($dilps-theme-dark);
-}
+// Tiresias
+@import 'themes/tiresias-production';
+@import 'themes/tiresias-development';
+@import 'themes/tiresias-staging';
 

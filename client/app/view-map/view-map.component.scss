@@ -1,0 +1,32 @@
+:host {
+
+    .name {
+        color: black;
+        padding: 5px;
+    }
+
+    .img {
+        max-width: 500px;
+        max-height: 300px;
+    }
+
+
+    .image-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        height: 200px;
+        width: 300px;
+
+        .image {
+            height: 200px;
+            width: 300px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+    }
+}

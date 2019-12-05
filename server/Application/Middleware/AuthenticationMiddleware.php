@@ -21,9 +21,15 @@ class AuthenticationMiddleware implements MiddlewareInterface
      */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    /**
+     * @var string
+     */
+    private $site;
+
+    public function __construct(UserRepository $userRepository, string $site)
     {
         $this->userRepository = $userRepository;
+        $this->site = $site;
     }
 
     /**
@@ -70,7 +76,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
             // User has Shibboleth session but no user session
             if (array_key_exists('mail', $serverParams)) {
                 // Check for the user in the db
-                $user = $this->userRepository->getOneByEmail($serverParams['mail']);
+                $user = $this->userRepository->getOneByEmail($serverParams['mail'], $this->site);
 
                 if (!$user) {
                     $login = $this->generateShibbolethLogin($serverParams);
@@ -78,7 +84,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
                     // Create user if a Shibboleth session is found but user cannot be found in the db
                     $user = $this->userRepository->createShibboleth(
                         $login,
-                        $serverParams['mail']
+                        $serverParams['mail'],
+                        $this->site
                     );
                 }
 

@@ -6,4 +6,5 @@ namespace Application\Repository;
 
 class TagRepository extends AbstractRepository
 {
+    use HasParent;
 }

@@ -12,16 +12,18 @@
 
             mat-nav-list {
                 padding: 0;
-                width:64px;
+                width: 64px;
             }
 
             .mat-list-item {
                 color: mat-color($primary, default-contrast);
                 height: 64px;
             }
+
             .mat-list-item.active {
                 background: rgba(255, 255, 255, 0.2);
             }
+
             .mat-list-item:not(.active):hover {
                 background: rgba(0, 0, 0, 0.2);
             }
@@ -37,8 +39,8 @@
     }
 
     .mat-menu-panel.error-menu {
-        max-width:none !important;
-        width:auto !important;
+        max-width: none !important;
+        width: auto !important;
 
         .mat-caption {
             word-break: break-all;

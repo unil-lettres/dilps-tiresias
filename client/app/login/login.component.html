@@ -1,16 +1,14 @@
-<form fxLayout="column" fxFlexFill>
-
-    <perfect-scrollbar fxFlexAlign="center center">
-
-        <div class="login padding-v centered-content" fxFlex fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div class="login" fxLayout="column">
 
             <div fxLayout="column" fxLayoutGap="15px">
                 <img src="assets/images/logo-bleu.svg" class="dilps-logo" />
 
                 <mat-divider></mat-divider>
 
-                <div fxLayout="column" fxLayoutGap="15px" class="login-info">
-                    Veuillez choisir une méthode d'authentification ou<br>
+            <div class="login-info" fxLayout="column" fxLayoutGap="15px">
+                Veuillez choisir une méthode d'authentification ou
+                <br>
                     utiliser le bouton "Accès public"
                 </div>
 
@@ -36,52 +34,56 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
+                <form>
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input matInput
-                                   autofocus
-                                   name="login"
+                            <mat-label>Login</mat-label>
+                            <input (focus)="snackBar.dismiss()"
                                    [(ngModel)]="loginForm.login"
-                                   placeholder="login"
-                                   required="required"
                                    [disabled]="loading"
-                                   (focus)="snackBar.dismiss()"
+                                   autofocus
+                                   matInput
+                                   name="login"
+                                   required="required"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
-                            <input matInput
-                                   type="password"
-                                   name="password"
-                                   color="warn"
+                            <mat-label>Password</mat-label>
+                            <input (focus)="snackBar.dismiss()"
                                    [(ngModel)]="loginForm.password"
-                                   placeholder="password"
-                                   required="required"
                                    [disabled]="loading"
-                                   (focus)="snackBar.dismiss()"
+                                   color="warn"
+                                   matInput
+                                   name="password"
+                                   required="required"
+                                   type="password"
                             >
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
-                        <button type="submit"
+                        <button (click)="login()"
+                                [disabled]="loading || !loginForm.login || !loginForm.password"
+                                color="primary"
                                 mat-button
                                 mat-raised-button
-                                color="primary"
-                                (click)="login()"
-                                [disabled]="loading || !loginForm.login || !loginForm.password"
-                        >Se connecter</button>
+                                type="submit"
+                        >Se connecter
+                        </button>
                     </div>
+                </form>
+
                 </mat-expansion-panel>
 
                 <mat-divider></mat-divider>
 
-                <a mat-raised-button (click)="userService.startTempAccess()">Accès public</a>
+            <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
             </div>
+
         </div>
 
-    </perfect-scrollbar>
-
-</form>
+    <app-carousel></app-carousel>
+</div>

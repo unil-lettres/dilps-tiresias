@@ -4,5 +4,10 @@
     display: flex;
     flex-direction: column;
     @include fixedToolbar();
+
+    app-view-grid {
+        position: relative;
+        z-index: 9;
+    }
 }
 

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CardService } from '../card/services/card.service';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
-import { isString, uniq } from 'lodash';
-import { CardQuery } from '../shared/generated-types';
+import { CardService } from '../card/services/card.service';
+import { Card } from '../shared/generated-types';
+import { Result, test } from './quizz.utils';
 
 @Component({
     selector: 'app-quizz',
@@ -13,19 +13,17 @@ import { CardQuery } from '../shared/generated-types';
 })
 export class QuizzComponent implements OnInit, OnDestroy {
 
+    public cards: string[] = [];
+    public card: Card['card'];
+    public imageSrc;
+    public currentIndex = 0;
+    public attributes: Result;
+    public formCtrl: FormControl = new FormControl();
     private routeParamsSub;
     private formChangeSub;
 
-    public cards: string[] = [];
-    public card: CardQuery['card'];
-    public imageSrc;
-    public currentIndex = 0;
-    public attributes;
-
-    public formCtrl: FormControl = new FormControl();
-
     constructor(private route: ActivatedRoute,
-                private cardSvc: CardService) {
+                private cardService: CardService) {
     }
 
     ngOnDestroy() {
@@ -43,31 +41,8 @@ export class QuizzComponent implements OnInit, OnDestroy {
         });
 
         this.formChangeSub = this.formCtrl.valueChanges.pipe(debounceTime(500)).subscribe(val => {
-            this.test(val);
+            this.attributes = test(val, this.card);
         });
-    }
-
-    private getCard(id: string) {
-        if (!id) {
-            return;
-        }
-
-        const index = this.cards.findIndex(c => c === id);
-        this.cardSvc.getOne(id).subscribe((card: any) => {
-            this.currentIndex = index;
-            this.selectCard(card);
-        });
-    }
-
-    private selectCard(card: CardQuery['card']) {
-        this.card = card;
-        this.imageSrc = CardService.getImageLink(card, 2000);
-        this.attributes = {
-            name: false,
-            artists: false,
-            institution: false,
-            dating: false,
-        };
     }
 
     public goToNext() {
@@ -80,146 +55,26 @@ export class QuizzComponent implements OnInit, OnDestroy {
         return artists.map(a => a.name).join(', ');
     }
 
-    private test(formValue: string): void {
-        const commonPlaces = /(eglise|chapelle|musee)/g;
-        const words = this.sanitize(formValue).replace(commonPlaces, '').split(/\W/).filter(word => word.length > 3);
-
-        for (const attribute of Object.keys(this.attributes)) {
-            const value = this.card[attribute];
-            if (attribute === 'institution') {
-                this.attributes[attribute] = this.testSingleThesaurus(words, value);
-            } else if (attribute === 'artists') {
-                this.attributes[attribute] = this.testMultipleThesaurus(words, value);
-            } else if (attribute === 'dating') {
-                this.attributes[attribute] = this.testDate(formValue, this.card.datings);
-            } else if (isString(value)) {
-                this.attributes[attribute] = this.testString(words, value);
-            }
+    private getCard(id: string) {
+        if (!id) {
+            return;
         }
 
+        const index = this.cards.findIndex(c => c === id);
+        this.cardService.getOne(id).subscribe((card: any) => {
+            this.currentIndex = index;
+            this.selectCard(card);
+        });
     }
 
-    private sanitize(string: string): string {
-        return this.stripVowelAccent(string.toLowerCase());
-    }
-
-    private testString(words: string[], attributeValue: string): boolean {
-        attributeValue = this.sanitize(attributeValue);
-        for (const word of words) {
-            if (attributeValue.indexOf(word) > -1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private testSingleThesaurus(words: string[], attributeValue): boolean {
-        if (!attributeValue) {
-            return false;
-        }
-
-        return this.testString(words, attributeValue.name);
-    }
-
-    private testMultipleThesaurus(words: string[], attributeValue): boolean {
-        for (const item of attributeValue) {
-            if (this.testSingleThesaurus(words, item)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private testDate(formValue: string, datings: CardQuery['card']['datings']) {
-
-        const years: string[] = uniq(formValue.match(/(-?\d+)/));
-        if (years) {
-            for (const year of years) {
-                const searched = (new Date(year)).getFullYear();
-                for (const dating of datings) {
-                    const from = (new Date(dating.from)).getFullYear();
-                    const to = (new Date(dating.to)).getFullYear();
-
-                    // If expected span is small, then allow a margin of error
-                    const span = to - from;
-                    let margin;
-                    if (span === 0) {
-                        margin = 25;
-                    } else if (span < 20) {
-                        margin = 15;
-                    } else {
-                        margin = 0;
-                    }
-
-                    if (searched >= from - margin && searched <= to + margin) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private stripVowelAccent(str) {
-
-        const rExps = [
-            {
-                re: /[\xC0-\xC6]/g,
-                ch: 'A',
-            },
-            {
-                re: /[\xE0-\xE6]/g,
-                ch: 'a',
-            },
-            {
-                re: /[\xC8-\xCB]/g,
-                ch: 'E',
-            },
-            {
-                re: /[\xE8-\xEB]/g,
-                ch: 'e',
-            },
-            {
-                re: /[\xCC-\xCF]/g,
-                ch: 'I',
-            },
-            {
-                re: /[\xEC-\xEF]/g,
-                ch: 'i',
-            },
-            {
-                re: /[\xD2-\xD6]/g,
-                ch: 'O',
-            },
-            {
-                re: /[\xF2-\xF6]/g,
-                ch: 'o',
-            },
-            {
-                re: /[\xD9-\xDC]/g,
-                ch: 'U',
-            },
-            {
-                re: /[\xF9-\xFC]/g,
-                ch: 'u',
-            },
-            {
-                re: /[\xD1]/g,
-                ch: 'N',
-            },
-            {
-                re: /[\xF1]/g,
-                ch: 'n',
-            },
-        ];
-
-        for (let i = 0, len = rExps.length; i < len; i++) {
-            str = str.replace(rExps[i].re, rExps[i].ch);
-        }
-
-        return str;
+    private selectCard(card: Card['card']) {
+        this.card = card;
+        this.imageSrc = CardService.getImageLink(card, 2000);
+        this.attributes = {
+            name: false,
+            artists: false,
+            institution: false,
+            dating: false,
+        };
     }
 }

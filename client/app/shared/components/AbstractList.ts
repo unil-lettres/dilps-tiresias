@@ -1,38 +1,17 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { IncrementSubject } from '../services/increment-subject';
+import { Injector, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PaginatedDataSource } from '../services/paginated.data.source';
-import { OnInit } from '@angular/core';
+import { NaturalAbstractList, PaginatedData, QueryVariables } from '@ecodev/natural';
 
-export class AbstractList implements OnInit {
+export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVariables> extends NaturalAbstractList<Tall, Vall>
+    implements OnInit {
 
-    public displayedColumns = [
-        'name',
-    ];
+    public displayedColumns = ['name'];
 
-    public dataSource;
+    protected dialog: MatDialog;
 
-    protected listingOptions = new IncrementSubject({});
-
-    constructor(private key,
-                protected service,
-                private component,
-                protected router: Router,
-                protected route: ActivatedRoute,
-                protected dialog: MatDialog) {
-    }
-
-    ngOnInit() {
-        const queryRef = this.service.watchAll(this.listingOptions);
-        this.dataSource = new PaginatedDataSource(
-            queryRef.valueChanges,
-            this.listingOptions,
-            {},
-            true,
-            this.router,
-            this.route,
-            this.key,
-        );
+    constructor(service, private component, injector: Injector) {
+        super(service, injector);
+        this.dialog = injector.get(MatDialog);
     }
 
     public edit(item) {

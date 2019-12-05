@@ -1,0 +1,21 @@
+<agm-map *ngIf="markers"
+         [fitBoundsPadding]="{top: 250, right: 100, left: 100, bottom:10}"
+         [fitBounds]="bounds"
+         [mapTypeControlOptions]="{position: 10}"
+         [mapTypeControl]="true"
+         [scrollwheel]="true"
+         style="width:100%;height:100%;"
+>
+    <agm-marker *ngFor="let marker of markers" [iconUrl]="marker.icon" [latitude]="marker.latitude" [longitude]="marker.longitude">
+        <agm-snazzy-info-window [closeWhenOthersOpen]="true" [maxHeight]="300" [maxWidth]="500" padding="0">
+            <ng-template>
+                <div>
+                    <div class="name">{{ marker.name }}</div>
+                    <a [routerLink]="['/card', marker.id]">
+                        <img [attr.src]="'/image/'+ marker.id + '/200'" class="img">
+                    </a>
+                </div>
+            </ng-template>
+        </agm-snazzy-info-window>
+    </agm-marker>
+</agm-map>

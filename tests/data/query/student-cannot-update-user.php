@@ -17,7 +17,7 @@ return [
         'variables' => [
             'inputUser' => [
                 'login' => 'testlogin',
-                'email' => 'test email',
+                'email' => 'test@email.com',
                 'type' => User::TYPE_DEFAULT,
                 'role' => User::ROLE_ADMINISTRATOR,
             ],
@@ -27,7 +27,9 @@ return [
         'errors' => [
             [
                 'message' => 'User "student" with role student is not allowed on resource "User#1000" with privilege "update"',
-                'category' => 'Permissions',
+                'extensions' => [
+                    'category' => 'Permissions',
+                ],
                 'locations' => [
                     [
                         'line' => 2,

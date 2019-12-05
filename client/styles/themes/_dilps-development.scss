@@ -1,0 +1,18 @@
+$primary: mat-palette($mat-cyan);
+$accent: mat-palette($mat-orange);
+$warn: mat-palette($mat-red);
+
+.dilps-development {
+    $theme-light: mat-light-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-light, foreground), base);
+    @include angular-material-theme($theme-light);
+    @include components-theme($theme-light);
+}
+
+.dilps-development-dark {
+    $theme-dark: mat-dark-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-dark, foreground), base);
+    @include angular-material-theme($theme-dark);
+    @include components-theme($theme-dark);
+}
+

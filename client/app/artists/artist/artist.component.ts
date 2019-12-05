@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { AlertService } from '../../shared/components/alert/alert.service';
-import { ArtistService } from '../services/artist.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractDetail } from '../../shared/components/AbstractDetail';
+import { AlertService } from '../../shared/components/alert/alert.service';
 import { UserService } from '../../users/services/user.service';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
     selector: 'app-artist',
@@ -12,11 +12,11 @@ import { UserService } from '../../users/services/user.service';
 export class ArtistComponent extends AbstractDetail {
 
     constructor(service: ArtistService,
-                alertSvc: AlertService,
-                userSvc: UserService,
+                alertService: AlertService,
+                userService: UserService,
                 dialogRef: MatDialogRef<ArtistComponent>,
                 @Inject(MAT_DIALOG_DATA) data: any) {
 
-        super(service, alertSvc, dialogRef, userSvc, data);
+        super(service, alertService, dialogRef, userService, data);
     }
 }

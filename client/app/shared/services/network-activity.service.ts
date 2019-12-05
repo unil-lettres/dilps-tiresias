@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { NgProgress } from '@ngx-progressbar/core';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class NetworkActivityService {
 
     /**
      * Count pending requests
-     * @type {number}
      */
     public pending = 0;
 
     /**
      * Observable specifying if app is loading or not
-     * @type {BehaviorSubject<number>}
      */
     public readonly isPending = new BehaviorSubject<boolean>(false);
     public readonly errors = new BehaviorSubject<any[]>([]);

@@ -4,19 +4,29 @@ declare(strict_types=1);
 
 namespace Application\Acl;
 
+use Application\Acl\Assertion\All;
+use Application\Acl\Assertion\IsCreator;
 use Application\Acl\Assertion\IsMyself;
 use Application\Acl\Assertion\IsNotSuggestion;
-use Application\Acl\Assertion\IsOwner;
+use Application\Acl\Assertion\IsOwnerOrResponsible;
 use Application\Acl\Assertion\IsSuggestion;
+use Application\Acl\Assertion\One;
 use Application\Acl\Assertion\Visibility;
 use Application\Model\AbstractModel;
+use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\Dating;
+use Application\Model\DocumentType;
+use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\Material;
+use Application\Model\News;
+use Application\Model\Period;
+use Application\Model\Statistic;
 use Application\Model\Tag;
 use Application\Model\User;
 use Doctrine\Common\Util\ClassUtils;
@@ -48,43 +58,65 @@ class Acl extends \Zend\Permissions\Acl\Acl
         $this->addResource(new ModelResource(Tag::class));
         $this->addResource(new ModelResource(User::class));
 
+        $this->addResource(new ModelResource(DocumentType::class));
+        $this->addResource(new ModelResource(Domain::class));
+        $this->addResource(new ModelResource(Material::class));
+        $this->addResource(new ModelResource(AntiqueName::class));
+        $this->addResource(new ModelResource(News::class));
+        $this->addResource(new ModelResource(Period::class));
+        $this->addResource(new ModelResource(Statistic::class));
+
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Artist::class), 'read');
-        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Card::class), 'read', new Visibility([Card::VISIBILITY_PUBLIC]));
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Card::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Country::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Dating::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Institution::class), 'read');
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Tag::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(DocumentType::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Domain::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Material::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(AntiqueName::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(News::class), 'read');
+        $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Period::class), 'read');
 
         $this->allow(User::ROLE_STUDENT, new ModelResource(Artist::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), ['update'], new IsSuggestion());
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'read', new Visibility([Card::VISIBILITY_MEMBER]));
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'read', new Visibility([Collection::VISIBILITY_MEMBER]));
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'read', new IsOwner());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), ['update'], new All(new IsSuggestion(), new IsOwnerOrResponsible()));
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'read');
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'read');
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete'], new IsOwner());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete'], new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Institution::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Tag::class), 'create');
         $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), 'read');
         $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), ['update', 'delete'], new IsMyself());
 
-        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['update'], new IsOwner());
-        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['delete'], new IsNotSuggestion());
+        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['update'], new IsOwnerOrResponsible());
+        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible()));
 
-        $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new IsOwner());
+        $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new IsOwnerOrResponsible());
 
-        // Administrator inherits nothing, but is allowed almost all privileges
+        // Administrator inherits nothing, but is allowed **almost** all privileges
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Artist::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Change::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), 'create');
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR]));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Country::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Dating::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(DocumentType::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Domain::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Material::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(AntiqueName::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Period::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read');
     }
 
     /**

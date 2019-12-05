@@ -42,7 +42,7 @@ abstract class Standard
                 'name' => $plural,
                 'type' => _types()->get($shortName . 'Pagination'),
                 'args' => $listArgs,
-                'resolve' => function ($root, array $args) use ($class): array {
+                'resolve' => function (string $site, array $args) use ($class): array {
                     if (($args['filters'] ?? false) && ($args['filter'] ?? false)) {
                         throw new Exception('Cannot use `filter` and `filters` at the same time');
                     }
@@ -64,7 +64,7 @@ abstract class Standard
                 'name' => $name,
                 'type' => _types()->getOutput($class),
                 'args' => $singleArgs,
-                'resolve' => function ($root, array $args): ?AbstractModel {
+                'resolve' => function (string $site, array $args): ?AbstractModel {
                     $object = $args['id']->getEntity();
 
                     Helper::throwIfDenied($object, 'read');
@@ -87,7 +87,6 @@ abstract class Standard
         $reflect = new ReflectionClass($class);
         $name = $reflect->getShortName();
         $plural = self::makePlural($name);
-        $lowerName = lcfirst($name);
 
         return [
             [
@@ -97,13 +96,19 @@ abstract class Standard
                 'args' => [
                     'input' => Type::nonNull(_types()->getInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($class, $lowerName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($class): AbstractModel {
                     // Check ACL
                     $object = new $class();
                     Helper::throwIfDenied($object, 'create');
 
                     // Do it
                     $input = $args['input'];
+
+                    // Be sure that site is set first
+                    if ($input['site'] ?? false) {
+                        Helper::hydrate($object, ['site' => $input['site']]);
+                    }
+
                     Helper::hydrate($object, $input);
                     _em()->persist($object);
                     _em()->flush();
@@ -119,7 +124,7 @@ abstract class Standard
                     'id' => Type::nonNull(_types()->getId($class)),
                     'input' => Type::nonNull(_types()->getPartialInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): AbstractModel {
+                'resolve' => function (string $site, array $args): AbstractModel {
                     $object = $args['id']->getEntity();
 
                     // Check ACL
@@ -141,7 +146,7 @@ abstract class Standard
                 'args' => [
                     'ids' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getId($class)))),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): bool {
+                'resolve' => function (string $site, array $args): bool {
                     foreach ($args['ids'] as $id) {
                         $object = $id->getEntity();
 
@@ -196,7 +201,7 @@ abstract class Standard
                 'description' => 'Create a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation already exists, it will have no effect.',
                 'args' => $args,
-                'resolve' => function ($root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], true);
@@ -221,7 +226,7 @@ abstract class Standard
                 'description' => 'Delete a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation does not exist, it will have no effect.',
                 'args' => $args,
-                'resolve' => function ($root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], false);
@@ -287,7 +292,9 @@ abstract class Standard
     /**
      * Return arguments used for the list
      *
-     * @param string $class
+     * @param ClassMetadata $class
+     * @param string $classs
+     * @param string $name
      *
      * @return array
      */

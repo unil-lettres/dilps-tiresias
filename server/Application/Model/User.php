@@ -8,8 +8,12 @@ use Application\Acl\Acl;
 use Application\Api\Exception;
 use Application\ORM\Query\Filter\AclFilter;
 use Application\Traits\HasInstitution;
+use Application\Traits\HasName;
+use Application\Traits\HasSite;
 use Application\Utility;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -17,20 +21,26 @@ use GraphQL\Doctrine\Annotation as API;
  * User
  *
  * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"}),
+ *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
+ * })
  */
 class User extends AbstractModel
 {
     use HasInstitution;
+    use HasSite;
+    use HasName;
 
     /**
-     * Someone who is a normal user, not part of UNIL
+     * Someone who is a normal user, not part of AAI
      */
     const TYPE_DEFAULT = 'default';
 
     /**
-     * Someone who log in via UNIL system
+     * Someone who log in via AAI system
      */
-    const TYPE_UNIL = 'unil';
+    const TYPE_AAI = 'aai';
 
     /**
      * Empty shell used for legacy
@@ -47,6 +57,13 @@ class User extends AbstractModel
      * @var User
      */
     private static $currentUser;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
+     */
+    private $collections;
 
     /**
      * Set currently logged in user
@@ -75,7 +92,7 @@ class User extends AbstractModel
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=191)
      */
     private $login = '';
 
@@ -87,8 +104,8 @@ class User extends AbstractModel
     private $password = '';
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=191)
+     * @var null|string
+     * @ORM\Column(type="string", length=191, nullable=true)
      */
     private $email;
 
@@ -123,6 +140,7 @@ class User extends AbstractModel
      */
     public function __construct(string $role = self::ROLE_STUDENT)
     {
+        $this->collections = new ArrayCollection();
         $this->role = $role;
     }
 
@@ -181,9 +199,11 @@ class User extends AbstractModel
     /**
      * Set email
      *
-     * @param string $email
+     * @API\Input(type="?Email")
+     *
+     * @param null|string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -191,9 +211,11 @@ class User extends AbstractModel
     /**
      * Get email
      *
-     * @return string
+     * @API\Field(type="?Email")
+     *
+     * @return null|string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -341,6 +363,12 @@ class User extends AbstractModel
             Dating::class,
             Institution::class,
             Tag::class,
+            Domain::class,
+            DocumentType::class,
+            News::class,
+            Period::class,
+            Material::class,
+            AntiqueName::class,
             self::class,
         ];
 
@@ -362,5 +390,27 @@ class User extends AbstractModel
         self::setCurrent($previousUser);
 
         return $result;
+    }
+
+    /**
+     * Notify the Card that it was added to a Collection.
+     * This should only be called by Collection::addCard()
+     *
+     * @param Collection $collection
+     */
+    public function collectionAdded(Collection $collection): void
+    {
+        $this->collections->add($collection);
+    }
+
+    /**
+     * Notify the Card that it was removed from a Collection.
+     * This should only be called by Collection::removeCard()
+     *
+     * @param Collection $collection
+     */
+    public function collectionRemoved(Collection $collection): void
+    {
+        $this->collections->removeElement($collection);
     }
 }

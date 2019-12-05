@@ -1,12 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
+@import '../node_modules/quill/dist/quill.bubble.css';
 @import 'styles/themes';
 @import 'app/shared/components/boot-loader/boot-loader.external';
 @import 'app/collections/collections/collections.external';
 @import 'app/shared/components/thesaurus/thesaurus.external';
 @import 'styles/layout';
-@import 'app/card/card.external';
 @import 'app/list/list.external';
+@import 'app/view-grid/view-grid.external';
 
 body {
     margin: 0;
@@ -68,6 +69,7 @@ perfect-scrollbar {
 
 #appContent {
     height: 100vh;
+
     router-outlet + * {
         height: 100vh;
         min-height: 0;
@@ -94,6 +96,7 @@ perfect-scrollbar {
     top: -0.12em;
 }
 
+natural-search,
 .searchField {
     font-size: 16px;
 }

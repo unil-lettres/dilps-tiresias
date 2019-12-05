@@ -1,6 +1,6 @@
-import { BehaviorSubject } from 'rxjs';
+import { Literal } from '@ecodev/natural';
 import { merge } from 'lodash';
-import { Literal } from '../types';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * Same as BehaviorSubject with same functions

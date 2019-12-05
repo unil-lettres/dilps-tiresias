@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,9 +33,9 @@ trait HasName
      *
      * @param string $name
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
-        $this->name = $name;
+        $this->name = Utility::sanitizeSingleLineRichText($name);
     }
 
     /**

@@ -12,7 +12,7 @@ class UserTypeType extends AbstractEnumType
     {
         $config = [
             User::TYPE_DEFAULT => 'Someone who is a normal user, with login/password in DILPS',
-            User::TYPE_UNIL => 'Someone who log in via UNIL system',
+            User::TYPE_AAI => 'Someone who log in via AAI system',
             User::TYPE_LEGACY => 'Empty shell used for legacy',
         ];
 

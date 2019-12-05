@@ -6,18 +6,6 @@
 --
 --     more bin/generate-script-to-migrate-files.sql | mysql --raw -u dilps -p dilps
 
-SELECT CONCAT(
-           'cp "',
-           ng_img_base.base,
-           '/cache/',
-           ng_img.collectionid,
-           '-',
-           ng_img.imageid,
-           '.jpg" ',
-           '"data/images/',
-           '"'
-       ) AS '#!/usr/bin/env bash'
-FROM ng_img
-  JOIN ng_collection ON ng_img.collectionid = ng_collection.collectionid
-  JOIN ng_img_base ON ng_collection.collectionid = ng_img_base.collectionid
-ORDER BY ng_img_base.base, ng_img.filename, ng_img.imageid;
+SELECT CONCAT('cp "medias/', fond, '/cache/', id, '.jpg" "data/images/tiresias-', id, '.jpg"') AS '#!/usr/bin/env bash'
+FROM meta
+ORDER BY fond, id;

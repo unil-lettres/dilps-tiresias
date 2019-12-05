@@ -1,20 +1,44 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { ThemeService } from '../shared/services/theme.service';
-import { CardService } from './services/card.service';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
-import { InstitutionService } from '../institutions/services/institution.service';
-import { AlertService } from '../shared/components/alert/alert.service';
-import { ArtistService } from '../artists/services/artist.service';
+import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
+import { AntiqueNameService } from '../antique-names/services/antique-name.service';
 import { ArtistComponent } from '../artists/artist/artist.component';
-import { InstitutionComponent } from '../institutions/institution/institution.component';
+import { ArtistService } from '../artists/services/artist.service';
 import { ChangeService } from '../changes/services/change.service';
-import { UploadService } from '../shared/services/upload.service';
-import { CardVisibility, UserRole } from '../shared/generated-types';
-import { CollectionSelectorComponent } from '../shared/components/collection-selector/collection-selector.component';
-import { MatDialog } from '@angular/material';
-import { UserService } from '../users/services/user.service';
+import { DocumentTypeComponent } from '../document-types/document-type/document-type.component';
+import { DocumentTypeService } from '../document-types/services/document-type.service';
+import { DomainComponent } from '../domains/domain/domain.component';
+import { DomainService } from '../domains/services/domain.service';
+import { InstitutionComponent } from '../institutions/institution/institution.component';
+import { InstitutionService } from '../institutions/services/institution.service';
+import { MaterialComponent } from '../materials/material/material.component';
+import { MaterialService } from '../materials/services/material.service';
+import { PeriodComponent } from '../periods/period/period.component';
+import { PeriodService } from '../periods/services/period.service';
+import { AlertService } from '../shared/components/alert/alert.service';
+import { CardSelectorComponent } from '../shared/components/card-selector/card-selector.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+    CollectionSelectorResult,
+} from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
+import { Card_card, CardVisibility, Site, UserRole } from '../shared/generated-types';
+import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
+import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
+import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
+import { tagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
+import { UploadService } from '../shared/services/upload.service';
+import { getBase64 } from '../shared/services/utility';
+import { StatisticService } from '../statistics/services/statistic.service';
+import { TagService } from '../tags/services/tag.service';
+import { TagComponent } from '../tags/tag/tag.component';
+import { UserService } from '../users/services/user.service';
+import { CardService } from './services/card.service';
+import { QuillModules, QuillEditorComponent } from 'ngx-quill';
+import { quillConfig } from '../shared/config/quill.options';
 
 @Component({
     selector: 'app-card',
@@ -24,29 +48,73 @@ import { DownloadComponent } from '../shared/components/download/download.compon
 })
 export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
-    @Input() public model;
+    /**
+     * External card data
+     */
+    @Input() public model: Card_card & { artists: string[]; file: any; institution: string };
+
+    /**
+     * Show/Hide toolbar
+     */
     @Input() public hideToolbar = false;
+
+    /**
+     * Show/Hide the right side of the card (image and actions in toolbar)
+     */
     @Input() public hideImage = false;
+
+    /**
+     * Hide related cards
+     */
     @Input() public hideCards = false;
+
+    /**
+     * Hide some toolbar actions
+     */
     @Input() public hideTools = false;
+
+    /**
+     * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if car is source or surggestion
+     */
     @Input() public title: string;
+
+    /**
+     * Show logo on top of the page if true
+     */
     @Input() public showLogo = false;
 
-    @Input() public imageData;
-    @Input() public imageSrc;
-    @Input() public imageSrcFull;
+    /**
+     * Base 64 image data for display usage before effective upload
+     */
+    @Input() public imageData: string;
 
-    private edit = false;
+    /**
+     * Url of resized images (2000px) to be displayed
+     */
+    @Input() public imageSrc: string;
+
+    /**
+     * Url of full sized image (for download purpose)
+     */
+    @Input() public imageSrcFull: string;
+
+    /**
+     * Default visibility
+     */
     public visibility = 1;
+
+    /**
+     * List of visibilities
+     */
     public visibilities = {
         1: {
             value: CardVisibility.private,
-            text: 'par moi',
+            text: 'par moi et les responsables des collections',
             color: null,
         },
         2: {
             value: CardVisibility.member,
-            text: 'par les membres',
+            text: 'par tous les membres',
             color: 'accent',
         },
         3: {
@@ -56,13 +124,139 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         },
     };
 
-    public institutionComponent = InstitutionComponent;
-    public artistComponent = ArtistComponent;
+    /**
+     * Currently logged user
+     */
+    public user;
+
+    public singleLine: QuillModules = {
+        ...quillConfig.modules,
+        keyboard: {
+            bindings: {
+                enter: {
+                    key: 13,
+                    handler: () => false,
+                },
+                shiftEnter: {
+                    key: 13,
+                    shiftKey: true,
+                    handler: () => false,
+                },
+            },
+        },
+    };
+
+    /**
+     * Cache institution data from server
+     * this.model is here considered as CardInput and should receive string, not object
+     */
+    public institution;
+
+    /**
+     * Cache artists data from server
+     * this.model is here considered as CardInput and should receive string array, not array of objects
+     */
+    public artists;
+
+    /**
+     * Template exposed variable
+     */
+    public InstitutionComponent = InstitutionComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public ArtistComponent = ArtistComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public MaterialComponent = MaterialComponent;
+    /**
+     * Template exposed variable
+     */
+    public PeriodComponent = PeriodComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public TagComponent = TagComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public DocumentTypeComponent = DocumentTypeComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public DomainComponent = DomainComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public AntiqueNameComponent = AntiqueNameComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public domainHierarchicConfig = domainHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public tagHierarchicConfig = tagHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public periodHierarchicConfig = periodHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public materialHierarchicConfig = materialHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public Site = Site;
+
+    /**
+     * Edition mode if true
+     */
+    private edit = false;
+
+    /**
+     * Cache for upload subscription
+     * Usefull for (de)activation toggle
+     */
     private uploadSub;
 
-    public institution;
-    public artists;
-    public user;
+    /**
+     * List of linked collections that are sources
+     */
+    private sources;
+
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private changeService: ChangeService,
+                public cardService: CardService,
+                private alertService: AlertService,
+                public artistService: ArtistService,
+                public institutionService: InstitutionService,
+                public materialService: MaterialService,
+                public tagService: TagService,
+                public documentTypeService: DocumentTypeService,
+                public domainService: DomainService,
+                public antiqueNameService: AntiqueNameService,
+                public periodService: PeriodService,
+                private uploadService: UploadService,
+                private dialog: MatDialog,
+                private userService: UserService,
+                private statisticService: StatisticService,
+    ) {
+    }
 
     @Input()
     set editable(val: boolean) {
@@ -70,22 +264,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.updateUploadWatching();
     }
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private changeSvc: ChangeService,
-                public themeSvc: ThemeService,
-                public cardSvc: CardService,
-                private alertSvc: AlertService,
-                public artistService: ArtistService,
-                public institutionSvc: InstitutionService,
-                private uploadSvc: UploadService,
-                private dialog: MatDialog,
-                private userSvc: UserService) {
-    }
-
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
 
@@ -103,7 +284,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
                     const card = this.route.snapshot.data['card'];
-                    this.institution = card.institution;
                     this.model = merge({}, card);
                     this.initCard();
                 } else if (!params.cardId && this.model && this.model.id) {
@@ -113,6 +293,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.updateUploadWatching();
+        this.statisticService.recordDetail();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -121,10 +302,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         this.unwatchUpload();
-    }
-
-    public isEdit() {
-        return this.edit;
     }
 
     public toggleEdit() {
@@ -141,7 +318,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public watchUpload() {
-        this.uploadSub = this.uploadSvc.filesChanged.subscribe(files => {
+        this.uploadSub = this.uploadService.filesChanged.subscribe(files => {
             const file = files[files.length - 1];
             this.model.file = file;
             this.getBase64(file);
@@ -155,19 +332,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    private getBase64(file) {
-
-        if (!file) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.addEventListener('load', (ev: any) => {
-            this.imageData = btoa(ev.target.result);
-        });
-        reader.readAsBinaryString(file);
-    }
-
     public initCard() {
         if (this.model) {
 
@@ -176,8 +340,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 return s.value === this.model.visibility;
             });
 
-            this.artists = this.model.artists;
-            this.institution = this.model.institution;
+            this.institution = this.model.institution; // cache, see attribute docs
+            this.artists = this.model.artists; // cache, see attribute docs
 
             const src = CardService.getImageLink(this.model, 2000);
             if (src) {
@@ -188,6 +352,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             if (srcFull) {
                 this.imageSrcFull = srcFull;
             }
+
+            this.sources = this.model.collections.filter(c => c.isSource);
         }
     }
 
@@ -204,8 +370,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public update() {
-        this.cardSvc.update(this.model).subscribe((card: any) => {
-            this.alertSvc.info('Mis à jour');
+        this.cardService.update(this.model).subscribe((card: any) => {
+            this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
             this.edit = false;
@@ -213,8 +379,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public create() {
-        this.cardSvc.create(this.model).subscribe(card => {
-            this.alertSvc.info('Créé');
+        this.cardService.create(this.model).subscribe(card => {
+            this.alertService.info('Créé');
             this.router.navigate([
                 '..',
                 card.id,
@@ -223,11 +389,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public confirmDelete() {
-        this.alertSvc.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardSvc.delete(this.model).subscribe(() => {
-                        this.alertSvc.info('Supprimé');
+                    this.cardService.delete([this.model]).subscribe(() => {
+                        this.alertService.info('Supprimé');
                         this.router.navigateByUrl('/');
                     });
                 }
@@ -239,20 +405,20 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public suggestDeletion() {
-        this.changeSvc.suggestDeletion(this.model).subscribe(() => {
+        this.changeService.suggestDeletion(this.model).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
     public suggestCreation() {
-        this.changeSvc.suggestCreation(this.model).subscribe(() => {
+        this.changeService.suggestCreation(this.model).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
     public linkToCollection() {
 
-        this.dialog.open(CollectionSelectorComponent, {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',
@@ -264,30 +430,46 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
+    public copy() {
+        this.router.navigate(['/card/new', {cardId: this.model.id}]);
+    }
+
+    public complete() {
+
+        this.dialog.open(CardSelectorComponent, {
+            width: '400px',
+            position: {
+                top: '74px',
+                left: '74px',
+            },
+        }).afterClosed().subscribe(selection => {
+            if (selection) {
+                this.model = Object.assign(selection, {id: this.model.id, visibility: this.model.visibility});
+                this.initCard();
+            }
+        });
+    }
+
     public validateData() {
-        this.cardSvc.validateData(this.model).subscribe(() => {
-            this.alertSvc.info('Donnée validée');
+        this.cardService.validateData(this.model).subscribe(() => {
+            this.alertService.info('Donnée validée');
         });
     }
 
     public validateImage() {
-        this.cardSvc.validateImage(this.model).subscribe(() => {
-            this.alertSvc.info('Image validée');
+        this.cardService.validateImage(this.model).subscribe(() => {
+            this.alertService.info('Image validée');
         });
     }
 
     public download(card) {
         this.dialog.open(DownloadComponent, {
-            width: '400px',
+            width: '600px',
             data: {
                 images: [card],
                 denyLegendsDownload: !this.user,
             },
         });
-    }
-
-    public goToCard(card) {
-        this.router.navigateByUrl('/card/' + card.id);
     }
 
     public getSuggestAddLabel() {
@@ -299,10 +481,10 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public canSuggestCreate() {
-        return this.user && this.model.creator
-               && this.model.owner.id === this.user.id
-               && this.model.creator.id === this.user.id
-               && this.model.visibility === CardVisibility.private;
+        return this.user
+            && this.model.owner && this.model.owner.id === this.user.id
+            && this.model.creator && this.model.creator.id === this.user.id
+            && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
@@ -311,5 +493,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestDelete() {
         return this.canSuggestUpdate();
+    }
+
+    private getBase64(file) {
+        getBase64(file).then(result => {
+            this.imageData = result;
+        });
     }
 }

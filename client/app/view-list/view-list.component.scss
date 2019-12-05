@@ -1,0 +1,61 @@
+:host {
+    $gap: 5px;
+
+    .scrolled {
+        max-width: 1130px;
+        margin-top: 64px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    mat-paginator {
+        margin-top: $gap;
+    }
+
+    .line {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: $gap;
+        height: 200 + $gap * 2;
+
+        .line-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            flex: 1;
+            padding-left: 20px;
+
+            & > *:not(:last-child) {
+                margin-bottom: $gap;
+            }
+        }
+
+        mat-checkbox {
+            margin-right: 20px;
+        }
+
+        .image-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.5);
+            height: 200px;
+            width: 300px;
+            padding: $gap;
+
+            .image {
+                height: 200px;
+                width: 300px;
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+        }
+    }
+}

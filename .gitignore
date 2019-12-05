@@ -1,17 +1,13 @@
 /config/autoload/*.local.php
 /config/autoload/local.php
 /config/development.config.php
-/data/dump/*
-/data/tmp/*.*
-/data/tmp/pptx*
-/data/tmp/zip*
-/data/tmp/*/*
-/data/cache/*.*
-/data/cache/DoctrineORMModule/*
-/data/cache/images/*
-/data/images/*
+/data/cache/
+/data/dump/
+/data/images/
+/data/tmp/
 !/data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg
-/*.backup.sql.gz
+!/data/images/5da49355cbcff.jpeg
+/htdocs/news-images/
 /htdocs/favicon.ico
 /htdocs/*.html
 /htdocs/*.js
@@ -28,8 +24,9 @@
 /node_modules/
 /phpunit.xml
 /vendor/
-client/app/shared/generated-types.ts
+/client/app/shared/generated-types.ts
 .DS_Store
+*.sql.gz
 
 
 # keep it at the end of the file

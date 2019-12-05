@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CardVisibility } from '../../shared/generated-types';
-import { ChangeService } from '../services/change.service';
-import { CardService } from '../../card/services/card.service';
 import { merge, omit } from 'lodash';
+import { CardService } from '../../card/services/card.service';
+import { CardVisibility } from '../../shared/generated-types';
 import { UserService } from '../../users/services/user.service';
+import { ChangeService } from '../services/change.service';
 
 @Component({
     selector: 'app-change',
@@ -25,12 +25,12 @@ export class ChangeComponent implements OnInit {
                 private router: Router,
                 private changeService: ChangeService,
                 private cardService: CardService,
-                private userSvc: UserService) {
+                private userService: UserService) {
     }
 
     ngOnInit() {
 
-        this.userSvc.getCurrentUser().subscribe(user => this.user = user);
+        this.userService.getCurrentUser().subscribe(user => this.user = user);
 
         if (this.route.snapshot.params['changeId']) {
             this.changeService.getOne(this.route.snapshot.params['changeId']).subscribe(change => {

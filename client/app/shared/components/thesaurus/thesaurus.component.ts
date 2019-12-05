@@ -1,12 +1,25 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatAutocompleteTrigger, MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
-import { IncrementSubject } from '../../services/increment-subject';
-import { QueryRef } from 'apollo-angular';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Literal } from '../../types';
-import { filter, map, sampleTime } from 'rxjs/operators';
-import { clone, isArray, isObject, merge } from 'lodash';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+    HierarchicDialogConfig,
+    HierarchicDialogResult,
+    Literal,
+    NaturalAbstractController,
+    NaturalAbstractModelService,
+    NaturalHierarchicConfiguration,
+    NaturalHierarchicSelectorDialogService,
+    NaturalQueryVariablesManager,
+} from '@ecodev/natural';
+import { clone, isArray, isObject, isString, merge } from 'lodash';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
+
+interface ThesaurusModel {
+    name: string;
+    locality?: string;
+}
 
 @Component({
     selector: 'app-thesaurus',
@@ -14,39 +27,52 @@ import { clone, isArray, isObject, merge } from 'lodash';
     styleUrls: ['./thesaurus.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThesaurusComponent implements OnInit {
+export class ThesaurusComponent extends NaturalAbstractController implements OnInit {
 
-    @ViewChild(MatAutocompleteTrigger) public autocomplete: MatAutocompleteTrigger;
-    @ViewChild('input') input;
+    /**
+     * Reference to autocomplete
+     */
+    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete: MatAutocompleteTrigger;
 
+    /**
+     * If true, manipulations are forbidden
+     */
     @Input() readonly = false;
-    @Input() service;
-    @Input() placeholder;
+
+    /**
+     * Service used as data source
+     */
+    @Input() service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any>;
+
+    /**
+     * Input label name
+     */
+    @Input() placeholder: string;
+
+    /**
+     * If multi selection is allowed
+     */
     @Input() multiple = true;
+
+    /**
+     * If multi selection is allowed
+     */
+    @Input() allowFreeText = true;
+
+    /**
+     * Component that renders the detail view of an entry
+     */
     @Input() previewComponent;
 
-    private _model;
-    @Input() set model(val) {
-        this._model = val;
-        this.convertModel();
-    }
-
+    /**
+     * Emits when a selection is done
+     */
     @Output() modelChange = new EventEmitter();
 
-    public formCtrl: FormControl = new FormControl();
-    private queryRef: QueryRef<any>;
-
     /**
-     * Default page size
-     * @type {number}
+     * Configuration for hierarchic relations
      */
-    private pageSize = 10;
-
-    /**
-     * Init search options
-     * @type {IncrementSubject}
-     */
-    private options: IncrementSubject;
+    @Input() hierarchicSelectorConfig: NaturalHierarchicConfiguration[];
 
     /**
      * Number of items not shown in result list
@@ -55,41 +81,54 @@ export class ThesaurusComponent implements OnInit {
     public moreNbItems = 0;
 
     /**
-     * Filter options debounced.
-     * Used by the query
+     * List of suggestions for autocomplete dropdown
      */
-    private optionsFiltered: BehaviorSubject<Literal>;
+    public suggestions: any[];
 
-    public suggestionsObs: Observable<any>;
+    /**
+     * List of selected items
+     */
+    public items: ThesaurusModel[] = [];
+    /**
+     * <input> controller
+     */
+    public formControl: FormControl = new FormControl();
+    /**
+     * Cache to init search watching only once
+     */
+    private resultsCache: Observable<any>;
+    /**
+     * Default page size
+     */
+    private pageSize = 10;
+    /**
+     * Query variables manger
+     */
+    private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
 
-    public items: { name: string, locality?: string }[] = [];
+    constructor(private dialog: MatDialog,
+                private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
+    ) {
+        super();
+        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
+    }
 
-    constructor(private dialog: MatDialog) {
+    private _model: ThesaurusModel;
+
+    @Input() set model(val: ThesaurusModel) {
+        this._model = val;
+        this.convertModel();
     }
 
     ngOnInit() {
 
         this.convertModel();
 
-        const options = {
-            filters: {
-                search: null,
-            },
-            pagination: {
-                pageIndex: 0,
-                pageSize: 10,
-            },
-        };
-
-        this.options = new IncrementSubject(options);
-        this.optionsFiltered = new BehaviorSubject<Literal>(options);
-
-        // Debounce search...
-        // ...and filter only string search terms (when an item is selected, the value is an object)
-        this.options.pipe(sampleTime(400), filter(val => {
-            return !isObject(val.filters.search); // prevent to emit when value is an object
-        })).subscribe(data => {
-            this.optionsFiltered.next(data);
+        this.formControl.valueChanges.pipe(takeUntil(this.ngUnsubscribe),
+            distinctUntilChanged(),
+            filter(val => isString(val)),
+            debounceTime(300)).subscribe(val => {
+            this.variablesManager.set('search', {filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]}});
         });
     }
 
@@ -102,6 +141,16 @@ export class ThesaurusComponent implements OnInit {
         });
     }
 
+    public focus() {
+
+        if (!this.hierarchicSelectorConfig) {
+            this.startSearch();
+        } else {
+            this.openDialog();
+        }
+
+    }
+
     /**
      * Start search only when focusing on the input
      */
@@ -110,30 +159,117 @@ export class ThesaurusComponent implements OnInit {
         /**
          * Start search only once
          */
-        if (this.queryRef) {
+        if (this.resultsCache) {
             return;
         }
 
-        // Init query
-        this.queryRef = this.service.watchAll(this.optionsFiltered);
+        this.resultsCache = this.service.watchAll(this.variablesManager, this.ngUnsubscribe);
 
-        // When query results arrive, start loading, and count items
-        this.queryRef.valueChanges.subscribe((data: any) => {
+        // Init query
+        this.resultsCache.subscribe(data => {
             const nbTotal = data.length;
             const nbListed = Math.min(data.length, this.pageSize);
             this.moreNbItems = nbTotal - nbListed;
+            this.suggestions = data.items.filter(item => this.items.findIndex(term => term.name === item.name));
         });
+    }
 
-        this.suggestionsObs = this.queryRef.valueChanges.pipe(map((data: any) => {
-            return data.items.filter(item => this.items.findIndex(term => term.name === item.name));
-        }));
+    public openDialog(): void {
+
+        // todo : test on firefox, watch app-select (or relations) for details about lockOpenDialog on firefox
+
+        // if (this.lockOpenDialog) {
+        //     return;
+        // }
+        //
+        // this.lockOpenDialog = true;
+
+        if (this.readonly || !this.hierarchicSelectorConfig) {
+            return;
+        }
+
+        const selectAtKey = this.getSelectKey();
+
+        if (!selectAtKey) {
+            return;
+        }
+
+        const selected = {};
+
+        if (this.items) {
+            selected[selectAtKey] = this.items;
+        }
+
+        const hierarchicConfig: HierarchicDialogConfig = {
+            hierarchicConfig: this.hierarchicSelectorConfig,
+            hierarchicSelection: selected,
+            // hierarchicFilters: this.hierarchicSelectorFilters,
+            multiple: this.multiple,
+        };
+
+        const dialogFocus: MatDialogConfig = {
+            restoreFocus: false,
+        };
+
+        this.hierarchicSelectorDialogService.open(hierarchicConfig, dialogFocus)
+            .afterClosed()
+            .subscribe((result: HierarchicDialogResult) => {
+                // this.lockOpenDialog = false;
+                if (result && result.hierarchicSelection) {
+
+                    // Find the only selection amongst all possible keys
+                    const keyWithSelection = Object.keys(result.hierarchicSelection).find(key => result.hierarchicSelection[key][0]);
+                    const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : null;
+
+                    if (this.multiple) {
+                        this.items = selection;
+                        this.notifyModel();
+                    } else {
+                        this.addTerm(selection[0]);
+                    }
+
+                }
+            });
+    }
+
+    public removeTerm(term: Literal): void {
+        const index = this.items.findIndex(item => item.name === term.name);
+        if (index >= 0) {
+            this.items.splice(index, 1);
+            this.notifyModel();
+        }
+    }
+
+    /**
+     * Add a term
+     * On enter key, find if there is an active (focused) option in the mat-select).
+     * If not add the term as is. If it does, add the selected option.
+     */
+    public onEnter(event) {
+        if (!this.autocomplete.activeOption && this.allowFreeText) {
+            this.addTerm({name: event.target.value});
+            event.target.value = '';
+        } else if (this.autocomplete.activeOption) {
+            this.addTerm(this.autocomplete.activeOption.value);
+            event.target.value = '';
+        }
+    }
+
+    /**
+     * When click on a suggestion
+     */
+    public selectSuggestion(event) {
+        this.addTerm(event.option.value);
+    }
+
+    private getSelectKey() {
+        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
     }
 
     /**
      * Add term to list
      * Grants unicity of elements.
      * Always close the panel (without resetting results)
-     * @param {string} term
      */
     private addTerm(term: { name }) {
         this.autocomplete.closePanel();
@@ -147,46 +283,15 @@ export class ThesaurusComponent implements OnInit {
         }
     }
 
-    public removeTerm(term: Literal): void {
-        const index = this.items.findIndex(item => item.name === term.name);
-        if (index >= 0) {
-            this.items.splice(index, 1);
-            this.notifyModel();
-        }
-    }
-
-    public onSearch(ev) {
-        this.options.patch({filters: {search: ev}});
-    }
-
-    /**
-     * Add a term
-     * On enter key, find if there is an active (focused) option in the mat-select).
-     * If not add the term as is. If it does, add the selected option.
-     * @param event
-     */
-    public onEnter(event) {
-        if (!this.autocomplete.activeOption) {
-            this.addTerm({name: event.target.value});
-            event.target.value = '';
-        } else {
-            this.addTerm(this.autocomplete.activeOption.value);
-        }
-    }
-
-    /**
-     * When click on a suggestion
-     * @param event
-     */
-    public selectSuggestion(event) {
-        this.addTerm(event.option.value);
-    }
-
     private notifyModel() {
-        if (!this.multiple) {
-            this.modelChange.emit(this.items[0] ? this.items[0].name : null);
-        } else {
+        if (this.multiple && this.allowFreeText) {
             this.modelChange.emit(this.items.map(v => v.name));
+        } else if (!this.multiple && this.allowFreeText) {
+            this.modelChange.emit(this.items[0] ? this.items[0].name : null);
+        } else if (this.multiple && !this.allowFreeText) {
+            this.modelChange.emit(this.items);
+        } else if (!this.multiple && !this.allowFreeText) {
+            this.modelChange.emit(this.items[0] || null);
         }
     }
 

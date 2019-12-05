@@ -1,9 +1,9 @@
-import { ArtistComponent } from '../../artists/artist/artist.component';
-import { AlertService } from './alert/alert.service';
-import { MatDialogRef } from '@angular/material';
 import { OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { merge } from 'lodash';
+import { ArtistComponent } from '../../artists/artist/artist.component';
 import { UserService } from '../../users/services/user.service';
+import { AlertService } from './alert/alert.service';
 
 export class AbstractDetail implements OnInit {
 
@@ -14,12 +14,12 @@ export class AbstractDetail implements OnInit {
     };
 
     constructor(public service,
-                private alertSvc: AlertService,
+                private alertService: AlertService,
                 public dialogRef: MatDialogRef<ArtistComponent>,
-                public userSvc: UserService,
+                public userService: UserService,
                 data: any) {
 
-        this.data = merge({item: this.service.getEmptyObject()}, data);
+        this.data = merge({item: this.service.getConsolidatedForClient()}, data);
     }
 
     ngOnInit() {
@@ -30,15 +30,12 @@ export class AbstractDetail implements OnInit {
             });
         }
 
-        this.userSvc.getCurrentUser().subscribe(user => this.user = user);
+        this.userService.getCurrentUser().subscribe(user => this.user = user);
     }
-
-    protected postQuery() {}
-    protected postUpdate(model) {}
 
     public update() {
         this.service.update(this.data.item).subscribe((model) => {
-            this.alertSvc.info('Mis à jour');
+            this.alertService.info('Mis à jour');
             this.dialogRef.close(this.data.item);
             this.postUpdate(model);
         });
@@ -46,20 +43,26 @@ export class AbstractDetail implements OnInit {
 
     public create() {
         this.service.create(this.data.item).subscribe(() => {
-            this.alertSvc.info('Créé');
+            this.alertService.info('Créé');
             this.dialogRef.close(this.data.item);
         });
     }
 
     public delete() {
-        this.alertSvc.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.service.delete(this.data.item).subscribe(() => {
-                        this.alertSvc.info('Supprimé');
+                    this.service.delete([this.data.item]).subscribe(() => {
+                        this.alertService.info('Supprimé');
                         this.dialogRef.close(null);
                     });
                 }
             });
+    }
+
+    protected postQuery() {
+    }
+
+    protected postUpdate(model) {
     }
 }

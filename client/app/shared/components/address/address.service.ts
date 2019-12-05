@@ -11,7 +11,9 @@ export interface Address {
     longitude?: number;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AddressService {
 
     /**
@@ -30,9 +32,7 @@ export class AddressService {
 
     public buildAddress(place: any) {
 
-        const tmpGAddress = mapValues(this.config, function() {
-            return '';
-        });
+        const tmpGAddress = mapValues(this.config, () => '');
 
         place.address_components.forEach((addressComponent: any) => {
             const addressType = addressComponent.types[0];

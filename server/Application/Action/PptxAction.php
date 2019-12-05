@@ -74,7 +74,7 @@ class PptxAction extends AbstractAction
         $this->textColor = $request->getAttribute('textColor', $this->textColor);
         $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);
         $cards = $request->getAttribute('cards');
-        //w(count($cards));
+
         $title = 'DILPS ' . date('c', time());
         $presentation = $this->export($cards, $title);
 
@@ -208,6 +208,8 @@ class PptxAction extends AbstractAction
         if (!$value) {
             return;
         }
+
+        $value = strip_tags($value);
 
         if ($this->needSeparator) {
             $textRun = $shape->createTextRun(', ');

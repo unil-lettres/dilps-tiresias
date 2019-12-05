@@ -17,11 +17,14 @@ return [
     [
         'data' => [
             'cards' => [
-                'length' => 1,
+                'length' => 2,
                 'pageIndex' => 0,
                 'items' => [
                     [
                         'id' => 6005,
+                    ],
+                    [
+                        'id' => 6012,
                     ],
                 ],
             ],

@@ -1,23 +1,28 @@
 {
-  "compileOnSave": false,
-  "preserveWhitespaces": false,
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "baseUrl": "client",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "noStrictGenericChecks" : true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom",
-      "esnext.asynciterable"
-    ]
-  }
+    "compileOnSave": false,
+    "preserveWhitespaces": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "downlevelIteration": true,
+        "importHelpers": true,
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "strictNullChecks": false,
+        "noStrictGenericChecks": true,
+        "target": "es2015",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+        }
+    }
 }

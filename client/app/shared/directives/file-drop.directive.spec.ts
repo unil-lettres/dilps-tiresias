@@ -1,7 +1,7 @@
-import { FileDropDirective } from './file-drop.directive';
 import { Component } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { UploadService } from '../services/upload.service';
+import { FileDropDirective } from './file-drop.directive';
 
 @Component({
     template: '<div appFileDrop>foo bar</div>',

@@ -1,43 +1,54 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import {
-    createInstitutionMutation,
-    deleteInstitutionsMutation,
-    institutionQuery,
-    institutionsQuery,
-    updateInstitutionMutation,
-} from './institutionQueries';
+import { SITE } from '../../app.config';
 
 import {
-    CreateInstitutionMutation,
-    DeleteInstitutionsMutation,
-    InstitutionInput,
-    InstitutionQuery,
-    InstitutionsQuery,
-    UpdateInstitutionMutation,
+    CreateInstitution,
+    CreateInstitutionVariables,
+    DeleteInstitutions,
+    Institution, InstitutionInput,
+    Institutions,
+    InstitutionsVariables,
+    InstitutionVariables,
+    Site,
+    UpdateInstitution,
+    UpdateInstitutionVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { createInstitution, deleteInstitutions, institutionQuery, institutionsQuery, updateInstitution } from './institution.queries';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class InstitutionService
-    extends AbstractModelService<InstitutionQuery['institution'],
-        InstitutionsQuery['institutions'],
-        CreateInstitutionMutation['createInstitution'],
-        UpdateInstitutionMutation['updateInstitution'],
-        DeleteInstitutionsMutation['deleteInstitutions']> {
+    extends AbstractContextualizedService<Institution['institution'],
+        InstitutionVariables,
+        Institutions['institutions'],
+        InstitutionsVariables,
+        CreateInstitution['createInstitution'],
+        CreateInstitutionVariables,
+        UpdateInstitution['updateInstitution'],
+        UpdateInstitutionVariables,
+        DeleteInstitutions['deleteInstitutions']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'institution',
             institutionQuery,
             institutionsQuery,
-            createInstitutionMutation,
-            updateInstitutionMutation,
-            deleteInstitutionsMutation);
+            createInstitution,
+            updateInstitution,
+            deleteInstitutions,
+            site);
     }
 
-    public getEmptyObject(): InstitutionInput {
+    public getDefaultForClient() {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer(): InstitutionInput {
         return {
+            site: this.site,
             name: '',
             street: '',
             postcode: '',
