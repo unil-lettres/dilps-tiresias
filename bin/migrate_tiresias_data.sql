@@ -50,6 +50,10 @@ INTO @user_offset
 FROM user;
 
 -- Migrate users into user
+-- Make tiresias users mail column nullable
+ALTER TABLE users MODIFY mail varchar(60);
+-- Update empty tiresias users mail to null
+UPDATE users SET mail = NULL WHERE mail = '';
 INSERT INTO user (id, creation_date, name, login, password, email, role, active_until, type, site)
 SELECT id + @user_offset,
     creation_date,
