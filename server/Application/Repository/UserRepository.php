@@ -144,6 +144,7 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
         $user->setEmail($email);
         $user->setType(User::TYPE_AAI);
         $user->setRole(User::ROLE_STUDENT);
+        $user->setSite($site);
 
         _em()->persist($user);
         _em()->flush();

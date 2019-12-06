@@ -1,4 +1,4 @@
-# Dilps
+# Dilps/Tiresias
 
 Master: [![Build Status](https://travis-ci.com/unil-lettres/dilps.svg?branch=master)](https://travis-ci.com/unil-lettres/dilps) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps/?branch=master)
 
@@ -6,7 +6,7 @@ Development: [![Build Status](https://travis-ci.com/unil-lettres/dilps.svg?branc
 
 ## Introduction
 
-Dilps is a web application based on GraphQL for the API and Angular for the client.
+Dilps/Tiresias is a web application based on GraphQL for the API and Angular for the client.
 
 
 ## Installation
@@ -48,7 +48,7 @@ $ composer clear-config-cache
 
 ### Client
 
-Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4300/`. The app will
+Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4400/`. The app will
 automatically reload if you change any of the source files.
 
 ## Testing
