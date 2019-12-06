@@ -56,7 +56,7 @@ SELECT id + @user_offset,
     name,
     username,
     password,
-    IF(TRIM(mail) = '', NULL, TRIM(mail)),
+    IF(TRIM(mail) = '' OR users.id = 88, NULL, TRIM(mail)),
     CASE level
         WHEN 'superadministrateur'
             THEN 'administrator'
@@ -145,7 +145,7 @@ SELECT id + @collection_offset_for_fonds,
     'tiresias'
 FROM fonds;
 
-INSERT INTO institution (id, name, locality, site)
+INSERT IGNORE INTO institution (id, name, locality, site)
 SELECT musees.id + @institution_offset,
     -- Make institution name as unique as possible, according to https://support.ecodev.ch/issues/5779
     TRIM(CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), ''))),
@@ -196,7 +196,7 @@ VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affe
 
 INSERT INTO card (id, filename, visibility, name, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
-                  institution_id, literature, isbn, object_reference, `from`, `to`, production_place,
+                  literature, isbn, object_reference, `from`, `to`, production_place,
                   locality, site, url, url_description)
 SELECT meta.id + @card_offset,
     CONCAT('tiresias-', meta.id, '.jpg'),
@@ -294,7 +294,6 @@ SELECT meta.id + @card_offset,
         ELSE
             NULL
         END,
-    IF(musee = 0, NULL, musee + @institution_offset),
     REPLACE(
             REPLACE(
                     REPLACE(
@@ -328,6 +327,16 @@ SELECT meta.id + @card_offset,
     url_description
 FROM meta
          LEFT JOIN lieux AS locality ON locality.id = l2_lieux;
+
+-- Link card to their institution by names
+UPDATE card
+    INNER JOIN meta ON meta.id + @card_offset = card.id
+    INNER JOIN musees ON musees.id = meta.musee
+    LEFT JOIN city ON musees.city_id = city.id
+    INNER JOIN institution ON institution.site = 'tiresias'
+        AND institution.name =
+            TRIM(CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), '')))
+SET card.institution_id = institution.id;
 
 -- Link card to their country by names
 UPDATE card
