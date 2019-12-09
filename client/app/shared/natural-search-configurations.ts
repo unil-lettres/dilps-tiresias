@@ -48,11 +48,13 @@ export class NaturalSearchFacetsService {
         {
             display: 'Dilps uniquement',
             field: 'site',
+            name: 'onlyDilps',
             condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
         } as FlagFacet,
         {
             display: 'Tiresias uniquement',
             field: 'site',
+            name: 'onlyTiresias',
             condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
         } as FlagFacet,
         {
