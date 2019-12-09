@@ -28,4 +28,7 @@
         text-align: left;
     }
 
+    ::ng-deep .swiper-button-disabled {
+        display: none;
+    }
 }

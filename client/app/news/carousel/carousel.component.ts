@@ -16,7 +16,6 @@ export class CarouselComponent implements OnInit {
         autoplay: true,
         speed: 1000,
         a11y: true,
-        loop: true,
         slidesPerView: 1,
         navigation: true,
     };
