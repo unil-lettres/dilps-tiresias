@@ -55,7 +55,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                         this.showTerms(user);
                     } else {
                         this.redirect();
-                    }                }
+                    }
+                }
             });
         }
 
