@@ -22,7 +22,16 @@ import {
     Viewer,
 } from '../../shared/generated-types';
 import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
-import { createUser, deleteUsers, loginMutation, logoutMutation, updateUser, userQuery, usersQuery, viewerQuery } from './user.queries';
+import {
+    createUser,
+    deleteUsers,
+    loginMutation,
+    logoutMutation,
+    updateUser,
+    userQuery,
+    usersQuery,
+    viewerQuery,
+} from './user.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -132,12 +141,12 @@ export class UserService extends AbstractContextualizedService<User['user'],
     public logout(): Observable<Logout['logout']> {
         const subject = new Subject<Logout['logout']>();
 
-        this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
-            this.apollo.mutate<Logout>({
-                mutation: logoutMutation,
-            }).pipe(map(result => result.data.logout)).subscribe((v) => {
-                this.currentUser = null;
-                (this.apollo.getClient().resetStore() as Promise<null>).then(() => {
+        this.apollo.mutate<Logout>({
+            mutation: logoutMutation,
+        }).pipe(map(result => result.data.logout)).subscribe((v) => {
+            this.currentUser = null;
+            this.apollo.getClient().clearStore().then(() => {
+                this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
                     subject.next(v);
                 });
             });
