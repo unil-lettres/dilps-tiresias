@@ -288,8 +288,8 @@ const icons: NaturalIconsConfig = {
         QuillModule.forRoot(quillConfig),
     ],
     providers: [
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults },
-        {provide: SITE, useValue: window.location.hostname.indexOf('tiresias.') > -1 ? 'tiresias' : 'dilps'},
+        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
+        {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
     ],
     bootstrap: [AppComponent],
 })
