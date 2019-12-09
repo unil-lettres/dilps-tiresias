@@ -45,6 +45,6 @@ class ShibbolethMiddleware implements MiddlewareInterface
             return new RedirectResponse($quizzUrl, 302);
         }
 
-        return new RedirectResponse('/', 302);
+        return new RedirectResponse('/login', 302);
     }
 }
