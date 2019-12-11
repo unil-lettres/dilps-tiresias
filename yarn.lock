@@ -966,6 +966,56 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bugsnag/browser@^6.4.3":
+  version "6.4.3"
+  resolved "https://registry.yarnpkg.com/@bugsnag/browser/-/browser-6.4.3.tgz#2f11163aa513e14215d3e409e713f90c9bb7aa33"
+  integrity sha512-BE87ikYMRmA9/1hg9v9ESukEaiOO6/rWbByGbonwjTRgK+hccQZXqF/9Uy7BtjNVuQVuhx0WTKp8pfw+s4r7QQ==
+
+"@bugsnag/core@^6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@bugsnag/core/-/core-6.4.1.tgz#4bd87f767c145a004a58d628cb899a544325db77"
+  integrity sha512-xW0mcGPwXbdWLVPk9UVc3zDuU8ZFulHsLAsHXhCqR5S8PbG+GeOJ9CcS+QUopVlTPMeRDKMXQDymnHZcvxpTgw==
+  dependencies:
+    "@bugsnag/cuid" "^3.0.0"
+    "@bugsnag/safe-json-stringify" "4.0.0"
+    error-stack-parser "^2.0.3"
+    iserror "0.0.2"
+    stack-generator "^2.0.3"
+
+"@bugsnag/cuid@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/cuid/-/cuid-3.0.0.tgz#2ee7642a30aee6dc86f5e7f824653741e42e5c35"
+  integrity sha512-LOt8aaBI+KvOQGneBtpuCz3YqzyEAehd1f3nC5yr9TIYW1+IzYKa2xWS4EiMz5pPOnRPHkyyS5t/wmSmN51Gjg==
+
+"@bugsnag/js@^6.4.3":
+  version "6.4.3"
+  resolved "https://registry.yarnpkg.com/@bugsnag/js/-/js-6.4.3.tgz#6439c8b1f3fdae45a09f6f525a2e22999b8d0329"
+  integrity sha512-w/VjJbao+B9PCwxTypD35LPRWA96HUf30FzXSha7uXojVihQpCAycVrVp9nM/1UYFY7THnvwlw9C1SIQNlc/HQ==
+  dependencies:
+    "@bugsnag/browser" "^6.4.3"
+    "@bugsnag/node" "^6.4.2"
+
+"@bugsnag/node@^6.4.2":
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/@bugsnag/node/-/node-6.4.2.tgz#0ca3b155066f213d4bb7d331f0bdcc09ee2b275c"
+  integrity sha512-Z2IU8+edZQbZGRtyhqvObSWiYLbP9xC/agFLepGEDCipVapRfO+8isDwFGU1autb693wz71m3jBewV+2Vn9nVg==
+  dependencies:
+    byline "^5.0.0"
+    error-stack-parser "^2.0.2"
+    iserror "^0.0.2"
+    pump "^3.0.0"
+    stack-generator "^2.0.3"
+
+"@bugsnag/plugin-angular@^6.4.3":
+  version "6.4.3"
+  resolved "https://registry.yarnpkg.com/@bugsnag/plugin-angular/-/plugin-angular-6.4.3.tgz#6648d6829c3164d0fa721f31927c45b42da13200"
+  integrity sha512-uan1vVQ5AepTes2OlFB8okhPez1i1/7j6lRHXiHAVk+FHMVwOt2D+tCNrgUGXRIbTNQZ5cdUL/hYY4axUjRS5A==
+
+"@bugsnag/safe-json-stringify@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@bugsnag/safe-json-stringify/-/safe-json-stringify-4.0.0.tgz#da4d9321524c6a1c33472f7151af7c7a0604cd3d"
+  integrity sha512-eb0yG+PNTdpRXIhfEq4IFi2wBfpE1DjrAlkyehinu9RxE1PKteqJioLmfQjvkG3UviGu/k5pcamYMxNuCAMIoQ==
+
 "@ecodev/angular-natural-gallery@^5.0.1":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-5.1.0.tgz#c767e63cee2407fa4c37bcb8b1181f190041a88a"
@@ -2559,7 +2609,7 @@ builtins@^1.0.3:
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
 
-byline@5.0.0:
+byline@5.0.0, byline@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/byline/-/byline-5.0.0.tgz#741c5216468eadc457b03410118ad77de8c1ddb1"
   integrity sha1-dBxSFkaOrcRXsDQQEYrXfejB3bE=
@@ -3854,6 +3904,13 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   integrity sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==
   dependencies:
     is-arrayish "^0.2.1"
+
+error-stack-parser@^2.0.2, error-stack-parser@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.4.tgz#a757397dc5d9de973ac9a5d7d4e8ade7cfae9101"
+  integrity sha512-fZ0KkoxSjLFmhW5lHbUT3tLwy3nX1qEzMYo8koY1vrsAco53CMT1djnBSeC/wUjTEZRhZl9iRw7PaMaxfJ4wzQ==
+  dependencies:
+    stackframe "^1.1.0"
 
 es-abstract@^1.5.1:
   version "1.15.0"
@@ -5423,6 +5480,11 @@ isbinaryfile@^3.0.0:
   integrity sha512-8cJBL5tTd2OS0dM4jz07wQd5g0dCCqIhUxPIGtZfa5L6hWlvV5MHTITy/DBAsF+Oe2LS1X3krBUhNwaGUWpWxw==
   dependencies:
     buffer-alloc "^1.2.0"
+
+iserror@0.0.2, iserror@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/iserror/-/iserror-0.0.2.tgz#bd53451fe2f668b9f2402c1966787aaa2c7c0bf5"
+  integrity sha1-vVNFH+L2aLnyQCwZZnh6qix8C/U=
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -8742,6 +8804,18 @@ ssri@^6.0.0, ssri@^6.0.1:
   integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
   dependencies:
     figgy-pudding "^3.5.1"
+
+stack-generator@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/stack-generator/-/stack-generator-2.0.4.tgz#027513eab2b195bbb43b9c8360ba2dd0ab54de09"
+  integrity sha512-ha1gosTNcgxwzo9uKTQ8zZ49aUp5FIUW58YHFxCqaAHtE0XqBg0chGFYA1MfmW//x1KWq3F4G7Ug7bJh4RiRtg==
+  dependencies:
+    stackframe "^1.1.0"
+
+stackframe@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.1.0.tgz#e3fc2eb912259479c9822f7d1f1ff365bd5cbc83"
+  integrity sha512-Vx6W1Yvy+AM1R/ckVwcHQHV147pTPBKWCRLrXMuPrFVfvBUc3os7PR1QLIWCMhPpRg5eX9ojzbQIMLGBwyLjqg==
 
 static-extend@^0.1.1:
   version "0.1.2"

@@ -1,7 +1,7 @@
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -128,7 +128,8 @@ import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
 import { QuillModule } from 'ngx-quill';
 import { quillConfig } from './shared/config/quill.options';
-
+import bugsnag from '@bugsnag/js';
+import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
 import { environment } from '../environments/environment';
 
 /** Custom options to configure the form field's look and feel */
@@ -150,6 +151,18 @@ const icons: NaturalIconsConfig = {
         svg: 'assets/icons/fire.svg',
     },
 };
+
+/** Configure Bugsnag client */
+const bugsnagClient = bugsnag({
+    apiKey: environment.bugsnagApiKey,
+    releaseStage: environment.environment,
+    notifyReleaseStages: [ 'production', 'staging' ]
+});
+
+/** Factory which will return the Bugsnag error handler */
+export function errorHandlerFactory() {
+    return new BugsnagErrorHandler(bugsnagClient);
+}
 
 @NgModule({
     declarations: [
@@ -290,6 +303,7 @@ const icons: NaturalIconsConfig = {
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
         {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
+        {provide: ErrorHandler, useFactory: errorHandlerFactory},
     ],
     bootstrap: [AppComponent],
 })
