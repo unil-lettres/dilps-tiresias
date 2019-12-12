@@ -50,10 +50,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         selectable: true,
         lightbox: true,
         infiniteScrollOffset: -200,
-        // ratioLimit: {
-        //     min: 0.5,
-        //     max: 2
-        // }
+        ratioLimit: {
+            min: 0.5,
+            max: 2
+        }
     };
     private enlargedHeight = 2000;
 
