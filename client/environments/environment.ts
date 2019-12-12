@@ -5,5 +5,6 @@
 
 export const environment = {
     environment: 'development',
-    agmApiKey: ''
+    agmApiKey: '',
+    bugsnagApiKey: '1995a31a02f4d32d40e36840f8c81509'
 };

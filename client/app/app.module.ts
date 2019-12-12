@@ -1,7 +1,7 @@
 import { AgmCoreModule } from '@agm/core';
 import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -128,7 +128,7 @@ import { ViewListComponent } from './view-list/view-list.component';
 import { ViewMapComponent } from './view-map/view-map.component';
 import { QuillModule } from 'ngx-quill';
 import { quillConfig } from './shared/config/quill.options';
-
+import { bugsnagErrorHandlerFactory } from './shared/config/bugsnag';
 import { environment } from '../environments/environment';
 
 /** Custom options to configure the form field's look and feel */
@@ -290,6 +290,7 @@ const icons: NaturalIconsConfig = {
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
         {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
+        {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
     ],
     bootstrap: [AppComponent],
 })
