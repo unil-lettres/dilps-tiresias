@@ -34,7 +34,7 @@ export class AbstractDetail implements OnInit {
     }
 
     public update() {
-        this.service.update(this.data.item).subscribe((model) => {
+        this.service.updateNow(this.data.item).subscribe((model) => {
             this.alertService.info('Mis à jour');
             this.dialogRef.close(this.data.item);
             this.postUpdate(model);
