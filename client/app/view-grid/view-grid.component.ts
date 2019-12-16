@@ -20,27 +20,42 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      * Reference to gallery
      */
     @ViewChild('gallery', {static: false}) gallery: NaturalGalleryComponent;
+
     /**
      * DataSource containing cards
      */
     @Input() public dataSource: NaturalDataSource<Cards_cards_items>;
+
     /**
      *
      */
     @Input() selected: Cards_cards_items[] = [];
+
     /**
      * Emits when data is required
      */
     @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
+
     /**
      * Emits when some cards are selected
      */
     @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
+
     /**
      * Reference to scrollable element
      */
     @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
+
+    /**
+     * Row height of thumbails in grid
+     */
     private thumbnailHeight = 300;
+
+    /**
+     * Lightbox image dimension
+     */
+    private enlargedHeight = 2000;
+
     public options: NaturalGalleryOptions = {
         cover: true,
         gap: 5,
@@ -52,10 +67,9 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         infiniteScrollOffset: -200,
         ratioLimit: {
             min: 0.5,
-            max: 2
-        }
+            max: 2,
+        },
     };
-    private enlargedHeight = 2000;
 
     constructor(private router: Router) {
         super();
