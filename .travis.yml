@@ -3,6 +3,7 @@ dist: bionic
 
 php:
   - "7.3"
+  - "7.4"
 
 addons:
   mariadb: "10.3"
