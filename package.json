@@ -10,7 +10,8 @@
     "test": "yarn codegen && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts"
+    "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts",
+    "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
   },
   "dependencies": {
     "@agm/core": "^1.0.0",
@@ -43,6 +44,7 @@
     "apollo-link-error": "^1.1.11",
     "apollo-link-schema": "^1.2.3",
     "apollo-upload-client": "^11.0.0",
+    "bugsnag-build-reporter": "^1.0.2",
     "core-js": "^3.3.6",
     "graphql": "14.5.8",
     "graphql-tag": "^2.10.1",
