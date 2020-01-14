@@ -38,6 +38,8 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     public hierarchicConfig = collectionsHierarchicConfig;
 
+    public showVisibility = true;
+
     constructor(public institutionService: InstitutionService,
                 public collectionService: CollectionService,
                 public userService: UserService,
@@ -53,9 +55,9 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
     }
 
     /**
-     * Visibility is seen by >=seniors if their are the creator, or by admins if visibility is set to admin.
+     * Visibility is seen by >=seniors if they are the creator, or by admins if visibility is set to admin.
      */
-    public showVisibility() {
+    public computeShowVisibility() {
 
         // While no user loaded
         if (!this.user) {
@@ -83,11 +85,11 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
     protected postQuery() {
         // Init visibility
-        this.visibility = +findKey(this.visibilities, (s) => {
-            return s.value === this.data.item.visibility;
-        });
+        this.visibility = +findKey(this.visibilities, (s) => s.value === this.data.item.visibility);
 
         this.institution = this.data.item.institution;
+
+        this.showVisibility = this.computeShowVisibility();
     }
 
     protected postUpdate(model) {
