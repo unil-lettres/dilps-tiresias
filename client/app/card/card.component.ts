@@ -1,7 +1,8 @@
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge } from 'lodash';
+import { QuillModules } from 'ngx-quill';
 import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
 import { AntiqueNameService } from '../antique-names/services/antique-name.service';
 import { ArtistComponent } from '../artists/artist/artist.component';
@@ -25,6 +26,7 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
+import { quillConfig } from '../shared/config/quill.options';
 import { Card_card, CardVisibility, Site, UserRole } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
 import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -37,8 +39,6 @@ import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
-import { QuillModules, QuillEditorComponent } from 'ngx-quill';
-import { quillConfig } from '../shared/config/quill.options';
 
 @Component({
     selector: 'app-card',
@@ -353,7 +353,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 this.imageSrcFull = srcFull;
             }
 
-            this.sources = this.model.collections.filter(c => c.isSource);
+            if (this.model.collections) {
+                this.sources = this.model.collections.filter(c => c.isSource);
+            }
         }
     }
 
@@ -482,9 +484,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-            && this.model.owner && this.model.owner.id === this.user.id
-            && this.model.creator && this.model.creator.id === this.user.id
-            && this.model.visibility === CardVisibility.private;
+               && this.model.owner && this.model.owner.id === this.user.id
+               && this.model.creator && this.model.creator.id === this.user.id
+               && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
