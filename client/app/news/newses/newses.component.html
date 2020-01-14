@@ -39,7 +39,7 @@
             <ng-container matColumnDef="name">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
-                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
+                    <app-table-button (click)="edit(element)" [label]="element.name || 'Sans titre'" icon="edit" matTooltip="Éditer"></app-table-button>
                 </td>
             </ng-container>
 
