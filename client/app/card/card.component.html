@@ -122,7 +122,7 @@
                 </div>
 
                 <div *ngIf="sources" class="padding mat-body-2">
-                    <div *ngFor="let source of sources"> {{source.name}} </div>
+                    <div *ngFor="let source of sources"> {{ source.name }} </div>
                 </div>
 
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
@@ -271,7 +271,6 @@
                                   matAutosizeMinRows="1"
                                   matInput
                                   matTextareaAutosize
-                                  placeholder="Titre étendu"
                         ></textarea>
                     </mat-form-field>
 

@@ -37,6 +37,8 @@ export const cardDetailsFragment = gql`
         longitude
         objectReference
         productionPlace
+        from
+        to
         cards {
             id
             name

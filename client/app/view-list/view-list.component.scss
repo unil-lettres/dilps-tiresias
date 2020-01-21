@@ -1,5 +1,5 @@
 :host {
-    $gap: 5px;
+    $gap: 10px;
 
     .scrolled {
         max-width: 1130px;
@@ -15,21 +15,49 @@
     .line {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: $gap;
-        height: 200 + $gap * 2;
+        padding: $gap;
+
+        & > *:not(:last-child) {
+            margin-right: $gap;
+        }
+
+        &:nth-child(odd) {
+            background: rgba(0, 0, 0, 0.1);
+        }
 
         .line-body {
-            display: flex;
+            display: table;
             flex-direction: column;
             align-items: flex-start;
-
             flex: 1;
-            padding-left: 20px;
 
             & > *:not(:last-child) {
-                margin-bottom: $gap;
+                margin-bottom: 2 * $gap;
             }
+
+
+            & > div {
+                display: table-row;
+
+                & > div {
+                    display: table-cell;
+                    padding: 5px;
+
+                    &:first-child {
+                        width: 25%;
+                        font-weight: bold;
+                    }
+
+                    &:last-child {
+                        width: 75%;
+                        padding-bottom: 1.5 * $gap;
+                    }
+                }
+            }
+
+
         }
 
         mat-checkbox {

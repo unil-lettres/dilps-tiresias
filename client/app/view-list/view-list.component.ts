@@ -6,7 +6,7 @@ import { intersectionBy } from 'lodash';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { takeUntil } from 'rxjs/operators';
 import { ViewInterface } from '../list/list.component';
-import { Cards_cards_items } from '../shared/generated-types';
+import { Cards_cards_items, Site } from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-list',
@@ -19,10 +19,12 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      * DataSource containing cards
      */
     @Input() public dataSource: NaturalDataSource<Cards_cards_items>;
+
     /**
      * Emits when data is required
      */
     @Output() public pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+
     /**
      * Emits when some cards are selected
      */
@@ -30,10 +32,16 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     @Input() selected: Cards_cards_items[] = [];
     public selectionModel = new SelectionModel<Cards_cards_items>(true);
     public cards: Cards_cards_items[] = [];
+
     /**
      * Reference to scrollable element
      */
     @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
+
+    /**
+     * Template exposed variable
+     */
+    public Site = Site;
 
     constructor() {
         super();

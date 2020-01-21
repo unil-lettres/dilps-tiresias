@@ -18,6 +18,14 @@
             padding: 10px 10px 0 10px;
             border-bottom: 1px solid mat-color($fg, base, 0.5);
         }
+
+        .ql-editor {
+            padding: 0.25em 0 0.75em 0;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 
