@@ -8,7 +8,7 @@
                      fxLayout="row"
                      fxLayoutAlign="start center"
         >
-            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg"/>
+            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg" />
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -83,7 +83,7 @@
                     <mat-icon>spellcheck</mat-icon>
                 </button>
 
-                <button (click)="complete()" *ngIf="edit" mat-icon-button matTooltip="Importer les données d'autre fiche">
+                <button (click)="complete()" *ngIf="edit" mat-icon-button matTooltip="Importer les données d'une autre fiche">
                     <mat-icon>content_copy</mat-icon>
                 </button>
 
@@ -127,25 +127,22 @@
 
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre</div>
-                    <quill-editor
-                            *ngIf="edit || !!model.name"
-                            [(ngModel)]="model.name"
-                            [disabled]="!edit"
-                            bounds="self"
-                            [modules]="singleLine"
-                            [matTooltip]="!edit ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
-                    >
-                    </quill-editor>
+                    <quill-editor *ngIf="edit || !!model.name"
+                                  [(ngModel)]="model.name"
+                                  [disabled]="!edit"
+                                  bounds="self"
+                                  [modules]="singleLine"
+                                  [matTooltip]="!edit ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                    ></quill-editor>
                 </div>
 
                 <div *ngIf="edit || !!model.expandedName && model.expandedName != model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre étendu</div>
-                    <quill-editor
-                            *ngIf="edit || !!model.expandedName"
-                            [(ngModel)]="model.expandedName"
-                            [disabled]="!edit"
-                            bounds="self"
-                            [matTooltip]="!edit ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                    <quill-editor *ngIf="edit || !!model.expandedName"
+                                  [(ngModel)]="model.expandedName"
+                                  [disabled]="!edit"
+                                  bounds="self"
+                                  [matTooltip]="!edit ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
                     ></quill-editor>
                 </div>
 
@@ -289,11 +286,10 @@
 
                     <div *ngIf="edit" class="margin-bottom rich-text">
                         <div class="mat-body-2">Description</div>
-                        <quill-editor
-                                *ngIf="edit || !!model.urlDescription"
-                                [(ngModel)]="model.urlDescription"
-                                [disabled]="!edit"
-                                bounds="self"
+                        <quill-editor *ngIf="edit || !!model.urlDescription"
+                                      [(ngModel)]="model.urlDescription"
+                                      [disabled]="!edit"
+                                      bounds="self"
                         ></quill-editor>
                     </div>
 
@@ -381,12 +377,11 @@
                 <!-- Literature / source -->
                 <div *ngIf="edit || !!model.literature" class="margin-v rich-text">
                     <div class="mat-body-2">Source</div>
-                    <quill-editor
-                            *ngIf="edit || !!model.literature"
-                            [(ngModel)]="model.literature"
-                            [disabled]="!edit"
-                            bounds="self"
-                            [matTooltip]="!edit ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
+                    <quill-editor *ngIf="edit || !!model.literature"
+                                  [(ngModel)]="model.literature"
+                                  [disabled]="!edit"
+                                  bounds="self"
+                                  [matTooltip]="!edit ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
                     ></quill-editor>
                 </div>
 
@@ -409,7 +404,6 @@
 
                 <mat-form-field *ngIf="edit || !!model.isbn"
                                 [matTooltip]="!edit ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
-
                                 matTooltipPosition="after"
                 >
                     <mat-label>ISBN / ISSN</mat-label>
@@ -423,7 +417,7 @@
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id">
-                    <br/>
+                    <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations [disabled]="!edit"
@@ -431,6 +425,7 @@
                                        [main]="model"
                                        [service]="cardService"
                                        placeholder="Chercher une fiche"
+                                       [displayWith]="displayWith"
                     >
                         <ng-template let-item="item">
                             <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"

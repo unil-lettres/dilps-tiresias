@@ -15,7 +15,10 @@ export class CardSelectorComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
 
+    public displayWith(item) {
+        return item.name + ' (' + item.id + ')';
     }
 
 }

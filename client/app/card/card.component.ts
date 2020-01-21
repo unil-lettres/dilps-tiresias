@@ -502,4 +502,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             this.imageData = result;
         });
     }
+
+    public displayWith(item) {
+        return item.name + ' (' + item.id + ')';
+    }
 }
