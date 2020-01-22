@@ -504,6 +504,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public displayWith(item) {
-        return item.name + ' (' + item.id + ')';
+        return item ? item.name + ' (' + item.id + ')' : '';
     }
 }
