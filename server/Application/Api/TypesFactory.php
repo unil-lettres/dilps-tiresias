@@ -7,7 +7,7 @@ namespace Application\Api;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class TypesFactory
 {

@@ -31,7 +31,7 @@ use Application\Model\Tag;
 use Application\Model\User;
 use Doctrine\Common\Util\ClassUtils;
 
-class Acl extends \Zend\Permissions\Acl\Acl
+class Acl extends \Laminas\Permissions\Acl\Acl
 {
     /**
      * The message explaining the last denial

@@ -6,7 +6,7 @@ namespace ApplicationTest\Action;
 
 use Application\Action\TemplateAction;
 use ApplicationTest\Traits\TestWithTransaction;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 class TemplateActionTest extends AbstractXlsxAction
 {

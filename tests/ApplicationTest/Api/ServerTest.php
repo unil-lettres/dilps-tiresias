@@ -8,10 +8,10 @@ use Application\Api\Server;
 use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use ApplicationTest\Traits\TestWithTransaction;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Session\Session;
+use Mezzio\Session\SessionMiddleware;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Session\Session;
-use Zend\Expressive\Session\SessionMiddleware;
 
 class ServerTest extends TestCase
 {

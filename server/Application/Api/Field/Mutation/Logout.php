@@ -7,7 +7,7 @@ namespace Application\Api\Field\Mutation;
 use Application\Api\Field\FieldInterface;
 use Application\Model\User;
 use GraphQL\Type\Definition\Type;
-use Zend\Expressive\Session\SessionInterface;
+use Mezzio\Session\SessionInterface;
 
 abstract class Logout implements FieldInterface
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Stream;
 
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Stream;
 
 /**
  * This is a stream that will delete the temporary file on disk when not needed anymore.

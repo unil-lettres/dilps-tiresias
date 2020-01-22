@@ -8,7 +8,7 @@ use Application\Model\AbstractModel;
 use Application\Utility;
 use Doctrine\Common\Util\ClassUtils;
 use InvalidArgumentException;
-use Zend\Permissions\Acl\Resource\GenericResource;
+use Laminas\Permissions\Acl\Resource\GenericResource;
 
 /**
  * An ACL resource linked to a specific instance of an \Application\Model\*

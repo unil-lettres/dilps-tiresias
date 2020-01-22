@@ -17,21 +17,21 @@ return [
         // class name.
         'invokables' => [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
-            \Zend\Expressive\Helper\ServerUrlHelper::class => \Zend\Expressive\Helper\ServerUrlHelper::class,
+            \Mezzio\Helper\ServerUrlHelper::class => \Mezzio\Helper\ServerUrlHelper::class,
             \Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class => \Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class,
             \Application\DBAL\FileLogger::class => \Application\DBAL\FileLogger::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             'site' => \Application\Service\SiteFactory::class,
-            \Zend\Expressive\Application::class => \Zend\Expressive\Container\ApplicationFactory::class,
-            \Zend\Expressive\Helper\ServerUrlMiddleware::class => \Zend\Expressive\Helper\ServerUrlMiddlewareFactory::class,
-            \Zend\Expressive\Helper\UrlHelper::class => \Zend\Expressive\Helper\UrlHelperFactory::class,
-            \Zend\Expressive\Helper\UrlHelperMiddleware::class => \Zend\Expressive\Helper\UrlHelperMiddlewareFactory::class,
+            \Mezzio\Application::class => \Mezzio\Container\ApplicationFactory::class,
+            \Mezzio\Helper\ServerUrlMiddleware::class => \Mezzio\Helper\ServerUrlMiddlewareFactory::class,
+            \Mezzio\Helper\UrlHelper::class => \Mezzio\Helper\UrlHelperFactory::class,
+            \Mezzio\Helper\UrlHelperMiddleware::class => \Mezzio\Helper\UrlHelperMiddlewareFactory::class,
 
-            \Zend\Stratigility\Middleware\ErrorHandler::class => \Zend\Expressive\Container\ErrorHandlerFactory::class,
-            \Zend\Expressive\Middleware\ErrorResponseGenerator::class => \Zend\Expressive\Container\ErrorResponseGeneratorFactory::class,
-            \Zend\Expressive\Handler\NotFoundHandler::class => \Zend\Expressive\Container\NotFoundHandlerFactory::class,
+            \Laminas\Stratigility\Middleware\ErrorHandler::class => \Mezzio\Container\ErrorHandlerFactory::class,
+            \Mezzio\Middleware\ErrorResponseGenerator::class => \Mezzio\Container\ErrorResponseGeneratorFactory::class,
+            \Mezzio\Handler\NotFoundHandler::class => \Mezzio\Container\NotFoundHandlerFactory::class,
             'doctrine.entity_manager.orm_default' => \Application\ORM\EntityManagerFactory::class,
             \Application\Action\GraphQLAction::class => \Application\Action\GraphQLFactory::class,
             \Application\Action\ImageAction::class => \Application\Action\ImageFactory::class,

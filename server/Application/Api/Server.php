@@ -9,8 +9,8 @@ use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
+use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Session\SessionMiddleware;
 
 /**
  * A thin wrapper to serve GraphQL via HTTP or CLI
