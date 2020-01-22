@@ -7,9 +7,9 @@
  */
 use Application\Api\Server;
 use Application\DBAL\Types\SiteType;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Session\Session;
-use Zend\Expressive\Session\SessionMiddleware;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Session\Session;
+use Mezzio\Session\SessionMiddleware;
 
 require_once __DIR__ . '/../htdocs/index.php';
 
