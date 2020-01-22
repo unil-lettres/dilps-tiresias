@@ -18,7 +18,7 @@ export class CardSelectorComponent implements OnInit {
     }
 
     public displayWith(item) {
-        return item.name + ' (' + item.id + ')';
+        return item ? item.name + ' (' + item.id + ')' : '';
     }
 
 }
