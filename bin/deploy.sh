@@ -21,5 +21,5 @@ if [ ${DEPLOY_ENV:-prod} = "prod" ]; then
     echo "********************* Report build to error tracker..."
     git fetch --tags
     APP_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
-    yarn run report-build -k "${BUGSNAG_API_KEY}" -v "${APP_VERSION}" -s "${DEPLOY_ENV}"
+    yarn run report-build -k "${BUGSNAG_API_KEY}" -v "${APP_VERSION}" -s "${DEPLOY_ENV:-prod}"
 fi
