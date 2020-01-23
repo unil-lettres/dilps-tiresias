@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Application\Model\Card;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\UploadedFile;
 
 return [
     [

@@ -9,10 +9,10 @@ use Application\Model\User;
 use Application\Service\ImageService;
 use Application\Stream\TemporaryFile;
 use Imagine\Image\ImagineInterface;
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response;
 use ZipArchive;
 
 /**

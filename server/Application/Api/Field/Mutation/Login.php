@@ -10,7 +10,7 @@ use Application\Api\Scalar\LoginType;
 use Application\Model\Statistic;
 use Application\Model\User;
 use GraphQL\Type\Definition\Type;
-use Zend\Expressive\Session\SessionInterface;
+use Mezzio\Session\SessionInterface;
 
 abstract class Login implements FieldInterface
 {

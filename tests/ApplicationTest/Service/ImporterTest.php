@@ -8,10 +8,10 @@ use Application\Action\TemplateAction;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Service\Importer;
+use Laminas\Diactoros\UploadedFile;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\UploadedFile;
 
 class ImporterTest extends TestCase
 {

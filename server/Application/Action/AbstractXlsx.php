@@ -6,11 +6,11 @@ namespace Application\Action;
 
 use Application\Model\User;
 use Application\Stream\TemporaryFile;
+use Laminas\Diactoros\Response;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Diactoros\Response;
 
 abstract class AbstractXlsx implements MiddlewareInterface
 {

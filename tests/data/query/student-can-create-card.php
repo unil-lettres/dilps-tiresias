@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\UploadedFile;
 
 return [
     [

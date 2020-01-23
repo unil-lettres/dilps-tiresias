@@ -12,7 +12,7 @@ use Application\Model\DocumentType;
 use Application\Model\Material;
 use Application\Model\Period;
 use ApplicationTest\Traits\TestWithTransaction;
-use Zend\Diactoros\ServerRequest;
+use Laminas\Diactoros\ServerRequest;
 
 class XlsxActionTest extends AbstractXlsxAction
 {

@@ -6,7 +6,7 @@ namespace Application\Api\Output;
 
 use Application\Model\AbstractModel;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\AbstractFactoryInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 
 /**
  * Create a Pagination type for the entity extracted from name.

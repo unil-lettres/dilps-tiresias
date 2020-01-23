@@ -7,12 +7,12 @@ namespace Application\Middleware;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use DateTimeImmutable;
+use Mezzio\Session\SessionInterface;
+use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Session\SessionInterface;
-use Zend\Expressive\Session\SessionMiddleware;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
