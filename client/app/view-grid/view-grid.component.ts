@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
-import { NaturalAbstractController, NaturalDataSource, NaturalPageEvent } from '@ecodev/natural';
+import { NaturalAbstractController, NaturalDataSource, PaginationInput } from '@ecodev/natural';
 import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
 import { merge } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<NaturalPageEvent> = new EventEmitter<NaturalPageEvent>();
+    @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<Required<PaginationInput>>();
 
     /**
      * Emits when some cards are selected

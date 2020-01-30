@@ -1,17 +1,11 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    NaturalAbstractList,
-    NaturalPageEvent,
-    NaturalQueryVariablesManager,
-    NaturalSearchSelections,
-    PaginationInput,
-    Sorting,
-} from '@ecodev/natural';
+import { NaturalAbstractList, NaturalQueryVariablesManager, NaturalSearchSelections, PaginationInput, Sorting } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
+import { FakeCollection } from '../collections/services/fake-collection.resolver';
 import { NumberSelectorComponent } from '../quizz/shared/number-selector/number-selector.component';
 import {
     CollectionSelectorComponent,
@@ -38,7 +32,6 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { ViewMapComponent } from '../view-map/view-map.component';
-import { FakeCollection } from '../collections/services/fake-collection.resolver';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -118,7 +111,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             order: SortingOrder.DESC,
         },
     ];
-    protected defaultPagination: PaginationInput = {
+    protected defaultPagination: Required<PaginationInput> = {
         pageSize: 15,
         pageIndex: 0,
         offset: null,
@@ -204,7 +197,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
-    public pagination(event: NaturalPageEvent): void {
+    public pagination(event: Required<PaginationInput>): void {
 
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
@@ -223,7 +216,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
         if (mode !== ViewMode.map) {
             sessionStorage.setItem('view-mode', mode);
-            this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
+            this.pagination(this.defaultPagination as Required<PaginationInput>); // reset pagination, will clean url
         }
     }
 
@@ -243,7 +236,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     public reset(): void {
         this.selected = [];
-        this.pagination(this.defaultPagination as NaturalPageEvent); // reset pagination, will clean url
+        this.pagination(this.defaultPagination as Required<PaginationInput>); // reset pagination, will clean url
     }
 
     public linkSelectionToCollection(selection: Cards_cards_items[]): void {
