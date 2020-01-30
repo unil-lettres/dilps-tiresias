@@ -89,22 +89,31 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * List of selected items
      */
     public items: ThesaurusModel[] = [];
+
     /**
      * <input> controller
      */
     public formControl: FormControl = new FormControl();
+
     /**
      * Cache to init search watching only once
      */
     private resultsCache: Observable<any>;
+
     /**
      * Default page size
      */
     private pageSize = 10;
+
     /**
      * Query variables manger
      */
     private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
+
+    /**
+     * Prevent bug opening twice hierarchic dialog on ff
+     */
+    private lockOpenDialog: boolean;
 
     constructor(private dialog: MatDialog,
                 private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
@@ -176,13 +185,11 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
 
     public openDialog(): void {
 
-        // todo : test on firefox, watch app-select (or relations) for details about lockOpenDialog on firefox
+        if (this.lockOpenDialog) {
+            return;
+        }
 
-        // if (this.lockOpenDialog) {
-        //     return;
-        // }
-        //
-        // this.lockOpenDialog = true;
+        this.lockOpenDialog = true;
 
         if (this.readonly || !this.hierarchicSelectorConfig) {
             return;
@@ -214,7 +221,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         this.hierarchicSelectorDialogService.open(hierarchicConfig, dialogFocus)
             .afterClosed()
             .subscribe((result: HierarchicDialogResult) => {
-                // this.lockOpenDialog = false;
+                this.lockOpenDialog = false;
                 if (result && result.hierarchicSelection) {
 
                     // Find the only selection amongst all possible keys

@@ -31,7 +31,7 @@
     "@bugsnag/js": "^6.4.3",
     "@bugsnag/plugin-angular": "^6.4.3",
     "@ecodev/angular-natural-gallery": "^6.0.2",
-    "@ecodev/natural": "^10.0.0",
+    "@ecodev/natural": "^11.2.0",
     "@ngx-progressbar/core": "^5.3.2",
     "@types/swiper": "^4.4.8",
     "angular-file": "^2.0.0",
