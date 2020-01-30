@@ -74,6 +74,10 @@ class SearchOperatorType extends AbstractOperator
             'id',
         ];
 
+        if ($metadata->name === Institution::class) {
+            $whitelistedFields[] = 'street';
+        }
+
         // Find most textual fields for the entity
         $fields = [];
         foreach ($metadata->fieldMappings as $mapping) {
