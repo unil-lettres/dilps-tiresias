@@ -17,9 +17,6 @@ use GraphQL\Doctrine\Annotation as API;
 /**
  * An exact period in time with a name and expressed in years.
  *
- * Julian days are used instead of standard date format because MariaDB does not
- * support older year than 1000 and we are often much older than that (before Christ)
- *
  * @ORM\Entity(repositoryClass="Application\Repository\PeriodRepository")
  */
 class Period extends AbstractModel implements HasParentInterface
