@@ -798,6 +798,7 @@ class Card extends AbstractModel
         $original->artists = clone $this->artists;
         $original->tags = clone $this->tags;
         $original->materials = clone $this->materials;
+        $original->periods = clone $this->periods;
         $original->computeDatings();
         $original->institution = $this->institution;
         $original->country = $this->country;
