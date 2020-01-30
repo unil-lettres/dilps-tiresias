@@ -237,6 +237,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * List of linked collections that are sources
      */
     private sources;
+    public formIsValid = true;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,

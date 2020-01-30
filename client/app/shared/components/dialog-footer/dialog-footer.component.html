@@ -18,7 +18,12 @@
         Enregistrer
     </button>
 
-    <button (click)="create.emit(item)" *ngIf="!item.id && canCreate" color="primary" mat-raised-button>
+    <button (click)="create.emit(item)"
+            *ngIf="!item.id && canCreate"
+            [disabled]="formCtrl?.errors"
+            color="primary"
+            mat-raised-button
+    >
         <mat-icon>add</mat-icon>
         Ajouter
     </button>

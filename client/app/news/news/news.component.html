@@ -3,7 +3,7 @@
         <mat-tab label="Actualité">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
 
-                <mat-checkbox [(ngModel)]="data.item.isActive">Actif
+                <mat-checkbox [(ngModel)]="data.item.isActive" >Actif
                 </mat-checkbox>
 
                 <mat-form-field>
@@ -21,7 +21,8 @@
 
                 <mat-form-field>
                     <mat-label>Lien</mat-label>
-                    <input [(ngModel)]="data.item.url" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput maxlength="255" type="url">
+                    <input [(ngModel)]="data.item.url" #url="ngModel" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput maxlength="255" type="url">
+                    <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                 </mat-form-field>
 
                 <input (change)="upload($event.target.files[0])"
@@ -45,6 +46,7 @@
                        (update)="update()"
                        [canCreate]="user?.globalPermissions?.news?.create"
                        [item]="data.item"
+                       [formCtrl]="url"
                        fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

@@ -47,6 +47,7 @@
                         mat-icon-button
                         mat-raised-button
                         matTooltip="Enregistrer"
+                        [disabled]="!formIsValid"
                 >
                     <mat-icon>save</mat-icon>
                 </button>
@@ -280,7 +281,8 @@
 
                     <mat-form-field *ngIf="edit">
                         <mat-label>URL</mat-label>
-                        <input [(ngModel)]="model.url" [readonly]="!edit" matInput maxlength="255" type="url">
+                        <input [(ngModel)]="model.url" #url="ngModel" [readonly]="!edit" matInput maxlength="255" type="url" (change)="formIsValid = !url.invalid">
+                        <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                     </mat-form-field>
 
                     <div *ngIf="edit" class="margin-bottom rich-text">
