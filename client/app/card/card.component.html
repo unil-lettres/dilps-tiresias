@@ -126,6 +126,13 @@
                     <div *ngFor="let source of sources"> {{ source.name }} </div>
                 </div>
 
+                <mat-form-field *ngIf="(edit || !!model.code) && model.site === Site.tiresias"
+                >
+                    <mat-label>Référence</mat-label>
+                    <input [(ngModel)]="model.code" #code="ngModel" [readonly]="!edit" matInput maxlength="30" [appUniqueCode]="model" (change)="codeModel = code; updateFormValidity()">
+                    <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched)">Cette référence est déjà attribuée à une fiche</mat-error>
+                </mat-form-field>
+
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre</div>
                     <quill-editor *ngIf="edit || !!model.name"
@@ -281,7 +288,7 @@
 
                     <mat-form-field *ngIf="edit">
                         <mat-label>URL</mat-label>
-                        <input [(ngModel)]="model.url" #url="ngModel" [readonly]="!edit" matInput maxlength="255" type="url" (change)="formIsValid = !url.invalid">
+                        <input [(ngModel)]="model.url" #url="ngModel" [readonly]="!edit" matInput maxlength="255" type="url" (change)="urlModel = url; updateFormValidity()">
                         <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                     </mat-form-field>
 

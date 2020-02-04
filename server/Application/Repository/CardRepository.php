@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Repository;
 
 use Application\Model\Card;
+use Application\Model\Collection;
 use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
 
@@ -122,5 +123,25 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->orderBy('filename')->execute()->fetchAll();
 
         return $filenames;
+    }
+
+    /**
+     * Return the next available Account code
+     *
+     * @return string
+     */
+    public function getNextCodeAvailable(Collection $collection): string
+    {
+        static $latest = null;
+        if (!$latest) {
+            $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
+                ->select('IFNULL(MAX(card.id) + 1, 1)')
+                ->from('card', 'card');
+            $latest = $qb->execute()->fetchColumn();
+        } else {
+            ++$latest;
+        }
+
+        return $collection->getName() . '-' . $latest;
     }
 }

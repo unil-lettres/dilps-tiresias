@@ -15,6 +15,7 @@ class Version20191119141059 extends AbstractMigration
         $this->addSql('ALTER TABLE user CHANGE login login VARCHAR(191) NOT NULL');
         $this->addSql('ALTER TABLE user CHANGE email email VARCHAR(191) DEFAULT NULL;');
         $this->addSql('UPDATE user SET email = NULL WHERE email = ""');
+        $this->addSql('UPDATE user SET email = null WHERE email = "noemie.arnold@vd.educanet2.ch"');
         $this->addSql('CREATE UNIQUE INDEX unique_email ON user (email, site)');
     }
 }

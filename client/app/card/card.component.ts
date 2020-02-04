@@ -39,6 +39,7 @@ import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
+import { NgModel } from '@angular/forms';
 
 @Component({
     selector: 'app-card',
@@ -237,7 +238,10 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * List of linked collections that are sources
      */
     private sources;
+
     public formIsValid = true;
+    public codeModel: NgModel | null;
+    public urlModel: NgModel | null;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -263,6 +267,10 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     set editable(val: boolean) {
         this.edit = val;
         this.updateUploadWatching();
+    }
+
+    public updateFormValidity(): void {
+        this.formIsValid = (!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid);
     }
 
     ngOnInit() {
@@ -485,9 +493,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-               && this.model.owner && this.model.owner.id === this.user.id
-               && this.model.creator && this.model.creator.id === this.user.id
-               && this.model.visibility === CardVisibility.private;
+            && this.model.owner && this.model.owner.id === this.user.id
+            && this.model.creator && this.model.creator.id === this.user.id
+            && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {

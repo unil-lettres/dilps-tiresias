@@ -197,7 +197,7 @@ VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affe
 INSERT INTO card (id, filename, visibility, name, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
                   literature, isbn, object_reference, `from`, `to`, production_place,
-                  locality, site, url, url_description, width, height)
+                  locality, site, url, url_description, width, height, code)
 SELECT meta.id + @card_offset,
     CONCAT('tiresias-', meta.id, '.jpg'),
     CASE statut
@@ -220,7 +220,7 @@ SELECT meta.id + @card_offset,
                                                                     REPLACE(
                                                                             REPLACE(
                                                                                     REPLACE(
-                                                                                            REGEXP_SUBSTR(description, '\\[t\\].*\\[/t\\]'),
+                                                                                            REGEXP_SUBSTR(meta.description, '\\[t\\].*\\[/t\\]'),
                                                                                             '[t]',
                                                                                             ''),
                                                                                     '[/t].',
@@ -251,7 +251,7 @@ SELECT meta.id + @card_offset,
                                             REPLACE(
                                                     REPLACE(
                                                             REPLACE(
-                                                                    REGEXP_REPLACE(description, '\\[t\\].*\\[/t\\]\\.?', ''),
+                                                                    REGEXP_REPLACE(meta.description, '\\[t\\].*\\[/t\\]\\.?', ''),
                                                                     '[b]',
                                                                     '<strong>'),
                                                             '[/b]',
@@ -326,8 +326,10 @@ SELECT meta.id + @card_offset,
     url_http,
     url_description,
     200,
-    200
+    200,
+    CONCAT(fonds.fond, '-', meta.id)
 FROM meta
+         INNER JOIN fonds ON meta.fond = fonds.id
          LEFT JOIN lieux AS locality ON locality.id = l2_lieux;
 
 -- Link card to their institution by names

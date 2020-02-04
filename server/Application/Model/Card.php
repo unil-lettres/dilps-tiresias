@@ -8,6 +8,7 @@ use Application\Api\Exception;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
+use Application\Traits\HasCode;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
@@ -34,6 +35,9 @@ use Psr\Http\Message\UploadedFileInterface;
  *     @ORM\Index(name="card_area_idx", columns={"area"}),
  *     @ORM\Index(name="card_latitude_idx", columns={"latitude"}),
  *     @ORM\Index(name="card_longitude_idx", columns={"longitude"}),
+ * },
+ * uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_code", columns={"code", "site"})
  * })
  * @API\Filters({
  *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
@@ -54,6 +58,7 @@ use Psr\Http\Message\UploadedFileInterface;
  */
 class Card extends AbstractModel
 {
+    use HasCode;
     use HasName;
     use HasInstitution;
     use HasAddress;
@@ -602,6 +607,12 @@ class Card extends AbstractModel
     public function collectionAdded(Collection $collection): void
     {
         $this->collections->add($collection);
+
+        // If we are new and don't have a code yet, set one automatically
+        if (!$this->getId() && !$this->getCode()) {
+            $code = _em()->getRepository(self::class)->getNextCodeAvailable($collection);
+            $this->setCode($code);
+        }
     }
 
     /**

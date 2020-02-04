@@ -117,6 +117,12 @@ export class NaturalSearchFacetsService {
 
     private tiresiasFacets: NaturalSearchFacets = [
         {
+            display: 'Référence',
+            field: 'code',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
             display: 'Période',
             field: 'periods',
             component: TypeHierarchicSelectorComponent,

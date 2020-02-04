@@ -131,6 +131,7 @@ import { quillConfig } from './shared/config/quill.options';
 import { bugsnagErrorHandlerFactory } from './shared/config/bugsnag';
 import { environment } from '../environments/environment';
 import { UrlValidatorDirective } from './shared/directives/url-validator.directive';
+import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-validator.directive';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -167,6 +168,7 @@ const icons: NaturalIconsConfig = {
         ConfirmComponent,
         FocusDirective,
         UrlValidatorDirective,
+        UniqueCodeValidatorDirective,
         CollectionComponent,
         TermsAgreementComponent,
         InstitutionsComponent,

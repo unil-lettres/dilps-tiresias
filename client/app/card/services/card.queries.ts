@@ -6,6 +6,7 @@ export const cardDetailsFragment = gql`
     fragment cardDetails on Card {
         id
         site
+        code
         name
         expandedName
         hasImage

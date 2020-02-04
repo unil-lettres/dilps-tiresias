@@ -72,6 +72,7 @@ class SearchOperatorType extends AbstractOperator
             'email',
             'dating',
             'id',
+            'code',
         ];
 
         if ($metadata->name === Institution::class) {
