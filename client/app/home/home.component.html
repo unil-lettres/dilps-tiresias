@@ -1,3 +1,22 @@
+<mat-menu #thesaurusMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
+    <button *ngIf="site === Site.dilps" mat-menu-item routerLink="/artist" routerLinkActive="active">Artistes</button>
+    <ng-container *ngIf="site === Site.tiresias">
+        <button mat-menu-item routerLink="/period" routerLinkActive="active">Périodes</button>
+        <button mat-menu-item routerLink="/tag" routerLinkActive="active">Mots clés</button>
+        <button mat-menu-item routerLink="/domain" routerLinkActive="active">Domaines</button>
+        <button mat-menu-item routerLink="/material" routerLinkActive="active">Matériaux</button>
+        <button mat-menu-item routerLink="/antique-name" routerLinkActive="active">Nom antique</button>
+        <button mat-menu-item routerLink="/document-type" routerLinkActive="active">Type de documents</button>
+    </ng-container>
+</mat-menu>
+
+<mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item routerLink="/user" routerLinkActive="active">Utilisateurs</button>
+    <button mat-menu-item routerLink="/news" routerLinkActive="active">News</button>
+    <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
+</mat-menu>
+
 <div [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="column">
 
     <mat-sidenav-container #navContainer fxFlex fxLayout="column">
@@ -44,17 +63,6 @@
                                 <natural-icon mat-list-icon name="folder_special"></natural-icon>
                             </a>
 
-                            <!-- Users -->
-                            <a *ngIf="user.role === 'administrator'"
-                               mat-list-item
-                               matTooltip="Liste des utilisateurs"
-                               matTooltipPosition="after"
-                               routerLink="/user"
-                               routerLinkActive="active"
-                            >
-                                <natural-icon mat-list-icon name="group"></natural-icon>
-                            </a>
-
                             <!-- Notifications -->
                             <a mat-list-item
                                matTooltip="Notifications"
@@ -89,113 +97,28 @@
                             </a>
                         </mat-nav-list>
 
-                        <mat-divider *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"></mat-divider>
-                        <mat-nav-list *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
-
-                            <!-- Institutions -->
-                            <a mat-list-item
-                               matTooltip="Institutions"
-                               matTooltipPosition="after"
-                               routerLink="/institution"
-                               routerLinkActive="active"
-                            >
-                                <natural-icon mat-list-icon name="place"></natural-icon>
-                            </a>
-
-                            <!-- Artists -->
-                            <a *ngIf="site === Site.dilps"
-                               mat-list-item
-                               matTooltip="Artistes"
-                               matTooltipPosition="after"
-                               routerLink="/artist"
-                               routerLinkActive="active"
-                            >
-                                <natural-icon mat-list-icon name="copyright"></natural-icon>
-
-                            </a>
-
-                            <ng-container *ngIf="site === Site.tiresias">
-
-                                <!-- Periods -->
-                                <a mat-list-item
-                                   matTooltip="Périodes"
-                                   matTooltipPosition="after"
-                                   routerLink="/period"
-                                   routerLinkActive="active"
-                                >
-                                    <natural-icon mat-list-icon name="period"></natural-icon>
+                        <!-- Thesaurus -->
+                        <ng-container *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
+                            <mat-divider></mat-divider>
+                            <mat-nav-list>
+                                <a mat-list-item matTooltip="Thesaurus" matTooltipPosition="after" [matMenuTriggerFor]="thesaurusMenu">
+                                    <natural-icon mat-list-icon name="book"></natural-icon>
                                 </a>
+                            </mat-nav-list>
+                        </ng-container>
 
-                                <!-- Tags -->
-                                <a mat-list-item matTooltip="Tags" matTooltipPosition="after" routerLink="/tag" routerLinkActive="active">
-                                    <natural-icon mat-list-icon name="tag"></natural-icon>
+                        <!-- Administration -->
+                        <ng-container *ngIf="user.role === 'administrator'">
+                            <mat-divider></mat-divider>
+                            <mat-nav-list>
+                                <a mat-list-item matTooltip="Administration" matTooltipPosition="after" [matMenuTriggerFor]="adminMenu">
+                                    <natural-icon mat-list-icon name="build"></natural-icon>
                                 </a>
+                            </mat-nav-list>
+                        </ng-container>
 
-                                <!-- Domain -->
-                                <a mat-list-item
-                                   matTooltip="Domaines"
-                                   matTooltipPosition="after"
-                                   routerLink="/domain"
-                                   routerLinkActive="active"
-                                >
-                                    <natural-icon mat-list-icon name="work"></natural-icon>
-                                </a>
-
-                                <!-- Material -->
-                                <a mat-list-item
-                                   matTooltip="Matériaux"
-                                   matTooltipPosition="after"
-                                   routerLink="/material"
-                                   routerLinkActive="active"
-                                >
-                                    <natural-icon mat-list-icon name="material"></natural-icon>
-                                </a>
-
-                                <!-- AntiqueName -->
-                                <a mat-list-item
-                                   matTooltip="Nom antique"
-                                   matTooltipPosition="after"
-                                   routerLink="/antique-name"
-                                   routerLinkActive="active"
-                                >
-                                    <natural-icon mat-list-icon name="antique-name"></natural-icon>
-                                </a>
-
-                                <!-- Document type -->
-                                <a mat-list-item
-                                   matTooltip="Type de documents"
-                                   matTooltipPosition="after"
-                                   routerLink="/document-type"
-                                   routerLinkActive="active"
-                                >
-                                    <natural-icon mat-list-icon name="insert_drive_file"></natural-icon>
-                                </a>
-
-                            </ng-container>
-
-                            <!-- Carousel -->
-                            <a mat-list-item
-                               matTooltip="News"
-                               matTooltipPosition="after"
-                               routerLink="/news"
-                               routerLinkActive="active"
-                            >
-                                <natural-icon mat-list-icon name="view_carousel"></natural-icon>
-                            </a>
-
-                            <!-- Statistic -->
-                            <a *ngIf="user.role === 'administrator'"
-                               mat-list-item
-                               matTooltip="Statistiques"
-                               matTooltipPosition="after"
-                               routerLink="/statistic"
-                               routerLinkActive="active"
-                            >
-                                <natural-icon mat-list-icon name="show_chart"></natural-icon>
-                            </a>
-
-                        </mat-nav-list>
                         <mat-divider></mat-divider>
+
                         <mat-nav-list fxFlex>
                             <!-- Account -->
                             <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
