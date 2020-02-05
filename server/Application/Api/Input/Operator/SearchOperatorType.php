@@ -64,6 +64,7 @@ class SearchOperatorType extends AbstractOperator
         $whitelistedFields = [
             'name',
             'expandedName',
+            'street',
             'locality',
             'material',
             'technique',
@@ -74,10 +75,6 @@ class SearchOperatorType extends AbstractOperator
             'id',
             'code',
         ];
-
-        if ($metadata->name === Institution::class) {
-            $whitelistedFields[] = 'street';
-        }
 
         // Find most textual fields for the entity
         $fields = [];
