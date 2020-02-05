@@ -9,6 +9,7 @@ use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
 use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Traits\HasSorting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
@@ -21,7 +22,7 @@ use GraphQL\Doctrine\Annotation as API;
  * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
  * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
  */
-class Collection extends AbstractModel implements HasParentInterface
+class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
     use HasInstitution;

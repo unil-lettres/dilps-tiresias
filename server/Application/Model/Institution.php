@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Traits\HasAddress;
 use Application\Traits\HasName;
 use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\UniqueConstraint(name="unique_name", columns={"name", "site"})
  * })
  */
-class Institution extends AbstractModel
+class Institution extends AbstractModel implements HasSiteInterface
 {
     use HasName;
     use HasAddress;

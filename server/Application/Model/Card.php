@@ -13,6 +13,7 @@ use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
 use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Traits\HasValidation;
 use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -56,7 +57,7 @@ use Psr\Http\Message\UploadedFileInterface;
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
  */
-class Card extends AbstractModel
+class Card extends AbstractModel implements HasSiteInterface
 {
     use HasCode;
     use HasName;

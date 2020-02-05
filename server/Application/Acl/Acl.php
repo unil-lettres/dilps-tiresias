@@ -11,6 +11,7 @@ use Application\Acl\Assertion\IsNotSuggestion;
 use Application\Acl\Assertion\IsOwnerOrResponsible;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\One;
+use Application\Acl\Assertion\SameSite;
 use Application\Acl\Assertion\Visibility;
 use Application\Model\AbstractModel;
 use Application\Model\AntiqueName;
@@ -46,7 +47,7 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->addRole(User::ROLE_STUDENT, User::ROLE_ANONYMOUS);
         $this->addRole(User::ROLE_JUNIOR, User::ROLE_STUDENT);
         $this->addRole(User::ROLE_SENIOR, User::ROLE_JUNIOR);
-        $this->addRole(User::ROLE_ADMINISTRATOR);
+        $this->addRole(User::ROLE_ADMINISTRATOR, User::ROLE_ANONYMOUS);
 
         $this->addResource(new ModelResource(Artist::class));
         $this->addResource(new ModelResource(Card::class));
@@ -80,43 +81,41 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, new ModelResource(Period::class), 'read');
 
         $this->allow(User::ROLE_STUDENT, new ModelResource(Artist::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), ['update'], new All(new IsSuggestion(), new IsOwnerOrResponsible()));
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'read');
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), 'create', new SameSite());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Card::class), ['update'], new All(new IsSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'read');
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete'], new IsOwnerOrResponsible());
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Institution::class), 'create');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Tag::class), 'create');
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'create', new SameSite());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Institution::class), 'create', new SameSite());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Tag::class), 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), 'read');
-        $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), ['update', 'delete'], new IsMyself());
+        $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), ['update', 'delete'], new All(new IsMyself(), new SameSite()));
 
-        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['update'], new IsOwnerOrResponsible());
-        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible()));
+        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['update'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
 
-        $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new IsOwnerOrResponsible());
+        $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
-        // Administrator inherits nothing, but is allowed **almost** all privileges
+        // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Artist::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Change::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), 'create');
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Country::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Dating::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), 'create', new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])), new SameSite()));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class), 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(DocumentType::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Domain::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Material::class));
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(AntiqueName::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Period::class));
-        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read', new SameSite());
     }
 
     /**

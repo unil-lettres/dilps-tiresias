@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Traits\HasImage;
 use Application\Traits\HasName;
 use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Traits\HasSorting;
 use Application\Traits\HasUrl;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\NewsRepository")
  */
-class News extends AbstractModel
+class News extends AbstractModel implements HasSiteInterface
 {
     private const IMAGE_PATH = 'htdocs/news-images/';
 

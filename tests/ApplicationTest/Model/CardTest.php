@@ -186,6 +186,7 @@ class CardTest extends TestCase
     public function testGetPermissions(): void
     {
         $card = new Card();
+        $card->setSite(SiteType::DILPS);
         $actual = $card->getPermissions();
         $expected = [
             'create' => false,
@@ -197,6 +198,7 @@ class CardTest extends TestCase
 
         // Make it the current user as creator
         $user = new User();
+        $user->setSite(SiteType::DILPS);
         User::setCurrent($user);
         $card->timestampCreation();
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ApplicationTest\Acl;
 
 use Application\Acl\Acl;
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
@@ -17,8 +18,10 @@ class AclTest extends TestCase
     {
         $acl = new Acl();
         $card = new Card();
+        $card->setSite(SiteType::DILPS);
 
         $ownerStudent = new User();
+        $ownerStudent->setSite(SiteType::DILPS);
         $ownerStudent->setLogin('Sarah');
         User::setCurrent($ownerStudent);
         $card->timestampCreation();
@@ -32,6 +35,7 @@ class AclTest extends TestCase
         self::assertSame('User "Sarah" with role student is not allowed on resource "Card#" with privilege "update"', $acl->getLastDenialMessage());
 
         $ownerJunior = new User(User::ROLE_JUNIOR);
+        $ownerJunior->setSite(SiteType::DILPS);
         $ownerJunior->setLogin('Kyle');
         User::setCurrent($ownerJunior);
         $card->timestampCreation();
@@ -47,18 +51,21 @@ class AclTest extends TestCase
         self::assertSame('User "Kyle" with role junior is not allowed on resource "Card#" with privilege "delete"', $acl->getLastDenialMessage());
 
         $otherStudent = new User();
+        $otherStudent->setSite(SiteType::DILPS);
         $otherStudent->setLogin('John');
         User::setCurrent($otherStudent);
         self::assertFalse($acl->isCurrentUserAllowed($card, 'update'), 'other user cannot update');
         self::assertSame('User "John" with role student is not allowed on resource "Card#" with privilege "update"', $acl->getLastDenialMessage());
 
         $administrator = new User(User::ROLE_ADMINISTRATOR);
+        $administrator->setSite(SiteType::DILPS);
         $administrator->setLogin('Jane');
         User::setCurrent($administrator);
         self::assertTrue($acl->isCurrentUserAllowed($card, 'update'), 'admin can do anything');
         self::assertNull($acl->getLastDenialMessage());
 
         $collection = new Collection();
+        $collection->setSite(SiteType::DILPS);
         self::assertFalse($acl->isCurrentUserAllowed($collection, 'read'), 'admin cannot read non-admin collection');
         self::assertSame('User "Jane" with role administrator is not allowed on resource "Collection#" with privilege "read"', $acl->getLastDenialMessage());
 

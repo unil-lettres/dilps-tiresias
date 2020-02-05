@@ -97,18 +97,18 @@ abstract class Standard
                     'input' => Type::nonNull(_types()->getInput($class)),
                 ],
                 'resolve' => function (string $site, array $args) use ($class): AbstractModel {
-                    // Check ACL
                     $object = new $class();
-                    Helper::throwIfDenied($object, 'create');
-
-                    // Do it
-                    $input = $args['input'];
 
                     // Be sure that site is set first
+                    $input = $args['input'];
                     if ($input['site'] ?? false) {
                         Helper::hydrate($object, ['site' => $input['site']]);
                     }
 
+                    // Check ACL
+                    Helper::throwIfDenied($object, 'create');
+
+                    // Do it
                     Helper::hydrate($object, $input);
                     _em()->persist($object);
                     _em()->flush();

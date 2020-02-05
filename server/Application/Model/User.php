@@ -10,6 +10,7 @@ use Application\ORM\Query\Filter\AclFilter;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
 use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Utility;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,7 +27,7 @@ use GraphQL\Doctrine\Annotation as API;
  *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
  * })
  */
-class User extends AbstractModel
+class User extends AbstractModel implements HasSiteInterface
 {
     use HasInstitution;
     use HasSite;
@@ -379,6 +380,13 @@ class User extends AbstractModel
         self::setCurrent($this);
         foreach ($types as $type) {
             $instance = new $type();
+
+            // Simulate current site on new object
+            if ($instance instanceof HasSiteInterface) {
+                $site = $this->getSite();
+                $instance->setSite($site);
+            }
+
             $sh = lcfirst(Utility::getShortClassName($instance));
             $result[$sh] = [];
 
