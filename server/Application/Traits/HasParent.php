@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Doctrine\Common\Collections\Collection;
-use GraphQL\Doctrine\Annotation as API;
 use InvalidArgumentException;
 
 /**
@@ -96,11 +95,9 @@ trait HasParent
     }
 
     /**
-     * @API\Exclude
-     *
      * @return string
      */
-    public function getFullName(): string
+    public function getHierarchicName(): string
     {
         $object = $this;
         $result = [];

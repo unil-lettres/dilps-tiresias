@@ -9,6 +9,7 @@ export const periodsQuery = gql`
                 name
                 from
                 to
+                hierarchicName
             }
             pageSize
             pageIndex
@@ -23,6 +24,7 @@ export const periodQuery = gql`
             name
             from
             to
+            hierarchicName
             parentHierarchy {
                 id
                 name

@@ -66,10 +66,12 @@ export const cardDetailsFragment = gql`
         materials {
             id
             name
+            hierarchicName
         }
         periods {
             id
             name
+            hierarchicName
         }
         documentType {
             id
@@ -82,6 +84,7 @@ export const cardDetailsFragment = gql`
         domain {
             id
             name
+            hierarchicName
         }
         collections {
             id

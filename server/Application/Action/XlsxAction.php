@@ -143,14 +143,14 @@ class XlsxAction extends AbstractXlsx
 
     private function nullableFullName(?HasParentInterface $model): string
     {
-        return $model ? $model->getFullName() : '';
+        return $model ? $model->getHierarchicName() : '';
     }
 
     private function collection(\Doctrine\Common\Collections\Collection $collection): string
     {
         $lines = $collection->map(function ($model) {
             if ($model instanceof HasParentInterface) {
-                $name = $model->getFullName();
+                $name = $model->getHierarchicName();
             } else {
                 $name = $model->getName();
             }

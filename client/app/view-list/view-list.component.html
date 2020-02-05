@@ -48,7 +48,7 @@
                     <div *ngIf="item.periods?.length">
                         <div>Périodes</div>
                         <div>
-                            <div *ngFor="let period of item.periods">{{ period.name }}</div>
+                            <div *ngFor="let period of item.periods">{{ period.hierarchicName }}</div>
                         </div>
                     </div>
 
@@ -66,13 +66,13 @@
 
                 <div *ngIf="item.domain || item.technique">
                     <div>Technique (Domaine)</div>
-                    <div>{{ item.technique || item.domain?.name }}</div>
+                    <div>{{ item.technique || item.domain?.hierarchicName }}</div>
                 </div>
 
                 <div *ngIf="item.materials?.length || item.material">
                     <div>Matériel (Matériaux)</div>
                     <div>
-                        <div *ngFor="let material of item.materials">{{ material.name }}</div>
+                        <div *ngFor="let material of item.materials">{{ material.hierarchicName }}</div>
                         <div>{{ item.material }}</div>
                     </div>
                 </div>

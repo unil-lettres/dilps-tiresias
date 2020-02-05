@@ -7,6 +7,7 @@ export const domainsQuery = gql`
             items {
                 id
                 name
+                hierarchicName
             }
             pageSize
             pageIndex
@@ -19,6 +20,7 @@ export const domainQuery = gql`
         domain(id: $id) {
             id
             name
+            hierarchicName
             parentHierarchy {
                 id
                 name

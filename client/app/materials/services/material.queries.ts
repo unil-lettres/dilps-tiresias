@@ -7,6 +7,7 @@ export const materialsQuery = gql`
             items {
                 id
                 name
+                hierarchicName
             }
             pageSize
             pageIndex
@@ -19,6 +20,7 @@ export const materialQuery = gql`
         material(id: $id) {
             id
             name
+            hierarchicName
             parentHierarchy {
                 id
                 name
