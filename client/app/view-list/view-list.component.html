@@ -40,12 +40,16 @@
 
                     <div *ngIf="item.tags?.length">
                         <div>Mots clés</div>
-                        <div *ngFor="let tag of item.tags">{{ tag.name }}</div>
+                        <div>
+                            <div *ngFor="let tag of item.tags">{{ tag.name }}</div>
+                        </div>
                     </div>
 
                     <div *ngIf="item.periods?.length">
                         <div>Périodes</div>
-                        <div *ngFor="let period of item.periods">{{ period.name }}</div>
+                        <div>
+                            <div *ngFor="let period of item.periods">{{ period.name }}</div>
+                        </div>
                     </div>
 
                     <div *ngIf="item.from || item.to">
