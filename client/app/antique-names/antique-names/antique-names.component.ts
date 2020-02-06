@@ -1,7 +1,6 @@
 import { Component, Injector } from '@angular/core';
-import { Sorting, SortingOrder } from '@ecodev/natural';
 import { AbstractList } from '../../shared/components/AbstractList';
-import { AntiqueNames, AntiqueNameSortingField, AntiqueNamesVariables } from '../../shared/generated-types';
+import { AntiqueNames, AntiqueNamesVariables } from '../../shared/generated-types';
 import { AntiqueNameComponent } from '../antique-name/antique-name.component';
 import { AntiqueNameService } from '../services/antique-name.service';
 
@@ -12,8 +11,6 @@ import { AntiqueNameService } from '../services/antique-name.service';
 
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNames['antiqueNames'], AntiqueNamesVariables> {
-
-    protected defaultSorting: Array<Sorting> = [{field: AntiqueNameSortingField.name, order: SortingOrder.ASC}];
 
     constructor(service: AntiqueNameService, injector: Injector) {
         super(service, AntiqueNameComponent, injector);
