@@ -132,8 +132,8 @@
                     <input [(ngModel)]="model.code" #code="ngModel" [readonly]="!edit" matInput maxlength="30" [appUniqueCode]="model" (change)="codeModel = code; updateFormValidity()">
                     <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched)">Cette référence est déjà attribuée à une fiche</mat-error>
                     <mat-hint align="end"
-                              *ngIf="edit && model.code.length > 23"
-                              [ngClass]="{'strong': model.code.length >= 30}"
+                              *ngIf="edit && model.code?.length > 23"
+                              [ngClass]="{'strong': model.code?.length >= 30}"
                     >
                         {{ model.code.length }} / 30
                     </mat-hint>
@@ -150,8 +150,8 @@
                     ></quill-editor>
                     <mat-hint align="end"
                               style="float: right;"
-                              *ngIf="edit && (model.name | stripTags).length > 187"
-                              [ngClass]="{'strong': (model.name | stripTags).length >= 191}"
+                              *ngIf="edit && (model.name | stripTags)?.length > 187"
+                              [ngClass]="{'strong': (model.name | stripTags)?.length >= 191}"
                     >
                         {{ (model.name | stripTags).length }} / 191
                     </mat-hint>
@@ -201,8 +201,8 @@
                         <mat-label>Datation</mat-label>
                         <input [(ngModel)]="model.dating" [readonly]="!edit" matInput maxlength="255">
                         <mat-hint align="end"
-                                  *ngIf="edit && model.dating.length > 200"
-                                  [ngClass]="{'strong': model.dating.length >= 255}"
+                                  *ngIf="edit && model.dating?.length > 200"
+                                  [ngClass]="{'strong': model.dating?.length >= 255}"
                         >
                             {{ model.dating.length }} / 255
                         </mat-hint>
@@ -215,8 +215,8 @@
                         <mat-label>Matériel</mat-label>
                         <input [(ngModel)]="model.material" [readonly]="!edit" matInput maxlength="255">
                         <mat-hint align="end"
-                                  *ngIf="edit && model.material.length > 200"
-                                  [ngClass]="{'strong': model.material.length >= 255}"
+                                  *ngIf="edit && model.material?.length > 200"
+                                  [ngClass]="{'strong': model.material?.length >= 255}"
                         >
                             {{ model.material.length }} / 255
                         </mat-hint>
@@ -288,8 +288,8 @@
                         <mat-label>Lieu de production</mat-label>
                         <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput maxlength="60">
                         <mat-hint align="end"
-                                  *ngIf="edit && model.productionPlace.length > 47"
-                                  [ngClass]="{'strong': model.productionPlace.length >= 60}"
+                                  *ngIf="edit && model.productionPlace?.length > 47"
+                                  [ngClass]="{'strong': model.productionPlace?.length >= 60}"
                         >
                             {{ model.productionPlace.length }} / 60
                         </mat-hint>
@@ -326,8 +326,8 @@
                         <input [(ngModel)]="model.url" #url="ngModel" [readonly]="!edit" matInput maxlength="255" type="url" (change)="urlModel = url; updateFormValidity()">
                         <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                         <mat-hint align="end"
-                                  *ngIf="edit && model.url.length > 200"
-                                  [ngClass]="{'strong': model.url.length >= 255}"
+                                  *ngIf="edit && model.url?.length > 200"
+                                  [ngClass]="{'strong': model.url?.length >= 255}"
                         >
                             {{ model.url.length }} / 255
                         </mat-hint>
@@ -370,8 +370,8 @@
                     <mat-label>Technique</mat-label>
                     <input [(ngModel)]="model.technique" [readonly]="!edit" matInput maxlength="255">
                     <mat-hint align="end"
-                              *ngIf="edit && model.technique.length > 200"
-                              [ngClass]="{'strong': model.technique.length >= 255}"
+                              *ngIf="edit && model.technique?.length > 200"
+                              [ngClass]="{'strong': model.technique?.length >= 255}"
                     >
                         {{ model.technique.length }} / 255
                     </mat-hint>
@@ -381,8 +381,8 @@
                     <mat-label>Date</mat-label>
                     <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput maxlength="60">
                     <mat-hint align="end"
-                              *ngIf="edit && model.techniqueDate.length > 47"
-                              [ngClass]="{'strong': model.techniqueDate.length >= 60}"
+                              *ngIf="edit && model.techniqueDate?.length > 47"
+                              [ngClass]="{'strong': model.techniqueDate?.length >= 60}"
                     >
                         {{ model.techniqueDate.length }} / 60
                     </mat-hint>
@@ -392,8 +392,8 @@
                     <mat-label>Auteur technique</mat-label>
                     <input [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255">
                     <mat-hint align="end"
-                              *ngIf="edit && model.techniqueAuthor.length > 200"
-                              [ngClass]="{'strong': model.techniqueAuthor.length >= 255}"
+                              *ngIf="edit && model.techniqueAuthor?.length > 200"
+                              [ngClass]="{'strong': model.techniqueAuthor?.length >= 255}"
                     >
                         {{ model.techniqueAuthor.length }} / 255
                     </mat-hint>
@@ -406,8 +406,8 @@
                     <mat-label>Dimensions</mat-label>
                     <input [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255">
                     <mat-hint align="end"
-                              *ngIf="edit && model.format.length > 200"
-                              [ngClass]="{'strong': model.format.length >= 255}"
+                              *ngIf="edit && model.format?.length > 200"
+                              [ngClass]="{'strong': model.format?.length >= 255}"
                     >
                         {{ model.format.length }} / 255
                     </mat-hint>
@@ -417,8 +417,8 @@
                     <mat-label>Dimensions du document</mat-label>
                     <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191">
                     <mat-hint align="end"
-                              *ngIf="edit && model.documentSize.length > 150"
-                              [ngClass]="{'strong': model.documentSize.length >= 191}"
+                              *ngIf="edit && model.documentSize?.length > 150"
+                              [ngClass]="{'strong': model.documentSize?.length >= 191}"
                     >
                         {{ model.documentSize.length }} / 191
                     </mat-hint>
@@ -468,8 +468,8 @@
                     <mat-label>Page</mat-label>
                     <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10">
                     <mat-hint align="end"
-                              *ngIf="edit && model.page.length > 7"
-                              [ngClass]="{'strong': model.page.length >= 10}"
+                              *ngIf="edit && model.page?.length > 7"
+                              [ngClass]="{'strong': model.page?.length >= 10}"
                     >
                         {{ model.page.length }} / 10
                     </mat-hint>
@@ -480,8 +480,8 @@
                         <mat-label>Figure</mat-label>
                         <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10">
                         <mat-hint align="end"
-                                  *ngIf="edit && model.figure.length > 7"
-                                  [ngClass]="{'strong': model.figure.length >= 10}"
+                                  *ngIf="edit && model.figure?.length > 7"
+                                  [ngClass]="{'strong': model.figure?.length >= 10}"
                         >
                             {{ model.figure.length }} / 10
                         </mat-hint>
@@ -491,8 +491,8 @@
                         <mat-label>Planche</mat-label>
                         <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10">
                         <mat-hint align="end"
-                                  *ngIf="edit && model.table.length > 7"
-                                  [ngClass]="{'strong': model.table.length >= 10}"
+                                  *ngIf="edit && model.table?.length > 7"
+                                  [ngClass]="{'strong': model.table?.length >= 10}"
                         >
                             {{ model.table.length }} / 10
                         </mat-hint>
@@ -506,8 +506,8 @@
                     <mat-label>ISBN / ISSN</mat-label>
                     <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30">
                     <mat-hint align="end"
-                              *ngIf="edit && model.isbn.length > 23"
-                              [ngClass]="{'strong': model.isbn.length >= 30}"
+                              *ngIf="edit && model.isbn?.length > 23"
+                              [ngClass]="{'strong': model.isbn?.length >= 30}"
                     >
                         {{ model.isbn.length }} / 30
                     </mat-hint>
@@ -517,8 +517,8 @@
                     <mat-label>Droits d'auteur</mat-label>
                     <input [(ngModel)]="model.rights" [readonly]="!edit" matInput maxlength="255">
                     <mat-hint align="end"
-                              *ngIf="edit && model.rights.length > 200"
-                              [ngClass]="{'strong': model.rights.length >= 255}"
+                              *ngIf="edit && model.rights?.length > 200"
+                              [ngClass]="{'strong': model.rights?.length >= 255}"
                     >
                         {{ model.rights.length }} / 255
                     </mat-hint>

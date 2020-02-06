@@ -3,8 +3,8 @@
         <mat-label>Rue</mat-label>
         <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput maxlength="255">
         <mat-hint align="end"
-                  *ngIf="model.street.length > 200"
-                  [ngClass]="{'strong': model.street.length >= 255}"
+                  *ngIf="model.street?.length > 200"
+                  [ngClass]="{'strong': model.street?.length >= 255}"
         >
             {{ model.street.length }} / 255
         </mat-hint>
@@ -15,8 +15,8 @@
             <mat-label>NPA</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput maxlength="20">
             <mat-hint align="end"
-                      *ngIf="model.postcode.length > 15"
-                      [ngClass]="{'strong': model.postcode.length >= 20}"
+                      *ngIf="model.postcode?.length > 15"
+                      [ngClass]="{'strong': model.postcode?.length >= 20}"
             >
                 {{ model.postcode.length }} / 20
             </mat-hint>
@@ -25,8 +25,8 @@
             <mat-label>Localité</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput maxlength="191">
             <mat-hint align="end"
-                      *ngIf="model.locality.length > 150"
-                      [ngClass]="{'strong': model.locality.length >= 191}"
+                      *ngIf="model.locality?.length > 150"
+                      [ngClass]="{'strong': model.locality?.length >= 191}"
             >
                 {{ model.locality.length }} / 191
             </mat-hint>

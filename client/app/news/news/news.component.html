@@ -24,8 +24,8 @@
                     <input [(ngModel)]="data.item.url" #url="ngModel" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput maxlength="255" type="url">
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                     <mat-hint align="end"
-                              *ngIf="data.item.url.length > 200"
-                              [ngClass]="{'strong': data.item.url.length >= 255}"
+                              *ngIf="data.item.url?.length > 200"
+                              [ngClass]="{'strong': data.item.url?.length >= 255}"
                     >
                         {{ data.item.url.length }} / 255
                     </mat-hint>
