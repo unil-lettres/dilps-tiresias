@@ -10,6 +10,15 @@
 
             <div class="line-body">
 
+                <ng-container *ngIf="item.site === Site.tiresias">
+
+                    <div *ngIf="item.code">
+                        <div>Référence</div>
+                        <div>{{ item.code }}</div>
+                    </div>
+
+                </ng-container>
+
                 <div>
                     <div>Titre</div>
                     <div [innerHTML]="item.name.slice(0, 250)"></div>

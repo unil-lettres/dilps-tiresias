@@ -108,7 +108,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.gallery.gallery.unselectAllItems();
     }
 
-    private formatImages(cards) {
+    private formatImages(cards: Cards_cards_items[]) {
 
         const selected = this.selected.map(c => c.id);
 
@@ -135,6 +135,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
                 title = '[ ' + artists + ' ] ' + title;
             } else if (artists && !title) {
                 title = artists;
+            }
+
+            if (card.code) {
+                title = '[ ' + card.code + ' ] ' + title;
             }
 
             const fields: any = {
