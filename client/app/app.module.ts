@@ -132,6 +132,7 @@ import { bugsnagErrorHandlerFactory } from './shared/config/bugsnag';
 import { environment } from '../environments/environment';
 import { UrlValidatorDirective } from './shared/directives/url-validator.directive';
 import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-validator.directive';
+import { StripTagsPipe } from './shared/pipes/strip-tags.pipe';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -186,6 +187,7 @@ const icons: NaturalIconsConfig = {
         DownloadComponent,
         RolePipe,
         TypePipe,
+        StripTagsPipe,
         QuizzComponent,
         NumberSelectorComponent,
         MassEditComponent,

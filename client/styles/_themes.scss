@@ -13,6 +13,7 @@
 @import 'scroll';
 @import 'toolbar';
 @import 'table';
+@import 'hint';
 @import 'upload';
 @import '../app/shared/components/table-button/table-button.theme';
 @import '../app/collections/collections/collections.theme';
@@ -41,6 +42,7 @@
     @include upload($theme);
     @include card($theme);
     @include quizz($theme);
+    @include hint($theme);
 }
 
 // Dilps
