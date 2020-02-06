@@ -5,7 +5,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
     HierarchicDialogResult,
-    Literal,
     NaturalAbstractController,
     NaturalAbstractModelService,
     NaturalHierarchicConfiguration,
@@ -67,7 +66,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * Emits when a selection is done
      */
-    @Output() modelChange = new EventEmitter();
+    @Output() modelChange = new EventEmitter<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
 
     /**
      * Configuration for hierarchic relations
@@ -147,6 +146,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             data: {item: item},
         }).afterClosed().subscribe(res => {
             merge(item, res);
+            this.notifyModel();
         });
     }
 
@@ -239,7 +239,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             });
     }
 
-    public removeTerm(term: Literal): void {
+    public removeTerm(term: ThesaurusModel): void {
         const index = this.items.findIndex(item => item.name === term.name);
         if (index >= 0) {
             this.items.splice(index, 1);

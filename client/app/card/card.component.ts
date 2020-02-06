@@ -27,7 +27,14 @@ import {
 } from '../shared/components/collection-selector/collection-selector.component';
 import { DownloadComponent } from '../shared/components/download/download.component';
 import { quillConfig } from '../shared/config/quill.options';
-import { Card_card, CardVisibility, Site, UserRole } from '../shared/generated-types';
+import {
+    Card_card,
+    Card_card_artists,
+    Card_card_institution,
+    CardVisibility, Institutions_institutions_items,
+    Site, UpdateCard_updateCard_artists, UpdateCard_updateCard_institution,
+    UserRole,
+} from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
 import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
 import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
@@ -151,13 +158,13 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * Cache institution data from server
      * this.model is here considered as CardInput and should receive string, not object
      */
-    public institution;
+    public institution: Card_card_institution | UpdateCard_updateCard_institution | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    public artists;
+    public artists: Card_card_artists[] | UpdateCard_updateCard_artists[] = [];
 
     /**
      * Template exposed variable
