@@ -9,7 +9,6 @@ use Application\Api\Helper;
 use Application\Api\Input\PaginationInputType;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
-use Application\Model\Collection;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use GraphQL\Type\Definition\Type;
 use ReflectionClass;
@@ -356,7 +355,16 @@ abstract class Standard
                 'field' => 'creationDate',
                 'order' => 'DESC',
             ];
-        } elseif ($class->getName() === Collection::class) {
+        }
+
+        if ($class->hasField('sorting')) {
+            $defaultSorting[] = [
+                'field' => 'sorting',
+                'order' => 'ASC',
+            ];
+        }
+
+        if ($class->hasField('name')) {
             $defaultSorting[] = [
                 'field' => 'name',
                 'order' => 'ASC',
