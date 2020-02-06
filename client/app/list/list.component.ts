@@ -357,7 +357,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     changes.documentType = changes.documentType.name ? changes.documentType.name : changes.documentType;
                 }
 
-                observables.push(this.cardService.update(changes));
+                observables.push(this.cardService.updateNow(changes));
             }
 
             forkJoin(observables).subscribe(() => {

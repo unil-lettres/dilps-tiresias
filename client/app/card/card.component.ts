@@ -381,7 +381,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public update() {
-        this.cardService.update(this.model).subscribe((card: any) => {
+        this.cardService.updateNow(this.model).subscribe(card => {
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
