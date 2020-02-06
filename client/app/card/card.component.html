@@ -185,13 +185,12 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Supplément</mat-label>
-                        <input [(ngModel)]="model.addition" [readonly]="!edit" matInput maxlength="255">
-                        <mat-hint align="end"
-                                  *ngIf="edit && model.addition.length > 200"
-                                  [ngClass]="{'strong': model.addition.length >= 255}"
-                        >
-                            {{ model.addition.length }} / 255
-                        </mat-hint>
+                        <textarea [(ngModel)]="model.addition"
+                                  [readonly]="!edit"
+                                  matAutosizeMinRows="1"
+                                  matInput
+                                  matTextareaAutosize
+                        ></textarea>
                     </mat-form-field>
 
                     <mat-form-field *ngIf="(edit || !!model.dating)"
