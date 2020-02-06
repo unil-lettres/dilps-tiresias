@@ -91,6 +91,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
 
     public getDefaultForServer(): CardInput {
         return {
+            code: '',
             site: this.site,
             file: null,
             dating: '',
