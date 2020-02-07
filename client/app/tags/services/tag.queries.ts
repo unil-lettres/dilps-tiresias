@@ -7,6 +7,8 @@ export const tagsQuery = gql`
             items {
                 id
                 name
+                hierarchicName
+                hasChildren
             }
             pageSize
             pageIndex

@@ -133,6 +133,7 @@ import { environment } from '../environments/environment';
 import { UrlValidatorDirective } from './shared/directives/url-validator.directive';
 import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-validator.directive';
 import { StripTagsPipe } from './shared/pipes/strip-tags.pipe';
+import { OnlyLeavesPipe } from './shared/pipes/only-leaves.pipe';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -188,6 +189,7 @@ const icons: NaturalIconsConfig = {
         RolePipe,
         TypePipe,
         StripTagsPipe,
+        OnlyLeavesPipe,
         QuizzComponent,
         NumberSelectorComponent,
         MassEditComponent,

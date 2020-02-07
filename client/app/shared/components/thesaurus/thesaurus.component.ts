@@ -210,7 +210,6 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         const hierarchicConfig: HierarchicDialogConfig = {
             hierarchicConfig: this.hierarchicSelectorConfig,
             hierarchicSelection: selected,
-            // hierarchicFilters: this.hierarchicSelectorFilters,
             multiple: this.multiple,
         };
 

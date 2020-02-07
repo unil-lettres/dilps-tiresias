@@ -419,6 +419,8 @@ class Card extends AbstractModel implements HasSiteInterface
         foreach ($tags as $tag) {
             $this->tags->add($tag);
         }
+
+        $this->addEntireHierarchy();
     }
 
     /**
@@ -455,6 +457,7 @@ class Card extends AbstractModel implements HasSiteInterface
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
         }
+        $this->addEntireHierarchy();
     }
 
     /**
@@ -465,6 +468,7 @@ class Card extends AbstractModel implements HasSiteInterface
     public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
+        $this->addEntireHierarchy();
     }
 
     /**
@@ -906,5 +910,30 @@ class Card extends AbstractModel implements HasSiteInterface
     public function getDocumentSize(): string
     {
         return $this->documentSize;
+    }
+
+    /**
+     * Ensure that the entire hierarchy is added, but also make sure that
+     * a non-leaf tag is added without one of his leaf.
+     */
+    private function addEntireHierarchy(): void
+    {
+        $tags = $this->tags->toArray();
+        $this->tags->clear();
+
+        /** @var Tag $tag */
+        foreach ($tags as $tag) {
+            if ($tag->hasChildren()) {
+                continue;
+            }
+
+            $this->tags->add($tag);
+
+            foreach ($tag->getParentHierarchy() as $parent) {
+                if (!$this->tags->contains($parent)) {
+                    $this->tags->add($parent);
+                }
+            }
+        }
     }
 }

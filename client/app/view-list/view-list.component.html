@@ -50,7 +50,7 @@
                     <div *ngIf="item.tags?.length">
                         <div>Mots clés</div>
                         <div>
-                            <div *ngFor="let tag of item.tags">{{ tag.name }}</div>
+                            <div *ngFor="let tag of item.tags | onlyLeaves">{{ tag.hierarchicName }}</div>
                         </div>
                     </div>
 

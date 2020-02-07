@@ -31,14 +31,14 @@ import {
     Card_card,
     Card_card_artists,
     Card_card_institution,
-    CardVisibility, Institutions_institutions_items,
+    CardVisibility,
     Site, UpdateCard_updateCard_artists, UpdateCard_updateCard_institution,
     UserRole,
 } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
 import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
 import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
-import { tagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
+import { onlyLeafTagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
 import { UploadService } from '../shared/services/upload.service';
 import { getBase64 } from '../shared/services/utility';
 import { StatisticService } from '../statistics/services/statistic.service';
@@ -47,6 +47,7 @@ import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
 import { NgModel } from '@angular/forms';
+import { onlyLeaves } from '../shared/pipes/only-leaves.pipe';
 
 @Component({
     selector: 'app-card',
@@ -213,7 +214,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Template exposed variable
      */
-    public tagHierarchicConfig = tagHierarchicConfig;
+    public tagHierarchicConfig = onlyLeafTagHierarchicConfig;
 
     /**
      * Template exposed variable
@@ -372,6 +373,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             if (this.model.collections) {
                 this.sources = this.model.collections.filter(c => c.isSource);
             }
+
+            this.model.tags = onlyLeaves(this.model.tags);
         }
     }
 

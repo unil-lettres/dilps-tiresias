@@ -65,6 +65,16 @@ trait HasParent
         return $this->children;
     }
 
+    /**
+     * Has children
+     *
+     * @return bool
+     */
+    public function hasChildren(): bool
+    {
+        return $this->getChildren()->count() > 0;
+    }
+
     private function assertNotCyclic(HasParentInterface $parentCandidate): void
     {
         $allChildren = $this->getAllChildren();

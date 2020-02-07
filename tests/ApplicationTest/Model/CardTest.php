@@ -9,8 +9,10 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
+use Application\Model\Tag;
 use Application\Model\User;
 use Application\Utility;
+use GraphQL\Doctrine\Definition\EntityID;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -294,5 +296,65 @@ class CardTest extends TestCase
         $institution3 = $card->getInstitution();
         self::assertNotSame($institution1, $institution3, 'can change for something else');
         self::assertSame('bar', $institution3->getName(), 'new name');
+    }
+
+    public function testSetTags(): void
+    {
+        $card = new Card();
+
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4000'),
+        ]);
+        self::assertEquals([], $this->toIds($card->getTags()), 'still empty because not leaf');
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'leaf added and parent automatically added');
+
+        $card->getTags()->clear();
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4000'),
+            new EntityID(_em(), Tag::class, '4001'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'also adding parent change nothing to result');
+
+        $card->getTags()->clear();
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+            new EntityID(_em(), Tag::class, '4002'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'adding another parent change nothing to result');
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+            new EntityID(_em(), Tag::class, '4003'),
+        ]);
+        self::assertEquals([4001, 4000, 4003, 4002], $this->toIds($card->getTags()), 'adding two leaves select everything');
+
+        $card->removeTag(_em()->getReference(Tag::class, 4000));
+        self::assertEquals([4001, 4000, 4003, 4002], $this->toIds($card->getTags()), 'removing parent has no effect');
+
+        $card->removeTag(_em()->getReference(Tag::class, 4001));
+        self::assertEquals([4003, 4002], $this->toIds($card->getTags()), 'removing child remove hierarchy');
+
+        $card->addTag(_em()->getReference(Tag::class, 4001));
+        self::assertEquals([4003, 4002, 4001, 4000], $this->toIds($card->getTags()), 'adding again child re-add hierarchy');
+    }
+
+    private function toIds(iterable $models): array
+    {
+        $ids = [];
+        foreach ($models as $model) {
+            $ids[] = $model->getId();
+        }
+
+        return $ids;
     }
 }

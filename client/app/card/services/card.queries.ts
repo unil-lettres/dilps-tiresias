@@ -80,6 +80,8 @@ export const cardDetailsFragment = gql`
         tags {
             id
             name
+            hierarchicName
+            hasChildren
         }
         domain {
             id
