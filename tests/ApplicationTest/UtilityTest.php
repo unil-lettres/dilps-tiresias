@@ -18,4 +18,23 @@ class UtilityTest extends \PHPUnit\Framework\TestCase
     {
         self::assertSame('User', Utility::getShortClassName(new User()));
     }
+
+    /**
+     * @dataProvider providerFormatYearRange
+     */
+    public function testFormatYearRange(array $args, string $expected): void
+    {
+        $actual = Utility::formatYearRange(...$args);
+        self::assertSame($actual, $expected);
+    }
+
+    public function providerFormatYearRange(): array
+    {
+        return [
+            [[123, 456], ' (entre 123 et 456)'],
+            [[null, 456], ' (456)'],
+            [[123, null], ' (123)'],
+            [[null, null], ''],
+        ];
+    }
 }
