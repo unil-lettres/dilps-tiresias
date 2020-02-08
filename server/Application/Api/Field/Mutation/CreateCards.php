@@ -27,6 +27,7 @@ class CreateCards implements FieldInterface
             'resolve' => function (string $site, array $args): array {
                 // Check ACL
                 $object = new Card();
+                $object->setSite($site);
                 Helper::throwIfDenied($object, 'create');
 
                 // Get optional collection
