@@ -110,3 +110,8 @@ natural-search,
     align-items: flex-start;
     padding: 0 3px;
 }
+
+// Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
+agm-map div.gm-style > div:last-child {
+    top: 75px !important;
+}
