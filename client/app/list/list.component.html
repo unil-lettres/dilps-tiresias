@@ -121,6 +121,10 @@
                    [style.height]="'100%'"
     ></app-view-list>
 
-    <app-view-map #view *ngIf="viewMode === ViewMode.map" [cards]="selected" [style.height]="'100%'"
+    <app-view-map #view
+                  *ngIf="viewMode === ViewMode.map"
+                  [cards]="selected"
+                  [style.height]="'100%'"
+                  (searchByLocation)="searchByLocation($event)"
     ></app-view-map>
 </div>

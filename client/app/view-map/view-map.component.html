@@ -7,13 +7,16 @@
          style="width:100%;height:100%;"
 >
     <agm-marker *ngFor="let marker of markers" [iconUrl]="marker.icon" [latitude]="marker.latitude" [longitude]="marker.longitude">
-        <agm-snazzy-info-window [closeWhenOthersOpen]="true" [maxHeight]="300" [maxWidth]="500" padding="0">
+        <agm-snazzy-info-window [closeWhenOthersOpen]="true" [maxHeight]="400" [maxWidth]="500" padding="0">
             <ng-template>
                 <div>
-                    <div class="name">{{ marker.name }}</div>
-                    <a [routerLink]="['/card', marker.id]">
+                    <div class="mat-h3 name">{{ marker.name }}</div>
+                    <a [routerLink]="['/card', marker.id]" fxLayout="column" fxLayoutAlign="center center">
                         <img [attr.src]="'/image/'+ marker.id + '/200'" class="img">
                     </a>
+                    <button mat-button (click)="forwardSearch(marker)">
+                        Rechercher les fiches à proximité
+                    </button>
                 </div>
             </ng-template>
         </agm-snazzy-info-window>

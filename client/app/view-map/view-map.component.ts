@@ -1,24 +1,45 @@
 import { MapsAPILoader } from '@agm/core';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { NaturalAbstractController } from '@ecodev/natural';
-import { Cards, Precision } from '../shared/generated-types';
+import { Cards_cards_items, Precision } from '../shared/generated-types';
 import Icon = google.maps.Icon;
 import LatLngBounds = google.maps.LatLngBounds;
 import {} from 'googlemaps';
+
+export interface Location {
+    longitude: number;
+    latitude: number;
+}
+
+type Marker = {
+    name: string;
+    icon: Icon;
+    id: string;
+} & Location;
 
 @Component({
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
     styleUrls: ['./view-map.component.scss'],
 })
-export class ViewMapComponent extends NaturalAbstractController implements OnInit {
+export class ViewMapComponent extends NaturalAbstractController {
 
-    @Input() cards: Cards;
+    @Input() set cards(cards: Cards_cards_items[]) {
+        this.mapsAPILoader.load().then(() => {
+            this.markers = this.convertIntoMarkers(cards);
+            this.updateBounds(this.markers);
+        });
+    }
 
-    public markers;
+    @Output() readonly searchByLocation = new EventEmitter<Location>();
+
+    public markers: Marker[];
     public bounds: LatLngBounds;
 
-    constructor(private mapsAPILoader: MapsAPILoader) {
+    constructor(
+        private readonly mapsAPILoader: MapsAPILoader,
+        private readonly ngZone: NgZone,
+    ) {
         super();
     }
 
@@ -31,16 +52,7 @@ export class ViewMapComponent extends NaturalAbstractController implements OnIni
         };
     }
 
-    ngOnInit() {
-
-        this.mapsAPILoader.load().then(() => {
-            this.markers = this.convertIntoMarkers(this.cards);
-            this.updateBounds(this.markers);
-        });
-
-    }
-
-    public convertIntoMarkers(cards) {
+    public convertIntoMarkers(cards: Cards_cards_items[]): Marker[] {
         return cards.filter(c => c.latitude && c.longitude).map(c => {
             return {
                 id: c.id,
@@ -52,8 +64,16 @@ export class ViewMapComponent extends NaturalAbstractController implements OnIni
         });
     }
 
-    public updateBounds(markers) {
+    public forwardSearch(marker: Marker): void {
+        this.ngZone.run(() => {
+            this.searchByLocation.emit({
+                longitude: marker.longitude,
+                latitude: marker.latitude,
+            });
+        });
+    }
 
+    public updateBounds(markers): void {
         this.bounds = new google.maps.LatLngBounds();
         markers.forEach(marker => {
             this.bounds.extend({lat: marker.latitude, lng: marker.longitude});

@@ -52,6 +52,7 @@ use Psr\Http\Message\UploadedFileInterface;
  *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\GreaterOrEqualOperatorType", type="Login"),
  *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOperatorType", type="Login"),
  *     @API\Filter(field="yearRange", operator="Application\Api\Input\Operator\CardYearRange\LessOrEqualOperatorType", type="Login"),
+ *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\LocationOperatorType", type="string"),
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
  */

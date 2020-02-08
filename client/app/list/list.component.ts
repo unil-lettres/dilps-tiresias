@@ -1,6 +1,12 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractList, NaturalQueryVariablesManager, NaturalSearchSelections, PaginationInput, Sorting } from '@ecodev/natural';
+import {
+    NaturalAbstractList,
+    NaturalQueryVariablesManager,
+    NaturalSearchSelections,
+    PaginationInput,
+    Sorting,
+} from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
@@ -31,7 +37,7 @@ import { StatisticService } from '../statistics/services/statistic.service';
 import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
-import { ViewMapComponent } from '../view-map/view-map.component';
+import { ViewMapComponent, Location } from '../view-map/view-map.component';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -420,5 +426,25 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public search(naturalSearchSelections: NaturalSearchSelections): void {
         super.search(naturalSearchSelections);
         this.statisticService.recordSearch();
+    }
+
+    public searchByLocation($event: Location): void {
+        this.viewMode = ViewMode.grid;
+        this.naturalSearchSelections = [
+            [
+                {
+                    field: 'custom',
+                    name: 'location',
+                    condition: {
+                        distance: {
+                            longitude: $event.longitude,
+                            latitude: $event.latitude,
+                            distance: 200, // default to 200 meters
+                        },
+                    },
+                },
+            ],
+        ];
+        this.search(this.naturalSearchSelections);
     }
 }

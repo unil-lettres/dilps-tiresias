@@ -134,6 +134,7 @@ import { UrlValidatorDirective } from './shared/directives/url-validator.directi
 import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-validator.directive';
 import { StripTagsPipe } from './shared/pipes/strip-tags.pipe';
 import { OnlyLeavesPipe } from './shared/pipes/only-leaves.pipe';
+import { TypeLocationComponent } from './type-location/type-location.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -215,6 +216,7 @@ const icons: NaturalIconsConfig = {
         CardSelectorComponent,
         AntiqueNamesComponent,
         AntiqueNameComponent,
+        TypeLocationComponent,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -235,6 +237,7 @@ const icons: NaturalIconsConfig = {
         MaterialComponent,
         CardSelectorComponent,
         AntiqueNameComponent,
+        TypeLocationComponent,
     ],
     imports: [
         BrowserModule,
