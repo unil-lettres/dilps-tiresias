@@ -31,21 +31,21 @@ REPLACE INTO `institution` (`id`, `country_id`, `name`, `site`) VALUES
   (5000, 1, 'Test institution 5000', 'dilps'),
   (5001, 1, 'Test institution 5001', 'tiresias');
 
-REPLACE INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site, `name`, `filename`, `width`, `height`, `file_size`, `dating`, `latitude`, `longitude`, `precision`) VALUES
-  (6000, 1003, 1003, NULL, 'private', 'dilps', 'Test card 6000', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '2000', '46.9937969', '6.9301', NULL),
-  (6001, 1003, 1003, NULL, 'private', 'dilps', 'Test suggestion card 6001', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '46.5210895', '6.5779666', NULL),
-  (6002, 1003, 1003, 6000, 'private', 'dilps', 'Test suggestion card 6002', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '46.5214586', '6.5814212', NULL),
-  (6003, 1003, 1003, NULL, 'private', 'dilps', 'Test card 6003', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '46.5219361', '6.5832964', NULL),
-  (6004, 1003, 1003, 6000, 'member', 'dilps', 'Test card 6004', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '41.1621376', '-8.6570586,13', NULL),
-  (6005, NULL, NULL, 6000, 'public', 'dilps', 'Test related card 6005', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '-33.8567844', '151.2131027', NULL),
-  (6006, 1002, 1002, NULL, 'member', 'dilps', 'Test junior card 6006', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', '40.7828647', '-73.9675491', NULL),
-  (6007, 1007, 1007, NULL, 'private', 'tiresias', 'Test card 6007', '5da49355cbcff.jpeg', 1950, 1300, 90188, '2000', '41.8906832', '12.4917557', 'site'),
-  (6008, 1007, 1007, NULL, 'private', 'tiresias', 'Test suggestion card 6008', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906842', '12.4917557', 'site'),
-  (6009, 1007, 1007, 6007, 'private', 'tiresias', 'Test suggestion card 6009', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906832', '12.4917567', 'site'),
-  (6010, 1007, 1007, NULL, 'private', 'tiresias', 'Test card 6010', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906822', '12.4917557', 'site'),
-  (6011, 1007, 1007, 6007, 'member', 'tiresias', 'Test card 6011', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906832', '12.4917547', 'site'),
-  (6012, NULL, NULL, 6007, 'public', 'tiresias', 'Test related card 6012', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8916832', '12.4917557', 'site'),
-  (6013, 1006, 1006, NULL, 'member', 'tiresias', 'Test junior card 6013', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', '41.8906832', '12.4927557', 'site');
+REPLACE INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site, `name`, `filename`, `width`, `height`, `file_size`, `dating`, `location`, `precision`) VALUES
+  (6000, 1003, 1003, NULL, 'private', 'dilps', 'Test card 6000', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '2000', ST_PointFromText('POINT(6.9301 46.9937969)'), NULL),
+  (6001, 1003, 1003, NULL, 'private', 'dilps', 'Test suggestion card 6001', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(6.5779666 46.5210895)'), NULL),
+  (6002, 1003, 1003, 6000, 'private', 'dilps', 'Test suggestion card 6002', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(6.5814212 46.5214586)'), NULL),
+  (6003, 1003, 1003, NULL, 'private', 'dilps', 'Test card 6003', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(6.5832964 46.5219361)'), NULL),
+  (6004, 1003, 1003, 6000, 'member', 'dilps', 'Test card 6004', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(-8.6570586 41.1621376)'), NULL),
+  (6005, NULL, NULL, 6000, 'public', 'dilps', 'Test related card 6005', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(151.2131027 -33.8567844)'), NULL),
+  (6006, 1002, 1002, NULL, 'member', 'dilps', 'Test junior card 6006', 'dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 960, 425, 90188, '', ST_PointFromText('POINT(-73.9675491 40.7828647)'), NULL),
+  (6007, 1007, 1007, NULL, 'private', 'tiresias', 'Test card 6007', '5da49355cbcff.jpeg', 1950, 1300, 90188, '2000', ST_PointFromText('POINT(12.4917557 41.8906832)'), 'site'),
+  (6008, 1007, 1007, NULL, 'private', 'tiresias', 'Test suggestion card 6008', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4917557 41.8906842)'), 'site'),
+  (6009, 1007, 1007, 6007, 'private', 'tiresias', 'Test suggestion card 6009', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4917567 41.8906832)'), 'site'),
+  (6010, 1007, 1007, NULL, 'private', 'tiresias', 'Test card 6010', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4917557 41.8906822)'), 'site'),
+  (6011, 1007, 1007, 6007, 'member', 'tiresias', 'Test card 6011', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4917547 41.8906832)'), 'site'),
+  (6012, NULL, NULL, 6007, 'public', 'tiresias', 'Test related card 6012', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4917557 41.8916832)'), 'site'),
+  (6013, 1006, 1006, NULL, 'member', 'tiresias', 'Test junior card 6013', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4927557 41.8906832)'), 'site');
 
 REPLACE INTO `card_artist` (`card_id`, `artist_id`) VALUES
   (6000, 3000);

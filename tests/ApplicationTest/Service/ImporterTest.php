@@ -44,7 +44,7 @@ class ImporterTest extends TestCase
         $excel = $this->createExcel([
             TemplateAction::HEADERS,
             ['5da49355cbcff.jpeg', 'Super name', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'Test domain 9001', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', '1997', '1.1231', '1231.132', 'building'],
+            ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'Test domain 9001', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', '1997', '1.1231', '123.132', 'building'],
         ]);
 
         $images = $this->createImages([
@@ -75,7 +75,7 @@ class ImporterTest extends TestCase
         self::assertSame('John Rambo', $c->getTechniqueAuthor());
         self::assertSame('1997', $c->getTechniqueDate());
         self::assertSame(1.1231, $c->getLatitude());
-        self::assertSame(1231.132, $c->getLongitude());
+        self::assertSame(123.132, $c->getLongitude());
         self::assertSame('building', $c->getPrecision());
     }
 

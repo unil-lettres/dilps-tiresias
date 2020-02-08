@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Application\Model\Country;
+use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -14,14 +15,19 @@ use GraphQL\Doctrine\Annotation as API;
 trait HasAddress
 {
     /**
-     * @var float
-     * @ORM\Column(type="float", nullable=true)
+     * @var null|Point
+     * @ORM\Column(type="point", nullable=true)
+     * @API\Exclude
+     */
+    private $location;
+
+    /**
+     * @var null|float
      */
     private $latitude;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", nullable=true)
+     * @var null|float
      */
     private $longitude;
 
@@ -69,7 +75,7 @@ trait HasAddress
      */
     public function getLatitude(): ?float
     {
-        return $this->latitude;
+        return $this->location ? $this->location->getLatitude() : null;
     }
 
     /**
@@ -80,6 +86,16 @@ trait HasAddress
     public function setLatitude(?float $latitude): void
     {
         $this->latitude = $latitude;
+        $this->toLocation();
+    }
+
+    private function toLocation(): void
+    {
+        if ($this->longitude && $this->latitude) {
+            $this->location = new Point($this->longitude, $this->latitude, 4326);
+        } else {
+            $this->location = null;
+        }
     }
 
     /**
@@ -89,7 +105,7 @@ trait HasAddress
      */
     public function getLongitude(): ?float
     {
-        return $this->longitude;
+        return $this->location ? $this->location->getLongitude() : null;
     }
 
     /**
@@ -100,6 +116,7 @@ trait HasAddress
     public function setLongitude(?float $longitude): void
     {
         $this->longitude = $longitude;
+        $this->toLocation();
     }
 
     /**

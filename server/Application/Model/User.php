@@ -101,6 +101,7 @@ class User extends AbstractModel implements HasSiteInterface
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     * @API\Exclude
      */
     private $password = '';
 

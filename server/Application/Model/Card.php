@@ -34,8 +34,6 @@ use Psr\Http\Message\UploadedFileInterface;
  *     @ORM\Index(name="card_name_idx", columns={"name"}),
  *     @ORM\Index(name="card_locality_idx", columns={"locality"}),
  *     @ORM\Index(name="card_area_idx", columns={"area"}),
- *     @ORM\Index(name="card_latitude_idx", columns={"latitude"}),
- *     @ORM\Index(name="card_longitude_idx", columns={"longitude"}),
  * },
  * uniqueConstraints={
  *     @ORM\UniqueConstraint(name="unique_code", columns={"code", "site"})

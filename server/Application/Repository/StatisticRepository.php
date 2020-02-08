@@ -130,8 +130,8 @@ $userClause
         $userClause = $this->getUserClause($user, $isCreation);
 
         $query = "SELECT
-SUM(CASE WHEN longitude IS NOT NULL THEN 1 ELSE 0 END) AS 'Géolocalisées',
-SUM(CASE WHEN longitude IS NULL THEN 1 ELSE 0 END) AS 'Sans géolocalisation'
+SUM(CASE WHEN location IS NOT NULL THEN 1 ELSE 0 END) AS 'Géolocalisées',
+SUM(CASE WHEN location IS NULL THEN 1 ELSE 0 END) AS 'Sans géolocalisation'
 FROM card
 WHERE 
 site = :site

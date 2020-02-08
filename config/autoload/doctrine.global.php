@@ -21,6 +21,10 @@ return [
                         'collate' => 'utf8mb4_unicode_ci',
                     ],
                 ],
+
+                'doctrine_mapping_types' => [
+                    'point' => 'point',
+                ],
             ],
         ],
         'driver' => [
@@ -41,6 +45,8 @@ return [
                 'numeric_functions' => [
                     'rand' => \DoctrineExtensions\Query\Mysql\Rand::class,
                     'native_in' => \Application\ORM\Query\NativeIn::class,
+                    'geomfromtext' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText::class,
+                    'st_distance' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STDistance::class,
                 ],
             ],
         ],
@@ -52,6 +58,7 @@ return [
             'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
             'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
             'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
+            'point' => CrEOF\Spatial\DBAL\Types\Geography\PointType::class,
         ],
         // migrations configuration
         'migrations_configuration' => [
