@@ -1,19 +1,22 @@
 <mat-menu #thesaurusMenu="matMenu" [overlapTrigger]="false">
-    <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
-    <button *ngIf="site === Site.dilps" mat-menu-item routerLink="/artist" routerLinkActive="active">Artistes</button>
+    <ng-container *ngIf="site === Site.dilps">
+        <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
+        <button mat-menu-item routerLink="/artist" routerLinkActive="active">Artistes</button>
+    </ng-container>
     <ng-container *ngIf="site === Site.tiresias">
-        <button mat-menu-item routerLink="/period" routerLinkActive="active">Périodes</button>
-        <button mat-menu-item routerLink="/tag" routerLinkActive="active">Mots clés</button>
         <button mat-menu-item routerLink="/domain" routerLinkActive="active">Domaines</button>
+        <button mat-menu-item routerLink="/period" routerLinkActive="active">Périodes</button>
         <button mat-menu-item routerLink="/material" routerLinkActive="active">Matériaux</button>
-        <button mat-menu-item routerLink="/antique-name" routerLinkActive="active">Nom antique</button>
+        <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
+        <button mat-menu-item routerLink="/antique-name" routerLinkActive="active">Noms antiques</button>
         <button mat-menu-item routerLink="/document-type" routerLinkActive="active">Type de documents</button>
+        <button mat-menu-item routerLink="/tag" routerLinkActive="active">Mots-clés</button>
     </ng-container>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
     <button mat-menu-item routerLink="/user" routerLinkActive="active">Utilisateurs</button>
-    <button mat-menu-item routerLink="/news" routerLinkActive="active">News</button>
+    <button mat-menu-item routerLink="/news" routerLinkActive="active">Actualités</button>
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
@@ -87,21 +90,23 @@
                             </a>
 
                             <!-- Export template -->
-                            <a href="/template"
-                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
-                               mat-list-item
-                               matTooltip="Télécharger le modèle pour import Excel"
-                               matTooltipPosition="after"
-                            >
-                                <natural-icon mat-list-icon name="file_download"></natural-icon>
-                            </a>
+                            <ng-container *ngIf="site === Site.tiresias">
+                                <a href="/template"
+                                   *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                                   mat-list-item
+                                   matTooltip="Télécharger le modèle pour import Excel"
+                                   matTooltipPosition="after"
+                                >
+                                    <natural-icon mat-list-icon name="file_download"></natural-icon>
+                                </a>
+                            </ng-container>
                         </mat-nav-list>
 
-                        <!-- Thesaurus -->
+                        <!-- Thésaurus -->
                         <ng-container *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
                             <mat-divider></mat-divider>
                             <mat-nav-list>
-                                <a mat-list-item matTooltip="Thesaurus" matTooltipPosition="after" [matMenuTriggerFor]="thesaurusMenu">
+                                <a mat-list-item matTooltip="Thésaurus" matTooltipPosition="after" [matMenuTriggerFor]="thesaurusMenu">
                                     <natural-icon mat-list-icon name="book"></natural-icon>
                                 </a>
                             </mat-nav-list>
@@ -111,7 +116,7 @@
                         <ng-container *ngIf="user.role === 'administrator'">
                             <mat-divider></mat-divider>
                             <mat-nav-list>
-                                <a mat-list-item matTooltip="Administration" matTooltipPosition="after" [matMenuTriggerFor]="adminMenu">
+                                <a mat-list-item matTooltip="Gestion" matTooltipPosition="after" [matMenuTriggerFor]="adminMenu">
                                     <natural-icon mat-list-icon name="build"></natural-icon>
                                 </a>
                             </mat-nav-list>
