@@ -81,7 +81,7 @@
                 <div *ngIf="item.materials?.length || item.material">
                     <div>Matériel (Matériaux)</div>
                     <div>
-                        <div *ngFor="let material of item.materials">{{ material.hierarchicName }}</div>
+                        <div *ngFor="let material of item.materials | onlyLeaves">{{ material.hierarchicName }}</div>
                         <div>{{ item.material }}</div>
                     </div>
                 </div>

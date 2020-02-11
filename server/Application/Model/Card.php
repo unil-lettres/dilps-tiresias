@@ -12,6 +12,7 @@ use Application\Traits\HasCode;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
+use Application\Traits\HasParentInterface;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Application\Traits\HasValidation;
@@ -361,6 +362,8 @@ class Card extends AbstractModel implements HasSiteInterface
         foreach ($materials as $material) {
             $this->materials->add($material);
         }
+
+        $this->addEntireHierarchy($this->materials);
     }
 
     /**
@@ -419,7 +422,7 @@ class Card extends AbstractModel implements HasSiteInterface
             $this->tags->add($tag);
         }
 
-        $this->addEntireHierarchy();
+        $this->addEntireHierarchy($this->tags);
     }
 
     /**
@@ -456,7 +459,7 @@ class Card extends AbstractModel implements HasSiteInterface
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
         }
-        $this->addEntireHierarchy();
+        $this->addEntireHierarchy($this->tags);
     }
 
     /**
@@ -467,7 +470,7 @@ class Card extends AbstractModel implements HasSiteInterface
     public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
-        $this->addEntireHierarchy();
+        $this->addEntireHierarchy($this->tags);
     }
 
     /**
@@ -590,6 +593,8 @@ class Card extends AbstractModel implements HasSiteInterface
         if (!$this->materials->contains($material)) {
             $this->materials[] = $material;
         }
+
+        $this->addEntireHierarchy($this->materials);
     }
 
     /**
@@ -600,6 +605,7 @@ class Card extends AbstractModel implements HasSiteInterface
     public function removeMaterial(Material $material): void
     {
         $this->materials->removeElement($material);
+        $this->addEntireHierarchy($this->materials);
     }
 
     /**
@@ -914,23 +920,25 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Ensure that the entire hierarchy is added, but also make sure that
      * a non-leaf tag is added without one of his leaf.
+     *
+     * @param DoctrineCollection $collection
      */
-    private function addEntireHierarchy(): void
+    private function addEntireHierarchy(DoctrineCollection $collection): void
     {
-        $tags = $this->tags->toArray();
-        $this->tags->clear();
+        $objects = $collection->toArray();
+        $collection->clear();
 
-        /** @var Tag $tag */
-        foreach ($tags as $tag) {
-            if ($tag->hasChildren()) {
+        /** @var HasParentInterface $object */
+        foreach ($objects as $object) {
+            if ($object->hasChildren()) {
                 continue;
             }
 
-            $this->tags->add($tag);
+            $collection->add($object);
 
-            foreach ($tag->getParentHierarchy() as $parent) {
-                if (!$this->tags->contains($parent)) {
-                    $this->tags->add($parent);
+            foreach ($object->getParentHierarchy() as $parent) {
+                if (!$collection->contains($parent)) {
+                    $collection->add($parent);
                 }
             }
         }

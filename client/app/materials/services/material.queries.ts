@@ -8,6 +8,7 @@ export const materialsQuery = gql`
                 id
                 name
                 hierarchicName
+                hasChildren
             }
             pageSize
             pageIndex

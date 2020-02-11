@@ -67,6 +67,7 @@ export const cardDetailsFragment = gql`
             id
             name
             hierarchicName
+            hasChildren
         }
         periods {
             id

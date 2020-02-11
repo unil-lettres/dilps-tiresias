@@ -36,7 +36,7 @@ import {
     UserRole,
 } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
-import { materialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
+import { onlyLeafMaterialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
 import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
 import { onlyLeafTagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
 import { UploadService } from '../shared/services/upload.service';
@@ -224,7 +224,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Template exposed variable
      */
-    public materialHierarchicConfig = materialHierarchicConfig;
+    public materialHierarchicConfig = onlyLeafMaterialHierarchicConfig;
 
     /**
      * Template exposed variable
@@ -375,6 +375,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             this.model.tags = onlyLeaves(this.model.tags);
+            this.model.materials = onlyLeaves(this.model.materials);
         }
     }
 
