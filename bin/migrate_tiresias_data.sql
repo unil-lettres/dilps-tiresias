@@ -148,7 +148,7 @@ FROM fonds;
 INSERT IGNORE INTO institution (id, name, locality, site)
 SELECT musees.id + @institution_offset,
     -- Make institution name as unique as possible, according to https://support.ecodev.ch/issues/5779
-    TRIM(CONCAT(musees.musee, IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), ''))),
+    TRIM(CONCAT(REPLACE(REPLACE(musees.musee, '<i>', ''), '</i>', ''), , IF(city.city IS NOT NULL AND city.city != '', CONCAT(' - ', city.city), ''))),
     city.city,
     'tiresias'
 FROM musees
