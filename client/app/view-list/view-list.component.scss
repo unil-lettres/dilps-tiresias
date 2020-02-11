@@ -28,31 +28,32 @@
         }
 
         .line-body {
-            display: table;
-            flex-direction: column;
-            align-items: flex-start;
             flex: 1;
 
-            & > *:not(:last-child) {
-                margin-bottom: 2 * $gap;
-            }
+            .line-body-table {
+                display: table;
+                width: 100%;
 
-
-            & > div {
-                display: table-row;
+                & > *:not(:last-child) {
+                    margin-bottom: 2 * $gap;
+                }
 
                 & > div {
-                    display: table-cell;
-                    padding: 5px;
+                    display: table-row;
 
-                    &:first-child {
-                        width: 25%;
-                        font-weight: bold;
-                    }
+                    & > div {
+                        display: table-cell;
+                        padding: 5px;
 
-                    &:last-child {
-                        width: 75%;
-                        padding-bottom: 1.5 * $gap;
+                        &:first-child {
+                            width: 25%;
+                            font-weight: bold;
+                        }
+
+                        &:last-child {
+                            width: 75%;
+                            padding-bottom: 1.5 * $gap;
+                        }
                     }
                 }
             }
