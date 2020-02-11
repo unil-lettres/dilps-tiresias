@@ -8,6 +8,7 @@ export const collectionsQuery = gql`
             items {
                 id
                 name
+                hierarchicName
                 hasUsers
                 isSource
                 copyrights
@@ -58,6 +59,7 @@ export const createCollection = gql`
         createCollection (input: $input) {
             id
             name
+            hierarchicName
             isSource
             copyrights
             usageRights

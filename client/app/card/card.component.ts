@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { findKey, merge } from 'lodash';
+import { findKey, merge, sortBy } from 'lodash';
 import { QuillModules } from 'ngx-quill';
 import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
 import { AntiqueNameService } from '../antique-names/services/antique-name.service';
@@ -29,7 +29,7 @@ import { DownloadComponent } from '../shared/components/download/download.compon
 import { quillConfig } from '../shared/config/quill.options';
 import {
     Card_card,
-    Card_card_artists,
+    Card_card_artists, Card_card_collections,
     Card_card_institution,
     CardVisibility,
     Site, UpdateCard_updateCard_artists, UpdateCard_updateCard_institution,
@@ -243,9 +243,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     private uploadSub;
 
     /**
-     * List of linked collections that are sources
+     * Sorted list collections by their hierarchicNames
      */
-    private sources;
+    private sortedCollections: Card_card_collections[] = [];
 
     public formIsValid = true;
     public codeModel: NgModel | null;
@@ -372,7 +372,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             }
 
             if (this.model.collections) {
-                this.sources = this.model.collections.filter(c => c.isSource);
+                this.sortedCollections = sortBy(this.model.collections, 'hierarchicName');
             }
 
             this.model.tags = onlyLeaves(this.model.tags);

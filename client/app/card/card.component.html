@@ -122,8 +122,8 @@
                     ></mat-slider>
                 </div>
 
-                <div *ngIf="sources" class="padding mat-body-2">
-                    <div *ngFor="let source of sources"> {{ source.name }} </div>
+                <div class="padding mat-body-2">
+                    <div *ngFor="let collection of sortedCollections"> {{ collection.hierarchicName }} </div>
                 </div>
 
                 <mat-form-field *ngIf="(edit || !!model.code) && model.site === Site.tiresias"
