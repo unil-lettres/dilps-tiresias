@@ -48,18 +48,6 @@ export class NaturalSearchFacetsService {
 
     private commonFacets: NaturalSearchFacets = [
         {
-            display: 'Dilps uniquement',
-            field: 'site',
-            name: 'onlyDilps',
-            condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
-        } as FlagFacet,
-        {
-            display: 'Tiresias uniquement',
-            field: 'site',
-            name: 'onlyTiresias',
-            condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
-        } as FlagFacet,
-        {
             display: 'Titre',
             field: 'nameOrExpandedName',
             component: TypeTextComponent,
@@ -101,6 +89,13 @@ export class NaturalSearchFacetsService {
 
     private dilpsFacets: NaturalSearchFacets = [
         {
+            display: 'Inclure Tiresias',
+            field: 'site',
+            name: 'includeTiresias',
+            condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
+            inversed: true,
+        } as FlagFacet,
+        {
             display: 'Datation',
             field: 'dating',
             component: TypeNumberComponent,
@@ -126,6 +121,13 @@ export class NaturalSearchFacetsService {
     ];
 
     private tiresiasFacets: NaturalSearchFacets = [
+        {
+            display: 'Inclure Dilps',
+            field: 'site',
+            name: 'includeDilps',
+            condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
+            inversed: true,
+        } as FlagFacet,
         {
             display: 'Référence',
             field: 'code',
