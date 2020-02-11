@@ -201,7 +201,13 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Datation</mat-label>
-                        <input [(ngModel)]="model.dating" [readonly]="!edit" matInput maxlength="255">
+                        <textarea [(ngModel)]="model.dating"
+                                  [readonly]="!edit"
+                                  matInput
+                                  maxlength="255"
+                                  matAutosizeMinRows="1"
+                                  matTextareaAutosize
+                        ></textarea>
                         <mat-hint align="end" *ngIf="edit && model.dating?.length > 200" [ngClass]="{'strong': model.dating?.length >= 255}"
                         >
                             {{ model.dating.length }} / 255
@@ -213,7 +219,13 @@
                                     matTooltipPosition="after"
                     >
                         <mat-label>Matériel</mat-label>
-                        <input [(ngModel)]="model.material" [readonly]="!edit" matInput maxlength="255">
+                        <textarea [(ngModel)]="model.material"
+                                  [readonly]="!edit"
+                                  matInput
+                                  maxlength="255"
+                                  matAutosizeMinRows="1"
+                                  matTextareaAutosize
+                        ></textarea>
                         <mat-hint align="end"
                                   *ngIf="edit && model.material?.length > 200"
                                   [ngClass]="{'strong': model.material?.length >= 255}"
@@ -319,14 +331,16 @@
 
                     <mat-form-field *ngIf="edit">
                         <mat-label>URL</mat-label>
-                        <input [(ngModel)]="model.url"
-                               #url="ngModel"
-                               [readonly]="!edit"
-                               matInput
-                               maxlength="255"
-                               type="url"
-                               (change)="urlModel = url; updateFormValidity()"
-                        >
+                        <textarea [(ngModel)]="model.url"
+                                  #url="ngModel"
+                                  [readonly]="!edit"
+                                  matInput
+                                  maxlength="255"
+                                  type="url"
+                                  (change)="urlModel = url; updateFormValidity()"
+                                  matAutosizeMinRows="1"
+                                  matTextareaAutosize
+                        ></textarea>
                         <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                         <mat-hint align="end" *ngIf="edit && model.url?.length > 200" [ngClass]="{'strong': model.url?.length >= 255}"
                         >
@@ -369,7 +383,7 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
-                    <input [(ngModel)]="model.technique" [readonly]="!edit" matInput maxlength="255">
+                    <textarea [(ngModel)]="model.technique" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.technique?.length > 200"
                               [ngClass]="{'strong': model.technique?.length >= 255}"
@@ -391,7 +405,7 @@
 
                 <mat-form-field *ngIf="edit || !!model.techniqueAuthor">
                     <mat-label>Auteur technique</mat-label>
-                    <input [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255">
+                    <textarea [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.techniqueAuthor?.length > 200"
                               [ngClass]="{'strong': model.techniqueAuthor?.length >= 255}"
@@ -405,7 +419,7 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
-                    <input [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255">
+                    <textarea [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
                     <mat-hint align="end" *ngIf="edit && model.format?.length > 200" [ngClass]="{'strong': model.format?.length >= 255}"
                     >
                         {{ model.format.length }} / 255
@@ -414,7 +428,7 @@
 
                 <mat-form-field *ngIf="(edit || !!model.documentSize) && model.site === Site.tiresias" matTooltipPosition="after">
                     <mat-label>Dimensions du document</mat-label>
-                    <input [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191">
+                    <textarea [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191" matAutosizeMinRows="1" matTextareaAutosize></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.documentSize?.length > 150"
                               [ngClass]="{'strong': model.documentSize?.length >= 191}"
@@ -506,9 +520,8 @@
 
                 <mat-form-field *ngIf="(edit || !!model.rights) && model.site === Site.dilps">
                     <mat-label>Droits d'auteur</mat-label>
-                    <input [(ngModel)]="model.rights" [readonly]="!edit" matInput maxlength="255">
-                    <mat-hint align="end" *ngIf="edit && model.rights?.length > 200" [ngClass]="{'strong': model.rights?.length >= 255}"
-                    >
+                    <textarea [(ngModel)]="model.rights" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <mat-hint align="end" *ngIf="edit && model.rights?.length > 200" [ngClass]="{'strong': model.rights?.length >= 255}">
                         {{ model.rights.length }} / 255
                     </mat-hint>
                 </mat-form-field>
