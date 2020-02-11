@@ -10,6 +10,8 @@ export const collectionsQuery = gql`
                 name
                 hasUsers
                 isSource
+                copyrights
+                usageRights
             }
             pageSize
             pageIndex
@@ -57,6 +59,8 @@ export const createCollection = gql`
             id
             name
             isSource
+            copyrights
+            usageRights
             creationDate
             creator {
                 ...userMeta
