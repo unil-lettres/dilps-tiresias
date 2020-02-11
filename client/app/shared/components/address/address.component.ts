@@ -1,5 +1,5 @@
-import { MapsAPILoader, MapTypeStyle } from '@agm/core';
-import { Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AgmMap, MapsAPILoader, MapTypeStyle } from '@agm/core';
+import { Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NaturalQueryVariablesManager } from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
@@ -17,12 +17,24 @@ import { AddressService } from './address.service';
         CountryService,
     ],
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnChanges {
 
     @ViewChild('input', {static: true}) public inputRef: ElementRef;
 
+    /**
+     * If true, layouts vertically some side by side elements
+     */
     @Input() vertical = false;
+
+    /**
+     * Prevents fields edition
+     */
     @Input() readonly = false;
+
+    /**
+     * If true, displays the latitude and longitude fields
+     */
+    @Input() showLngLat = false;
 
     /**
      * Object reference is directly modified
@@ -36,6 +48,8 @@ export class AddressComponent implements OnInit {
     public zoom = 2;
 
     public icon;
+
+    @ViewChild(AgmMap, {static: false}) public map: AgmMap;
 
     public mapStyles: MapTypeStyle[] = [
         {
@@ -214,8 +228,8 @@ export class AddressComponent implements OnInit {
         this.countryService.getAll(qvm).subscribe(countries => this.countries = countries.items);
 
         if (this.model && this.model.latitude && this.model.longitude) {
-            this.latitude = this.model.latitude;
-            this.longitude = this.model.longitude;
+            this.latitude = +this.model.latitude;
+            this.longitude = +this.model.longitude;
             this.zoom = 12;
         }
 
@@ -230,6 +244,14 @@ export class AddressComponent implements OnInit {
             });
         });
 
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+
+        if (this.model) {
+            this.latitude = +this.model.latitude;
+            this.longitude = +this.model.longitude;
+        }
     }
 
     public updateSearch() {
@@ -262,6 +284,9 @@ export class AddressComponent implements OnInit {
     public onMarkerDrag(ev) {
         this.latitude = ev.coords.lat;
         this.longitude = ev.coords.lng;
+
+        this.model.latitude = this.latitude;
+        this.model.longitude = this.longitude;
 
         const geocoder = new google.maps.Geocoder();
         geocoder.geocode({
@@ -304,6 +329,11 @@ export class AddressComponent implements OnInit {
             this.model.country ? this.model.country.name : this.model.country,
         ];
         return address.filter(v => !!v).join(', ');
+    }
+
+    public recenter() {
+        this.latitude = +this.model.latitude;
+        this.longitude = +this.model.longitude;
     }
 
 }

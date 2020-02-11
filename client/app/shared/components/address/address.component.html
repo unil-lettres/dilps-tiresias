@@ -2,9 +2,7 @@
     <mat-form-field *ngIf="!readonly || !!model?.street">
         <mat-label>Rue</mat-label>
         <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput maxlength="255">
-        <mat-hint align="end"
-                  *ngIf="model.street?.length > 200"
-                  [ngClass]="{'strong': model.street?.length >= 255}"
+        <mat-hint align="end" *ngIf="model.street?.length > 200" [ngClass]="{'strong': model.street?.length >= 255}"
         >
             {{ model.street.length }} / 255
         </mat-hint>
@@ -14,9 +12,7 @@
         <mat-form-field *ngIf="!readonly || !!model?.postcode">
             <mat-label>NPA</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput maxlength="20">
-            <mat-hint align="end"
-                      *ngIf="model.postcode?.length > 15"
-                      [ngClass]="{'strong': model.postcode?.length >= 20}"
+            <mat-hint align="end" *ngIf="model.postcode?.length > 15" [ngClass]="{'strong': model.postcode?.length >= 20}"
             >
                 {{ model.postcode.length }} / 20
             </mat-hint>
@@ -24,9 +20,7 @@
         <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
             <mat-label>Localité</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput maxlength="191">
-            <mat-hint align="end"
-                      *ngIf="model.locality?.length > 150"
-                      [ngClass]="{'strong': model.locality?.length >= 191}"
+            <mat-hint align="end" *ngIf="model.locality?.length > 150" [ngClass]="{'strong': model.locality?.length >= 191}"
             >
                 {{ model.locality.length }} / 191
             </mat-hint>
@@ -51,14 +45,13 @@
 
     <!-- Map -->
     <agm-map *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
-             [latitude]="model?.latitude"
-             [longitude]="model?.longitude"
+             [latitude]="latitude"
+             [longitude]="longitude"
              [mapTypeControlOptions]="{position: 10}"
              [mapTypeControl]="true"
              [scrollwheel]="false"
              [styles]="mapStyles"
              [zoom]="zoom"
-             style="height:300px;"
     >
         <agm-marker (dragEnd)="onMarkerDrag($event)"
                     [iconUrl]="icon"
@@ -69,6 +62,21 @@
     </agm-map>
 
 </div>
+
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="showLngLat" [style.margin-top.px]="10">
+
+    <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
+        <mat-label>Latitude</mat-label>
+        <input (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!readonly || !!model?.longitude"lass="lonlat">
+        <mat-label>Longitude</mat-label>
+        <input (ngModelChange)="recenter()" [(ngModel)]="model.longitude" [readonly]="readonly" matInput>
+    </mat-form-field>
+
+</div>
+
 
 <!-- Todo : allow to nullify --><!-- Todo : test this component suggestion system, that is new in project -->
 <natural-select-enum *ngIf="!readonly || !!model?.precision" [(ngModel)]="model.precision" enumName="Precision" placeholder="Précision"
