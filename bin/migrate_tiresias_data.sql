@@ -195,7 +195,7 @@ INSERT INTO country (code, name)
 VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affected to anything, see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 INSERT INTO card (id, filename, visibility, name, expanded_name, domain_id, document_type_id, technique_author,
-                  technique_date, creation_date, update_date, creator_id, updater_id, latitude, longitude, `precision`,
+                  technique_date, creation_date, update_date, creator_id, updater_id, location, `precision`,
                   literature, isbn, object_reference, `from`, `to`, production_place,
                   locality, site, url, url_description, width, height, code)
 SELECT meta.id + @card_offset,
@@ -282,8 +282,11 @@ SELECT meta.id + @card_offset,
     -- Migrate only the very few users that actually existed in old DB
     IF(insertion_utilisateur IN (SELECT id FROM users), insertion_utilisateur + @user_offset, NULL),
     IF(edition_utilisateur IN (SELECT id FROM users), edition_utilisateur + @user_offset, NULL),
-    REPLACE(geo_latitude, '°', ''),
-    REPLACE(geo_longitude, '°', ''),
+    IF(
+        REPLACE(geo_longitude, '°', '') != '' AND REPLACE(geo_latitude, '°', '') != '',
+        ST_PointFromText(CONCAT('POINT(', REPLACE(geo_longitude, '°', '') ,' ', REPLACE(geo_latitude, '°', ''),')')),
+        NULL
+    ),
     CASE geo_precision
         WHEN 'Localité'
             THEN 'locality'
