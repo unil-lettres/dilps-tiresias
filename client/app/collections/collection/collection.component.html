@@ -24,6 +24,16 @@
                     <input [(ngModel)]="data.item.description" matInput>
                 </mat-form-field>
 
+                <mat-form-field *ngIf="data.item.isSource">
+                    <mat-label>Droits d'utilisation</mat-label>
+                    <input [(ngModel)]="data.item.usageRights" matInput>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="data.item.isSource">
+                    <mat-label>Copyrights</mat-label>
+                    <input [(ngModel)]="data.item.copyrights" matInput>
+                </mat-form-field>
+
                 <app-thesaurus (modelChange)="data.item.institution = $event"
                                [model]="institution"
                                [multiple]="false"

@@ -250,6 +250,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public formIsValid = true;
     public codeModel: NgModel | null;
     public urlModel: NgModel | null;
+    private collectionCopyrights = '';
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -376,6 +377,16 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
             this.model.tags = onlyLeaves(this.model.tags);
             this.model.materials = onlyLeaves(this.model.materials);
+
+            this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
+                if (c.copyrights && c.usageRights) {
+                    return `${c.copyrights} (${c.usageRights})`;
+                } else if (c.copyrights) {
+                    return c.copyrights;
+                } else {
+                    return c.usageRights;
+                }
+            }).join(', ');
         }
     }
 

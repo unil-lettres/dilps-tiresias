@@ -23,6 +23,8 @@ export const collectionQuery = gql`
             id
             name
             description
+            copyrights
+            usageRights
             isSource
             sorting
             visibility

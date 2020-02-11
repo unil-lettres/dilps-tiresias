@@ -71,6 +71,8 @@ export class CollectionService
             visibility: CollectionVisibility.private,
             institution: null,
             parent: null,
+            usageRights: '',
+            copyrights: '',
         };
     }
 
