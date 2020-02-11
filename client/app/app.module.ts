@@ -114,6 +114,7 @@ import { apolloDefaultOptions } from './shared/config/apollo.default.options';
 import { FileDropDirective } from './shared/directives/file-drop.directive';
 import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
+import { TruncatePipe } from './shared/pipes/truncate.pipe';
 import { TypePipe } from './shared/pipes/type.pipe';
 import { NetworkActivityService } from './shared/services/network-activity.service';
 import { StatisticService } from './statistics/services/statistic.service';
@@ -217,6 +218,7 @@ const icons: NaturalIconsConfig = {
         AntiqueNamesComponent,
         AntiqueNameComponent,
         TypeLocationComponent,
+        TruncatePipe
     ],
     entryComponents: [
         ConfirmComponent,
