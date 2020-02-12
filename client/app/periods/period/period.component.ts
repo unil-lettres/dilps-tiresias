@@ -5,6 +5,8 @@ import { AlertService } from '../../shared/components/alert/alert.service';
 import { periodHierarchicConfig } from '../../shared/hierarchic-configurations/PeriodConfiguration';
 import { UserService } from '../../users/services/user.service';
 import { PeriodService } from '../services/period.service';
+import { Periods_periods_items } from '../../shared/generated-types';
+import { formatYearRange } from '../../shared/services/utility';
 
 @Component({
     selector: 'app-period',
@@ -13,6 +15,10 @@ import { PeriodService } from '../services/period.service';
 export class PeriodComponent extends AbstractDetail {
 
     public hierarchicConfig = periodHierarchicConfig;
+
+    public displayWith(item: Periods_periods_items): string {
+        return item.name + formatYearRange(item.from, item.to);
+    }
 
     constructor(service: PeriodService,
                 alertService: AlertService,

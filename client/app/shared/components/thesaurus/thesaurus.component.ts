@@ -14,6 +14,7 @@ import {
 import { clone, isArray, isObject, isString, merge } from 'lodash';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
+import { formatYearRange } from '../../services/utility';
 
 interface ThesaurusModel {
     name: string;
@@ -314,5 +315,15 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             this.notifyModel();
         }
 
+    }
+
+    public getLabel(item: any): string {
+        let result = item.hierarchicName || item.name;
+
+        if (!this.readonly && item.__typename === 'Period') {
+            result += formatYearRange(item.from, item.to);
+        }
+
+        return result;
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
-use Application\Model\Period;
-use Application\Utility;
 use Doctrine\Common\Collections\Collection;
 use InvalidArgumentException;
 
@@ -113,11 +111,6 @@ trait HasParent
     {
         $object = $this;
         $result = [];
-
-        // Special case for the leaf which is a period
-        $suffix = $object instanceof Period ? Utility::formatYearRange($this->getFrom(), $this->getTo()) : '';
-        $result[] = $object->getName() . $suffix;
-        $object = $object->getParent();
 
         while ($object) {
             $result[] = $object->getName();

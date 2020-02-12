@@ -89,21 +89,4 @@ abstract class Utility
 
         return $sanitized;
     }
-
-    public static function formatYearRange(?int $from, ?int $to): string
-    {
-        if ($from !== null && $to !== null) {
-            return " (entre $from et $to)";
-        }
-
-        if ($from !== null) {
-            return " ($from)";
-        }
-
-        if ($to !== null) {
-            return " ($to)";
-        }
-
-        return '';
-    }
 }

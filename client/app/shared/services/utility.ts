@@ -1,3 +1,5 @@
+import { Periods_periods_items } from '../generated-types';
+
 export function shuffleArray(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -21,4 +23,20 @@ export function getBase64(file): Promise<null | string> {
         reader.readAsBinaryString(file);
     });
 
+}
+
+export function formatYearRange(from: number | null, to: number | null): string {
+    if (from !== null && to !== null) {
+        return ` (entre ${from} et ${to})`;
+    }
+
+    if (from !== null) {
+        return ` (${from})`;
+    }
+
+    if (to !== null) {
+        return ` (${to})`;
+    }
+
+    return '';
 }

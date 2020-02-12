@@ -73,6 +73,8 @@ export const cardDetailsFragment = gql`
             id
             name
             hierarchicName
+            from
+            to
         }
         documentType {
             id
