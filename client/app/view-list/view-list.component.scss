@@ -1,6 +1,13 @@
 :host {
     $gap: 10px;
 
+    display: flex;
+
+    .scrollable {
+        flex: 1;
+        overflow: auto
+    }
+
     .scrolled {
         max-width: 1130px;
         margin-top: 64px;

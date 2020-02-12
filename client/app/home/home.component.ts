@@ -1,21 +1,22 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { forkJoin, Observable, of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
-import { CardInput, Site } from '../shared/generated-types';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
-import { ThemeService } from '../shared/services/theme.service';
-import { UserService } from '../users/services/user.service';
-import { UserComponent } from '../users/user/user.component';
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
+import { CardInput, Site } from '../shared/generated-types';
+import { NetworkActivityService } from '../shared/services/network-activity.service';
+import { ThemeService } from '../shared/services/theme.service';
+import { UserService } from '../users/services/user.service';
+import { UserComponent } from '../users/user/user.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -71,6 +72,13 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.nav = +params.nav;
             }
         });
+
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe(() => {
+                document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
+            });
+
     }
 
     public uploadImages(files: File[]): void {

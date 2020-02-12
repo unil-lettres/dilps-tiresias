@@ -1,6 +1,5 @@
-<perfect-scrollbar #scrollable>
-
-    <div class="padding scrolled">
+<div #scrollable class="scrollable">
+    <div class="scrolled">
 
         <mat-paginator (page)="loadMore($event)"
                        *ngIf="dataSource.data?.length"
@@ -133,4 +132,4 @@
 
     </div>
 
-</perfect-scrollbar>
+</div>

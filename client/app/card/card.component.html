@@ -383,7 +383,13 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
-                    <textarea [(ngModel)]="model.technique" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <textarea [(ngModel)]="model.technique"
+                              [readonly]="!edit"
+                              matInput
+                              maxlength="255"
+                              matAutosizeMinRows="1"
+                              matTextareaAutosize
+                    ></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.technique?.length > 200"
                               [ngClass]="{'strong': model.technique?.length >= 255}"
@@ -405,7 +411,13 @@
 
                 <mat-form-field *ngIf="edit || !!model.techniqueAuthor">
                     <mat-label>Auteur technique</mat-label>
-                    <textarea [(ngModel)]="model.techniqueAuthor" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <textarea [(ngModel)]="model.techniqueAuthor"
+                              [readonly]="!edit"
+                              matInput
+                              maxlength="255"
+                              matAutosizeMinRows="1"
+                              matTextareaAutosize
+                    ></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.techniqueAuthor?.length > 200"
                               [ngClass]="{'strong': model.techniqueAuthor?.length >= 255}"
@@ -419,7 +431,13 @@
                                 matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
-                    <textarea [(ngModel)]="model.format" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <textarea [(ngModel)]="model.format"
+                              [readonly]="!edit"
+                              matInput
+                              maxlength="255"
+                              matAutosizeMinRows="1"
+                              matTextareaAutosize
+                    ></textarea>
                     <mat-hint align="end" *ngIf="edit && model.format?.length > 200" [ngClass]="{'strong': model.format?.length >= 255}"
                     >
                         {{ model.format.length }} / 255
@@ -428,7 +446,13 @@
 
                 <mat-form-field *ngIf="(edit || !!model.documentSize) && model.site === Site.tiresias" matTooltipPosition="after">
                     <mat-label>Dimensions du document</mat-label>
-                    <textarea [(ngModel)]="model.documentSize" [readonly]="!edit" matInput maxlength="191" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <textarea [(ngModel)]="model.documentSize"
+                              [readonly]="!edit"
+                              matInput
+                              maxlength="191"
+                              matAutosizeMinRows="1"
+                              matTextareaAutosize
+                    ></textarea>
                     <mat-hint align="end"
                               *ngIf="edit && model.documentSize?.length > 150"
                               [ngClass]="{'strong': model.documentSize?.length >= 191}"
@@ -520,7 +544,13 @@
 
                 <mat-form-field *ngIf="(edit || !!model.rights) && model.site === Site.dilps">
                     <mat-label>Droits d'auteur</mat-label>
-                    <textarea [(ngModel)]="model.rights" [readonly]="!edit" matInput maxlength="255" matAutosizeMinRows="1" matTextareaAutosize></textarea>
+                    <textarea [(ngModel)]="model.rights"
+                              [readonly]="!edit"
+                              matInput
+                              maxlength="255"
+                              matAutosizeMinRows="1"
+                              matTextareaAutosize
+                    ></textarea>
                     <mat-hint align="end" *ngIf="edit && model.rights?.length > 200" [ngClass]="{'strong': model.rights?.length >= 255}">
                         {{ model.rights.length }} / 255
                     </mat-hint>
@@ -528,7 +558,7 @@
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id && (edit || model.cards.length > 0)">
-                    <br/>
+                    <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations [disabled]="!edit"

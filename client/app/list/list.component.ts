@@ -201,9 +201,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 this.variablesManager.set('route-context', {filter: data.filter});
             }
 
-            const filter: CardFilter = {
-                groups: [{conditions: [{filename: {equal: {value: '', not: true}}}]}],
-            };
+            const filter: CardFilter = {groups: [{conditions: [{filename: {equal: {value: '', not: true}}}]}]};
 
             // Setup own page, with self created cards
             if (data.creator && !this.collection) {
@@ -217,8 +215,6 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     }
 
     public pagination(event: Required<PaginationInput>): void {
-
-        console.log('event', event);
 
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
