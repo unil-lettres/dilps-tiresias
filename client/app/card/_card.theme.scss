@@ -29,6 +29,7 @@
 
         a[href] {
             color: mat-color($accent);
+            overflow-wrap: break-word;
         }
     }
 }
