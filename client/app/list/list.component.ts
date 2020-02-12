@@ -79,7 +79,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Checked content for selection
      */
-    public selected: Cards_cards_items[];
+    public selected: Cards_cards_items[] = [];
 
     /**
      * Show logo on top left corner
@@ -191,9 +191,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             this.showLogo = data.showLogo;
             this.updateShowDownloadCollection();
 
-            this.collection = data.collection;
-            if (this.collection) {
-                const collectionFilter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [this.collection.id]}}}]}]};
+            if (data.collection) {
+                const collectionFilter: CardFilter = {groups: [{conditions: [{collections: {have: {values: [data.collection.id]}}}]}]};
                 this.variablesManager.set('collection', {filter: collectionFilter});
             }
 
@@ -209,7 +208,13 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             }
 
             this.variablesManager.set('controller-variables', {filter: filter});
-            this.reset();
+
+            if (data.collection !== this.collection) {
+                this.reset();
+            }
+
+            this.collection = data.collection;
+
         });
 
     }
