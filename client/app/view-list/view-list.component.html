@@ -2,6 +2,14 @@
 
     <div class="padding scrolled">
 
+        <mat-paginator (page)="loadMore($event)"
+                       *ngIf="dataSource.data?.length"
+                       [length]="dataSource.data?.length"
+                       [pageIndex]="dataSource.data?.pageIndex"
+                       [pageSizeOptions]="[5, 10, 20, 50]"
+                       [pageSize]="dataSource.data?.pageSize"
+        ></mat-paginator>
+
         <div *ngFor="let item of cards" class="line">
 
             <div class="image-wrapper">

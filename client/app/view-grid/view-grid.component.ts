@@ -37,6 +37,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<Required<PaginationInput>>();
 
     /**
+     * Emits number of visible items in dom and number of total items
+     */
+    @Output() public contentChange: EventEmitter<{ visible: number; total: number }> = new EventEmitter();
+
+    /**
      * Emits when some cards are selected
      */
     @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
@@ -88,6 +93,8 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
             } else {
                 this.gallery.gallery.addItems(this.formatImages(result.items));
             }
+
+            this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length, total: result.length});
         });
 
     }

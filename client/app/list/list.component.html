@@ -101,11 +101,14 @@
             <mat-icon>select_all</mat-icon>
         </button>
 
+        <div *ngIf="viewMode === ViewMode.grid">{{ gridNumberVisibleItems }} / {{ gridNumberTotalItems }}</div>
+
     </mat-toolbar>
 
     <app-view-grid #view
                    (pagination)="pagination($event)"
                    (selectionChange)="select($event)"
+                   (contentChange)="gridNumberVisibleItems = $event.visible; gridNumberTotalItems = $event.total"
                    *ngIf="viewMode === ViewMode.grid"
                    [dataSource]="dataSource"
                    [selected]="selected"

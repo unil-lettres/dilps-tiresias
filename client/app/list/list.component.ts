@@ -1,12 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    NaturalAbstractList,
-    NaturalQueryVariablesManager,
-    NaturalSearchSelections,
-    PaginationInput,
-    Sorting,
-} from '@ecodev/natural';
+import { NaturalAbstractList, NaturalQueryVariablesManager, NaturalSearchSelections, PaginationInput, Sorting } from '@ecodev/natural';
 import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
@@ -37,7 +31,7 @@ import { StatisticService } from '../statistics/services/statistic.service';
 import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
-import { ViewMapComponent, Location } from '../view-map/view-map.component';
+import { Location, ViewMapComponent } from '../view-map/view-map.component';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -107,16 +101,35 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
      * True if button for archive download has permissions to be displayed
      */
     public showDownloadCollection = true;
+
+    /**
+     * Number of items added to dom from the gallery (grid view)
+     */
+    public gridNumberVisibleItems: number;
+
+    /**
+     * Total number of items matching with search
+     */
+    public gridNumberTotalItems: number;
+
     /**
      * Enum that specified the displayed list
      */
     public viewMode: ViewMode = ViewMode.grid;
+
+    /**
+     * Sorting applied when none is asked
+     */
     protected defaultSorting: Array<Sorting> = [
         {
             field: CardSortingField.creationDate,
             order: SortingOrder.DESC,
         },
     ];
+
+    /**
+     * Pagination by default when none is asked
+     */
     protected defaultPagination: Required<PaginationInput> = {
         pageSize: 15,
         pageIndex: 0,
@@ -204,6 +217,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     }
 
     public pagination(event: Required<PaginationInput>): void {
+
+        console.log('event', event);
 
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
