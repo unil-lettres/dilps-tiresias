@@ -91,7 +91,7 @@ class Importer
         while ($imageName = (string) $sheet->getCellByColumnAndRow($col, $row)->getValue()) {
             $imageNameWithoutExtension = pathinfo($imageName, PATHINFO_FILENAME);
             if (!array_key_exists($imageNameWithoutExtension, $imagesToImport)) {
-                $this->throwException($col, $row, 'Image présente dans le fichier Excel, mais pas retrouvée dans les images upladées: ' . $imageName);
+                $this->throwException($col, $row, 'Image présente dans le fichier Excel, mais pas retrouvée dans les images uploadées: ' . $imageName);
             }
 
             $image = $imagesToImport[$imageNameWithoutExtension];

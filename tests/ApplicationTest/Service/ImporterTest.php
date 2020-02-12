@@ -116,7 +116,7 @@ class ImporterTest extends TestCase
         ]);
 
         $importer = new Importer();
-        $this->expectExceptionMessage('Erreur dans la cellule A2: Image présente dans le fichier Excel, mais pas retrouvée dans les images upladées: 5da49355cbcff.jpeg');
+        $this->expectExceptionMessage('Erreur dans la cellule A2: Image présente dans le fichier Excel, mais pas retrouvée dans les images uploadées: 5da49355cbcff.jpeg');
         $importer->import($excel, [], 'dilps', null);
     }
 
