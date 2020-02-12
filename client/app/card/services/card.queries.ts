@@ -165,8 +165,8 @@ export const cardQuery = gql`
     }${cardDetailsFragment}`;
 
 export const createCard = gql`
-    mutation CreateCard ($input: CardInput!) {
-        createCard (input: $input) {
+    mutation CreateCard ($input: CardInput!, $collection: CollectionID) {
+        createCard (input: $input, collection: $collection) {
             id
             creationDate
             creator {

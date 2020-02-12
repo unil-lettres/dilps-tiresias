@@ -32,6 +32,7 @@ import {
     validateImage,
 } from './card.queries';
 import { Observable } from 'rxjs';
+import { Literal } from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -45,6 +46,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     UpdateCard['updateCard'],
     UpdateCardVariables,
     DeleteCards['deleteCards']> {
+
+    private collectionIdForCreation: string | null = null;
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
@@ -189,6 +192,22 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     // In Card specific case, don't context lists
     public getContextForAll() {
         return {};
+    }
+
+    public createWithCollection(
+        object: CreateCardVariables['input'],
+        collection: CreateCardVariables['collection'],
+    ): Observable<CreateCard['createCard']> {
+        this.collectionIdForCreation = collection ? collection.id : null;
+
+        return this.create(object);
+    }
+
+    protected getContextForCreation(object: Literal): Partial<CreateCardVariables> {
+        const result = this.collectionIdForCreation ? {collection: this.collectionIdForCreation} : {};
+        this.collectionIdForCreation = null;
+
+        return result;
     }
 
     public createWithExcel(

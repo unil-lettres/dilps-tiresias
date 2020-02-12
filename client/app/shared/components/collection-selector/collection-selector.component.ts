@@ -31,7 +31,7 @@ export type CollectionSelectorData = {
     collection?: never,
 };
 
-export type CollectionSelectorResult = Collections_collections_items | CreateCollection_createCollection ;
+export type CollectionSelectorResult = Collections_collections_items | CreateCollection_createCollection;
 
 @Component({
     selector: 'app-collection-selector',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Api;
 
 use Application\Api\Field\Mutation\AcceptChange;
+use Application\Api\Field\Mutation\CreateCard;
 use Application\Api\Field\Mutation\CreateCards;
 use Application\Api\Field\Mutation\LinkCollectionToCollection;
 use Application\Api\Field\Mutation\Login;
@@ -51,12 +52,11 @@ class MutationType extends ObjectType
             RecordPage::build(),
             RecordDetail::build(),
             RecordSearch::build(),
+            CreateCard::build(),
             CreateCards::build(),
         ];
 
         $fields = array_merge(
-            $specializedFields,
-
             Standard::buildMutation(Artist::class),
             Standard::buildMutation(Collection::class),
             Standard::buildMutation(Institution::class),
@@ -74,6 +74,8 @@ class MutationType extends ObjectType
             Standard::buildRelationMutation(Card::class, Card::class),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
+
+            $specializedFields,
         );
 
         $config = [

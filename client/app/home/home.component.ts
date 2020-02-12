@@ -2,11 +2,11 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { AlertService } from '../shared/components/alert/alert.service';
-import { CardInput, Collections_collections_items, Site } from '../shared/generated-types';
+import { CardInput, Site } from '../shared/generated-types';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
@@ -85,31 +85,53 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     public uploadImagesOnly(files: File[]): void {
-        const observables = [];
-        for (const file of files) {
+        const inputs = files.map(file => {
             const card = this.cardService.getConsolidatedForClient();
             card.file = file;
-            observables.push(this.cardService.create(card as CardInput));
-        }
+
+            return card;
+        });
         files.length = 0;
-        forkJoin(observables).subscribe(() => {
-            this.router.navigateByUrl('/empty', {skipLocationChange: true})
-                .then(() => this.router.navigateByUrl('my-collection'));
+
+        const requireCollection = this.site === Site.tiresias;
+        const collection$ = requireCollection ? this.selectCollection() : of(undefined);
+        collection$.subscribe(collection => {
+
+            // Don't do anything if don't have a required collection
+            if (requireCollection && !collection) {
+                return;
+            }
+
+            const observables = inputs.map(input => this.cardService.createWithCollection(input as CardInput, collection));
+
+            forkJoin(observables).subscribe(() => {
+                this.redirectAfterCreation(collection);
+            });
         });
     }
 
     public uploadImagesAndExcel(excel: File, images: File[]): void {
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
-            width: '400px',
-            data: {},
-        }).afterClosed().subscribe(collection => {
-
+        this.selectCollection().subscribe(collection => {
             this.cardService.createWithExcel(excel, images, collection).subscribe(() => {
-                this.router.navigateByUrl('/empty', {skipLocationChange: true})
-                    .then(() => this.router.navigateByUrl('my-collection/' + collection.id));
+                this.redirectAfterCreation(collection);
             });
         });
+    }
 
+    private redirectAfterCreation(collection?: CollectionSelectorResult) {
+        const url = collection ? 'my-collection/' + collection.id : 'my-collection';
+        this.router.navigateByUrl('/empty', {skipLocationChange: true})
+            .then(() => this.router.navigateByUrl(url));
+    }
+
+    private selectCollection(): Observable<CollectionSelectorResult | undefined> {
+        return this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+            CollectionSelectorComponent,
+            {
+                width: '400px',
+                data: {},
+            },
+        ).afterClosed();
     }
 
     public editUser() {
