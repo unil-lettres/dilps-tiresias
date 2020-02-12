@@ -251,7 +251,13 @@ SELECT meta.id + @card_offset,
                                             REPLACE(
                                                     REPLACE(
                                                             REPLACE(
-                                                                    REGEXP_REPLACE(meta.description, '\\[t\\].*\\[/t\\]\\.?', ''),
+                                                                    REPLACE(
+                                                                            REPLACE(
+                                                                                    meta.description,
+                                                                                    '[t]',
+                                                                                    ''),
+                                                                            '[/t]',
+                                                                            ''),
                                                                     '[b]',
                                                                     '<strong>'),
                                                             '[/b]',
