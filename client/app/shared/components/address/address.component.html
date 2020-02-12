@@ -50,6 +50,7 @@
              [mapTypeControlOptions]="{position: 10}"
              [mapTypeControl]="true"
              [scrollwheel]="false"
+             [mapTypeId]="site === 'dilps' ? 'roadmap' : 'satellite'"
              [styles]="mapStyles"
              [zoom]="zoom"
     >

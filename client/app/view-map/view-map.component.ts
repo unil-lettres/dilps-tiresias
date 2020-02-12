@@ -1,10 +1,11 @@
 import { MapsAPILoader } from '@agm/core';
-import { Component, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, Input, Output, EventEmitter, NgZone, Inject } from '@angular/core';
 import { NaturalAbstractController } from '@ecodev/natural';
-import { Cards_cards_items, Precision } from '../shared/generated-types';
+import { Cards_cards_items, Precision, Site } from '../shared/generated-types';
 import Icon = google.maps.Icon;
 import LatLngBounds = google.maps.LatLngBounds;
 import {} from 'googlemaps';
+import { SITE } from '../app.config';
 
 export interface Location {
     longitude: number;
@@ -39,6 +40,7 @@ export class ViewMapComponent extends NaturalAbstractController {
     constructor(
         private readonly mapsAPILoader: MapsAPILoader,
         private readonly ngZone: NgZone,
+        @Inject(SITE) public readonly site: Site,
     ) {
         super();
     }
