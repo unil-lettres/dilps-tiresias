@@ -1,19 +1,6 @@
 <form [formGroup]="form" fxLayout="row" fxLayoutGap="10px">
 
     <mat-form-field>
-        <mat-label i18n>Longitude</mat-label>
-        <input (keydown.enter)="close()"
-               [formControl]="longitudeCtrl"
-               [min]="-180"
-               [max]="180"
-               [required]="true"
-               matInput
-               type="number"
-        >
-        <mat-error *ngIf="longitudeCtrl.hasError('min') || longitudeCtrl.hasError('max')">La longitude doit être entre -180 et 180</mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
         <mat-label i18n>Latitude</mat-label>
         <input (keydown.enter)="close()"
                [formControl]="latitudeCtrl"
@@ -24,6 +11,19 @@
                type="number"
         >
         <mat-error *ngIf="latitudeCtrl.hasError('min') || latitudeCtrl.hasError('max')">La latitude doit être entre -180 et 180</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label i18n>Longitude</mat-label>
+        <input (keydown.enter)="close()"
+               [formControl]="longitudeCtrl"
+               [min]="-180"
+               [max]="180"
+               [required]="true"
+               matInput
+               type="number"
+        >
+        <mat-error *ngIf="longitudeCtrl.hasError('min') || longitudeCtrl.hasError('max')">La longitude doit être entre -180 et 180</mat-error>
     </mat-form-field>
 
     <mat-form-field>
