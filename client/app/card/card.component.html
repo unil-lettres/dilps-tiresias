@@ -126,12 +126,12 @@
                     <div *ngFor="let collection of sortedCollections"> {{ collection.hierarchicName }} </div>
                 </div>
 
-                <mat-form-field *ngIf="(edit || !!model.code) && model.site === Site.tiresias"
+                <mat-form-field *ngIf="((edit && user?.role === 'administrator') || !!model.code) && model.site === Site.tiresias"
                 >
                     <mat-label>Référence</mat-label>
                     <input [(ngModel)]="model.code"
                            #code="ngModel"
-                           [readonly]="!edit"
+                           [readonly]="!edit || user?.role !== 'administrator'"
                            matInput
                            maxlength="30"
                            [appUniqueCode]="model"

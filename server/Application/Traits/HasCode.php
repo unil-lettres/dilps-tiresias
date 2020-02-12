@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Api\Exception;
+use Application\Model\User;
+
 trait HasCode
 {
     /**
@@ -22,6 +25,12 @@ trait HasCode
     {
         if ($code === '') {
             $code = null;
+        }
+
+        // Simple ACL check
+        $currentRole = User::getCurrent() ? User::getCurrent()->getRole() : User::ROLE_ANONYMOUS;
+        if ($code !== $this->code && $currentRole !== User::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrators are allowed to update card.code');
         }
 
         $this->code = $code;
