@@ -219,6 +219,9 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     }
 
+    /**
+     * On pagination request, dont persist for gallery as it's meaningless
+     */
     public pagination(event: Required<PaginationInput>): void {
 
         if (this.viewMode === ViewMode.grid) {
@@ -230,6 +233,18 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         }
     }
 
+    public gridContentChange(event) {
+
+        if (event.visible != null) {
+            this.gridNumberVisibleItems = event.visible;
+        }
+
+        if (event.total != null) {
+            this.gridNumberTotalItems = event.total;
+        }
+
+    }
+
     /**
      * Persist list rendering in session storage.
      */
@@ -238,7 +253,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
         if (mode !== ViewMode.map) {
             sessionStorage.setItem('view-mode', mode);
-            this.pagination(this.defaultPagination as Required<PaginationInput>); // reset pagination, will clean url
+            this.pagination(this.defaultPagination); // reset pagination, will clean url
         }
     }
 

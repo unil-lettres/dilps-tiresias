@@ -108,7 +108,7 @@
     <app-view-grid #view
                    (pagination)="pagination($event)"
                    (selectionChange)="select($event)"
-                   (contentChange)="gridNumberVisibleItems = $event.visible; gridNumberTotalItems = $event.total"
+                   (contentChange)="gridContentChange($event)"
                    *ngIf="viewMode === ViewMode.grid"
                    [dataSource]="dataSource"
                    [selected]="selected"

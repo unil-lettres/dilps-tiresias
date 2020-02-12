@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
 import { NaturalAbstractController, NaturalDataSource, PaginationInput } from '@ecodev/natural';
@@ -14,7 +14,7 @@ import { Cards_cards_items } from '../shared/generated-types';
     templateUrl: './view-grid.component.html',
     styleUrls: ['./view-grid.component.scss'],
 })
-export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface {
+export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
 
     /**
      * Reference to gallery
@@ -39,7 +39,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public contentChange: EventEmitter<{ visible: number; total: number }> = new EventEmitter();
+    @Output() public contentChange: EventEmitter<{ visible?: number; total?: number }> = new EventEmitter();
 
     /**
      * Emits when some cards are selected
@@ -94,7 +94,15 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
                 this.gallery.gallery.addItems(this.formatImages(result.items));
             }
 
-            this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length, total: result.length});
+            this.contentChange.emit({total: result.length});
+        });
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.gallery.gallery.addEventListener('item-added-to-dom', (event) => {
+                this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length});
+            });
         });
 
     }
