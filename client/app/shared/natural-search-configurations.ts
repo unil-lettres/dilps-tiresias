@@ -148,14 +148,6 @@ export class NaturalSearchFacetsService {
             component: TypeTextComponent,
             transform: wrapLike,
         },
-        {
-            display: 'Géolocalisation',
-            field: 'custom',
-            name: 'location',
-            component: TypeLocationComponent,
-            showValidateButton: true,
-            transform: replaceOperatorByName,
-        },
     ];
 
     private tiresiasFacets: NaturalSearchFacets = [
