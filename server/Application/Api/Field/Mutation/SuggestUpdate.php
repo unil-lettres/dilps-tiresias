@@ -31,7 +31,7 @@ class SuggestUpdate implements FieldInterface
                     throw new Exception('An suggestion must have an original defined');
                 }
 
-                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_UPDATE, $suggestion, $args['request']);
+                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_UPDATE, $suggestion, $args['request'], $site);
                 Helper::throwIfDenied($change, 'create');
 
                 if (!$change->getId()) {

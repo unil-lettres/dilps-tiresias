@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -9,7 +8,7 @@ import {
     DocumentType, DocumentTypeInput,
     DocumentTypes,
     DocumentTypesVariables,
-    DocumentTypeVariables,
+    DocumentTypeVariables, Site,
     UpdateDocumentType,
     UpdateDocumentTypeVariables,
 } from '../../shared/generated-types';
@@ -20,12 +19,14 @@ import {
     documentTypesQuery,
     updateDocumentType,
 } from './document-type.queries';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { SITE } from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DocumentTypeService
-    extends NaturalAbstractModelService<DocumentType['documentType'],
+    extends AbstractContextualizedService<DocumentType['documentType'],
         DocumentTypeVariables,
         DocumentTypes['documentTypes'],
         DocumentTypesVariables,
@@ -35,14 +36,15 @@ export class DocumentTypeService
         UpdateDocumentTypeVariables,
         DeleteDocumentTypes['deleteDocumentTypes']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'documentType',
             documentTypeQuery,
             documentTypesQuery,
             createDocumentType,
             updateDocumentType,
-            deleteDocumentTypes);
+            deleteDocumentTypes,
+            site);
     }
 
     public getDefaultForClient() {
@@ -52,6 +54,7 @@ export class DocumentTypeService
     public getDefaultForServer(): DocumentTypeInput {
         return {
             name: '',
+            site: this.site,
         };
     }
 

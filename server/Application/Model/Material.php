@@ -7,6 +7,8 @@ namespace Application\Model;
 use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,10 +18,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\MaterialRepository")
  */
-class Material extends AbstractModel implements HasParentInterface
+class Material extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
     use HasParent;
+    use HasSite;
 
     /**
      * @var Material

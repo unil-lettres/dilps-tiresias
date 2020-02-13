@@ -31,7 +31,7 @@ class ArtistRepositoryTest extends AbstractRepositoryTest
             'Test foo', // duplicate
             'Test foo ', // duplicate with whitespace
         ];
-        $artists = $this->repository->getOrCreateByNames($names);
+        $artists = $this->repository->getOrCreateByNames($names, 'dilps');
 
         self::assertCount(2, $artists);
         self::assertSame('Test artist 3000', $artists[0]->getName());

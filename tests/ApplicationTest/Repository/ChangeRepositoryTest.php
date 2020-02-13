@@ -35,16 +35,16 @@ class ChangeRepositoryTest extends AbstractRepositoryTest
         $deletionSuggestion = _em()->getReference(Card::class, 6000);
 
         // Can retrieve existing one
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_CREATE, $creationSuggestion, $request)->getId());
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $updateSuggestion, $request)->getId());
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_DELETE, $deletionSuggestion, $request)->getId());
+        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_CREATE, $creationSuggestion, $request, 'dilps')->getId());
+        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $updateSuggestion, $request, 'dilps')->getId());
+        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_DELETE, $deletionSuggestion, $request, 'dilps')->getId());
 
         // Can create new one
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $creationSuggestion, $request)->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $creationSuggestion, $request)->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $updateSuggestion, $request)->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $updateSuggestion, $request)->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $deletionSuggestion, $request)->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $deletionSuggestion, $request)->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $creationSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $creationSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $updateSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $updateSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $deletionSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $deletionSuggestion, $request, 'dilps')->getId());
     }
 }

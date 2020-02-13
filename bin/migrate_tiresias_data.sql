@@ -75,13 +75,14 @@ SELECT id + @user_offset,
 FROM users;
 
 -- Migrate periode into period
-INSERT INTO period (id, name, `from`, `to`, sorting, parent_id)
+INSERT INTO period (id, name, `from`, `to`, sorting, parent_id, site)
 SELECT id,
     TRIM(periode),
     debut,
     fin,
     tri,
-    IF(parentid = 0, NULL, parentid)
+    IF(parentid = 0, NULL, parentid),
+    'tiresias'
 FROM periodes;
 
 -- Migrate panier into collection
@@ -111,18 +112,20 @@ FROM motscles
 ORDER BY parentid;
 
 -- Migrate domaines into domain
-INSERT INTO domain (id, name, parent_id)
+INSERT INTO domain (id, name, parent_id, site)
 SELECT id,
     TRIM(domaine),
-    IF(parentid = 0, NULL, parentid)
+    IF(parentid = 0, NULL, parentid),
+    'tiresias'
 FROM domaines
 ORDER BY parentid;
 
 -- Migrate domaines into domain
-INSERT INTO material (id, name, parent_id)
+INSERT INTO material (id, name, parent_id, site)
 SELECT id,
     TRIM(materiau),
-    IF(parentid = 0, NULL, parentid)
+    IF(parentid = 0, NULL, parentid),
+    'tiresias'
 FROM materiaux
 ORDER BY parentid;
 
@@ -179,9 +182,10 @@ FROM stats
 ORDER BY date;
 
 
-INSERT INTO document_type(id, name)
+INSERT INTO document_type(id, name, site)
 SELECT id,
-    TRIM(restitutiontype)
+    TRIM(restitutiontype),
+    'tiresias'
 FROM restitutiontypes;
 
 -- Fix our known countries

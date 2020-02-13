@@ -301,6 +301,7 @@ class CardTest extends TestCase
     public function testSetTags(): void
     {
         $card = new Card();
+        $card->setSite('dilps');
 
         self::assertEquals([], $this->toIds($card->getTags()));
 
@@ -328,24 +329,24 @@ class CardTest extends TestCase
 
         $card->setTags([
             new EntityID(_em(), Tag::class, '4001'),
-            new EntityID(_em(), Tag::class, '4002'),
+            new EntityID(_em(), Tag::class, '4004'),
         ]);
         self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'adding another parent change nothing to result');
 
         $card->setTags([
             new EntityID(_em(), Tag::class, '4001'),
-            new EntityID(_em(), Tag::class, '4003'),
+            new EntityID(_em(), Tag::class, '4005'),
         ]);
-        self::assertEquals([4001, 4000, 4003, 4002], $this->toIds($card->getTags()), 'adding two leaves select everything');
+        self::assertEquals([4001, 4000, 4005, 4004], $this->toIds($card->getTags()), 'adding two leaves select everything');
 
         $card->removeTag(_em()->getReference(Tag::class, 4000));
-        self::assertEquals([4001, 4000, 4003, 4002], $this->toIds($card->getTags()), 'removing parent has no effect');
+        self::assertEquals([4001, 4000, 4005, 4004], $this->toIds($card->getTags()), 'removing parent has no effect');
 
         $card->removeTag(_em()->getReference(Tag::class, 4001));
-        self::assertEquals([4003, 4002], $this->toIds($card->getTags()), 'removing child remove hierarchy');
+        self::assertEquals([4005, 4004], $this->toIds($card->getTags()), 'removing child remove hierarchy');
 
         $card->addTag(_em()->getReference(Tag::class, 4001));
-        self::assertEquals([4003, 4002, 4001, 4000], $this->toIds($card->getTags()), 'adding again child re-add hierarchy');
+        self::assertEquals([4005, 4004, 4001, 4000], $this->toIds($card->getTags()), 'adding again child re-add hierarchy');
     }
 
     private function toIds(iterable $models): array

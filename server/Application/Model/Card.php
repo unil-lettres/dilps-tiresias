@@ -21,6 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\ImagineInterface;
 use InvalidArgumentException;
@@ -339,7 +340,7 @@ class Card extends AbstractModel implements HasSiteInterface
     {
         $this->artists->clear();
 
-        $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames);
+        $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames, $this->getSite());
         foreach ($artistNames as $a) {
             $this->artists->add($a);
         }
@@ -352,17 +353,7 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setMaterials(array $materials): void
     {
-        $this->materials->clear();
-
-        $ids = array_map(function ($m) {
-            return $m->getId();
-        }, $materials);
-
-        $materials = _em()->getRepository(Material::class)->findById($ids);
-        foreach ($materials as $material) {
-            $this->materials->add($material);
-        }
-
+        $this->setEntireCollection($materials, $this->materials, Material::class);
         $this->addEntireHierarchy($this->materials);
     }
 
@@ -373,16 +364,7 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setAntiqueNames(array $antiqueNames): void
     {
-        $this->antiqueNames->clear();
-
-        $ids = array_map(function ($n) {
-            return $n->getId();
-        }, $antiqueNames);
-
-        $antiqueNames = _em()->getRepository(AntiqueName::class)->findById($ids);
-        foreach ($antiqueNames as $material) {
-            $this->antiqueNames->add($material);
-        }
+        $this->setEntireCollection($antiqueNames, $this->antiqueNames, AntiqueName::class);
     }
 
     /**
@@ -392,16 +374,7 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setPeriods(array $periods): void
     {
-        $this->periods->clear();
-
-        $ids = array_map(function ($m) {
-            return $m->getId();
-        }, $periods);
-
-        $periods = _em()->getRepository(Period::class)->findById($ids);
-        foreach ($periods as $period) {
-            $this->periods->add($period);
-        }
+        $this->setEntireCollection($periods, $this->periods, Period::class);
     }
 
     /**
@@ -411,18 +384,27 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setTags(array $tags): void
     {
-        $this->tags->clear();
-
-        $ids = array_map(function ($m) {
-            return $m->getId();
-        }, $tags);
-
-        $tags = _em()->getRepository(Tag::class)->findById($ids);
-        foreach ($tags as $tag) {
-            $this->tags->add($tag);
-        }
-
+        $this->setEntireCollection($tags, $this->tags, Tag::class);
         $this->addEntireHierarchy($this->tags);
+    }
+
+    private function setEntireCollection(array $entityIds, DoctrineCollection $collection, string $class): void
+    {
+        $collection->clear();
+
+        $ids = array_map(function (EntityID $m) {
+            return $m->getId();
+        }, $entityIds);
+
+        $repository = _em()->getRepository($class);
+        $objects = $repository->findBy([
+            'id' => $ids,
+            'site' => $this->getSite(),
+        ]);
+
+        foreach ($objects as $object) {
+            $collection->add($object);
+        }
     }
 
     /**

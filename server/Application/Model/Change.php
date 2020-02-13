@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -13,11 +15,13 @@ use GraphQL\Doctrine\Annotation as API;
  * @ORM\Entity(repositoryClass="Application\Repository\ChangeRepository")
  * @ORM\Table(name="`change`")
  */
-class Change extends AbstractModel
+class Change extends AbstractModel implements HasSiteInterface
 {
     const TYPE_CREATE = 'create';
     const TYPE_UPDATE = 'update';
     const TYPE_DELETE = 'delete';
+
+    use HasSite;
 
     /**
      * @var string

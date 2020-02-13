@@ -1,23 +1,32 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import {
     AcceptChange,
     Changes,
     ChangesVariables,
-    RejectChange,
+    RejectChange, Site,
     SuggestCreation,
     SuggestDeletion,
     SuggestUpdate,
 } from '../../shared/generated-types';
-import { acceptChange, changeQuery, changesQuery, rejectChange, suggestCreation, suggestDeletion, suggestUpdate } from './change.queries';
+import {
+    acceptChange,
+    changeQuery,
+    changesQuery,
+    rejectChange,
+    suggestCreation,
+    suggestDeletion,
+    suggestUpdate,
+} from './change.queries';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { SITE } from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ChangeService
-    extends NaturalAbstractModelService<null,
+    extends AbstractContextualizedService<null,
         never,
         Changes['changes'],
         ChangesVariables,
@@ -27,11 +36,15 @@ export class ChangeService
         never,
         null> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'change',
             changeQuery,
-            changesQuery, null, null, null);
+            changesQuery,
+            null,
+            null,
+            null,
+            site);
     }
 
     public acceptChange(change: { id }) {

@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -10,17 +9,19 @@ import {
     AntiqueNameVariables,
     CreateAntiqueName,
     CreateAntiqueNameVariables,
-    DeleteAntiqueNames,
+    DeleteAntiqueNames, Site,
     UpdateAntiqueName,
     UpdateAntiqueNameVariables,
 } from '../../shared/generated-types';
 import { antiqueNameQuery, antiqueNamesQuery, createAntiqueName, deleteAntiqueNames, updateAntiqueName } from './antique-name.queries';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { SITE } from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AntiqueNameService
-    extends NaturalAbstractModelService<AntiqueName['antiqueName'],
+    extends AbstractContextualizedService<AntiqueName['antiqueName'],
         AntiqueNameVariables,
         AntiqueNames['antiqueNames'],
         AntiqueNamesVariables,
@@ -30,14 +31,15 @@ export class AntiqueNameService
         UpdateAntiqueNameVariables,
         DeleteAntiqueNames['deleteAntiqueNames']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'antiqueName',
             antiqueNameQuery,
             antiqueNamesQuery,
             createAntiqueName,
             updateAntiqueName,
-            deleteAntiqueNames);
+            deleteAntiqueNames,
+            site);
     }
 
     public getDefaultForClient() {
@@ -47,6 +49,7 @@ export class AntiqueNameService
     public getDefaultForServer(): AntiqueNameInput {
         return {
             name: '',
+            site: this.site,
         };
     }
 

@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -9,17 +8,19 @@ import {
     Domain, DomainInput,
     Domains,
     DomainsVariables,
-    DomainVariables,
+    DomainVariables, Site,
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
 import { createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain } from './domain.queries';
+import { SITE } from '../../app.config';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DomainService
-    extends NaturalAbstractModelService<Domain['domain'],
+    extends AbstractContextualizedService<Domain['domain'],
         DomainVariables,
         Domains['domains'],
         DomainsVariables,
@@ -29,14 +30,15 @@ export class DomainService
         UpdateDomainVariables,
         DeleteDomains['deleteDomains']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'domain',
             domainQuery,
             domainsQuery,
             createDomain,
             updateDomain,
-            deleteDomains);
+            deleteDomains,
+            site);
     }
 
     public getDefaultForClient() {
@@ -47,6 +49,7 @@ export class DomainService
         return {
             name: '',
             parent: null,
+            site: this.site,
         };
     }
 

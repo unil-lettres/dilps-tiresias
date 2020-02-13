@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -9,17 +8,19 @@ import {
     ArtistVariables,
     CreateArtist,
     CreateArtistVariables,
-    DeleteArtists,
+    DeleteArtists, Site,
     UpdateArtist,
     UpdateArtistVariables,
 } from '../../shared/generated-types';
 import { artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist } from './artist.queries';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import { SITE } from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ArtistService
-    extends NaturalAbstractModelService<Artist['artist'],
+    extends AbstractContextualizedService<Artist['artist'],
         ArtistVariables,
         Artists['artists'],
         ArtistsVariables,
@@ -29,14 +30,15 @@ export class ArtistService
         UpdateArtistVariables,
         DeleteArtists['deleteArtists']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'artist',
             artistQuery,
             artistsQuery,
             createArtist,
             updateArtist,
-            deleteArtists);
+            deleteArtists,
+            site);
     }
 
     public getDefaultForClient() {
@@ -46,6 +48,7 @@ export class ArtistService
     public getDefaultForServer(): ArtistInput {
         return {
             name: '',
+            site: this.site,
         };
     }
 

@@ -7,6 +7,8 @@ namespace Application\Model;
 use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Traits\HasSorting;
 use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,12 +21,13 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\PeriodRepository")
  */
-class Period extends AbstractModel implements HasParentInterface
+class Period extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
     use HasSorting;
     use HasParent;
     use HasYearRange;
+    use HasSite;
 
     /**
      * @var Period

@@ -24,7 +24,7 @@ class SuggestCreation implements FieldInterface
             ],
             'resolve' => function (string $site, array $args): Change {
                 $suggestion = $args['id']->getEntity();
-                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_CREATE, $suggestion, $args['request']);
+                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_CREATE, $suggestion, $args['request'], $site);
 
                 Helper::throwIfDenied($change, 'create');
 

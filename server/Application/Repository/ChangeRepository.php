@@ -16,13 +16,15 @@ class ChangeRepository extends AbstractRepository implements LimitedAccessSubQue
      * @param string $type
      * @param Card $card
      * @param string $request
+     * @param string $site
      *
      * @return Change
      */
-    public function getOrCreate(string $type, Card $card, string $request): Change
+    public function getOrCreate(string $type, Card $card, string $request, string $site): Change
     {
         $criteria = [
             'type' => $type,
+            'site' => $site,
         ];
 
         if ($type === Change::TYPE_DELETE) {
@@ -42,6 +44,7 @@ class ChangeRepository extends AbstractRepository implements LimitedAccessSubQue
             // Create the change
             $change = new Change();
             _em()->persist($change);
+            $change->setSite($site);
             $change->setSuggestion($suggestion);
             $change->setOriginal($original);
             $change->setType($type);

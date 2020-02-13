@@ -23,10 +23,11 @@ class ArtistRepository extends AbstractRepository
      * Get or create artists by their given names
      *
      * @param string[] $names
+     * @param string $site
      *
      * @return Artist[]
      */
-    public function getOrCreateByNames(array $names): array
+    public function getOrCreateByNames(array $names, string $site): array
     {
         if (!$names) {
             return [];
@@ -37,7 +38,10 @@ class ArtistRepository extends AbstractRepository
             return trim($value);
         }, $names));
 
-        $artists = $this->findByName($names);
+        $artists = $this->findBy([
+            'name' => $names,
+            'site' => $site,
+        ]);
 
         $found = [];
         foreach ($artists as $artist) {
@@ -47,6 +51,7 @@ class ArtistRepository extends AbstractRepository
         $notFound = array_diff($names, $found);
         foreach ($notFound as $name) {
             $artist = new Artist();
+            $artist->setSite($site);
             $this->getEntityManager()->persist($artist);
             $artist->setName($name);
             $artists[] = $artist;

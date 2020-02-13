@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NaturalAbstractModelService } from '@ecodev/natural';
+import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 
 import {
@@ -9,17 +8,19 @@ import {
     Period, PeriodInput,
     Periods,
     PeriodsVariables,
-    PeriodVariables,
+    PeriodVariables, Site,
     UpdatePeriod,
     UpdatePeriodVariables,
 } from '../../shared/generated-types';
 import { createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod } from './period.queries';
+import { SITE } from '../../app.config';
+import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PeriodService
-    extends NaturalAbstractModelService<Period['period'],
+    extends AbstractContextualizedService<Period['period'],
         PeriodVariables,
         Periods['periods'],
         PeriodsVariables,
@@ -29,14 +30,15 @@ export class PeriodService
         UpdatePeriodVariables,
         DeletePeriods['deletePeriods']> {
 
-    constructor(apollo: Apollo) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,
             'period',
             periodQuery,
             periodsQuery,
             createPeriod,
             updatePeriod,
-            deletePeriods);
+            deletePeriods,
+            site);
     }
 
     public getDefaultForClient() {
@@ -49,6 +51,7 @@ export class PeriodService
             parent: null,
             from: null,
             to: null,
+            site: this.site,
         };
     }
 
