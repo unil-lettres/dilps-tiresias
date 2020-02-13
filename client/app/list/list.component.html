@@ -101,7 +101,11 @@
             <mat-icon>select_all</mat-icon>
         </button>
 
-        <div *ngIf="viewMode === ViewMode.grid">{{ gridNumberVisibleItems }} / {{ gridNumberTotalItems }}</div>
+        <div *ngIf="viewMode === ViewMode.grid">
+            <mat-chip-list>
+                <mat-chip>{{ gridNumberVisibleItems }}/{{ gridNumberTotalItems }}</mat-chip>
+            </mat-chip-list>
+        </div>
 
     </mat-toolbar>
 

@@ -89,16 +89,17 @@ export class NaturalSearchFacetsService {
 
     private dilpsFacets: NaturalSearchFacets = [
         {
-            display: 'Inclure Tiresias',
+            display: '[Inclure Tiresias]',
             field: 'site',
             name: 'includeTiresias',
             condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
             inversed: true,
         } as FlagFacet,
         {
-            display: 'Datation',
-            field: 'dating',
-            component: TypeNumberComponent,
+            display: 'Titre',
+            field: 'nameOrExpandedName',
+            component: TypeTextComponent,
+            transform: replaceOperatorByField,
         },
         {
             display: 'Artistes',
@@ -107,10 +108,15 @@ export class NaturalSearchFacetsService {
             transform: replaceOperatorByField,
         },
         {
-            display: 'Matériel',
-            field: 'material',
+            display: 'Supplément',
+            field: 'addition',
             component: TypeTextComponent,
             transform: wrapLike,
+        },
+        {
+            display: 'Datation',
+            field: 'dating',
+            component: TypeNumberComponent,
         },
         {
             display: 'Technique',
@@ -118,21 +124,64 @@ export class NaturalSearchFacetsService {
             component: TypeTextComponent,
             transform: wrapLike,
         },
+        {
+            display: 'Matériel',
+            field: 'material',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Localité',
+            field: 'localityOrInstitutionLocality',
+            component: TypeTextComponent,
+            transform: replaceOperatorByField,
+        },
+        {
+            display: 'Institution',
+            field: 'institution.name',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Source',
+            field: 'literature',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Géolocalisation',
+            field: 'custom',
+            name: 'location',
+            component: TypeLocationComponent,
+            showValidateButton: true,
+            transform: replaceOperatorByName,
+        },
     ];
 
     private tiresiasFacets: NaturalSearchFacets = [
         {
-            display: 'Inclure Dilps',
+            display: '[Inclure Dilps]',
             field: 'site',
             name: 'includeDilps',
             condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
             inversed: true,
         } as FlagFacet,
         {
-            display: 'Référence',
-            field: 'code',
+            display: 'Description',
+            field: 'nameOrExpandedName',
             component: TypeTextComponent,
-            transform: wrapLike,
+            transform: replaceOperatorByField,
+        },
+        {
+            display: 'Domaine',
+            field: 'domain',
+            component: TypeHierarchicSelectorComponent,
+            showValidateButton: true,
+            configuration: {
+                key: 'domain',
+                service: this.domainService,
+                config: domainHierarchicConfig,
+            },
         },
         {
             display: 'Période',
@@ -151,6 +200,20 @@ export class NaturalSearchFacetsService {
             component: TypeNumberComponent,
         },
         {
+            display: 'Géolocalisation',
+            field: 'custom',
+            name: 'location',
+            component: TypeLocationComponent,
+            showValidateButton: true,
+            transform: replaceOperatorByName,
+        },
+        {
+            display: 'Localité',
+            field: 'localityOrInstitutionLocality',
+            component: TypeTextComponent,
+            transform: replaceOperatorByField,
+        },
+        {
             display: 'Matériaux',
             field: 'materials',
             component: TypeHierarchicSelectorComponent,
@@ -162,7 +225,7 @@ export class NaturalSearchFacetsService {
             },
         },
         {
-            display: 'Tag',
+            display: 'Mots-clés',
             field: 'tags',
             component: TypeHierarchicSelectorComponent,
             showValidateButton: true,
@@ -173,15 +236,28 @@ export class NaturalSearchFacetsService {
             },
         },
         {
-            display: 'Domaine',
-            field: 'domain',
-            component: TypeHierarchicSelectorComponent,
-            showValidateButton: true,
-            configuration: {
-                key: 'domain',
-                service: this.domainService,
-                config: domainHierarchicConfig,
-            },
+            display: 'Référence',
+            field: 'code',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Supplément',
+            field: 'addition',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Source',
+            field: 'literature',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
+            display: 'Musée',
+            field: 'institution.name',
+            component: TypeTextComponent,
+            transform: wrapLike,
         },
     ];
 
@@ -194,9 +270,9 @@ export class NaturalSearchFacetsService {
 
     public getFacets(): NaturalSearchFacets {
         if (this.site === Site.dilps) {
-            return [...this.commonFacets, ...this.dilpsFacets];
+            return [...this.dilpsFacets];
         } else {
-            return [...this.commonFacets, ...this.tiresiasFacets];
+            return [...this.tiresiasFacets];
         }
     }
 
