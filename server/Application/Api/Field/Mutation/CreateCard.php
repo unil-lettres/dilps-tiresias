@@ -36,6 +36,9 @@ class CreateCard implements FieldInterface
                 // Check ACL
                 Helper::throwIfDenied($object, 'create');
 
+                // Do it
+                Helper::hydrate($object, $input);
+
                 // Affect optional collection
                 if ($args['collection'] ?? false) {
                     /** @var Collection $collection */
@@ -45,8 +48,6 @@ class CreateCard implements FieldInterface
                     $collection->addCard($object);
                 }
 
-                // Do it
-                Helper::hydrate($object, $input);
                 _em()->persist($object);
                 _em()->flush();
 
