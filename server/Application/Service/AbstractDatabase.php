@@ -57,7 +57,7 @@ STRING;
     private static function copyFile($remote, $dumpFile): void
     {
         $copyCmd = <<<STRING
-        scp $remote:$dumpFile $dumpFile
+        rsync -avz --progress $remote:$dumpFile $dumpFile
 STRING;
 
         echo "copying dump to $dumpFile ...\n";
