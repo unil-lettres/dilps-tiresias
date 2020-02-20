@@ -64,7 +64,10 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     }
 
     public selectAll(): Cards_cards_items[] {
-        this.selectionModel.select(...this.dataSource.data.items);
+        if (this.dataSource.data) {
+            this.selectionModel.select(...this.dataSource.data.items);
+        }
+
         return this.selectionModel.selected;
     }
 
