@@ -29,10 +29,13 @@ import { DownloadComponent } from '../shared/components/download/download.compon
 import { quillConfig } from '../shared/config/quill.options';
 import {
     Card_card,
-    Card_card_artists, Card_card_collections,
+    Card_card_artists,
+    Card_card_collections,
     Card_card_institution,
     CardVisibility,
-    Site, UpdateCard_updateCard_artists, UpdateCard_updateCard_institution,
+    Site,
+    UpdateCard_updateCard_artists,
+    UpdateCard_updateCard_institution,
     UserRole,
 } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
@@ -227,11 +230,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public materialHierarchicConfig = onlyLeafMaterialHierarchicConfig;
 
     /**
-     * Template exposed variable
-     */
-    public Site = Site;
-
-    /**
      * Edition mode if true
      */
     private edit = false;
@@ -251,6 +249,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public codeModel: NgModel | null;
     public urlModel: NgModel | null;
     private collectionCopyrights = '';
+    public isDilps = true;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -352,6 +351,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public initCard() {
         if (this.model) {
+            this.isDilps = this.model.site === Site.dilps;
 
             // Init visibility
             this.visibility = +findKey(this.visibilities, (s) => {

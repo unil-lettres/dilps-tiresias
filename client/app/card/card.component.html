@@ -126,7 +126,7 @@
                     <div *ngFor="let collection of sortedCollections"> {{ collection.hierarchicName }} </div>
                 </div>
 
-                <mat-form-field *ngIf="((edit && user?.role === 'administrator') || !!model.code) && model.site === Site.tiresias"
+                <mat-form-field *ngIf="((edit && user?.role === 'administrator') || !!model.code) && !isDilps"
                 >
                     <mat-label>Référence</mat-label>
                     <input [(ngModel)]="model.code"
@@ -173,7 +173,7 @@
                 </div>
 
                 <!-- Specific dilps fields -->
-                <ng-container *ngIf="model.site === Site.dilps">
+                <ng-container *ngIf="isDilps">
 
                     <app-thesaurus (modelChange)="model.artists = $event"
                                    *ngIf="edit || !!artists?.length"
@@ -237,7 +237,7 @@
                 </ng-container>
 
                 <!-- Specific tiresias fields -->
-                <ng-container *ngIf="model.site === Site.tiresias">
+                <ng-container *ngIf="!isDilps">
 
                     <app-thesaurus *ngIf="edit || !!model.domain"
                                    [(model)]="model.domain"
@@ -367,7 +367,7 @@
                 >Référence du document / Technique
                 </div>
 
-                <app-thesaurus *ngIf="(edit || !!model.documentType) && model.site === Site.tiresias"
+                <app-thesaurus *ngIf="(edit || !!model.documentType) && !isDilps"
                                [(model)]="model.documentType"
                                [allowFreeText]="false"
                                [multiple]="false"
@@ -378,7 +378,7 @@
                                placeholder="Type de document"
                 ></app-thesaurus>
 
-                <mat-form-field *ngIf="(edit || !!model.technique) && model.site === Site.dilps"
+                <mat-form-field *ngIf="(edit || !!model.technique) && isDilps"
                                 [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
                                 matTooltipPosition="after"
                 >
@@ -426,7 +426,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="(edit || !!model.format) && model.site === Site.dilps"
+                <mat-form-field *ngIf="(edit || !!model.format) && isDilps"
                                 [matTooltip]="!edit ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
                                 matTooltipPosition="after"
                 >
@@ -444,7 +444,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="(edit || !!model.documentSize) && model.site === Site.tiresias" matTooltipPosition="after">
+                <mat-form-field *ngIf="(edit || !!model.documentSize) && !isDilps" matTooltipPosition="after">
                     <mat-label>Dimensions du document</mat-label>
                     <textarea [(ngModel)]="model.documentSize"
                               [readonly]="!edit"
@@ -510,7 +510,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <ng-container *ngIf="model.site === Site.dilps">
+                <ng-container *ngIf="isDilps">
                     <mat-form-field *ngIf="edit || !!model.figure">
                         <mat-label>Figure</mat-label>
                         <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10">
@@ -542,7 +542,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="(edit || !!model.rights) && model.site === Site.dilps">
+                <mat-form-field *ngIf="(edit || !!model.rights) && isDilps">
                     <mat-label>Droits d'auteur</mat-label>
                     <textarea [(ngModel)]="model.rights"
                               [readonly]="!edit"
