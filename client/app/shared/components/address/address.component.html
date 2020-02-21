@@ -9,7 +9,7 @@
     </mat-form-field>
 
     <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column': 'row'">
-        <mat-form-field *ngIf="!readonly || !!model?.postcode">
+        <mat-form-field *ngIf="isDilps && (!readonly || !!model?.postcode)">
             <mat-label>NPA</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.postcode" [readonly]="readonly" matInput maxlength="20">
             <mat-hint align="end" *ngIf="model.postcode?.length > 15" [ngClass]="{'strong': model.postcode?.length >= 20}"
@@ -17,6 +17,7 @@
                 {{ model.postcode.length }} / 20
             </mat-hint>
         </mat-form-field>
+
         <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
             <mat-label>Localité</mat-label>
             <input (keyup.enter)="search()" [(ngModel)]="model.locality" [readonly]="readonly" matInput maxlength="191">
@@ -64,14 +65,14 @@
 
 </div>
 
-<div fxLayout="row" fxLayoutGap="10px" *ngIf="showLngLat" [style.margin-top.px]="10">
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">
 
     <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
         <mat-label>Latitude</mat-label>
         <input (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput>
     </mat-form-field>
 
-    <mat-form-field *ngIf="!readonly || !!model?.longitude"lass="lonlat">
+    <mat-form-field *ngIf="!readonly || !!model?.longitude" class="lonlat">
         <mat-label>Longitude</mat-label>
         <input (ngModelChange)="recenter()" [(ngModel)]="model.longitude" [readonly]="readonly" matInput>
     </mat-form-field>
@@ -80,5 +81,9 @@
 
 
 <!-- Todo : allow to nullify --><!-- Todo : test this component suggestion system, that is new in project -->
-<natural-select-enum *ngIf="!readonly || !!model?.precision" [(ngModel)]="model.precision" enumName="Precision" placeholder="Précision"
+<natural-select-enum
+        *ngIf="!isDilps && (!readonly || !!model?.precision)"
+        [(ngModel)]="model.precision"
+        enumName="Precision"
+        placeholder="Précision"
 ></natural-select-enum>

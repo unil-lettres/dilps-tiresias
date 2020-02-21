@@ -43,9 +43,9 @@ export class AddressComponent implements OnInit, OnChanges {
     @Input() readonly = false;
 
     /**
-     * If true, displays the latitude and longitude fields
+     * If Dilps mode, show everything, otherwise hide some stuff for Tiresias
      */
-    @Input() showLngLat = false;
+    @Input() isDilps = true;
 
     /**
      * Object reference is directly modified

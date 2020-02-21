@@ -243,7 +243,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Sorted list collections by their hierarchicNames
      */
-    private sortedCollections: Card_card_collections[] = [];
+    public sortedCollections: Card_card_collections[] = [];
 
     public formIsValid = true;
     public codeModel: NgModel | null;
