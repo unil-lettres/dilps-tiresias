@@ -18,8 +18,8 @@ REPLACE INTO `collection` (`id`, owner_id, visibility, `name`, `description`, `s
   (2004, NULL, 'member', 'Test collection 2004', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'tiresias'),
   (2005, 1006, 'member', 'Test collection 2005', 'You''re gonna need a bigger boat.', 'tiresias');
 
-REPLACE INTO `artist` (`id`, `name`) VALUES
-  (3000, 'Test artist 3000');
+REPLACE INTO `artist` (`id`, `name`, `site`) VALUES
+  (3000, 'Test artist 3000', 'dilps');
 
 REPLACE INTO `tag` (`id`, `parent_id`, `name`, `site`) VALUES
   (4000, NULL, 'Test root tag 4000', 'dilps'),
@@ -60,10 +60,10 @@ REPLACE INTO `collection_card` (`collection_id`, `card_id`) VALUES
   (2001, 6001),
   (2001, 6002);
 
-REPLACE INTO `change` (`id`, `original_id`, `suggestion_id`, `type`, `request`) VALUES
-  (7000, NULL, 6001, 'create', 'I want to add new card to collection'),
-  (7001, 6000, 6002, 'update', 'I want to edit existing card'),
-  (7002, 6000, NULL, 'delete', 'I want to delete existing card');
+REPLACE INTO `change` (`id`, `original_id`, `suggestion_id`, `type`, `request`, `site`) VALUES
+  (7000, NULL, 6001, 'create', 'I want to add new card to collection', 'dilps'),
+  (7001, 6000, 6002, 'update', 'I want to edit existing card', 'dilps'),
+  (7002, 6000, NULL, 'delete', 'I want to delete existing card', 'dilps');
 
 REPLACE INTO `dating` (`id`, `card_id`, `from`, `to`) VALUES
   (8000, 6000, '2451545', '2451545');
@@ -72,28 +72,28 @@ REPLACE INTO `card_card` (`card_source`, `card_target`) VALUES
   (6000, 6005),
   (6005, 6000);
 
-REPLACE INTO `period` (`id`, `parent_id`, `name`) VALUES
-  (7000, NULL, 'Test root period 7000'),
-  (7001, 7000, 'Test child period 7001');
+REPLACE INTO `period` (`id`, `parent_id`, `name`, `site`) VALUES
+  (7000, NULL, 'Test root period 7000', 'tiresias'),
+  (7001, 7000, 'Test child period 7001', 'tiresias');
 
-REPLACE INTO `material` (`id`, `parent_id`, `name`) VALUES
-  (8000, NULL, 'Test root material 8000'),
-  (8001, 8000, 'Test child material 8001');
+REPLACE INTO `material` (`id`, `parent_id`, `name`, `site`) VALUES
+  (8000, NULL, 'Test root material 8000', 'tiresias'),
+  (8001, 8000, 'Test child material 8001', 'tiresias');
 
-REPLACE INTO `domain` (`id`, `name`) VALUES
-  (9000, 'Test domain 9000'),
-  (9001, 'Test domain 9001');
+REPLACE INTO `domain` (`id`, `name`, `site`) VALUES
+  (9000, 'Test domain 9000', 'tiresias'),
+  (9001, 'Test domain 9001', 'tiresias');
 
-REPLACE INTO `document_type` (`id`, `name`) VALUES
-  (11000, 'Test document type 11000'),
-  (11001, 'Test document type 11001');
+REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
+  (11000, 'Test document type 11000', 'tiresias'),
+  (11001, 'Test document type 11001', 'tiresias');
 
 REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
   (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
   (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg');
 
-REPLACE INTO `antique_name` (`id`, `name`) VALUES
-  (12000, 'Test antique name 12000'),
-  (12001, 'Test antique name 12001');
+REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
+  (12000, 'Test antique name 12000', 'tiresias'),
+  (12001, 'Test antique name 12001', 'tiresias');
 
 COMMIT ;
