@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "458ea601fba0a605d12834877ce9ddc3",
+    "content-hash": "a621765588f8db27e5411af9e5b3ea68",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -349,16 +349,16 @@
         },
         {
             "name": "dflydev/fig-cookies",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
-                "reference": "a59857139b9e30978b5b802b3631b5eaf34e8c66"
+                "reference": "733af78ddad60aec96f7c4a1204619dd4d62afff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/a59857139b9e30978b5b802b3631b5eaf34e8c66",
-                "reference": "a59857139b9e30978b5b802b3631b5eaf34e8c66",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/733af78ddad60aec96f7c4a1204619dd4d62afff",
+                "reference": "733af78ddad60aec96f7c4a1204619dd4d62afff",
                 "shasum": ""
             },
             "require": {
@@ -399,7 +399,7 @@
                 "psr-7",
                 "psr7"
             ],
-            "time": "2018-07-11T06:54:37+00:00"
+            "time": "2020-01-02T16:13:22+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2880,27 +2880,24 @@
         },
         {
             "name": "mezzio/mezzio-session-ext",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session-ext.git",
-                "reference": "b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166"
+                "reference": "7c0acb5dac070f40dc50c984f27505a04ce34a6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166",
-                "reference": "b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/7c0acb5dac070f40dc50c984f27505a04ce34a6a",
+                "reference": "7c0acb5dac070f40dc50c984f27505a04ce34a6a",
                 "shasum": ""
             },
             "require": {
-                "dflydev/fig-cookies": "^1.0 || ^2.0",
+                "dflydev/fig-cookies": "^2.0.1",
                 "ext-session": "*",
                 "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio-session": "^1.3",
-                "php": "^7.1"
-            },
-            "conflict": {
-                "phpspec/prophecy": "<1.7.2"
+                "php": "^7.3"
             },
             "replace": {
                 "zendframework/zend-expressive-session-ext": "self.version"
@@ -2908,13 +2905,13 @@
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "laminas/laminas-diactoros": "^1.6",
-                "phpunit/phpunit": "^7.0.2"
+                "phpunit/phpunit": "^9.0.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev",
-                    "dev-develop": "1.8.x-dev"
+                    "dev-master": "1.8.x-dev",
+                    "dev-develop": "1.9.x-dev"
                 },
                 "laminas": {
                     "config-provider": "Mezzio\\Session\\Ext\\ConfigProvider"
@@ -2939,7 +2936,7 @@
                 "psr-7",
                 "session"
             ],
-            "time": "2019-12-31T15:46:24+00:00"
+            "time": "2020-03-20T14:34:02+00:00"
         },
         {
             "name": "mezzio/mezzio-template",

@@ -50,7 +50,7 @@
         "mezzio/mezzio-fastroute": "^3.0",
         "mezzio/mezzio-helpers": "^5.3",
         "mezzio/mezzio-session": "^1.2",
-        "mezzio/mezzio-session-ext": "^1.6",
+        "mezzio/mezzio-session-ext": "^1.8",
         "phpoffice/phppresentation": "^0.9.0",
         "phpoffice/phpspreadsheet": "^1.9"
     },
