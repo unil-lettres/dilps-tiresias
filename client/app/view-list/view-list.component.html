@@ -91,23 +91,22 @@
                         <div>
                             <div *ngFor="let material of item.materials | onlyLeaves">{{ material.hierarchicName }}</div>
                             <div>{{ item.material }}</div>
-
                         </div>
+                    </div>
 
-                        <div *ngIf="item.site === Site.dilps && (item.format || item.documentSize)">
-                            <div>Dimensions</div>
-                            <div>{{ item.format || item.documentSize }}</div>
-                        </div>
+                    <div *ngIf="item.site === Site.dilps && (item.format || item.documentSize)">
+                        <div>Dimensions</div>
+                        <div>{{ item.format || item.documentSize }}</div>
+                    </div>
 
-                        <div *ngIf="item?.institution?.name">
-                            <div>Lieu (Musée)</div>
-                            <div>{{ item?.institution?.name }}</div>
-                        </div>
+                    <div *ngIf="item?.institution?.name">
+                        <div>Lieu (Musée)</div>
+                        <div>{{ item?.institution?.name }}</div>
+                    </div>
 
-                        <div *ngIf="item.literature">
-                            <div>Source (référence de l'image)</div>
-                            <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
-                        </div>
+                    <div *ngIf="item.literature">
+                        <div>Source (référence de l'image)</div>
+                        <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
                     </div>
                 </div>
 
