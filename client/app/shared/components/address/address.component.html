@@ -28,7 +28,7 @@
         </mat-form-field>
 
         <natural-select (keyup.enter)="search()"
-                        *ngIf="countries && (!readonly || !!model?.postcode)"
+                        *ngIf="countries && (!readonly || !!model?.country)"
                         [(ngModel)]="model.country"
                         [disabled]="readonly"
                         [service]="countryService"
