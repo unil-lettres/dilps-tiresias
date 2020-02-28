@@ -31,6 +31,13 @@
             color: mat-color($accent);
             overflow-wrap: break-word;
         }
+
+        #fiches-additionnelles {
+            natural-table-button span {
+                white-space: normal;
+            }
+        }
+
     }
 }
 

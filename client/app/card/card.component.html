@@ -8,7 +8,7 @@
                      fxLayout="row"
                      fxLayoutAlign="start center"
         >
-            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg"/>
+            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg" />
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -272,9 +272,7 @@
                               matAutosizeMinRows="1"
                               matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end"
-                              *ngIf="edit && model.material?.length > 200"
-                              [ngClass]="{'strong': model.material?.length >= 255}"
+                    <mat-hint align="end" *ngIf="edit && model.material?.length > 200" [ngClass]="{'strong': model.material?.length >= 255}"
                     >
                         {{ model.material.length }} / 255
                     </mat-hint>
@@ -347,19 +345,13 @@
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="isDilps && !(model.locality || edit)"
-                             [(model)]="institution"
-                             [readonly]="!edit"
-                             [vertical]="true"
+                <app-address *ngIf="isDilps && !(model.locality || edit)" [(model)]="institution" [readonly]="!edit" [vertical]="true"
                 ></app-address>
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
                     <div class="mat-title">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
-                    <app-address [(model)]="model"
-                                 [readonly]="!edit"
-                                 [vertical]="true"
-                                 [isDilps]="isDilps"
+                    <app-address [(model)]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"
                     ></app-address>
                 </div>
 
@@ -414,10 +406,7 @@
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="!isDilps && !(model.locality || edit)"
-                             [(model)]="institution"
-                             [readonly]="!edit"
-                             [vertical]="true"
+                <app-address *ngIf="!isDilps && !(model.locality || edit)" [(model)]="institution" [readonly]="!edit" [vertical]="true"
                 ></app-address>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.objectReference)">
@@ -426,7 +415,8 @@
                     ></textarea>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.documentType || !!model.documentSize || !!model.techniqueAuthor || !!model.techniqueDate)" class="mat-title"
+                <div *ngIf="!isDilps && (edit || !!model.documentType || !!model.documentSize || !!model.techniqueAuthor || !!model.techniqueDate)"
+                     class="mat-title"
                 >Référence du document
                 </div>
 
@@ -486,8 +476,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)"
-                     class="mat-title"
+                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)" class="mat-title"
                 >Référence de l'image
                 </div>
 
@@ -584,10 +573,7 @@
 
                 <div *ngIf="!isDilps && edit" class="margin-bottom rich-text">
                     <div class="mat-body-2">Description</div>
-                    <quill-editor *ngIf="edit || !!model.urlDescription"
-                                  [(ngModel)]="model.urlDescription"
-                                  [disabled]="!edit"
-                                  bounds="self"
+                    <quill-editor *ngIf="edit || !!model.urlDescription" [(ngModel)]="model.urlDescription" [disabled]="!edit" bounds="self"
                     ></quill-editor>
                 </div>
 
@@ -597,7 +583,7 @@
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id && (edit || model.cards.length > 0)">
-                    <br/>
+                    <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations [disabled]="!edit"
@@ -606,6 +592,7 @@
                                        [service]="cardService"
                                        placeholder="Chercher une fiche"
                                        [displayWith]="displayWith"
+                                       id="fiches-additionnelles"
                     >
                         <ng-template let-item="item">
                             <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"
