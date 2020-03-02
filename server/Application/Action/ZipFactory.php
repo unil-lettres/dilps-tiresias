@@ -14,7 +14,8 @@ class ZipFactory
     {
         $imagine = $container->get(ImagineInterface::class);
         $imageService = $container->get(ImageService::class);
+        $site = $container->get('site');
 
-        return new ZipAction($imageService, $imagine);
+        return new ZipAction($imageService, $imagine, $site);
     }
 }

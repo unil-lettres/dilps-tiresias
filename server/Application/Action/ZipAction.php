@@ -31,6 +31,11 @@ class ZipAction extends AbstractAction
     private $imageService;
 
     /**
+     * @var string
+     */
+    private $site;
+
+    /**
      * @var bool
      */
     private $includeLegend = true;
@@ -50,10 +55,11 @@ class ZipAction extends AbstractAction
      */
     private $fileIndex = 0;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine)
+    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
     {
         $this->imageService = $imageService;
         $this->imagine = $imagine;
+        $this->site = $site;
     }
 
     /**
@@ -72,7 +78,7 @@ class ZipAction extends AbstractAction
 
         // Write to disk
         $tempFile = tempnam('data/tmp/', 'zip');
-        $title = 'DILPS ' . date('c', time());
+        $title = $this->site . '_' . date('c', time());
         $this->export($cards, $tempFile);
 
         $headers = [
@@ -137,7 +143,7 @@ class ZipAction extends AbstractAction
         $html .= '<!DOCTYPE html>';
         $html .= '<html lang="fr">';
         $html .= '<head>';
-        $html .= '<title>Base de données DILPS</title>';
+        $html .= '<title>Base de données ' . $this->site . '</title>';
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         $html .= '<meta name="author" content="' . (User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
         $html .= '<style>';

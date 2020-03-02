@@ -17,8 +17,10 @@ class TemplateFactory
     public function __invoke(ContainerInterface $container)
     {
         $entityManager = $container->get(EntityManager::class);
+        $site = $container->get('site');
 
         return new TemplateAction(
+            $site,
             $entityManager->getRepository(Domain::class),
             $entityManager->getRepository(Period::class),
             $entityManager->getRepository(Country::class),

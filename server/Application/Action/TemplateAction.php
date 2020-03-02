@@ -56,6 +56,11 @@ class TemplateAction extends AbstractXlsx
     private $col = 1;
 
     /**
+     * @var string
+     */
+    private $site;
+
+    /**
      * @var DomainRepository
      */
     private $domainRepository;
@@ -80,8 +85,9 @@ class TemplateAction extends AbstractXlsx
      */
     private $documentTypeRepository;
 
-    public function __construct(DomainRepository $domainRepository, PeriodRepository $periodRepository, CountryRepository $countryRepository, MaterialRepository $materialRepository, DocumentTypeRepository $documentTypeRepository)
+    public function __construct(string $site, DomainRepository $domainRepository, PeriodRepository $periodRepository, CountryRepository $countryRepository, MaterialRepository $materialRepository, DocumentTypeRepository $documentTypeRepository)
     {
+        $this->site = $site;
         $this->domainRepository = $domainRepository;
         $this->periodRepository = $periodRepository;
         $this->countryRepository = $countryRepository;
@@ -111,7 +117,7 @@ class TemplateAction extends AbstractXlsx
      */
     private function export(): Spreadsheet
     {
-        $spreadsheet = $this->createSpreadsheet();
+        $spreadsheet = $this->createSpreadsheet($this->site);
         $sheet = $spreadsheet->getActiveSheet();
 
         $this->headers($sheet);

@@ -41,6 +41,11 @@ class PptxAction extends AbstractAction
     private $imageService;
 
     /**
+     * @var string
+     */
+    private $site;
+
+    /**
      * @var bool
      */
     private $needSeparator = false;
@@ -55,10 +60,11 @@ class PptxAction extends AbstractAction
      */
     private $backgroundColor = Color::COLOR_BLACK;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine)
+    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
     {
         $this->imageService = $imageService;
         $this->imagine = $imagine;
+        $this->site = $site;
     }
 
     /**
@@ -75,7 +81,7 @@ class PptxAction extends AbstractAction
         $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);
         $cards = $request->getAttribute('cards');
 
-        $title = 'DILPS ' . date('c', time());
+        $title = $this->site . '_' . date('c', time());
         $presentation = $this->export($cards, $title);
 
         // Write to disk
@@ -109,12 +115,11 @@ class PptxAction extends AbstractAction
         // Set a few meta data
         $properties = $presentation->getDocumentProperties();
         $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
-        $properties->setLastModifiedBy('DILPS');
+        $properties->setLastModifiedBy($this->site);
         $properties->setTitle($title);
-        $properties->setSubject('Présentation PowerPoint générée par le système DILPS');
+        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->site);
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
-        $properties->setKeywords("Université de Lausanne, Section d'Histoire de l'art");
-        $properties->setCategory("Histoire de l'art");
+        $properties->setKeywords('Université de Lausanne');
 
         // Remove default slide
         $presentation->removeSlideByIndex(0);

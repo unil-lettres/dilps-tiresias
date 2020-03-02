@@ -28,8 +28,14 @@ class XlsxAction extends AbstractXlsx
      */
     private $col = 1;
 
-    public function __construct()
+    /**
+     * @var string
+     */
+    private $site;
+
+    public function __construct(string $site)
     {
+        $this->site = $site;
     }
 
     /**
@@ -57,7 +63,7 @@ class XlsxAction extends AbstractXlsx
      */
     private function export(array $cards): Spreadsheet
     {
-        $spreadsheet = $this->createSpreadsheet();
+        $spreadsheet = $this->createSpreadsheet($this->site);
         $sheet = $spreadsheet->getActiveSheet();
 
         $this->headers($sheet);

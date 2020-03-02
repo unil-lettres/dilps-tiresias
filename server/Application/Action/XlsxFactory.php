@@ -10,6 +10,8 @@ class XlsxFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        return new XlsxAction();
+        $site = $container->get('site');
+
+        return new XlsxAction($site);
     }
 }
