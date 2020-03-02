@@ -24,7 +24,7 @@ class AbstractXlsxAction extends TestCase
         $response = $action->process($request, $handler->reveal());
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertStringContainsString('inline; filename="DILPS', $response->getHeaderLine('content-disposition'));
+        $this->assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));
         $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->getHeaderLine('content-type'));
 
         // Write in a temp file
