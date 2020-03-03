@@ -62,7 +62,7 @@ export class CollectionSelectorComponent implements OnInit {
             if (user.role !== UserRole.administrator) {
                 this.listFilter = {
                     groups: [
-                        {conditions: [{creator: {equal: {value: user.id}}}]},
+                        {conditions: [{owner: {equal: {value: user.id}}}]},
                         {
                             groupLogic: LogicalOperator.OR,
                             conditions: [{users: {have: {values: [user.id]}}}],
