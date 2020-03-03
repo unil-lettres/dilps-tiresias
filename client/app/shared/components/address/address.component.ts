@@ -309,7 +309,7 @@ export class AddressComponent implements OnInit, OnChanges {
                 lng: ev.coords.lng,
             },
         }, (places) => {
-            const address = this.addressService.buildAddress(places[0]) as any;
+            const address = this.addressService.buildAddress(places[0], false) as any;
             merge(this.model, address);
             this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
             this.updateSearch();

@@ -30,7 +30,7 @@ export class AddressService {
     constructor() {
     }
 
-    public buildAddress(place: any) {
+    public buildAddress(place: any, withLatLon: boolean = true) {
 
         const tmpGAddress = mapValues(this.config, () => '');
 
@@ -41,14 +41,17 @@ export class AddressService {
             }
         });
 
-        const address = {
+        const address: any = {
             street: trim(tmpGAddress.route + ' ' + tmpGAddress.street_number),
             postcode: tmpGAddress.postal_code,
             locality: tmpGAddress.locality,
             countryIso2: tmpGAddress.country,
-            latitude: place.geometry.location.lat(),
-            longitude: place.geometry.location.lng(),
         };
+
+        if (withLatLon) {
+            address.latitude = place.geometry.location.lat();
+            address.longitude = place.geometry.location.lng();
+        }
 
         return address;
     }
