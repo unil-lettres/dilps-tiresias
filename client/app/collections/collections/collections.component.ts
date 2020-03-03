@@ -71,7 +71,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
                 this.queryVariables.set('creator', {
                     filter: {
                         groups: [
-                            {conditions: [{creator: {in: {values: [data.creator.id]}}}]},
+                            {conditions: [{owner: {in: {values: [data.creator.id]}}}]},
                             {
                                 groupLogic: LogicalOperator.OR,
                                 conditions: [{users: {have: {values: [this.user.id]}}}],
