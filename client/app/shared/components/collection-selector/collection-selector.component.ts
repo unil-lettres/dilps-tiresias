@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ArtistComponent } from '../../../artists/artist/artist.component';
 import { CollectionService } from '../../../collections/services/collection.service';
 
 import { UserService } from '../../../users/services/user.service';
@@ -9,6 +8,7 @@ import {
     CollectionFilter,
     Collections_collections_items,
     CreateCollection_createCollection,
+    LogicalOperator,
     UserRole,
 } from '../../generated-types';
 import { AlertService } from '../alert/alert.service';
@@ -60,7 +60,15 @@ export class CollectionSelectorComponent implements OnInit {
 
         this.userService.getCurrentUser().subscribe(user => {
             if (user.role !== UserRole.administrator) {
-                this.listFilter = {groups: [{conditions: [{creator: {equal: {value: user.id}}}]}]};
+                this.listFilter = {
+                    groups: [
+                        {conditions: [{creator: {equal: {value: user.id}}}]},
+                        {
+                            groupLogic: LogicalOperator.OR,
+                            conditions: [{users: {have: {values: [user.id]}}}],
+                        },
+                    ],
+                };
             }
         });
 
