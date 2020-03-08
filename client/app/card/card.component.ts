@@ -373,20 +373,19 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
             if (this.model.collections) {
                 this.sortedCollections = sortBy(this.model.collections, 'hierarchicName');
+                this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
+                    if (c.copyrights && c.usageRights) {
+                        return `${c.copyrights} (${c.usageRights})`;
+                    } else if (c.copyrights) {
+                        return c.copyrights;
+                    } else {
+                        return c.usageRights;
+                    }
+                }).join(', ');
             }
 
             this.model.tags = onlyLeaves(this.model.tags);
             this.model.materials = onlyLeaves(this.model.materials);
-
-            this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
-                if (c.copyrights && c.usageRights) {
-                    return `${c.copyrights} (${c.usageRights})`;
-                } else if (c.copyrights) {
-                    return c.copyrights;
-                } else {
-                    return c.usageRights;
-                }
-            }).join(', ');
         }
     }
 
