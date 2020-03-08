@@ -52,7 +52,7 @@
             </div>
 
         </mat-tab>
-        <mat-tab *ngIf="data.item.id" label="Responsables">
+        <mat-tab *ngIf="data.item.id" label="Abonnés">
 
             <natural-relations [displayWith]="displayFn"
                                [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"

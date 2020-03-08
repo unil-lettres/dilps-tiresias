@@ -121,17 +121,17 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public visibilities = {
         1: {
             value: CardVisibility.private,
-            text: 'par moi et les responsables des collections',
+            text: 'par moi, les admins et les abonnés',
             color: null,
         },
         2: {
             value: CardVisibility.member,
-            text: 'par tous les membres',
+            text: 'par les membres',
             color: 'accent',
         },
         3: {
             value: CardVisibility.public,
-            text: 'par tout le monde',
+            text: 'par tous',
             color: 'primary',
         },
     };
