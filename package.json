@@ -70,8 +70,8 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.17",
-    "@angular/cli": "^8.3.17",
+    "@angular-devkit/build-angular": "~0.803.25",
+    "@angular/cli": "^8.3.25",
     "@angular/compiler-cli": "^8.2.13",
     "@angular/language-service": "^8.2.13",
     "@types/googlemaps": "^3.38.0",
