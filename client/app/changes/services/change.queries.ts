@@ -3,8 +3,8 @@ import { cardDetailsFragment } from '../../card/services/card.queries';
 import { userMetaFragment } from '../../shared/queries/fragments';
 
 export const changesQuery = gql`
-    query Changes($pagination: PaginationInput) {
-        changes(pagination: $pagination) {
+    query Changes($filter: ChangeFilter, $pagination: PaginationInput, $sorting: [ChangeSorting!]) {
+        changes(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
                 id
                 type
