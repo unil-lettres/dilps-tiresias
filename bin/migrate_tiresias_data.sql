@@ -54,7 +54,7 @@ INSERT INTO user (id, creation_date, name, login, password, email, role, active_
 SELECT id + @user_offset,
     creation_date,
     name,
-    username,
+    IF(type = 'externe', username, CONCAT('-unil-', username)),
     password,
     IF(TRIM(mail) = '' OR users.id = 88, NULL, TRIM(mail)),
     CASE level
@@ -65,7 +65,7 @@ SELECT id + @user_offset,
         WHEN 'contributeur'
             THEN 'junior'
         WHEN 'scientifique'
-            THEN 'junior'
+            THEN 'student'
         WHEN 'invité'
             THEN 'student'
         END,
