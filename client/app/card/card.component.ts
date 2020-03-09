@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { findKey, merge, sortBy } from 'lodash';
@@ -42,6 +43,7 @@ import { domainHierarchicConfig } from '../shared/hierarchic-configurations/Doma
 import { onlyLeafMaterialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
 import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
 import { onlyLeafTagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
+import { onlyLeaves } from '../shared/pipes/only-leaves.pipe';
 import { UploadService } from '../shared/services/upload.service';
 import { getBase64 } from '../shared/services/utility';
 import { StatisticService } from '../statistics/services/statistic.service';
@@ -49,8 +51,6 @@ import { TagService } from '../tags/services/tag.service';
 import { TagComponent } from '../tags/tag/tag.component';
 import { UserService } from '../users/services/user.service';
 import { CardService } from './services/card.service';
-import { NgModel } from '@angular/forms';
-import { onlyLeaves } from '../shared/pipes/only-leaves.pipe';
 
 @Component({
     selector: 'app-card',
@@ -64,6 +64,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
      * External card data
      */
     @Input() public model: Card_card & { artists: string[]; file: any; institution: string };
+
+    /**
+     * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
+     */
+    @Input() public hideCode = false;
 
     /**
      * Show/Hide toolbar
@@ -514,9 +519,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-            && this.model.owner && this.model.owner.id === this.user.id
-            && this.model.creator && this.model.creator.id === this.user.id
-            && this.model.visibility === CardVisibility.private;
+               && this.model.owner && this.model.owner.id === this.user.id
+               && this.model.creator && this.model.creator.id === this.user.id
+               && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
