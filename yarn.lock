@@ -1199,9 +1199,9 @@
   integrity sha512-QNP9nCjYT+By5+RJFc1TyC9axA5s6Ga0Ru6iDUsY5f9vn+b37gT2QWd3d/S9oxK0/f0Ao/qqAI8RXjMLvZrWSQ==
 
 "@ecodev/natural@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-13.0.0.tgz#cfe760fdc1487a792b5685659e0315f008d078e4"
-  integrity sha512-HleRamwDX8Hsn1CgvREsmS+KJ8hj692auTbsyTlJmuADzUbQ2JStSMD+bBzOCr2BoTbneRfg1lPnls4+m8YjCw==
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-13.0.3.tgz#123bdfd60bb179e8af6d7e55550cf02148b0e6c9"
+  integrity sha512-ErpxdluJwW+x9MevekBYUaZIGG5J3yGUoa22B7/Y4iK8k5gOGpK13yZ6VPSjQpjRLjM/rYSwiCFoAlthi8XrAA==
   dependencies:
     tslib "^1.9.0"
 
@@ -9647,10 +9647,15 @@ ts-node@~8.4.1:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-tslib@1.10.0, tslib@^1, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
+tslib@1.10.0, tslib@^1, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
+tslib@^1.9.0:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
+  integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
 
 tslint@^5.0.0:
   version "5.20.1"
