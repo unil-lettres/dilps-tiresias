@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NaturalAbstractList, NaturalQueryVariablesManager, NaturalSearchSelections, PaginationInput, Sorting } from '@ecodev/natural';
-import { clone, defaults, isArray, isString, merge, pickBy } from 'lodash';
+import { clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
@@ -353,8 +353,11 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 return;
             }
 
+            /**
+             * Pick attributes with values that are objects, numbers, non-empty array, non-empty strings
+             */
             const changeAttributes = pickBy(model, (value, key) => {
-                return isString(value) && value !== '' || isArray(value) && value.length > 0;
+                return isObject(value) || isNumber(value) || isString(value) && value !== '' || isArray(value) && value.length > 0;
             });
 
             const observables = [];
