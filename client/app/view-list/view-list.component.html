@@ -35,7 +35,7 @@
 
                     <ng-container *ngIf="item.site === Site.dilps">
 
-                        <div *ngIf="item.expandedName && item.name !== item.expandedName">
+                        <div *ngIf="item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)">
                             <div>Titre étendu</div>
                             <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
                         </div>
