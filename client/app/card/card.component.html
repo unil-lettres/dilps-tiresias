@@ -147,7 +147,8 @@
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre</div>
                     <quill-editor *ngIf="edit || !!model.name"
-                                  [(ngModel)]="model.name"
+                                  [ngModel]="model.name"
+                                  (ngModelChange)="model.name = $event || ''"
                                   [disabled]="!edit"
                                   bounds="self"
                                   [modules]="singleLine"
@@ -177,7 +178,8 @@
                 <div *ngIf="edit || !!model.expandedName && model.expandedName != model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
                     <quill-editor *ngIf="edit || !!model.expandedName"
-                                  [(ngModel)]="model.expandedName"
+                                  [ngModel]="model.expandedName"
+                                  (ngModelChange)="model.expandedName = $event || ''"
                                   [disabled]="!edit"
                                   bounds="self"
                                   [matTooltip]="!edit ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
@@ -483,7 +485,8 @@
                 <div *ngIf="edit || !!model.literature" class="margin-v rich-text">
                     <div class="mat-body-2">Source</div>
                     <quill-editor *ngIf="edit || !!model.literature"
-                                  [(ngModel)]="model.literature"
+                                  [ngModel]="model.literature"
+                                  (ngModelChange)="model.literature = $event || ''"
                                   [disabled]="!edit"
                                   bounds="self"
                                   [matTooltip]="!edit ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
@@ -573,7 +576,11 @@
 
                 <div *ngIf="!isDilps && edit" class="margin-bottom rich-text">
                     <div class="mat-body-2">Description</div>
-                    <quill-editor *ngIf="edit || !!model.urlDescription" [(ngModel)]="model.urlDescription" [disabled]="!edit" bounds="self"
+                    <quill-editor *ngIf="edit || !!model.urlDescription"
+                                  [ngModel]="model.urlDescription"
+                                  (ngModelChange)="model.urlDescription = $event || ''"
+                                  [disabled]="!edit"
+                                  bounds="self"
                     ></quill-editor>
                 </div>
 
