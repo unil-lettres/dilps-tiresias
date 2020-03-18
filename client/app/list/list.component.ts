@@ -1,7 +1,14 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractList, NaturalQueryVariablesManager, NaturalSearchSelections, PaginationInput, Sorting } from '@ecodev/natural';
-import { clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy } from 'lodash';
+import {
+    NaturalAbstractList,
+    NaturalQueryVariablesManager,
+    NaturalSearchSelections,
+    PaginationInput,
+    Sorting,
+    toUrl,
+} from '@ecodev/natural';
+import { clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy, pick } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
@@ -222,14 +229,14 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * On pagination request, dont persist for gallery as it's meaningless
      */
-    public pagination(event: Required<PaginationInput>): void {
+    public pagination(event: Required<PaginationInput>, defer?: Promise<unknown>): void {
 
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
-            super.pagination(event);
+            super.pagination(event, defer);
             this.persistSearch = true;
         } else {
-            super.pagination(event);
+            super.pagination(event, defer);
         }
     }
 
