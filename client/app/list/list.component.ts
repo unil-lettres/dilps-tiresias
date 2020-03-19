@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import {Component, Inject, Injector, OnInit, ViewChild} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -30,6 +30,7 @@ import {
     SortingOrder,
     UserRole,
     Viewer,
+    Site,
 } from '../shared/generated-types';
 
 import { adminConfig, NaturalSearchFacetsService } from '../shared/natural-search-facets.service';
@@ -39,6 +40,7 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { Location, ViewMapComponent } from '../view-map/view-map.component';
+import {SITE} from '../app.config';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -124,6 +126,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
      */
     public viewMode: ViewMode = ViewMode.grid;
 
+    public Site = Site;
+
     /**
      * Sorting applied when none is asked
      */
@@ -150,6 +154,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 injector: Injector,
                 private statisticService: StatisticService,
                 public facetService: NaturalSearchFacetsService,
+                @Inject(SITE) public site: Site,
     ) {
 
         super(cardService, injector);
