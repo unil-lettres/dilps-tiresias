@@ -3,7 +3,7 @@ module.exports = {
         includes: ['./client/**/*.ts'],
         service: {
             name: 'my-service',
-            localSchemaFile: './data/tmp/schema/schema.graphql',
+            localSchemaFile: './client/app/shared/generated-schema.graphql',
         },
     },
 };

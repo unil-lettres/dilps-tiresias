@@ -1,0 +1,13 @@
+{
+    "schemaPath": "client/app/shared/generated-schema.graphql",
+    "extensions": {
+        "endpoints": {
+            "Default (https://dilps.lan/graphql)": {
+                "url": "https://dilps.lan/graphql",
+                "headers": {
+                    "user-agent": "JS GraphQL"
+                }
+            }
+        }
+    }
+}

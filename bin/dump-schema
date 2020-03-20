@@ -9,8 +9,7 @@ const shell = require('shelljs');
 const utilities = require('graphql/utilities');
 const {buildClientSchema, printSchema} = require('graphql');
 
-function write(filename, content) {
-    const folder = 'data/tmp/schema/';
+function write(folder, filename, content) {
 
     if (!fs.existsSync(folder)) {
         shell.mkdir('-p', folder);
@@ -28,8 +27,5 @@ const schemaObject = buildClientSchema(schemaLiteral);
 const schemaSdlString = printSchema(schemaObject);
 
 const disableTsLintMessage = '/* tslint:disable */\n';
-write('index.ts', disableTsLintMessage + 'export const schema = ' + schemaJsonString + ';');
-write('schema.json', schemaJsonString);
-write('schema.graphql', schemaSdlString);
-
-
+write('data/tmp/schema/', 'index.ts', disableTsLintMessage + 'export const schema = ' + schemaJsonString + ';');
+write('client/app/shared/', 'generated-schema.graphql', schemaSdlString);
