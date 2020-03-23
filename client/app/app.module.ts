@@ -136,6 +136,7 @@ import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-va
 import { StripTagsPipe } from './shared/pipes/strip-tags.pipe';
 import { OnlyLeavesPipe } from './shared/pipes/only-leaves.pipe';
 import { TypeLocationComponent } from './type-location/type-location.component';
+import { TypeNumericRangeComponent } from './type-numeric-range/type-numeric-range.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -218,6 +219,7 @@ const icons: NaturalIconsConfig = {
         AntiqueNamesComponent,
         AntiqueNameComponent,
         TypeLocationComponent,
+        TypeNumericRangeComponent,
         TruncatePipe
     ],
     entryComponents: [
@@ -240,6 +242,7 @@ const icons: NaturalIconsConfig = {
         CardSelectorComponent,
         AntiqueNameComponent,
         TypeLocationComponent,
+        TypeNumericRangeComponent,
     ],
     imports: [
         BrowserModule,

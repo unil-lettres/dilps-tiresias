@@ -21,6 +21,7 @@ import { materialHierarchicConfig } from './hierarchic-configurations/MaterialCo
 import { periodHierarchicConfig } from './hierarchic-configurations/PeriodConfiguration';
 import { tagHierarchicConfig } from './hierarchic-configurations/TagConfiguration';
 import { TypeLocationComponent } from '../type-location/type-location.component';
+import { TypeNumericRangeComponent } from '../type-numeric-range/type-numeric-range.component';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -115,8 +116,9 @@ export class NaturalSearchFacetsService {
         },
         {
             display: 'Datation',
-            field: 'dating',
-            component: TypeNumberComponent,
+            field: 'datingYearRange',
+            component: TypeNumericRangeComponent,
+            transform: replaceOperatorByField,
         },
         {
             display: 'Technique',
@@ -188,8 +190,9 @@ export class NaturalSearchFacetsService {
         },
         {
             display: 'Datation',
-            field: 'yearRange',
-            component: TypeNumberComponent,
+            field: 'cardYearRange',
+            component: TypeNumericRangeComponent,
+            transform: replaceOperatorByField,
         },
         {
             display: 'Géolocalisation',
