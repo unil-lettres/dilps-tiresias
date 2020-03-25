@@ -58,9 +58,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         // Watch errors
         this.network.errors.subscribe(errors => {
             this.errors = this.errors.concat(errors);
-            if (errors.length) {
-                this.alertService.error('Quelque chose s\'est mal passé !');
-            }
         });
 
         this.userService.getCurrentUser().subscribe(user => {

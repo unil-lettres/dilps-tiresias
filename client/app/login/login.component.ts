@@ -4,9 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'lodash';
 import { Subscription } from 'rxjs';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { UserService } from '../users/services/user.service';
 import { TermsAgreementComponent } from './terms-agreement.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -35,12 +35,13 @@ export class LoginComponent implements OnInit, OnDestroy {
      */
     private currentUser: Subscription;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                public userService: UserService,
-                private network: NetworkActivityService,
-                public snackBar: MatSnackBar,
-                public dialog: MatDialog) {
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private userService: UserService,
+        public dialog: MatDialog,
+        public snackBar: MatSnackBar,
+    ) {
     }
 
     ngOnInit(): void {
@@ -59,18 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }
             });
         }
-
-        // Watch errors
-        this.network.errors.subscribe(errors => {
-            if (errors.length) {
-                this.loading = false;
-                this.status = 'default';
-                this.snackBar.open(errors[0].message, null, {
-                    duration: 5000,
-                    panelClass: ['snackbar-error'],
-                });
-            }
-        });
     }
 
     ngOnDestroy(): void {
@@ -86,14 +75,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.snackBar.dismiss();
         this.loading = true;
         this.status = 'loading';
-        this.userService.login(this.loginForm).subscribe((user) => {
-            this.loading = false;
-            if (!user.termsAgreement) {
-                this.showTerms(user);
-            } else {
-                this.redirect();
-            }
-        });
+        this.userService.login(this.loginForm)
+            .pipe(finalize(() => this.loading = false))
+            .subscribe((user) => {
+                if (!user.termsAgreement) {
+                    this.showTerms(user);
+                } else {
+                    this.redirect();
+                }
+            });
     }
 
     private showTerms(user) {
