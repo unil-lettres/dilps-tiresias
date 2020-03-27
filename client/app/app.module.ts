@@ -57,9 +57,6 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { onError } from 'apollo-link-error';
-import { createUploadLink } from 'apollo-upload-client';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -110,7 +107,7 @@ import { MassEditComponent } from './shared/components/mass-edit/mass-edit.compo
 import { StampComponent } from './shared/components/stamp/stamp.component';
 import { TableButtonComponent } from './shared/components/table-button/table-button.component';
 import { ThesaurusComponent } from './shared/components/thesaurus/thesaurus.component';
-import { apolloDefaultOptions } from './shared/config/apollo.default.options';
+import { apolloDefaultOptions, createApolloLink } from './shared/config/apollo.link.creator';
 import { FileDropDirective } from './shared/directives/file-drop.directive';
 import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
@@ -326,45 +323,10 @@ export class AppModule {
 
         dateAdapter.setLocale('fr-ch');
 
-        const link = createUploadLink({
-            uri: '/graphql',
-            credentials: 'include',
-        });
-
-        const middleware = new ApolloLink((operation, forward) => {
-            networkActivityService.increase();
-            return forward(operation).map(response => {
-                networkActivityService.decrease();
-                return response;
-            });
-        });
-
-        const errorLink = onError(errorResponse => {
-
-            // Network errors are not caught by uploadInterceptor, so we need to decrease pending queries
-            if (errorResponse.networkError) {
-                alertService.error('Une erreur est survenue sur le réseau');
-                networkActivityService.decrease();
-            }
-
-            // Show Graphql responses with errors to end-users (but do not decrease pending queries because it is done by uploadInterceptor)
-            if (errorResponse.graphQLErrors) {
-                errorResponse.graphQLErrors.forEach(error => {
-                    // Use generic message for internal error not to frighten end-user too much
-                    if (error.extensions && error.extensions.category === 'internal') {
-                        alertService.error('Une erreur est survenue du côté du serveur');
-                    } else {
-                        // Show whatever server prepared for end-user, with a little bit more time to read
-                        alertService.error(error.message, 5000);
-                    }
-                });
-
-                networkActivityService.updateErrors(errorResponse.graphQLErrors);
-            }
-        });
+        const link = createApolloLink(networkActivityService, alertService);
 
         apollo.create({
-            link: middleware.concat(errorLink).concat(link),
+            link: link,
             cache: new InMemoryCache(),
             defaultOptions: apolloDefaultOptions,
         });

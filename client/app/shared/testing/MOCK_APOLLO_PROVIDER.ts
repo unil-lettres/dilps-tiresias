@@ -6,7 +6,7 @@ import { SchemaLink } from 'apollo-link-schema';
 import { buildClientSchema } from 'graphql';
 import { addMockFunctionsToSchema } from 'graphql-tools';
 import { schema as introspectionResult } from '../../../../data/tmp/schema';
-import { apolloDefaultOptions } from '../config/apollo.default.options';
+import { apolloDefaultOptions } from '../config/apollo.link.creator';
 
 /**
  * A mock Apollo to be used in tests only
