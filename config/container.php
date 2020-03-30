@@ -9,6 +9,10 @@ use Laminas\ServiceManager\ServiceManager;
 
 require_once 'server/Debug.php';
 
+// Secure cookie usage
+ini_set('session.cookie_httponly', '1');
+ini_set('session.cookie_samesite', 'Strict');
+
 // Load configuration
 $config = require __DIR__ . '/config.php';
 

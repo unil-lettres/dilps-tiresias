@@ -1,5 +1,8 @@
 {
     "schemaPath": "client/app/shared/generated-schema.graphql",
+    "includes": [
+        "./client/"
+    ],
     "extensions": {
         "endpoints": {
             "Default (https://dilps.lan/graphql)": {

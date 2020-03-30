@@ -7,7 +7,7 @@ namespace Application\ORM;
 use Application\ORM\Query\Filter\AclFilter;
 use Psr\Container\ContainerInterface;
 
-class EntityManagerFactory extends \ContainerInteropDoctrine\EntityManagerFactory
+class EntityManagerFactory
 {
     /**
      * Return the preferred driver available on this system
@@ -18,7 +18,8 @@ class EntityManagerFactory extends \ContainerInteropDoctrine\EntityManagerFactor
      */
     public function __invoke(ContainerInterface $container)
     {
-        $entityManger = parent::__invoke($container);
+        $factory = new \Roave\PsrContainerDoctrine\EntityManagerFactory();
+        $entityManger = $factory($container);
 
         $entityManger->getFilters()->enable(AclFilter::class);
 

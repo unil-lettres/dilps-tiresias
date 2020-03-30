@@ -57,9 +57,6 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { onError } from 'apollo-link-error';
-import { createUploadLink } from 'apollo-upload-client';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -110,7 +107,7 @@ import { MassEditComponent } from './shared/components/mass-edit/mass-edit.compo
 import { StampComponent } from './shared/components/stamp/stamp.component';
 import { TableButtonComponent } from './shared/components/table-button/table-button.component';
 import { ThesaurusComponent } from './shared/components/thesaurus/thesaurus.component';
-import { apolloDefaultOptions } from './shared/config/apollo.default.options';
+import { apolloDefaultOptions, createApolloLink } from './shared/config/apollo.link.creator';
 import { FileDropDirective } from './shared/directives/file-drop.directive';
 import { FocusDirective } from './shared/directives/focus';
 import { RolePipe } from './shared/pipes/role.pipe';
@@ -136,6 +133,7 @@ import { UniqueCodeValidatorDirective } from './shared/directives/unique-code-va
 import { StripTagsPipe } from './shared/pipes/strip-tags.pipe';
 import { OnlyLeavesPipe } from './shared/pipes/only-leaves.pipe';
 import { TypeLocationComponent } from './type-location/type-location.component';
+import { TypeNumericRangeComponent } from './type-numeric-range/type-numeric-range.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -218,7 +216,8 @@ const icons: NaturalIconsConfig = {
         AntiqueNamesComponent,
         AntiqueNameComponent,
         TypeLocationComponent,
-        TruncatePipe
+        TypeNumericRangeComponent,
+        TruncatePipe,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -240,6 +239,7 @@ const icons: NaturalIconsConfig = {
         CardSelectorComponent,
         AntiqueNameComponent,
         TypeLocationComponent,
+        TypeNumericRangeComponent,
     ],
     imports: [
         BrowserModule,
@@ -323,38 +323,10 @@ export class AppModule {
 
         dateAdapter.setLocale('fr-ch');
 
-        const link = createUploadLink({
-            uri: '/graphql',
-            credentials: 'include',
-        });
-
-        const middleware = new ApolloLink((operation, forward) => {
-            networkActivityService.increase();
-            return forward(operation).map(response => {
-                networkActivityService.decrease();
-                return response;
-            });
-        });
-
-        const errorLink = onError(({graphQLErrors, networkError}) => {
-
-            // Network errors seems not to be catched by above middleware, and we need to be informed to decrease pending queries
-            if (networkError) {
-                alertService.error('Une erreur est survenue sur le réseau');
-                networkActivityService.decrease();
-            }
-
-            // Graphql responses with errors are valid responses and are catched by the above middleware.
-            // There seems to be no need to do something here
-            // Seems we have no need to deal
-            if (graphQLErrors) {
-                alertService.error('Une erreur est survenue du côté du serveur');
-                networkActivityService.updateErrors(graphQLErrors);
-            }
-        });
+        const link = createApolloLink(networkActivityService, alertService);
 
         apollo.create({
-            link: middleware.concat(errorLink).concat(link),
+            link: link,
             cache: new InMemoryCache(),
             defaultOptions: apolloDefaultOptions,
         });

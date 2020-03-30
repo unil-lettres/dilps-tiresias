@@ -34,7 +34,7 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
 
         $joins = $qb->getDQLPart('join');
         if ($class === Card::class) {
-            self::assertCount(2, $joins[$alias], 'Card should have new joins');
+            self::assertCount(3, $joins[$alias], 'Card should have new joins');
         } else {
             self::assertEmpty($joins, 'Non-card should not have any joins');
         }
@@ -46,8 +46,8 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
             'simple' => [Artist::class, 'john', '((a.id LIKE :filter1 OR a.name LIKE :filter1))'],
             'split words' => [Artist::class, 'john doe', '((a.id LIKE :filter1 OR a.name LIKE :filter1) AND (a.id LIKE :filter2 OR a.name LIKE :filter2))'],
             'search predefined fields' => [User::class, 'john', '((a.id LIKE :filter1 OR a.login LIKE :filter1 OR a.email LIKE :filter1 OR a.name LIKE :filter1))'],
-            'search predefined joins' => [Card::class, 'foo', '((a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.technique LIKE :filter1 OR institution1.name LIKE :filter1 OR artist1.name LIKE :filter1))'],
-            'kitchen sink' => [Card::class, '  foo   bar   ', '((a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.technique LIKE :filter1 OR institution1.name LIKE :filter1 OR artist1.name LIKE :filter1) AND (a.id LIKE :filter2 OR a.dating LIKE :filter2 OR a.code LIKE :filter2 OR a.name LIKE :filter2 OR a.street LIKE :filter2 OR a.locality LIKE :filter2 OR a.addition LIKE :filter2 OR a.expandedName LIKE :filter2 OR a.material LIKE :filter2 OR a.technique LIKE :filter2 OR institution1.name LIKE :filter2 OR artist1.name LIKE :filter2))'],
+            'search predefined joins' => [Card::class, 'foo', '((a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.technique LIKE :filter1 OR institution1.name LIKE :filter1 OR artist1.name LIKE :filter1 OR country1.name LIKE :filter1))'],
+            'kitchen sink' => [Card::class, '  foo   bar   ', '((a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.technique LIKE :filter1 OR institution1.name LIKE :filter1 OR artist1.name LIKE :filter1 OR country1.name LIKE :filter1) AND (a.id LIKE :filter2 OR a.dating LIKE :filter2 OR a.code LIKE :filter2 OR a.name LIKE :filter2 OR a.street LIKE :filter2 OR a.locality LIKE :filter2 OR a.addition LIKE :filter2 OR a.expandedName LIKE :filter2 OR a.material LIKE :filter2 OR a.technique LIKE :filter2 OR institution1.name LIKE :filter2 OR artist1.name LIKE :filter2 OR country1.name LIKE :filter2))'],
         ];
     }
 }

@@ -41,17 +41,30 @@ abstract class Standard
                 'name' => $plural,
                 'type' => _types()->get($shortName . 'Pagination'),
                 'args' => $listArgs,
-                'resolve' => function (string $site, array $args) use ($class): array {
+                'resolve' => function (string $site, array $args) use ($class, $metadata): array {
                     if (($args['filters'] ?? false) && ($args['filter'] ?? false)) {
                         throw new Exception('Cannot use `filter` and `filters` at the same time');
                     }
+
                     if ($args['filters'] ?? false) {
                         $queryArgs = [$args['filters'] ?? []];
                         $queryArgs[] = $args['sorting'];
 
                         $qb = _em()->getRepository($class)->getFindAllQuery(...$queryArgs);
                     } else {
-                        $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $args['sorting'] ?? []);
+                        // If null or empty list is provided by client, fallback on default sorting
+                        $sorting = $args['sorting'] ?? [];
+                        if (!$sorting) {
+                            $sorting = self::getDefaultSorting($metadata);
+                        }
+
+                        // And **always** sort by ID
+                        $sorting[] = [
+                            'field' => 'id',
+                            'order' => 'ASC',
+                        ];
+
+                        $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
                     }
 
                     $result = Helper::paginate($args['pagination'], $qb);
@@ -370,11 +383,6 @@ abstract class Standard
                 'order' => 'ASC',
             ];
         }
-
-        $defaultSorting[] = [
-            'field' => 'id',
-            'order' => 'ASC',
-        ];
 
         return $defaultSorting;
     }

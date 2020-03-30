@@ -34,7 +34,6 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "creof/doctrine2-spatial": "^1.2",
-        "dasprid/container-interop-doctrine": "^1.1",
         "doctrine/migrations": "^2.1",
         "ecodev/graphql-doctrine": "^6.3",
         "ecodev/graphql-upload": "^4.0",
@@ -50,9 +49,10 @@
         "mezzio/mezzio-fastroute": "^3.0",
         "mezzio/mezzio-helpers": "^5.3",
         "mezzio/mezzio-session": "^1.2",
-        "mezzio/mezzio-session-ext": "^1.6",
+        "mezzio/mezzio-session-ext": "^1.8",
         "phpoffice/phppresentation": "^0.9.0",
-        "phpoffice/phpspreadsheet": "^1.9"
+        "phpoffice/phpspreadsheet": "^1.9",
+        "roave/psr-container-doctrine": "^2.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
