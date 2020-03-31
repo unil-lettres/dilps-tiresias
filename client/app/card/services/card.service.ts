@@ -149,8 +149,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
             variables: {
                 id: card.id,
             },
-        }).pipe(map(data => {
-                const c = data.data.validateData;
+        }).pipe(map(result => {
+                const c = (result.data as ValidateData).validateData;
                 merge(card, c);
 
                 return c;
@@ -164,8 +164,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
             variables: {
                 id: card.id,
             },
-        }).pipe(map(data => {
-                const c = data.data.validateImage;
+        }).pipe(map(result => {
+                const c = (result.data as ValidateImage).validateImage;
                 merge(card, c);
 
                 return c;
@@ -222,7 +222,7 @@ export class CardService extends AbstractContextualizedService<Card['card'],
                 images,
                 collection: collection.id,
             },
-        }).pipe(map(result => result.data.createCards));
+        }).pipe(map(result => (result.data as CreateCards).createCards));
     }
 
 }

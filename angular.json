@@ -11,6 +11,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "aot": true,
                         "outputPath": "htdocs",
                         "preserveSymlinks": true,
                         "index": "client/index.html",
@@ -30,6 +31,12 @@
                     },
                     "configurations": {
                         "production": {
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -47,6 +54,12 @@
                             ]
                         },
                         "staging": {
+                            "budgets": [
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -152,7 +165,7 @@
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",
-            "styleext": "scss"
+            "style": "scss"
         },
         "@schematics/angular:directive": {
             "prefix": "app"

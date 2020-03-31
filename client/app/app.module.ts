@@ -5,7 +5,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule, MatSortModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -53,7 +54,7 @@ import {
     NaturalSelectModule,
     NaturalTableButtonModule,
 } from '@ecodev/natural';
-import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressModule } from 'ngx-progressbar';
 import { ngfModule } from 'angular-file';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { InMemoryCache } from 'apollo-cache-inmemory';

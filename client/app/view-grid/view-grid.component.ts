@@ -19,7 +19,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to gallery
      */
-    @ViewChild('gallery', {static: false}) gallery: NaturalGalleryComponent;
+    @ViewChild('gallery') gallery: NaturalGalleryComponent;
 
     /**
      * DataSource containing cards

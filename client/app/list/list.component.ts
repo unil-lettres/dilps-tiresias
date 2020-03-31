@@ -63,17 +63,17 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Reference to grid component
      */
-    @ViewChild(ViewGridComponent, {static: false}) gridComponent: ViewGridComponent;
+    @ViewChild(ViewGridComponent) gridComponent: ViewGridComponent;
 
     /**
      * Reference to list component
      */
-    @ViewChild(ViewListComponent, {static: false}) listComponent: ViewListComponent;
+    @ViewChild(ViewListComponent) listComponent: ViewListComponent;
 
     /**
      * Reference to map component
      */
-    @ViewChild(ViewMapComponent, {static: false}) mapComponent: ViewMapComponent;
+    @ViewChild(ViewMapComponent) mapComponent: ViewMapComponent;
 
     /**
      * Expose enum for template

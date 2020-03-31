@@ -53,10 +53,10 @@ export class ChangeService
             variables: {
                 id: change.id,
             },
-        }).pipe(map(data => {
+        }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return data.data.acceptChange;
+            return (result.data as AcceptChange).acceptChange;
         }));
     }
 
@@ -66,10 +66,10 @@ export class ChangeService
             variables: {
                 id: change.id,
             },
-        }).pipe(map(data => {
+        }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return data.data.rejectChange;
+            return (result.data as RejectChange).rejectChange;
         }));
     }
 
@@ -79,10 +79,10 @@ export class ChangeService
             variables: {
                 id: card.id,
             },
-        }).pipe(map(data => {
+        }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return data.data.suggestDeletion;
+            return (result.data as SuggestDeletion).suggestDeletion;
         }));
     }
 
@@ -92,10 +92,10 @@ export class ChangeService
             variables: {
                 id: card.id,
             },
-        }).pipe(map(data => {
+        }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return data.data.suggestCreation;
+            return (result.data as SuggestCreation).suggestCreation;
         }));
     }
 
@@ -105,10 +105,10 @@ export class ChangeService
             variables: {
                 id: card.id,
             },
-        }).pipe(map(data => {
+        }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return data.data.suggestUpdate;
+            return (result.data as SuggestUpdate).suggestUpdate;
         }));
     }
 

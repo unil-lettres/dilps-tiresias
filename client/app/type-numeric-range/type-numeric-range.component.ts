@@ -9,7 +9,7 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { BehaviorSubject } from 'rxjs';
 import {
     NATURAL_DROPDOWN_DATA,

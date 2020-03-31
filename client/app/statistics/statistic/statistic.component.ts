@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import * as Highcharts from 'highcharts';
 
 interface Row {

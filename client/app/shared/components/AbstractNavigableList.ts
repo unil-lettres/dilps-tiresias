@@ -1,5 +1,5 @@
 import { Injector, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NaturalAbstractNavigableList, PaginatedData, QueryVariables } from '@ecodev/natural';
 
 export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends QueryVariables>

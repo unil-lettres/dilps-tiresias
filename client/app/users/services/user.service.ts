@@ -8,7 +8,7 @@ import {
     CreateUser,
     CreateUserVariables,
     DeleteUsers,
-    Login,
+    Login, LoginVariables,
     Logout,
     Site,
     UpdateUser,
@@ -131,11 +131,11 @@ export class UserService extends AbstractContextualizedService<User['user'],
         ];
     }
 
-    public login(loginData): Observable<Login['login']> {
-        return this.apollo.mutate<Login>({
+    public login(loginData: LoginVariables): Observable<Login['login']> {
+        return this.apollo.mutate<Login, LoginVariables>({
             mutation: loginMutation,
             variables: loginData,
-        }).pipe(map(result => result.data.login));
+        }).pipe(map(result => (result.data as Login).login));
     }
 
     public logout(): Observable<Logout['logout']> {
@@ -143,7 +143,8 @@ export class UserService extends AbstractContextualizedService<User['user'],
 
         this.apollo.mutate<Logout>({
             mutation: logoutMutation,
-        }).pipe(map(result => result.data.logout)).subscribe((v) => {
+        }).subscribe(result => {
+            const v = (result.data as Logout).logout;
             this.currentUser = null;
             this.apollo.getClient().clearStore().then(() => {
                 this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {

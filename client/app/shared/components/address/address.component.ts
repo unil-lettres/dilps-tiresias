@@ -60,7 +60,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public icon;
 
-    @ViewChild(AgmMap, {static: false}) public map: AgmMap;
+    @ViewChild(AgmMap) public map: AgmMap;
 
     public mapStyles: MapTypeStyle[] = [
         {
