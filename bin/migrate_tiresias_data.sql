@@ -85,6 +85,9 @@ SELECT id,
     'tiresias'
 FROM periodes;
 
+-- Root periods are all sorted by names
+UPDATE period SET sorting = 0 WHERE parent_id IS NULL AND site = 'tiresias';
+
 -- Migrate panier into collection
 INSERT INTO collection (id, creation_date, name, visibility, site)
 SELECT id + @collection_offset,
