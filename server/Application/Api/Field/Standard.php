@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Api\Field;
 
-use Application\Api\Exception;
 use Application\Api\Helper;
 use Application\Api\Input\PaginationInputType;
 use Application\Model\AbstractModel;
@@ -42,30 +41,19 @@ abstract class Standard
                 'type' => _types()->get($shortName . 'Pagination'),
                 'args' => $listArgs,
                 'resolve' => function (string $site, array $args) use ($class, $metadata): array {
-                    if (($args['filters'] ?? false) && ($args['filter'] ?? false)) {
-                        throw new Exception('Cannot use `filter` and `filters` at the same time');
+                    // If null or empty list is provided by client, fallback on default sorting
+                    $sorting = $args['sorting'] ?? [];
+                    if (!$sorting) {
+                        $sorting = self::getDefaultSorting($metadata);
                     }
 
-                    if ($args['filters'] ?? false) {
-                        $queryArgs = [$args['filters'] ?? []];
-                        $queryArgs[] = $args['sorting'];
+                    // And **always** sort by ID
+                    $sorting[] = [
+                        'field' => 'id',
+                        'order' => 'ASC',
+                    ];
 
-                        $qb = _em()->getRepository($class)->getFindAllQuery(...$queryArgs);
-                    } else {
-                        // If null or empty list is provided by client, fallback on default sorting
-                        $sorting = $args['sorting'] ?? [];
-                        if (!$sorting) {
-                            $sorting = self::getDefaultSorting($metadata);
-                        }
-
-                        // And **always** sort by ID
-                        $sorting[] = [
-                            'field' => 'id',
-                            'order' => 'ASC',
-                        ];
-
-                        $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
-                    }
+                    $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
 
                     $result = Helper::paginate($args['pagination'], $qb);
 
@@ -323,14 +311,6 @@ abstract class Standard
                 'defaultValue' => self::getDefaultSorting($class),
             ],
         ];
-
-        $filterTypeClass = 'Old' . $class->getReflectionClass()->getShortName() . 'Filter';
-        if (_types()->has($filterTypeClass)) {
-            $listArgs[] = [
-                'name' => 'filters',
-                'type' => _types()->get($filterTypeClass),
-            ];
-        }
 
         $listArgs[] = PaginationInputType::build();
 

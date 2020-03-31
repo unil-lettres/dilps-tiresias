@@ -5,20 +5,9 @@ declare(strict_types=1);
 namespace Application\Repository;
 
 use Application\Model\Artist;
-use Doctrine\ORM\QueryBuilder;
 
 class ArtistRepository extends AbstractRepository
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('artist');
-
-        $this->applySearch($qb, $filters, 'artist');
-        $this->applySorting($qb, $sorting, 'artist');
-
-        return $qb;
-    }
-
     /**
      * Get or create artists by their given names
      *

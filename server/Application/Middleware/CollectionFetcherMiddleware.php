@@ -35,7 +35,7 @@ class CollectionFetcherMiddleware extends AbstractAction implements MiddlewareIn
     {
         $ids = explode(',', $request->getAttribute('ids'));
 
-        $cards = $this->cardRepository->getFindAllQuery(['collections' => $ids])->getQuery()->getResult();
+        $cards = $this->cardRepository->getFindAllByCollections($ids)->getQuery()->getResult();
         if (!$cards) {
             return $this->createError('No cards found in database for the collection with ids: ' . implode(', ', $ids));
         }

@@ -7,52 +7,9 @@ namespace Application\Repository;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
-use Doctrine\ORM\QueryBuilder;
 
 class CollectionRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('collection');
-
-        if (isset($filters['isSource'])) {
-            $qb->andWhere('collection.isSource = :isSource');
-            $qb->setParameter('isSource', $filters['isSource']);
-        }
-
-        if (isset($filters['creators'])) {
-            if (\count($filters['creators']) > 0) {
-                $qb->andWhere('collection.creator IN (:creators)');
-                $qb->setParameter('creators', $filters['creators']);
-            } else {
-                $qb->andWhere('collection.creator IS NULL');
-            }
-        }
-
-        if (isset($filters['parents'])) {
-            if (\count($filters['parents']) > 0) {
-                $qb->andWhere('collection.parent IN (:parents)');
-                $qb->setParameter('parents', $filters['parents']);
-            } else {
-                $qb->andWhere('collection.parent IS NULL');
-            }
-        }
-
-        if (isset($filters['visibilities'])) {
-            if (\count($filters['visibilities']) > 0) {
-                $qb->andWhere('collection.visibility IN (:visibilities)');
-                $qb->setParameter('visibilities', $filters['visibilities']);
-            } else {
-                $qb->andWhere('collection.visibility IS NULL');
-            }
-        }
-
-        $this->applySearch($qb, $filters, 'collection');
-        $this->applySorting($qb, $sorting, 'collection');
-
-        return $qb;
-    }
-
     /**
      * Returns pure SQL to get ID of all collections that are accessible to given user.
      *

@@ -11,43 +11,19 @@ use Doctrine\ORM\QueryBuilder;
 
 class CardRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
+    public function getFindAllByCollections(array $collections = []): QueryBuilder
     {
         $qb = $this->createQueryBuilder('card');
 
-        if (isset($filters['collections'])) {
-            if (\count($filters['collections']) > 0) {
+        if (isset($collections)) {
+            if (\count($collections) > 0) {
                 $qb->join('card.collections', 'collection');
                 $qb->andWhere('collection.id IN (:collections)');
-                $qb->setParameter('collections', $filters['collections']);
+                $qb->setParameter('collections', $collections);
             } else {
                 $qb->andWhere('card.collections IS EMPTY');
             }
         }
-        if (@$filters['ids'] ?? false) {
-            $qb->andWhere('card.id IN (:ids)');
-            $qb->setParameter('ids', $filters['ids']);
-        }
-
-        if (isset($filters['creators'])) {
-            if (\count($filters['creators']) > 0) {
-                $qb->andWhere('card.creator IN (:creators)');
-                $qb->setParameter('creators', $filters['creators']);
-            } else {
-                $qb->andWhere('card.creator IS NULL');
-            }
-        }
-
-        if (isset($filters['hasImage'])) {
-            if ($filters['hasImage'] === true) {
-                $qb->andWhere("card.filename != ''");
-            } elseif ($filters['hasImage'] === false) {
-                $qb->andWhere("card.filename = ''");
-            }
-        }
-
-        $this->applySearch($qb, $filters, 'card');
-        $this->applySorting($qb, $sorting, 'card');
 
         return $qb;
     }

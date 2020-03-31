@@ -6,30 +6,9 @@ namespace Application\Repository;
 
 use Application\Model\User;
 use DateTimeImmutable;
-use Doctrine\ORM\QueryBuilder;
 
 class UserRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('user');
-
-        if (@$filters['login']) {
-            $qb->andWhere('user.login LIKE :login');
-            $qb->setParameter('login', '%' . $filters['login'] . '%');
-        }
-
-        if (@$filters['email']) {
-            $qb->andWhere('user.email LIKE :email');
-            $qb->setParameter('email', '%' . $filters['email'] . '%');
-        }
-
-        $this->applySearch($qb, $filters, 'user');
-        $this->applySorting($qb, $sorting, 'user');
-
-        return $qb;
-    }
-
     /**
      * Returns the user authenticated by its login and password
      *
