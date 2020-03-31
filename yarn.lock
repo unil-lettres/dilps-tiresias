@@ -1145,10 +1145,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-6.0.1.tgz#f1a17bc9893dda49526ce3237a809e46ee8e6484"
   integrity sha512-QNP9nCjYT+By5+RJFc1TyC9axA5s6Ga0Ru6iDUsY5f9vn+b37gT2QWd3d/S9oxK0/f0Ao/qqAI8RXjMLvZrWSQ==
 
-"@ecodev/natural@^14.0.4":
-  version "14.0.4"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-14.0.4.tgz#dee316e7a5f07c5b8259de80c298c572b7bd31cc"
-  integrity sha512-SNehiNTrKBD7uGHunmmrOJBbgxXOh7xCvXxgkDi4pMhXIsH2W7zz3DKzAeNK/78beCIp00oVYKGafIwH4Q/D1w==
+"@ecodev/natural@^14.0.5":
+  version "14.0.5"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-14.0.5.tgz#f3e962aa4dcd2919bdb7cbd8a67506f148cbe4ca"
+  integrity sha512-APgIlc4SQak/5F5AQbxBEzDc4Dfgok9ezHXjIMKEFeApIkMxa718qarAT4YONWFkEyFqVL5G9n8e+w1XHAimww==
 
 "@endemolshinegroup/cosmiconfig-typescript-loader@^1.0.0":
   version "1.0.1"
