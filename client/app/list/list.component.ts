@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit, ViewChild} from '@angular/core';
+import { Component, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -6,7 +6,6 @@ import {
     NaturalSearchSelections,
     PaginationInput,
     Sorting,
-    toUrl,
 } from '@ecodev/natural';
 import { clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy, pick } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
@@ -40,7 +39,7 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { Location, ViewMapComponent } from '../view-map/view-map.component';
-import {SITE} from '../app.config';
+import { SITE } from '../app.config';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -221,7 +220,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
             this.variablesManager.set('controller-variables', {filter: filter});
 
-            if (data.collection !== this.collection) {
+            if (data.collection?.id !== this.collection?.id) {
                 this.reset();
             }
 
