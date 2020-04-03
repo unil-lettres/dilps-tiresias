@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
 
             // set new theme class
             this.overlayContainer.getContainerElement().classList.add(newTheme);
-            // this.theme = newTheme;
+            this.theme = newTheme;
             this.lastTheme = newTheme;
             document.body.classList.add(newTheme);
         });
