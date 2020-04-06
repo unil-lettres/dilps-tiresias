@@ -97,8 +97,9 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Contextual collection
      * Used to link
+     * Before component initialization it is undefined, then it is either null or FakeCollection
      */
-    public collection: FakeCollection | undefined;
+    public collection: FakeCollection | undefined | null;
 
     /**
      * Current user
@@ -220,11 +221,12 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
             this.variablesManager.set('controller-variables', {filter: filter});
 
-            if (data.collection?.id !== this.collection?.id) {
+            // Only reset pagination if our collection has been initialized and the new collection is not the same as ours
+            if (this.collection !== undefined && this.collection?.id !== data.collection?.id) {
                 this.reset();
             }
 
-            this.collection = data.collection;
+            this.collection = data.collection || null;
 
         });
 
