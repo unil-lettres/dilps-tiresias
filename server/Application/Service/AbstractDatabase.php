@@ -22,7 +22,7 @@ abstract class AbstractDatabase
     private static function dumpDataRemotely($remote, $dumpFile): void
     {
         $sshCmd = <<<STRING
-        ssh $remote "cd /sites/$remote/ && php7.3 bin/dump-data.php $dumpFile"
+        ssh $remote "cd /sites/$remote/ && php7.4 bin/dump-data.php $dumpFile"
 STRING;
 
         echo "dumping data $dumpFile on $remote...\n";
