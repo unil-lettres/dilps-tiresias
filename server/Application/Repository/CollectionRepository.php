@@ -18,6 +18,7 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      * - collection is member and user is logged in
      * - collection is admin and user is admin
      * - collection owner, creator or responsible is the user
+     * - collection parent is accessible (recursively)
      *
      * @param null|User $user
      *
@@ -35,19 +36,36 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
         }
 
         $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+        $visibility = $this->quoteArray($visibility);
 
-        $qb = $this->getEntityManager()
-            ->getConnection()
-            ->createQueryBuilder()
-            ->select('collection.id')
-            ->from('collection')
-            ->leftJoin('collection', 'collection_user', 'cu', 'collection.id = cu.collection_id')
-            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')')
-            ->orWhere('collection.owner_id = ' . $userId)
-            ->orWhere('collection.creator_id = ' . $userId)
-            ->orWhere('cu.user_id = ' . $userId);
+        $isAccessible = <<<STRING
+            collection.visibility IN ($visibility)
+            OR collection.owner_id = $userId
+            OR collection.creator_id = $userId
+            OR cu.user_id = $userId 
+STRING;
 
-        return $qb->getSQL();
+        $sql = <<<STRING
+WITH RECURSIVE parent AS (
+
+SELECT collection.id, collection.parent_id FROM collection
+LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+WHERE
+parent_id IS NULL 
+AND ($isAccessible)
+
+UNION
+
+SELECT collection.id, collection.parent_id FROM collection
+INNER JOIN parent ON collection.parent_id = parent.id
+LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+WHERE
+$isAccessible
+
+) SELECT id FROM parent
+STRING;
+
+        return $sql;
     }
 
     /**

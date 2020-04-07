@@ -75,12 +75,12 @@ class AclFilterTest extends TestCase
             'student can access collections that are his own or are member' => [
                 'student',
                 Collection::class,
-                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\')) OR (collection.owner_id = \'1003\') OR (collection.creator_id = \'1003\') OR (cu.user_id = \'1003\'))',
+                'test.id IN (WITH RECURSIVE parent AS',
             ],
             'administrator can access collections that are his own or are administrator or member' => [
                 'administrator',
                 Collection::class,
-                'test.id IN (SELECT collection.id FROM collection LEFT JOIN collection_user cu ON collection.id = cu.collection_id WHERE (collection.visibility IN (\'member\', \'administrator\')) OR (collection.owner_id = \'1000\') OR (collection.creator_id = \'1000\') OR (cu.user_id = \'1000\'))',
+                'test.id IN (WITH RECURSIVE parent AS',
             ],
             'changes are invisible to anonymous' => [
                 null,

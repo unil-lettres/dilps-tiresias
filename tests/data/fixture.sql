@@ -18,7 +18,8 @@ REPLACE INTO `collection` (`id`, parent_id, owner_id, visibility, `name`, `descr
   (2004, NULL, NULL, 'member', 'Test collection 2004', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'tiresias'),
   (2005, NULL, 1006, 'member', 'Test collection 2005', 'You''re gonna need a bigger boat.', 'tiresias'),
   (2006, 2000, 1003, 'member', 'Test collection 2006 child of 2000', 'I''m the king of the world!', 'dilps'),
-  (2007, 2001, 1003, 'member', 'Test collection 2007 child of 2001', 'My mama always said life was like a box of chocolates.', 'dilps');
+  (2007, 2001, 1003, 'member', 'Test collection 2007 child of 2001', 'My mama always said life was like a box of chocolates.', 'dilps'),
+  (2008, 2001, 1003, 'private', 'Test collection 2008 child of 2001', 'It is not our abilities that show what we truly are. It is our choices.', 'dilps');
 
 REPLACE INTO `artist` (`id`, `name`, `site`) VALUES
   (3000, 'Test artist 3000', 'dilps');
