@@ -10,13 +10,15 @@ REPLACE INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
   (1006, 'junior', 'junior-tiresias@example.com', MD5('junior'), 'junior', 'tiresias'),
   (1007, 'student', 'student-tiresias@example.com', MD5('student'), 'student', 'tiresias');
 
-REPLACE INTO `collection` (`id`, owner_id, visibility, `name`, `description`, `site`) VALUES
-  (2000, 1003, 'private', 'Test collection 2000', 'Roads? Where we''re going we don''t need roads.', 'dilps'),
-  (2001, NULL, 'member', 'Test collection 2001', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'dilps'),
-  (2002, 1002, 'member', 'Test collection 2002', 'You''re gonna need a bigger boat.', 'dilps'),
-  (2003, 1007, 'private', 'Test collection 2003', 'Roads? Where we''re going we don''t need roads.', 'tiresias'),
-  (2004, NULL, 'member', 'Test collection 2004', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'tiresias'),
-  (2005, 1006, 'member', 'Test collection 2005', 'You''re gonna need a bigger boat.', 'tiresias');
+REPLACE INTO `collection` (`id`, parent_id, owner_id, visibility, `name`, `description`, `site`) VALUES
+  (2000, NULL, 1003, 'private', 'Test collection 2000', 'Roads? Where we''re going we don''t need roads.', 'dilps'),
+  (2001, NULL, NULL, 'member', 'Test collection 2001', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'dilps'),
+  (2002, NULL, 1002, 'member', 'Test collection 2002', 'You''re gonna need a bigger boat.', 'dilps'),
+  (2003, NULL, 1007, 'private', 'Test collection 2003', 'Roads? Where we''re going we don''t need roads.', 'tiresias'),
+  (2004, NULL, NULL, 'member', 'Test collection 2004', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'tiresias'),
+  (2005, NULL, 1006, 'member', 'Test collection 2005', 'You''re gonna need a bigger boat.', 'tiresias'),
+  (2006, 2000, 1003, 'member', 'Test collection 2006 child of 2000', 'I''m the king of the world!', 'dilps'),
+  (2007, 2001, 1003, 'member', 'Test collection 2007 child of 2001', 'My mama always said life was like a box of chocolates.', 'dilps');
 
 REPLACE INTO `artist` (`id`, `name`, `site`) VALUES
   (3000, 'Test artist 3000', 'dilps');

@@ -27,6 +27,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4",
+        "ext-PDO": "*",
         "ext-calendar": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
