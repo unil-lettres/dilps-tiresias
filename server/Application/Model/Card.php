@@ -11,8 +11,8 @@ use Application\Traits\HasAddress;
 use Application\Traits\HasCode;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
-use Application\Traits\HasName;
 use Application\Traits\HasParentInterface;
+use Application\Traits\HasRichTextName;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Application\Traits\HasValidation;
@@ -34,6 +34,7 @@ use Psr\Http\Message\UploadedFileInterface;
  * @ORM\Entity(repositoryClass="Application\Repository\CardRepository")
  * @ORM\Table(indexes={
  *     @ORM\Index(name="card_name_idx", columns={"name"}),
+ *     @ORM\Index(name="card_plain_name_idx", columns={"plain_name"}),
  *     @ORM\Index(name="card_locality_idx", columns={"locality"}),
  *     @ORM\Index(name="card_area_idx", columns={"area"}),
  * },
@@ -53,7 +54,7 @@ use Psr\Http\Message\UploadedFileInterface;
 class Card extends AbstractModel implements HasSiteInterface
 {
     use HasCode;
-    use HasName;
+    use HasRichTextName;
     use HasInstitution;
     use HasAddress;
     use CardSimpleProperties;

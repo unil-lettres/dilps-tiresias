@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait for all objects with a name
+ * Trait for all objects with a richt text name and an automatic plain version (to sort and filter on)
  */
-trait HasName
+trait HasRichTextName
 {
     /**
      * @var string
      * @ORM\Column(type="string", length=191)
      */
     private $name = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=191)
+     */
+    private $plainName = '';
 
     /**
      * Constructor
@@ -34,7 +41,8 @@ trait HasName
      */
     public function setName(string $name): void
     {
-        $this->name = $name;
+        $this->name = Utility::sanitizeSingleLineRichText($name);
+        $this->plainName = strip_tags($this->name);
     }
 
     /**
