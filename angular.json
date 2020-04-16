@@ -81,11 +81,14 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "disableHostCheck": true,
                         "browserTarget": "dilps:build",
                         "host": "dilps.lan",
                         "proxyConfig": "proxy.conf.json",
-                        "port": 4400
+                        "port": 4400,
+                        "allowedHosts": [
+                            "dilps.lan",
+                            "tiresias.lan"
+                        ]
                     },
                     "configurations": {
                         "production": {
