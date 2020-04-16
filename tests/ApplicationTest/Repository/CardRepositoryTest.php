@@ -38,6 +38,6 @@ class CardRepositoryTest extends AbstractRepositoryTest
 
         $this->getEntityManager()->remove($card);
         $this->getEntityManager()->flush();
-        self::assertFileNotExists($card->getPath(), 'test file must have been deleted when record was deleted');
+        self::assertFileDoesNotExist($card->getPath(), 'test file must have been deleted when record was deleted');
     }
 }

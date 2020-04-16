@@ -57,9 +57,9 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
-        "phpunit/phpunit": "^8.3",
+        "laminas/laminas-development-mode": "^3.2",
         "mezzio/mezzio-tooling": "^1.2",
-        "laminas/laminas-development-mode": "^3.2"
+        "phpunit/phpunit": "^9.1"
     },
     "autoload": {
         "psr-4": {

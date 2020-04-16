@@ -20,8 +20,8 @@ class AbstractXlsxAction extends TestCase
     protected function getSpreadsheet(MiddlewareInterface $action, ServerRequestInterface $request): Spreadsheet
     {
         // Generate a response containing a spreadsheet
-        $handler = $this->prophesize(RequestHandlerInterface::class);
-        $response = $action->process($request, $handler->reveal());
+        $handler = $this->createMock(RequestHandlerInterface::class);
+        $response = $action->process($request, $handler);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));
