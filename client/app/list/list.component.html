@@ -5,7 +5,7 @@
     <div (click)="sorting([{active: 'dating', direction: 'asc'}])" mat-menu-item>Datation</div>
     <div (click)="sorting([{active: 'locality', direction: 'asc'}])" mat-menu-item>Lieu</div>
     <div (click)="sorting([{active: 'artists', direction: 'asc'}])" mat-menu-item>Artistes</div>
-    <div (click)="sorting([{active: 'code', direction: 'asc'}])" mat-menu-item *ngIf="site === Site.tiresias">Référence</div>
+    <div (click)="sorting([{active: 'code', direction: 'asc', nullAsHighest: true}])" mat-menu-item *ngIf="site === Site.tiresias">Référence</div>
 </mat-menu>
 
 <div class="containerWithToolbar" fxFlex fxLayout="column">
