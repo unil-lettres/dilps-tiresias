@@ -23,7 +23,7 @@ abstract class Helper
     public static function paginate(array $pagination, QueryBuilder $query): array
     {
         $offset = $pagination['offset'] ?? 0;
-        $pageIndex = $pagination['pageIndex'] ?? 0;
+        $pageIndex = $pagination['pageIndex'];
         $pageSize = $pagination['pageSize'];
 
         $paginator = new Paginator($query);
