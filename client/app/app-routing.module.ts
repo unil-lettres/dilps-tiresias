@@ -22,11 +22,11 @@ import { EmptyComponent } from './shared/components/empty/empty.component';
 import { CardFilterGroupCondition, CollectionFilterGroupCondition, CollectionVisibility, UserRole } from './shared/generated-types';
 import { AuthAdminGuard } from './shared/services/auth.admin.guard';
 import { AuthGuard } from './shared/services/auth.guard';
+import { StatisticsComponent } from './statistics/statistics/statistics.component';
 import { TagsComponent } from './tags/tags/tags.component';
 import { UserResolver } from './users/services/user.resolver';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users/users.component';
-import { StatisticsComponent } from './statistics/statistics/statistics.component';
 
 export const routes: Routes = [
     {
@@ -198,7 +198,13 @@ export const routes: Routes = [
                 },
                 children: [
                     {
+                        // Redirect to next route. Angular router dislikes usage of navigation with empty path
                         path: '',
+                        pathMatch: 'full',
+                        redirectTo: '/my-collection/unclassified',
+                    },
+                    {
+                        path: 'unclassified',
                         component: ListComponent,
                         data: {
                             filter: {groups: [{conditions: [{collections: {empty: {}}} as CardFilterGroupCondition]}]},

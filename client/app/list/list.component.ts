@@ -6,9 +6,11 @@ import {
     NaturalSearchSelections,
     PaginationInput,
     Sorting,
+    toUrl,
 } from '@ecodev/natural';
-import { clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy, pick } from 'lodash';
+import { clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy } from 'lodash';
 import { forkJoin, Observable } from 'rxjs';
+import { SITE } from '../app.config';
 import { CardService } from '../card/services/card.service';
 import { CollectionService } from '../collections/services/collection.service';
 import { FakeCollection } from '../collections/services/fake-collection.resolver';
@@ -26,10 +28,10 @@ import {
     Cards_cards_items,
     CardSortingField,
     CardsVariables,
+    Site,
     SortingOrder,
     UserRole,
     Viewer,
-    Site,
 } from '../shared/generated-types';
 
 import { adminConfig, NaturalSearchFacetsService } from '../shared/natural-search-facets.service';
@@ -39,7 +41,6 @@ import { UserService } from '../users/services/user.service';
 import { ViewGridComponent } from '../view-grid/view-grid.component';
 import { ViewListComponent } from '../view-list/view-list.component';
 import { Location, ViewMapComponent } from '../view-map/view-map.component';
-import { SITE } from '../app.config';
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
