@@ -15,6 +15,9 @@ trait HasImage
 {
     /**
      * @var string
+     *
+     * @API\Exclude
+     *
      * @ORM\Column(type="string", length=2000)
      */
     private $filename = '';

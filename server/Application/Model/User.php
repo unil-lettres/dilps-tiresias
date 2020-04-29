@@ -100,6 +100,8 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * @var string
      *
+     * @API\Exclude
+     *
      * @ORM\Column(type="string", length=255)
      * @API\Exclude
      */
