@@ -101,7 +101,7 @@ class ZipAction extends AbstractAction
     private function export(array $cards, string $file): void
     {
         $this->zip = new ZipArchive();
-        $this->zip->open($file);
+        $this->zip->open($file, ZipArchive::OVERWRITE);
 
         foreach ($cards as $card) {
             $image = $this->insertImage($card);
