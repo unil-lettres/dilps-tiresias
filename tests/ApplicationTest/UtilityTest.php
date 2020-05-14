@@ -11,7 +11,7 @@ class UtilityTest extends \PHPUnit\Framework\TestCase
 {
     public function testNow(): void
     {
-        self::assertStringStartsWith('201', Utility::getNow()->format('c'));
+        self::assertStringStartsWith('202', Utility::getNow()->format('c'));
     }
 
     public function testGetShortClassName(): void
