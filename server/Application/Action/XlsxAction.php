@@ -40,11 +40,6 @@ class XlsxAction extends AbstractXlsx
 
     /**
      * Serve multiples cards as PowerPoint file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -58,8 +53,6 @@ class XlsxAction extends AbstractXlsx
      * Export all cards into a presentation
      *
      * @param Card[] $cards
-     *
-     * @return Spreadsheet
      */
     private function export(array $cards): Spreadsheet
     {
@@ -78,9 +71,6 @@ class XlsxAction extends AbstractXlsx
         return $spreadsheet;
     }
 
-    /**
-     * @param Worksheet $sheet
-     */
     private function headers(Worksheet $sheet): void
     {
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Id');

@@ -18,8 +18,6 @@ trait HasSorting
 
     /**
      * Set sorting
-     *
-     * @param int $sorting
      */
     public function setSorting(int $sorting): void
     {
@@ -28,8 +26,6 @@ trait HasSorting
 
     /**
      * Get sorting
-     *
-     * @return int
      */
     public function getSorting(): int
     {

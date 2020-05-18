@@ -27,17 +27,12 @@ trait HasYearRange
 
     /**
      * Return the from year
-     *
-     * @return null|int
      */
     public function getFrom(): ?int
     {
         return $this->from;
     }
 
-    /**
-     * @param null|int $from
-     */
     public function setFrom(?int $from): void
     {
         $this->from = $from;
@@ -45,17 +40,12 @@ trait HasYearRange
 
     /**
      * Return the to year
-     *
-     * @return null|int
      */
     public function getTo(): ?int
     {
         return $this->to;
     }
 
-    /**
-     * @param null|int $to
-     */
     public function setTo(?int $to): void
     {
         $this->to = $to;

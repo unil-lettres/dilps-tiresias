@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use GraphQL\Doctrine\Annotation as API;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -24,10 +25,6 @@ trait HasImage
      * Set the image file
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
-     *
-     * @param UploadedFileInterface $file
-     *
-     * @throws \Exception
      */
     public function setFile(UploadedFileInterface $file): void
     {
@@ -35,7 +32,7 @@ trait HasImage
 
         $path = $this->getPath();
         if (file_exists($path)) {
-            throw new \Exception('A file already exist with the same name: ' . $this->getFilename());
+            throw new Exception('A file already exist with the same name: ' . $this->getFilename());
         }
         $file->moveTo($path);
 
@@ -46,8 +43,6 @@ trait HasImage
      * Set filename (without path)
      *
      * @API\Exclude
-     *
-     * @param string $filename
      */
     public function setFilename(string $filename): void
     {
@@ -58,17 +53,12 @@ trait HasImage
      * Get filename (without path)
      *
      * @API\Exclude
-     *
-     * @return string
      */
     public function getFilename(): string
     {
         return $this->filename;
     }
 
-    /**
-     * @return bool
-     */
     public function hasImage(): bool
     {
         return !empty($this->filename);
@@ -78,8 +68,6 @@ trait HasImage
      * Get absolute path to image on disk
      *
      * @API\Exclude
-     *
-     * @return string
      */
     public function getPath(): string
     {
@@ -108,8 +96,6 @@ trait HasImage
 
     /**
      * Delete file and throw exception if MIME type is invalid
-     *
-     * @throws \Exception
      */
     private function validateMimeType(): void
     {
@@ -132,14 +118,12 @@ trait HasImage
         if (!in_array($mime, $acceptedMimeTypes, true)) {
             unlink($path);
 
-            throw new \Exception('Invalid file type of: ' . $mime);
+            throw new Exception('Invalid file type of: ' . $mime);
         }
     }
 
     /**
      * Generate unique filename while trying to preserver original extension
-     *
-     * @param string $originalFilename
      */
     private function generateUniqueFilename(string $originalFilename): void
     {

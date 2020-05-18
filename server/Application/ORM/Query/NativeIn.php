@@ -30,9 +30,6 @@ class NativeIn extends FunctionNode
      *
      * @param string $field DQL for the field
      * @param string $nativeSql native SQL subquery
-     * @param bool $isNot
-     *
-     * @return string
      */
     public static function dql(string $field, string $nativeSql, bool $isNot = false): string
     {

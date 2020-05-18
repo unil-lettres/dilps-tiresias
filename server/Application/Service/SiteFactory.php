@@ -12,10 +12,6 @@ class SiteFactory
 {
     /**
      * Return the current site, dilps or tiresias, from the request host name
-     *
-     * @param ContainerInterface $container
-     *
-     * @return string
      */
     public function __invoke(ContainerInterface $container): string
     {

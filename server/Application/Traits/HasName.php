@@ -29,8 +29,6 @@ trait HasName
 
     /**
      * Set name
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -39,8 +37,6 @@ trait HasName
 
     /**
      * Get name
-     *
-     * @return string
      */
     public function getName(): string
     {

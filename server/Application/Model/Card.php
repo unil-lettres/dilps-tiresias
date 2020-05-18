@@ -207,8 +207,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Constructor
-     *
-     * @param string $name
      */
     public function __construct(string $name = '')
     {
@@ -228,8 +226,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Return whether this is publicly available to everybody, or only member, or only owner
      *
      * @API\Field(type="Application\Api\Enum\CardVisibilityType")
-     *
-     * @return string
      */
     public function getVisibility(): string
     {
@@ -240,8 +236,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set whether this is publicly available to everybody, or only member, or only owner
      *
      * @API\Input(type="Application\Api\Enum\CardVisibilityType")
-     *
-     * @param string $visibility
      */
     public function setVisibility(string $visibility): void
     {
@@ -261,8 +255,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get collections this card belongs to
      *
      * @API\Field(type="Collection[]")
-     *
-     * @return DoctrineCollection
      */
     public function getCollections(): DoctrineCollection
     {
@@ -282,8 +274,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * - 1927
      * - c. 1100
      * - Fin du XIIe siècle
-     *
-     * @return string
      */
     public function getDating(): string
     {
@@ -303,8 +293,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * - 1927
      * - c. 1100
      * - Fin du XIIe siècle
-     *
-     * @param string $dating
      */
     public function setDating(string $dating): void
     {
@@ -320,8 +308,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Return the automatically computed dating periods
      *
      * @API\Field(type="Dating[]")
-     *
-     * @return DoctrineCollection
      */
     public function getDatings(): DoctrineCollection
     {
@@ -410,8 +396,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get artists
      *
      * @API\Field(type="Artist[]")
-     *
-     * @return DoctrineCollection
      */
     public function getArtists(): DoctrineCollection
     {
@@ -422,8 +406,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get antiqueNames
      *
      * @API\Field(type="AntiqueName[]")
-     *
-     * @return DoctrineCollection
      */
     public function getAntiqueNames(): DoctrineCollection
     {
@@ -432,8 +414,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Add tag
-     *
-     * @param Tag $tag
      */
     public function addTag(Tag $tag): void
     {
@@ -445,8 +425,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Remove tag
-     *
-     * @param Tag $tag
      */
     public function removeTag(Tag $tag): void
     {
@@ -458,8 +436,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get tags
      *
      * @API\Field(type="Tag[]")
-     *
-     * @return DoctrineCollection
      */
     public function getTags(): DoctrineCollection
     {
@@ -486,33 +462,21 @@ class Card extends AbstractModel implements HasSiteInterface
         $this->original = $original;
     }
 
-    /**
-     * @return null|DocumentType
-     */
     public function getDocumentType(): ?DocumentType
     {
         return $this->documentType;
     }
 
-    /**
-     * @param null|DocumentType $documentType
-     */
     public function setDocumentType(?DocumentType $documentType): void
     {
         $this->documentType = $documentType;
     }
 
-    /**
-     * @return null|Domain
-     */
     public function getDomain(): ?Domain
     {
         return $this->domain;
     }
 
-    /**
-     * @param null|Domain $domain
-     */
     public function setDomain(?Domain $domain): void
     {
         $this->domain = $domain;
@@ -522,8 +486,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get periods
      *
      * @API\Field(type="Period[]")
-     *
-     * @return DoctrineCollection
      */
     public function getPeriods(): DoctrineCollection
     {
@@ -532,8 +494,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Add Period
-     *
-     * @param Period $period
      */
     public function addPeriod(Period $period): void
     {
@@ -544,8 +504,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Remove Period
-     *
-     * @param Period $period
      */
     public function removePeriod(Period $period): void
     {
@@ -556,8 +514,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get materials
      *
      * @API\Field(type="Material[]")
-     *
-     * @return DoctrineCollection
      */
     public function getMaterials(): DoctrineCollection
     {
@@ -566,8 +522,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Add Material
-     *
-     * @param Material $material
      */
     public function addMaterial(Material $material): void
     {
@@ -580,8 +534,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Remove Material
-     *
-     * @param Material $material
      */
     public function removeMaterial(Material $material): void
     {
@@ -592,8 +544,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that it was added to a Collection.
      * This should only be called by Collection::addCard()
-     *
-     * @param Collection $collection
      */
     public function collectionAdded(Collection $collection): void
     {
@@ -609,8 +559,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that it was removed from a Collection.
      * This should only be called by Collection::removeCard()
-     *
-     * @param Collection $collection
      */
     public function collectionRemoved(Collection $collection): void
     {
@@ -620,8 +568,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that a Dating was added.
      * This should only be called by Dating::setCard()
-     *
-     * @param Dating $dating
      */
     public function datingAdded(Dating $dating): void
     {
@@ -631,8 +577,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that a Dating was removed.
      * This should only be called by Dating::setCard()
-     *
-     * @param Dating $dating
      */
     public function datingRemoved(Dating $dating): void
     {
@@ -641,8 +585,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Get file size in bytes
-     *
-     * @return int
      */
     public function getFileSize(): int
     {
@@ -653,8 +595,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set file size in bytes
      *
      * @API\Exclude
-     *
-     * @param int $fileSize
      */
     public function setFileSize(int $fileSize): void
     {
@@ -663,8 +603,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Get image width
-     *
-     * @return int
      */
     public function getWidth(): int
     {
@@ -675,8 +613,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set image width
      *
      * @API\Exclude
-     *
-     * @param int $width
      */
     public function setWidth(int $width): void
     {
@@ -685,8 +621,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Get image height
-     *
-     * @return int
      */
     public function getHeight(): int
     {
@@ -697,8 +631,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set image height
      *
      * @API\Exclude
-     *
-     * @param int $height
      */
     public function setHeight(int $height): void
     {
@@ -709,8 +641,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set the image file
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
-     *
-     * @param UploadedFileInterface $file
      */
     public function setFile(UploadedFileInterface $file): void
     {
@@ -720,8 +650,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Get legacy id
-     *
-     * @return int
      */
     public function getLegacyId(): int
     {
@@ -732,8 +660,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Set legacy id
      *
      * @API\Exclude
-     *
-     * @param int $legacyId
      */
     public function setLegacyId(int $legacyId): void
     {
@@ -840,8 +766,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * Get related cards
      *
      * @API\Field(type="Card[]")
-     *
-     * @return DoctrineCollection
      */
     public function getCards(): DoctrineCollection
     {
@@ -881,8 +805,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Return the change this card is a suggestion for, if any
-     *
-     * @return null|Change
      */
     public function getChange(): ?Change
     {
@@ -892,8 +814,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that it was added to a Change.
      * This should only be called by Change::addCard()
-     *
-     * @param null|Change $change
      */
     public function changeAdded(?Change $change): void
     {
@@ -902,8 +822,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Set documentSize
-     *
-     * @param string $documentSize
      */
     public function setDocumentSize(string $documentSize): void
     {
@@ -912,8 +830,6 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * Get documentSize
-     *
-     * @return string
      */
     public function getDocumentSize(): string
     {
@@ -923,8 +839,6 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Ensure that the entire hierarchy is added, but also make sure that
      * a non-leaf tag is added without one of his leaf.
-     *
-     * @param DoctrineCollection $collection
      */
     private function addEntireHierarchy(DoctrineCollection $collection): void
     {

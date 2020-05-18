@@ -14,6 +14,7 @@ use Application\Model\DocumentType;
 use Application\Model\Domain;
 use Application\Model\Material;
 use Application\Model\Period;
+use Exception;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -115,14 +116,9 @@ class Importer
         $cell = Coordinate::stringFromColumnIndex($column) . $row;
         $message = 'Erreur dans la cellule ' . $cell . ': ' . $message;
 
-        throw new \Exception($message, 0, $previousException);
+        throw new Exception($message, 0, $previousException);
     }
 
-    /**
-     * @param array $images
-     *
-     * @return array
-     */
     private function indexByName(array $images): array
     {
         $imagesToImport = [];

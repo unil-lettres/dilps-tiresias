@@ -42,8 +42,6 @@ class News extends AbstractModel implements HasSiteInterface
 
     /**
      * Set description
-     *
-     * @param string $description
      */
     public function setDescription(string $description): void
     {
@@ -52,8 +50,6 @@ class News extends AbstractModel implements HasSiteInterface
 
     /**
      * Get description
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -62,25 +58,17 @@ class News extends AbstractModel implements HasSiteInterface
 
     /**
      * Relative URL to image
-     *
-     * @return string
      */
     public function getImageUrl(): string
     {
         return '/news-images/' . $this->getFilename();
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return $this->isActive;
     }
 
-    /**
-     * @param bool $isActive
-     */
     public function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;

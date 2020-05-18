@@ -13,8 +13,6 @@ interface HasParentInterface
 {
     /**
      * Get name
-     *
-     * @return string
      */
     public function getName(): string;
 
@@ -29,8 +27,6 @@ interface HasParentInterface
 
     /**
      * Get children objects
-     *
-     * @return Collection
      */
     public function getChildren(): Collection;
 }

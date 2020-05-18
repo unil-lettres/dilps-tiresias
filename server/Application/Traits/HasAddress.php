@@ -70,8 +70,6 @@ trait HasAddress
 
     /**
      * Get latitude
-     *
-     * @return null|float
      */
     public function getLatitude(): ?float
     {
@@ -80,8 +78,6 @@ trait HasAddress
 
     /**
      * Set latitude
-     *
-     * @param null|float $latitude
      */
     public function setLatitude(?float $latitude): void
     {
@@ -100,8 +96,6 @@ trait HasAddress
 
     /**
      * Get longitude
-     *
-     * @return null|float
      */
     public function getLongitude(): ?float
     {
@@ -110,8 +104,6 @@ trait HasAddress
 
     /**
      * Set longitude
-     *
-     * @param null|float $longitude
      */
     public function setLongitude(?float $longitude): void
     {
@@ -121,8 +113,6 @@ trait HasAddress
 
     /**
      * @API\Field(type="?Precision")
-     *
-     * @return null|string
      */
     public function getPrecision(): ?string
     {
@@ -131,89 +121,57 @@ trait HasAddress
 
     /**
      * @API\Input(type="?Precision")
-     *
-     * @param null|string $precision
      */
     public function setPrecision(?string $precision): void
     {
         $this->precision = $precision;
     }
 
-    /**
-     * @return string
-     */
     public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * @param string $street
-     */
     public function setStreet(string $street): void
     {
         $this->street = $street;
     }
 
-    /**
-     * @return string
-     */
     public function getPostcode(): string
     {
         return $this->postcode;
     }
 
-    /**
-     * @param string $postcode
-     */
     public function setPostcode(string $postcode): void
     {
         $this->postcode = $postcode;
     }
 
-    /**
-     * @return string
-     */
     public function getLocality(): string
     {
         return $this->locality;
     }
 
-    /**
-     * @param string $locality
-     */
     public function setLocality(string $locality): void
     {
         $this->locality = $locality;
     }
 
-    /**
-     * @return string
-     */
     public function getArea(): string
     {
         return $this->area;
     }
 
-    /**
-     * @param string $area
-     */
     public function setArea(string $area): void
     {
         $this->area = $area;
     }
 
-    /**
-     * @return null|Country
-     */
     public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-    /**
-     * @param null|Country $country
-     */
     public function setCountry(?Country $country = null): void
     {
         $this->country = $country;

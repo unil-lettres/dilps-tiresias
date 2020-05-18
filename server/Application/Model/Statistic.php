@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * A statistic to record activity per month
@@ -126,121 +127,76 @@ class Statistic extends AbstractModel implements HasSiteInterface
      */
     private $aaiLogins = [];
 
-    /**
-     * @return string
-     */
     public function getDate(): string
     {
         return $this->date;
     }
 
-    /**
-     * @param string $date
-     */
     public function setDate(string $date): void
     {
         $this->date = $date;
     }
 
-    /**
-     * @return int
-     */
     public function getAnonymousPageCount(): int
     {
         return $this->anonymousPageCount;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultPageCount(): int
     {
         return $this->defaultPageCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAaiPageCount(): int
     {
         return $this->aaiPageCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAnonymousDetailCount(): int
     {
         return $this->anonymousDetailCount;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultDetailCount(): int
     {
         return $this->defaultDetailCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAaiDetailCount(): int
     {
         return $this->aaiDetailCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAnonymousSearchCount(): int
     {
         return $this->anonymousSearchCount;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultSearchCount(): int
     {
         return $this->defaultSearchCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAaiSearchCount(): int
     {
         return $this->aaiSearchCount;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultLoginCount(): int
     {
         return $this->defaultLoginCount;
     }
 
-    /**
-     * @return int
-     */
     public function getAaiLoginCount(): int
     {
         return $this->aaiLoginCount;
     }
 
-    /**
-     * @return int
-     */
     public function getDefaultUniqueLoginCount(): int
     {
         return count($this->defaultLogins);
     }
 
-    /**
-     * @return int
-     */
     public function getAaiUniqueLoginCount(): int
     {
         return count($this->aaiLogins);
@@ -256,7 +212,7 @@ class Statistic extends AbstractModel implements HasSiteInterface
         } elseif ($user->getType() === User::TYPE_AAI) {
             ++$this->aaiPageCount;
         } else {
-            throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
         }
     }
 
@@ -270,7 +226,7 @@ class Statistic extends AbstractModel implements HasSiteInterface
         } elseif ($user->getType() === User::TYPE_AAI) {
             ++$this->aaiDetailCount;
         } else {
-            throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
         }
     }
 
@@ -284,7 +240,7 @@ class Statistic extends AbstractModel implements HasSiteInterface
         } elseif ($user->getType() === User::TYPE_AAI) {
             ++$this->aaiSearchCount;
         } else {
-            throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
         }
     }
 
@@ -304,7 +260,7 @@ class Statistic extends AbstractModel implements HasSiteInterface
                 $this->aaiLogins[] = $user->getId();
             }
         } else {
-            throw new \InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
         }
     }
 }

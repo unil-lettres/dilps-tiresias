@@ -110,8 +110,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * Return whether this is publicly available to only to member, or only administrators, or only owner
      *
      * @API\Field(type="Application\Api\Enum\CollectionVisibilityType")
-     *
-     * @return string
      */
     public function getVisibility(): string
     {
@@ -122,8 +120,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * Set whether this is publicly available to only to member, or only administrators, or only owner
      *
      * @API\Input(type="Application\Api\Enum\CollectionVisibilityType")
-     *
-     * @param string $visibility
      */
     public function setVisibility(string $visibility): void
     {
@@ -132,8 +128,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Set description
-     *
-     * @param string $description
      */
     public function setDescription(string $description): void
     {
@@ -142,8 +136,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Get description
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -160,8 +152,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Set whether the collection is a source ("main" collection)
-     *
-     * @param bool $isSource
      */
     public function setIsSource(bool $isSource): void
     {
@@ -170,8 +160,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Set copyrights
-     *
-     * @param string $copyrights
      */
     public function setCopyrights(string $copyrights): void
     {
@@ -180,8 +168,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Get copyrights
-     *
-     * @return string
      */
     public function getCopyrights(): string
     {
@@ -200,8 +186,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Get usageRights
-     *
-     * @return string
      */
     public function getUsageRights(): string
     {
@@ -210,8 +194,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Add card
-     *
-     * @param Card $card
      */
     public function addCard(Card $card): void
     {
@@ -223,8 +205,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Remove card
-     *
-     * @param Card $card
      */
     public function removeCard(Card $card): void
     {
@@ -236,8 +216,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * Get cards
      *
      * @API\Field(type="Card[]")
-     *
-     * @return DoctrineCollection
      */
     public function getCards(): DoctrineCollection
     {
@@ -248,8 +226,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * Get users
      *
      * @API\Field(type="User[]")
-     *
-     * @return DoctrineCollection
      */
     public function getUsers(): DoctrineCollection
     {
@@ -258,8 +234,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Add User
-     *
-     * @param User $user
      */
     public function addUser(User $user): void
     {
@@ -270,17 +244,12 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Remove User
-     *
-     * @param User $user
      */
     public function removeUser(User $user): void
     {
         $this->users->removeElement($user);
     }
 
-    /**
-     * @return bool
-     */
     public function hasUsers(): bool
     {
         return count($this->users) > 0;

@@ -15,7 +15,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
      */
     private $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->repository = _em()->getRepository(Statistic::class);

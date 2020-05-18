@@ -14,14 +14,13 @@ class IsNotSuggestion implements AssertionInterface
     /**
      * Assert that the card is NOT a suggestion (has a change)
      *
-     * @param Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
         $object = $resource->getInstance();
 

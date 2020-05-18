@@ -10,11 +10,6 @@ use Interop\Container\ContainerInterface;
 
 class LegacyRedirectFactory
 {
-    /**
-     * @param ContainerInterface $container
-     *
-     * @return LegacyRedirectMiddleware
-     */
     public function __invoke(ContainerInterface $container): LegacyRedirectMiddleware
     {
         $entityManager = $container->get(EntityManager::class);

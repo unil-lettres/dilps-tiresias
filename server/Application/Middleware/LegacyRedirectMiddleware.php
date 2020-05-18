@@ -30,12 +30,6 @@ class LegacyRedirectMiddleware implements MiddlewareInterface
         $this->cardRepository = $cardRepository;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (array_key_exists('id', $request->getQueryParams())) {

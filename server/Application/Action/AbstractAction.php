@@ -9,11 +9,6 @@ use Psr\Http\Server\MiddlewareInterface;
 
 abstract class AbstractAction implements MiddlewareInterface
 {
-    /**
-     * @param string $message
-     *
-     * @return JsonResponse
-     */
     protected function createError(string $message): JsonResponse
     {
         $response = new JsonResponse(['error' => $message]);

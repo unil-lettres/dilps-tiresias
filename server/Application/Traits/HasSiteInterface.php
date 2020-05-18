@@ -9,13 +9,7 @@ namespace Application\Traits;
  */
 interface HasSiteInterface
 {
-    /**
-     * @return string
-     */
     public function getSite(): string;
 
-    /**
-     * @param string $site
-     */
     public function setSite(string $site): void;
 }

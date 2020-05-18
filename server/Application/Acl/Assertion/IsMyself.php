@@ -15,14 +15,13 @@ class IsMyself implements AssertionInterface
     /**
      * Assert that the user is the current user himself
      *
-     * @param Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
         $user = $resource->getInstance();
 

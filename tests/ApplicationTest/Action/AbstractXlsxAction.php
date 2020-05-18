@@ -23,9 +23,9 @@ class AbstractXlsxAction extends TestCase
         $handler = $this->createMock(RequestHandlerInterface::class);
         $response = $action->process($request, $handler);
 
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->getHeaderLine('content-type'));
+        self::assertEquals(200, $response->getStatusCode());
+        self::assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->getHeaderLine('content-type'));
 
         // Write in a temp file
         $body = $response->getBody()->getContents();
@@ -33,7 +33,7 @@ class AbstractXlsxAction extends TestCase
         file_put_contents($filename, $body);
 
         $size = filesize($filename);
-        $this->assertEquals($size, $response->getHeaderLine('content-length'));
+        self::assertEquals($size, $response->getHeaderLine('content-length'));
 
         // Assert that it is a valid ZIP file to prevent PhpSpreadsheet from hanging
         $zip = new ZipArchive();

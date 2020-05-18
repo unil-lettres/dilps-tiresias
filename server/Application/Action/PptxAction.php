@@ -69,11 +69,6 @@ class PptxAction extends AbstractAction
 
     /**
      * Serve multiples cards as PowerPoint file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -104,9 +99,6 @@ class PptxAction extends AbstractAction
      * Export all cards into a presentation
      *
      * @param Card[] $cards
-     * @param string $title
-     *
-     * @return PhpPresentation
      */
     private function export(array $cards, string $title): PhpPresentation
     {

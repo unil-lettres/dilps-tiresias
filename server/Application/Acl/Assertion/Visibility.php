@@ -26,14 +26,13 @@ class Visibility implements AssertionInterface
      * or belongs to the current user,
      * or has been created by the current user.
      *
-     * @param Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
         $object = $resource->getInstance();
 

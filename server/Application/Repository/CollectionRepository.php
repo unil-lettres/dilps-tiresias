@@ -19,10 +19,6 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      * - collection is admin and user is admin
      * - collection owner, creator or responsible is the user
      * - collection parent is accessible (recursively)
-     *
-     * @param null|User $user
-     *
-     * @return string
      */
     public function getAccessibleSubQuery(?User $user): string
     {
@@ -40,40 +36,37 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
         $visibility = $this->quoteArray($visibility);
 
         $isAccessible = <<<STRING
-            collection.visibility IN ($visibility)
-            OR collection.owner_id = $userId
-            OR collection.creator_id = $userId
-            OR cu.user_id = $userId 
-STRING;
+                        collection.visibility IN ($visibility)
+                        OR collection.owner_id = $userId
+                        OR collection.creator_id = $userId
+                        OR cu.user_id = $userId 
+            STRING;
 
         $sql = <<<STRING
-WITH RECURSIVE parent AS (
+            WITH RECURSIVE parent AS (
 
-SELECT collection.id, collection.parent_id FROM collection
-LEFT JOIN collection_user cu ON collection.id = cu.collection_id
-WHERE
-parent_id IS NULL 
-AND ($isAccessible)
+            SELECT collection.id, collection.parent_id FROM collection
+            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            WHERE
+            parent_id IS NULL 
+            AND ($isAccessible)
 
-UNION
+            UNION
 
-SELECT collection.id, collection.parent_id FROM collection
-INNER JOIN parent ON collection.parent_id = parent.id
-LEFT JOIN collection_user cu ON collection.id = cu.collection_id
-WHERE
-$isAccessible
+            SELECT collection.id, collection.parent_id FROM collection
+            INNER JOIN parent ON collection.parent_id = parent.id
+            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            WHERE
+            $isAccessible
 
-) SELECT id FROM parent
-STRING;
+            ) SELECT id FROM parent
+            STRING;
 
         return $sql;
     }
 
     /**
      * Duplicate all accessible images from source collection into target collection
-     *
-     * @param Collection $sourceCollection
-     * @param Collection $targetCollection
      */
     public function linkCollectionToCollection(Collection $sourceCollection, Collection $targetCollection): void
     {

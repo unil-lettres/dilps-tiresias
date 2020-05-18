@@ -11,8 +11,6 @@ abstract class AbstractRepository extends EntityRepository
 {
     /**
      * Returns the AclFilter to fetch ACL filtering SQL
-     *
-     * @return AclFilter
      */
     public function getAclFilter(): AclFilter
     {
@@ -21,8 +19,6 @@ abstract class AbstractRepository extends EntityRepository
 
     /**
      * Return all ID
-     *
-     * @return string
      */
     protected function getAllIdsQuery(): string
     {

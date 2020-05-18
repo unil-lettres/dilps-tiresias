@@ -29,14 +29,13 @@ class All implements AssertionInterface
     /**
      * Assert that all given assert are correct (AND logic)
      *
-     * @param Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
         foreach ($this->asserts as $assert) {
             if (!$assert->assert($acl, $role, $resource, $privilege)) {

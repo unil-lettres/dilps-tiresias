@@ -8,6 +8,7 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
+use PDO;
 
 class CardRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
@@ -35,10 +36,6 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card is member and user is logged in
      * - card owner or creator is the user
      * - card's collection responsible is the user
-     *
-     * @param null|User $user
-     *
-     * @return string
      */
     public function getAccessibleSubQuery(?User $user): string
     {
@@ -77,7 +74,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->from('card')
             ->select('DISTINCT CONCAT("data/images/", filename)')
             ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll(\PDO::FETCH_COLUMN);
+            ->orderBy('filename')->execute()->fetchAll(PDO::FETCH_COLUMN);
 
         return $filenames;
     }
@@ -103,8 +100,6 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
     /**
      * Return the next available Account code
-     *
-     * @return string
      */
     public function getNextCodeAvailable(Collection $collection): string
     {
@@ -123,10 +118,6 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
     /**
      * Get a card from it's legacy id.
-     *
-     * @param int $legacy_id
-     *
-     * @return null|Card
      */
     public function getOneByLegacyId(int $legacy_id): ?Card
     {

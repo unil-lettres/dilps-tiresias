@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Application\Api\Output;
 
 use GraphQL\Type\Definition\ObjectType;
+use ReflectionClass;
 
 class PaginationType extends ObjectType
 {
     public function __construct(string $class, string $name)
     {
-        $c = new \ReflectionClass($class);
+        $c = new ReflectionClass($class);
         $s = $c->getShortName();
         $name = $s . 'Pagination';
 

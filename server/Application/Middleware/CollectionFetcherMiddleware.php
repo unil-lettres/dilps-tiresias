@@ -25,11 +25,6 @@ class CollectionFetcherMiddleware extends AbstractAction implements MiddlewareIn
 
     /**
      * Fetch multiples cards from their ID
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

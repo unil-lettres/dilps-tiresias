@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
 use Interop\Container\ContainerInterface;
@@ -38,7 +39,7 @@ class TypesFactory
         ];
 
         $aliases = [
-            \DateTimeImmutable::class => \Application\Api\Scalar\DateTimeType::class,
+            DateTimeImmutable::class => \Application\Api\Scalar\DateTimeType::class,
             'datetime_immutable' => \Application\Api\Scalar\DateTimeType::class,
         ];
 
@@ -53,8 +54,8 @@ class TypesFactory
             'invokables' => $invokables,
             'aliases' => $aliases,
             'services' => [
-//                // This is not quite right because it allow to compare a string with a json array.
-//                // TODO: either hide the json filter or find a cleaner solution
+                //                // This is not quite right because it allow to compare a string with a json array.
+                //                // TODO: either hide the json filter or find a cleaner solution
                 'json' => \GraphQL\Type\Definition\Type::string(),
             ],
             'abstract_factories' => [

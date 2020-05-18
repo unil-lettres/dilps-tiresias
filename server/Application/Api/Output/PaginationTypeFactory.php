@@ -25,7 +25,7 @@ class PaginationTypeFactory implements AbstractFactoryInterface
         return $class && is_a($class, AbstractModel::class, true);
     }
 
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): PaginationType
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): PaginationType
     {
         $class = $this->getClass($requestedName);
         $type = new PaginationType($class, $requestedName);

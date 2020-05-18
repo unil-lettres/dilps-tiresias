@@ -11,9 +11,6 @@ class InstitutionRepository extends AbstractRepository
     /**
      * Get or create an institution by its name
      *
-     * @param null|string $name
-     * @param string $site
-     *
      * @return Institution
      */
     public function getOrCreateByName(?string $name, string $site): ?Institution

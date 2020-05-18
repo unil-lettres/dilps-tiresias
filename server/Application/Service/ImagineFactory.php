@@ -11,10 +11,6 @@ class ImagineFactory
 {
     /**
      * Return the preferred driver available on this system
-     *
-     * @param ContainerInterface $container
-     *
-     * @return ImagineInterface
      */
     public function __invoke(ContainerInterface $container): ImagineInterface
     {

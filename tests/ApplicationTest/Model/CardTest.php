@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CardTest extends TestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         User::setCurrent(null);
     }
@@ -229,11 +229,6 @@ class CardTest extends TestCase
 
     /**
      * @dataProvider providerSetVisibility
-     *
-     * @param string $role
-     * @param string $previous
-     * @param string $next
-     * @param bool $shouldThrow
      */
     public function testSetVisibility(string $role, string $previous, string $next, bool $shouldThrow): void
     {

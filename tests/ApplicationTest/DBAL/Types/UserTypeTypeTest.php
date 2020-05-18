@@ -6,6 +6,7 @@ namespace ApplicationTest\DBAL\Types;
 
 use Application\DBAL\Types\UserTypeType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class UserTypeTypeTest extends TestCase
@@ -20,7 +21,7 @@ class UserTypeTypeTest extends TestCase
      */
     private $platform;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->type = $this->getMockBuilder(UserTypeType::class)->disableOriginalConstructor()
             ->setMethods(null)
@@ -46,28 +47,28 @@ class UserTypeTypeTest extends TestCase
 
     public function testConvertToPHPValueThrowsWithInvalidValue(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->type->convertToPHPValue('foo', $this->platform);
     }
 
     public function testConvertToDatabaseValueThrowsWithInvalidValue(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->type->convertToDatabaseValue('foo', $this->platform);
     }
 
     public function testConvertToPHPValueThrowsWithZero(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->type->convertToPHPValue(0, $this->platform);
     }
 
     public function testConvertToDatabaseValueThrowsWithZero(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $this->type->convertToDatabaseValue(0, $this->platform);
     }

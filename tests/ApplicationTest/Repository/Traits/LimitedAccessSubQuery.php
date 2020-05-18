@@ -16,9 +16,6 @@ trait LimitedAccessSubQuery
 {
     /**
      * @dataProvider providerGetAccessibleSubQuery
-     *
-     * @param null|string $login
-     * @param array $expected
      */
     public function testGetAccessibleSubQuery(?string $login, array $expected): void
     {

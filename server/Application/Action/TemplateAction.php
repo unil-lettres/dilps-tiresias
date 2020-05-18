@@ -97,11 +97,6 @@ class TemplateAction extends AbstractXlsx
 
     /**
      * Serve multiples cards as PowerPoint file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -112,8 +107,6 @@ class TemplateAction extends AbstractXlsx
 
     /**
      * Export all cards into a presentation
-     *
-     * @return Spreadsheet
      */
     private function export(): Spreadsheet
     {
@@ -170,9 +163,6 @@ class TemplateAction extends AbstractXlsx
         return $spreadsheet;
     }
 
-    /**
-     * @param Worksheet $sheet
-     */
     private function headers(Worksheet $sheet): void
     {
         foreach (self::HEADERS as $header) {

@@ -11,12 +11,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
 {
     /**
      * Returns the user authenticated by its login and password
-     *
-     * @param string $login
-     * @param string $password
-     * @param string $site
-     *
-     * @return null|User
      */
     public function getLoginPassword(string $login, string $password, string $site): ?User
     {
@@ -49,11 +43,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      * Unsecured way to get a user from its login.
      *
      * This should only be used in tests or controlled environment.
-     *
-     * @param null|string $login
-     * @param string $site
-     *
-     * @return null|User
      */
     public function getOneByLogin(?string $login, string $site): ?User
     {
@@ -71,10 +60,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      * Unsecured way to get a user from its ID.
      *
      * This should only be used in tests or controlled environment.
-     *
-     * @param int $id
-     *
-     * @return null|User
      */
     public function getOneById(int $id): ?User
     {
@@ -89,11 +74,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
      * Unsecured way to get a user from its email.
      *
      * This should only be used in tests or controlled environment.
-     *
-     * @param null|string $email
-     * @param string $site
-     *
-     * @return null|User
      */
     public function getOneByEmail(?string $email, string $site): ?User
     {
@@ -109,12 +89,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
 
     /**
      * Create new Shibboleth user.
-     *
-     * @param string $login
-     * @param string $email
-     * @param string $site
-     *
-     * @return User
      */
     public function createShibboleth(string $login, string $email, string $site): User
     {
@@ -133,10 +107,6 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
 
     /**
      * Returns pure SQL to get ID of all objects that are accessible to given user.
-     *
-     * @param null|User $user
-     *
-     * @return string
      */
     public function getAccessibleSubQuery(?User $user): string
     {

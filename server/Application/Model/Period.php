@@ -56,8 +56,6 @@ class Period extends AbstractModel implements HasParentInterface, HasSiteInterfa
      * Get children periods
      *
      * @API\Field(type="Period[]")
-     *
-     * @return Collection
      */
     public function getChildren(): Collection
     {

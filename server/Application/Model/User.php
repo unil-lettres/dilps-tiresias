@@ -83,8 +83,6 @@ class User extends AbstractModel implements HasSiteInterface
 
     /**
      * Returns currently logged user or null
-     *
-     * @return null|self
      */
     public static function getCurrent(): ?self
     {
@@ -153,8 +151,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Set login (eg: johndoe)
      *
      * @API\Input(type="Application\Api\Scalar\LoginType")
-     *
-     * @param string $login
      */
     public function setLogin(string $login): void
     {
@@ -165,8 +161,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Get login (eg: johndoe)
      *
      * @API\Field(type="Application\Api\Scalar\LoginType")
-     *
-     * @return string
      */
     public function getLogin(): string
     {
@@ -175,8 +169,6 @@ class User extends AbstractModel implements HasSiteInterface
 
     /**
      * Encrypt and change the user password
-     *
-     * @param string $password
      */
     public function setPassword(string $password): void
     {
@@ -193,8 +185,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Returns the hashed password
      *
      * @API\Exclude
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -205,8 +195,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Set email
      *
      * @API\Input(type="?Email")
-     *
-     * @param null|string $email
      */
     public function setEmail(?string $email): void
     {
@@ -217,8 +205,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Get email
      *
      * @API\Field(type="?Email")
-     *
-     * @return null|string
      */
     public function getEmail(): ?string
     {
@@ -243,8 +229,6 @@ class User extends AbstractModel implements HasSiteInterface
      *
      * But the current user is **not** allowed to demote a user who has a higher role than himself.
      * That means that a Senior cannot demote an Admin to Student.
-     *
-     * @param string $role
      */
     public function setRole(string $role): void
     {
@@ -285,8 +269,6 @@ class User extends AbstractModel implements HasSiteInterface
 
     /**
      * The date until the user is active. Or `null` if there is not limit in time
-     *
-     * @return null|DateTimeImmutable
      */
     public function getActiveUntil(): ?DateTimeImmutable
     {
@@ -295,8 +277,6 @@ class User extends AbstractModel implements HasSiteInterface
 
     /**
      * The date until the user is active. Or `null` if there is not limit in time
-     *
-     * @param null|DateTimeImmutable $activeUntil
      */
     public function setActiveUntil(?DateTimeImmutable $activeUntil): void
     {
@@ -305,8 +285,6 @@ class User extends AbstractModel implements HasSiteInterface
 
     /**
      * The date when the user agreed to the terms of usage
-     *
-     * @return null|DateTimeImmutable
      */
     public function getTermsAgreement(): ?DateTimeImmutable
     {
@@ -317,8 +295,6 @@ class User extends AbstractModel implements HasSiteInterface
      * The date when the user agreed to the terms of usage.
      *
      * A user cannot un-agree once he agreed.
-     *
-     * @param null|DateTimeImmutable $termsAgreement
      */
     public function setTermsAgreement(?DateTimeImmutable $termsAgreement): void
     {
@@ -329,8 +305,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Set user type
      *
      * @API\Input(type="Application\Api\Enum\UserTypeType")
-     *
-     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -341,8 +315,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Get user type
      *
      * @API\Field(type="Application\Api\Enum\UserTypeType")
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -353,8 +325,6 @@ class User extends AbstractModel implements HasSiteInterface
      * Get a list of global permissions for this user
      *
      * @API\Field(type="GlobalPermissionsList")
-     *
-     * @return array
      */
     public function getGlobalPermissions(): array
     {
@@ -407,8 +377,6 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that it was added to a Collection.
      * This should only be called by Collection::addCard()
-     *
-     * @param Collection $collection
      */
     public function collectionAdded(Collection $collection): void
     {
@@ -418,8 +386,6 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * Notify the Card that it was removed from a Collection.
      * This should only be called by Collection::removeCard()
-     *
-     * @param Collection $collection
      */
     public function collectionRemoved(Collection $collection): void
     {

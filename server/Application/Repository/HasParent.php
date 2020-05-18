@@ -11,8 +11,6 @@ trait HasParent
 {
     /**
      * Returns an array of fullNames and their ID for all domains
-     *
-     * @return array
      */
     public function getFullNames(): array
     {

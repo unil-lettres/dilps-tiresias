@@ -64,11 +64,6 @@ class ZipAction extends AbstractAction
 
     /**
      * Serve multiples cards as zip file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -96,7 +91,6 @@ class ZipAction extends AbstractAction
      * Export all cards into a zip file
      *
      * @param Card[] $cards
-     * @param string $file
      */
     private function export(array $cards, string $file): void
     {

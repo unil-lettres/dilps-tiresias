@@ -23,12 +23,6 @@ class ShibbolethMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Redirect to specific moodle url if moodle parameter found in the query params

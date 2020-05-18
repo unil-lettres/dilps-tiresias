@@ -20,8 +20,6 @@ trait HasUrl
 
     /**
      * @API\Field(type="Url")
-     *
-     * @return string
      */
     public function getUrl(): string
     {
@@ -30,8 +28,6 @@ trait HasUrl
 
     /**
      * @API\Input(type="Url")
-     *
-     * @param string $url
      */
     public function setUrl(string $url): void
     {

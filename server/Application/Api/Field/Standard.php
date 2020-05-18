@@ -19,10 +19,6 @@ abstract class Standard
 {
     /**
      * Returns standard fields to query the object
-     *
-     * @param string $class
-     *
-     * @return array
      */
     public static function buildQuery(string $class): array
     {
@@ -77,10 +73,6 @@ abstract class Standard
 
     /**
      * Returns standard fields to mutate the object
-     *
-     * @param string $class
-     *
-     * @return array
      */
     public static function buildMutation(string $class): array
     {
@@ -171,8 +163,6 @@ abstract class Standard
      * @param string $ownerClass The class owning the relation
      * @param string $otherClass The other class, not-owning the relation
      * @param bool $byName if true, the name of $other will define the relation instead of its ID
-     *
-     * @return array
      */
     public static function buildRelationMutation(string $ownerClass, string $otherClass, bool $byName = false): array
     {
@@ -252,12 +242,6 @@ abstract class Standard
 
     /**
      * Load object from DB and optionally create new one if not found
-     *
-     * @param string $class
-     * @param string $name
-     * @param bool $createIfNotFound
-     *
-     * @return null|AbstractModel
      */
     private static function getByName(string $class, string $name, bool $createIfNotFound): ?AbstractModel
     {
@@ -275,10 +259,6 @@ abstract class Standard
 
     /**
      * Returns the plural form of the given name
-     *
-     * @param string $name
-     *
-     * @return string
      */
     private static function makePlural(string $name): string
     {
@@ -291,12 +271,6 @@ abstract class Standard
 
     /**
      * Return arguments used for the list
-     *
-     * @param ClassMetadata $class
-     * @param string $classs
-     * @param string $name
-     *
-     * @return array
      */
     private static function getListArguments(ClassMetadata $class, string $classs, string $name): array
     {
@@ -319,10 +293,6 @@ abstract class Standard
 
     /**
      * Return arguments used for single item
-     *
-     * @param string $class
-     *
-     * @return array
      */
     private static function getSingleArguments(string $class): array
     {
@@ -335,10 +305,6 @@ abstract class Standard
 
     /**
      * Get default sorting values with some fallback for some special cases
-     *
-     * @param ClassMetadata $class
-     *
-     * @return array
      */
     private static function getDefaultSorting(ClassMetadata $class): array
     {

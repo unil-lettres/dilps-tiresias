@@ -19,10 +19,6 @@ class ServerTest extends TestCase
 
     /**
      * @dataProvider providerQuery
-     *
-     * @param null|string $user
-     * @param ServerRequest $request
-     * @param array $expected
      */
     public function testQuery(?string $user, ServerRequest $request, array $expected): void
     {

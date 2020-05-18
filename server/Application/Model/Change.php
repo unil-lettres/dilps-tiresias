@@ -60,8 +60,6 @@ class Change extends AbstractModel implements HasSiteInterface
      * Get the type of change
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -72,8 +70,6 @@ class Change extends AbstractModel implements HasSiteInterface
      * Set the type of change
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
-     *
-     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -85,8 +81,6 @@ class Change extends AbstractModel implements HasSiteInterface
      *
      * It will be `null` if the change type is `create`, otherwise
      * it mus be set.
-     *
-     * @return null|Card
      */
     public function getOriginal(): ?Card
     {
@@ -95,8 +89,6 @@ class Change extends AbstractModel implements HasSiteInterface
 
     /**
      * Set the original card on which to apply change
-     *
-     * @param null|Card $original
      */
     public function setOriginal(?Card $original): void
     {
@@ -108,17 +100,12 @@ class Change extends AbstractModel implements HasSiteInterface
      *
      * It will be `null` if the change type is `delete`, otherwise
      * it mus be set.
-     *
-     * @return null|Card
      */
     public function getSuggestion(): ?Card
     {
         return $this->suggestion;
     }
 
-    /**
-     * @param null|Card $suggestion
-     */
     public function setSuggestion(?Card $suggestion): void
     {
         if ($this->suggestion) {
@@ -134,8 +121,6 @@ class Change extends AbstractModel implements HasSiteInterface
 
     /**
      * Get the message from the submitter explaining the reason of the change request
-     *
-     * @return string
      */
     public function getRequest(): string
     {
@@ -144,8 +129,6 @@ class Change extends AbstractModel implements HasSiteInterface
 
     /**
      * Set the message from the submitter explaining the reason of the change request
-     *
-     * @param string $request
      */
     public function setRequest(string $request): void
     {

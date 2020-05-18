@@ -9,6 +9,7 @@ use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
+use Exception;
 use GraphQL\Type\Definition\Type;
 
 class AcceptChange implements FieldInterface
@@ -51,7 +52,7 @@ class AcceptChange implements FieldInterface
 
                         break;
                     default:
-                        throw new \Exception('Unsupported change type: ' . $change->getType());
+                        throw new Exception('Unsupported change type: ' . $change->getType());
                 }
 
                 _em()->remove($change);

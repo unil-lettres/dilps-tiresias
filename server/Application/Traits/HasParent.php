@@ -36,8 +36,6 @@ trait HasParent
 
     /**
      * Set the parent containing this object.
-     *
-     * @param null|self $parent
      */
     public function setParent(?self $parent): void
     {
@@ -57,8 +55,6 @@ trait HasParent
 
     /**
      * Get children
-     *
-     * @return Collection
      */
     public function getChildren(): Collection
     {
@@ -67,8 +63,6 @@ trait HasParent
 
     /**
      * Has children
-     *
-     * @return bool
      */
     public function hasChildren(): bool
     {
@@ -104,9 +98,6 @@ trait HasParent
         return $allChildren;
     }
 
-    /**
-     * @return string
-     */
     public function getHierarchicName(): string
     {
         $object = $this;

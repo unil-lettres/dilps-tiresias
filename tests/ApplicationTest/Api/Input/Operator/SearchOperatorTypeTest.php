@@ -15,10 +15,6 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerSearch
-     *
-     * @param string $class
-     * @param string $term
-     * @param string $expected
      */
     public function testSearch(string $class, string $term, string $expected): void
     {

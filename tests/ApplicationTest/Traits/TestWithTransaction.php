@@ -14,8 +14,6 @@ trait TestWithTransaction
 {
     /**
      * Get EntityManager
-     *
-     * @return EntityManager
      */
     public function getEntityManager(): EntityManager
     {
@@ -25,7 +23,7 @@ trait TestWithTransaction
     /**
      * Start transaction
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->getEntityManager()->beginTransaction();
         User::setCurrent(null);
@@ -34,7 +32,7 @@ trait TestWithTransaction
     /**
      * Cancel transaction, to undo all changes made
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->getEntityManager()->rollback();
         $this->getEntityManager()->clear();

@@ -46,8 +46,6 @@ class Dating extends AbstractModel
 
     /**
      * Return the automatically computed beginning of dating period
-     *
-     * @return DateTimeImmutable
      */
     public function getFrom(): DateTimeImmutable
     {
@@ -56,8 +54,6 @@ class Dating extends AbstractModel
 
     /**
      * @API\Exclude
-     *
-     * @param DateTimeImmutable $from
      */
     public function setFrom(DateTimeImmutable $from): void
     {
@@ -66,8 +62,6 @@ class Dating extends AbstractModel
 
     /**
      * Return the automatically computed end of dating period
-     *
-     * @return DateTimeImmutable
      */
     public function getTo(): DateTimeImmutable
     {
@@ -76,25 +70,17 @@ class Dating extends AbstractModel
 
     /**
      * @API\Exclude
-     *
-     * @param DateTimeImmutable $to
      */
     public function setTo(DateTimeImmutable $to): void
     {
         $this->to = Utility::dateToJulian($to);
     }
 
-    /**
-     * @return Card
-     */
     public function getCard(): Card
     {
         return $this->card;
     }
 
-    /**
-     * @param Card $card
-     */
     public function setCard(Card $card): void
     {
         if ($this->card) {

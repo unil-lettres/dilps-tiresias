@@ -36,11 +36,6 @@ class Server
         $this->server = new StandardServer($this->config);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ExecutionResult
-     */
     public function execute(ServerRequestInterface $request): ExecutionResult
     {
         if (!$request->getParsedBody()) {
@@ -56,8 +51,6 @@ class Server
 
     /**
      * Send response to CLI
-     *
-     * @param ExecutionResult $result
      */
     public function sendCli(ExecutionResult $result): void
     {

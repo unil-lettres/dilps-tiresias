@@ -18,8 +18,6 @@ trait HasCode
 
     /**
      * Set code
-     *
-     * @param null|string $code
      */
     public function setCode(?string $code): void
     {
@@ -38,8 +36,6 @@ trait HasCode
 
     /**
      * Get code
-     *
-     * @return null|string
      */
     public function getCode(): ?string
     {

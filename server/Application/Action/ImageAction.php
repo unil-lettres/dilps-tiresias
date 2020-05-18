@@ -32,11 +32,6 @@ class ImageAction extends AbstractAction
 
     /**
      * Serve an image from disk, with optional dynamic resizing
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -58,7 +53,7 @@ class ImageAction extends AbstractAction
             $path = $this->imageService->resize($card, $maxHeight);
         }
 
-        $resource = fopen($path, 'r');
+        $resource = fopen($path, 'rb');
         $type = mime_content_type($path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $filename = $id . '.' . $extension;

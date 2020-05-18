@@ -12,8 +12,6 @@ class EntityManagerFactory
     /**
      * Return the preferred driver available on this system
      *
-     * @param ContainerInterface $container
-     *
      * @return \Doctrine\ORM\EntityManager
      */
     public function __invoke(ContainerInterface $container)

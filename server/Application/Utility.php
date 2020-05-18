@@ -6,6 +6,7 @@ namespace Application;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use ReflectionClass;
 
 abstract class Utility
 {
@@ -16,8 +17,6 @@ abstract class Utility
 
     /**
      * Returns now, always same value for a single PHP execution
-     *
-     * @return DateTimeImmutable
      */
     public static function getNow(): DateTimeImmutable
     {
@@ -32,21 +31,16 @@ abstract class Utility
      * Returns the short class name of any object, eg: Application\Model\Calendar => Calendar
      *
      * @param object $object
-     *
-     * @return string
      */
     public static function getShortClassName($object): string
     {
-        $reflect = new \ReflectionClass($object);
+        $reflect = new ReflectionClass($object);
 
         return $reflect->getShortName();
     }
 
     /**
      * Print a list of files if non empty
-     *
-     * @param string $title
-     * @param array $files
      */
     public static function printFiles(string $title, array $files): void
     {

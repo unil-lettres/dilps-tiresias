@@ -19,14 +19,13 @@ class IsOwnerOrResponsible implements AssertionInterface
     /**
      * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of
      *
-     * @param Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
      *
      * @return bool
      */
-    public function assert(Acl $acl, RoleInterface $role = null, ResourceInterface $resource = null, $privilege = null)
+    public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
         /** @var AbstractModel $object */
         $object = $resource->getInstance();

@@ -47,8 +47,6 @@ class ModelResource extends GenericResource
 
     /**
      * Returns the specific instance of resource found by its type and id.
-     *
-     * @return null|AbstractModel
      */
     public function getInstance(): ?AbstractModel
     {
@@ -57,8 +55,6 @@ class ModelResource extends GenericResource
 
     /**
      * Returns a name identifying this resource for exception messages for developers
-     *
-     * @return string
      */
     public function getName(): string
     {

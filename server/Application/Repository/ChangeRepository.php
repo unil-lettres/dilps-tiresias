@@ -12,13 +12,6 @@ class ChangeRepository extends AbstractRepository implements LimitedAccessSubQue
 {
     /**
      * Get an open change for the given suggestion
-     *
-     * @param string $type
-     * @param Card $card
-     * @param string $request
-     * @param string $site
-     *
-     * @return Change
      */
     public function getOrCreate(string $type, Card $card, string $request, string $site): Change
     {
@@ -60,10 +53,6 @@ class ChangeRepository extends AbstractRepository implements LimitedAccessSubQue
      * A change is accessible if:
      *
      * - change owner or creator is the user
-     *
-     * @param null|User $user
-     *
-     * @return string
      */
     public function getAccessibleSubQuery(?User $user): string
     {

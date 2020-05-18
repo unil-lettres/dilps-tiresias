@@ -36,8 +36,6 @@ trait HasRichTextName
 
     /**
      * Set name
-     *
-     * @param string $name
      */
     public function setName(string $name): void
     {
@@ -47,8 +45,6 @@ trait HasRichTextName
 
     /**
      * Get name
-     *
-     * @return string
      */
     public function getName(): string
     {

@@ -20,8 +20,6 @@ trait HasSite
 
     /**
      * @API\Field(type="Site")
-     *
-     * @return string
      */
     public function getSite(): string
     {
@@ -30,8 +28,6 @@ trait HasSite
 
     /**
      * @API\Input(type="Site")
-     *
-     * @param string $site
      */
     public function setSite(string $site): void
     {

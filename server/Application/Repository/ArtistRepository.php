@@ -12,7 +12,6 @@ class ArtistRepository extends AbstractRepository
      * Get or create artists by their given names
      *
      * @param string[] $names
-     * @param string $site
      *
      * @return Artist[]
      */
