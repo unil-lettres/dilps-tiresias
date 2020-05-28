@@ -30,5 +30,9 @@
     "/auth": {
         "target": "https://dilps.lan",
         "secure": false
+    },
+    "/detail": {
+        "target": "https://dilps.lan",
+        "secure": false
     }
 }
