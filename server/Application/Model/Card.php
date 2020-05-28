@@ -201,7 +201,7 @@ class Card extends AbstractModel implements HasSiteInterface
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="legacy_id", type="integer", nullable=true)
      */
     private $legacyId;
 

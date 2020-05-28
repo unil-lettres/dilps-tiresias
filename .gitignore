@@ -20,6 +20,7 @@
 /htdocs/*.eot
 /htdocs/assets
 /.idea/
+/out/
 /logs/
 /node_modules/
 /phpunit.xml
