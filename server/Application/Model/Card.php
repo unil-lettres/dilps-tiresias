@@ -200,6 +200,12 @@ class Card extends AbstractModel implements HasSiteInterface
     private $documentSize = '';
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $legacyId;
+
+    /**
      * Constructor
      *
      * @param string $name
@@ -710,6 +716,28 @@ class Card extends AbstractModel implements HasSiteInterface
     {
         $this->traitSetFile($file);
         $this->readFileInfo();
+    }
+
+    /**
+     * Get legacy id
+     *
+     * @return int
+     */
+    public function getLegacyId(): int
+    {
+        return $this->fileSize;
+    }
+
+    /**
+     * Set legacy id
+     *
+     * @API\Exclude
+     *
+     * @param int $legacyId
+     */
+    public function setLegacyId(int $legacyId): void
+    {
+        $this->legacyId = $legacyId;
     }
 
     /**

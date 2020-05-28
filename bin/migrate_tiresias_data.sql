@@ -204,7 +204,7 @@ VALUES ('WB', 'Cisjordanie'); -- Here we use a made-up ISO code that is not affe
 INSERT INTO card (id, filename, visibility, name, expanded_name, domain_id, document_type_id, technique_author,
                   technique_date, creation_date, update_date, creator_id, updater_id, location, `precision`,
                   literature, isbn, object_reference, `from`, `to`, production_place,
-                  locality, site, url, url_description, width, height, code)
+                  locality, site, url, url_description, width, height, code, legacy_id)
 SELECT meta.id + @card_offset,
     CONCAT('tiresias-', meta.id, '.jpg'),
     CASE statut
@@ -343,7 +343,8 @@ SELECT meta.id + @card_offset,
     url_description,
     200,
     200,
-    CONCAT(fonds.fond, '-', meta.id)
+    CONCAT(fonds.fond, '-', meta.id),
+    meta.id
 FROM meta
          INNER JOIN fonds ON meta.fond = fonds.id
          LEFT JOIN lieux AS locality ON locality.id = l2_lieux;

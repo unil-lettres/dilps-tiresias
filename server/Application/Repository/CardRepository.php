@@ -120,4 +120,20 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
         return $collection->getName() . '-' . $latest;
     }
+
+    /**
+     * Get a card from it's legacy id.
+     *
+     * @param int $legacy_id
+     *
+     * @return null|Card
+     */
+    public function getOneByLegacyId(int $legacy_id): ?Card
+    {
+        return $this->getAclFilter()->runWithoutAcl(function () use ($legacy_id) {
+            return $this->findOneBy([
+                'legacyId' => $legacy_id,
+            ]);
+        });
+    }
 }

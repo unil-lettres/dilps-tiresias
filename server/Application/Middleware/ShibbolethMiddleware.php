@@ -45,6 +45,14 @@ class ShibbolethMiddleware implements MiddlewareInterface
             return new RedirectResponse($quizzUrl, 302);
         }
 
+        // Redirect to return url if return url is found in the query params
+        if (array_key_exists('returnUrl', $request->getQueryParams())) {
+            $returnUrl = $request->getQueryParams()['returnUrl'] || '/';
+
+            return new RedirectResponse($returnUrl, 302);
+        }
+
+        // Redirect to the standard path otherwise
         return new RedirectResponse('/login', 302);
     }
 }

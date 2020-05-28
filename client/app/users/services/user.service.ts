@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { Observable, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -48,7 +48,7 @@ export class UserService extends AbstractContextualizedService<User['user'],
 
     private currentUser: Viewer['viewer'] | null = null;
 
-    constructor(apollo: Apollo, private router: Router, @Inject(SITE) site: Site) {
+    constructor(apollo: Apollo, private route: ActivatedRoute, private router: Router, @Inject(SITE) site: Site) {
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
@@ -162,7 +162,9 @@ export class UserService extends AbstractContextualizedService<User['user'],
 
     public startTempAccess() {
         sessionStorage.setItem('tempAccess', 'true');
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl(
+            this.route.snapshot.queryParams['returnUrl'] || '/'
+        );
     }
 
     public revokeTempAccess() {

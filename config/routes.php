@@ -83,4 +83,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     ], 'template');
 
     $app->get('/auth', \Application\Middleware\ShibbolethMiddleware::class);
+
+    $app->get('/detail[/]', \Application\Middleware\LegacyRedirectMiddleware::class);
 };
