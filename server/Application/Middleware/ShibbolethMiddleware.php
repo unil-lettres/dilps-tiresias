@@ -47,7 +47,7 @@ class ShibbolethMiddleware implements MiddlewareInterface
 
         // Redirect to return url if return url is found in the query params
         if (array_key_exists('returnUrl', $request->getQueryParams())) {
-            $returnUrl = $request->getQueryParams()['returnUrl'] || '/';
+            $returnUrl = $request->getQueryParams()['returnUrl'] ? $request->getQueryParams()['returnUrl'] : '/';
 
             return new RedirectResponse($returnUrl, 302);
         }
