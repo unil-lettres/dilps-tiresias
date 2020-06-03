@@ -103,7 +103,7 @@
                         </mat-nav-list>
 
                         <!-- Thésaurus -->
-                        <ng-container *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'">
+                        <ng-container *ngIf="showThesaurusMenu()">
                             <mat-divider></mat-divider>
                             <mat-nav-list>
                                 <a mat-list-item matTooltip="Thésaurus" matTooltipPosition="after" [matMenuTriggerFor]="thesaurusMenu">

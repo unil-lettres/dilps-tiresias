@@ -12,7 +12,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import { CardInput, Site } from '../shared/generated-types';
+import { CardInput, Site, UserRole } from '../shared/generated-types';
 import { NetworkActivityService } from '../shared/services/network-activity.service';
 import { ThemeService } from '../shared/services/theme.service';
 import { UserService } from '../users/services/user.service';
@@ -150,6 +150,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     public showNavigationMenu() {
         return !!this.nav;
+    }
+
+    public showThesaurusMenu() {
+
+        const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.junior];
+        const tiresiasRoles = [UserRole.administrator];
+        const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
+
+        return applicableRoles.includes(this.user.role);
     }
 
 }
