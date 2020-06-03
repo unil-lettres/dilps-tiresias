@@ -41,12 +41,12 @@
                                placeholder="Institution"
                 ></app-thesaurus>
 
-                <natural-select [(ngModel)]="data.item.parent"
-                                [hierarchicSelectorConfig]="hierarchicConfig"
+                <natural-select-hierarchic [(ngModel)]="data.item.parent"
+                                [config]="hierarchicConfig"
                                 [showIcon]="false"
                                 clearLabel="Dissocier de la collection parente"
                                 placeholder="Collection parente"
-                ></natural-select>
+                ></natural-select-hierarchic>
 
                 <mat-slide-toggle *ngIf="user?.role == 'administrator'" [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
             </div>

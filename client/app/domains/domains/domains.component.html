@@ -17,7 +17,6 @@
         <div fxLayout="row wrap">
             <a *ngFor="let item of breadcrumbs;" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
                 <natural-icon name="chevron_right"></natural-icon>
-                <natural-icon name="work"></natural-icon>
                 <span>{{ item.name }}</span>
             </a>
         </div>

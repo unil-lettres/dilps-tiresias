@@ -20,14 +20,14 @@
                     </mat-form-field>
                 </div>
 
-                <natural-select (selectionChange)="data.item.parent = $event"
-                                [hierarchicSelectorConfig]="hierarchicConfig"
+                <natural-select-hierarchic (selectionChange)="data.item.parent = $event"
+                                [config]="hierarchicConfig"
                                 [showIcon]="false"
                                 clearLabel="Dissocier"
                                 placeholder="Parent"
                                 selectLabel="Associer au parent"
                                 [displayWith]="displayWith"
-                ></natural-select>
+                ></natural-select-hierarchic>
 
             </div>
         </mat-tab>
