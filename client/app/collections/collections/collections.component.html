@@ -38,7 +38,10 @@
                                 {{collection.name}}
                                 <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
-                            <button (click)="edit($event, collection)" *ngIf="showEditButtons" mat-icon-button>
+                            <button (click)="edit($event, collection)"
+                                    *ngIf="showEditButtons && (collection.permissions.update || collection.permissions.delete)"
+                                    mat-icon-button
+                            >
                                 <mat-icon>edit</mat-icon>
                             </button>
                         </a>

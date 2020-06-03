@@ -13,6 +13,10 @@ export const collectionsQuery = gql`
                 isSource
                 copyrights
                 usageRights
+                permissions {
+                    update
+                    delete
+                }
             }
             pageSize
             pageIndex
