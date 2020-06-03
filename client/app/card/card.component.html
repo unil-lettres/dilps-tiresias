@@ -138,8 +138,7 @@
                     >
                     <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched)">Cette référence est déjà attribuée à une fiche
                     </mat-error>
-                    <mat-hint align="end" *ngIf="edit && model.code?.length > 23" [ngClass]="{'strong': model.code?.length >= 30}"
-                    >
+                    <mat-hint align="end" *ngIf="edit && model.code?.length > 23" [ngClass]="{'strong': model.code?.length >= 30}">
                         {{ model.code.length }} / 30
                     </mat-hint>
                 </mat-form-field>

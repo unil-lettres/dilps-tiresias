@@ -376,21 +376,25 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 this.imageSrcFull = srcFull;
             }
 
-            if (this.model.collections) {
-                this.sortedCollections = sortBy(this.model.collections, 'hierarchicName');
-                this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
-                    if (c.copyrights && c.usageRights) {
-                        return `${c.copyrights} (${c.usageRights})`;
-                    } else if (c.copyrights) {
-                        return c.copyrights;
-                    } else {
-                        return c.usageRights;
-                    }
-                }).join(', ');
-            }
+            this.updateCollections();
 
             this.model.tags = onlyLeaves(this.model.tags);
             this.model.materials = onlyLeaves(this.model.materials);
+        }
+    }
+
+    public updateCollections() {
+        if (this.model.collections) {
+            this.sortedCollections = sortBy(this.model.collections, 'hierarchicName');
+            this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
+                if (c.copyrights && c.usageRights) {
+                    return `${c.copyrights} (${c.usageRights})`;
+                } else if (c.copyrights) {
+                    return c.copyrights;
+                } else {
+                    return c.usageRights;
+                }
+            }).join(', ');
         }
     }
 
@@ -464,6 +468,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             data: {
                 images: [this.model],
             },
+        }).afterClosed().subscribe(() => {
+            this.cardService.getOne(this.model.id).subscribe((result) => {
+                this.model.collections = result.collections;
+                this.updateCollections();
+            });
         });
     }
 
