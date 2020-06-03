@@ -104,6 +104,10 @@ export class UserService extends AbstractContextualizedService<User['user'],
                 text: 'Senior',
             },
             {
+                name: UserRole.major,
+                text: 'Major',
+            },
+            {
                 name: UserRole.administrator,
                 text: 'Administrateur',
             },

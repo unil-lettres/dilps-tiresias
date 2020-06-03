@@ -30,6 +30,7 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
             return '-1';
         }
 
+        // Todo : grant access to collections visible by admins to majors ?
         $visibility = [Collection::VISIBILITY_MEMBER];
         if ($user->getRole() === User::ROLE_ADMINISTRATOR) {
             $visibility[] = Collection::VISIBILITY_ADMINISTRATOR;

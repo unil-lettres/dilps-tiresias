@@ -78,7 +78,7 @@
 
                             <!-- Add photos -->
                             <a (filesChange)="uploadImages($event)"
-                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                               *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior' || user.role === 'major'"
                                [ngfFixOrientation]="false"
                                mat-list-item
                                matTooltip="Ajouter une image"
@@ -92,7 +92,7 @@
                             <!-- Export template -->
                             <ng-container *ngIf="site === Site.tiresias">
                                 <a href="/template"
-                                   *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior'"
+                                   *ngIf="user.role === 'administrator' || user.role === 'senior' || user.role === 'junior' || user.role === 'major'"
                                    mat-list-item
                                    matTooltip="Télécharger le modèle pour import Excel"
                                    matTooltipPosition="after"

@@ -33,7 +33,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
     public canCreate = false;
     public user;
     public hasMore = false;
-    public showEditButtons = true;
     private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
     private pageSize = 50;
 
@@ -53,7 +52,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
 
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
-            this.showEditButtons = this.showEditionButtons();
+            // this.showEditButtons = this.showEditionButtons();
             this.canCreate = this.showCreateButton(this.route.snapshot.data.creationButtonForRoles, this.user);
         });
 
@@ -114,14 +113,14 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         });
     }
 
-    public showEditionButtons() {
-        const authorizedRoles = this.route.snapshot.data.editionButtonsForRoles;
-        if (!authorizedRoles) {
-            return true;
-        }
-
-        return authorizedRoles.indexOf(this.user.role) > -1;
-    }
+    // public showEditionButtons() {
+    //     const authorizedRoles = this.route.snapshot.data.editionButtonsForRoles;
+    //     if (!authorizedRoles) {
+    //         return true;
+    //     }
+    //
+    //     return authorizedRoles.indexOf(this.user.role) > -1;
+    // }
 
     public search(term) {
         this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});

@@ -146,24 +146,14 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: false,
-                    editionButtonsForRoles: [
-                        UserRole.administrator,
-                        UserRole.senior,
-                    ],
+                    // editionButtonsForRoles: [UserRole.administrator, UserRole.senior],
                     filter: {
                         groups: [
                             {
                                 conditions: [
                                     {
                                         isSource: {equal: {value: false}},
-                                        visibility: {
-                                            in: {
-                                                values: [
-                                                    CollectionVisibility.administrator,
-                                                    CollectionVisibility.member,
-                                                ],
-                                            },
-                                        },
+                                        visibility: {in: {values: [CollectionVisibility.administrator, CollectionVisibility.member]}},
                                     } as CollectionFilterGroupCondition,
                                 ],
                             },
@@ -229,7 +219,7 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: [UserRole.administrator],
-                    editionButtonsForRoles: [UserRole.administrator],
+                    // editionButtonsForRoles: [UserRole.administrator],
                     filter: {groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}]},
                 },
                 children: [

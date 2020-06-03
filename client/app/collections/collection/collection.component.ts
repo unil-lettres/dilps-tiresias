@@ -66,7 +66,7 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
 
         const hasCreator = !!this.data.item.creator;
         const isCreator = hasCreator && this.user.id === this.data.item.creator.id;
-        const isOwner = isCreator && this.user.role === UserRole.senior || isCreator && this.user.role === UserRole.administrator;
+        const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
         if (isOwner) {
             return true;

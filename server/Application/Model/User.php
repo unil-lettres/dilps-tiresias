@@ -52,6 +52,7 @@ class User extends AbstractModel implements HasSiteInterface
     const ROLE_STUDENT = 'student';
     const ROLE_JUNIOR = 'junior';
     const ROLE_SENIOR = 'senior';
+    const ROLE_MAJOR = 'major';
     const ROLE_ADMINISTRATOR = 'administrator';
 
     /**

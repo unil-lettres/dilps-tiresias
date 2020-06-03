@@ -47,6 +47,7 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->addRole(User::ROLE_STUDENT, User::ROLE_ANONYMOUS);
         $this->addRole(User::ROLE_JUNIOR, User::ROLE_STUDENT);
         $this->addRole(User::ROLE_SENIOR, User::ROLE_JUNIOR);
+        $this->addRole(User::ROLE_MAJOR, User::ROLE_SENIOR);
         $this->addRole(User::ROLE_ADMINISTRATOR, User::ROLE_ANONYMOUS);
 
         $this->addResource(new ModelResource(Artist::class));
@@ -97,6 +98,9 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->allow(User::ROLE_JUNIOR, new ModelResource(Card::class), ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
 
         $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
+
+        $this->allow(User::ROLE_MAJOR, new ModelResource(Collection::class), 'delete', new All(new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_MAJOR, new ModelResource(Collection::class), ['update']);
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Artist::class), null, new SameSite());

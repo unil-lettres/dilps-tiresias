@@ -59,7 +59,7 @@ export class CollectionSelectorComponent implements OnInit {
     public ngOnInit(): void {
 
         this.userService.getCurrentUser().subscribe(user => {
-            if (user.role !== UserRole.administrator) {
+            if (![UserRole.administrator, UserRole.major].includes(user.role)) {
                 this.listFilter = {
                     groups: [
                         {conditions: [{owner: {equal: {value: user.id}}}]},

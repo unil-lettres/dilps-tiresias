@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     public showThesaurusMenu() {
 
-        const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.junior];
+        const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.major, UserRole.junior];
         const tiresiasRoles = [UserRole.administrator];
         const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
 

@@ -14,6 +14,7 @@ class UserRoleType extends AbstractEnumType
             User::ROLE_STUDENT,
             User::ROLE_JUNIOR,
             User::ROLE_SENIOR,
+            User::ROLE_MAJOR,
             User::ROLE_ADMINISTRATOR,
         ];
     }
