@@ -109,7 +109,7 @@ export class CollectionSelectorComponent implements OnInit {
 
         observable.subscribe(() => {
             if (this.data.images && this.data.images.length === 1 && this.data.images[0].collections) {
-                this.data.images[0].collections.push(collection);
+                this.data.images[0].collections.push(collection as any);
             }
             this.dialogRef.close(collection);
             this.alertService.info('Fiches ajoutées');

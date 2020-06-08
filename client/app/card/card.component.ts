@@ -34,6 +34,7 @@ import {
     Card_card_collections,
     Card_card_institution,
     CardVisibility,
+    CollectionVisibility,
     Site,
     UpdateCard_updateCard_artists,
     UpdateCard_updateCard_institution,
@@ -385,7 +386,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public updateCollections() {
         if (this.model.collections) {
-            this.sortedCollections = sortBy(this.model.collections, 'hierarchicName');
+            const visibleCollections = this.model.collections.filter(c => c.visibility !== CollectionVisibility.private);
+            this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
             this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
                 if (c.copyrights && c.usageRights) {
                     return `${c.copyrights} (${c.usageRights})`;

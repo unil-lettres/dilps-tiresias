@@ -98,6 +98,7 @@ export const cardDetailsFragment = gql`
             copyrights
             usageRights
             hierarchicName
+            visibility
         }
         country {
             id
