@@ -16,6 +16,7 @@ return [
                 'fileSize' => 90188,
                 'width' => 960,
                 'height' => 425,
+                'code' => 'Test collection 2001-6014',
                 'artists' => [
                     [
                         'name' => 'Test artist 3000',

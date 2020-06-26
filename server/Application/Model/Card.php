@@ -550,7 +550,7 @@ class Card extends AbstractModel implements HasSiteInterface
         $this->collections->add($collection);
 
         // If we are new and don't have a code yet, set one automatically
-        if (!$this->getId() && !$this->getCode() && User::getCurrent() && User::getCurrent()->getRole() === User::ROLE_ADMINISTRATOR) {
+        if (!$this->getId() && !$this->getCode() && $this->canUpdateCode()) {
             $code = _em()->getRepository(self::class)->getNextCodeAvailable($collection);
             $this->setCode($code);
         }

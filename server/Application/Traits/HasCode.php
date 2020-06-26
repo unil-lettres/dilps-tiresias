@@ -6,6 +6,7 @@ namespace Application\Traits;
 
 use Application\Api\Exception;
 use Application\Model\User;
+use Doctrine\ORM\Mapping as ORM;
 
 trait HasCode
 {
@@ -25,10 +26,8 @@ trait HasCode
             $code = null;
         }
 
-        // Simple ACL check
-        $currentRole = User::getCurrent() ? User::getCurrent()->getRole() : User::ROLE_ANONYMOUS;
-        if ($code !== $this->code && $currentRole !== User::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrators are allowed to update card.code');
+        if ($code !== $this->code && !$this->canUpdateCode()) {
+            throw new Exception('Only majors and administrators are allowed to update card.code');
         }
 
         $this->code = $code;
@@ -40,5 +39,20 @@ trait HasCode
     public function getCode(): ?string
     {
         return $this->code;
+    }
+
+    /**
+     * Simple ACL check
+     */
+    private function canUpdateCode(): bool
+    {
+        $whitelist = [
+            User::ROLE_MAJOR,
+            User::ROLE_ADMINISTRATOR,
+        ];
+
+        $currentRole = User::getCurrent() ? User::getCurrent()->getRole() : User::ROLE_ANONYMOUS;
+
+        return in_array($currentRole, $whitelist, true);
     }
 }
