@@ -8,7 +8,7 @@
                      fxLayout="row"
                      fxLayoutAlign="start center"
         >
-            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg" />
+            <img *ngIf="showLogo" class="logo" src="assets/images/logo-bleu.svg"/>
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -126,16 +126,28 @@
                     <div *ngFor="let collection of sortedCollections"> {{ collection.hierarchicName }} </div>
                 </div>
 
-                <mat-form-field *ngIf="!hideCode && !isDilps && ((edit && user?.role === 'administrator') || !!model.code)">
+                <mat-form-field *ngIf="!hideCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)">
                     <mat-label>Référence</mat-label>
                     <input [(ngModel)]="model.code"
                            #code="ngModel"
-                           [readonly]="!edit || user?.role !== 'administrator'"
+                           [readonly]="!edit || !canUpdateCode()"
                            matInput
                            maxlength="30"
                            [appUniqueCode]="model"
                            (change)="codeModel = code; updateFormValidity()"
                     >
+
+                    <button
+                            mat-button
+                            mat-icon-button
+                            matSuffix
+                            (click)="useSuggestedCode($event)"
+                            *ngIf="showSuggestedCode()"
+                            [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;' "
+                    >
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+
                     <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched)">Cette référence est déjà attribuée à une fiche
                     </mat-error>
                     <mat-hint align="end" *ngIf="edit && model.code?.length > 23" [ngClass]="{'strong': model.code?.length >= 30}">
@@ -588,7 +600,7 @@
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id && (edit || model.cards.length > 0)">
-                    <br />
+                    <br/>
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations [disabled]="!edit"

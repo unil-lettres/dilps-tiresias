@@ -39,6 +39,7 @@ import {
     UpdateCard_updateCard_artists,
     UpdateCard_updateCard_institution,
     UserRole,
+    Viewer,
 } from '../shared/generated-types';
 import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
 import { onlyLeafMaterialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -145,7 +146,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Currently logged user
      */
-    public user;
+    public user: Viewer['viewer'];
 
     public singleLine: QuillModules = {
         ...quillConfig.modules,
@@ -256,6 +257,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public urlModel: NgModel | null;
     private collectionCopyrights = '';
     public isDilps = true;
+    public suggestedCode: string | null;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -384,7 +386,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public updateCollections() {
+    private updateCollections(): void {
         if (this.model.collections) {
             const visibleCollections = this.model.collections.filter(c => c.visibility !== CollectionVisibility.private);
             this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
@@ -398,6 +400,23 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }).join(', ');
         }
+
+        if (this.model.collections.length === 1 && this.model.id) {
+            this.suggestedCode = this.model.collections[0].name + '-' + this.model.id;
+        } else {
+            this.suggestedCode = null;
+        }
+    }
+
+    public canUpdateCode(): boolean {
+        return [
+            UserRole.major,
+            UserRole.administrator,
+        ].includes(this.user.role);
+    }
+
+    public showSuggestedCode(): boolean {
+        return this.canUpdateCode() && this.suggestedCode !== this.model.code;
     }
 
     public updateVisibility(ev) {
@@ -530,9 +549,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-               && this.model.owner && this.model.owner.id === this.user.id
-               && this.model.creator && this.model.creator.id === this.user.id
-               && this.model.visibility === CardVisibility.private;
+            && this.model.owner && this.model.owner.id === this.user.id
+            && this.model.creator && this.model.creator.id === this.user.id
+            && this.model.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
@@ -551,5 +570,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public displayWith(item) {
         return item ? item.name + ' (' + item.id + ')' : '';
+    }
+
+    public useSuggestedCode(event: Event): void {
+        event.preventDefault();
+        this.model.code = this.suggestedCode;
+        this.codeModel.viewToModelUpdate(this.suggestedCode);
     }
 }
