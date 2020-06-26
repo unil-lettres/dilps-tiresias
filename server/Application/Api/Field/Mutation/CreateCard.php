@@ -43,7 +43,7 @@ class CreateCard implements FieldInterface
                 if ($args['collection'] ?? false) {
                     /** @var Collection $collection */
                     $collection = $args['collection']->getEntity();
-                    Helper::throwIfDenied($collection, 'update');
+                    Helper::throwIfDenied($collection, 'linkCard');
 
                     $collection->addCard($object);
                 }

@@ -8,14 +8,17 @@ use Laminas\Diactoros\UploadedFile;
 
 return [
     [
-        'query' => 'mutation ($inputCard: CardInput!) {
-            createCard(input: $inputCard) {
+        'query' => 'mutation ($inputCard: CardInput!, $collection: CollectionID) {
+            createCard(input: $inputCard, collection: $collection) {
                 name
                 fileSize
                 width
                 height
                 artists {
                     name
+                }
+                collections {
+                    id
                 }
             }
         }',
@@ -72,6 +75,7 @@ return [
                         'name' => 'New artist',
                     ],
                 ],
+                'collections' => [],
             ],
         ],
     ],

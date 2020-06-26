@@ -163,8 +163,9 @@ abstract class Standard
      * @param string $ownerClass The class owning the relation
      * @param string $otherClass The other class, not-owning the relation
      * @param bool $byName if true, the name of $other will define the relation instead of its ID
+     * @param string $privilege the ACL privilege to assert before linking, usually "update", but in edge cases a custom one
      */
-    public static function buildRelationMutation(string $ownerClass, string $otherClass, bool $byName = false): array
+    public static function buildRelationMutation(string $ownerClass, string $otherClass, bool $byName = false, string $privilege = 'update'): array
     {
         $ownerReflect = new ReflectionClass($ownerClass);
         $ownerName = $ownerReflect->getShortName();
@@ -191,7 +192,7 @@ abstract class Standard
                 'description' => 'Create a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation already exists, it will have no effect.',
                 'args' => $args,
-                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], true);
@@ -200,7 +201,7 @@ abstract class Standard
                     }
 
                     // Check ACL
-                    Helper::throwIfDenied($owner, 'update');
+                    Helper::throwIfDenied($owner, $privilege);
 
                     // Do it
                     $method = 'add' . $otherName;
@@ -216,7 +217,7 @@ abstract class Standard
                 'description' => 'Delete a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation does not exist, it will have no effect.',
                 'args' => $args,
-                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], false);
@@ -225,7 +226,7 @@ abstract class Standard
                     }
 
                     // Check ACL
-                    Helper::throwIfDenied($owner, 'update');
+                    Helper::throwIfDenied($owner, $privilege);
 
                     // Do it
                     if ($other) {

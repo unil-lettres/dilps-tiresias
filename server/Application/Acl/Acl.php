@@ -88,7 +88,7 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Change::class), 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), 'create', new SameSite());
-        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_STUDENT, new ModelResource(Collection::class), ['update', 'delete', 'linkCard'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_STUDENT, new ModelResource(Institution::class), 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, new ModelResource(Tag::class), 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, new ModelResource(User::class), 'read');
@@ -100,7 +100,7 @@ class Acl extends \Laminas\Permissions\Acl\Acl
         $this->allow(User::ROLE_SENIOR, new ModelResource(Card::class), ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
         $this->allow(User::ROLE_MAJOR, new ModelResource(Collection::class), 'delete', new All(new IsOwnerOrResponsible(), new SameSite()));
-        $this->allow(User::ROLE_MAJOR, new ModelResource(Collection::class), ['update']);
+        $this->allow(User::ROLE_MAJOR, new ModelResource(Collection::class), ['linkCard'], new SameSite());
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Artist::class), null, new SameSite());
