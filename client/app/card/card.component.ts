@@ -417,7 +417,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public showSuggestedCode(): boolean {
-        return this.edit && this.canUpdateCode() && this.suggestedCode !== this.model.code;
+        return this.edit && this.canUpdateCode() && this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
     public updateVisibility(ev) {
