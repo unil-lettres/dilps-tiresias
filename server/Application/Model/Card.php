@@ -651,9 +651,9 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Get legacy id
      */
-    public function getLegacyId(): int
+    public function getLegacyId(): ?int
     {
-        return $this->fileSize;
+        return $this->legacyId;
     }
 
     /**

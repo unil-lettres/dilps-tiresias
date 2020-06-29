@@ -402,7 +402,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (this.model.collections.length === 1 && this.model.id) {
-            this.suggestedCode = this.model.collections[0].name + '-' + this.model.id;
+            const idForCode = this.model.legacyId ?? this.model.id;
+            this.suggestedCode = this.model.collections[0].name + '-' + idForCode;
         } else {
             this.suggestedCode = null;
         }
