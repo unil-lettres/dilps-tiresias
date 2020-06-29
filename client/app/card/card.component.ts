@@ -576,6 +576,10 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public useSuggestedCode(event: Event): void {
         event.preventDefault();
         this.model.code = this.suggestedCode;
-        this.codeModel.viewToModelUpdate(this.suggestedCode);
+
+        // Very short delay before validating to allow propagation of our changes
+        setTimeout(() => {
+            this.updateFormValidity();
+        }, 1);
     }
 }
