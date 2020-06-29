@@ -61,7 +61,7 @@ SELECT id + @user_offset,
         WHEN 'superadministrateur'
             THEN 'administrator'
         WHEN 'administrateur'
-            THEN 'senior'
+            THEN 'major'
         WHEN 'contributeur'
             THEN 'junior'
         WHEN 'scientifique'
