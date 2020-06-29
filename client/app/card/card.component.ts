@@ -239,7 +239,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Edition mode if true
      */
-    private edit = false;
+    public edit = false;
 
     /**
      * Cache for upload subscription
@@ -255,7 +255,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public formIsValid = true;
     public codeModel: NgModel | null;
     public urlModel: NgModel | null;
-    private collectionCopyrights = '';
+    public collectionCopyrights = '';
     public isDilps = true;
     public suggestedCode: string | null;
 
