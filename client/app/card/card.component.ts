@@ -570,7 +570,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public displayWith(item) {
-        return item ? item.name + ' (' + item.id + ')' : '';
+        // Turn HTML to plain text
+        return item ? item.name.replace(/<[^>]*>/g, '') + ' (' + item.id + ')' : '';
     }
 
     public useSuggestedCode(event: Event): void {

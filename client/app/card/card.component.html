@@ -612,7 +612,7 @@
                                        id="fiches-additionnelles"
                     >
                         <ng-template let-item="item">
-                            <natural-table-button [label]="item.name" [navigate]="['/card/',  item.id]" icon="image"
+                            <natural-table-button [label]="displayWith(item)" [navigate]="['/card/',  item.id]" icon="image"
                             ></natural-table-button>
                         </ng-template>
                     </natural-relations>
