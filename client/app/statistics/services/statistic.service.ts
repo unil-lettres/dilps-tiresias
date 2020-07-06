@@ -7,7 +7,7 @@ import {
     Statistics,
     StatisticsVariables,
     StatisticVariables,
-    Site,
+    Site, RecordPage, RecordDetail, RecordSearch,
 } from '../../shared/generated-types';
 import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
 import {
@@ -44,19 +44,19 @@ export class StatisticService
     }
 
     public recordPage(): void {
-        this.apollo.mutate({
+        this.apollo.mutate<RecordPage>({
             mutation: recordPage,
         }).subscribe();
     }
 
     public recordDetail(): void {
-        this.apollo.mutate({
+        this.apollo.mutate<RecordDetail>({
             mutation: recordDetail,
         }).subscribe();
     }
 
     public recordSearch(): void {
-        this.apollo.mutate({
+        this.apollo.mutate<RecordSearch>({
             mutation: recordSearch,
         }).subscribe();
     }

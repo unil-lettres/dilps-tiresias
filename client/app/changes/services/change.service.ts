@@ -56,7 +56,7 @@ export class ChangeService
         }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return (result.data as AcceptChange).acceptChange;
+            return result.data!.acceptChange;
         }));
     }
 
@@ -69,7 +69,7 @@ export class ChangeService
         }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return (result.data as RejectChange).rejectChange;
+            return result.data!.rejectChange;
         }));
     }
 
@@ -82,7 +82,7 @@ export class ChangeService
         }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return (result.data as SuggestDeletion).suggestDeletion;
+            return result.data!.suggestDeletion;
         }));
     }
 
@@ -95,7 +95,7 @@ export class ChangeService
         }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return (result.data as SuggestCreation).suggestCreation;
+            return result.data!.suggestCreation;
         }));
     }
 
@@ -108,7 +108,7 @@ export class ChangeService
         }).pipe(map(result => {
             this.apollo.getClient().reFetchObservableQueries();
 
-            return (result.data as SuggestUpdate).suggestUpdate;
+            return result.data!.suggestUpdate;
         }));
     }
 
