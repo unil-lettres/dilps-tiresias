@@ -28,7 +28,8 @@ export class MaterialService
         CreateMaterialVariables,
         UpdateMaterial['updateMaterial'],
         UpdateMaterialVariables,
-        DeleteMaterials['deleteMaterials']> {
+        DeleteMaterials['deleteMaterials'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

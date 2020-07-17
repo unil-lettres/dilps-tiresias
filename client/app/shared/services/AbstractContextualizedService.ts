@@ -11,10 +11,13 @@ export class AbstractContextualizedService<Tone,
     Vcreate extends VariablesWithInput,
     Tupdate,
     Vupdate extends { id: string; input: Literal; },
-    Tdelete>
-    extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete> {
+    Tdelete,
+    Vdelete extends {
+        ids: string[];
+    }>
+    extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete, Vdelete> {
 
-    constructor(protected readonly apollo: Apollo,
+    constructor(apollo: Apollo,
                 protected readonly name: string,
                 protected oneQuery: DocumentNode | null,
                 protected allQuery: DocumentNode | null,

@@ -30,7 +30,8 @@ export class NewsService
         CreateNewsVariables,
         UpdateNews['updateNews'],
         UpdateNewsVariables,
-        DeleteNewses['deleteNewses']> {
+        DeleteNewses['deleteNewses'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

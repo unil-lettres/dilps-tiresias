@@ -50,7 +50,6 @@ import {
     NaturalIconsConfig,
     NaturalRelationsModule,
     NaturalSearchModule,
-    NaturalSelectEnumModule,
     NaturalSelectModule,
     NaturalTableButtonModule,
 } from '@ecodev/natural';
@@ -296,7 +295,6 @@ const icons: NaturalIconsConfig = {
         NaturalFixedButtonModule,
         SwiperModule,
         NaturalHierarchicSelectorModule,
-        NaturalSelectEnumModule,
         HighchartsChartModule,
         MatSortModule,
         QuillModule.forRoot(quillConfig),

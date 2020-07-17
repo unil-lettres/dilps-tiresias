@@ -28,7 +28,8 @@ export class PeriodService
         CreatePeriodVariables,
         UpdatePeriod['updatePeriod'],
         UpdatePeriodVariables,
-        DeletePeriods['deletePeriods']> {
+        DeletePeriods['deletePeriods'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

@@ -29,7 +29,8 @@ export class TagService
         CreateTagVariables,
         UpdateTag['updateTag'],
         UpdateTagVariables,
-        DeleteTags['deleteTags']> {
+        DeleteTags['deleteTags'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

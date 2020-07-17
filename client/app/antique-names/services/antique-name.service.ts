@@ -29,7 +29,8 @@ export class AntiqueNameService
         CreateAntiqueNameVariables,
         UpdateAntiqueName['updateAntiqueName'],
         UpdateAntiqueNameVariables,
-        DeleteAntiqueNames['deleteAntiqueNames']> {
+        DeleteAntiqueNames['deleteAntiqueNames'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

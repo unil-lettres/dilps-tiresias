@@ -28,7 +28,8 @@ export class ArtistService
         CreateArtistVariables,
         UpdateArtist['updateArtist'],
         UpdateArtistVariables,
-        DeleteArtists['deleteArtists']> {
+        DeleteArtists['deleteArtists'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

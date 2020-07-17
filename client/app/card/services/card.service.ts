@@ -45,7 +45,8 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     CreateCardVariables,
     UpdateCard['updateCard'],
     UpdateCardVariables,
-    DeleteCards['deleteCards']> {
+    DeleteCards['deleteCards'],
+    never> {
 
     private collectionIdForCreation: string | null = null;
 

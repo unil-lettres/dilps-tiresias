@@ -42,7 +42,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * Service used as data source
      */
-    @Input() service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any>;
+    @Input() service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>;
 
     /**
      * Input label name

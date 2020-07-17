@@ -30,6 +30,7 @@ export class StatisticService
         never,
         never,
         never,
+        never,
         never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {

@@ -28,7 +28,8 @@ export class DomainService
         CreateDomainVariables,
         UpdateDomain['updateDomain'],
         UpdateDomainVariables,
-        DeleteDomains['deleteDomains']> {
+        DeleteDomains['deleteDomains'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

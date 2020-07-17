@@ -44,7 +44,8 @@ export class CollectionService
         CreateCollectionVariables,
         UpdateCollection['updateCollection'],
         UpdateCollectionVariables,
-        DeleteCollections['deleteCollections']> {
+        DeleteCollections['deleteCollections'],
+        never> {
 
     constructor(apollo: Apollo, private linkService: NaturalLinkMutationService, @Inject(SITE) site: Site) {
         super(apollo,

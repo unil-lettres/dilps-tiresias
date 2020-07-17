@@ -34,7 +34,8 @@ export class ChangeService
         never,
         null,
         never,
-        null> {
+        null,
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

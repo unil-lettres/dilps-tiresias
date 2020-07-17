@@ -29,7 +29,8 @@ export class InstitutionService
         CreateInstitutionVariables,
         UpdateInstitution['updateInstitution'],
         UpdateInstitutionVariables,
-        DeleteInstitutions['deleteInstitutions']> {
+        DeleteInstitutions['deleteInstitutions'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

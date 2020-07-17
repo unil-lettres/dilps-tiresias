@@ -34,7 +34,8 @@ export class DocumentTypeService
         CreateDocumentTypeVariables,
         UpdateDocumentType['updateDocumentType'],
         UpdateDocumentTypeVariables,
-        DeleteDocumentTypes['deleteDocumentTypes']> {
+        DeleteDocumentTypes['deleteDocumentTypes'],
+        never> {
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo,

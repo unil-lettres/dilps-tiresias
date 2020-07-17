@@ -44,7 +44,8 @@ export class UserService extends AbstractContextualizedService<User['user'],
     CreateUserVariables,
     UpdateUser['updateUser'],
     UpdateUserVariables,
-    DeleteUsers['deleteUsers']> {
+    DeleteUsers['deleteUsers'],
+    never> {
 
     private currentUser: Viewer['viewer'] | null = null;
 

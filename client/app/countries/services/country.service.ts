@@ -16,7 +16,8 @@ export class CountryService
         never,
         null,
         never,
-        null> {
+        null,
+        never> {
 
     constructor(apollo: Apollo) {
         super(apollo,
