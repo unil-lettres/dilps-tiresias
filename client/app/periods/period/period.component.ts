@@ -17,7 +17,7 @@ export class PeriodComponent extends AbstractDetail {
     public hierarchicConfig = periodHierarchicConfig;
 
     public displayWith(item: Periods_periods_items): string {
-        return item.name + formatYearRange(item.from, item.to);
+        return item ? item.name + formatYearRange(item.from, item.to) : '';
     }
 
     constructor(service: PeriodService,
