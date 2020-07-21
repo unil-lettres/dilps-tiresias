@@ -34,35 +34,35 @@ abstract class AbstractModel
     private $id;
 
     /**
-     * @var DateTimeImmutable
+     * @var null|DateTimeImmutable
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $creationDate;
 
     /**
-     * @var DateTimeImmutable
+     * @var null|DateTimeImmutable
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updateDate;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $creator;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $owner;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
@@ -78,10 +78,8 @@ abstract class AbstractModel
 
     /**
      * Set creation date
-     *
-     * @param DateTimeImmutable $creationDate
      */
-    private function setCreationDate(?DateTimeImmutable $creationDate = null): void
+    private function setCreationDate(DateTimeImmutable $creationDate): void
     {
         $this->creationDate = $creationDate;
     }
@@ -96,10 +94,8 @@ abstract class AbstractModel
 
     /**
      * Set update date
-     *
-     * @param DateTimeImmutable $updateDate
      */
-    private function setUpdateDate(?DateTimeImmutable $updateDate = null): void
+    private function setUpdateDate(DateTimeImmutable $updateDate): void
     {
         $this->updateDate = $updateDate;
     }
@@ -117,7 +113,7 @@ abstract class AbstractModel
      *
      * @param User $creator
      */
-    private function setCreator(?User $creator = null): void
+    private function setCreator(?User $creator): void
     {
         $this->creator = $creator;
     }
@@ -137,7 +133,7 @@ abstract class AbstractModel
      *
      * @param User $owner
      */
-    public function setOwner(?User $owner = null): void
+    public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
     }
@@ -153,7 +149,7 @@ abstract class AbstractModel
     /**
      * Set updater
      */
-    private function setUpdater(?User $updater = null): void
+    private function setUpdater(?User $updater): void
     {
         $this->updater = $updater;
     }
