@@ -153,7 +153,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     public showThesaurusMenu() {
-
         const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.major, UserRole.junior];
         const tiresiasRoles = [UserRole.administrator];
         const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
@@ -161,4 +160,17 @@ export class HomeComponent implements OnInit, OnDestroy {
         return applicableRoles.includes(this.user.role);
     }
 
+    public mailto() {
+        document.location.href = 'mailto:' + this.contact();
+    }
+
+    public contact() {
+        switch (this.site) {
+            case Site.tiresias:
+                return 'tiresias@unil.ch';
+            case Site.dilps:
+            default:
+                return 'infra-lettres@unil.ch';
+        }
+    }
 }

@@ -1,4 +1,37 @@
-$primary: mat-palette($mat-orange);
+$mat-tiresias: (
+        50: #f9edee,
+        100: #f1d3d4,
+        200: #d9a5a1,
+        300: #c8857e,
+        400: #cf6f61,
+        500: #d1674e,
+        600: #c35f4b,
+        700: #b15645,
+        800: #a35140,
+        900: #914a3a,
+        A100: #d9a5a1,
+        A200: #c8857e,
+        A400: #cf6f61,
+        A700: #d1674e,
+        contrast: (
+                50: $black-87-opacity,
+                100: $black-87-opacity,
+                200: $black-87-opacity,
+                300: $black-87-opacity,
+                400: $black-87-opacity,
+                500: white,
+                600: white,
+                700: white,
+                800: $white-87-opacity,
+                900: $white-87-opacity,
+                A100: $black-87-opacity,
+                A200: white,
+                A400: white,
+                A700: white,
+        )
+);
+
+$primary: mat-palette($mat-tiresias);
 $accent: mat-palette($mat-blue);
 $warn: mat-palette($mat-red);
 
@@ -15,4 +48,3 @@ $warn: mat-palette($mat-red);
     @include angular-material-theme($theme-dark);
     @include components-theme($theme-dark);
 }
-

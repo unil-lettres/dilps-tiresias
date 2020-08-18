@@ -138,9 +138,7 @@
                         </mat-nav-list>
 
                     </ng-container>
-
                     <mat-nav-list *ngIf="!user" fxFlex>
-
                         <!-- Dashboard -->
                         <a [routerLinkActiveOptions]="{ exact: true }" mat-list-item routerLink="/" routerLinkActive="active">
                             <natural-icon mat-list-icon name="home"></natural-icon>
@@ -150,6 +148,12 @@
                         <!-- Logout -->
                         <a (click)="userService.revokeTempAccess()" mat-list-item matTooltip="Se connecter" matTooltipPosition="after">
                             <natural-icon mat-list-icon name="account_circle"></natural-icon>
+                        </a>
+
+                        <!-- Contact -->
+                        <a *ngIf="site === Site.tiresias" (click)="mailto()" mat-list-item matTooltip="Contact" matTooltipPosition="after">
+                            <natural-icon mat-list-icon name="help"></natural-icon>
+                            <span matLine>Contact</span>
                         </a>
                     </mat-nav-list>
 
