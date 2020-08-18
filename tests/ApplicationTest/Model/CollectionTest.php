@@ -60,10 +60,6 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         self::assertCount(1, $collection->getCards(), 'should have the added card');
         self::assertSame($card, $collection->getCards()->first(), 'should be able to retrieve added card');
 
-        $collection->addCard($card);
-        self::assertCount(1, $card->getCollections(), 'should still belong to exactly 1 collection');
-        self::assertCount(1, $collection->getCards(), 'should still have the same unique card');
-
         $card2 = new Card();
         $collection->addCard($card2);
         self::assertCount(2, $collection->getCards(), 'should be able to add second card');

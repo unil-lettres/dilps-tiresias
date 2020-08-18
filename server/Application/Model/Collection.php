@@ -197,10 +197,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function addCard(Card $card): void
     {
-        if (!$this->cards->contains($card)) {
-            $this->cards[] = $card;
-            $card->collectionAdded($this);
-        }
+        $this->cards[] = $card;
+        $card->collectionAdded($this);
     }
 
     /**
