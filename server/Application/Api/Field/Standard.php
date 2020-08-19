@@ -200,8 +200,11 @@ abstract class Standard
                         $other = $args[$lowerOtherName]->getEntity();
                     }
 
+                    // If privilege is linkCard, exceptionally test ACL on other, instead of owner, because other is the collection to which a card will be added
+                    $objectForAcl = $privilege === 'linkCard' ? $other : $owner;
+
                     // Check ACL
-                    Helper::throwIfDenied($owner, $privilege);
+                    Helper::throwIfDenied($objectForAcl, $privilege);
 
                     // Do it
                     $method = 'add' . $otherName;
@@ -225,8 +228,11 @@ abstract class Standard
                         $other = $args[$lowerOtherName]->getEntity();
                     }
 
+                    // If privilege is linkCard, exceptionally test ACL on other, instead of owner, because other is the collection to which a card will be added
+                    $objectForAcl = $privilege === 'linkCard' ? $other : $owner;
+
                     // Check ACL
-                    Helper::throwIfDenied($owner, $privilege);
+                    Helper::throwIfDenied($objectForAcl, $privilege);
 
                     // Do it
                     if ($other) {

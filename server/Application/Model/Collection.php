@@ -85,13 +85,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Card", inversedBy="collections")
-     */
-    private $cards;
-
-    /**
-     * @var DoctrineCollection
      * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
     private $users;
@@ -102,7 +95,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->cards = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -190,34 +182,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function getUsageRights(): string
     {
         return $this->usageRights;
-    }
-
-    /**
-     * Add card
-     */
-    public function addCard(Card $card): void
-    {
-        $this->cards[] = $card;
-        $card->collectionAdded($this);
-    }
-
-    /**
-     * Remove card
-     */
-    public function removeCard(Card $card): void
-    {
-        $this->cards->removeElement($card);
-        $card->collectionRemoved($this);
-    }
-
-    /**
-     * Get cards
-     *
-     * @API\Field(type="Card[]")
-     */
-    public function getCards(): DoctrineCollection
-    {
-        return $this->cards;
     }
 
     /**

@@ -69,9 +69,9 @@ class MutationType extends ObjectType
             Standard::buildMutation(Period::class),
             Standard::buildMutation(Tag::class),
             Standard::buildMutation(AntiqueName::class),
-            Standard::buildRelationMutation(Collection::class, Card::class, false, 'linkCard'),
             Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),
+            Standard::buildRelationMutation(Card::class, Collection::class, false, 'linkCard'),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
 

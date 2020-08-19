@@ -57,7 +57,10 @@ class ImporterTest extends TestCase
         $importer = new Importer();
         $cards = $importer->import($excel, $images, 'dilps', $collection);
 
-        self::assertCount(2, $collection->getCards());
+        self::assertCount(1, $cards[0]->getCollections());
+        self::assertCount(1, $cards[1]->getCollections());
+        self::assertSame($collection, $cards[0]->getCollections()->first());
+        self::assertSame($collection, $cards[1]->getCollections()->first());
 
         /** @var Card $c */
         $c = $cards[1];

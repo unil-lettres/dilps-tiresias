@@ -60,7 +60,7 @@ REPLACE INTO `card_artist` (`card_id`, `artist_id`) VALUES
 REPLACE INTO `card_tag` (`card_id`, `tag_id`) VALUES
   (6000, 4000);
 
-REPLACE INTO `collection_card` (`collection_id`, `card_id`) VALUES
+REPLACE INTO `card_collection` (`collection_id`, `card_id`) VALUES
   (2000, 6000),
   (2001, 6001),
   (2001, 6002);

@@ -135,7 +135,7 @@ class Importer
         $card = new Card();
         $card->setSite($this->site);
         if ($this->collection) {
-            $this->collection->addCard($card);
+            $card->addCollection($this->collection);
         }
 
         _em()->persist($card);

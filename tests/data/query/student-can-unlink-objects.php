@@ -5,9 +5,9 @@ declare(strict_types=1);
 return [
     [
         'query' => 'mutation {
-            unlinkCollectionCard(collection: 2000, card: 6000) {
+            unlinkCardCollection(collection: 2000, card: 6000) {
                 id
-                cards {
+                collections {
                     id
                 }
             }
@@ -15,9 +15,9 @@ return [
     ],
     [
         'data' => [
-            'unlinkCollectionCard' => [
-                'id' => '2000',
-                'cards' => [],
+            'unlinkCardCollection' => [
+                'id' => '6000',
+                'collections' => [],
             ],
         ],
     ],

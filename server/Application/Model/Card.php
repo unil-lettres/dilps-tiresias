@@ -105,7 +105,7 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * @var DoctrineCollection
      *
-     * @ORM\ManyToMany(targetEntity="Collection", mappedBy="cards")
+     * @ORM\ManyToMany(targetEntity="Collection")
      */
     private $collections;
 
@@ -542,12 +542,13 @@ class Card extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Notify the Card that it was added to a Collection.
-     * This should only be called by Collection::addCard()
+     * Add this card into the given collection
      */
-    public function collectionAdded(Collection $collection): void
+    public function addCollection(Collection $collection): void
     {
-        $this->collections->add($collection);
+        if (!$this->collections->contains($collection)) {
+            $this->collections->add($collection);
+        }
 
         // If we are new and don't have a code yet, set one automatically
         if (!$this->getId() && !$this->getCode() && $this->canUpdateCode()) {
@@ -557,10 +558,9 @@ class Card extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Notify the Card that it was removed from a Collection.
-     * This should only be called by Collection::removeCard()
+     * Remove this card from given collection
      */
-    public function collectionRemoved(Collection $collection): void
+    public function removeCollection(Collection $collection): void
     {
         $this->collections->removeElement($collection);
     }

@@ -73,9 +73,9 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
         $cardSubQuery = $this->getEntityManager()->getRepository(Card::class)->getAccessibleSubQuery(User::getCurrent());
 
         $connection = $this->getEntityManager()->getConnection();
-        $connection->query('REPLACE INTO collection_card (collection_id, card_id)
+        $connection->query('REPLACE INTO card_collection (collection_id, card_id)
             SELECT ' . $connection->quote($targetCollection->getId()) . ' AS collection_id, card_id
-            FROM collection_card
+            FROM card_collection
             WHERE
             collection_id = ' . $connection->quote($sourceCollection->getId()) . '
             AND card_id IN (' . $cardSubQuery . ')');

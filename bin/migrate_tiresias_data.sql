@@ -388,7 +388,7 @@ SELECT img_id + @card_offset,
 FROM kwimg;
 
 -- Link card to collection
-INSERT INTO collection_card (collection_id, card_id)
+INSERT INTO card_collection (collection_id, card_id)
 SELECT fonds.id + @collection_offset_for_fonds,
     meta.id + @card_offset
 FROM fonds

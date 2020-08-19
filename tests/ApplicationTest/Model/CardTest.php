@@ -88,7 +88,7 @@ class CardTest extends TestCase
         touch($suggestion->getPath());
 
         $collection = new Collection();
-        $collection->addCard($suggestion);
+        $suggestion->addCollection($collection);
 
         $original = new Card();
         $original->setVisibility(Card::VISIBILITY_PUBLIC);
@@ -106,7 +106,7 @@ class CardTest extends TestCase
         self::assertSame('Museum', $original->getInstitution()->getName(), 'institution should be copied');
         self::assertNotNull($original->getCountry(), 'country should be copied');
         self::assertNull($original->getOriginal(), 'original should not be copied over');
-        self::assertCount(1, $collection->getCards(), 'original should not be moved to intro a collection');
+        self::assertCount(0, $original->getCollections(), 'original should not be moved to intro a collection');
 
         self::assertNotEquals('', $original->getFilename(), 'should have file on disk');
         self::assertNotEquals($suggestion->getFilename(), $original->getFilename(), 'should not share the same file on disk');
@@ -352,5 +352,28 @@ class CardTest extends TestCase
         }
 
         return $ids;
+    }
+
+    public function testCollectionRelation(): void
+    {
+        $card = new Card();
+        self::assertCount(0, $card->getCollections(), 'should have no collections');
+
+        $collection = new Collection();
+
+        $card->addCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should have the added collection');
+        self::assertSame($collection, $card->getCollections()->first(), 'should be able to retrieve added collection');
+
+        $card->addCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should still have the same unique collection');
+
+        $collection2 = new Collection();
+        $card->addCollection($collection2);
+        self::assertCount(2, $card->getCollections(), 'should be able to add second collection');
+
+        $card->removeCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should be able to remove first collection');
+        self::assertSame($collection2, $card->getCollections()->first(), 'should be have only second collection left');
     }
 }
