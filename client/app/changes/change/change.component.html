@@ -1,7 +1,6 @@
 <div class="containerWithToolbar" fxFlex fxLayout="column">
-
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+        <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
         <div fxFlex></div>
 
         <ng-container *ngIf="user?.role === 'administrator'">
@@ -59,5 +58,4 @@
             ></app-card>
         </div>
     </div>
-
 </div>

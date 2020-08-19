@@ -11,7 +11,7 @@
 <div class="containerWithToolbar" fxFlex fxLayout="column">
 
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <img *ngIf="showLogo" src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+        <span *ngIf="showLogo"><app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo></span>
 
         <button (click)="setViewMode(ViewMode.grid)" *ngIf="viewMode !== ViewMode.grid" mat-icon-button matTooltip="Grille">
             <mat-icon>view_compact</mat-icon>

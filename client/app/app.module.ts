@@ -102,6 +102,7 @@ import { CardSelectorComponent } from './shared/components/card-selector/card-se
 import { CollectionSelectorComponent } from './shared/components/collection-selector/collection-selector.component';
 import { DialogFooterComponent } from './shared/components/dialog-footer/dialog-footer.component';
 import { DownloadComponent } from './shared/components/download/download.component';
+import { LogoComponent } from './shared/components/logo/logo.component';
 import { EmptyComponent } from './shared/components/empty/empty.component';
 import { MassEditComponent } from './shared/components/mass-edit/mass-edit.component';
 import { StampComponent } from './shared/components/stamp/stamp.component';
@@ -186,6 +187,7 @@ const icons: NaturalIconsConfig = {
         FileDropDirective,
         CollectionSelectorComponent,
         DownloadComponent,
+        LogoComponent,
         RolePipe,
         TypePipe,
         StripTagsPipe,

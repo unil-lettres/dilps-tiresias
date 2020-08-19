@@ -1,5 +1,5 @@
 <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <img src="assets/images/logo-bleu.svg" style="max-width:100%;height:30px;" />
+    <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
 
     <natural-search (selectionChange)="search($event)"
                     [facets]="naturalSearchFacets"
@@ -7,7 +7,6 @@
                     [selections]="naturalSearchSelections"
                     fxFlex
     ></natural-search>
-
 </mat-toolbar>
 
 <div class="padding padding-fab">
