@@ -24,7 +24,7 @@ export class LogoComponent {
                 }
             case Site.dilps:
             default:
-                return 'assets/images/logo-bleu.svg';
+                return 'assets/images/logo-dilps.svg';
         }
     }
 }

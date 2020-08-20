@@ -1,38 +1,37 @@
 <div fxLayout="row" fxLayoutAlign="center center">
     <div class="login" fxLayout="column">
+        <div fxLayout="column" fxLayoutGap="15px">
+            <app-logo [data]="{ type: 'main', class: 'logo-main' }"></app-logo>
 
-            <div fxLayout="column" fxLayoutGap="15px">
-                <app-logo [data]="{ type: 'main', class: 'logo-main' }"></app-logo>
-
-                <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
 
             <div class="login-info" fxLayout="column" fxLayoutGap="15px">
                 Veuillez choisir une méthode d'authentification ou
                 <br>
-                    utiliser le bouton "Accès public"
-                </div>
+                utiliser le bouton "Accès public"
+            </div>
 
-                <mat-grid-list cols="2" rowHeight="80px">
-                    <mat-grid-tile>
-                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
-                            <img src="assets/images/logo-unil-bleu.svg" width="130" />
-                        </a>
-                    </mat-grid-tile>
-                    <mat-grid-tile>
-                        <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
-                            <img src="assets/images/logo-unine.svg" width="90" />
-                        </a>
-                    </mat-grid-tile>
-                </mat-grid-list>
+            <mat-grid-list cols="2" rowHeight="80px">
+                <mat-grid-tile>
+                    <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
+                        <img src="assets/images/logo-unil.svg" width="130" />
+                    </a>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
+                        <img src="assets/images/logo-unine.svg" width="90" />
+                    </a>
+                </mat-grid-tile>
+            </mat-grid-list>
 
-                <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
 
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Utilisateur externe
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Utilisateur externe
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
 
                 <form>
                     <div fxLayout="column" fxLayoutGap="10px">
@@ -75,15 +74,13 @@
                         </button>
                     </div>
                 </form>
+            </mat-expansion-panel>
 
-                </mat-expansion-panel>
-
-                <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
 
             <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
-            </div>
-
         </div>
+    </div>
 
     <app-carousel></app-carousel>
 </div>
