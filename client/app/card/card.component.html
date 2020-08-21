@@ -772,14 +772,14 @@
                 </div>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
-                <div *ngIf="!hideCards && model && model.id && (edit || model.cards.length > 0)">
+                <div *ngIf="!hideCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
                     <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
                     <natural-relations
                         [disabled]="!edit"
-                        [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
-                        [main]="model"
+                        [filter]="{groups: [{conditions: [{cards: {have: {values: [fetchedModel.id]}}}]}]}"
+                        [main]="fetchedModel"
                         [service]="cardService"
                         placeholder="Chercher une fiche"
                         [displayWith]="displayWith"
