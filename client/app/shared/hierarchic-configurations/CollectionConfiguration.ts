@@ -1,5 +1,5 @@
-import { NaturalHierarchicConfiguration } from '@ecodev/natural';
-import { CollectionService } from '../../collections/services/collection.service';
+import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {CollectionService} from '../../collections/services/collection.service';
 
 export const collectionsHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {

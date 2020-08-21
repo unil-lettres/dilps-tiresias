@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CollectionService } from '../../../collections/services/collection.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {CollectionService} from '../../../collections/services/collection.service';
 
-import { UserService } from '../../../users/services/user.service';
+import {UserService} from '../../../users/services/user.service';
 import {
     Cards_cards_items,
     CollectionFilter,
@@ -11,8 +11,8 @@ import {
     LogicalOperator,
     UserRole,
 } from '../../generated-types';
-import { AlertService } from '../alert/alert.service';
-import { FakeCollection } from '../../../collections/services/fake-collection.resolver';
+import {AlertService} from '../alert/alert.service';
+import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 
 /**
  * Exclusive fields:
@@ -20,16 +20,19 @@ import { FakeCollection } from '../../../collections/services/fake-collection.re
  * If `collection` is given will link the collection's images to the selected collection.
  * If nothing is given will do nothing and return the selected collection.
  */
-export type CollectionSelectorData = {
-    images: Cards_cards_items[],
-    collection?: never,
-} | {
-    images?: never,
-    collection: FakeCollection,
-} | {
-    images?: never,
-    collection?: never,
-};
+export type CollectionSelectorData =
+    | {
+          images: Cards_cards_items[];
+          collection?: never;
+      }
+    | {
+          images?: never;
+          collection: FakeCollection;
+      }
+    | {
+          images?: never;
+          collection?: never;
+      };
 
 export type CollectionSelectorResult = Collections_collections_items | CreateCollection_createCollection;
 
@@ -39,7 +42,6 @@ export type CollectionSelectorResult = Collections_collections_items | CreateCol
     styleUrls: ['./collection-selector.component.scss'],
 })
 export class CollectionSelectorComponent implements OnInit {
-
     public listFilter: CollectionFilter;
     public collection: Collections_collections_items;
     public image: Cards_cards_items | undefined;
@@ -49,15 +51,15 @@ export class CollectionSelectorComponent implements OnInit {
         parent: null,
     };
 
-    constructor(public collectionService: CollectionService,
-                private dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
-                private userService: UserService,
-                private alertService: AlertService,
-                @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData) {
-    }
+    constructor(
+        public collectionService: CollectionService,
+        private dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
+        private userService: UserService,
+        private alertService: AlertService,
+        @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData,
+    ) {}
 
     public ngOnInit(): void {
-
         this.userService.getCurrentUser().subscribe(user => {
             if (![UserRole.administrator, UserRole.major].includes(user.role)) {
                 this.listFilter = {
@@ -114,6 +116,5 @@ export class CollectionSelectorComponent implements OnInit {
             this.dialogRef.close(collection);
             this.alertService.info('Fiches ajoutées');
         });
-
     }
 }

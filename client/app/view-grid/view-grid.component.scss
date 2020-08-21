@@ -1,5 +1,4 @@
 :host {
-
     display: flex;
 
     .scrolled {
@@ -8,6 +7,6 @@
 
     .scrollable {
         flex: 1;
-        overflow: auto
+        overflow: auto;
     }
 }

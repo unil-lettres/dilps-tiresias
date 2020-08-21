@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
     selector: 'app-table-button',
@@ -7,7 +7,6 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class TableButtonComponent {
-
     @Input() queryParams: any;
     @Input() queryParamsHandling: any;
     @Input() label: string;
@@ -16,7 +15,5 @@ export class TableButtonComponent {
     @Input() navigate: string;
     @Input() disable: boolean;
 
-    constructor() {
-    }
-
+    constructor() {}
 }

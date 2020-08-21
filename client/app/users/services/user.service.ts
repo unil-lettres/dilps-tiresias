@@ -1,19 +1,21 @@
-import { Inject, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Apollo } from 'apollo-angular';
-import { Observable, of, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SITE } from '../../app.config';
+import {Inject, Injectable} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Apollo} from 'apollo-angular';
+import {Observable, of, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {SITE} from '../../app.config';
 import {
     CreateUser,
     CreateUserVariables,
     DeleteUsers,
-    Login, LoginVariables,
+    Login,
+    LoginVariables,
     Logout,
     Site,
     UpdateUser,
     UpdateUserVariables,
-    User, UserInput,
+    User,
+    UserInput,
     UserRole,
     Users,
     UsersVariables,
@@ -21,7 +23,7 @@ import {
     UserVariables,
     Viewer,
 } from '../../shared/generated-types';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
     createUser,
     deleteUsers,
@@ -36,7 +38,8 @@ import {
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends AbstractContextualizedService<User['user'],
+export class UserService extends AbstractContextualizedService<
+    User['user'],
     UserVariables,
     Users['users'],
     UsersVariables,
@@ -45,8 +48,8 @@ export class UserService extends AbstractContextualizedService<User['user'],
     UpdateUser['updateUser'],
     UpdateUserVariables,
     DeleteUsers['deleteUsers'],
-    never> {
-
+    never
+> {
     private currentUser: Viewer['viewer'] | null = null;
 
     constructor(apollo: Apollo, private route: ActivatedRoute, private router: Router, @Inject(SITE) site: Site) {
@@ -73,17 +76,20 @@ export class UserService extends AbstractContextualizedService<User['user'],
     }
 
     public getCurrentUser(): Observable<Viewer['viewer']> {
-
         if (this.currentUser) {
             return of(this.currentUser);
         }
 
-        return this.apollo.query<Viewer>({
-            query: viewerQuery,
-        }).pipe(map(({data: {viewer}}) => {
-            this.currentUser = viewer;
-            return viewer;
-        }));
+        return this.apollo
+            .query<Viewer>({
+                query: viewerQuery,
+            })
+            .pipe(
+                map(({data: {viewer}}) => {
+                    this.currentUser = viewer;
+                    return viewer;
+                }),
+            );
     }
 
     public getRole(role: UserRole) {
@@ -137,26 +143,33 @@ export class UserService extends AbstractContextualizedService<User['user'],
     }
 
     public login(loginData: LoginVariables): Observable<Login['login']> {
-        return this.apollo.mutate<Login, LoginVariables>({
-            mutation: loginMutation,
-            variables: loginData,
-        }).pipe(map(result => result.data!.login));
+        return this.apollo
+            .mutate<Login, LoginVariables>({
+                mutation: loginMutation,
+                variables: loginData,
+            })
+            .pipe(map(result => result.data!.login));
     }
 
     public logout(): Observable<Logout['logout']> {
         const subject = new Subject<Logout['logout']>();
 
-        this.apollo.mutate<Logout>({
-            mutation: logoutMutation,
-        }).subscribe(result => {
-            const v = result.data!.logout;
-            this.currentUser = null;
-            this.apollo.getClient().clearStore().then(() => {
-                this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
-                    subject.next(v);
-                });
+        this.apollo
+            .mutate<Logout>({
+                mutation: logoutMutation,
+            })
+            .subscribe(result => {
+                const v = result.data!.logout;
+                this.currentUser = null;
+                this.apollo
+                    .getClient()
+                    .clearStore()
+                    .then(() => {
+                        this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
+                            subject.next(v);
+                        });
+                    });
             });
-        });
 
         return subject;
     }
@@ -167,14 +180,11 @@ export class UserService extends AbstractContextualizedService<User['user'],
 
     public startTempAccess() {
         sessionStorage.setItem('tempAccess', 'true');
-        this.router.navigateByUrl(
-            this.route.snapshot.queryParams['returnUrl'] || '/'
-        );
+        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/');
     }
 
     public revokeTempAccess() {
         sessionStorage.removeItem('tempAccess');
         this.router.navigateByUrl('login');
     }
-
 }

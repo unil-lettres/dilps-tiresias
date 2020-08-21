@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 
 export interface FakeCollection {
     id: string;
@@ -10,9 +10,7 @@ export interface FakeCollection {
     providedIn: 'root',
 })
 export class FakeCollectionResolver implements Resolve<FakeCollection> {
-
-    constructor() {
-    }
+    constructor() {}
 
     /**
      * Converts ID into fake collection
@@ -21,5 +19,4 @@ export class FakeCollectionResolver implements Resolve<FakeCollection> {
     public resolve(route: ActivatedRouteSnapshot): FakeCollection {
         return {id: route.params.collectionId, __typename: 'Collection'};
     }
-
 }

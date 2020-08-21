@@ -1,25 +1,27 @@
 <mat-form-field class="innerSpacing">
-
     <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
         <mat-label>{{ placeholder }}</mat-label>
         <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayout="row">
-            <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove">remove_red_eye</mat-icon>
+            <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove"
+                >remove_red_eye</mat-icon
+            >
             <div fxFlex>
-                <span>{{ getLabel(item)}}</span>
-                <br *ngIf="item.locality && !readonly">
+                <span>{{ getLabel(item) }}</span>
+                <br *ngIf="item.locality && !readonly" />
                 <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
             </div>
 
             <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
         </mat-chip>
 
-        <input (focus)="focus()"
-               (keydown.enter)="onEnter($event)"
-               [formControl]="formControl"
-               [fxShow]="!readonly || items.length === 0"
-               [matAutocomplete]="autocomplete"
-               [matChipInputFor]="chipList"
-               [readonly]="readonly"
+        <input
+            (focus)="focus()"
+            (keydown.enter)="onEnter($event)"
+            [formControl]="formControl"
+            [fxShow]="!readonly || items.length === 0"
+            [matAutocomplete]="autocomplete"
+            [matChipInputFor]="chipList"
+            [readonly]="readonly"
         />
     </mat-chip-list>
 
@@ -31,7 +33,8 @@
                 <div *ngIf="item?.locality" class="mat-caption">{{ item.locality }}</div>
             </div>
         </mat-option>
-        <div *ngIf="moreNbItems > 0" class="mat-caption" i18n style="padding:5px 10px">{{ moreNbItems }} élément(s) supplémentaire(s)</div>
+        <div *ngIf="moreNbItems > 0" class="mat-caption" i18n style="padding: 5px 10px;">
+            {{ moreNbItems }} élément(s) supplémentaire(s)
+        </div>
     </mat-autocomplete>
-
 </mat-form-field>

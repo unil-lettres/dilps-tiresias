@@ -1,14 +1,14 @@
-import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ArtistComponent } from '../../artists/artist/artist.component';
-import { CollectionService } from '../../collections/services/collection.service';
-import { InstitutionService } from '../../institutions/services/institution.service';
-import { AbstractDetail } from '../../shared/components/AbstractDetail';
-import { AlertService } from '../../shared/components/alert/alert.service';
-import { UserType } from '../../shared/generated-types';
-import { collectionsHierarchicConfig } from '../../shared/hierarchic-configurations/CollectionConfiguration';
-import { UserService } from '../services/user.service';
+import {Component, Inject} from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {ArtistComponent} from '../../artists/artist/artist.component';
+import {CollectionService} from '../../collections/services/collection.service';
+import {InstitutionService} from '../../institutions/services/institution.service';
+import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AlertService} from '../../shared/components/alert/alert.service';
+import {UserType} from '../../shared/generated-types';
+import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
+import {UserService} from '../services/user.service';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password').value; // to get value in input tag
@@ -26,7 +26,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     templateUrl: './user.component.html',
 })
 export class UserComponent extends AbstractDetail {
-
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
 
     public roles = [];
@@ -37,14 +36,15 @@ export class UserComponent extends AbstractDetail {
 
     public institution;
 
-    constructor(public institutionService: InstitutionService,
-                service: UserService,
-                alertService: AlertService,
-                userService: UserService,
-                dialogRef: MatDialogRef<ArtistComponent>,
-                public collectionService: CollectionService,
-                @Inject(MAT_DIALOG_DATA) data: any) {
-
+    constructor(
+        public institutionService: InstitutionService,
+        service: UserService,
+        alertService: AlertService,
+        userService: UserService,
+        dialogRef: MatDialogRef<ArtistComponent>,
+        public collectionService: CollectionService,
+        @Inject(MAT_DIALOG_DATA) data: any,
+    ) {
         super(service, alertService, dialogRef, userService, data);
 
         this.roles = service.getRoles();
@@ -59,8 +59,8 @@ export class UserComponent extends AbstractDetail {
             {
                 updateOn: 'change',
                 validators: [matchPassword],
-            });
-
+            },
+        );
     }
 
     public isShibbolethUser() {
@@ -74,5 +74,4 @@ export class UserComponent extends AbstractDetail {
     protected postUpdate(model) {
         this.institution = model.institution;
     }
-
 }

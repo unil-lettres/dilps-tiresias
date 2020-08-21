@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
-import { NaturalLinkMutationService } from '@ecodev/natural';
-import { Apollo } from 'apollo-angular';
-import { forkJoin } from 'rxjs';
-import { SITE } from '../../app.config';
+import {Inject, Injectable} from '@angular/core';
+import {NaturalLinkMutationService} from '@ecodev/natural';
+import {Apollo} from 'apollo-angular';
+import {forkJoin} from 'rxjs';
+import {SITE} from '../../app.config';
 import {
     Cards_cards_items,
     Collection,
@@ -20,7 +20,7 @@ import {
     UpdateCollection,
     UpdateCollectionVariables,
 } from '../../shared/generated-types';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 import {
     collectionQuery,
@@ -30,32 +30,34 @@ import {
     linkCollectionToCollection,
     updateCollection,
 } from './collection.queries';
-import { FakeCollection } from './fake-collection.resolver';
+import {FakeCollection} from './fake-collection.resolver';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CollectionService
-    extends AbstractContextualizedService<Collection['collection'],
-        CollectionVariables,
-        Collections['collections'],
-        CollectionsVariables,
-        CreateCollection['createCollection'],
-        CreateCollectionVariables,
-        UpdateCollection['updateCollection'],
-        UpdateCollectionVariables,
-        DeleteCollections['deleteCollections'],
-        never> {
-
+export class CollectionService extends AbstractContextualizedService<
+    Collection['collection'],
+    CollectionVariables,
+    Collections['collections'],
+    CollectionsVariables,
+    CreateCollection['createCollection'],
+    CreateCollectionVariables,
+    UpdateCollection['updateCollection'],
+    UpdateCollectionVariables,
+    DeleteCollections['deleteCollections'],
+    never
+> {
     constructor(apollo: Apollo, private linkService: NaturalLinkMutationService, @Inject(SITE) site: Site) {
-        super(apollo,
+        super(
+            apollo,
             'collection',
             collectionQuery,
             collectionsQuery,
             createCollection,
             updateCollection,
             deleteCollections,
-            site);
+            site,
+        );
     }
 
     public getDefaultForClient() {

@@ -1,45 +1,40 @@
-import { Injectable, Inject } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import {Injectable, Inject} from '@angular/core';
+import {Apollo} from 'apollo-angular';
 
 import {
     CreatePeriod,
     CreatePeriodVariables,
     DeletePeriods,
-    Period, PeriodInput,
+    Period,
+    PeriodInput,
     Periods,
     PeriodsVariables,
-    PeriodVariables, Site,
+    PeriodVariables,
+    Site,
     UpdatePeriod,
     UpdatePeriodVariables,
 } from '../../shared/generated-types';
-import { createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod } from './period.queries';
-import { SITE } from '../../app.config';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
+import {SITE} from '../../app.config';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
     providedIn: 'root',
 })
-export class PeriodService
-    extends AbstractContextualizedService<Period['period'],
-        PeriodVariables,
-        Periods['periods'],
-        PeriodsVariables,
-        CreatePeriod['createPeriod'],
-        CreatePeriodVariables,
-        UpdatePeriod['updatePeriod'],
-        UpdatePeriodVariables,
-        DeletePeriods['deletePeriods'],
-        never> {
-
+export class PeriodService extends AbstractContextualizedService<
+    Period['period'],
+    PeriodVariables,
+    Periods['periods'],
+    PeriodsVariables,
+    CreatePeriod['createPeriod'],
+    CreatePeriodVariables,
+    UpdatePeriod['updatePeriod'],
+    UpdatePeriodVariables,
+    DeletePeriods['deletePeriods'],
+    never
+> {
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo,
-            'period',
-            periodQuery,
-            periodsQuery,
-            createPeriod,
-            updatePeriod,
-            deletePeriods,
-            site);
+        super(apollo, 'period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
     }
 
     public getDefaultForClient() {
@@ -55,5 +50,4 @@ export class PeriodService
             site: this.site,
         };
     }
-
 }

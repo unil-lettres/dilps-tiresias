@@ -1,5 +1,5 @@
-import { QuillConfig } from 'ngx-quill';
-import { pick } from 'lodash';
+import {QuillConfig} from 'ngx-quill';
+import {pick} from 'lodash';
 
 export function keepOnlyTextAndBasicFormatting(node, delta) {
     const ops = [];
@@ -25,12 +25,7 @@ export const quillConfig: QuillConfig = {
             ['clean'], // remove formatting button
         ],
         clipboard: {
-            matchers: [
-                [
-                    Node.ELEMENT_NODE,
-                    keepOnlyTextAndBasicFormatting,
-                ],
-            ],
+            matchers: [[Node.ELEMENT_NODE, keepOnlyTextAndBasicFormatting]],
         },
     },
 };

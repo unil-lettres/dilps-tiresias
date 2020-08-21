@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NaturalAbstractController, NaturalQueryVariablesManager } from '@ecodev/natural';
-import { isArray } from 'lodash';
-import { CollectionsVariables, LogicalOperator, UserRole } from '../../shared/generated-types';
-import { UserService } from '../../users/services/user.service';
-import { CollectionComponent } from '../collection/collection.component';
-import { CollectionService } from '../services/collection.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {isArray} from 'lodash';
+import {CollectionsVariables, LogicalOperator, UserRole} from '../../shared/generated-types';
+import {UserService} from '../../users/services/user.service';
+import {CollectionComponent} from '../collection/collection.component';
+import {CollectionService} from '../services/collection.service';
 
 @Component({
     selector: 'app-collections',
@@ -14,7 +14,6 @@ import { CollectionService } from '../services/collection.service';
     styleUrls: ['./collections.component.scss'],
 })
 export class CollectionsComponent extends NaturalAbstractController implements OnInit {
-
     public collections = [];
 
     /**
@@ -40,16 +39,17 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private collectionsService: CollectionService,
-                private dialog: MatDialog,
-                private userService: UserService) {
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private collectionsService: CollectionService,
+        private dialog: MatDialog,
+        private userService: UserService,
+    ) {
         super();
     }
 
     ngOnInit() {
-
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
             // this.showEditButtons = this.showEditionButtons();
@@ -79,7 +79,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
                     },
                 });
             }
-
         });
 
         this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe((collections: any) => {
@@ -90,7 +89,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             }
             this.hasMore = collections.length > this.collections.length;
         });
-
     }
 
     public toggle(collection) {
@@ -153,7 +151,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
     }
 
     private showCreateButton(allowedRoles: boolean | UserRole[], user) {
-
         if (!allowedRoles || !user) {
             return false;
         }
@@ -172,5 +169,4 @@ export class CollectionsComponent extends NaturalAbstractController implements O
 
         return false;
     }
-
 }

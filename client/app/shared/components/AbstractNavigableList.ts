@@ -1,11 +1,10 @@
-import { Injector, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractNavigableList, PaginatedData, QueryVariables } from '@ecodev/natural';
+import {Injector, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NaturalAbstractNavigableList, PaginatedData, QueryVariables} from '@ecodev/natural';
 
 export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends QueryVariables>
     extends NaturalAbstractNavigableList<Tall, Vall>
     implements OnInit {
-
     public displayedColumns = ['navigation', 'name'];
 
     /**
@@ -31,7 +30,7 @@ export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends
         });
     }
 
-    protected getBreadcrumb(item: { parent, name, parentHierarchy }): { name }[] {
+    protected getBreadcrumb(item: {parent; name; parentHierarchy}): {name}[] {
         return [...item.parentHierarchy, item];
     }
 }

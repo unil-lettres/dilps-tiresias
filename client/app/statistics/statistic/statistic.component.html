@@ -1,33 +1,32 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
-    <highcharts-chart fxFlex="70"
-                      [Highcharts]="Highcharts"
-                      [options]="chartOptions"
-                      [(update)]="chartUpdated"
-                      [oneToOne]="true"
-                      style="height: 400px;"
+    <highcharts-chart
+        fxFlex="70"
+        [Highcharts]="Highcharts"
+        [options]="chartOptions"
+        [(update)]="chartUpdated"
+        [oneToOne]="true"
+        style="height: 400px;"
     ></highcharts-chart>
 
     <div fxLayout="column" fxLayoutGap="20px">
-        <table mat-table *ngFor="let table of tables"  [dataSource]="table.dataSource">
-
+        <table mat-table *ngFor="let table of tables" [dataSource]="table.dataSource">
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
             <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell>{{table.name}}</th>
-                <td *matCellDef="let element" mat-cell>{{element.name}}</td>
+                <th *matHeaderCellDef mat-header-cell>{{ table.name }}</th>
+                <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
             </ng-container>
 
             <ng-container matColumnDef="absolute">
                 <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let element" mat-cell style="text-align: right">{{element.value}}</td>
+                <td *matCellDef="let element" mat-cell style="text-align: right;">{{ element.value }}</td>
             </ng-container>
 
             <ng-container matColumnDef="percent">
                 <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let element" mat-cell style="text-align: right">{{element.percent | percent}}</td>
+                <td *matCellDef="let element" mat-cell style="text-align: right;">{{ element.percent | percent }}</td>
             </ng-container>
-
         </table>
     </div>
 </div>

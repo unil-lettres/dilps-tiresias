@@ -4,7 +4,11 @@
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
-                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
+                    <input
+                        [(ngModel)]="data.item.name"
+                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
         </mat-tab>
@@ -12,11 +16,12 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer (create)="create()"
-                       (delete)="delete()"
-                       (update)="update()"
-                       [canCreate]="user?.globalPermissions?.documentType?.create"
-                       [item]="data.item"
-                       fxFlex
+    <app-dialog-footer
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
+        [canCreate]="user?.globalPermissions?.documentType?.create"
+        [item]="data.item"
+        fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

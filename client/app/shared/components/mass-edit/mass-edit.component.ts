@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { CardService } from '../../../card/services/card.service';
-import { CardInput } from '../../generated-types';
+import {Component} from '@angular/core';
+import {CardService} from '../../../card/services/card.service';
+import {CardInput} from '../../generated-types';
 
 @Component({
     selector: 'app-mass-edit',
@@ -8,7 +8,6 @@ import { CardInput } from '../../generated-types';
     styleUrls: ['./mass-edit.component.scss'],
 })
 export class MassEditComponent {
-
     public readonly card: CardInput;
 
     constructor(private cardService: CardService) {
@@ -16,5 +15,4 @@ export class MassEditComponent {
         card.visibility = null;
         this.card = card;
     }
-
 }

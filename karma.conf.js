@@ -2,7 +2,7 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 // Use puppeteer to control a headless Chrome
-process.env.CHROME_BIN = require('puppeteer').executablePath()
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
     config.set({
@@ -16,9 +16,7 @@ module.exports = function (config) {
             require('karma-scss-preprocessor'),
             require('@angular-devkit/build-angular/plugins/karma'),
         ],
-        files: [
-            {pattern: './client/styles.scss', included: true, watched: true},
-        ],
+        files: [{pattern: './client/styles.scss', included: true, watched: true}],
         preprocessors: {
             './client/styles.scss': ['scss'],
         },
@@ -27,7 +25,8 @@ module.exports = function (config) {
             captureConsole: true,
         },
         coverageIstanbulReporter: {
-            dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
+            dir: require('path').join(__dirname, 'coverage'),
+            reports: ['html', 'lcovonly'],
             fixWebpackSourcePaths: true,
         },
         angularCli: {

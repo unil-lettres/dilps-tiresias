@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { institutionDetails } from '../../institutions/services/institution.queries';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {institutionDetails} from '../../institutions/services/institution.queries';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const collectionsQuery = gql`
     query Collections($filter: CollectionFilter, $pagination: PaginationInput) {
@@ -22,7 +22,8 @@ export const collectionsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const collectionQuery = gql`
     query Collection($id: CollectionID!) {
@@ -56,11 +57,13 @@ export const collectionQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createCollection = gql`
-    mutation CreateCollection ($input: CollectionInput!) {
-        createCollection (input: $input) {
+    mutation CreateCollection($input: CollectionInput!) {
+        createCollection(input: $input) {
             id
             name
             hierarchicName
@@ -72,7 +75,9 @@ export const createCollection = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateCollection = gql`
     mutation UpdateCollection($id: CollectionID!, $input: CollectionPartialInput!) {
@@ -87,16 +92,19 @@ export const updateCollection = gql`
         }
     }
     ${userMetaFragment}
-${institutionDetails}`;
+    ${institutionDetails}
+`;
 
 export const deleteCollections = gql`
-    mutation DeleteCollections ($ids: [CollectionID!]!){
+    mutation DeleteCollections($ids: [CollectionID!]!) {
         deleteCollections(ids: $ids)
-    }`;
+    }
+`;
 
 export const linkCollectionToCollection = gql`
-    mutation LinkCollectionToCollection ($sourceCollection: CollectionID!, $targetCollection: CollectionID!) {
+    mutation LinkCollectionToCollection($sourceCollection: CollectionID!, $targetCollection: CollectionID!) {
         linkCollectionToCollection(sourceCollection: $sourceCollection, targetCollection: $targetCollection) {
             id
         }
-    }`;
+    }
+`;

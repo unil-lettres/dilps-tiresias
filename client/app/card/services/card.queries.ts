@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { institutionDetails } from '../../institutions/services/institution.queries';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {institutionDetails} from '../../institutions/services/institution.queries';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const cardDetailsFragment = gql`
     fragment cardDetails on Card {
@@ -133,8 +133,9 @@ export const cardDetailsFragment = gql`
             delete
         }
     }
-${userMetaFragment}
-${institutionDetails}`;
+    ${userMetaFragment}
+    ${institutionDetails}
+`;
 
 export const cardsQuery = gql`
     query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
@@ -147,32 +148,39 @@ export const cardsQuery = gql`
             offset
             length
         }
-    }${cardDetailsFragment}`;
+    }
+    ${cardDetailsFragment}
+`;
 
 export const cardQuery = gql`
     query Card($id: CardID!) {
         card(id: $id) {
             ...cardDetails
         }
-    }${cardDetailsFragment}`;
+    }
+    ${cardDetailsFragment}
+`;
 
 export const createCard = gql`
-    mutation CreateCard ($input: CardInput!, $collection: CollectionID) {
-        createCard (input: $input, collection: $collection) {
+    mutation CreateCard($input: CardInput!, $collection: CollectionID) {
+        createCard(input: $input, collection: $collection) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createCards = gql`
-    mutation CreateCards ($excel: Upload!, $images: [Upload!]!, $collection: CollectionID) {
-        createCards (excel: $excel, images: $images, collection: $collection) {
+    mutation CreateCards($excel: Upload!, $images: [Upload!]!, $collection: CollectionID) {
+        createCards(excel: $excel, images: $images, collection: $collection) {
             id
         }
-    }`;
+    }
+`;
 
 export const updateCard = gql`
     mutation UpdateCard($id: CardID!, $input: CardPartialInput!) {
@@ -191,23 +199,29 @@ export const updateCard = gql`
         }
     }
     ${userMetaFragment}
-${institutionDetails}`;
+    ${institutionDetails}
+`;
 
 export const deleteCards = gql`
-    mutation DeleteCards ($ids: [CardID!]!){
+    mutation DeleteCards($ids: [CardID!]!) {
         deleteCards(ids: $ids)
-    }`;
+    }
+`;
 
 export const validateData = gql`
     mutation ValidateData($id: CardID!) {
         validateData(id: $id) {
             ...cardDetails
         }
-    }${cardDetailsFragment}`;
+    }
+    ${cardDetailsFragment}
+`;
 
 export const validateImage = gql`
     mutation ValidateImage($id: CardID!) {
         validateImage(id: $id) {
             ...cardDetails
         }
-    }${cardDetailsFragment}`;
+    }
+    ${cardDetailsFragment}
+`;

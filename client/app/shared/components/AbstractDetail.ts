@@ -1,24 +1,24 @@
-import { OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { merge } from 'lodash';
-import { ArtistComponent } from '../../artists/artist/artist.component';
-import { UserService } from '../../users/services/user.service';
-import { AlertService } from './alert/alert.service';
+import {OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
+import {merge} from 'lodash';
+import {ArtistComponent} from '../../artists/artist/artist.component';
+import {UserService} from '../../users/services/user.service';
+import {AlertService} from './alert/alert.service';
 
 export class AbstractDetail implements OnInit {
-
     public user;
 
     public data: any = {
         item: {},
     };
 
-    constructor(public service,
-                private alertService: AlertService,
-                public dialogRef: MatDialogRef<ArtistComponent>,
-                public userService: UserService,
-                data: any) {
-
+    constructor(
+        public service,
+        private alertService: AlertService,
+        public dialogRef: MatDialogRef<ArtistComponent>,
+        public userService: UserService,
+        data: any,
+    ) {
         this.data = merge({item: this.service.getConsolidatedForClient()}, data);
     }
 
@@ -30,11 +30,11 @@ export class AbstractDetail implements OnInit {
             });
         }
 
-        this.userService.getCurrentUser().subscribe(user => this.user = user);
+        this.userService.getCurrentUser().subscribe(user => (this.user = user));
     }
 
     public update() {
-        this.service.updateNow(this.data.item).subscribe((model) => {
+        this.service.updateNow(this.data.item).subscribe(model => {
             this.alertService.info('Mis à jour');
             this.dialogRef.close(this.data.item);
             this.postUpdate(model);
@@ -49,7 +49,8 @@ export class AbstractDetail implements OnInit {
     }
 
     public delete() {
-        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+        this.alertService
+            .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 if (confirmed) {
                     this.service.delete([this.data.item]).subscribe(() => {
@@ -60,9 +61,7 @@ export class AbstractDetail implements OnInit {
             });
     }
 
-    protected postQuery() {
-    }
+    protected postQuery() {}
 
-    protected postUpdate(model) {
-    }
+    protected postUpdate(model) {}
 }

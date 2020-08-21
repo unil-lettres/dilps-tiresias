@@ -6,7 +6,8 @@
     @include fixedToolbar();
 
     mat-nav-list {
-        &, & * {
+        &,
+        & * {
             white-space: normal;
         }
 

@@ -1,18 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
-    NaturalDropdownData, NaturalDropdownRef,
+    NaturalDropdownData,
+    NaturalDropdownRef,
 } from '@ecodev/natural';
-import {
-    TypeNumericRangeComponent,
-    TypeNumericRangeConfiguration,
-} from './type-numeric-range.component';
+import {TypeNumericRangeComponent, TypeNumericRangeConfiguration} from './type-numeric-range.component';
 
 describe('TypeNumericRangeComponent', () => {
     let component: TypeNumericRangeComponent;
@@ -40,13 +38,7 @@ describe('TypeNumericRangeComponent', () => {
 
         TestBed.configureTestingModule({
             declarations: [TypeNumericRangeComponent],
-            imports: [
-                NoopAnimationsModule,
-                FormsModule,
-                ReactiveFormsModule,
-                MatFormFieldModule,
-                MatInputModule,
-            ],
+            imports: [NoopAnimationsModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
             providers: [
                 {
                     provide: NATURAL_DROPDOWN_DATA,

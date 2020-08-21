@@ -1,17 +1,22 @@
-import { Inject, Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { merge } from 'lodash';
-import { map } from 'rxjs/operators';
-import { SITE } from '../../app.config';
+import {Inject, Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {merge} from 'lodash';
+import {map} from 'rxjs/operators';
+import {SITE} from '../../app.config';
 import {
     Card,
     CardInput,
     Cards,
     CardsVariables,
     CardVariables,
-    CardVisibility, Collections_collections_items,
-    CreateCard, CreateCards, CreateCards_createCards, CreateCardsVariables,
-    CreateCardVariables, CreateCollection_createCollection,
+    CardVisibility,
+    Collections_collections_items,
+    CreateCard,
+    CreateCards,
+    CreateCards_createCards,
+    CreateCardsVariables,
+    CreateCardVariables,
+    CreateCollection_createCollection,
     DeleteCards,
     Precision,
     Site,
@@ -20,7 +25,7 @@ import {
     ValidateData,
     ValidateImage,
 } from '../../shared/generated-types';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
     cardQuery,
     cardsQuery,
@@ -31,13 +36,14 @@ import {
     validateData,
     validateImage,
 } from './card.queries';
-import { Observable } from 'rxjs';
-import { Literal } from '@ecodev/natural';
+import {Observable} from 'rxjs';
+import {Literal} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
 })
-export class CardService extends AbstractContextualizedService<Card['card'],
+export class CardService extends AbstractContextualizedService<
+    Card['card'],
     CardVariables,
     Cards['cards'],
     CardsVariables,
@@ -46,15 +52,15 @@ export class CardService extends AbstractContextualizedService<Card['card'],
     UpdateCard['updateCard'],
     UpdateCardVariables,
     DeleteCards['deleteCards'],
-    never> {
-
+    never
+> {
     private collectionIdForCreation: string | null = null;
 
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
-    public static getImageFormat(card, height): { height: number, width: number } {
+    public static getImageFormat(card, height): {height: number; width: number} {
         height = card.height ? Math.min(card.height, height) : height;
         const ratio = card.width / card.height;
         return {
@@ -144,38 +150,43 @@ export class CardService extends AbstractContextualizedService<Card['card'],
         };
     }
 
-    public validateData(card: { id }) {
-        return this.apollo.mutate<ValidateData>({
-            mutation: validateData,
-            variables: {
-                id: card.id,
-            },
-        }).pipe(map(result => {
-                const c = result.data!.validateData;
-                merge(card, c);
+    public validateData(card: {id}) {
+        return this.apollo
+            .mutate<ValidateData>({
+                mutation: validateData,
+                variables: {
+                    id: card.id,
+                },
+            })
+            .pipe(
+                map(result => {
+                    const c = result.data!.validateData;
+                    merge(card, c);
 
-                return c;
-            },
-        ));
+                    return c;
+                }),
+            );
     }
 
-    public validateImage(card: { id }) {
-        return this.apollo.mutate<ValidateImage>({
-            mutation: validateImage,
-            variables: {
-                id: card.id,
-            },
-        }).pipe(map(result => {
-                const c = result.data!.validateImage;
-                merge(card, c);
+    public validateImage(card: {id}) {
+        return this.apollo
+            .mutate<ValidateImage>({
+                mutation: validateImage,
+                variables: {
+                    id: card.id,
+                },
+            })
+            .pipe(
+                map(result => {
+                    const c = result.data!.validateImage;
+                    merge(card, c);
 
-                return c;
-            },
-        ));
+                    return c;
+                }),
+            );
     }
 
     public getInput(object) {
-
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server
@@ -216,14 +227,15 @@ export class CardService extends AbstractContextualizedService<Card['card'],
         images: File[],
         collection: Collections_collections_items | CreateCollection_createCollection,
     ): Observable<CreateCards_createCards[]> {
-        return this.apollo.mutate<CreateCards, CreateCardsVariables>({
-            mutation: createCards,
-            variables: {
-                excel,
-                images,
-                collection: collection.id,
-            },
-        }).pipe(map(result => result.data!.createCards));
+        return this.apollo
+            .mutate<CreateCards, CreateCardsVariables>({
+                mutation: createCards,
+                variables: {
+                    excel,
+                    images,
+                    collection: collection.id,
+                },
+            })
+            .pipe(map(result => result.data!.createCards));
     }
-
 }

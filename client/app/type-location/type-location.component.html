@@ -1,41 +1,47 @@
 <form [formGroup]="form" fxLayout="row" fxLayoutGap="10px">
-
     <mat-form-field>
         <mat-label i18n>Latitude</mat-label>
-        <input (keydown.enter)="close()"
-               [formControl]="latitudeCtrl"
-               [min]="-90"
-               [max]="90"
-               [required]="true"
-               matInput
-               type="number"
+        <input
+            (keydown.enter)="close()"
+            [formControl]="latitudeCtrl"
+            [min]="-90"
+            [max]="90"
+            [required]="true"
+            matInput
+            type="number"
+        />
+        <mat-error *ngIf="latitudeCtrl.hasError('min') || latitudeCtrl.hasError('max')"
+            >La latitude doit être entre -180 et 180</mat-error
         >
-        <mat-error *ngIf="latitudeCtrl.hasError('min') || latitudeCtrl.hasError('max')">La latitude doit être entre -180 et 180</mat-error>
     </mat-form-field>
 
     <mat-form-field>
         <mat-label i18n>Longitude</mat-label>
-        <input (keydown.enter)="close()"
-               [formControl]="longitudeCtrl"
-               [min]="-180"
-               [max]="180"
-               [required]="true"
-               matInput
-               type="number"
+        <input
+            (keydown.enter)="close()"
+            [formControl]="longitudeCtrl"
+            [min]="-180"
+            [max]="180"
+            [required]="true"
+            matInput
+            type="number"
+        />
+        <mat-error *ngIf="longitudeCtrl.hasError('min') || longitudeCtrl.hasError('max')"
+            >La longitude doit être entre -180 et 180</mat-error
         >
-        <mat-error *ngIf="longitudeCtrl.hasError('min') || longitudeCtrl.hasError('max')">La longitude doit être entre -180 et 180</mat-error>
     </mat-form-field>
 
     <mat-form-field>
         <mat-label i18n>Rayon</mat-label>
-        <input (keydown.enter)="close()"
-               [formControl]="distanceCtrl"
-               [min]="1"
-               [step]="50"
-               [required]="true"
-               matInput
-               type="number"
-        >
+        <input
+            (keydown.enter)="close()"
+            [formControl]="distanceCtrl"
+            [min]="1"
+            [step]="50"
+            [required]="true"
+            matInput
+            type="number"
+        />
         <span matSuffix>m</span>
 
         <mat-error *ngIf="distanceCtrl.hasError('min')">Le rayon doit être positif</mat-error>

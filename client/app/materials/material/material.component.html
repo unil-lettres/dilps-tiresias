@@ -4,15 +4,20 @@
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
-                    <input [(ngModel)]="data.item.name" [readonly]="data?.item?.permissions && !data.item.permissions.update" matInput>
+                    <input
+                        [(ngModel)]="data.item.name"
+                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        matInput
+                    />
                 </mat-form-field>
 
-                <natural-select-hierarchic (selectionChange)="data.item.parent = $event"
-                                [config]="hierarchicConfig"
-                                [showIcon]="false"
-                                clearLabel="Dissocier"
-                                placeholder="Parent"
-                                selectLabel="Associer au parent"
+                <natural-select-hierarchic
+                    (selectionChange)="data.item.parent = $event"
+                    [config]="hierarchicConfig"
+                    [showIcon]="false"
+                    clearLabel="Dissocier"
+                    placeholder="Parent"
+                    selectLabel="Associer au parent"
                 ></natural-select-hierarchic>
             </div>
         </mat-tab>
@@ -20,11 +25,12 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer (create)="create()"
-                       (delete)="delete()"
-                       (update)="update()"
-                       [canCreate]="user?.globalPermissions?.material?.create"
-                       [item]="data.item"
-                       fxFlex
+    <app-dialog-footer
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
+        [canCreate]="user?.globalPermissions?.material?.create"
+        [item]="data.item"
+        fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

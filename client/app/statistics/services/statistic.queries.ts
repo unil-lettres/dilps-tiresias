@@ -17,7 +17,8 @@ export const statisticDetails = gql`
         aaiLoginCount
         defaultUniqueLoginCount
         aaiUniqueLoginCount
-    }`;
+    }
+`;
 
 export const statisticsQuery = gql`
     query Statistics($filter: StatisticFilter, $pagination: PaginationInput, $sorting: [StatisticSorting!]) {
@@ -30,7 +31,8 @@ export const statisticsQuery = gql`
             length
         }
     }
-${statisticDetails}`;
+    ${statisticDetails}
+`;
 
 export const statisticQuery = gql`
     query Statistic($id: StatisticID!) {
@@ -38,22 +40,26 @@ export const statisticQuery = gql`
             ...statisticDetails
         }
     }
-${statisticDetails}`;
+    ${statisticDetails}
+`;
 
 export const recordPage = gql`
     mutation RecordPage {
         recordPage
-    }`;
+    }
+`;
 
 export const recordDetail = gql`
     mutation RecordDetail {
         recordDetail
-    }`;
+    }
+`;
 
 export const recordSearch = gql`
     mutation RecordSearch {
         recordSearch
-    }`;
+    }
+`;
 
 export const extraStatisticsQuery = gql`
     query ExtraStatistics($period: String!, $user: UserID) {

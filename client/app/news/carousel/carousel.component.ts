@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NaturalQueryVariablesManager } from '@ecodev/natural';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { NewsesVariables } from '../../shared/generated-types';
-import { NewsService } from '../services/news.service';
+import {Component, OnInit} from '@angular/core';
+import {NaturalQueryVariablesManager} from '@ecodev/natural';
+import {SwiperConfigInterface} from 'ngx-swiper-wrapper';
+import {NewsesVariables} from '../../shared/generated-types';
+import {NewsService} from '../services/news.service';
 
 @Component({
     selector: 'app-carousel',
@@ -10,7 +10,6 @@ import { NewsService } from '../services/news.service';
     styleUrls: ['./carousel.component.scss'],
 })
 export class CarouselComponent implements OnInit {
-
     public swiperConfig: SwiperConfigInterface = {
         direction: 'horizontal',
         autoplay: true,
@@ -22,18 +21,14 @@ export class CarouselComponent implements OnInit {
 
     public newses;
 
-    constructor(public newsService: NewsService) {
-    }
+    constructor(public newsService: NewsService) {}
 
     ngOnInit() {
-
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();
         qvm.set('search', {filter: {groups: [{conditions: [{isActive: {equal: {value: true}}}]}]}});
 
         this.newsService.getAll(qvm).subscribe(result => {
             this.newses = result.items;
         });
-
     }
-
 }

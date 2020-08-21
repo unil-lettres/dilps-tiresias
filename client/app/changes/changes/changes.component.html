@@ -1,5 +1,5 @@
 <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 </mat-toolbar>
 
 <div class="padding">
@@ -7,9 +7,8 @@
 
     <div class="responsive-table" [fxShow]="showTable()">
         <table [dataSource]="dataSource" mat-table>
-
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" mat-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" mat-row></tr>
 
             <!-- Type -->
             <ng-container matColumnDef="type">
@@ -28,7 +27,6 @@
                 <th *matHeaderCellDef mat-header-cell>Suggestion</th>
                 <td *matCellDef="let element" mat-cell>{{ element.suggestion?.name }}</td>
             </ng-container>
-
         </table>
     </div>
 
@@ -40,11 +38,12 @@
         <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
     </div>
 
-    <mat-paginator (page)="pagination($event)"
-                   *ngIf="dataSource.data?.length"
-                   [length]="dataSource.data?.length"
-                   [pageIndex]="dataSource.data?.pageIndex"
-                   [pageSizeOptions]="pageSizeOptions"
-                   [pageSize]="dataSource.data?.pageSize"
+    <mat-paginator
+        (page)="pagination($event)"
+        *ngIf="dataSource.data?.length"
+        [length]="dataSource.data?.length"
+        [pageIndex]="dataSource.data?.pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="dataSource.data?.pageSize"
     ></mat-paginator>
 </div>

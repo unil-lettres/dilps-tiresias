@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { debounceTime } from 'rxjs/operators';
-import { CardService } from '../card/services/card.service';
-import { Card } from '../shared/generated-types';
-import { Result, test } from './quizz.utils';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {debounceTime} from 'rxjs/operators';
+import {CardService} from '../card/services/card.service';
+import {Card} from '../shared/generated-types';
+import {Result, test} from './quizz.utils';
 
 @Component({
     selector: 'app-quizz',
@@ -12,7 +12,6 @@ import { Result, test } from './quizz.utils';
     styleUrls: ['./quizz.component.scss'],
 })
 export class QuizzComponent implements OnInit, OnDestroy {
-
     public cards: string[] = [];
     public card: Card['card'];
     public imageSrc;
@@ -22,9 +21,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
     private routeParamsSub;
     private formChangeSub;
 
-    constructor(private route: ActivatedRoute,
-                private cardService: CardService) {
-    }
+    constructor(private route: ActivatedRoute, private cardService: CardService) {}
 
     ngOnDestroy() {
         this.routeParamsSub.unsubscribe();
@@ -32,7 +29,6 @@ export class QuizzComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.routeParamsSub = this.route.params.subscribe(params => {
             if (params.cards) {
                 this.cards = params.cards.split(',');

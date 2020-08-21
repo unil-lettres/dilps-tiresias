@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { merge, omit } from 'lodash';
-import { CardService } from '../../card/services/card.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {merge, omit} from 'lodash';
+import {CardService} from '../../card/services/card.service';
 import {
     Card_card,
     Card_card_artists,
@@ -10,8 +10,8 @@ import {
     Change_change,
     Viewer,
 } from '../../shared/generated-types';
-import { UserService } from '../../users/services/user.service';
-import { ChangeService } from '../services/change.service';
+import {UserService} from '../../users/services/user.service';
+import {ChangeService} from '../services/change.service';
 
 @Component({
     selector: 'app-change',
@@ -19,7 +19,6 @@ import { ChangeService } from '../services/change.service';
     styleUrls: ['./change.component.scss'],
 })
 export class ChangeComponent implements OnInit {
-
     public change: Change_change;
     public original: Card_card;
     public suggestion: CardInput;
@@ -28,16 +27,16 @@ export class ChangeComponent implements OnInit {
     public loaded = false;
     public user: Viewer['viewer'];
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private changeService: ChangeService,
-                private cardService: CardService,
-                private userService: UserService) {
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private changeService: ChangeService,
+        private cardService: CardService,
+        private userService: UserService,
+    ) {}
 
     ngOnInit() {
-
-        this.userService.getCurrentUser().subscribe(user => this.user = user);
+        this.userService.getCurrentUser().subscribe(user => (this.user = user));
 
         if (this.route.snapshot.params['changeId']) {
             this.changeService.getOne(this.route.snapshot.params['changeId']).subscribe(change => {
@@ -77,15 +76,12 @@ export class ChangeComponent implements OnInit {
 
     public reject() {
         this.changeService.rejectChange(this.change).subscribe(() => {
-            this.router.navigate([
-                '..',
-                'notification',
-            ]);
+            this.router.navigate(['..', 'notification']);
         });
     }
 
     public update() {
-        this.cardService.create(this.suggestion).subscribe((card: { id }) => {
+        this.cardService.create(this.suggestion).subscribe((card: {id}) => {
             this.changeService.suggestUpdate(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });
@@ -93,11 +89,10 @@ export class ChangeComponent implements OnInit {
     }
 
     public create() {
-        this.cardService.create(this.suggestion).subscribe((card: { id }) => {
+        this.cardService.create(this.suggestion).subscribe((card: {id}) => {
             this.changeService.suggestCreation(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });
         });
     }
-
 }

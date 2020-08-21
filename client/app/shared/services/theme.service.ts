@@ -1,13 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { SITE } from '../../app.config';
-import { Site } from '../generated-types';
+import {Inject, Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {SITE} from '../../app.config';
+import {Site} from '../generated-types';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ThemeService {
-
     public readonly themes = [
         'dilps-production',
         'dilps-staging',
@@ -23,7 +22,6 @@ export class ThemeService {
     private storageKey = null;
 
     constructor(@Inject(SITE) site: Site) {
-
         this.storageKey = site + '-theme';
 
         const theme = localStorage.getItem(this.storageKey);
@@ -32,13 +30,11 @@ export class ThemeService {
         if (theme && theme.indexOf('-dark') > -1) {
             this.darkActivated = true;
         }
-
     }
 
     public set(theme: string): void {
-
         // Set default theme if stored theme don't exist
-        if (!theme || theme && this.themes.indexOf(theme.replace('-dark', '')) < 0) {
+        if (!theme || (theme && this.themes.indexOf(theme.replace('-dark', '')) < 0)) {
             this.set(this.themes[0]);
             return;
         }
@@ -57,5 +53,4 @@ export class ThemeService {
         this.darkActivated = !this.darkActivated;
         this.set(this.theme.getValue());
     }
-
 }

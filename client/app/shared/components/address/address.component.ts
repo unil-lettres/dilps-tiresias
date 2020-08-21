@@ -1,42 +1,29 @@
-import { AgmMap, MapsAPILoader, MapTypeStyle } from '@agm/core';
-import {
-    Component,
-    ElementRef,
-    Input,
-    NgZone,
-    OnChanges,
-    OnInit,
-    SimpleChanges,
-    ViewChild,
-    Inject,
-} from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { NaturalQueryVariablesManager } from '@ecodev/natural';
+import {AgmMap, MapsAPILoader, MapTypeStyle} from '@agm/core';
+import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild, Inject} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
-import { merge } from 'lodash';
-import { CountryService } from '../../../countries/services/country.service';
+import {merge} from 'lodash';
+import {CountryService} from '../../../countries/services/country.service';
 import {
     Card_card,
-    Card_card_institution, CardInput,
+    Card_card_institution,
+    CardInput,
     Countries,
     CountriesVariables,
     Institution_institution,
     Site,
 } from '../../generated-types';
-import { AddressService } from './address.service';
-import { SITE } from '../../../app.config';
+import {AddressService} from './address.service';
+import {SITE} from '../../../app.config';
 
 @Component({
     selector: 'app-address',
     templateUrl: './address.component.html',
     styleUrls: ['./address.component.scss'],
-    providers: [
-        AddressService,
-        CountryService,
-    ],
+    providers: [AddressService, CountryService],
 })
 export class AddressComponent implements OnInit, OnChanges {
-
     @ViewChild('input', {static: true}) public inputRef: ElementRef;
 
     /**
@@ -238,15 +225,13 @@ export class AddressComponent implements OnInit, OnChanges {
         private addressService: AddressService,
         private countryService: CountryService,
         @Inject(SITE) public readonly site: Site,
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
-
         const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
         qvm.set('pagination', {pagination: {pageSize: 9999}});
 
-        this.countryService.getAll(qvm).subscribe(countries => this.countries = countries.items);
+        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
 
         if (this.model && this.model.latitude && this.model.longitude) {
             this.latitude = +this.model.latitude;
@@ -264,11 +249,9 @@ export class AddressComponent implements OnInit, OnChanges {
                 });
             });
         });
-
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
         if (this.model) {
             this.latitude = +this.model.latitude;
             this.longitude = +this.model.longitude;
@@ -286,7 +269,6 @@ export class AddressComponent implements OnInit, OnChanges {
     }
 
     public onPlaceChange() {
-
         const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
 
         // verify result
@@ -310,25 +292,27 @@ export class AddressComponent implements OnInit, OnChanges {
         this.model.longitude = this.longitude;
 
         const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-            location: {
-                lat: ev.coords.lat,
-                lng: ev.coords.lng,
+        geocoder.geocode(
+            {
+                location: {
+                    lat: ev.coords.lat,
+                    lng: ev.coords.lng,
+                },
             },
-        }, (places) => {
-            const address = this.addressService.buildAddress(places[0], false) as any;
-            merge(this.model, address);
-            this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
-            this.updateSearch();
-        });
-
+            places => {
+                const address = this.addressService.buildAddress(places[0], false) as any;
+                merge(this.model, address);
+                this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
+                this.updateSearch();
+            },
+        );
     }
 
     public getIcon(color = '#ff9800') {
-
         const iconSize = 48;
         const icon: any = {
-            path: 'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
+            path:
+                'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
                 '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
             fillOpacity: 1,
             strokeWeight: 0,
@@ -356,5 +340,4 @@ export class AddressComponent implements OnInit, OnChanges {
         this.latitude = +this.model.latitude;
         this.longitude = +this.model.longitude;
     }
-
 }

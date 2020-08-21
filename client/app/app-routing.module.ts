@@ -1,32 +1,37 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AntiqueNamesComponent } from './antique-names/antique-names/antique-names.component';
-import { ArtistsComponent } from './artists/artists/artists.component';
-import { CardComponent } from './card/card.component';
-import { CardResolver } from './card/services/card.resolver';
-import { ChangeComponent } from './changes/change/change.component';
-import { ChangesComponent } from './changes/changes/changes.component';
-import { CollectionsComponent } from './collections/collections/collections.component';
-import { FakeCollectionResolver } from './collections/services/fake-collection.resolver';
-import { DocumentTypesComponent } from './document-types/document-types/document-types.component';
-import { DomainsComponent } from './domains/domains/domains.component';
-import { HomeComponent } from './home/home.component';
-import { InstitutionsComponent } from './institutions/institutions/institutions.component';
-import { ListComponent } from './list/list.component';
-import { LoginComponent } from './login/login.component';
-import { MaterialsComponent } from './materials/materials/materials.component';
-import { NewsesComponent } from './news/newses/newses.component';
-import { PeriodsComponent } from './periods/periods/periods.component';
-import { QuizzComponent } from './quizz/quizz.component';
-import { EmptyComponent } from './shared/components/empty/empty.component';
-import { CardFilterGroupCondition, CollectionFilterGroupCondition, CollectionVisibility, UserRole } from './shared/generated-types';
-import { AuthAdminGuard } from './shared/services/auth.admin.guard';
-import { AuthGuard } from './shared/services/auth.guard';
-import { StatisticsComponent } from './statistics/statistics/statistics.component';
-import { TagsComponent } from './tags/tags/tags.component';
-import { UserResolver } from './users/services/user.resolver';
-import { UserComponent } from './users/user/user.component';
-import { UsersComponent } from './users/users/users.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
+import {ArtistsComponent} from './artists/artists/artists.component';
+import {CardComponent} from './card/card.component';
+import {CardResolver} from './card/services/card.resolver';
+import {ChangeComponent} from './changes/change/change.component';
+import {ChangesComponent} from './changes/changes/changes.component';
+import {CollectionsComponent} from './collections/collections/collections.component';
+import {FakeCollectionResolver} from './collections/services/fake-collection.resolver';
+import {DocumentTypesComponent} from './document-types/document-types/document-types.component';
+import {DomainsComponent} from './domains/domains/domains.component';
+import {HomeComponent} from './home/home.component';
+import {InstitutionsComponent} from './institutions/institutions/institutions.component';
+import {ListComponent} from './list/list.component';
+import {LoginComponent} from './login/login.component';
+import {MaterialsComponent} from './materials/materials/materials.component';
+import {NewsesComponent} from './news/newses/newses.component';
+import {PeriodsComponent} from './periods/periods/periods.component';
+import {QuizzComponent} from './quizz/quizz.component';
+import {EmptyComponent} from './shared/components/empty/empty.component';
+import {
+    CardFilterGroupCondition,
+    CollectionFilterGroupCondition,
+    CollectionVisibility,
+    UserRole,
+} from './shared/generated-types';
+import {AuthAdminGuard} from './shared/services/auth.admin.guard';
+import {AuthGuard} from './shared/services/auth.guard';
+import {StatisticsComponent} from './statistics/statistics/statistics.component';
+import {TagsComponent} from './tags/tags/tags.component';
+import {UserResolver} from './users/services/user.resolver';
+import {UserComponent} from './users/user/user.component';
+import {UsersComponent} from './users/users/users.component';
 
 export const routes: Routes = [
     {
@@ -153,13 +158,19 @@ export const routes: Routes = [
                                 conditions: [
                                     {
                                         isSource: {equal: {value: false}},
-                                        visibility: {in: {values: [CollectionVisibility.administrator, CollectionVisibility.member]}},
+                                        visibility: {
+                                            in: {
+                                                values: [
+                                                    CollectionVisibility.administrator,
+                                                    CollectionVisibility.member,
+                                                ],
+                                            },
+                                        },
                                     } as CollectionFilterGroupCondition,
                                 ],
                             },
                         ],
                     },
-
                 },
                 children: [
                     {
@@ -184,7 +195,9 @@ export const routes: Routes = [
                     showLogo: false,
                     showUnclassified: true,
                     showMyCards: true,
-                    filter: {groups: [{conditions: [{isSource: {equal: {value: false}}} as CollectionFilterGroupCondition]}]},
+                    filter: {
+                        groups: [{conditions: [{isSource: {equal: {value: false}}} as CollectionFilterGroupCondition]}],
+                    },
                 },
                 children: [
                     {
@@ -220,7 +233,9 @@ export const routes: Routes = [
                 data: {
                     creationButtonForRoles: [UserRole.administrator],
                     // editionButtonsForRoles: [UserRole.administrator],
-                    filter: {groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}]},
+                    filter: {
+                        groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}],
+                    },
                 },
                 children: [
                     {
@@ -243,7 +258,6 @@ export const routes: Routes = [
             },
         ],
     },
-
 ];
 
 @NgModule({
@@ -254,5 +268,4 @@ export const routes: Routes = [
     ],
     exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

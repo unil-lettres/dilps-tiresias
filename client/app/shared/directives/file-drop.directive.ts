@@ -1,13 +1,12 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
-import { ngfDrop } from 'angular-file';
-import { sampleTime } from 'rxjs/operators';
-import { UploadService } from '../services/upload.service';
+import {Directive, ElementRef, HostListener} from '@angular/core';
+import {ngfDrop} from 'angular-file';
+import {sampleTime} from 'rxjs/operators';
+import {UploadService} from '../services/upload.service';
 
 @Directive({
     selector: '[appFileDrop]',
 })
 export class FileDropDirective extends ngfDrop {
-
     constructor(element: ElementRef, private uploadService: UploadService) {
         super(element);
 
@@ -18,15 +17,13 @@ export class FileDropDirective extends ngfDrop {
 
         // Automatically change the class, but not too often to avoid visual flickering
         const fileOverClass = 'app-file-drag-n-drop-file-over';
-        this.fileOver
-            .pipe((sampleTime(100)))
-            .subscribe(fileOver => {
-                if (fileOver) {
-                    element.nativeElement.classList.add(fileOverClass);
-                } else {
-                    element.nativeElement.classList.remove(fileOverClass);
-                }
-            });
+        this.fileOver.pipe(sampleTime(100)).subscribe(fileOver => {
+            if (fileOver) {
+                element.nativeElement.classList.add(fileOverClass);
+            } else {
+                element.nativeElement.classList.remove(fileOverClass);
+            }
+        });
 
         this.filesChange.subscribe((data: File[]) => {
             uploadService.filesChanged.next(data);

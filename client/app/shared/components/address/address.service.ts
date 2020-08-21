@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { isUndefined, mapValues, trim } from 'lodash';
+import {Injectable} from '@angular/core';
+import {isUndefined, mapValues, trim} from 'lodash';
 
 export interface Address {
     street?: string;
@@ -15,7 +15,6 @@ export interface Address {
     providedIn: 'root',
 })
 export class AddressService {
-
     /**
      * Binds gmap semantic with string we should retrieve
      */
@@ -27,11 +26,9 @@ export class AddressService {
         country: 'short_name',
     };
 
-    constructor() {
-    }
+    constructor() {}
 
     public buildAddress(place: any, withLatLon: boolean = true) {
-
         const tmpGAddress = mapValues(this.config, () => '');
 
         place.address_components.forEach((addressComponent: any) => {
@@ -65,5 +62,4 @@ export class AddressService {
         text += address.country ? ' ' + address.country : '';
         return text;
     }
-
 }

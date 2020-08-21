@@ -1,37 +1,59 @@
 <mat-menu #sortingMenu="matMenu" [overlapTrigger]="false">
     <div (click)="sorting([{active: 'plainName', direction: 'asc', nullAsHighest: true}])" mat-menu-item>Titre</div>
     <div (click)="sorting([{active: 'creationDate', direction: 'desc'}])" mat-menu-item>Date d'insertion en tête</div>
-    <div (click)="sorting([{active: 'updateDate', direction: 'desc'}])" mat-menu-item>Date de dernière édition en tête</div>
+    <div (click)="sorting([{active: 'updateDate', direction: 'desc'}])" mat-menu-item>
+        Date de dernière édition en tête
+    </div>
     <div (click)="sorting([{active: 'dating', direction: 'asc'}])" mat-menu-item>Datation</div>
     <div (click)="sorting([{active: 'locality', direction: 'asc'}])" mat-menu-item>Lieu</div>
     <div (click)="sorting([{active: 'artists', direction: 'asc'}])" mat-menu-item>Artistes</div>
-    <div (click)="sorting([{active: 'code', direction: 'asc', nullAsHighest: true}])" mat-menu-item *ngIf="site === Site.tiresias">Référence</div>
+    <div
+        (click)="sorting([{active: 'code', direction: 'asc', nullAsHighest: true}])"
+        mat-menu-item
+        *ngIf="site === Site.tiresias"
+    >
+        Référence
+    </div>
 </mat-menu>
 
 <div class="containerWithToolbar" fxFlex fxLayout="column">
-
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <span *ngIf="showLogo"><app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo></span>
+        <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
 
-        <button (click)="setViewMode(ViewMode.grid)" *ngIf="viewMode !== ViewMode.grid" mat-icon-button matTooltip="Grille">
+        <button
+            (click)="setViewMode(ViewMode.grid)"
+            *ngIf="viewMode !== ViewMode.grid"
+            mat-icon-button
+            matTooltip="Grille"
+        >
             <mat-icon>view_compact</mat-icon>
         </button>
 
-        <button (click)="setViewMode(ViewMode.list)" *ngIf="viewMode !== ViewMode.list" mat-icon-button matTooltip="Liste">
+        <button
+            (click)="setViewMode(ViewMode.list)"
+            *ngIf="viewMode !== ViewMode.list"
+            mat-icon-button
+            matTooltip="Liste"
+        >
             <mat-icon>view_list</mat-icon>
         </button>
 
-        <button (click)="setViewMode(ViewMode.map)" *ngIf="selected?.length && viewMode !== ViewMode.map" mat-icon-button matTooltip="Carte"
+        <button
+            (click)="setViewMode(ViewMode.map)"
+            *ngIf="selected?.length && viewMode !== ViewMode.map"
+            mat-icon-button
+            matTooltip="Carte"
         >
             <mat-icon>map</mat-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <natural-search (selectionChange)="search($event)"
-                            [facets]="naturalSearchFacets"
-                            [selections]="naturalSearchSelections"
-                            class="searchField"
-                            fxFlex
+            <natural-search
+                (selectionChange)="search($event)"
+                [facets]="naturalSearchFacets"
+                [selections]="naturalSearchSelections"
+                class="searchField"
+                fxFlex
             ></natural-search>
             <button [matMenuTriggerFor]="sortingMenu" mat-button mat-icon-button matTooltip="Trier">
                 <mat-icon>sort</mat-icon>
@@ -39,14 +61,23 @@
         </div>
 
         <ng-container *ngIf="selected?.length">
-
             <!--<div *ngIf="selected.length === 1" class="mat-body-1">{{ selected.length }} élément sélectionné</div>-->
             <!--<div *ngIf="selected.length > 1" class="mat-body-1">{{ selected.length }} éléments sélectionnés</div>-->
 
-            <button (click)="linkSelectionToCollection(selected)" *ngIf="!!user" mat-icon-button matTooltip="Ajouter à une collection">
+            <button
+                (click)="linkSelectionToCollection(selected)"
+                *ngIf="!!user"
+                mat-icon-button
+                matTooltip="Ajouter à une collection"
+            >
                 <mat-icon>library_add</mat-icon>
             </button>
-            <button (click)="unlinkFromCollection(selected)" *ngIf="collection?.id" mat-icon-button matTooltip="Supprimer de la collection">
+            <button
+                (click)="unlinkFromCollection(selected)"
+                *ngIf="collection?.id"
+                mat-icon-button
+                matTooltip="Supprimer de la collection"
+            >
                 <mat-icon>close</mat-icon>
             </button>
 
@@ -58,34 +89,41 @@
                 <mat-icon>burst_mode</mat-icon>
             </button>
 
-            <button (click)="edit(selected)" *ngIf="user?.role === 'administrator'" mat-icon-button matTooltip="Editer en masse">
+            <button
+                (click)="edit(selected)"
+                *ngIf="user?.role === 'administrator'"
+                mat-icon-button
+                matTooltip="Editer en masse"
+            >
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button (click)="delete(selected)"
-                    *ngIf="user?.role === 'administrator'"
-                    color="warn"
-                    mat-icon-button
-                    matTooltip="Supprimer la fiche définitivement"
+            <button
+                (click)="delete(selected)"
+                *ngIf="user?.role === 'administrator'"
+                color="warn"
+                mat-icon-button
+                matTooltip="Supprimer la fiche définitivement"
             >
                 <mat-icon>delete_forever</mat-icon>
             </button>
-
         </ng-container>
 
         <ng-container *ngIf="!selected?.length && user">
-            <button (click)="linkCollectionToCollection(collection)"
-                    *ngIf="collection?.id"
-                    mat-icon-button
-                    matTooltip="Ajouter la collection à une autre collection"
+            <button
+                (click)="linkCollectionToCollection(collection)"
+                *ngIf="collection?.id"
+                mat-icon-button
+                matTooltip="Ajouter la collection à une autre collection"
             >
                 <mat-icon>library_add</mat-icon>
             </button>
 
-            <button (click)="downloadCollection(collection)"
-                    *ngIf="showDownloadCollection"
-                    mat-icon-button
-                    matTooltip="Télécharger la collection"
+            <button
+                (click)="downloadCollection(collection)"
+                *ngIf="showDownloadCollection"
+                mat-icon-button
+                matTooltip="Télécharger la collection"
             >
                 <mat-icon>file_download</mat-icon>
             </button>
@@ -99,7 +137,12 @@
             <mat-icon>select_all</mat-icon>
         </button>
 
-        <button (click)="selectAll()" *ngIf="!selected?.length" mat-icon-button matTooltip="Sélectionner les images visibles">
+        <button
+            (click)="selectAll()"
+            *ngIf="!selected?.length"
+            mat-icon-button
+            matTooltip="Sélectionner les images visibles"
+        >
             <mat-icon>select_all</mat-icon>
         </button>
 
@@ -108,32 +151,34 @@
                 <mat-chip>{{ gridNumberVisibleItems }}/{{ gridNumberTotalItems }}</mat-chip>
             </mat-chip-list>
         </div>
-
     </mat-toolbar>
 
-    <app-view-grid #view
-                   (pagination)="pagination($event)"
-                   (selectionChange)="select($event)"
-                   (contentChange)="gridContentChange($event)"
-                   *ngIf="viewMode === ViewMode.grid"
-                   [dataSource]="dataSource"
-                   [selected]="selected"
-                   [style.height]="'100%'"
+    <app-view-grid
+        #view
+        (pagination)="pagination($event)"
+        (selectionChange)="select($event)"
+        (contentChange)="gridContentChange($event)"
+        *ngIf="viewMode === ViewMode.grid"
+        [dataSource]="dataSource"
+        [selected]="selected"
+        [style.height]="'100%'"
     ></app-view-grid>
 
-    <app-view-list #view
-                   (pagination)="pagination($event)"
-                   (selectionChange)="select($event)"
-                   *ngIf="viewMode === ViewMode.list"
-                   [dataSource]="dataSource"
-                   [selected]="selected"
-                   [style.height]="'100%'"
+    <app-view-list
+        #view
+        (pagination)="pagination($event)"
+        (selectionChange)="select($event)"
+        *ngIf="viewMode === ViewMode.list"
+        [dataSource]="dataSource"
+        [selected]="selected"
+        [style.height]="'100%'"
     ></app-view-list>
 
-    <app-view-map #view
-                  *ngIf="viewMode === ViewMode.map"
-                  [cards]="selected"
-                  [style.height]="'100%'"
-                  (searchByLocation)="searchByLocation($event)"
+    <app-view-map
+        #view
+        *ngIf="viewMode === ViewMode.map"
+        [cards]="selected"
+        [style.height]="'100%'"
+        (searchByLocation)="searchByLocation($event)"
     ></app-view-map>
 </div>

@@ -18,11 +18,12 @@
 </a>
 
 <!-- ... and without label -->
-<a *ngIf="navigate && !label"
-   [queryParamsHandling]="queryParamsHandling"
-   [queryParams]="queryParams"
-   [routerLink]="navigate"
-   mat-icon-button
+<a
+    *ngIf="navigate && !label"
+    [queryParamsHandling]="queryParamsHandling"
+    [queryParams]="queryParams"
+    [routerLink]="navigate"
+    mat-icon-button
 >
     <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
 </a>

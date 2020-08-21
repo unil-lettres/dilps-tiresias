@@ -1,38 +1,40 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { NgModel } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { findKey, merge, sortBy, omit } from 'lodash';
-import { QuillModules } from 'ngx-quill';
-import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
-import { AntiqueNameService } from '../antique-names/services/antique-name.service';
-import { ArtistComponent } from '../artists/artist/artist.component';
-import { ArtistService } from '../artists/services/artist.service';
-import { ChangeService } from '../changes/services/change.service';
-import { DocumentTypeComponent } from '../document-types/document-type/document-type.component';
-import { DocumentTypeService } from '../document-types/services/document-type.service';
-import { DomainComponent } from '../domains/domain/domain.component';
-import { DomainService } from '../domains/services/domain.service';
-import { InstitutionComponent } from '../institutions/institution/institution.component';
-import { InstitutionService } from '../institutions/services/institution.service';
-import { MaterialComponent } from '../materials/material/material.component';
-import { MaterialService } from '../materials/services/material.service';
-import { PeriodComponent } from '../periods/period/period.component';
-import { PeriodService } from '../periods/services/period.service';
-import { AlertService } from '../shared/components/alert/alert.service';
-import { CardSelectorComponent } from '../shared/components/card-selector/card-selector.component';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {NgModel} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {findKey, merge, sortBy, omit} from 'lodash';
+import {QuillModules} from 'ngx-quill';
+import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
+import {AntiqueNameService} from '../antique-names/services/antique-name.service';
+import {ArtistComponent} from '../artists/artist/artist.component';
+import {ArtistService} from '../artists/services/artist.service';
+import {ChangeService} from '../changes/services/change.service';
+import {DocumentTypeComponent} from '../document-types/document-type/document-type.component';
+import {DocumentTypeService} from '../document-types/services/document-type.service';
+import {DomainComponent} from '../domains/domain/domain.component';
+import {DomainService} from '../domains/services/domain.service';
+import {InstitutionComponent} from '../institutions/institution/institution.component';
+import {InstitutionService} from '../institutions/services/institution.service';
+import {MaterialComponent} from '../materials/material/material.component';
+import {MaterialService} from '../materials/services/material.service';
+import {PeriodComponent} from '../periods/period/period.component';
+import {PeriodService} from '../periods/services/period.service';
+import {AlertService} from '../shared/components/alert/alert.service';
+import {CardSelectorComponent} from '../shared/components/card-selector/card-selector.component';
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import { DownloadComponent } from '../shared/components/download/download.component';
-import { quillConfig } from '../shared/config/quill.options';
+import {DownloadComponent} from '../shared/components/download/download.component';
+import {quillConfig} from '../shared/config/quill.options';
 import {
     Card_card,
     Card_card_artists,
     Card_card_collections,
-    Card_card_institution, CardInput, Cards_cards_items,
+    Card_card_institution,
+    CardInput,
+    Cards_cards_items,
     CardVisibility,
     CollectionVisibility,
     Site,
@@ -41,18 +43,18 @@ import {
     UserRole,
     Viewer,
 } from '../shared/generated-types';
-import { domainHierarchicConfig } from '../shared/hierarchic-configurations/DomainConfiguration';
-import { onlyLeafMaterialHierarchicConfig } from '../shared/hierarchic-configurations/MaterialConfiguration';
-import { periodHierarchicConfig } from '../shared/hierarchic-configurations/PeriodConfiguration';
-import { onlyLeafTagHierarchicConfig } from '../shared/hierarchic-configurations/TagConfiguration';
-import { onlyLeaves } from '../shared/pipes/only-leaves.pipe';
-import { UploadService } from '../shared/services/upload.service';
-import { getBase64 } from '../shared/services/utility';
-import { StatisticService } from '../statistics/services/statistic.service';
-import { TagService } from '../tags/services/tag.service';
-import { TagComponent } from '../tags/tag/tag.component';
-import { UserService } from '../users/services/user.service';
-import { CardService } from './services/card.service';
+import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
+import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';
+import {periodHierarchicConfig} from '../shared/hierarchic-configurations/PeriodConfiguration';
+import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
+import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
+import {UploadService} from '../shared/services/upload.service';
+import {getBase64} from '../shared/services/utility';
+import {StatisticService} from '../statistics/services/statistic.service';
+import {TagService} from '../tags/services/tag.service';
+import {TagComponent} from '../tags/tag/tag.component';
+import {UserService} from '../users/services/user.service';
+import {CardService} from './services/card.service';
 
 @Component({
     selector: 'app-card',
@@ -61,7 +63,6 @@ import { CardService } from './services/card.service';
     providers: [UploadService],
 })
 export class CardComponent implements OnInit, OnChanges, OnDestroy {
-
     /**
      * External card data
      */
@@ -266,25 +267,25 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public isDilps = true;
     public suggestedCode: string | null;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private changeService: ChangeService,
-                public cardService: CardService,
-                private alertService: AlertService,
-                public artistService: ArtistService,
-                public institutionService: InstitutionService,
-                public materialService: MaterialService,
-                public tagService: TagService,
-                public documentTypeService: DocumentTypeService,
-                public domainService: DomainService,
-                public antiqueNameService: AntiqueNameService,
-                public periodService: PeriodService,
-                private uploadService: UploadService,
-                private dialog: MatDialog,
-                private userService: UserService,
-                private statisticService: StatisticService,
-    ) {
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private changeService: ChangeService,
+        public cardService: CardService,
+        private alertService: AlertService,
+        public artistService: ArtistService,
+        public institutionService: InstitutionService,
+        public materialService: MaterialService,
+        public tagService: TagService,
+        public documentTypeService: DocumentTypeService,
+        public domainService: DomainService,
+        public antiqueNameService: AntiqueNameService,
+        public periodService: PeriodService,
+        private uploadService: UploadService,
+        private dialog: MatDialog,
+        private userService: UserService,
+        private statisticService: StatisticService,
+    ) {}
 
     @Input()
     set editable(val: boolean) {
@@ -297,35 +298,28 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
 
-        this.route.data.subscribe(data => this.showLogo = data.showLogo);
+        this.route.data.subscribe(data => (this.showLogo = data.showLogo));
 
         if (this.model && !this.isFetchedCard(this.model)) {
             // mass edit and create a change case
             this.initCard();
             this.edit = true;
-
         } else if (this.model && this.isFetchedCard(this.model)) {
             this.fetchedModel = this.model;
             this.initCard();
-
         } else {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
                     this.fetchedModel = this.route.snapshot.data['card'];
 
-                    this.model = Object.assign(
-                        {},
-                        this.fetchedModel,
-                        {
-                            artists: this.fetchedModel.artists.map(a => a.name),
-                            institution: this.fetchedModel.institution?.name ?? null,
-                        },
-                    );
+                    this.model = Object.assign({}, this.fetchedModel, {
+                        artists: this.fetchedModel.artists.map(a => a.name),
+                        institution: this.fetchedModel.institution?.name ?? null,
+                    });
 
                     this.initCard();
                 } else if (!params.cardId && this.model && this.isFetchedCard(this.model)) {
@@ -380,7 +374,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             this.isDilps = this.model.site === Site.dilps;
 
             // Init visibility
-            this.visibility = +findKey(this.visibilities, (s) => {
+            this.visibility = +findKey(this.visibilities, s => {
                 return s.value === this.model.visibility;
             });
 
@@ -409,17 +403,22 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             return;
         }
 
-        const visibleCollections = this.fetchedModel.collections.filter(c => c.visibility !== CollectionVisibility.private);
+        const visibleCollections = this.fetchedModel.collections.filter(
+            c => c.visibility !== CollectionVisibility.private,
+        );
         this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
-        this.collectionCopyrights = this.fetchedModel.collections.filter(c => c.isSource).map(c => {
-            if (c.copyrights && c.usageRights) {
-                return `${c.copyrights} (${c.usageRights})`;
-            } else if (c.copyrights) {
-                return c.copyrights;
-            } else {
-                return c.usageRights;
-            }
-        }).join(', ');
+        this.collectionCopyrights = this.fetchedModel.collections
+            .filter(c => c.isSource)
+            .map(c => {
+                if (c.copyrights && c.usageRights) {
+                    return `${c.copyrights} (${c.usageRights})`;
+                } else if (c.copyrights) {
+                    return c.copyrights;
+                } else {
+                    return c.usageRights;
+                }
+            })
+            .join(', ');
 
         if (this.fetchedModel.collections.length === 1 && this.fetchedModel.id) {
             const idForCode = this.fetchedModel.legacyId ?? this.fetchedModel.id;
@@ -430,10 +429,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public canUpdateCode(): boolean {
-        return [
-            UserRole.major,
-            UserRole.administrator,
-        ].includes(this.user.role);
+        return [UserRole.major, UserRole.administrator].includes(this.user.role);
     }
 
     public showSuggestedCode(): boolean {
@@ -464,15 +460,13 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public create() {
         this.cardService.create(this.model).subscribe(card => {
             this.alertService.info('Créé');
-            this.router.navigate([
-                '..',
-                card.id,
-            ], {relativeTo: this.route});
+            this.router.navigate(['..', card.id], {relativeTo: this.route});
         });
     }
 
     public confirmDelete() {
-        this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+        this.alertService
+            .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
                 this.assertFetchedCard(this.fetchedModel);
 
@@ -507,25 +501,31 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public linkToCollection() {
         this.assertFetchedCard(this.fetchedModel);
 
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
-            width: '400px',
-            position: {
-                top: '74px',
-                left: '74px',
-            },
-            data: {
-                images: [this.fetchedModel],
-            },
-        }).afterClosed().subscribe(() => {
-            this.assertFetchedCard(this.fetchedModel);
-
-            this.cardService.getOne(this.fetchedModel.id).subscribe((result) => {
+        this.dialog
+            .open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+                CollectionSelectorComponent,
+                {
+                    width: '400px',
+                    position: {
+                        top: '74px',
+                        left: '74px',
+                    },
+                    data: {
+                        images: [this.fetchedModel],
+                    },
+                },
+            )
+            .afterClosed()
+            .subscribe(() => {
                 this.assertFetchedCard(this.fetchedModel);
 
-                this.fetchedModel.collections = result.collections;
-                this.updateCollections();
+                this.cardService.getOne(this.fetchedModel.id).subscribe(result => {
+                    this.assertFetchedCard(this.fetchedModel);
+
+                    this.fetchedModel.collections = result.collections;
+                    this.updateCollections();
+                });
             });
-        });
     }
 
     public copy() {
@@ -534,35 +534,33 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public complete() {
+        this.dialog
+            .open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
+                width: '400px',
+                position: {
+                    top: '74px',
+                    left: '74px',
+                },
+            })
+            .afterClosed()
+            .subscribe(selection => {
+                this.assertFetchedCard(this.fetchedModel);
 
-        this.dialog.open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
-            width: '400px',
-            position: {
-                top: '74px',
-                left: '74px',
-            },
-        }).afterClosed().subscribe(selection => {
-            this.assertFetchedCard(this.fetchedModel);
+                if (selection) {
+                    this.model = Object.assign(omit(selection, 'id'), {
+                        artists: selection.artists.map(a => a.name),
+                        institution: selection.institution?.name ?? null,
+                        visibility: this.model.visibility,
+                    });
 
-            if (selection) {
-                this.model = Object.assign(omit(selection, 'id'), {
-                    artists: selection.artists.map(a => a.name),
-                    institution: selection.institution?.name ?? null,
-                    visibility: this.model.visibility,
-                });
-
-                this.fetchedModel = Object.assign(
-                    {},
-                    selection,
-                    {
+                    this.fetchedModel = Object.assign({}, selection, {
                         id: this.fetchedModel.id,
                         visibility: this.model.visibility,
-                    },
-                );
+                    });
 
-                this.initCard();
-            }
-        });
+                    this.initCard();
+                }
+            });
     }
 
     public validateData() {
@@ -598,20 +596,24 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public canSuggestCreate() {
-        return this.user
-            && this.fetchedModel
-            && this.fetchedModel.owner && this.fetchedModel.owner.id === this.user.id
-            && this.fetchedModel.creator && this.fetchedModel.creator.id === this.user.id
-            && this.fetchedModel.visibility === CardVisibility.private;
+        return (
+            this.user &&
+            this.fetchedModel &&
+            this.fetchedModel.owner &&
+            this.fetchedModel.owner.id === this.user.id &&
+            this.fetchedModel.creator &&
+            this.fetchedModel.creator.id === this.user.id &&
+            this.fetchedModel.visibility === CardVisibility.private
+        );
     }
 
     public canSuggestUpdate() {
-        return this.user
-            && this.fetchedModel
-            && (
-                this.fetchedModel.owner && this.user.id !== this.fetchedModel.owner.id
-                || this.fetchedModel.visibility !== CardVisibility.private
-            );
+        return (
+            this.user &&
+            this.fetchedModel &&
+            ((this.fetchedModel.owner && this.user.id !== this.fetchedModel.owner.id) ||
+                this.fetchedModel.visibility !== CardVisibility.private)
+        );
     }
 
     public canSuggestDelete() {
@@ -645,7 +647,9 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     private assertFetchedCard(card: Card_card | null): asserts card is Card_card {
         if (!card) {
-            throw  new Error('This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?');
+            throw new Error(
+                'This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?',
+            );
         }
     }
 }

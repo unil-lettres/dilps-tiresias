@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CardService } from '../../../card/services/card.service';
+import {Component, OnInit} from '@angular/core';
+import {CardService} from '../../../card/services/card.service';
 
 @Component({
     selector: 'app-card-selector',
@@ -7,18 +7,14 @@ import { CardService } from '../../../card/services/card.service';
     styleUrls: ['./card-selector.component.scss'],
 })
 export class CardSelectorComponent implements OnInit {
-
     public card;
     public image;
 
-    constructor(public cardService: CardService) {
-    }
+    constructor(public cardService: CardService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     public displayWith(item) {
         return item ? item.name + ' (' + item.id + ')' : '';
     }
-
 }

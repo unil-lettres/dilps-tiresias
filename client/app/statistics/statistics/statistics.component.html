@@ -1,5 +1,5 @@
 <div class="padding padding-fab">
-    <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
     <div class="mat-headline">Statistiques</div>
     <mat-dialog-content>
         <mat-tab-group>
@@ -10,14 +10,18 @@
                             <mat-form-field>
                                 <mat-label>Période</mat-label>
                                 <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{ item.name }}</mat-option>
+                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                        item.name
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Type</mat-label>
                                 <mat-select [(value)]="statType" (selectionChange)="applyFrequentationTypeSelection()">
-                                    <mat-option *ngFor="let item of availableTypes | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
+                                    <mat-option *ngFor="let item of availableTypes | keyvalue" [value]="item.key">{{
+                                        item.value
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -27,7 +31,6 @@
                 </ng-template>
             </mat-tab>
 
-
             <mat-tab label="Fiches">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
@@ -35,23 +38,28 @@
                             <mat-form-field>
                                 <mat-label>Période</mat-label>
                                 <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{ item.name }}</mat-option>
+                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                        item.name
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Type</mat-label>
                                 <mat-select [(value)]="cardType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                    <mat-option *ngFor="let item of availableCardTypes | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
+                                    <mat-option *ngFor="let item of availableCardTypes | keyvalue" [value]="item.key">{{
+                                        item.value
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
-                            <natural-select [(ngModel)]="user"
-                                            [service]="userService"
-                                            [showIcon]="false"
-                                            [displayWith]="displayFn"
-                                            (selectionChange)="update()"
-                                            placeholder="Utilisateur"
+                            <natural-select
+                                [(ngModel)]="user"
+                                [service]="userService"
+                                [showIcon]="false"
+                                [displayWith]="displayFn"
+                                (selectionChange)="update()"
+                                placeholder="Utilisateur"
                             ></natural-select>
                         </div>
 
@@ -60,7 +68,6 @@
                 </ng-template>
             </mat-tab>
 
-
             <mat-tab label="Utilisateurs">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
@@ -68,14 +75,18 @@
                             <mat-form-field>
                                 <mat-label>Période</mat-label>
                                 <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{ item.name }}</mat-option>
+                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                        item.name
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Type</mat-label>
                                 <mat-select [(value)]="userType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                    <mat-option *ngFor="let item of availableUserTypes | keyvalue" [value]="item.key">{{ item.value }}</mat-option>
+                                    <mat-option *ngFor="let item of availableUserTypes | keyvalue" [value]="item.key">{{
+                                        item.value
+                                    }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -84,7 +95,6 @@
                     </div>
                 </ng-template>
             </mat-tab>
-
         </mat-tab-group>
     </mat-dialog-content>
 </div>

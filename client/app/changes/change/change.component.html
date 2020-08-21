@@ -1,39 +1,54 @@
 <div class="containerWithToolbar" fxFlex fxLayout="column">
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
+        <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
         <div fxFlex></div>
 
         <ng-container *ngIf="user?.role === 'administrator'">
-            <button (click)="accept()" *ngIf="change" color="primary" mat-icon-button mat-raised-button matTooltip="Accepter suggestion">
+            <button
+                (click)="accept()"
+                *ngIf="change"
+                color="primary"
+                mat-icon-button
+                mat-raised-button
+                matTooltip="Accepter suggestion"
+            >
                 <mat-icon>check</mat-icon>
             </button>
-            <button (click)="reject()" *ngIf="change" color="warn" mat-icon-button mat-raised-button matTooltip="Refuser la suggestion">
+            <button
+                (click)="reject()"
+                *ngIf="change"
+                color="warn"
+                mat-icon-button
+                mat-raised-button
+                matTooltip="Refuser la suggestion"
+            >
                 <mat-icon>close</mat-icon>
             </button>
         </ng-container>
 
-        <button (click)="update()"
-                *ngIf="original"
-                color="primary"
-                mat-icon-button
-                mat-raised-button
-                matTooltip="Soumettre la suggestion à validation"
+        <button
+            (click)="update()"
+            *ngIf="original"
+            color="primary"
+            mat-icon-button
+            mat-raised-button
+            matTooltip="Soumettre la suggestion à validation"
         >
             <mat-icon>save</mat-icon>
         </button>
-        <button (click)="create()"
-                *ngIf="!original && suggestion"
-                color="primary"
-                mat-icon-button
-                mat-raised-button
-                matTooltip="Soumettre l'ajout de cette fiche à validation"
+        <button
+            (click)="create()"
+            *ngIf="!original && suggestion"
+            color="primary"
+            mat-icon-button
+            mat-raised-button
+            matTooltip="Soumettre l'ajout de cette fiche à validation"
         >
             <mat-icon>add</mat-icon>
         </button>
     </mat-toolbar>
 
     <div *ngIf="loaded" class="test" fxFlex fxLayout="row">
-
         <!-- Original -->
         <div *ngIf="!change?.original && !original" fxFlex fxLayout="column" fxLayoutAlign="center center">
             <div class="mat-display-1">Nouvelle fiche</div>
@@ -50,11 +65,22 @@
             <div class="mat-display-1">Suppression de la fiche</div>
         </div>
         <div *ngIf="change && change.suggestion" fxFlex fxLayout="column">
-            <app-card [model]="change.suggestion" [editable]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
+            <app-card
+                [model]="change.suggestion"
+                [editable]="true"
+                [imageSrc]="suggestionImageSrc"
+                fxFlex
+                title="Suggestion"
             ></app-card>
         </div>
         <div *ngIf="suggestion" fxFlex fxLayout="column">
-            <app-card [model]="suggestion" [editable]="true" [hideTools]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
+            <app-card
+                [model]="suggestion"
+                [editable]="true"
+                [hideTools]="true"
+                [imageSrc]="suggestionImageSrc"
+                fxFlex
+                title="Suggestion"
             ></app-card>
         </div>
     </div>

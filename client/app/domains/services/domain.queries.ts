@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const domainsQuery = gql`
     query Domains($filter: DomainFilter, $sorting: [DomainSorting!], $pagination: PaginationInput) {
@@ -13,7 +13,8 @@ export const domainsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const domainQuery = gql`
     query Domain($id: DomainID!) {
@@ -38,18 +39,22 @@ export const domainQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createDomain = gql`
-    mutation CreateDomain ($input: DomainInput!) {
-        createDomain (input: $input) {
+    mutation CreateDomain($input: DomainInput!) {
+        createDomain(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateDomain = gql`
     mutation UpdateDomain($id: DomainID!, $input: DomainPartialInput!) {
@@ -59,9 +64,12 @@ export const updateDomain = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteDomains = gql`
-    mutation DeleteDomains ($ids: [DomainID!]!){
+    mutation DeleteDomains($ids: [DomainID!]!) {
         deleteDomains(ids: $ids)
-    }`;
+    }
+`;

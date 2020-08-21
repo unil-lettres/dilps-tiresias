@@ -1,13 +1,14 @@
 <div *ngIf="model" [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="row">
-    <div [ngClass]="{'containerWithToolbar': !hideToolbar}" fxFlex="400px" fxLayout="column">
-        <mat-toolbar *ngIf="!hideToolbar"
-                     [ngClass]="edit ? 'edition' : ''"
-                     color="app"
-                     fxFlex="none"
-                     fxLayout="row"
-                     fxLayoutAlign="start center"
+    <div [ngClass]="{containerWithToolbar: !hideToolbar}" fxFlex="400px" fxLayout="column">
+        <mat-toolbar
+            *ngIf="!hideToolbar"
+            [ngClass]="edit ? 'edition' : ''"
+            color="app"
+            fxFlex="none"
+            fxLayout="row"
+            fxLayoutAlign="start center"
         >
-            <span *ngIf="showLogo"><app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo></span>
+            <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
 
             <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
 
@@ -31,59 +32,73 @@
             </mat-menu>
 
             <ng-container *ngIf="!hideTools">
-
-                <button (click)="toggleEdit()"
-                        *ngIf="!edit && fetchedModel?.permissions?.update"
-                        [matTooltip]="'Passer en mode édition'"
-                        mat-icon-button
+                <button
+                    (click)="toggleEdit()"
+                    *ngIf="!edit && fetchedModel?.permissions?.update"
+                    [matTooltip]="'Passer en mode édition'"
+                    mat-icon-button
                 >
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button (click)="update()"
-                        *ngIf="edit && fetchedModel?.permissions?.update"
-                        color="primary"
-                        mat-icon-button
-                        mat-raised-button
-                        matTooltip="Enregistrer"
-                        [disabled]="!formIsValid"
+                <button
+                    (click)="update()"
+                    *ngIf="edit && fetchedModel?.permissions?.update"
+                    color="primary"
+                    mat-icon-button
+                    mat-raised-button
+                    matTooltip="Enregistrer"
+                    [disabled]="!formIsValid"
                 >
                     <mat-icon>save</mat-icon>
                 </button>
 
-                <button *ngIf="user && !edit && (canSuggestUpdate() || canSuggestDelete())"
-                        [matMenuTriggerFor]="changeMenu"
-                        color="primary"
-                        mat-button
-                        mat-icon-button
-                        matTooltip="Soumettre"
+                <button
+                    *ngIf="user && !edit && (canSuggestUpdate() || canSuggestDelete())"
+                    [matMenuTriggerFor]="changeMenu"
+                    color="primary"
+                    mat-button
+                    mat-icon-button
+                    matTooltip="Soumettre"
                 >
                     <mat-icon>add_alert</mat-icon>
                 </button>
 
-                <button (click)="suggestCreation()"
-                        *ngIf="user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()"
-                        color="primary"
-                        mat-button
-                        mat-icon-button
-                        matTooltip="Soumettre"
+                <button
+                    (click)="suggestCreation()"
+                    *ngIf="user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()"
+                    color="primary"
+                    mat-button
+                    mat-icon-button
+                    matTooltip="Soumettre"
                 >
                     <mat-icon>add_alert</mat-icon>
                 </button>
 
-                <button (click)="create()" *ngIf="!fetchedModel && user?.globalPermissions?.card?.create" mat-icon-button matTooltip="Créer">
+                <button
+                    (click)="create()"
+                    *ngIf="!fetchedModel && user?.globalPermissions?.card?.create"
+                    mat-icon-button
+                    matTooltip="Créer"
+                >
                     <mat-icon>add</mat-icon>
                 </button>
 
-                <button *ngIf="fetchedModel && user?.role === 'administrator'"
-                        [matMenuTriggerFor]="validationMenu"
-                        mat-icon-button
-                        matTooltip="Valider"
+                <button
+                    *ngIf="fetchedModel && user?.role === 'administrator'"
+                    [matMenuTriggerFor]="validationMenu"
+                    mat-icon-button
+                    matTooltip="Valider"
                 >
                     <mat-icon>spellcheck</mat-icon>
                 </button>
 
-                <button (click)="complete()" *ngIf="edit" mat-icon-button matTooltip="Importer les données d'une autre fiche">
+                <button
+                    (click)="complete()"
+                    *ngIf="edit"
+                    mat-icon-button
+                    matTooltip="Importer les données d'une autre fiche"
+                >
                     <mat-icon>content_copy</mat-icon>
                 </button>
 
@@ -91,15 +106,21 @@
                     <mat-icon>file_download</mat-icon>
                 </button>
 
-                <button (click)="linkToCollection()" *ngIf="fetchedModel && user" mat-icon-button matTooltip="Ajouter à une collection">
+                <button
+                    (click)="linkToCollection()"
+                    *ngIf="fetchedModel && user"
+                    mat-icon-button
+                    matTooltip="Ajouter à une collection"
+                >
                     <mat-icon>library_add</mat-icon>
                 </button>
 
-                <button (click)="confirmDelete()"
-                        *ngIf="fetchedModel?.permissions?.delete"
-                        color="warn"
-                        mat-icon-button
-                        matTooltip="Supprimer"
+                <button
+                    (click)="confirmDelete()"
+                    *ngIf="fetchedModel?.permissions?.delete"
+                    color="warn"
+                    mat-icon-button
+                    matTooltip="Supprimer"
                 >
                     <mat-icon>delete_forever</mat-icon>
                 </button>
@@ -108,358 +129,476 @@
 
         <perfect-scrollbar fxFlex>
             <div class="padding scrolled" fxLayout="column" fxLayoutAlign="start stretch">
-
                 <div *ngIf="user?.role === 'administrator'" fxLayout="column">
-                    <div fxLayout="row">{{ visibilities[visibility] ? 'Visible ' + visibilities[visibility].text : 'Visibilité inchangée' }}
+                    <div fxLayout="row">
+                        {{
+                            visibilities[visibility]
+                                ? 'Visible ' + visibilities[visibility].text
+                                : 'Visibilité inchangée'
+                        }}
                     </div>
-                    <mat-slider (input)="updateVisibility($event);visibility = $event.value"
-                                [color]="visibilities[visibility] ? visibilities[visibility].color : null"
-                                [disabled]="!edit"
-                                [max]="3"
-                                [min]="1"
-                                [ngModel]="visibility"
+                    <mat-slider
+                        (input)="updateVisibility($event); visibility = $event.value"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                        [disabled]="!edit"
+                        [max]="3"
+                        [min]="1"
+                        [ngModel]="visibility"
                     ></mat-slider>
                 </div>
 
                 <div class="padding mat-body-2">
-                    <div *ngFor="let collection of sortedCollections"> {{ collection.hierarchicName }} </div>
+                    <div *ngFor="let collection of sortedCollections">{{ collection.hierarchicName }}</div>
                 </div>
 
                 <mat-form-field *ngIf="!hideCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)">
                     <mat-label>Référence</mat-label>
-                    <input [(ngModel)]="model.code"
-                           #code="ngModel"
-                           [readonly]="!edit || !canUpdateCode()"
-                           matInput
-                           maxlength="30"
-                           [appUniqueCode]="model"
-                           (change)="codeModel = code; updateFormValidity()"
-                    >
+                    <input
+                        [(ngModel)]="model.code"
+                        #code="ngModel"
+                        [readonly]="!edit || !canUpdateCode()"
+                        matInput
+                        maxlength="30"
+                        [appUniqueCode]="model"
+                        (change)="codeModel = code; updateFormValidity()"
+                    />
 
                     <button
-                            mat-button
-                            mat-icon-button
-                            matSuffix
-                            (click)="codeModel = code; useSuggestedCode($event)"
-                            *ngIf="showSuggestedCode()"
-                            [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;' "
+                        mat-button
+                        mat-icon-button
+                        matSuffix
+                        (click)="codeModel = code; useSuggestedCode($event)"
+                        *ngIf="showSuggestedCode()"
+                        [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
                     >
                         <mat-icon>refresh</mat-icon>
                     </button>
 
-                    <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors.maxlength">Cette référence est déjà attribuée à une fiche
+                    <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors.maxlength"
+                        >Cette référence est déjà attribuée à une fiche
                     </mat-error>
-                    <mat-hint align="end" *ngIf="edit && model.code?.length > 23" [ngClass]="{'strong': model.code?.length >= 30}">
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.code?.length > 23"
+                        [ngClass]="{strong: model.code?.length >= 30}"
+                    >
                         {{ model.code.length }} / 30
                     </mat-hint>
                 </mat-form-field>
 
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
                     <div class="mat-body-2">Titre</div>
-                    <quill-editor *ngIf="edit || !!model.name"
-                                  [ngModel]="model.name"
-                                  (ngModelChange)="model.name = $event || ''"
-                                  [disabled]="!edit"
-                                  bounds="self"
-                                  [modules]="singleLine"
-                                  [matTooltip]="!edit || !isDilps ? '' : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                    <quill-editor
+                        *ngIf="edit || !!model.name"
+                        [ngModel]="model.name"
+                        (ngModelChange)="model.name = $event || ''"
+                        [disabled]="!edit"
+                        bounds="self"
+                        [modules]="singleLine"
+                        [matTooltip]="
+                            !edit || !isDilps
+                                ? ''
+                                : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
+                        "
                     ></quill-editor>
-                    <mat-hint align="end"
-                              style="float: right;"
-                              *ngIf="edit && (model.name | stripTags)?.length > 187"
-                              [ngClass]="{'strong': (model.name | stripTags)?.length >= 191}"
+                    <mat-hint
+                        align="end"
+                        style="float: right;"
+                        *ngIf="edit && (model.name | stripTags)?.length > 187"
+                        [ngClass]="{strong: (model.name | stripTags)?.length >= 191}"
                     >
                         {{ (model.name | stripTags).length }} / 191
                     </mat-hint>
                 </div>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!model.domain)"
-                               [model]="model.domain"
-                               (modelChange)="model.domain = $event"
-                               [allowFreeText]="false"
-                               [hierarchicSelectorConfig]="domainHierarchicConfig"
-                               [multiple]="false"
-                               [previewComponent]="DomainComponent"
-                               [readonly]="!edit"
-                               [service]="domainService"
-                               matTooltipPosition="after"
-                               placeholder="Domaine"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!model.domain)"
+                    [model]="model.domain"
+                    (modelChange)="model.domain = $event"
+                    [allowFreeText]="false"
+                    [hierarchicSelectorConfig]="domainHierarchicConfig"
+                    [multiple]="false"
+                    [previewComponent]="DomainComponent"
+                    [readonly]="!edit"
+                    [service]="domainService"
+                    matTooltipPosition="after"
+                    placeholder="Domaine"
                 ></app-thesaurus>
 
-                <div *ngIf="edit || !!model.expandedName && model.expandedName != model.name" class="margin-bottom rich-text">
+                <div
+                    *ngIf="edit || (!!model.expandedName && model.expandedName != model.name)"
+                    class="margin-bottom rich-text"
+                >
                     <div class="mat-body-2">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
-                    <quill-editor *ngIf="edit || !!model.expandedName"
-                                  [ngModel]="model.expandedName"
-                                  (ngModelChange)="model.expandedName = $event || ''"
-                                  [disabled]="!edit"
-                                  bounds="self"
-                                  [matTooltip]="!edit || !isDilps ? '' : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'"
+                    <quill-editor
+                        *ngIf="edit || !!model.expandedName"
+                        [ngModel]="model.expandedName"
+                        (ngModelChange)="model.expandedName = $event || ''"
+                        [disabled]="!edit"
+                        bounds="self"
+                        [matTooltip]="
+                            !edit || !isDilps
+                                ? ''
+                                : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
+                        "
                     ></quill-editor>
                 </div>
 
-                <app-thesaurus *ngIf="isDilps && (edit || !!artists?.length)"
-                               (modelChange)="model.artists = $event"
-                               [matTooltip]="!edit ? '' : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'"
-                               [model]="artists"
-                               [previewComponent]="ArtistComponent"
-                               [readonly]="!edit"
-                               [service]="artistService"
-                               matTooltipPosition="after"
-                               placeholder="Artistes"
+                <app-thesaurus
+                    *ngIf="isDilps && (edit || !!artists?.length)"
+                    (modelChange)="model.artists = $event"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'
+                    "
+                    [model]="artists"
+                    [previewComponent]="ArtistComponent"
+                    [readonly]="!edit"
+                    [service]="artistService"
+                    matTooltipPosition="after"
+                    placeholder="Artistes"
                 ></app-thesaurus>
 
                 <mat-form-field *ngIf="isDilps && (edit || !!model.techniqueAuthor)">
                     <mat-label>Auteur technique</mat-label>
-                    <textarea [(ngModel)]="model.techniqueAuthor"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.techniqueAuthor"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end"
-                              *ngIf="edit && model.techniqueAuthor?.length > 200"
-                              [ngClass]="{'strong': model.techniqueAuthor?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.techniqueAuthor?.length > 200"
+                        [ngClass]="{strong: model.techniqueAuthor?.length >= 255}"
                     >
                         {{ model.techniqueAuthor.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.addition)"
-                                [matTooltip]="!edit ? '' : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'"
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="isDilps && (edit || !!model.addition)"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'
+                    "
+                    matTooltipPosition="after"
                 >
                     <mat-label>Supplément</mat-label>
-                    <textarea [(ngModel)]="model.addition" [readonly]="!edit" matAutosizeMinRows="1" matInput matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.addition"
+                        [readonly]="!edit"
+                        matAutosizeMinRows="1"
+                        matInput
+                        matTextareaAutosize
                     ></textarea>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.dating)"
-                                [matTooltip]="!edit ? '' : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'"
-
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="isDilps && (edit || !!model.dating)"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'
+                    "
+                    matTooltipPosition="after"
                 >
                     <mat-label>Datation</mat-label>
-                    <textarea [(ngModel)]="model.dating"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.dating"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end" *ngIf="edit && model.dating?.length > 200" [ngClass]="{'strong': model.dating?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.dating?.length > 200"
+                        [ngClass]="{strong: model.dating?.length >= 255}"
                     >
                         {{ model.dating.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.technique)"
-                                [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="isDilps && (edit || !!model.technique)"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'
+                    "
+                    matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
-                    <textarea [(ngModel)]="model.technique"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.technique"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end"
-                              *ngIf="edit && model.technique?.length > 200"
-                              [ngClass]="{'strong': model.technique?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.technique?.length > 200"
+                        [ngClass]="{strong: model.technique?.length >= 255}"
                     >
                         {{ model.technique.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.material)"
-                                [matTooltip]="!edit ? '' : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'"
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="isDilps && (edit || !!model.material)"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'
+                    "
+                    matTooltipPosition="after"
                 >
                     <mat-label>Matériel</mat-label>
-                    <textarea [(ngModel)]="model.material"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.material"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end" *ngIf="edit && model.material?.length > 200" [ngClass]="{'strong': model.material?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.material?.length > 200"
+                        [ngClass]="{strong: model.material?.length >= 255}"
                     >
                         {{ model.material.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.format)"
-                                [matTooltip]="!edit ? '' : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'"
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="isDilps && (edit || !!model.format)"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'
+                    "
+                    matTooltipPosition="after"
                 >
                     <mat-label>Dimensions</mat-label>
-                    <textarea [(ngModel)]="model.format"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.format"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end" *ngIf="edit && model.format?.length > 200" [ngClass]="{'strong': model.format?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.format?.length > 200"
+                        [ngClass]="{strong: model.format?.length >= 255}"
                     >
                         {{ model.format.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!model.materials?.length)"
-                               [model]="model.materials"
-                               (modelChange)="model.materials = $event"
-                               [allowFreeText]="false"
-                               [hierarchicSelectorConfig]="materialHierarchicConfig"
-                               [multiple]="true"
-                               [previewComponent]="MaterialComponent"
-                               [readonly]="!edit"
-                               [service]="materialService"
-                               placeholder="Matériaux"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!model.materials?.length)"
+                    [model]="model.materials"
+                    (modelChange)="model.materials = $event"
+                    [allowFreeText]="false"
+                    [hierarchicSelectorConfig]="materialHierarchicConfig"
+                    [multiple]="true"
+                    [previewComponent]="MaterialComponent"
+                    [readonly]="!edit"
+                    [service]="materialService"
+                    placeholder="Matériaux"
                 ></app-thesaurus>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.productionPlace)">
                     <mat-label>Lieu de production</mat-label>
-                    <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput maxlength="60">
-                    <mat-hint align="end"
-                              *ngIf="edit && model.productionPlace?.length > 47"
-                              [ngClass]="{'strong': model.productionPlace?.length >= 60}"
+                    <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput maxlength="60" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.productionPlace?.length > 47"
+                        [ngClass]="{strong: model.productionPlace?.length >= 60}"
                     >
                         {{ model.productionPlace.length }} / 60
                     </mat-hint>
                 </mat-form-field>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!model.tags?.length)"
-                               [model]="model.tags"
-                               (modelChange)="model.tags = $event"
-                               [allowFreeText]="false"
-                               [hierarchicSelectorConfig]="tagHierarchicConfig"
-                               [multiple]="true"
-                               [previewComponent]="TagComponent"
-                               [readonly]="!edit"
-                               [service]="tagService"
-                               matTooltipPosition="after"
-                               placeholder="Mots clés"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!model.tags?.length)"
+                    [model]="model.tags"
+                    (modelChange)="model.tags = $event"
+                    [allowFreeText]="false"
+                    [hierarchicSelectorConfig]="tagHierarchicConfig"
+                    [multiple]="true"
+                    [previewComponent]="TagComponent"
+                    [readonly]="!edit"
+                    [service]="tagService"
+                    matTooltipPosition="after"
+                    placeholder="Mots clés"
                 ></app-thesaurus>
 
                 <div *ngIf="isDilps && (edit || !!institution)" class="mat-title">Lieu</div>
 
-                <app-thesaurus *ngIf="isDilps && (edit || !!institution)"
-                               (modelChange)="model.institution = $event"
-                               [matTooltip]="!edit ? '' : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'"
-                               [model]="institution"
-                               [multiple]="false"
-                               [previewComponent]="InstitutionComponent"
-                               [readonly]="!edit"
-                               [service]="institutionService"
-                               matTooltipPosition="after"
-                               placeholder="Institution"
+                <app-thesaurus
+                    *ngIf="isDilps && (edit || !!institution)"
+                    (modelChange)="model.institution = $event"
+                    [matTooltip]="
+                        !edit
+                            ? ''
+                            : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'
+                    "
+                    [model]="institution"
+                    [multiple]="false"
+                    [previewComponent]="InstitutionComponent"
+                    [readonly]="!edit"
+                    [service]="institutionService"
+                    matTooltipPosition="after"
+                    placeholder="Institution"
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="isDilps && !(model.locality || edit)" [model]="institution" [readonly]="!edit" [vertical]="true"
+                <app-address
+                    *ngIf="isDilps && !(model.locality || edit)"
+                    [model]="institution"
+                    [readonly]="!edit"
+                    [vertical]="true"
                 ></app-address>
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
                     <div class="mat-title">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
-                    <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"
-                    ></app-address>
+                    <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"></app-address>
                 </div>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
-                               [model]="model.antiqueNames"
-                               (modelChange)="model.antiqueNames = $event"
-                               [allowFreeText]="false"
-                               [multiple]="true"
-                               [previewComponent]="AntiqueNameComponent"
-                               [readonly]="!edit"
-                               [service]="antiqueNameService"
-                               placeholder="Nom antique"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
+                    [model]="model.antiqueNames"
+                    (modelChange)="model.antiqueNames = $event"
+                    [allowFreeText]="false"
+                    [multiple]="true"
+                    [previewComponent]="AntiqueNameComponent"
+                    [readonly]="!edit"
+                    [service]="antiqueNameService"
+                    placeholder="Nom antique"
                 ></app-thesaurus>
 
-                <div *ngIf="!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)" class="mat-title">Datation</div>
+                <div
+                    *ngIf="!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)"
+                    class="mat-title"
+                >
+                    Datation
+                </div>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || model.periods?.length)"
-                               [model]="model.periods"
-                               (modelChange)="model.periods = $event"
-                               [allowFreeText]="false"
-                               [hierarchicSelectorConfig]="periodHierarchicConfig"
-                               [multiple]="true"
-                               [previewComponent]="PeriodComponent"
-                               [readonly]="!edit"
-                               [service]="periodService"
-                               matTooltipPosition="after"
-                               placeholder="Périodes"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || model.periods?.length)"
+                    [model]="model.periods"
+                    (modelChange)="model.periods = $event"
+                    [allowFreeText]="false"
+                    [hierarchicSelectorConfig]="periodHierarchicConfig"
+                    [multiple]="true"
+                    [previewComponent]="PeriodComponent"
+                    [readonly]="!edit"
+                    [service]="periodService"
+                    matTooltipPosition="after"
+                    placeholder="Périodes"
                 ></app-thesaurus>
 
                 <div *ngIf="!isDilps" fxLayout="row" fxLayoutGap="20px">
                     <mat-form-field *ngIf="edit || !!model.from" [style.width]="'45%'">
                         <mat-label>A partir de</mat-label>
-                        <input [(ngModel)]="model.from" [readonly]="!edit" matInput type="number" step="1">
+                        <input [(ngModel)]="model.from" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
 
                     <mat-form-field *ngIf="edit || !!model.to" [style.width]="'45%'">
                         <mat-label>Jusqu'à</mat-label>
-                        <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1">
+                        <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-title">Lieu de conservation</div>
+                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-title">
+                    Lieu de conservation
+                </div>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!institution)"
-                               (modelChange)="model.institution = $event"
-                               [model]="institution"
-                               [multiple]="false"
-                               [previewComponent]="InstitutionComponent"
-                               [readonly]="!edit"
-                               [service]="institutionService"
-                               matTooltipPosition="after"
-                               placeholder="Institution"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!institution)"
+                    (modelChange)="model.institution = $event"
+                    [model]="institution"
+                    [multiple]="false"
+                    [previewComponent]="InstitutionComponent"
+                    [readonly]="!edit"
+                    [service]="institutionService"
+                    matTooltipPosition="after"
+                    placeholder="Institution"
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="!isDilps && !(model.locality || edit)" [model]="institution" [readonly]="!edit" [vertical]="true"
+                <app-address
+                    *ngIf="!isDilps && !(model.locality || edit)"
+                    [model]="institution"
+                    [readonly]="!edit"
+                    [vertical]="true"
                 ></app-address>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.objectReference)">
                     <mat-label>Numéro d’inventaire</mat-label>
-                    <textarea [(ngModel)]="model.objectReference" [readonly]="!edit" matAutosizeMinRows="1" matInput matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.objectReference"
+                        [readonly]="!edit"
+                        matAutosizeMinRows="1"
+                        matInput
+                        matTextareaAutosize
                     ></textarea>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.documentType || !!model.documentSize || !!model.techniqueAuthor || !!model.techniqueDate)"
-                     class="mat-title"
-                >Référence du document
+                <div
+                    *ngIf="
+                        !isDilps &&
+                        (edit ||
+                            !!model.documentType ||
+                            !!model.documentSize ||
+                            !!model.techniqueAuthor ||
+                            !!model.techniqueDate)
+                    "
+                    class="mat-title"
+                >
+                    Référence du document
                 </div>
 
-                <app-thesaurus *ngIf="!isDilps && (edit || !!model.documentType)"
-                               [model]="model.documentType"
-                               (modelChange)="model.institution = $event"
-                               [allowFreeText]="false"
-                               [multiple]="false"
-                               [previewComponent]="DocumentTypeComponent"
-                               [readonly]="!edit"
-                               [service]="documentTypeService"
-                               matTooltipPosition="after"
-                               placeholder="Type"
+                <app-thesaurus
+                    *ngIf="!isDilps && (edit || !!model.documentType)"
+                    [model]="model.documentType"
+                    (modelChange)="model.institution = $event"
+                    [allowFreeText]="false"
+                    [multiple]="false"
+                    [previewComponent]="DocumentTypeComponent"
+                    [readonly]="!edit"
+                    [service]="documentTypeService"
+                    matTooltipPosition="after"
+                    placeholder="Type"
                 ></app-thesaurus>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.documentSize)" matTooltipPosition="after">
                     <mat-label>Dimensions</mat-label>
-                    <textarea [(ngModel)]="model.documentSize"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="191"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.documentSize"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="191"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end"
-                              *ngIf="edit && model.documentSize?.length > 150"
-                              [ngClass]="{'strong': model.documentSize?.length >= 191}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.documentSize?.length > 150"
+                        [ngClass]="{strong: model.documentSize?.length >= 191}"
                     >
                         {{ model.documentSize.length }} / 191
                     </mat-hint>
@@ -467,16 +606,18 @@
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.techniqueAuthor)">
                     <mat-label>Auteur</mat-label>
-                    <textarea [(ngModel)]="model.techniqueAuthor"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.techniqueAuthor"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end"
-                              *ngIf="edit && model.techniqueAuthor?.length > 200"
-                              [ngClass]="{'strong': model.techniqueAuthor?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.techniqueAuthor?.length > 200"
+                        [ngClass]="{strong: model.techniqueAuthor?.length >= 255}"
                     >
                         {{ model.techniqueAuthor.length }} / 255
                     </mat-hint>
@@ -484,34 +625,43 @@
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.techniqueDate)">
                     <mat-label>Date ou année</mat-label>
-                    <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput maxlength="60">
-                    <mat-hint align="end"
-                              *ngIf="edit && model.techniqueDate?.length > 47"
-                              [ngClass]="{'strong': model.techniqueDate?.length >= 60}"
+                    <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput maxlength="60" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.techniqueDate?.length > 47"
+                        [ngClass]="{strong: model.techniqueDate?.length >= 60}"
                     >
                         {{ model.techniqueDate.length }} / 60
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)" class="mat-title"
-                >Référence de l'image
+                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)" class="mat-title">
+                    Référence de l'image
                 </div>
 
                 <div *ngIf="edit || !!model.literature" class="margin-v rich-text">
                     <div class="mat-body-2">Source</div>
-                    <quill-editor *ngIf="edit || !!model.literature"
-                                  [ngModel]="model.literature"
-                                  (ngModelChange)="model.literature = $event || ''"
-                                  [disabled]="!edit"
-                                  bounds="self"
-                                  [matTooltip]="!edit || !isDilps ? '' : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'"
+                    <quill-editor
+                        *ngIf="edit || !!model.literature"
+                        [ngModel]="model.literature"
+                        (ngModelChange)="model.literature = $event || ''"
+                        [disabled]="!edit"
+                        bounds="self"
+                        [matTooltip]="
+                            !edit || !isDilps
+                                ? ''
+                                : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'
+                        "
                     ></quill-editor>
                 </div>
 
                 <mat-form-field *ngIf="edit || !!model.page">
                     <mat-label>Page</mat-label>
-                    <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10">
-                    <mat-hint align="end" *ngIf="edit && model.page?.length > 7" [ngClass]="{'strong': model.page?.length >= 10}"
+                    <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.page?.length > 7"
+                        [ngClass]="{strong: model.page?.length >= 10}"
                     >
                         {{ model.page.length }} / 10
                     </mat-hint>
@@ -519,8 +669,11 @@
 
                 <mat-form-field *ngIf="isDilps && (edit || !!model.figure)">
                     <mat-label>Figure</mat-label>
-                    <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10">
-                    <mat-hint align="end" *ngIf="edit && model.figure?.length > 7" [ngClass]="{'strong': model.figure?.length >= 10}"
+                    <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.figure?.length > 7"
+                        [ngClass]="{strong: model.figure?.length >= 10}"
                     >
                         {{ model.figure.length }} / 10
                     </mat-hint>
@@ -528,20 +681,27 @@
 
                 <mat-form-field *ngIf="isDilps && (edit || !!model.table)">
                     <mat-label>Planche</mat-label>
-                    <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10">
-                    <mat-hint align="end" *ngIf="edit && model.table?.length > 7" [ngClass]="{'strong': model.table?.length >= 10}"
+                    <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.table?.length > 7"
+                        [ngClass]="{strong: model.table?.length >= 10}"
                     >
                         {{ model.table.length }} / 10
                     </mat-hint>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="edit || !!model.isbn"
-                                [matTooltip]="!edit || !isDilps ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
-                                matTooltipPosition="after"
+                <mat-form-field
+                    *ngIf="edit || !!model.isbn"
+                    [matTooltip]="!edit || !isDilps ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
+                    matTooltipPosition="after"
                 >
                     <mat-label>{{ isDilps ? 'ISBN' : 'ISBN / ISSN' }}</mat-label>
-                    <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30">
-                    <mat-hint align="end" *ngIf="edit && model.isbn?.length > 23" [ngClass]="{'strong': model.isbn?.length >= 30}"
+                    <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30" />
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.isbn?.length > 23"
+                        [ngClass]="{strong: model.isbn?.length >= 30}"
                     >
                         {{ model.isbn.length }} / 30
                     </mat-hint>
@@ -549,41 +709,48 @@
 
                 <mat-form-field *ngIf="isDilps && (edit || !!model.rights)">
                     <mat-label>Droits d'auteur</mat-label>
-                    <textarea [(ngModel)]="model.rights"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.rights"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
-                    <mat-hint align="end" *ngIf="edit && model.rights?.length > 200" [ngClass]="{'strong': model.rights?.length >= 255}">
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.rights?.length > 200"
+                        [ngClass]="{strong: model.rights?.length >= 255}"
+                    >
                         {{ model.rights.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
                 <div *ngIf="!isDilps && collectionCopyrights">
                     <div class="mat-title">Droits d'auteur</div>
-                    <p>{{collectionCopyrights}}</p>
+                    <p>{{ collectionCopyrights }}</p>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-title"
-                >Référence web
-                </div>
+                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-title">Référence web</div>
 
                 <mat-form-field *ngIf="!isDilps && edit">
                     <mat-label>URL</mat-label>
-                    <textarea [(ngModel)]="model.url"
-                              #url="ngModel"
-                              [readonly]="!edit"
-                              matInput
-                              maxlength="255"
-                              type="url"
-                              (change)="urlModel = url; updateFormValidity()"
-                              matAutosizeMinRows="1"
-                              matTextareaAutosize
+                    <textarea
+                        [(ngModel)]="model.url"
+                        #url="ngModel"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        type="url"
+                        (change)="urlModel = url; updateFormValidity()"
+                        matAutosizeMinRows="1"
+                        matTextareaAutosize
                     ></textarea>
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
-                    <mat-hint align="end" *ngIf="edit && model.url?.length > 200" [ngClass]="{'strong': model.url?.length >= 255}"
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.url?.length > 200"
+                        [ngClass]="{strong: model.url?.length >= 255}"
                     >
                         {{ model.url.length }} / 255
                     </mat-hint>
@@ -591,33 +758,38 @@
 
                 <div *ngIf="!isDilps && edit" class="margin-bottom rich-text">
                     <div class="mat-body-2">Description</div>
-                    <quill-editor *ngIf="edit || !!model.urlDescription"
-                                  [ngModel]="model.urlDescription"
-                                  (ngModelChange)="model.urlDescription = $event || ''"
-                                  [disabled]="!edit"
-                                  bounds="self"
+                    <quill-editor
+                        *ngIf="edit || !!model.urlDescription"
+                        [ngModel]="model.urlDescription"
+                        (ngModelChange)="model.urlDescription = $event || ''"
+                        [disabled]="!edit"
+                        bounds="self"
                     ></quill-editor>
                 </div>
 
-                <div *ngIf="!isDilps && (!edit && model.url)">
-                    <a href="{{model.url}}" [innerHTML]="model.urlDescription || model.url"></a>
+                <div *ngIf="!isDilps && !edit && model.url">
+                    <a href="{{ model.url }}" [innerHTML]="model.urlDescription || model.url"></a>
                 </div>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="!hideCards && model && model.id && (edit || model.cards.length > 0)">
-                    <br/>
+                    <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
-                    <natural-relations [disabled]="!edit"
-                                       [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
-                                       [main]="model"
-                                       [service]="cardService"
-                                       placeholder="Chercher une fiche"
-                                       [displayWith]="displayWith"
-                                       id="fiches-additionnelles"
+                    <natural-relations
+                        [disabled]="!edit"
+                        [filter]="{groups: [{conditions: [{cards: {have: {values: [model.id]}}}]}]}"
+                        [main]="model"
+                        [service]="cardService"
+                        placeholder="Chercher une fiche"
+                        [displayWith]="displayWith"
+                        id="fiches-additionnelles"
                     >
                         <ng-template let-item="item">
-                            <natural-table-button [label]="displayWith(item)" [navigate]="['/card/',  item.id]" icon="image"
+                            <natural-table-button
+                                [label]="displayWith(item)"
+                                [navigate]="['/card/', item.id]"
+                                icon="image"
                             ></natural-table-button>
                         </ng-template>
                     </natural-relations>
@@ -625,27 +797,41 @@
 
                 <div *ngIf="isDilps && collectionCopyrights">
                     <div class="mat-title">Droits d’utilisation</div>
-                    <p>{{collectionCopyrights}}</p>
+                    <p>{{ collectionCopyrights }}</p>
                 </div>
-
             </div>
-
         </perfect-scrollbar>
 
         <div class="padding mat-elevation-z4">
             <app-stamp [item]="model"></app-stamp>
         </div>
-
     </div>
 
     <div *ngIf="!hideImage" class="containerWithToolbar" fxFlex fxLayout="column">
-        <mat-toolbar [ngClass]="edit ? 'edition' : ''" color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
+        <mat-toolbar
+            [ngClass]="edit ? 'edition' : ''"
+            color="app"
+            fxFlex="none"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+        >
             <div fxFlex></div>
-            <a *ngIf="imageSrcFull && !imageData" [attr.href]="imageSrcFull" download mat-icon-button matTooltip="Télécharger l'image">
+            <a
+                *ngIf="imageSrcFull && !imageData"
+                [attr.href]="imageSrcFull"
+                download
+                mat-icon-button
+                matTooltip="Télécharger l'image"
+            >
                 <mat-icon>file_download</mat-icon>
             </a>
         </mat-toolbar>
-        <div *ngIf="imageSrc && !imageData" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+        <div
+            *ngIf="imageSrc && !imageData"
+            [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"
+            class="image"
+            fxFlex
+        ></div>
         <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image" fxFlex></div>
     </div>
 </div>

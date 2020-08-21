@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 interface Hierarchic {
     hasChildren: boolean;
@@ -15,7 +15,6 @@ export function onlyLeaves<T extends Hierarchic>(value: T[]): T[] {
     name: 'onlyLeaves',
 })
 export class OnlyLeavesPipe implements PipeTransform {
-
     /**
      * Returns only tags that are leaves in the tag trees
      */

@@ -1,7 +1,7 @@
 <div fxFlex fxLayout="row">
     <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
         <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
-            <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
+            <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
             <div fxFlex></div>
             <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
                 <mat-icon>add</mat-icon>
@@ -10,15 +10,24 @@
 
         <perfect-scrollbar fxFlex>
             <div class="scrolled" fxLayout="column">
-
                 <mat-nav-list *ngIf="showUnclassified">
-                    <a [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['.']" mat-list-item routerLinkActive="active">
+                    <a
+                        [routerLinkActiveOptions]="{exact: true}"
+                        [routerLink]="['.']"
+                        mat-list-item
+                        routerLinkActive="active"
+                    >
                         <span fxLayout="row" fxLayoutAlign="start center" matLine>Non classé</span>
                     </a>
                 </mat-nav-list>
 
                 <mat-nav-list *ngIf="showMyCards">
-                    <a [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['my-cards']" mat-list-item routerLinkActive="active">
+                    <a
+                        [routerLinkActiveOptions]="{exact: true}"
+                        [routerLink]="['my-cards']"
+                        mat-list-item
+                        routerLinkActive="active"
+                    >
                         <span fxLayout="row" fxLayoutAlign="start center" matLine>Mes images</span>
                     </a>
                 </mat-nav-list>
@@ -27,29 +36,38 @@
 
                 <ng-template #recursiveList let-collections let-padding="padding">
                     <ng-container *ngFor="let collection of collections">
-                        <a (click)="toggle(collection)"
-                           [routerLink]="collection.id"
-                           [style.padding-left.px]="padding"
-                           mat-list-item
-                           routerLinkActive="active"
+                        <a
+                            (click)="toggle(collection)"
+                            [routerLink]="collection.id"
+                            [style.padding-left.px]="padding"
+                            mat-list-item
+                            routerLinkActive="active"
                         >
                             <span fxLayout="row" fxLayoutAlign="start center" matLine>
-                                {{collection.name}}
+                                {{ collection.name }}
                                 <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
-                            <button (click)="edit($event, collection)"
-                                    *ngIf="collection.permissions.update || collection.permissions.delete"
-                                    mat-icon-button
+                            <button
+                                (click)="edit($event, collection)"
+                                *ngIf="collection.permissions.update || collection.permissions.delete"
+                                mat-icon-button
                             >
                                 <mat-icon>edit</mat-icon>
                             </button>
                         </a>
-                        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: collection.children, padding: padding + 20 }"></ng-container>
+                        <ng-container
+                            *ngTemplateOutlet="
+                                recursiveList;
+                                context: {$implicit: collection.children, padding: padding + 20}
+                            "
+                        ></ng-container>
                     </ng-container>
                 </ng-template>
 
                 <mat-nav-list>
-                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: collections, padding: 0 }"></ng-container>
+                    <ng-container
+                        *ngTemplateOutlet="recursiveList; context: {$implicit: collections, padding: 0}"
+                    ></ng-container>
 
                     <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
                         <mat-icon mat-list-icon>keyboard_arrow_down</mat-icon>

@@ -1,18 +1,21 @@
-import { Component, Inject } from '@angular/core';
-import { StatisticService } from '../services/statistic.service';
-import { NaturalAbstractController, NaturalQueryVariablesManager, Literal } from '@ecodev/natural';
+import {Component, Inject} from '@angular/core';
+import {StatisticService} from '../services/statistic.service';
+import {NaturalAbstractController, NaturalQueryVariablesManager, Literal} from '@ecodev/natural';
 import {
-    ExtraStatistics, Site,
+    ExtraStatistics,
+    Site,
     SortingOrder,
     StatisticFilter,
     StatisticSortingField,
-    StatisticsVariables, UserFilter, Users_users_items,
+    StatisticsVariables,
+    UserFilter,
+    Users_users_items,
 } from '../../shared/generated-types';
-import { StatisticInput } from '../statistic/statistic.component';
-import { Apollo } from 'apollo-angular';
-import { extraStatisticsQuery } from '../services/statistic.queries';
-import { UserService } from '../../users/services/user.service';
-import { SITE } from '../../app.config';
+import {StatisticInput} from '../statistic/statistic.component';
+import {Apollo} from 'apollo-angular';
+import {extraStatisticsQuery} from '../services/statistic.queries';
+import {UserService} from '../../users/services/user.service';
+import {SITE} from '../../app.config';
 
 function formatDate(date: Date): string {
     const month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
@@ -50,7 +53,6 @@ interface Data {
     styleUrls: ['./statistic.component.scss'],
 })
 export class StatisticsComponent extends NaturalAbstractController {
-
     public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
     public data: Data;
     public statType: keyof Values = 'pageCount';
@@ -71,8 +73,8 @@ export class StatisticsComponent extends NaturalAbstractController {
     };
 
     public availableUserTypes = {
-        userCreation: 'Création d\'utilisateur',
-        userUpdate: 'Modification d\'utilisateur',
+        userCreation: "Création d'utilisateur",
+        userUpdate: "Modification d'utilisateur",
     };
 
     public availablePeriods: Period[] = [];
@@ -98,10 +100,12 @@ export class StatisticsComponent extends NaturalAbstractController {
             pagination: {
                 pageSize: 999,
             },
-            sorting: [{
-                field: StatisticSortingField.date,
-                order: SortingOrder.ASC,
-            }],
+            sorting: [
+                {
+                    field: StatisticSortingField.date,
+                    order: SortingOrder.ASC,
+                },
+            ],
         });
 
         this.buildAvailablePeriods();
@@ -261,20 +265,23 @@ export class StatisticsComponent extends NaturalAbstractController {
                 key: '' + year,
                 name: '' + year,
                 filter: {
-                    groups: [{
-                        conditions: [{
-                            date: {
-                                greaterOrEqual: {value: formatDate(new Date(year + '-01-01'))},
-                                less: {value: formatDate(new Date((year + 1) + '-01-01'))},
-                            },
-                        }],
-                    }],
+                    groups: [
+                        {
+                            conditions: [
+                                {
+                                    date: {
+                                        greaterOrEqual: {value: formatDate(new Date(year + '-01-01'))},
+                                        less: {value: formatDate(new Date(year + 1 + '-01-01'))},
+                                    },
+                                },
+                            ],
+                        },
+                    ],
                 },
             });
 
             year--;
         }
-
     }
 
     public update(): void {
@@ -286,14 +293,16 @@ export class StatisticsComponent extends NaturalAbstractController {
 
     public applyFrequentationTypeSelection(): void {
         this.frequentation = {
-            tables: [{
-                name: this.availableTypes[this.statType],
-                rows: [
-                    {name: this.data.aai.name, value: this.data.aai.values[this.statType]},
-                    {name: this.data.default.name, value: this.data.default.values[this.statType]},
-                    {name: this.data.anonymous.name, value: this.data.anonymous.values[this.statType]},
-                ],
-            }],
+            tables: [
+                {
+                    name: this.availableTypes[this.statType],
+                    rows: [
+                        {name: this.data.aai.name, value: this.data.aai.values[this.statType]},
+                        {name: this.data.default.name, value: this.data.default.values[this.statType]},
+                        {name: this.data.anonymous.name, value: this.data.anonymous.values[this.statType]},
+                    ],
+                },
+            ],
             chart: {
                 name: this.availableTypes[this.statType],
                 categories: this.categories,
@@ -308,16 +317,18 @@ export class StatisticsComponent extends NaturalAbstractController {
     }
 
     private fetchCardAndUser(): void {
-        this.apollo.query<ExtraStatistics>({
-            query: extraStatisticsQuery,
-            variables: {
-                period: this.period,
-                user: this.user ? this.user.id : null,
-            },
-        }).subscribe(result => {
-            this.raw = JSON.parse(result.data.extraStatistics);
-            this.applyCardAndUserTypeSelection();
-        });
+        this.apollo
+            .query<ExtraStatistics>({
+                query: extraStatisticsQuery,
+                variables: {
+                    period: this.period,
+                    user: this.user ? this.user.id : null,
+                },
+            })
+            .subscribe(result => {
+                this.raw = JSON.parse(result.data.extraStatistics);
+                this.applyCardAndUserTypeSelection();
+            });
     }
 
     public displayFn(item) {

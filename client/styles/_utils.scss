@@ -27,7 +27,6 @@
 }
 
 @mixin fixedToolbar() {
-
     .containerWithToolbar {
         min-height: 0;
         position: relative;
@@ -49,5 +48,4 @@
             z-index: 10;
         }
     }
-
 }

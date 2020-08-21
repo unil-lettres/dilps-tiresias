@@ -1,31 +1,30 @@
 <div #scrollable class="scrollable">
     <div class="scrolled">
-
-        <mat-paginator (page)="loadMore($event)"
-                       *ngIf="dataSource.data?.length"
-                       [length]="dataSource.data?.length"
-                       [pageIndex]="dataSource.data?.pageIndex"
-                       [pageSizeOptions]="[5, 10, 20, 50]"
-                       [pageSize]="dataSource.data?.pageSize"
+        <mat-paginator
+            (page)="loadMore($event)"
+            *ngIf="dataSource.data?.length"
+            [length]="dataSource.data?.length"
+            [pageIndex]="dataSource.data?.pageIndex"
+            [pageSizeOptions]="[5, 10, 20, 50]"
+            [pageSize]="dataSource.data?.pageSize"
         ></mat-paginator>
 
         <div *ngFor="let item of cards" class="line">
-
             <div class="image-wrapper">
-                <a [routerLink]="['/card', item.id]" [ngStyle]="{'background-image': 'url(/image/'+ item.id + '/200)'}" class="image"></a>
+                <a
+                    [routerLink]="['/card', item.id]"
+                    [ngStyle]="{'background-image': 'url(/image/' + item.id + '/200)'}"
+                    class="image"
+                ></a>
             </div>
 
             <div class="line-body">
-
                 <div class="line-body-table">
-
                     <ng-container *ngIf="item.site === Site.tiresias">
-
                         <div *ngIf="item.code">
                             <div>Référence</div>
                             <div>{{ item.code }}</div>
                         </div>
-
                     </ng-container>
 
                     <div>
@@ -34,7 +33,6 @@
                     </div>
 
                     <ng-container *ngIf="item.site === Site.dilps">
-
                         <div *ngIf="item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)">
                             <div>Titre étendu</div>
                             <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
@@ -51,7 +49,6 @@
                             <div>Supplément</div>
                             <div>{{ item.addition | truncate: ['250', '...'] }}</div>
                         </div>
-
                     </ng-container>
 
                     <ng-container *ngIf="item.site === Site.tiresias">
@@ -73,7 +70,6 @@
                             <div>Datation</div>
                             <div>De {{ item.from }} jusqu'à {{ item.to }}</div>
                         </div>
-
                     </ng-container>
 
                     <div *ngIf="item.dating">
@@ -89,7 +85,9 @@
                     <div *ngIf="item.materials?.length || item.material">
                         <div>Matériel (Matériaux)</div>
                         <div>
-                            <div *ngFor="let material of item.materials | onlyLeaves">{{ material.hierarchicName }}</div>
+                            <div *ngFor="let material of item.materials | onlyLeaves">
+                                {{ material.hierarchicName }}
+                            </div>
                             <div>{{ item.material }}</div>
                         </div>
                     </div>
@@ -109,26 +107,24 @@
                         <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
                     </div>
                 </div>
-
             </div>
 
             <div>
-                <mat-checkbox (change)="$event ? selectionModel.toggle(item) : null"
-                              (click)="$event.stopPropagation()"
-                              [checked]="selectionModel.isSelected(item)"
+                <mat-checkbox
+                    (change)="$event ? selectionModel.toggle(item) : null"
+                    (click)="$event.stopPropagation()"
+                    [checked]="selectionModel.isSelected(item)"
                 ></mat-checkbox>
             </div>
-
         </div>
 
-        <mat-paginator (page)="loadMore($event)"
-                       *ngIf="dataSource.data?.length"
-                       [length]="dataSource.data?.length"
-                       [pageIndex]="dataSource.data?.pageIndex"
-                       [pageSizeOptions]="[5, 10, 20, 50]"
-                       [pageSize]="dataSource.data?.pageSize"
+        <mat-paginator
+            (page)="loadMore($event)"
+            *ngIf="dataSource.data?.length"
+            [length]="dataSource.data?.length"
+            [pageIndex]="dataSource.data?.pageIndex"
+            [pageSizeOptions]="[5, 10, 20, 50]"
+            [pageSize]="dataSource.data?.pageSize"
         ></mat-paginator>
-
     </div>
-
 </div>

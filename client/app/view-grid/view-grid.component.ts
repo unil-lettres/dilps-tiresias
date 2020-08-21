@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { NaturalGalleryComponent } from '@ecodev/angular-natural-gallery';
-import { NaturalAbstractController, NaturalDataSource, PaginationInput } from '@ecodev/natural';
-import { NaturalGalleryOptions } from '@ecodev/natural-gallery-js';
-import { merge } from 'lodash';
-import { takeUntil } from 'rxjs/operators';
-import { CardService } from '../card/services/card.service';
-import { ViewInterface } from '../list/list.component';
-import { Cards_cards_items } from '../shared/generated-types';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
+import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
+import {NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
+import {merge} from 'lodash';
+import {takeUntil} from 'rxjs/operators';
+import {CardService} from '../card/services/card.service';
+import {ViewInterface} from '../list/list.component';
+import {Cards_cards_items} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-grid',
@@ -15,7 +15,6 @@ import { Cards_cards_items } from '../shared/generated-types';
     styleUrls: ['./view-grid.component.scss'],
 })
 export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
-
     /**
      * Reference to gallery
      */
@@ -34,12 +33,14 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<Required<PaginationInput>>();
+    @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<
+        Required<PaginationInput>
+    >();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public contentChange: EventEmitter<{ visible?: number; total?: number }> = new EventEmitter();
+    @Output() public contentChange: EventEmitter<{visible?: number; total?: number}> = new EventEmitter();
 
     /**
      * Emits when some cards are selected
@@ -81,9 +82,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     ngOnInit() {
-
         this.dataSource.internalDataObservable.pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
-
             if (!this.gallery) {
                 return;
             }
@@ -100,11 +99,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     ngAfterViewInit(): void {
         setTimeout(() => {
-            this.gallery.gallery.addEventListener('item-added-to-dom', (event) => {
+            this.gallery.gallery.addEventListener('item-added-to-dom', event => {
                 this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length});
             });
         });
-
     }
 
     public loadMore(ev) {
@@ -124,7 +122,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     private formatImages(cards: Cards_cards_items[]) {
-
         const selected = this.selected.map(c => c.id);
 
         cards = cards.map(card => {
@@ -166,5 +163,4 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
         return cards;
     }
-
 }

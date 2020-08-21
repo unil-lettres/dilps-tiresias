@@ -1,9 +1,9 @@
-import { DefaultOptions } from 'apollo-client/ApolloClient';
-import { NetworkActivityService } from '../services/network-activity.service';
-import { ApolloLink } from 'apollo-link';
-import { onError } from 'apollo-link-error';
-import { createUploadLink } from 'apollo-upload-client';
-import { AlertService } from '../components/alert/alert.service';
+import {DefaultOptions} from 'apollo-client/ApolloClient';
+import {NetworkActivityService} from '../services/network-activity.service';
+import {ApolloLink} from 'apollo-link';
+import {onError} from 'apollo-link-error';
+import {createUploadLink} from 'apollo-upload-client';
+import {AlertService} from '../components/alert/alert.service';
 
 export const apolloDefaultOptions: DefaultOptions = {
     query: {
@@ -17,12 +17,8 @@ export const apolloDefaultOptions: DefaultOptions = {
 /**
  * Create an Apollo link to show alert in case of error, and message if network is down
  */
-function createErrorLink(
-    networkActivityService: NetworkActivityService,
-    alertService: AlertService,
-): ApolloLink {
+function createErrorLink(networkActivityService: NetworkActivityService, alertService: AlertService): ApolloLink {
     return onError(errorResponse => {
-
         // Network errors are not caught by uploadInterceptor, so we need to decrease pending queries
         if (errorResponse.networkError) {
             alertService.error('Une erreur est survenue sur le réseau');

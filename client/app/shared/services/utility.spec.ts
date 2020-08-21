@@ -1,4 +1,4 @@
-import { formatYearRange } from './utility';
+import {formatYearRange} from './utility';
 
 describe('formatYearRange', () => {
     it('should work', () => {

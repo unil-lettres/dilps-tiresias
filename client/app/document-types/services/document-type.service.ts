@@ -1,14 +1,16 @@
-import { Injectable, Inject } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import {Injectable, Inject} from '@angular/core';
+import {Apollo} from 'apollo-angular';
 
 import {
     CreateDocumentType,
     CreateDocumentTypeVariables,
     DeleteDocumentTypes,
-    DocumentType, DocumentTypeInput,
+    DocumentType,
+    DocumentTypeInput,
     DocumentTypes,
     DocumentTypesVariables,
-    DocumentTypeVariables, Site,
+    DocumentTypeVariables,
+    Site,
     UpdateDocumentType,
     UpdateDocumentTypeVariables,
 } from '../../shared/generated-types';
@@ -19,33 +21,35 @@ import {
     documentTypesQuery,
     updateDocumentType,
 } from './document-type.queries';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
-import { SITE } from '../../app.config';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {SITE} from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
 })
-export class DocumentTypeService
-    extends AbstractContextualizedService<DocumentType['documentType'],
-        DocumentTypeVariables,
-        DocumentTypes['documentTypes'],
-        DocumentTypesVariables,
-        CreateDocumentType['createDocumentType'],
-        CreateDocumentTypeVariables,
-        UpdateDocumentType['updateDocumentType'],
-        UpdateDocumentTypeVariables,
-        DeleteDocumentTypes['deleteDocumentTypes'],
-        never> {
-
+export class DocumentTypeService extends AbstractContextualizedService<
+    DocumentType['documentType'],
+    DocumentTypeVariables,
+    DocumentTypes['documentTypes'],
+    DocumentTypesVariables,
+    CreateDocumentType['createDocumentType'],
+    CreateDocumentTypeVariables,
+    UpdateDocumentType['updateDocumentType'],
+    UpdateDocumentTypeVariables,
+    DeleteDocumentTypes['deleteDocumentTypes'],
+    never
+> {
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo,
+        super(
+            apollo,
             'documentType',
             documentTypeQuery,
             documentTypesQuery,
             createDocumentType,
             updateDocumentType,
             deleteDocumentTypes,
-            site);
+            site,
+        );
     }
 
     public getDefaultForClient() {
@@ -58,5 +62,4 @@ export class DocumentTypeService
             site: this.site,
         };
     }
-
 }

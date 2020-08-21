@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -9,8 +9,8 @@ import {
     ValidatorFn,
     Validators,
 } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { BehaviorSubject } from 'rxjs';
+import {ErrorStateMatcher} from '@angular/material/core';
+import {BehaviorSubject} from 'rxjs';
 import {
     NATURAL_DROPDOWN_DATA,
     NaturalDropdownData,
@@ -27,7 +27,7 @@ export interface TypeNumericRangeConfiguration {
 
 export class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        return form && form.invalid && (form.value.to || form.value.from) || control && control.invalid;
+        return (form && form.invalid && (form.value.to || form.value.from)) || (control && control.invalid);
     }
 }
 
@@ -57,10 +57,8 @@ function toGreaterThanFrom(control: FormControl): ValidationErrors | null {
 @Component({
     templateUrl: './type-numeric-range.component.html',
     styleUrls: ['./type-numeric-range.component.scss'],
-
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
-
     public renderedValue = new BehaviorSubject<string>('');
     public configuration: TypeNumericRangeConfiguration;
     public matcher = new InvalidWithValueStateMatcher();
@@ -75,7 +73,7 @@ export class TypeNumericRangeComponent implements DropdownComponent {
     };
 
     constructor(@Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData, protected dropdownRef: NaturalDropdownRef) {
-        this.configuration = {...this.defaults, ...data.configuration as TypeNumericRangeConfiguration};
+        this.configuration = {...this.defaults, ...(data.configuration as TypeNumericRangeConfiguration)};
 
         this.form = new FormGroup({
             from: this.fromCtrl,

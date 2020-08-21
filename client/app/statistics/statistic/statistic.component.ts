@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, Input} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
 import * as Highcharts from 'highcharts';
 
 interface Row {
@@ -46,7 +46,6 @@ function percent(count: number, total: number): number {
     styleUrls: ['./statistic.component.scss'],
 })
 export class StatisticComponent {
-
     @Input()
     public set input(val: StatisticInput) {
         if (!val) {
@@ -56,25 +55,23 @@ export class StatisticComponent {
         this.update(val.chart);
 
         this.tables = val.tables.map(table => {
-                const total = table.rows.reduce((t, r) => t + r.value, 0);
-                const rowPercent = table.rows.map(r => {
-                        return {...r, percent: percent(r.value, total)};
-                    },
-                );
+            const total = table.rows.reduce((t, r) => t + r.value, 0);
+            const rowPercent = table.rows.map(r => {
+                return {...r, percent: percent(r.value, total)};
+            });
 
-                // Insert total line
-                rowPercent.push({
-                    name: 'Total',
-                    value: total,
-                    percent: percent(total, total),
-                });
+            // Insert total line
+            rowPercent.push({
+                name: 'Total',
+                value: total,
+                percent: percent(total, total),
+            });
 
-                return {
-                    name: table.name,
-                    dataSource: new MatTableDataSource<RowPercent>(rowPercent),
-                };
-            },
-        );
+            return {
+                name: table.name,
+                dataSource: new MatTableDataSource<RowPercent>(rowPercent),
+            };
+        });
     }
 
     public displayedColumns = ['name', 'absolute', 'percent'];
@@ -85,11 +82,9 @@ export class StatisticComponent {
     };
     public chartUpdated = false;
 
-    constructor() {
-    }
+    constructor() {}
 
     public update(chart: SimpleChart): void {
-
         this.chartOptions = {
             chart: {
                 type: 'column',
@@ -118,4 +113,3 @@ export class StatisticComponent {
         this.chartUpdated = true;
     }
 }
-

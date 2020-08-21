@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
     FlagFacet,
     NaturalSearchFacets,
@@ -10,18 +10,18 @@ import {
     wrapLike,
     replaceOperatorByName,
 } from '@ecodev/natural';
-import { SITE } from '../app.config';
-import { DomainService } from '../domains/services/domain.service';
-import { MaterialService } from '../materials/services/material.service';
-import { PeriodService } from '../periods/services/period.service';
-import { TagService } from '../tags/services/tag.service';
-import { CardFilterGroupCondition, CardVisibility, Site } from './generated-types';
-import { domainHierarchicConfig } from './hierarchic-configurations/DomainConfiguration';
-import { materialHierarchicConfig } from './hierarchic-configurations/MaterialConfiguration';
-import { periodHierarchicConfig } from './hierarchic-configurations/PeriodConfiguration';
-import { tagHierarchicConfig } from './hierarchic-configurations/TagConfiguration';
-import { TypeLocationComponent } from '../type-location/type-location.component';
-import { TypeNumericRangeComponent } from '../type-numeric-range/type-numeric-range.component';
+import {SITE} from '../app.config';
+import {DomainService} from '../domains/services/domain.service';
+import {MaterialService} from '../materials/services/material.service';
+import {PeriodService} from '../periods/services/period.service';
+import {TagService} from '../tags/services/tag.service';
+import {CardFilterGroupCondition, CardVisibility, Site} from './generated-types';
+import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
+import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
+import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
+import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
+import {TypeLocationComponent} from '../type-location/type-location.component';
+import {TypeNumericRangeComponent} from '../type-numeric-range/type-numeric-range.component';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -29,11 +29,7 @@ export const adminConfig: NaturalSearchFacets = [
         field: 'visibility',
         component: TypeSelectComponent,
         configuration: {
-            items: [
-                CardVisibility.public,
-                CardVisibility.member,
-                CardVisibility.private,
-            ],
+            items: [CardVisibility.public, CardVisibility.member, CardVisibility.private],
             multiple: true,
         },
     },
@@ -46,7 +42,6 @@ export const adminConfig: NaturalSearchFacets = [
     providedIn: 'root',
 })
 export class NaturalSearchFacetsService {
-
     private commonFacets: NaturalSearchFacets = [
         {
             display: 'Titre',
@@ -256,12 +251,13 @@ export class NaturalSearchFacetsService {
         },
     ];
 
-    constructor(@Inject(SITE) public site: Site,
-                private periodService: PeriodService,
-                private materialService: MaterialService,
-                private domainService: DomainService,
-                private tagService: TagService) {
-    }
+    constructor(
+        @Inject(SITE) public site: Site,
+        private periodService: PeriodService,
+        private materialService: MaterialService,
+        private domainService: DomainService,
+        private tagService: TagService,
+    ) {}
 
     public getFacets(): NaturalSearchFacets {
         if (this.site === Site.dilps) {
@@ -270,6 +266,4 @@ export class NaturalSearchFacetsService {
             return [...this.tiresiasFacets];
         }
     }
-
 }
-

@@ -1,12 +1,12 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { SchemaLink } from 'apollo-link-schema';
-import { buildClientSchema } from 'graphql';
-import { addMockFunctionsToSchema } from 'graphql-tools';
-import { schema as introspectionResult } from '../../../../data/tmp/schema';
-import { apolloDefaultOptions } from '../config/apollo.link.creator';
+import {Injectable, NgZone} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloClient} from 'apollo-client';
+import {SchemaLink} from 'apollo-link-schema';
+import {buildClientSchema} from 'graphql';
+import {addMockFunctionsToSchema} from 'graphql-tools';
+import {schema as introspectionResult} from '../../../../data/tmp/schema';
+import {apolloDefaultOptions} from '../config/apollo.link.creator';
 
 /**
  * A mock Apollo to be used in tests only

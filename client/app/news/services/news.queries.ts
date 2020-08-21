@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const newsesQuery = gql`
     query Newses($filter: NewsFilter, $sorting: [NewsSorting!], $pagination: PaginationInput) {
@@ -17,7 +17,8 @@ export const newsesQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const newsQuery = gql`
     query News($id: NewsID!) {
@@ -42,18 +43,22 @@ export const newsQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createNews = gql`
-    mutation CreateNews ($input: NewsInput!) {
-        createNews (input: $input) {
+    mutation CreateNews($input: NewsInput!) {
+        createNews(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateNews = gql`
     mutation UpdateNews($id: NewsID!, $input: NewsPartialInput!) {
@@ -63,9 +68,12 @@ export const updateNews = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteNewses = gql`
-    mutation DeleteNewses ($ids: [NewsID!]!){
+    mutation DeleteNewses($ids: [NewsID!]!) {
         deleteNewses(ids: $ids)
-    }`;
+    }
+`;

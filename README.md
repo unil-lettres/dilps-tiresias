@@ -8,15 +8,15 @@ Development: [![Build Status](https://travis-ci.com/unil-lettres/dilps-tiresias.
 
 Dilps/Tiresias is a web application based on GraphQL for the API and Angular for the client.
 
-
 ## Installation
 
 The recommended way to get a working copy is the following:
 
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
-3. Configure database in `config/autoload/local.php` (see example ``config/autoload/local.php.dist``)
+3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
 4. Finally, build the app:
+
 ```sh
 ./bin/build.sh
 ```
@@ -31,7 +31,7 @@ To switch the API to development (to enable logging), run:
 composer development-enable
 ```
 
-Logs will be available in ``logs/all.log``.
+Logs will be available in `logs/all.log`.
 
 #### Configuration caching
 

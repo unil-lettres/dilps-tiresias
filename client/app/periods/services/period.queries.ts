@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const periodsQuery = gql`
-    query Periods($filter:PeriodFilter, $sorting: [PeriodSorting!], $pagination: PaginationInput) {
+    query Periods($filter: PeriodFilter, $sorting: [PeriodSorting!], $pagination: PaginationInput) {
         periods(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -15,7 +15,8 @@ export const periodsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const periodQuery = gql`
     query Period($id: PeriodID!) {
@@ -42,18 +43,22 @@ export const periodQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createPeriod = gql`
-    mutation CreatePeriod ($input: PeriodInput!) {
-        createPeriod (input: $input) {
+    mutation CreatePeriod($input: PeriodInput!) {
+        createPeriod(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updatePeriod = gql`
     mutation UpdatePeriod($id: PeriodID!, $input: PeriodPartialInput!) {
@@ -63,9 +68,12 @@ export const updatePeriod = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deletePeriods = gql`
-    mutation DeletePeriods ($ids: [PeriodID!]!){
+    mutation DeletePeriods($ids: [PeriodID!]!) {
         deletePeriods(ids: $ids)
-    }`;
+    }
+`;

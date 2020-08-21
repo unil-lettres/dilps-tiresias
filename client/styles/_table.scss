@@ -1,12 +1,10 @@
 @mixin table($theme) {
-
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
     $foreground: map-get($theme, foreground);
 
     mat-table {
-
         mat-cell {
             display: flex;
             flex-direction: column;
@@ -24,5 +22,4 @@
             background: mat-color($background, app-bar);
         }
     }
-
 }

@@ -1,10 +1,10 @@
-import { Injector, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NaturalAbstractList, PaginatedData, QueryVariables } from '@ecodev/natural';
+import {Injector, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {NaturalAbstractList, PaginatedData, QueryVariables} from '@ecodev/natural';
 
-export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVariables> extends NaturalAbstractList<Tall, Vall>
+export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVariables>
+    extends NaturalAbstractList<Tall, Vall>
     implements OnInit {
-
     public displayedColumns = ['name'];
 
     protected dialog: MatDialog;

@@ -1,9 +1,9 @@
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding, Inject, OnInit } from '@angular/core';
-import { environment } from '../environments/environment';
-import { SITE } from './app.config';
-import { Site } from './shared/generated-types';
-import { ThemeService } from './shared/services/theme.service';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {Component, HostBinding, Inject, OnInit} from '@angular/core';
+import {environment} from '../environments/environment';
+import {SITE} from './app.config';
+import {Site} from './shared/generated-types';
+import {ThemeService} from './shared/services/theme.service';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +11,6 @@ import { ThemeService } from './shared/services/theme.service';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
     /**
      * Bind theme at root-app level
      */
@@ -24,12 +23,15 @@ export class AppComponent implements OnInit {
 
     private lastTheme;
 
-    constructor(private themeService: ThemeService, private overlayContainer: OverlayContainer, @Inject(SITE) private site: Site) {
+    constructor(
+        private themeService: ThemeService,
+        private overlayContainer: OverlayContainer,
+        @Inject(SITE) private site: Site,
+    ) {
         themeService.set(site + '-' + environment.environment);
     }
 
     public ngOnInit() {
-
         this.themeService.theme.subscribe(newTheme => {
             document.body.classList.remove(this.lastTheme);
 
@@ -45,6 +47,5 @@ export class AppComponent implements OnInit {
             this.lastTheme = newTheme;
             document.body.classList.add(newTheme);
         });
-
     }
 }

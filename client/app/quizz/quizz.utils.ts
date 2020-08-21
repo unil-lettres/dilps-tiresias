@@ -1,5 +1,5 @@
-import { isString, uniq } from 'lodash';
-import { Card } from '../shared/generated-types';
+import {isString, uniq} from 'lodash';
+import {Card} from '../shared/generated-types';
 
 export interface Result {
     name: boolean;
@@ -10,7 +10,10 @@ export interface Result {
 
 export function test(formValue: string, card: Card['card']): Result {
     const commonPlaces = /(eglise|chapelle|musee)/g;
-    const words = sanitize(formValue).replace(commonPlaces, '').split(/\W/).filter(word => word.length > 3);
+    const words = sanitize(formValue)
+        .replace(commonPlaces, '')
+        .split(/\W/)
+        .filter(word => word.length > 3);
 
     const result = {
         name: false,
@@ -69,14 +72,13 @@ function testMultipleThesaurus(words: string[], attributeValue): boolean {
 }
 
 function testDate(formValue: string, datings: Card['card']['datings']): boolean {
-
     const years: string[] = uniq(formValue.match(/(-?\d+)/));
     if (years) {
         for (const year of years) {
-            const searched = (new Date(year)).getFullYear();
+            const searched = new Date(year).getFullYear();
             for (const dating of datings) {
-                const from = (new Date(dating.from)).getFullYear();
-                const to = (new Date(dating.to)).getFullYear();
+                const from = new Date(dating.from).getFullYear();
+                const to = new Date(dating.to).getFullYear();
 
                 // If expected span is small, then allow a margin of error
                 const span = to - from;
@@ -100,7 +102,6 @@ function testDate(formValue: string, datings: Card['card']['datings']): boolean 
 }
 
 function stripVowelAccent(str: string): string {
-
     const rExps = [
         {
             re: /[\xC0-\xC6]/g,

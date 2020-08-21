@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import {Component, Inject} from '@angular/core';
+import {FormControl, Validators, FormGroup} from '@angular/forms';
+import {BehaviorSubject} from 'rxjs';
 import {
     DropdownComponent,
     NATURAL_DROPDOWN_DATA,
@@ -14,7 +14,6 @@ import {
     styleUrls: ['./type-location.component.scss'],
 })
 export class TypeLocationComponent implements DropdownComponent {
-
     public renderedValue = new BehaviorSubject<string>('');
     public form: FormGroup;
 
@@ -88,27 +87,15 @@ export class TypeLocationComponent implements DropdownComponent {
     }
 
     private initValidators(): void {
-        this.longitudeCtrl.setValidators([
-            Validators.required,
-            Validators.min(-180),
-            Validators.max(180),
-        ]);
+        this.longitudeCtrl.setValidators([Validators.required, Validators.min(-180), Validators.max(180)]);
 
-        this.latitudeCtrl.setValidators([
-            Validators.required,
-            Validators.min(-90),
-            Validators.max(90),
-        ]);
+        this.latitudeCtrl.setValidators([Validators.required, Validators.min(-90), Validators.max(90)]);
 
-        this.distanceCtrl.setValidators([
-            Validators.required,
-            Validators.min(1),
-        ]);
+        this.distanceCtrl.setValidators([Validators.required, Validators.min(1)]);
     }
 
     private getRenderedValue(): string {
         if (this.longitudeCtrl.value && this.latitudeCtrl.value && this.distanceCtrl.value) {
-
             let distance = this.distanceCtrl.value;
             let unit = 'm';
             if (distance / 1000 > 1) {

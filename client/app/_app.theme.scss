@@ -1,5 +1,4 @@
 @mixin app($theme) {
-
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -11,7 +10,6 @@
     }
 
     ng-progress {
-
         .ng-bar {
             height: 3px !important;
             background-color: mat-color($accent) !important;
@@ -26,7 +24,4 @@
             box-shadow: mat-color($accent) 0 0 20px !important;
         }
     }
-
 }
-
-

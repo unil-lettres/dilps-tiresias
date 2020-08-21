@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { institutionDetails } from '../../institutions/services/institution.queries';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {institutionDetails} from '../../institutions/services/institution.queries';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 const userDetailsFragment = gql`
     fragment userDetails on User {
@@ -28,7 +28,9 @@ const userDetailsFragment = gql`
             update
             delete
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const usersQuery = gql`
     query Users($filter: UserFilter, $sorting: [UserSorting!], $pagination: PaginationInput) {
@@ -47,25 +49,30 @@ export const usersQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const userQuery = gql`
     query User($id: UserID!) {
         user(id: $id) {
             ...userDetails
         }
-    }${userDetailsFragment}`;
+    }
+    ${userDetailsFragment}
+`;
 
 export const createUser = gql`
-    mutation CreateUser ($input: UserInput!) {
-        createUser (input: $input) {
+    mutation CreateUser($input: UserInput!) {
+        createUser(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateUser = gql`
     mutation UpdateUser($id: UserID!, $input: UserPartialInput!) {
@@ -80,24 +87,29 @@ export const updateUser = gql`
         }
     }
     ${userMetaFragment}
-${institutionDetails}`;
+    ${institutionDetails}
+`;
 
 export const deleteUsers = gql`
-    mutation DeleteUsers ($ids: [UserID!]!){
+    mutation DeleteUsers($ids: [UserID!]!) {
         deleteUsers(ids: $ids)
-    }`;
+    }
+`;
 
 export const loginMutation = gql`
-    mutation Login ($login: Login! $password: String!){
-        login(login: $login password: $password) {
+    mutation Login($login: Login!, $password: String!) {
+        login(login: $login, password: $password) {
             ...userDetails
         }
-    }${userDetailsFragment}`;
+    }
+    ${userDetailsFragment}
+`;
 
 export const logoutMutation = gql`
     mutation Logout {
         logout
-    }`;
+    }
+`;
 
 export const viewerQuery = gql`
     query Viewer {
@@ -148,4 +160,6 @@ export const viewerQuery = gql`
                 }
             }
         }
-    }${userDetailsFragment}`;
+    }
+    ${userDetailsFragment}
+`;

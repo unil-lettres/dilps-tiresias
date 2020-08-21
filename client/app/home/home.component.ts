@@ -1,22 +1,22 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { forkJoin, Observable, of } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { SITE } from '../app.config';
-import { CardService } from '../card/services/card.service';
-import { AlertService } from '../shared/components/alert/alert.service';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {forkJoin, Observable, of} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {SITE} from '../app.config';
+import {CardService} from '../card/services/card.service';
+import {AlertService} from '../shared/components/alert/alert.service';
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import { CardInput, Site, UserRole } from '../shared/generated-types';
-import { NetworkActivityService } from '../shared/services/network-activity.service';
-import { ThemeService } from '../shared/services/theme.service';
-import { UserService } from '../users/services/user.service';
-import { UserComponent } from '../users/user/user.component';
+import {CardInput, Site, UserRole} from '../shared/generated-types';
+import {NetworkActivityService} from '../shared/services/network-activity.service';
+import {ThemeService} from '../shared/services/theme.service';
+import {UserService} from '../users/services/user.service';
+import {UserComponent} from '../users/user/user.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -28,7 +28,6 @@ function isExcel(file: File): boolean {
     styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
     public Site = Site;
 
     public errors = [];
@@ -36,17 +35,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     public nav = 1;
     private routeParamsSub;
 
-    constructor(public themeService: ThemeService,
-                public route: ActivatedRoute,
-                public router: Router,
-                public userService: UserService,
-                private network: NetworkActivityService,
-                private snackBar: MatSnackBar,
-                private alertService: AlertService,
-                private dialog: MatDialog,
-                private cardService: CardService,
-                @Inject(SITE) public site: Site) {
-
+    constructor(
+        public themeService: ThemeService,
+        public route: ActivatedRoute,
+        public router: Router,
+        public userService: UserService,
+        private network: NetworkActivityService,
+        private snackBar: MatSnackBar,
+        private alertService: AlertService,
+        private dialog: MatDialog,
+        private cardService: CardService,
+        @Inject(SITE) public site: Site,
+    ) {
         this.network.errors.next([]);
     }
 
@@ -70,18 +70,18 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(() => {
-                document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
-            });
-
+        this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+            document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
+        });
     }
 
     public uploadImages(files: File[]): void {
         const excel = files.find(isExcel);
         if (excel) {
-            this.uploadImagesAndExcel(excel, files.filter(f => !isExcel(f)));
+            this.uploadImagesAndExcel(
+                excel,
+                files.filter(f => !isExcel(f)),
+            );
         } else {
             this.uploadImagesOnly(files);
         }
@@ -101,13 +101,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         const requireCollection = this.site === Site.tiresias;
         const collection$ = requireCollection ? this.selectCollection() : of(undefined);
         collection$.subscribe(collection => {
-
             // Don't do anything if don't have a required collection
             if (requireCollection && !collection) {
                 return;
             }
 
-            const observables = inputs.map(input => this.cardService.createWithCollection(input as CardInput, collection));
+            const observables = inputs.map(input =>
+                this.cardService.createWithCollection(input as CardInput, collection),
+            );
 
             forkJoin(observables).subscribe(() => {
                 this.redirectAfterCreation(collection);
@@ -125,18 +126,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private redirectAfterCreation(collection?: CollectionSelectorResult) {
         const url = collection ? 'my-collection/' + collection.id : 'my-collection';
-        this.router.navigateByUrl('/empty', {skipLocationChange: true})
-            .then(() => this.router.navigateByUrl(url));
+        this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => this.router.navigateByUrl(url));
     }
 
     private selectCollection(): Observable<CollectionSelectorResult | undefined> {
-        return this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
-            CollectionSelectorComponent,
-            {
-                width: '400px',
-                data: {},
-            },
-        ).afterClosed();
+        return this.dialog
+            .open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+                CollectionSelectorComponent,
+                {
+                    width: '400px',
+                    data: {},
+                },
+            )
+            .afterClosed();
     }
 
     public editUser() {

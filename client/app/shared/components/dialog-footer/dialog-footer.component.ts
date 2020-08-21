@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'app-dialog-footer',

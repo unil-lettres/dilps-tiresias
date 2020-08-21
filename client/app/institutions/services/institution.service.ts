@@ -1,12 +1,13 @@
-import { Inject, Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { SITE } from '../../app.config';
+import {Inject, Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {SITE} from '../../app.config';
 
 import {
     CreateInstitution,
     CreateInstitutionVariables,
     DeleteInstitutions,
-    Institution, InstitutionInput,
+    Institution,
+    InstitutionInput,
     Institutions,
     InstitutionsVariables,
     InstitutionVariables,
@@ -14,33 +15,41 @@ import {
     UpdateInstitution,
     UpdateInstitutionVariables,
 } from '../../shared/generated-types';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
-import { createInstitution, deleteInstitutions, institutionQuery, institutionsQuery, updateInstitution } from './institution.queries';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {
+    createInstitution,
+    deleteInstitutions,
+    institutionQuery,
+    institutionsQuery,
+    updateInstitution,
+} from './institution.queries';
 
 @Injectable({
     providedIn: 'root',
 })
-export class InstitutionService
-    extends AbstractContextualizedService<Institution['institution'],
-        InstitutionVariables,
-        Institutions['institutions'],
-        InstitutionsVariables,
-        CreateInstitution['createInstitution'],
-        CreateInstitutionVariables,
-        UpdateInstitution['updateInstitution'],
-        UpdateInstitutionVariables,
-        DeleteInstitutions['deleteInstitutions'],
-        never> {
-
+export class InstitutionService extends AbstractContextualizedService<
+    Institution['institution'],
+    InstitutionVariables,
+    Institutions['institutions'],
+    InstitutionsVariables,
+    CreateInstitution['createInstitution'],
+    CreateInstitutionVariables,
+    UpdateInstitution['updateInstitution'],
+    UpdateInstitutionVariables,
+    DeleteInstitutions['deleteInstitutions'],
+    never
+> {
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo,
+        super(
+            apollo,
             'institution',
             institutionQuery,
             institutionsQuery,
             createInstitution,
             updateInstitution,
             deleteInstitutions,
-            site);
+            site,
+        );
     }
 
     public getDefaultForClient() {
@@ -60,5 +69,4 @@ export class InstitutionService
             country: null,
         };
     }
-
 }

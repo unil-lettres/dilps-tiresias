@@ -5,5 +5,5 @@ export const userMetaFragment = gql`
         id
         login
         email
-    }`;
-
+    }
+`;

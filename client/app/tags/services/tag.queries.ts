@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const tagsQuery = gql`
-    query Tags($filter:TagFilter, $sorting: [TagSorting!], $pagination: PaginationInput) {
+    query Tags($filter: TagFilter, $sorting: [TagSorting!], $pagination: PaginationInput) {
         tags(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -14,7 +14,8 @@ export const tagsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const tagQuery = gql`
     query Tag($id: TagID!) {
@@ -38,18 +39,22 @@ export const tagQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createTag = gql`
-    mutation CreateTag ($input: TagInput!) {
-        createTag (input: $input) {
+    mutation CreateTag($input: TagInput!) {
+        createTag(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateTag = gql`
     mutation UpdateTag($id: TagID!, $input: TagPartialInput!) {
@@ -59,9 +64,12 @@ export const updateTag = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteTags = gql`
-    mutation DeleteTags ($ids: [TagID!]!){
+    mutation DeleteTags($ids: [TagID!]!) {
         deleteTags(ids: $ids)
-    }`;
+    }
+`;

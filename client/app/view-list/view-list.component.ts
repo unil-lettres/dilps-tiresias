@@ -1,12 +1,12 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { NaturalAbstractController, NaturalDataSource } from '@ecodev/natural';
-import { intersectionBy } from 'lodash';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { takeUntil } from 'rxjs/operators';
-import { ViewInterface } from '../list/list.component';
-import { Cards_cards_items, Site } from '../shared/generated-types';
+import {SelectionModel} from '@angular/cdk/collections';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {PageEvent} from '@angular/material/paginator';
+import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
+import {intersectionBy} from 'lodash';
+import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
+import {takeUntil} from 'rxjs/operators';
+import {ViewInterface} from '../list/list.component';
+import {Cards_cards_items, Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-list',
@@ -14,7 +14,6 @@ import { Cards_cards_items, Site } from '../shared/generated-types';
     styleUrls: ['./view-list.component.scss'],
 })
 export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
-
     /**
      * DataSource containing cards
      */
@@ -45,15 +44,16 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
 
     constructor() {
         super();
-
     }
 
     ngOnInit() {
-
-        this.dataSource.connect().pipe(takeUntil(this.ngUnsubscribe)).subscribe(cards => {
-            this.cards = cards;
-            this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));
-        });
+        this.dataSource
+            .connect()
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(cards => {
+                this.cards = cards;
+                this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));
+            });
 
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));
     }

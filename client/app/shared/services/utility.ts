@@ -1,4 +1,4 @@
-import { Periods_periods_items } from '../generated-types';
+import {Periods_periods_items} from '../generated-types';
 
 export function shuffleArray(a) {
     for (let i = a.length - 1; i > 0; i--) {
@@ -9,9 +9,7 @@ export function shuffleArray(a) {
 }
 
 export function getBase64(file): Promise<null | string> {
-
     return new Promise((resolve, reject) => {
-
         if (!file) {
             reject(null);
         }
@@ -22,7 +20,6 @@ export function getBase64(file): Promise<null | string> {
         });
         reader.readAsBinaryString(file);
     });
-
 }
 
 export function formatYearRange(from: number | null, to: number | null): string {

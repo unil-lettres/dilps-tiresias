@@ -5,7 +5,7 @@
 
     .scrollable {
         flex: 1;
-        overflow: auto
+        overflow: auto;
     }
 
     .scrolled {
@@ -64,8 +64,6 @@
                     }
                 }
             }
-
-
         }
 
         mat-checkbox {
@@ -91,7 +89,6 @@
                 background-position: center;
                 background-repeat: no-repeat;
             }
-
         }
     }
 }

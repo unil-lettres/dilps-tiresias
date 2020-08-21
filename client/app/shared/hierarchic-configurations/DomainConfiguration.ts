@@ -1,5 +1,5 @@
-import { NaturalHierarchicConfiguration } from '@ecodev/natural';
-import { DomainService } from '../../domains/services/domain.service';
+import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {DomainService} from '../../domains/services/domain.service';
 
 export const domainHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {

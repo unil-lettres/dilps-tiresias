@@ -1,7 +1,7 @@
-import { Component, Injector } from '@angular/core';
-import { AbstractList } from '../../shared/components/AbstractList';
-import { Changes, ChangesVariables } from '../../shared/generated-types';
-import { ChangeService } from '../services/change.service';
+import {Component, Injector} from '@angular/core';
+import {AbstractList} from '../../shared/components/AbstractList';
+import {Changes, ChangesVariables} from '../../shared/generated-types';
+import {ChangeService} from '../services/change.service';
 
 @Component({
     selector: 'app-changes',
@@ -9,11 +9,9 @@ import { ChangeService } from '../services/change.service';
     styleUrls: ['./changes.component.scss'],
 })
 export class ChangesComponent extends AbstractList<Changes['changes'], ChangesVariables> {
-
     public displayedColumns = ['type', 'original', 'suggestion'];
 
     constructor(service: ChangeService, injector: Injector) {
         super(service, null, injector);
     }
-
 }

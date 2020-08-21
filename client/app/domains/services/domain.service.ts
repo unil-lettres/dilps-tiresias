@@ -1,45 +1,40 @@
-import { Injectable, Inject } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import {Injectable, Inject} from '@angular/core';
+import {Apollo} from 'apollo-angular';
 
 import {
     CreateDomain,
     CreateDomainVariables,
     DeleteDomains,
-    Domain, DomainInput,
+    Domain,
+    DomainInput,
     Domains,
     DomainsVariables,
-    DomainVariables, Site,
+    DomainVariables,
+    Site,
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
-import { createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain } from './domain.queries';
-import { SITE } from '../../app.config';
-import { AbstractContextualizedService } from '../../shared/services/AbstractContextualizedService';
+import {createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
+import {SITE} from '../../app.config';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
     providedIn: 'root',
 })
-export class DomainService
-    extends AbstractContextualizedService<Domain['domain'],
-        DomainVariables,
-        Domains['domains'],
-        DomainsVariables,
-        CreateDomain['createDomain'],
-        CreateDomainVariables,
-        UpdateDomain['updateDomain'],
-        UpdateDomainVariables,
-        DeleteDomains['deleteDomains'],
-        never> {
-
+export class DomainService extends AbstractContextualizedService<
+    Domain['domain'],
+    DomainVariables,
+    Domains['domains'],
+    DomainsVariables,
+    CreateDomain['createDomain'],
+    CreateDomainVariables,
+    UpdateDomain['updateDomain'],
+    UpdateDomainVariables,
+    DeleteDomains['deleteDomains'],
+    never
+> {
     constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo,
-            'domain',
-            domainQuery,
-            domainsQuery,
-            createDomain,
-            updateDomain,
-            deleteDomains,
-            site);
+        super(apollo, 'domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
     }
 
     public getDefaultForClient() {
@@ -53,5 +48,4 @@ export class DomainService
             site: this.site,
         };
     }
-
 }

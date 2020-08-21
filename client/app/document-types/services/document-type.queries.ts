@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const documentTypesQuery = gql`
     query DocumentTypes($filter: DocumentTypeFilter, $sorting: [DocumentTypeSorting!], $pagination: PaginationInput) {
@@ -12,7 +12,8 @@ export const documentTypesQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const documentTypeQuery = gql`
     query DocumentType($id: DocumentTypeID!) {
@@ -32,18 +33,22 @@ export const documentTypeQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createDocumentType = gql`
-    mutation CreateDocumentType ($input: DocumentTypeInput!) {
-        createDocumentType (input: $input) {
+    mutation CreateDocumentType($input: DocumentTypeInput!) {
+        createDocumentType(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateDocumentType = gql`
     mutation UpdateDocumentType($id: DocumentTypeID!, $input: DocumentTypePartialInput!) {
@@ -53,9 +58,12 @@ export const updateDocumentType = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteDocumentTypes = gql`
-    mutation DeleteDocumentTypes ($ids: [DocumentTypeID!]!){
+    mutation DeleteDocumentTypes($ids: [DocumentTypeID!]!) {
         deleteDocumentTypes(ids: $ids)
-    }`;
+    }
+`;

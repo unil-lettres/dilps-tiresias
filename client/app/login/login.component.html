@@ -1,24 +1,36 @@
 <div fxLayout="row" fxLayoutAlign="center center">
     <div class="login" fxLayout="column">
         <div fxLayout="column" fxLayoutGap="15px">
-            <app-logo [data]="{ type: 'main', class: 'logo-main' }"></app-logo>
+            <app-logo [data]="{type: 'main', class: 'logo-main'}"></app-logo>
 
             <mat-divider></mat-divider>
 
             <div class="login-info" fxLayout="column" fxLayoutGap="15px">
                 Veuillez choisir une méthode d'authentification ou
-                <br>
+                <br />
                 utiliser le bouton "Accès public"
             </div>
 
             <mat-grid-list cols="2" rowHeight="80px">
                 <mat-grid-tile>
-                    <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth" class="shib-link">
+                    <a
+                        mat-raised-button
+                        href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{
+                            encodeUrl(returnUrl)
+                        }}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth"
+                        class="shib-link"
+                    >
                         <img src="assets/images/logo-unil.svg" width="130" />
                     </a>
                 </mat-grid-tile>
                 <mat-grid-tile>
-                    <a mat-raised-button href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{ encodeUrl(returnUrl) }}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth" class="shib-link">
+                    <a
+                        mat-raised-button
+                        href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{
+                            encodeUrl(returnUrl)
+                        }}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth"
+                        class="shib-link"
+                    >
                         <img src="assets/images/logo-unine.svg" width="90" />
                     </a>
                 </mat-grid-tile>
@@ -37,40 +49,44 @@
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
                             <mat-label>Login</mat-label>
-                            <input (focus)="snackBar.dismiss()"
-                                   [(ngModel)]="loginForm.login"
-                                   [disabled]="loading"
-                                   autofocus
-                                   matInput
-                                   name="login"
-                                   required="required"
-                            >
+                            <input
+                                (focus)="snackBar.dismiss()"
+                                [(ngModel)]="loginForm.login"
+                                [disabled]="loading"
+                                autofocus
+                                matInput
+                                name="login"
+                                required="required"
+                            />
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
                         <mat-form-field class="width-auto">
                             <mat-label>Password</mat-label>
-                            <input (focus)="snackBar.dismiss()"
-                                   [(ngModel)]="loginForm.password"
-                                   [disabled]="loading"
-                                   color="warn"
-                                   matInput
-                                   name="password"
-                                   required="required"
-                                   type="password"
-                            >
+                            <input
+                                (focus)="snackBar.dismiss()"
+                                [(ngModel)]="loginForm.password"
+                                [disabled]="loading"
+                                color="warn"
+                                matInput
+                                name="password"
+                                required="required"
+                                type="password"
+                            />
                         </mat-form-field>
                     </div>
 
                     <div fxLayout="column" fxLayoutGap="10px">
-                        <button (click)="login()"
-                                [disabled]="loading || !loginForm.login || !loginForm.password"
-                                color="primary"
-                                mat-button
-                                mat-raised-button
-                                type="submit"
-                        >Se connecter
+                        <button
+                            (click)="login()"
+                            [disabled]="loading || !loginForm.login || !loginForm.password"
+                            color="primary"
+                            mat-button
+                            mat-raised-button
+                            type="submit"
+                        >
+                            Se connecter
                         </button>
                     </div>
                 </form>

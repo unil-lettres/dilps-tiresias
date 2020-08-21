@@ -1,21 +1,20 @@
 <mat-toolbar color="app" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <app-logo [data]="{ type: 'toolbar', class: 'logo' }"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 
-    <natural-search (selectionChange)="search($event)"
-                    [facets]="naturalSearchFacets"
-                    [multipleGroups]="false"
-                    [selections]="naturalSearchSelections"
-                    fxFlex
+    <natural-search
+        (selectionChange)="search($event)"
+        [facets]="naturalSearchFacets"
+        [multipleGroups]="false"
+        [selections]="naturalSearchSelections"
+        fxFlex
     ></natural-search>
-
 </mat-toolbar>
 
 <div class="padding padding-fab">
-
     <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
         <div [routerLink]="getChildLink(null)" class="mat-headline no-margin">Matériaux</div>
         <div fxLayout="row wrap">
-            <a *ngFor="let item of breadcrumbs;" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
+            <a *ngFor="let item of breadcrumbs" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
                 <natural-icon name="chevron_right"></natural-icon>
                 <span>{{ item.name }}</span>
             </a>
@@ -23,19 +22,18 @@
     </div>
 
     <div [fxShow]="showTable()" class="responsive-table">
-
         <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
-
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
             <ng-container matColumnDef="navigation">
                 <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
                 <td *matCellDef="let element" mat-cell>
-                    <natural-table-button *ngIf="element.hasNavigation"
-                                          [navigate]="getChildLink(element)"
-                                          icon="chevron_right"
-                                          matTooltip="Déployer"
+                    <natural-table-button
+                        *ngIf="element.hasNavigation"
+                        [navigate]="getChildLink(element)"
+                        icon="chevron_right"
+                        matTooltip="Déployer"
                     ></natural-table-button>
                 </td>
             </ng-container>
@@ -44,25 +42,31 @@
             <ng-container matColumnDef="name">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
-                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer"></app-table-button>
+                    <app-table-button
+                        (click)="edit(element)"
+                        [label]="element.name"
+                        icon="edit"
+                        matTooltip="Éditer"
+                    ></app-table-button>
                 </td>
             </ng-container>
-
         </table>
     </div>
 
-    <div *ngIf="showNoResults()" class="margin-v" fxLayout="column" fxLayoutAlign="center center" i18n>Pas de résultats</div>
+    <div *ngIf="showNoResults()" class="margin-v" fxLayout="column" fxLayoutAlign="center center" i18n>
+        Pas de résultats
+    </div>
     <div *ngIf="!dataSource?.data" fxLayout="column" fxLayoutAlign="center center">
         <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
     </div>
-    <mat-paginator (page)="pagination($event)"
-                   *ngIf="dataSource.data?.length"
-                   [length]="dataSource.data?.length"
-                   [pageIndex]="dataSource.data?.pageIndex"
-                   [pageSizeOptions]="pageSizeOptions"
-                   [pageSize]="dataSource.data?.pageSize"
+    <mat-paginator
+        (page)="pagination($event)"
+        *ngIf="dataSource.data?.length"
+        [length]="dataSource.data?.length"
+        [pageIndex]="dataSource.data?.pageIndex"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="dataSource.data?.pageSize"
     ></mat-paginator>
-
 </div>
 
 <natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>

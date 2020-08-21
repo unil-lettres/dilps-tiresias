@@ -19,14 +19,8 @@
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
                         "polyfills": "client/polyfills.ts",
-                        "assets": [
-                            "client/assets",
-                            "client/favicon.ico"
-                        ],
-                        "styles": [
-                            "client/styles.scss",
-                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css"
-                        ],
+                        "assets": ["client/assets", "client/favicon.ico"],
+                        "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
                         "scripts": []
                     },
                     "configurations": {
@@ -85,10 +79,7 @@
                         "host": "dilps.lan",
                         "proxyConfig": "proxy.conf.json",
                         "port": 4400,
-                        "allowedHosts": [
-                            "dilps.lan",
-                            "tiresias.lan"
-                        ]
+                        "allowedHosts": ["dilps.lan", "tiresias.lan"]
                     },
                     "configurations": {
                         "production": {
@@ -110,26 +101,15 @@
                         "polyfills": "client/polyfills.ts",
                         "tsConfig": "client/tsconfig.spec.json",
                         "scripts": [],
-                        "styles": [
-                            "client/styles.scss"
-                        ],
-                        "assets": [
-                            "client/assets",
-                            "client/favicon.ico"
-                        ]
+                        "styles": ["client/styles.scss"],
+                        "assets": ["client/assets", "client/favicon.ico"]
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "client/tsconfig.app.json",
-                            "client/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "**/data/tmp/**/*"
-                        ]
+                        "tsConfig": ["client/tsconfig.app.json", "client/tsconfig.spec.json"],
+                        "exclude": ["**/node_modules/**", "**/data/tmp/**/*"]
                     }
                 }
             }
@@ -149,13 +129,8 @@
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
-                        "tsConfig": [
-                            "e2e/tsconfig.e2e.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "**/data/tmp/**/*"
-                        ]
+                        "tsConfig": ["e2e/tsconfig.e2e.json"],
+                        "exclude": ["**/node_modules/**", "**/data/tmp/**/*"]
                     }
                 }
             }

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const artistsQuery = gql`
-    query Artists($filter:ArtistFilter, $sorting: [ArtistSorting!], $pagination: PaginationInput) {
+    query Artists($filter: ArtistFilter, $sorting: [ArtistSorting!], $pagination: PaginationInput) {
         artists(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -12,7 +12,8 @@ export const artistsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const artistQuery = gql`
     query Artist($id: ArtistID!) {
@@ -32,18 +33,22 @@ export const artistQuery = gql`
                 delete
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const createArtist = gql`
-    mutation CreateArtist ($input: ArtistInput!) {
-        createArtist (input: $input) {
+    mutation CreateArtist($input: ArtistInput!) {
+        createArtist(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateArtist = gql`
     mutation UpdateArtist($id: ArtistID!, $input: ArtistPartialInput!) {
@@ -53,9 +58,12 @@ export const updateArtist = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteArtists = gql`
-    mutation DeleteArtists ($ids: [ArtistID!]!){
+    mutation DeleteArtists($ids: [ArtistID!]!) {
         deleteArtists(ids: $ids)
-    }`;
+    }
+`;

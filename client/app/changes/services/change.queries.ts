@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { cardDetailsFragment } from '../../card/services/card.queries';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {cardDetailsFragment} from '../../card/services/card.queries';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const changesQuery = gql`
     query Changes($filter: ChangeFilter, $pagination: PaginationInput, $sorting: [ChangeSorting!]) {
@@ -21,7 +21,8 @@ export const changesQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const changeQuery = gql`
     query Change($id: ChangeID!) {
@@ -57,30 +58,35 @@ export const acceptChange = gql`
         acceptChange(id: $id) {
             id
         }
-    }`;
+    }
+`;
 
 export const rejectChange = gql`
     mutation RejectChange($id: ChangeID!) {
         rejectChange(id: $id)
-    }`;
+    }
+`;
 
 export const suggestDeletion = gql`
     mutation SuggestDeletion($id: CardID!) {
-        suggestDeletion(id: $id, request : "") {
+        suggestDeletion(id: $id, request: "") {
             id
         }
-    }`;
+    }
+`;
 
 export const suggestCreation = gql`
     mutation SuggestCreation($id: CardID!) {
-        suggestCreation(id: $id, request : "") {
+        suggestCreation(id: $id, request: "") {
             id
         }
-    }`;
+    }
+`;
 
 export const suggestUpdate = gql`
     mutation SuggestUpdate($id: CardID!) {
-        suggestUpdate(id: $id, request : "") {
+        suggestUpdate(id: $id, request: "") {
             id
         }
-    }`;
+    }
+`;

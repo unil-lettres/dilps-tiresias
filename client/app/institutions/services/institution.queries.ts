@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { userMetaFragment } from '../../shared/queries/fragments';
+import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const institutionDetails = gql`
     fragment institutionDetails on Institution {
@@ -17,7 +17,8 @@ export const institutionDetails = gql`
             code
             name
         }
-    }`;
+    }
+`;
 
 export const institutionsQuery = gql`
     query Institutions($filter: InstitutionFilter, $sorting: [InstitutionSorting!], $pagination: PaginationInput) {
@@ -31,7 +32,8 @@ export const institutionsQuery = gql`
             pageIndex
             length
         }
-    }`;
+    }
+`;
 
 export const institutionQuery = gql`
     query Institution($id: InstitutionID!) {
@@ -51,18 +53,21 @@ export const institutionQuery = gql`
         }
     }
     ${userMetaFragment}
-${institutionDetails}`;
+    ${institutionDetails}
+`;
 
 export const createInstitution = gql`
-    mutation CreateInstitution ($input: InstitutionInput!) {
-        createInstitution (input: $input) {
+    mutation CreateInstitution($input: InstitutionInput!) {
+        createInstitution(input: $input) {
             id
             creationDate
             creator {
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const updateInstitution = gql`
     mutation UpdateInstitution($id: InstitutionID!, $input: InstitutionPartialInput!) {
@@ -72,9 +77,12 @@ export const updateInstitution = gql`
                 ...userMeta
             }
         }
-    }${userMetaFragment}`;
+    }
+    ${userMetaFragment}
+`;
 
 export const deleteInstitutions = gql`
-    mutation DeleteInstitutions ($ids: [InstitutionID!]!){
+    mutation DeleteInstitutions($ids: [InstitutionID!]!) {
         deleteInstitutions(ids: $ids)
-    }`;
+    }
+`;

@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { merge } from 'lodash';
-import { Subscription } from 'rxjs';
-import { UserService } from '../users/services/user.service';
-import { TermsAgreementComponent } from './terms-agreement.component';
-import { finalize } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute, Router} from '@angular/router';
+import {merge} from 'lodash';
+import {Subscription} from 'rxjs';
+import {UserService} from '../users/services/user.service';
+import {TermsAgreementComponent} from './terms-agreement.component';
+import {finalize} from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +14,6 @@ import { finalize } from 'rxjs/operators';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
     public loading = false;
 
     public status = 'default';
@@ -41,8 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         public userService: UserService,
         public dialog: MatDialog,
         public snackBar: MatSnackBar,
-    ) {
-    }
+    ) {}
 
     ngOnInit(): void {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -75,9 +73,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.snackBar.dismiss();
         this.loading = true;
         this.status = 'loading';
-        this.userService.login(this.loginForm)
-            .pipe(finalize(() => this.loading = false))
-            .subscribe((user) => {
+        this.userService
+            .login(this.loginForm)
+            .pipe(finalize(() => (this.loading = false)))
+            .subscribe(user => {
                 if (!user.termsAgreement) {
                     this.showTerms(user);
                 } else {
@@ -87,16 +86,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     private showTerms(user) {
-        this.dialog.open(TermsAgreementComponent, {maxWidth: 700}).afterClosed().subscribe((accepted) => {
-            if (accepted) {
-                const date = {termsAgreement: (new Date()).toDateString()};
-                this.userService.updateNow(merge({}, user, date)).subscribe(u => {
-                    this.redirect();
-                });
-            } else {
-                this.userService.logout();
-            }
-        });
+        this.dialog
+            .open(TermsAgreementComponent, {maxWidth: 700})
+            .afterClosed()
+            .subscribe(accepted => {
+                if (accepted) {
+                    const date = {termsAgreement: new Date().toDateString()};
+                    this.userService.updateNow(merge({}, user, date)).subscribe(u => {
+                        this.redirect();
+                    });
+                } else {
+                    this.userService.logout();
+                }
+            });
     }
 
     /**

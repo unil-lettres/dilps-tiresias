@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
     HierarchicDialogResult,
@@ -11,10 +11,10 @@ import {
     NaturalHierarchicSelectorDialogService,
     NaturalQueryVariablesManager,
 } from '@ecodev/natural';
-import { clone, isArray, isObject, isString, merge } from 'lodash';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
-import { formatYearRange } from '../../services/utility';
+import {clone, isArray, isObject, isString, merge} from 'lodash';
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
+import {formatYearRange} from '../../services/utility';
 
 interface ThesaurusModel {
     name: string;
@@ -32,7 +32,6 @@ interface ThesaurusModel {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThesaurusComponent extends NaturalAbstractController implements OnInit {
-
     /**
      * Reference to autocomplete
      */
@@ -119,8 +118,9 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      */
     private lockOpenDialog: boolean;
 
-    constructor(private dialog: MatDialog,
-                private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
+    constructor(
+        private dialog: MatDialog,
+        private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
@@ -134,42 +134,47 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     }
 
     ngOnInit() {
-
         this.convertModel();
 
-        this.formControl.valueChanges.pipe(takeUntil(this.ngUnsubscribe),
-            distinctUntilChanged(),
-            filter(val => isString(val)),
-            debounceTime(300)).subscribe(val => {
-            this.variablesManager.set('search', {filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]}});
-        });
+        this.formControl.valueChanges
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                distinctUntilChanged(),
+                filter(val => isString(val)),
+                debounceTime(300),
+            )
+            .subscribe(val => {
+                this.variablesManager.set('search', {
+                    filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]},
+                });
+            });
     }
 
     public openItem(item: ThesaurusModel) {
-        this.dialog.open(this.previewComponent, {
-            width: '800px',
-            data: {item: item},
-        }).afterClosed().subscribe(res => {
-            merge(item, res);
-            this.notifyModel();
-        });
+        this.dialog
+            .open(this.previewComponent, {
+                width: '800px',
+                data: {item: item},
+            })
+            .afterClosed()
+            .subscribe(res => {
+                merge(item, res);
+                this.notifyModel();
+            });
     }
 
     public focus() {
-
         if (!this.hierarchicSelectorConfig) {
             this.startSearch();
         } else {
             this.openDialog();
         }
-
     }
 
     /**
      * Start search only when focusing on the input
      */
     public startSearch() {
-
         /**
          * Start search only once
          */
@@ -189,7 +194,6 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     }
 
     public openDialog(): void {
-
         if (this.lockOpenDialog) {
             return;
         }
@@ -222,14 +226,16 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             restoreFocus: false,
         };
 
-        this.hierarchicSelectorDialogService.open(hierarchicConfig, dialogFocus)
+        this.hierarchicSelectorDialogService
+            .open(hierarchicConfig, dialogFocus)
             .afterClosed()
             .subscribe((result: HierarchicDialogResult) => {
                 this.lockOpenDialog = false;
                 if (result && result.hierarchicSelection) {
-
                     // Find the only selection amongst all possible keys
-                    const keyWithSelection = Object.keys(result.hierarchicSelection).find(key => result.hierarchicSelection[key][0]);
+                    const keyWithSelection = Object.keys(result.hierarchicSelection).find(
+                        key => result.hierarchicSelection[key][0],
+                    );
                     const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : null;
 
                     if (this.multiple) {
@@ -238,7 +244,6 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
                     } else {
                         this.addTerm(selection[0]);
                     }
-
                 }
             });
     }
@@ -282,7 +287,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * Grants unicity of elements.
      * Always close the panel (without resetting results)
      */
-    private addTerm(term: { name }) {
+    private addTerm(term: {name}) {
         this.autocomplete.closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {
@@ -318,7 +323,6 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             this.items = this._model;
             this.notifyModel();
         }
-
     }
 
     public getLabel(item: ThesaurusModel): string {
