@@ -1,0 +1,15 @@
+/.git/
+/.idea/
+/client/app/shared/generated-config.ts
+/client/app/shared/generated-schema.graphql
+/client/app/shared/generated-types.ts
+/composer.lock
+/config/
+/configuration/
+/data/
+/htdocs/
+/logs/
+/node_modules/
+/server/
+/tests/
+/vendor/
