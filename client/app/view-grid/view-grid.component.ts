@@ -18,7 +18,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to gallery
      */
-    @ViewChild('gallery') gallery: NaturalGalleryComponent;
+    @ViewChild('gallery') public gallery: NaturalGalleryComponent;
 
     /**
      * DataSource containing cards
@@ -28,7 +28,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      *
      */
-    @Input() selected: Cards_cards_items[] = [];
+    @Input() public selected: Cards_cards_items[] = [];
 
     /**
      * Emits when data is required
@@ -81,7 +81,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.internalDataObservable.pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
             if (!this.gallery) {
                 return;
@@ -97,7 +97,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
     }
 
-    ngAfterViewInit(): void {
+    public ngAfterViewInit(): void {
         setTimeout(() => {
             this.gallery.gallery.addEventListener('item-added-to-dom', event => {
                 this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length});
@@ -105,11 +105,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
     }
 
-    public loadMore(ev) {
+    public loadMore(ev): void {
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit, pageIndex: null});
     }
 
-    public activate(event) {
+    public activate(event): void {
         this.router.navigate(['card', event.model.id]);
     }
 
@@ -121,23 +121,23 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.gallery.gallery.unselectAllItems();
     }
 
-    private formatImages(cards: Cards_cards_items[]) {
+    private formatImages(cards: Cards_cards_items[]): Cards_cards_items[] {
         const selected = this.selected.map(c => c.id);
 
         cards = cards.map(card => {
-            let thumb = CardService.formatImage(card, this.thumbnailHeight);
-            let big = CardService.formatImage(card, this.enlargedHeight);
+            const cardWithThumb = CardService.formatImage(card, this.thumbnailHeight);
+            const cardWithBig = CardService.formatImage(card, this.enlargedHeight);
 
-            thumb = {
-                thumbnailSrc: thumb.src,
-                thumbnailWidth: thumb.width,
-                thumbnailHeight: thumb.height,
+            const thumb = {
+                thumbnailSrc: cardWithThumb.src,
+                thumbnailWidth: cardWithThumb.width,
+                thumbnailHeight: cardWithThumb.height,
             };
 
-            big = {
-                enlargedSrc: big.src,
-                enlargedWidth: big.width,
-                enlargedHeight: big.height,
+            const big = {
+                enlargedSrc: cardWithBig.src,
+                enlargedWidth: cardWithBig.width,
+                enlargedHeight: cardWithBig.height,
             };
 
             let title = card.name ? card.name : null;

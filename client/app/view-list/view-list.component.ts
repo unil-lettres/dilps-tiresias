@@ -28,7 +28,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      * Emits when some cards are selected
      */
     @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
-    @Input() selected: Cards_cards_items[] = [];
+    @Input() public selected: Cards_cards_items[] = [];
     public selectionModel = new SelectionModel<Cards_cards_items>(true);
     public cards: Cards_cards_items[] = [];
 
@@ -46,7 +46,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource
             .connect()
             .pipe(takeUntil(this.ngUnsubscribe))
@@ -58,7 +58,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));
     }
 
-    public loadMore(event: PageEvent) {
+    public loadMore(event: PageEvent): void {
         this.selectionModel.clear();
         this.pagination.emit(event);
     }

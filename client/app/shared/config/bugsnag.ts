@@ -10,6 +10,6 @@ const bugsnagClient = bugsnag({
 });
 
 /** Factory which will return the Bugsnag error handler */
-export function bugsnagErrorHandlerFactory() {
+export function bugsnagErrorHandlerFactory(): BugsnagErrorHandler {
     return new BugsnagErrorHandler(bugsnagClient);
 }

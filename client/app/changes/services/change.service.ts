@@ -3,6 +3,7 @@ import {Apollo} from 'apollo-angular';
 import {map} from 'rxjs/operators';
 import {
     AcceptChange,
+    AcceptChange_acceptChange,
     Change,
     Changes,
     ChangesVariables,
@@ -10,8 +11,11 @@ import {
     RejectChange,
     Site,
     SuggestCreation,
+    SuggestCreation_suggestCreation,
     SuggestDeletion,
+    SuggestDeletion_suggestDeletion,
     SuggestUpdate,
+    SuggestUpdate_suggestUpdate,
 } from '../../shared/generated-types';
 import {
     acceptChange,
@@ -24,6 +28,7 @@ import {
 } from './change.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
+import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -44,7 +49,7 @@ export class ChangeService extends AbstractContextualizedService<
         super(apollo, 'change', changeQuery, changesQuery, null, null, null, site);
     }
 
-    public acceptChange(change: {id}) {
+    public acceptChange(change: {id}): Observable<AcceptChange_acceptChange> {
         return this.apollo
             .mutate<AcceptChange>({
                 mutation: acceptChange,
@@ -61,7 +66,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public rejectChange(change: {id}) {
+    public rejectChange(change: {id}): Observable<boolean> {
         return this.apollo
             .mutate<RejectChange>({
                 mutation: rejectChange,
@@ -78,7 +83,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestDeletion(card: {id}) {
+    public suggestDeletion(card: {id}): Observable<SuggestDeletion_suggestDeletion> {
         return this.apollo
             .mutate<SuggestDeletion>({
                 mutation: suggestDeletion,
@@ -95,7 +100,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestCreation(card: {id}) {
+    public suggestCreation(card: {id}): Observable<SuggestCreation_suggestCreation> {
         return this.apollo
             .mutate<SuggestCreation>({
                 mutation: suggestCreation,
@@ -112,7 +117,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestUpdate(card: {id}) {
+    public suggestUpdate(card: {id}): Observable<SuggestUpdate_suggestUpdate> {
         return this.apollo
             .mutate<SuggestUpdate>({
                 mutation: suggestUpdate,

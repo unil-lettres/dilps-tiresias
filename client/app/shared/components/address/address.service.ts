@@ -28,7 +28,7 @@ export class AddressService {
 
     constructor() {}
 
-    public buildAddress(place: any, withLatLon: boolean = true) {
+    public buildAddress(place: any, withLatLon: boolean = true): void {
         const tmpGAddress = mapValues(this.config, () => '');
 
         place.address_components.forEach((addressComponent: any) => {
@@ -53,13 +53,14 @@ export class AddressService {
         return address;
     }
 
-    public toString(address: Address) {
+    public toString(address: Address): string {
         let text = '';
         text += address.street ? address.street : '';
         text += address.postcode ? ' ' + address.postcode : '';
         text += address.locality ? ' ' + address.locality : '';
         text += address.area ? ' ' + address.area : '';
         text += address.country ? ' ' + address.country : '';
+
         return text;
     }
 }

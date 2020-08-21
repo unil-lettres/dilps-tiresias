@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Observable, ObservableInput} from 'rxjs';
 import {SITE} from '../../app.config';
 import {
     Cards_cards_items,
@@ -60,7 +60,7 @@ export class CollectionService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): CollectionInput {
         return this.getDefaultForServer();
     }
 
@@ -79,7 +79,7 @@ export class CollectionService extends AbstractContextualizedService<
         };
     }
 
-    public link(collection, images) {
+    public link(collection, images): Observable<unknown> {
         const observables = [];
         images.forEach(image => {
             observables.push(this.linkService.link(collection, image));
@@ -88,7 +88,7 @@ export class CollectionService extends AbstractContextualizedService<
         return forkJoin(observables);
     }
 
-    public unlink(collection: FakeCollection, images: Cards_cards_items[]) {
+    public unlink(collection: FakeCollection, images: Cards_cards_items[]): Observable<unknown> {
         const observables = [];
         images.forEach(image => {
             observables.push(this.linkService.unlink(collection, image));
@@ -97,7 +97,7 @@ export class CollectionService extends AbstractContextualizedService<
         return forkJoin(observables);
     }
 
-    public linkCollectionToCollection(sourceCollection, targetCollection) {
+    public linkCollectionToCollection(sourceCollection, targetCollection): Observable<unknown> {
         return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
             mutation: linkCollectionToCollection,
             variables: {

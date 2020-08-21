@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
         themeService.set(site + '-' + environment.environment);
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.themeService.theme.subscribe(newTheme => {
             document.body.classList.remove(this.lastTheme);
 

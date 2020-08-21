@@ -8,12 +8,12 @@ import {Site} from '../../generated-types';
     styleUrls: ['./logo.component.scss'],
 })
 export class LogoComponent {
-    @Input() data = {type: 'main', class: 'logo-main'};
+    @Input() public data = {type: 'main', class: 'logo-main'};
     public Site = Site;
 
     constructor(@Inject(SITE) public site: Site) {}
 
-    public path() {
+    public path(): string {
         switch (this.site) {
             case Site.tiresias:
                 if (this.data.type === 'main') {

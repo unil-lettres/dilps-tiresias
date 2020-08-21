@@ -40,42 +40,42 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * If true, manipulations are forbidden
      */
-    @Input() readonly = false;
+    @Input() public readonly = false;
 
     /**
      * Service used as data source
      */
-    @Input() service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>;
+    @Input() public service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>;
 
     /**
      * Input label name
      */
-    @Input() placeholder: string;
+    @Input() public placeholder: string;
 
     /**
      * If multi selection is allowed
      */
-    @Input() multiple = true;
+    @Input() public multiple = true;
 
     /**
      * If multi selection is allowed
      */
-    @Input() allowFreeText = true;
+    @Input() public allowFreeText = true;
 
     /**
      * Component that renders the detail view of an entry
      */
-    @Input() previewComponent;
+    @Input() public previewComponent;
 
     /**
      * Emits when a selection is done
      */
-    @Output() modelChange = new EventEmitter<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
+    @Output() public modelChange = new EventEmitter<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
 
     /**
      * Configuration for hierarchic relations
      */
-    @Input() hierarchicSelectorConfig: NaturalHierarchicConfiguration[];
+    @Input() public hierarchicSelectorConfig: NaturalHierarchicConfiguration[];
 
     /**
      * Number of items not shown in result list
@@ -133,7 +133,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         this.convertModel();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.convertModel();
 
         this.formControl.valueChanges
@@ -150,7 +150,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             });
     }
 
-    public openItem(item: ThesaurusModel) {
+    public openItem(item: ThesaurusModel): void {
         this.dialog
             .open(this.previewComponent, {
                 width: '800px',
@@ -163,7 +163,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             });
     }
 
-    public focus() {
+    public focus(): void {
         if (!this.hierarchicSelectorConfig) {
             this.startSearch();
         } else {
@@ -174,7 +174,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * Start search only when focusing on the input
      */
-    public startSearch() {
+    public startSearch(): void {
         /**
          * Start search only once
          */
@@ -261,7 +261,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * On enter key, find if there is an active (focused) option in the mat-select).
      * If not add the term as is. If it does, add the selected option.
      */
-    public onEnter(event) {
+    public onEnter(event): void {
         if (!this.autocomplete.activeOption && this.allowFreeText) {
             this.addTerm({name: event.target.value});
             event.target.value = '';
@@ -274,11 +274,11 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * When click on a suggestion
      */
-    public selectSuggestion(event) {
+    public selectSuggestion(event): void {
         this.addTerm(event.option.value);
     }
 
-    private getSelectKey() {
+    private getSelectKey(): string {
         return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
     }
 
@@ -287,7 +287,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * Grants unicity of elements.
      * Always close the panel (without resetting results)
      */
-    private addTerm(term: {name}) {
+    private addTerm(term: {name}): void {
         this.autocomplete.closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {
@@ -299,7 +299,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         }
     }
 
-    private notifyModel() {
+    private notifyModel(): void {
         if (this.multiple && this.allowFreeText) {
             this.modelChange.emit(this.items.map(v => v.name));
         } else if (!this.multiple && this.allowFreeText) {
@@ -315,7 +315,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * Convert [{name: 'Yippi Kay yay'}] to ['Yippi Kay yay'].
      * Affects the original object
      */
-    private convertModel() {
+    private convertModel(): void {
         if (!this.multiple && isObject(this._model)) {
             this.items = [this._model as ThesaurusModel];
             this.notifyModel();

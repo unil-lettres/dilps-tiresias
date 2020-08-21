@@ -56,7 +56,7 @@ export class UserService extends AbstractContextualizedService<
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): UserInput {
         return this.getDefaultForServer();
     }
 
@@ -92,11 +92,11 @@ export class UserService extends AbstractContextualizedService<
             );
     }
 
-    public getRole(role: UserRole) {
+    public getRole(role: UserRole): {name: UserRole; text: string} {
         return this.getRoles().find(r => r.name === role);
     }
 
-    public getRoles() {
+    public getRoles(): {name: UserRole; text: string}[] {
         return [
             {
                 name: UserRole.student,
@@ -121,11 +121,11 @@ export class UserService extends AbstractContextualizedService<
         ];
     }
 
-    public getType(type: UserType) {
+    public getType(type: UserType): {name: UserType; text: string} {
         return this.getTypes().find(t => t.name === type);
     }
 
-    public getTypes() {
+    public getTypes(): {name: UserType; text: string}[] {
         return [
             {
                 name: UserType.aai,
@@ -174,16 +174,16 @@ export class UserService extends AbstractContextualizedService<
         return subject;
     }
 
-    public hasTempAccess() {
+    public hasTempAccess(): boolean {
         return sessionStorage.getItem('tempAccess') === 'true';
     }
 
-    public startTempAccess() {
+    public startTempAccess(): void {
         sessionStorage.setItem('tempAccess', 'true');
-        this.router.navigateByUrl(this.route.snapshot.queryParams['returnUrl'] || '/');
+        this.router.navigateByUrl(this.route.snapshot.queryParams.returnUrl || '/');
     }
 
-    public revokeTempAccess() {
+    public revokeTempAccess(): void {
         sessionStorage.removeItem('tempAccess');
         this.router.navigateByUrl('login');
     }

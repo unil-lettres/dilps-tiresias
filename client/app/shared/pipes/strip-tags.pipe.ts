@@ -5,7 +5,7 @@ import * as striptags from 'striptags';
     name: 'stripTags',
 })
 export class StripTagsPipe implements PipeTransform {
-    transform(value: any, args?: any): string {
+    public transform(value: any, args?: any): string {
         return striptags(value, ['strong', 'em', 'u']);
     }
 }

@@ -6,5 +6,5 @@ import {Component, Input} from '@angular/core';
     styleUrls: ['./stamp.component.scss'],
 })
 export class StampComponent {
-    @Input() item;
+    @Input() public item;
 }

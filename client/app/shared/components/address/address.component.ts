@@ -29,22 +29,22 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * If true, layouts vertically some side by side elements
      */
-    @Input() vertical = false;
+    @Input() public vertical = false;
 
     /**
      * Prevents fields edition
      */
-    @Input() readonly = false;
+    @Input() public readonly = false;
 
     /**
      * If Dilps mode, show everything, otherwise hide some stuff for Tiresias
      */
-    @Input() isDilps = true;
+    @Input() public isDilps = true;
 
     /**
      * Object reference is directly modified
      */
-    @Input() model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
+    @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
 
     public formCtrl = new FormControl();
 
@@ -227,7 +227,7 @@ export class AddressComponent implements OnInit, OnChanges {
         @Inject(SITE) public readonly site: Site,
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
         qvm.set('pagination', {pagination: {pageSize: 9999}});
 
@@ -251,24 +251,24 @@ export class AddressComponent implements OnInit, OnChanges {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (this.model) {
             this.latitude = +this.model.latitude;
             this.longitude = +this.model.longitude;
         }
     }
 
-    public updateSearch() {
+    public updateSearch(): void {
         const address = this.getAddressAsString();
         this.formCtrl.setValue(address);
     }
 
-    public search() {
+    public search(): void {
         this.updateSearch();
         this.inputRef.nativeElement.focus(); // focus in input to open google suggestions
     }
 
-    public onPlaceChange() {
+    public onPlaceChange(): void {
         const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
 
         // verify result
@@ -284,7 +284,7 @@ export class AddressComponent implements OnInit, OnChanges {
         merge(this.model, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev) {
+    public onMarkerDrag(ev): void {
         this.latitude = ev.coords.lat;
         this.longitude = ev.coords.lng;
 
@@ -308,7 +308,7 @@ export class AddressComponent implements OnInit, OnChanges {
         );
     }
 
-    public getIcon(color = '#ff9800') {
+    public getIcon(color = '#ff9800'): void {
         const iconSize = 48;
         const icon: any = {
             path:
@@ -326,7 +326,7 @@ export class AddressComponent implements OnInit, OnChanges {
         return icon;
     }
 
-    private getAddressAsString() {
+    private getAddressAsString(): string {
         const address = [
             this.model.street,
             this.model.postcode,
@@ -336,7 +336,7 @@ export class AddressComponent implements OnInit, OnChanges {
         return address.filter(v => !!v).join(', ');
     }
 
-    public recenter() {
+    public recenter(): void {
         this.latitude = +this.model.latitude;
         this.longitude = +this.model.longitude;
     }

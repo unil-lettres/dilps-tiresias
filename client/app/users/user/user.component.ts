@@ -63,15 +63,15 @@ export class UserComponent extends AbstractDetail {
         );
     }
 
-    public isShibbolethUser() {
+    public isShibbolethUser(): boolean {
         return this.data.item.type === UserType.aai;
     }
 
-    protected postQuery() {
+    protected postQuery(): void {
         this.institution = this.data.item.institution;
     }
 
-    protected postUpdate(model) {
+    protected postUpdate(model): void {
         this.institution = model.institution;
     }
 }

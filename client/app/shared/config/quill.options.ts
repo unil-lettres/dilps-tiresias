@@ -1,7 +1,7 @@
 import {QuillConfig} from 'ngx-quill';
 import {pick} from 'lodash';
 
-export function keepOnlyTextAndBasicFormatting(node, delta) {
+export function keepOnlyTextAndBasicFormatting(node, delta): any {
     const ops = [];
     delta.ops.forEach(op => {
         if (op.insert && typeof op.insert === 'string') {

@@ -18,7 +18,7 @@ export class OnlyLeavesPipe implements PipeTransform {
     /**
      * Returns only tags that are leaves in the tag trees
      */
-    transform<T extends Hierarchic>(value: T[], args?: any): T[] {
+    public transform<T extends Hierarchic>(value: T[], args?: any): T[] {
         return onlyLeaves<T>(value);
     }
 }

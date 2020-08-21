@@ -11,7 +11,7 @@ export class IncrementSubject<T = Literal> extends BehaviorSubject<T> {
         super(_val);
     }
 
-    public patch(value: T) {
+    public patch(value: T): void {
         this.next(merge({}, this.value, value));
     }
 }

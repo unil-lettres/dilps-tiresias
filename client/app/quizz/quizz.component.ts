@@ -23,12 +23,12 @@ export class QuizzComponent implements OnInit, OnDestroy {
 
     constructor(private route: ActivatedRoute, private cardService: CardService) {}
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeParamsSub.unsubscribe();
         this.formChangeSub.unsubscribe();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.routeParamsSub = this.route.params.subscribe(params => {
             if (params.cards) {
                 this.cards = params.cards.split(',');
@@ -41,17 +41,17 @@ export class QuizzComponent implements OnInit, OnDestroy {
         });
     }
 
-    public goToNext() {
+    public goToNext(): void {
         this.formCtrl.setValue('');
         const index = this.cards.findIndex(c => c === this.card.id);
         this.getCard(this.cards[index + 1]);
     }
 
-    public getArtistsNames(artists) {
+    public getArtistsNames(artists): void {
         return artists.map(a => a.name).join(', ');
     }
 
-    private getCard(id: string) {
+    private getCard(id: string): void {
         if (!id) {
             return;
         }
@@ -63,7 +63,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         });
     }
 
-    private selectCard(card: Card['card']) {
+    private selectCard(card: Card['card']): void {
         this.card = card;
         this.imageSrc = CardService.getImageLink(card, 2000);
         this.attributes = {

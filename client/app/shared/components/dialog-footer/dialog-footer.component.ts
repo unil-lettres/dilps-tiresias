@@ -7,10 +7,10 @@ import {FormControl} from '@angular/forms';
     styleUrls: ['./dialog-footer.component.scss'],
 })
 export class DialogFooterComponent {
-    @Input() canCreate;
-    @Input() item;
-    @Input() formCtrl: FormControl;
-    @Output() create = new EventEmitter();
-    @Output() update = new EventEmitter();
-    @Output() delete = new EventEmitter();
+    @Input() public canCreate;
+    @Input() public item;
+    @Input() public formCtrl: FormControl;
+    @Output() public create = new EventEmitter();
+    @Output() public update = new EventEmitter();
+    @Output() public delete = new EventEmitter();
 }

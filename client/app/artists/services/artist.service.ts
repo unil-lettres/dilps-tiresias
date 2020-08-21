@@ -37,7 +37,7 @@ export class ArtistService extends AbstractContextualizedService<
         super(apollo, 'artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): ArtistInput {
         return this.getDefaultForServer();
     }
 

@@ -52,7 +52,7 @@ export class AntiqueNameService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): AntiqueNameInput {
         return this.getDefaultForServer();
     }
 

@@ -2,14 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {merge, omit} from 'lodash';
 import {CardService} from '../../card/services/card.service';
-import {
-    Card_card,
-    Card_card_artists,
-    CardInput,
-    CardVisibility,
-    Change_change,
-    Viewer,
-} from '../../shared/generated-types';
+import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
 
@@ -35,18 +28,18 @@ export class ChangeComponent implements OnInit {
         private userService: UserService,
     ) {}
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => (this.user = user));
 
-        if (this.route.snapshot.params['changeId']) {
-            this.changeService.getOne(this.route.snapshot.params['changeId']).subscribe(change => {
+        if (this.route.snapshot.params.changeId) {
+            this.changeService.getOne(this.route.snapshot.params.changeId).subscribe(change => {
                 this.change = merge({}, change);
                 this.suggestionImageSrcFull = CardService.getImageLink(this.change.original, null);
                 this.suggestionImageSrc = CardService.getImageLink(this.change.original, 2000);
                 this.loaded = true;
             });
-        } else if (this.route.snapshot.params['cardId']) {
-            this.cardService.getOne(this.route.snapshot.params['cardId']).subscribe(card => {
+        } else if (this.route.snapshot.params.cardId) {
+            this.cardService.getOne(this.route.snapshot.params.cardId).subscribe(card => {
                 this.original = merge({}, card);
                 this.suggestion = merge({}, omit(card, 'id'), {
                     original: card,
@@ -64,7 +57,7 @@ export class ChangeComponent implements OnInit {
         }
     }
 
-    public accept() {
+    public accept(): void {
         this.changeService.acceptChange(this.change).subscribe(card => {
             if (card) {
                 this.router.navigateByUrl('card/' + card.id);
@@ -74,13 +67,13 @@ export class ChangeComponent implements OnInit {
         });
     }
 
-    public reject() {
+    public reject(): void {
         this.changeService.rejectChange(this.change).subscribe(() => {
             this.router.navigate(['..', 'notification']);
         });
     }
 
-    public update() {
+    public update(): void {
         this.cardService.create(this.suggestion).subscribe((card: {id}) => {
             this.changeService.suggestUpdate(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
@@ -88,7 +81,7 @@ export class ChangeComponent implements OnInit {
         });
     }
 
-    public create() {
+    public create(): void {
         this.cardService.create(this.suggestion).subscribe((card: {id}) => {
             this.changeService.suggestCreation(card).subscribe(() => {
                 this.router.navigateByUrl('notification');

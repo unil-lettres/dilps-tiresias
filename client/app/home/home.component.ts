@@ -50,11 +50,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.network.errors.next([]);
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.routeParamsSub.unsubscribe();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // Watch errors
         this.network.errors.subscribe(errors => {
             this.errors = this.errors.concat(errors);
@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    private redirectAfterCreation(collection?: CollectionSelectorResult) {
+    private redirectAfterCreation(collection?: CollectionSelectorResult): void {
         const url = collection ? 'my-collection/' + collection.id : 'my-collection';
         this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => this.router.navigateByUrl(url));
     }
@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             .afterClosed();
     }
 
-    public editUser() {
+    public editUser(): void {
         this.userService.getCurrentUser().subscribe(user => {
             this.dialog.open(UserComponent, {
                 width: '800px',
@@ -150,11 +150,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    public showNavigationMenu() {
+    public showNavigationMenu(): boolean {
         return !!this.nav;
     }
 
-    public showThesaurusMenu() {
+    public showThesaurusMenu(): boolean {
         const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.major, UserRole.junior];
         const tiresiasRoles = [UserRole.administrator];
         const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
@@ -162,11 +162,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         return applicableRoles.includes(this.user.role);
     }
 
-    public mailto() {
+    public mailto(): void {
         document.location.href = 'mailto:' + this.contact();
     }
 
-    public contact() {
+    public contact(): string {
         switch (this.site) {
             case Site.tiresias:
                 return 'tiresias@unil.ch';

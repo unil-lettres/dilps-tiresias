@@ -10,5 +10,5 @@ export class NumberSelectorComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit() {}
+    public ngOnInit(): void {}
 }

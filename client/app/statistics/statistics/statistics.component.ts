@@ -311,7 +311,7 @@ export class StatisticsComponent extends NaturalAbstractController {
         };
     }
 
-    public applyCardAndUserTypeSelection() {
+    public applyCardAndUserTypeSelection(): void {
         this.cards = this.raw[this.cardType];
         this.users = this.raw[this.userType];
     }
@@ -331,7 +331,7 @@ export class StatisticsComponent extends NaturalAbstractController {
             });
     }
 
-    public displayFn(item) {
+    public displayFn(item): void {
         return item ? item.login : null;
     }
 }

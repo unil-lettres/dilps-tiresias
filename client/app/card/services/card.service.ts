@@ -6,7 +6,9 @@ import {SITE} from '../../app.config';
 import {
     Card,
     CardInput,
+    CardPartialInput,
     Cards,
+    Cards_cards_items,
     CardsVariables,
     CardVariables,
     CardVisibility,
@@ -23,7 +25,9 @@ import {
     UpdateCard,
     UpdateCardVariables,
     ValidateData,
+    ValidateData_validateData,
     ValidateImage,
+    ValidateImage_validateImage,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -86,7 +90,7 @@ export class CardService extends AbstractContextualizedService<
     /**
      * Merge image src on src attribute of given gard
      */
-    public static formatImage(card, height) {
+    public static formatImage(card: Cards_cards_items | null, height): (Cards_cards_items & {src: string}) | null {
         if (!card) {
             return null;
         }
@@ -95,7 +99,7 @@ export class CardService extends AbstractContextualizedService<
         return merge({}, card, fields);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): CardInput {
         return this.getDefaultForServer();
     }
 
@@ -150,7 +154,7 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public validateData(card: {id}) {
+    public validateData(card: {id}): Observable<ValidateData_validateData> {
         return this.apollo
             .mutate<ValidateData>({
                 mutation: validateData,
@@ -168,7 +172,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public validateImage(card: {id}) {
+    public validateImage(card: {id}): Observable<ValidateImage_validateImage> {
         return this.apollo
             .mutate<ValidateImage>({
                 mutation: validateImage,
@@ -186,7 +190,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public getInput(object) {
+    public getInput(object: Literal): CardInput | CardPartialInput {
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server
@@ -202,7 +206,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     // In Card specific case, don't context lists
-    public getContextForAll() {
+    public getContextForAll(): Partial<CardsVariables> {
         return {};
     }
 

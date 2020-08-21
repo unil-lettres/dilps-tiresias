@@ -38,8 +38,8 @@ export function test(formValue: string, card: Card['card']): Result {
     return result;
 }
 
-function sanitize(string: string): string {
-    return stripVowelAccent(string.toLowerCase());
+function sanitize(s: string): string {
+    return stripVowelAccent(s.toLowerCase());
 }
 
 function testString(words: string[], attributeValue: string): boolean {

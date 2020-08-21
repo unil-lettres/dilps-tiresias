@@ -25,7 +25,7 @@ class MockApollo extends Apollo {
      * This will create a fake ApolloClient who can responds to queries
      * against our real schema with random values
      */
-    private createMockClient() {
+    private createMockClient(): ApolloClient<unknown> {
         const schema = buildClientSchema(introspectionResult.data as any);
 
         // Configure hardcoded mocked values on a type basis.

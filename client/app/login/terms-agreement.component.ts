@@ -7,5 +7,5 @@ import {Component, OnInit} from '@angular/core';
 export class TermsAgreementComponent implements OnInit {
     constructor() {}
 
-    ngOnInit() {}
+    public ngOnInit(): void {}
 }

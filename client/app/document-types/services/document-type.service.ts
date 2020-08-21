@@ -52,7 +52,7 @@ export class DocumentTypeService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): DocumentTypeInput {
         return this.getDefaultForServer();
     }
 

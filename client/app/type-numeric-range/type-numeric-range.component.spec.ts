@@ -52,7 +52,10 @@ describe('TypeNumericRangeComponent', () => {
         }).compileComponents();
     }));
 
-    function createComponent(c: FilterGroupConditionField | null, configuration: TypeNumericRangeConfiguration | null) {
+    function createComponent(
+        c: FilterGroupConditionField | null,
+        configuration: TypeNumericRangeConfiguration | null,
+    ): void {
         data.condition = c;
         data.configuration = configuration;
         TestBed.overrideProvider(NATURAL_DROPDOWN_DATA, {useValue: data});

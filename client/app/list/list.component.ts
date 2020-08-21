@@ -62,17 +62,17 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * Reference to grid component
      */
-    @ViewChild(ViewGridComponent) gridComponent: ViewGridComponent;
+    @ViewChild(ViewGridComponent) public gridComponent: ViewGridComponent;
 
     /**
      * Reference to list component
      */
-    @ViewChild(ViewListComponent) listComponent: ViewListComponent;
+    @ViewChild(ViewListComponent) public listComponent: ViewListComponent;
 
     /**
      * Reference to map component
      */
-    @ViewChild(ViewMapComponent) mapComponent: ViewMapComponent;
+    @ViewChild(ViewMapComponent) public mapComponent: ViewMapComponent;
 
     /**
      * Expose enum for template
@@ -241,7 +241,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         }
     }
 
-    public gridContentChange(event) {
+    public gridContentChange(event): void {
         if (event.visible != null) {
             this.gridNumberVisibleItems = event.visible;
         }
@@ -328,8 +328,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     public goToQuizz(selected: Cards_cards_items[] | null = null): void {
         if (selected) {
-            selected = shuffleArray(selected.map(e => e.id)).join(',');
-            this.router.navigateByUrl('/quizz;cards=' + selected);
+            const selectedIds = shuffleArray(selected.map(e => e.id)).join(',');
+            this.router.navigateByUrl('/quizz;cards=' + selectedIds);
         } else {
             // open box, ask for number of items to display in quizz, and get randomized list pageIndex:0, pageSize:nbItems; sort: random'
             this.dialog
@@ -341,11 +341,11 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     },
                 })
                 .afterClosed()
-                .subscribe(number => {
-                    if (number > 0) {
+                .subscribe(num => {
+                    if (num > 0) {
                         const quizzVars = new NaturalQueryVariablesManager(this.variablesManager);
                         quizzVars.set('sorting', {sorting: [{field: CardSortingField.random}]});
-                        quizzVars.set('pagination', {pagination: {pageIndex: 0, pageSize: +number}});
+                        quizzVars.set('pagination', {pagination: {pageIndex: 0, pageSize: +num}});
                         this.cardService.getAll(quizzVars).subscribe(cards => {
                             this.router.navigateByUrl('quizz;cards=' + cards.items.map(e => e.id).join(','));
                         });

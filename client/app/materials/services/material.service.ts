@@ -37,7 +37,7 @@ export class MaterialService extends AbstractContextualizedService<
         super(apollo, 'material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): MaterialInput {
         return this.getDefaultForServer();
     }
 

@@ -37,7 +37,7 @@ export class TagService extends AbstractContextualizedService<
         super(apollo, 'tag', tagQuery, tagsQuery, createTag, updateTag, deleteTags, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): TagInput {
         return this.getDefaultForServer();
     }
 

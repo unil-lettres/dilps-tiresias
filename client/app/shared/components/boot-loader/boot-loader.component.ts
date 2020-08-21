@@ -7,5 +7,5 @@ import {Component, OnInit} from '@angular/core';
 export class BootLoaderComponent implements OnInit {
     constructor() {}
 
-    ngOnInit() {}
+    public ngOnInit(): void {}
 }

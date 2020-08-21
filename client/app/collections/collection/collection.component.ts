@@ -50,14 +50,14 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         super(collectionService, alertService, dialogRef, userService, data);
     }
 
-    public updateVisibility(ev) {
+    public updateVisibility(ev): void {
         this.data.item.visibility = this.visibilities[ev.value].value;
     }
 
     /**
      * Visibility is seen by >=seniors if they are the creator, or by admins if visibility is set to admin.
      */
-    public computeShowVisibility() {
+    public computeShowVisibility(): boolean {
         // While no user loaded
         if (!this.user) {
             return false;
@@ -79,11 +79,11 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    public displayFn(item) {
+    public displayFn(item): void {
         return item ? item.login : null;
     }
 
-    protected postQuery() {
+    protected postQuery(): void {
         // Init visibility
         this.visibility = +findKey(this.visibilities, s => s.value === this.data.item.visibility);
 
@@ -92,7 +92,7 @@ export class CollectionComponent extends AbstractDetail implements OnInit {
         this.showVisibility = this.computeShowVisibility();
     }
 
-    protected postUpdate(model) {
+    protected postUpdate(model): void {
         this.institution = model.institution;
     }
 }

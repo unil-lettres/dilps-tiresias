@@ -37,7 +37,7 @@ export class PeriodService extends AbstractContextualizedService<
         super(apollo, 'period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): PeriodInput {
         return this.getDefaultForServer();
     }
 

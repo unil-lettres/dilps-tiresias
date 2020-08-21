@@ -51,22 +51,22 @@ export class DownloadComponent implements OnInit {
         this.includeLegend = !this.denyLegendsDownload;
     }
 
-    ngOnInit() {}
+    public ngOnInit(): void {}
 
-    public downloadPowerPoint() {
+    public downloadPowerPoint(): void {
         const url =
             '/pptx/' + this.getIds() + '/' + this.toRgba(this.backgroundColor) + '/' + this.toRgba(this.textColor);
         (window.document.location as any) = url;
         this.dialogRef.close();
     }
 
-    public downloadExcel() {
+    public downloadExcel(): void {
         const url = '/xlsx/' + this.getIds();
         (window.document.location as any) = url;
         this.dialogRef.close();
     }
 
-    public downloadZip() {
+    public downloadZip(): void {
         const url =
             '/zip/' + this.getIds() + '/' + (this.includeLegend ? '1' : '0') + (this.size ? '/' + this.size : '');
         (window.document.location as any) = url;

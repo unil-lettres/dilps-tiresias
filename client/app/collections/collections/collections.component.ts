@@ -49,7 +49,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         super();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
             // this.showEditButtons = this.showEditionButtons();
@@ -91,7 +91,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         });
     }
 
-    public toggle(collection) {
+    public toggle(collection): void {
         if (collection.children) {
             this.removeChildren(collection);
         } else {
@@ -99,11 +99,11 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         }
     }
 
-    public removeChildren(collection) {
+    public removeChildren(collection): void {
         collection.children = null;
     }
 
-    public getChildren(collection) {
+    public getChildren(collection): void {
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
         this.collectionsService.getAll(qvm).subscribe(results => {
@@ -111,25 +111,16 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         });
     }
 
-    // public showEditionButtons() {
-    //     const authorizedRoles = this.route.snapshot.data.editionButtonsForRoles;
-    //     if (!authorizedRoles) {
-    //         return true;
-    //     }
-    //
-    //     return authorizedRoles.indexOf(this.user.role) > -1;
-    // }
-
-    public search(term) {
+    public search(term): void {
         this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});
     }
 
-    public more() {
+    public more(): void {
         const nextPage = this.queryVariables.variables.value.pagination.pageIndex + 1;
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    public edit(event, collection) {
+    public edit(event, collection): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -146,11 +137,11 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         });
     }
 
-    public add() {
+    public add(): void {
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user) {
+    private showCreateButton(allowedRoles: boolean | UserRole[], user): boolean {
         if (!allowedRoles || !user) {
             return false;
         }

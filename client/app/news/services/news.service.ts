@@ -10,6 +10,7 @@ import {
     Newses,
     NewsesVariables,
     NewsInput,
+    NewsPartialInput,
     NewsVariables,
     Site,
     UpdateNews,
@@ -37,7 +38,7 @@ export class NewsService extends AbstractContextualizedService<
         super(apollo, 'news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): NewsInput {
         return this.getDefaultForServer();
     }
 
@@ -52,7 +53,7 @@ export class NewsService extends AbstractContextualizedService<
         };
     }
 
-    public getInput(object) {
+    public getInput(object): NewsInput | NewsPartialInput {
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server

@@ -16,7 +16,7 @@ export class UsersComponent extends AbstractList<Users['users'], UsersVariables>
         super(service, UserComponent, injector);
     }
 
-    public isLegacyUser(user) {
+    public isLegacyUser(user): boolean {
         return user.type === UserType.legacy;
     }
 }

@@ -14,14 +14,14 @@ export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVar
         this.dialog = injector.get(MatDialog);
     }
 
-    public edit(item) {
+    public edit(item): void {
         this.dialog.open(this.component, {
             width: '800px',
             data: {item: item},
         });
     }
 
-    public add() {
+    public add(): void {
         this.dialog.open(this.component, {
             width: '800px',
         });

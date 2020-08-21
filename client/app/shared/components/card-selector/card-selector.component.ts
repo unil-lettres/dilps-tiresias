@@ -12,9 +12,9 @@ export class CardSelectorComponent implements OnInit {
 
     constructor(public cardService: CardService) {}
 
-    ngOnInit() {}
+    public ngOnInit(): void {}
 
-    public displayWith(item) {
+    public displayWith(item): string {
         return item ? item.name + ' (' + item.id + ')' : '';
     }
 }

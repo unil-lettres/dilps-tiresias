@@ -25,7 +25,7 @@ export class NewsComponent extends AbstractDetail {
         super(service, alertService, dialogRef, userService, data);
     }
 
-    public upload(file) {
+    public upload(file): void {
         this.data.item.file = file;
         getBase64(file).then(result => {
             this.imageData = result;

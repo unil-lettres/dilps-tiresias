@@ -52,7 +52,7 @@ export class InstitutionService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): InstitutionInput {
         return this.getDefaultForServer();
     }
 

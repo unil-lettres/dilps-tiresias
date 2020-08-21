@@ -24,7 +24,7 @@ import {Card_card} from '../generated-types';
     ],
 })
 export class UniqueCodeValidatorDirective implements AsyncValidator {
-    @Input('appUniqueCode') model: Card_card;
+    @Input('appUniqueCode') public model: Card_card;
 
     constructor(private cardService: CardService) {}
 

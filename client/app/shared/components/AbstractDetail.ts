@@ -22,7 +22,7 @@ export class AbstractDetail implements OnInit {
         this.data = merge({item: this.service.getConsolidatedForClient()}, data);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         if (this.data.item.id) {
             this.service.getOne(this.data.item.id).subscribe(res => {
                 merge(this.data.item, res); // init all fields considering getOne query
@@ -33,7 +33,7 @@ export class AbstractDetail implements OnInit {
         this.userService.getCurrentUser().subscribe(user => (this.user = user));
     }
 
-    public update() {
+    public update(): void {
         this.service.updateNow(this.data.item).subscribe(model => {
             this.alertService.info('Mis à jour');
             this.dialogRef.close(this.data.item);
@@ -41,14 +41,14 @@ export class AbstractDetail implements OnInit {
         });
     }
 
-    public create() {
+    public create(): void {
         this.service.create(this.data.item).subscribe(() => {
             this.alertService.info('Créé');
             this.dialogRef.close(this.data.item);
         });
     }
 
-    public delete() {
+    public delete(): void {
         this.alertService
             .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
@@ -61,7 +61,7 @@ export class AbstractDetail implements OnInit {
             });
     }
 
-    protected postQuery() {}
+    protected postQuery(): void {}
 
-    protected postUpdate(model) {}
+    protected postUpdate(model): void {}
 }

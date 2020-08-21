@@ -19,7 +19,7 @@ export class NetworkActivityService {
 
     constructor(private progressService: NgProgress) {}
 
-    public increase() {
+    public increase(): void {
         if (this.pending === 0) {
             this.progressService.ref().start();
         }
@@ -28,7 +28,7 @@ export class NetworkActivityService {
         this.isPending.next(this.pending > 0);
     }
 
-    public decrease() {
+    public decrease(): void {
         this.pending--;
         this.isPending.next(this.pending > 0);
 

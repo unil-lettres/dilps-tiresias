@@ -32,7 +32,7 @@ export class ViewMapComponent extends NaturalAbstractController {
         });
     }
 
-    @Output() readonly searchByLocation = new EventEmitter<Location>();
+    @Output() public readonly searchByLocation = new EventEmitter<Location>();
 
     public markers: Marker[];
     public bounds: LatLngBounds;

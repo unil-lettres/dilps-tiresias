@@ -14,8 +14,8 @@ export class CardResolver implements Resolve<any> {
      * Resolve sites for routing service only at the moment
      */
     public resolve(route: ActivatedRouteSnapshot): Observable<Card_card> {
-        if (route.params['cardId']) {
-            return this.cardService.getOne(route.params['cardId']);
+        if (route.params.cardId) {
+            return this.cardService.getOne(route.params.cardId);
         }
     }
 }

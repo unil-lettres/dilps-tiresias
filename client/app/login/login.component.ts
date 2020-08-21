@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         public snackBar: MatSnackBar,
     ) {}
 
-    ngOnInit(): void {
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        const logout = this.route.snapshot.queryParams['logout'] || false;
+    public ngOnInit(): void {
+        this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+        const logout = this.route.snapshot.queryParams.logout || false;
 
         // Attempt to skip login if user is already logged in
         if (!logout) {
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         if (this.currentUser) {
             this.currentUser.unsubscribe();
         }
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
     }
 
-    private showTerms(user) {
+    private showTerms(user): void {
         this.dialog
             .open(TermsAgreementComponent, {maxWidth: 700})
             .afterClosed()

@@ -297,7 +297,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.formIsValid = (!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid);
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });
@@ -314,7 +314,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
-                    this.fetchedModel = this.route.snapshot.data['card'];
+                    this.fetchedModel = this.route.snapshot.data.card;
 
                     this.model = Object.assign({}, this.fetchedModel, {
                         artists: this.fetchedModel.artists.map(a => a.name),
@@ -333,20 +333,20 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.statisticService.recordDetail();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         this.initCard();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.unwatchUpload();
     }
 
-    public toggleEdit() {
+    public toggleEdit(): void {
         this.edit = !this.edit;
         this.updateUploadWatching();
     }
 
-    public updateUploadWatching() {
+    public updateUploadWatching(): void {
         if (this.edit) {
             this.watchUpload();
         } else {
@@ -354,7 +354,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public watchUpload() {
+    public watchUpload(): void {
         this.uploadSub = this.uploadService.filesChanged.subscribe(files => {
             const file = files[files.length - 1];
             this.model.file = file;
@@ -362,14 +362,14 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public unwatchUpload() {
+    public unwatchUpload(): void {
         if (this.uploadSub) {
             this.uploadSub.unsubscribe();
             this.uploadSub = null;
         }
     }
 
-    public initCard() {
+    public initCard(): void {
         if (this.model) {
             this.isDilps = this.model.site === Site.dilps;
 
@@ -436,11 +436,11 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         return this.edit && this.canUpdateCode() && this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
-    public updateVisibility(ev) {
+    public updateVisibility(ev): void {
         this.model.visibility = this.visibilities[ev.value].value;
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         if (this.isFetchedCard(this.model)) {
             this.update();
         } else {
@@ -448,7 +448,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public update() {
+    public update(): void {
         this.cardService.updateNow(this.model).subscribe(card => {
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
@@ -457,14 +457,14 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public create() {
+    public create(): void {
         this.cardService.create(this.model).subscribe(card => {
             this.alertService.info('Créé');
             this.router.navigate(['..', card.id], {relativeTo: this.route});
         });
     }
 
-    public confirmDelete() {
+    public confirmDelete(): void {
         this.alertService
             .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
@@ -479,26 +479,26 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    public suggestUpdate() {
+    public suggestUpdate(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.router.navigateByUrl('notification/new/' + this.fetchedModel.id);
     }
 
-    public suggestDeletion() {
+    public suggestDeletion(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.changeService.suggestDeletion(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
-    public suggestCreation() {
+    public suggestCreation(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.changeService.suggestCreation(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
-    public linkToCollection() {
+    public linkToCollection(): void {
         this.assertFetchedCard(this.fetchedModel);
 
         this.dialog
@@ -528,12 +528,12 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    public copy() {
+    public copy(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.router.navigate(['/card/new', {cardId: this.fetchedModel.id}]);
     }
 
-    public complete() {
+    public complete(): void {
         this.dialog
             .open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
                 width: '400px',
@@ -563,21 +563,21 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    public validateData() {
+    public validateData(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.cardService.validateData(this.fetchedModel).subscribe(() => {
             this.alertService.info('Donnée validée');
         });
     }
 
-    public validateImage() {
+    public validateImage(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.cardService.validateImage(this.fetchedModel).subscribe(() => {
             this.alertService.info('Image validée');
         });
     }
 
-    public download(card) {
+    public download(card): void {
         this.dialog.open(DownloadComponent, {
             width: '600px',
             data: {
@@ -587,7 +587,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    public getSuggestAddLabel() {
+    public getSuggestAddLabel(): string {
         if (this.user.role === UserRole.junior || this.user.role === UserRole.senior) {
             return 'Soumettre';
         }
@@ -595,7 +595,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         return 'Suggérer l\'ajout';
     }
 
-    public canSuggestCreate() {
+    public canSuggestCreate(): boolean {
         return (
             this.user &&
             this.fetchedModel &&
@@ -607,7 +607,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    public canSuggestUpdate() {
+    public canSuggestUpdate(): boolean {
         return (
             this.user &&
             this.fetchedModel &&
@@ -616,17 +616,17 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    public canSuggestDelete() {
+    public canSuggestDelete(): boolean {
         return this.canSuggestUpdate();
     }
 
-    private getBase64(file) {
+    private getBase64(file): void {
         getBase64(file).then(result => {
             this.imageData = result;
         });
     }
 
-    public displayWith(item) {
+    public displayWith(item): string {
         // Turn HTML to plain text
         return item ? item.name.replace(/<[^>]*>/g, '') + ' (' + item.id + ')' : '';
     }

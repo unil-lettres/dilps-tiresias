@@ -7,7 +7,7 @@ import {UserService} from '../../users/services/user.service';
 export class RolePipe implements PipeTransform {
     constructor(private userService: UserService) {}
 
-    transform(value: any, args?: any): string {
+    public transform(value: any, args?: any): string {
         const role = this.userService.getRole(value);
 
         return role ? role.text : '';

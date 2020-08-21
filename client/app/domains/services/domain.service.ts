@@ -37,7 +37,7 @@ export class DomainService extends AbstractContextualizedService<
         super(apollo, 'domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
     }
 
-    public getDefaultForClient() {
+    public getDefaultForClient(): DomainInput {
         return this.getDefaultForServer();
     }
 
