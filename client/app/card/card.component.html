@@ -33,7 +33,7 @@
             <ng-container *ngIf="!hideTools">
 
                 <button (click)="toggleEdit()"
-                        *ngIf="!edit && model.id && model?.permissions?.update"
+                        *ngIf="!edit && fetchedModel?.permissions?.update"
                         [matTooltip]="'Passer en mode édition'"
                         mat-icon-button
                 >
@@ -41,7 +41,7 @@
                 </button>
 
                 <button (click)="update()"
-                        *ngIf="edit && model.id && model?.permissions?.update"
+                        *ngIf="edit && fetchedModel?.permissions?.update"
                         color="primary"
                         mat-icon-button
                         mat-raised-button
@@ -71,11 +71,11 @@
                     <mat-icon>add_alert</mat-icon>
                 </button>
 
-                <button (click)="create()" *ngIf="!model.id && user?.globalPermissions?.card?.create" mat-icon-button matTooltip="Créer">
+                <button (click)="create()" *ngIf="!fetchedModel && user?.globalPermissions?.card?.create" mat-icon-button matTooltip="Créer">
                     <mat-icon>add</mat-icon>
                 </button>
 
-                <button *ngIf="model.id && user?.role === 'administrator'"
+                <button *ngIf="fetchedModel && user?.role === 'administrator'"
                         [matMenuTriggerFor]="validationMenu"
                         mat-icon-button
                         matTooltip="Valider"
@@ -91,12 +91,12 @@
                     <mat-icon>file_download</mat-icon>
                 </button>
 
-                <button (click)="linkToCollection()" *ngIf="model.id && user" mat-icon-button matTooltip="Ajouter à une collection">
+                <button (click)="linkToCollection()" *ngIf="fetchedModel && user" mat-icon-button matTooltip="Ajouter à une collection">
                     <mat-icon>library_add</mat-icon>
                 </button>
 
                 <button (click)="confirmDelete()"
-                        *ngIf="model.id && model?.permissions?.delete"
+                        *ngIf="fetchedModel?.permissions?.delete"
                         color="warn"
                         mat-icon-button
                         matTooltip="Supprimer"
@@ -174,7 +174,8 @@
                 </div>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || !!model.domain)"
-                               [(model)]="model.domain"
+                               [model]="model.domain"
+                               (modelChange)="model.domain = $event"
                                [allowFreeText]="false"
                                [hierarchicSelectorConfig]="domainHierarchicConfig"
                                [multiple]="false"
@@ -309,7 +310,8 @@
                 </mat-form-field>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || !!model.materials?.length)"
-                               [(model)]="model.materials"
+                               [model]="model.materials"
+                               (modelChange)="model.materials = $event"
                                [allowFreeText]="false"
                                [hierarchicSelectorConfig]="materialHierarchicConfig"
                                [multiple]="true"
@@ -331,7 +333,8 @@
                 </mat-form-field>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || !!model.tags?.length)"
-                               [(model)]="model.tags"
+                               [model]="model.tags"
+                               (modelChange)="model.tags = $event"
                                [allowFreeText]="false"
                                [hierarchicSelectorConfig]="tagHierarchicConfig"
                                [multiple]="true"
@@ -357,18 +360,19 @@
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="isDilps && !(model.locality || edit)" [(model)]="institution" [readonly]="!edit" [vertical]="true"
+                <app-address *ngIf="isDilps && !(model.locality || edit)" [model]="institution" [readonly]="!edit" [vertical]="true"
                 ></app-address>
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
                     <div class="mat-title">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
-                    <app-address [(model)]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"
+                    <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"
                     ></app-address>
                 </div>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
-                               [(model)]="model.antiqueNames"
+                               [model]="model.antiqueNames"
+                               (modelChange)="model.antiqueNames = $event"
                                [allowFreeText]="false"
                                [multiple]="true"
                                [previewComponent]="AntiqueNameComponent"
@@ -380,7 +384,8 @@
                 <div *ngIf="!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)" class="mat-title">Datation</div>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || model.periods?.length)"
-                               [(model)]="model.periods"
+                               [model]="model.periods"
+                               (modelChange)="model.periods = $event"
                                [allowFreeText]="false"
                                [hierarchicSelectorConfig]="periodHierarchicConfig"
                                [multiple]="true"
@@ -417,7 +422,7 @@
                 ></app-thesaurus>
 
                 <!-- Institution address -->
-                <app-address *ngIf="!isDilps && !(model.locality || edit)" [(model)]="institution" [readonly]="!edit" [vertical]="true"
+                <app-address *ngIf="!isDilps && !(model.locality || edit)" [model]="institution" [readonly]="!edit" [vertical]="true"
                 ></app-address>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.objectReference)">
@@ -432,7 +437,8 @@
                 </div>
 
                 <app-thesaurus *ngIf="!isDilps && (edit || !!model.documentType)"
-                               [(model)]="model.documentType"
+                               [model]="model.documentType"
+                               (modelChange)="model.institution = $event"
                                [allowFreeText]="false"
                                [multiple]="false"
                                [previewComponent]="DocumentTypeComponent"

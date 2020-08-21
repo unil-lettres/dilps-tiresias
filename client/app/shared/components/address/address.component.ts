@@ -15,7 +15,14 @@ import { NaturalQueryVariablesManager } from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import { merge } from 'lodash';
 import { CountryService } from '../../../countries/services/country.service';
-import { Countries, CountriesVariables, Site } from '../../generated-types';
+import {
+    Card_card,
+    Card_card_institution, CardInput,
+    Countries,
+    CountriesVariables,
+    Institution_institution,
+    Site,
+} from '../../generated-types';
 import { AddressService } from './address.service';
 import { SITE } from '../../../app.config';
 
@@ -50,7 +57,7 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * Object reference is directly modified
      */
-    @Input() model;
+    @Input() model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
 
     public formCtrl = new FormControl();
 

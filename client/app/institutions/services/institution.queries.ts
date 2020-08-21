@@ -10,6 +10,7 @@ export const institutionDetails = gql`
         postcode
         latitude
         longitude
+        precision
         creationDate
         country {
             id

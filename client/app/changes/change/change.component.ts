@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, omit } from 'lodash';
 import { CardService } from '../../card/services/card.service';
-import { CardVisibility } from '../../shared/generated-types';
+import {
+    Card_card,
+    Card_card_artists,
+    CardInput,
+    CardVisibility,
+    Change_change,
+    Viewer,
+} from '../../shared/generated-types';
 import { UserService } from '../../users/services/user.service';
 import { ChangeService } from '../services/change.service';
 
@@ -13,13 +20,13 @@ import { ChangeService } from '../services/change.service';
 })
 export class ChangeComponent implements OnInit {
 
-    public change;
-    public original;
-    public suggestion;
-    public suggestionImageSrc;
-    public suggestionImageSrcFull;
+    public change: Change_change;
+    public original: Card_card;
+    public suggestion: CardInput;
+    public suggestionImageSrc: string;
+    public suggestionImageSrcFull: string;
     public loaded = false;
-    public user;
+    public user: Viewer['viewer'];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -42,14 +49,18 @@ export class ChangeComponent implements OnInit {
         } else if (this.route.snapshot.params['cardId']) {
             this.cardService.getOne(this.route.snapshot.params['cardId']).subscribe(card => {
                 this.original = merge({}, card);
-                this.suggestion = omit(merge({}, card, {original: card}), 'id');
-                this.suggestion.visibility = CardVisibility.private;
+                this.suggestion = merge({}, omit(card, 'id'), {
+                    original: card,
+                    artists: card.artists.map(a => a.name),
+                    institution: card.institution?.name ?? null,
+                    visibility: CardVisibility.private,
+                });
                 this.suggestionImageSrcFull = CardService.getImageLink(card, null);
                 this.suggestionImageSrc = CardService.getImageLink(card, 2000);
                 this.loaded = true;
             });
         } else {
-            this.suggestion = {};
+            this.suggestion = this.cardService.getDefaultForServer();
             this.loaded = true;
         }
     }

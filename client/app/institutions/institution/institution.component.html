@@ -8,7 +8,7 @@
                 </mat-form-field>
 
                 <app-address *ngIf="data.item.street !== undefined"
-                             [(model)]="data.item"
+                             [model]="data.item"
                              [readonly]="data?.item?.permissions && !data.item.permissions.update"
                 ></app-address>
             </div>

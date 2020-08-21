@@ -19,6 +19,10 @@ import { formatYearRange } from '../../services/utility';
 interface ThesaurusModel {
     name: string;
     locality?: string;
+    hierarchicName?: string;
+    __typename?: string;
+    from?: number;
+    to?: number;
 }
 
 @Component({
@@ -83,7 +87,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * List of suggestions for autocomplete dropdown
      */
-    public suggestions: any[];
+    public suggestions: ThesaurusModel[];
 
     /**
      * List of selected items
@@ -122,9 +126,9 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
     }
 
-    private _model: ThesaurusModel;
+    private _model: ThesaurusModel | ThesaurusModel[];
 
-    @Input() set model(val: ThesaurusModel) {
+    @Input() set model(val: ThesaurusModel | ThesaurusModel[]) {
         this._model = val;
         this.convertModel();
     }
@@ -141,7 +145,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
         });
     }
 
-    public openItem(item) {
+    public openItem(item: ThesaurusModel) {
         this.dialog.open(this.previewComponent, {
             width: '800px',
             data: {item: item},
@@ -308,7 +312,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      */
     private convertModel() {
         if (!this.multiple && isObject(this._model)) {
-            this.items = [this._model];
+            this.items = [this._model as ThesaurusModel];
             this.notifyModel();
         } else if (this.multiple && isArray(this._model)) {
             this.items = this._model;
@@ -317,7 +321,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
 
     }
 
-    public getLabel(item: any): string {
+    public getLabel(item: ThesaurusModel): string {
         let result = item.hierarchicName || item.name;
 
         if (!this.readonly && item.__typename === 'Period') {

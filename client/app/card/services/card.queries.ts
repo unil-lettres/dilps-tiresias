@@ -107,19 +107,7 @@ export const cardDetailsFragment = gql`
             name
         }
         institution {
-            id
-            name
-            locality
-            street
-            postcode
-            latitude
-            longitude
-            precision
-            country {
-                id
-                code
-                name
-            }
+            ...institutionDetails
         }
         owner {
             ...userMeta
@@ -144,7 +132,9 @@ export const cardDetailsFragment = gql`
             update
             delete
         }
-    }${userMetaFragment}`;
+    }
+${userMetaFragment}
+${institutionDetails}`;
 
 export const cardsQuery = gql`
     query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {

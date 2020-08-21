@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@
 import { NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { findKey, merge, sortBy } from 'lodash';
+import { findKey, merge, sortBy, omit } from 'lodash';
 import { QuillModules } from 'ngx-quill';
 import { AntiqueNameComponent } from '../antique-names/antique-name/antique-name.component';
 import { AntiqueNameService } from '../antique-names/services/antique-name.service';
@@ -32,7 +32,7 @@ import {
     Card_card,
     Card_card_artists,
     Card_card_collections,
-    Card_card_institution,
+    Card_card_institution, CardInput, Cards_cards_items,
     CardVisibility,
     CollectionVisibility,
     Site,
@@ -65,7 +65,14 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * External card data
      */
-    @Input() public model: Card_card & { artists: string[]; file: any; institution: string };
+    @Input() public model: CardInput;
+
+    /**
+     * The card as fetched from DB, if applicable.
+     *
+     * eg: it will be null if we are creating a new card, creating suggestion or mass editing
+     */
+    public fetchedModel: Card_card | null = null;
 
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
@@ -297,21 +304,32 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
         this.route.data.subscribe(data => this.showLogo = data.showLogo);
 
-        if (this.model && !this.model.id) {
+        if (this.model && !this.isFetchedCard(this.model)) {
             // mass edit and create a change case
             this.initCard();
             this.edit = true;
 
-        } else if (this.model && this.model.id) {
+        } else if (this.model && this.isFetchedCard(this.model)) {
+            this.fetchedModel = this.model;
             this.initCard();
 
         } else {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
-                    const card = this.route.snapshot.data['card'];
-                    this.model = merge({}, card);
+                    this.fetchedModel = this.route.snapshot.data['card'];
+
+                    this.model = Object.assign(
+                        {},
+                        this.fetchedModel,
+                        {
+                            artists: this.fetchedModel.artists.map(a => a.name),
+                            institution: this.fetchedModel.institution?.name ?? null,
+                        },
+                    );
+
                     this.initCard();
-                } else if (!params.cardId && this.model && this.model.id) {
+                } else if (!params.cardId && this.model && this.isFetchedCard(this.model)) {
+                    this.fetchedModel = this.model;
                     this.initCard();
                 }
             });
@@ -366,8 +384,8 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 return s.value === this.model.visibility;
             });
 
-            this.institution = this.model.institution; // cache, see attribute docs
-            this.artists = this.model.artists; // cache, see attribute docs
+            this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
+            this.artists = this.fetchedModel?.artists ?? null; // cache, see attribute docs
 
             const src = CardService.getImageLink(this.model, 2000);
             if (src) {
@@ -387,23 +405,25 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private updateCollections(): void {
-        if (this.model.collections) {
-            const visibleCollections = this.model.collections.filter(c => c.visibility !== CollectionVisibility.private);
-            this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
-            this.collectionCopyrights = this.model.collections.filter(c => c.isSource).map(c => {
-                if (c.copyrights && c.usageRights) {
-                    return `${c.copyrights} (${c.usageRights})`;
-                } else if (c.copyrights) {
-                    return c.copyrights;
-                } else {
-                    return c.usageRights;
-                }
-            }).join(', ');
+        if (!this.fetchedModel) {
+            return;
         }
 
-        if (this.model.collections.length === 1 && this.model.id) {
-            const idForCode = this.model.legacyId ?? this.model.id;
-            this.suggestedCode = this.model.collections[0].name + '-' + idForCode;
+        const visibleCollections = this.fetchedModel.collections.filter(c => c.visibility !== CollectionVisibility.private);
+        this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
+        this.collectionCopyrights = this.fetchedModel.collections.filter(c => c.isSource).map(c => {
+            if (c.copyrights && c.usageRights) {
+                return `${c.copyrights} (${c.usageRights})`;
+            } else if (c.copyrights) {
+                return c.copyrights;
+            } else {
+                return c.usageRights;
+            }
+        }).join(', ');
+
+        if (this.fetchedModel.collections.length === 1 && this.fetchedModel.id) {
+            const idForCode = this.fetchedModel.legacyId ?? this.fetchedModel.id;
+            this.suggestedCode = this.fetchedModel.collections[0].name + '-' + idForCode;
         } else {
             this.suggestedCode = null;
         }
@@ -425,7 +445,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public onSubmit() {
-        if (this.model.id) {
+        if (this.isFetchedCard(this.model)) {
             this.update();
         } else {
             this.create();
@@ -454,8 +474,10 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public confirmDelete() {
         this.alertService.confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
+                this.assertFetchedCard(this.fetchedModel);
+
                 if (confirmed) {
-                    this.cardService.delete([this.model]).subscribe(() => {
+                    this.cardService.delete([this.fetchedModel]).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.router.navigateByUrl('/');
                     });
@@ -464,22 +486,26 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public suggestUpdate() {
-        this.router.navigateByUrl('notification/new/' + this.model.id);
+        this.assertFetchedCard(this.fetchedModel);
+        this.router.navigateByUrl('notification/new/' + this.fetchedModel.id);
     }
 
     public suggestDeletion() {
-        this.changeService.suggestDeletion(this.model).subscribe(() => {
+        this.assertFetchedCard(this.fetchedModel);
+        this.changeService.suggestDeletion(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
     public suggestCreation() {
-        this.changeService.suggestCreation(this.model).subscribe(() => {
+        this.assertFetchedCard(this.fetchedModel);
+        this.changeService.suggestCreation(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
     public linkToCollection() {
+        this.assertFetchedCard(this.fetchedModel);
 
         this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(CollectionSelectorComponent, {
             width: '400px',
@@ -488,44 +514,67 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 left: '74px',
             },
             data: {
-                images: [this.model],
+                images: [this.fetchedModel],
             },
         }).afterClosed().subscribe(() => {
-            this.cardService.getOne(this.model.id).subscribe((result) => {
-                this.model.collections = result.collections;
+            this.assertFetchedCard(this.fetchedModel);
+
+            this.cardService.getOne(this.fetchedModel.id).subscribe((result) => {
+                this.assertFetchedCard(this.fetchedModel);
+
+                this.fetchedModel.collections = result.collections;
                 this.updateCollections();
             });
         });
     }
 
     public copy() {
-        this.router.navigate(['/card/new', {cardId: this.model.id}]);
+        this.assertFetchedCard(this.fetchedModel);
+        this.router.navigate(['/card/new', {cardId: this.fetchedModel.id}]);
     }
 
     public complete() {
 
-        this.dialog.open(CardSelectorComponent, {
+        this.dialog.open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
             width: '400px',
             position: {
                 top: '74px',
                 left: '74px',
             },
         }).afterClosed().subscribe(selection => {
+            this.assertFetchedCard(this.fetchedModel);
+
             if (selection) {
-                this.model = Object.assign(selection, {id: this.model.id, visibility: this.model.visibility});
+                this.model = Object.assign(omit(selection, 'id'), {
+                    artists: selection.artists.map(a => a.name),
+                    institution: selection.institution?.name ?? null,
+                    visibility: this.model.visibility,
+                });
+
+                this.fetchedModel = Object.assign(
+                    {},
+                    selection,
+                    {
+                        id: this.fetchedModel.id,
+                        visibility: this.model.visibility,
+                    },
+                );
+
                 this.initCard();
             }
         });
     }
 
     public validateData() {
-        this.cardService.validateData(this.model).subscribe(() => {
+        this.assertFetchedCard(this.fetchedModel);
+        this.cardService.validateData(this.fetchedModel).subscribe(() => {
             this.alertService.info('Donnée validée');
         });
     }
 
     public validateImage() {
-        this.cardService.validateImage(this.model).subscribe(() => {
+        this.assertFetchedCard(this.fetchedModel);
+        this.cardService.validateImage(this.fetchedModel).subscribe(() => {
             this.alertService.info('Image validée');
         });
     }
@@ -550,13 +599,19 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
     public canSuggestCreate() {
         return this.user
-            && this.model.owner && this.model.owner.id === this.user.id
-            && this.model.creator && this.model.creator.id === this.user.id
-            && this.model.visibility === CardVisibility.private;
+            && this.fetchedModel
+            && this.fetchedModel.owner && this.fetchedModel.owner.id === this.user.id
+            && this.fetchedModel.creator && this.fetchedModel.creator.id === this.user.id
+            && this.fetchedModel.visibility === CardVisibility.private;
     }
 
     public canSuggestUpdate() {
-        return this.user && this.model.owner && this.user.id !== this.model.owner.id || this.model.visibility !== CardVisibility.private;
+        return this.user
+            && this.fetchedModel
+            && (
+                this.fetchedModel.owner && this.user.id !== this.fetchedModel.owner.id
+                || this.fetchedModel.visibility !== CardVisibility.private
+            );
     }
 
     public canSuggestDelete() {
@@ -582,5 +637,15 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         setTimeout(() => {
             this.updateFormValidity();
         }, 1);
+    }
+
+    private isFetchedCard(card: Card_card | CardInput): card is Card_card {
+        return '__typename' in card;
+    }
+
+    private assertFetchedCard(card: Card_card | null): asserts card is Card_card {
+        if (!card) {
+            throw  new Error('This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?');
+        }
     }
 }

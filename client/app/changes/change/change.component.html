@@ -39,10 +39,10 @@
             <div class="mat-display-1">Nouvelle fiche</div>
         </div>
         <div *ngIf="change && change.original" fxFlex fxLayout="column">
-            <app-card [(model)]="change.original" fxFlex title="Original"></app-card>
+            <app-card [model]="change.original" fxFlex title="Original"></app-card>
         </div>
         <div *ngIf="original" fxFlex fxLayout="column">
-            <app-card [(model)]="original" fxFlex title="Original"></app-card>
+            <app-card [model]="original" fxFlex title="Original"></app-card>
         </div>
 
         <!-- Suggestion -->
@@ -50,11 +50,11 @@
             <div class="mat-display-1">Suppression de la fiche</div>
         </div>
         <div *ngIf="change && change.suggestion" fxFlex fxLayout="column">
-            <app-card [(model)]="change.suggestion" [editable]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
+            <app-card [model]="change.suggestion" [editable]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
             ></app-card>
         </div>
         <div *ngIf="suggestion" fxFlex fxLayout="column">
-            <app-card [(model)]="suggestion" [editable]="true" [hideTools]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
+            <app-card [model]="suggestion" [editable]="true" [hideTools]="true" [imageSrc]="suggestionImageSrc" fxFlex title="Suggestion"
             ></app-card>
         </div>
     </div>

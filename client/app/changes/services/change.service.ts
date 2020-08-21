@@ -2,9 +2,9 @@ import { Injectable, Inject } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import {
-    AcceptChange,
+    AcceptChange, Change,
     Changes,
-    ChangesVariables,
+    ChangesVariables, ChangeVariables,
     RejectChange, Site,
     SuggestCreation,
     SuggestDeletion,
@@ -26,8 +26,8 @@ import { SITE } from '../../app.config';
     providedIn: 'root',
 })
 export class ChangeService
-    extends AbstractContextualizedService<null,
-        never,
+    extends AbstractContextualizedService<Change['change'],
+        ChangeVariables,
         Changes['changes'],
         ChangesVariables,
         null,

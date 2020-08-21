@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CardService } from '../../../card/services/card.service';
+import { CardInput } from '../../generated-types';
 
 @Component({
     selector: 'app-mass-edit',
@@ -8,10 +9,10 @@ import { CardService } from '../../../card/services/card.service';
 })
 export class MassEditComponent {
 
-    public card;
+    public readonly card: CardInput;
 
     constructor(private cardService: CardService) {
-        const card = cardService.getConsolidatedForClient();
+        const card = cardService.getDefaultForServer();
         card.visibility = null;
         this.card = card;
     }
