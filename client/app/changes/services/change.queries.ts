@@ -30,18 +30,18 @@ export const changeQuery = gql`
             id
             type
             original {
-                ...cardDetails
+                ...CardDetails
             }
             suggestion {
-                ...cardDetails
+                ...CardDetails
             }
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update

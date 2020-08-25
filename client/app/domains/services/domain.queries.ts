@@ -28,11 +28,11 @@ export const domainQuery = gql`
             }
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -49,7 +49,7 @@ export const createDomain = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -61,7 +61,7 @@ export const updateDomain = gql`
         updateDomain(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }

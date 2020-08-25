@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const statisticDetails = gql`
-    fragment statisticDetails on Statistic {
+    fragment StatisticDetails on Statistic {
         id
         date
         anonymousPageCount
@@ -24,7 +24,7 @@ export const statisticsQuery = gql`
     query Statistics($filter: StatisticFilter, $pagination: PaginationInput, $sorting: [StatisticSorting!]) {
         statistics(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
-                ...statisticDetails
+                ...StatisticDetails
             }
             pageSize
             pageIndex
@@ -37,7 +37,7 @@ export const statisticsQuery = gql`
 export const statisticQuery = gql`
     query Statistic($id: StatisticID!) {
         statistic(id: $id) {
-            ...statisticDetails
+            ...StatisticDetails
         }
     }
     ${statisticDetails}

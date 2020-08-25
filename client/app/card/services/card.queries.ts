@@ -3,7 +3,7 @@ import {institutionDetails} from '../../institutions/services/institution.querie
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const cardDetailsFragment = gql`
-    fragment cardDetails on Card {
+    fragment CardDetails on Card {
         id
         legacyId
         site
@@ -107,26 +107,26 @@ export const cardDetailsFragment = gql`
             name
         }
         institution {
-            ...institutionDetails
+            ...InstitutionDetails
         }
         owner {
-            ...userMeta
+            ...UserMeta
         }
         creationDate
         creator {
-            ...userMeta
+            ...UserMeta
         }
         updateDate
         updater {
-            ...userMeta
+            ...UserMeta
         }
         dataValidationDate
         dataValidator {
-            ...userMeta
+            ...UserMeta
         }
         imageValidationDate
         imageValidator {
-            ...userMeta
+            ...UserMeta
         }
         permissions {
             update
@@ -141,7 +141,7 @@ export const cardsQuery = gql`
     query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
         cards(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
-                ...cardDetails
+                ...CardDetails
             }
             pageSize
             pageIndex
@@ -155,7 +155,7 @@ export const cardsQuery = gql`
 export const cardQuery = gql`
     query Card($id: CardID!) {
         card(id: $id) {
-            ...cardDetails
+            ...CardDetails
         }
     }
     ${cardDetailsFragment}
@@ -167,7 +167,7 @@ export const createCard = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -186,7 +186,7 @@ export const updateCard = gql`
     mutation UpdateCard($id: CardID!, $input: CardPartialInput!) {
         updateCard(id: $id, input: $input) {
             institution {
-                ...institutionDetails
+                ...InstitutionDetails
             }
             artists {
                 id
@@ -194,7 +194,7 @@ export const updateCard = gql`
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -211,7 +211,7 @@ export const deleteCards = gql`
 export const validateData = gql`
     mutation ValidateData($id: CardID!) {
         validateData(id: $id) {
-            ...cardDetails
+            ...CardDetails
         }
     }
     ${cardDetailsFragment}
@@ -220,7 +220,7 @@ export const validateData = gql`
 export const validateImage = gql`
     mutation ValidateImage($id: CardID!) {
         validateImage(id: $id) {
-            ...cardDetails
+            ...CardDetails
         }
     }
     ${cardDetailsFragment}

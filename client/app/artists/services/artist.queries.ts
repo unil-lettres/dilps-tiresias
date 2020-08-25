@@ -22,11 +22,11 @@ export const artistQuery = gql`
             name
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -43,7 +43,7 @@ export const createArtist = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -55,7 +55,7 @@ export const updateArtist = gql`
         updateArtist(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }

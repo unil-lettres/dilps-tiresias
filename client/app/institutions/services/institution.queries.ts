@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const institutionDetails = gql`
-    fragment institutionDetails on Institution {
+    fragment InstitutionDetails on Institution {
         id
         name
         locality
@@ -38,13 +38,13 @@ export const institutionsQuery = gql`
 export const institutionQuery = gql`
     query Institution($id: InstitutionID!) {
         institution(id: $id) {
-            ...institutionDetails
+            ...InstitutionDetails
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -62,7 +62,7 @@ export const createInstitution = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -74,7 +74,7 @@ export const updateInstitution = gql`
         updateInstitution(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }

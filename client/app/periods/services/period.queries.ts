@@ -32,11 +32,11 @@ export const periodQuery = gql`
             }
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -53,7 +53,7 @@ export const createPeriod = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -65,7 +65,7 @@ export const updatePeriod = gql`
         updatePeriod(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }

@@ -32,11 +32,11 @@ export const newsQuery = gql`
             isActive
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -53,7 +53,7 @@ export const createNews = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -65,7 +65,7 @@ export const updateNews = gql`
         updateNews(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
         }
     }

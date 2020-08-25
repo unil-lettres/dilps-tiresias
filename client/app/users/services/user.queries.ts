@@ -3,7 +3,7 @@ import {institutionDetails} from '../../institutions/services/institution.querie
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 const userDetailsFragment = gql`
-    fragment userDetails on User {
+    fragment UserDetails on User {
         id
         email
         name
@@ -18,11 +18,11 @@ const userDetailsFragment = gql`
         }
         creationDate
         creator {
-            ...userMeta
+            ...UserMeta
         }
         updateDate
         updater {
-            ...userMeta
+            ...UserMeta
         }
         permissions {
             update
@@ -55,7 +55,7 @@ export const usersQuery = gql`
 export const userQuery = gql`
     query User($id: UserID!) {
         user(id: $id) {
-            ...userDetails
+            ...UserDetails
         }
     }
     ${userDetailsFragment}
@@ -67,7 +67,7 @@ export const createUser = gql`
             id
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -79,10 +79,10 @@ export const updateUser = gql`
         updateUser(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             institution {
-                ...institutionDetails
+                ...InstitutionDetails
             }
         }
     }
@@ -99,7 +99,7 @@ export const deleteUsers = gql`
 export const loginMutation = gql`
     mutation Login($login: Login!, $password: String!) {
         login(login: $login, password: $password) {
-            ...userDetails
+            ...UserDetails
         }
     }
     ${userDetailsFragment}
@@ -114,7 +114,7 @@ export const logoutMutation = gql`
 export const viewerQuery = gql`
     query Viewer {
         viewer {
-            ...userDetails
+            ...UserDetails
             globalPermissions {
                 artist {
                     create

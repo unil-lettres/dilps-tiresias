@@ -46,11 +46,11 @@ export const collectionQuery = gql`
             }
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             permissions {
                 update
@@ -72,7 +72,7 @@ export const createCollection = gql`
             usageRights
             creationDate
             creator {
-                ...userMeta
+                ...UserMeta
             }
         }
     }
@@ -84,10 +84,10 @@ export const updateCollection = gql`
         updateCollection(id: $id, input: $input) {
             updateDate
             updater {
-                ...userMeta
+                ...UserMeta
             }
             institution {
-                ...institutionDetails
+                ...InstitutionDetails
             }
         }
     }
