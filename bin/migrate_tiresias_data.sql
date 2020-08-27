@@ -56,7 +56,7 @@ SELECT id + @user_offset,
     name,
     IF(type = 'externe', username, IF(TRIM(mail) = '', CONCAT('-lgc-', username), CONCAT('-unil-', username))),
     password,
-    IF(TRIM(mail) = '' OR users.id = 88, NULL, TRIM(mail)),
+    IF(TRIM(mail) = '', NULL, TRIM(mail)),
     CASE level
         WHEN 'superadministrateur'
             THEN 'administrator'
