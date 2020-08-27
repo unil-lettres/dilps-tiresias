@@ -4,8 +4,9 @@
 --
 -- Typical usage would be:
 --
---     more bin/generate-script-to-migrate-files.sql | mysql --raw -u dilps -p dilps
+--     more bin/generate-script-to-migrate-files.sql | mysql --raw -u {user} -p {database} > migrate-tiresias-data.sh
 
-SELECT CONCAT('cp "medias/', fond, '/cache/', id, '.jpg" "data/images/tiresias-', id, '.jpg"') AS '#!/usr/bin/env bash'
+SELECT CONCAT('cp "/var/www/html/tdata/', fonds.fond, '/cache/', meta.id, '.jpg" "/var/www/html/dilps/data/images/tiresias-', meta.id, '.jpg"') AS '#!/usr/bin/env bash'
 FROM meta
-ORDER BY fond, id;
+JOIN fonds ON meta.fond = fonds.id
+ORDER BY meta.fond, meta.id;
