@@ -84,7 +84,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      *
      * @return string[]
      */
-    public function getFilenamesForDimensionUpdate(): array
+    public function getFilenamesForDimensionUpdate(?string $site = null): array
     {
         $filenames = $this->getEntityManager()->getConnection()->createQueryBuilder()
             ->from('card')
@@ -93,9 +93,14 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->addSelect('height')
             ->addSelect('CONCAT("data/images/", filename) AS filename')
             ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll();
+            ->orderBy('filename');
 
-        return $filenames;
+        if ($site) {
+            $filenames
+                ->where('site = "' . $site . '"');
+        }
+
+        return $filenames->execute()->fetchAll();
     }
 
     /**
