@@ -1,0 +1,12 @@
+:host {
+    display: flex;
+
+    .scrolled {
+        margin-top: 64px;
+    }
+
+    .scrollable {
+        flex: 1;
+        overflow: auto;
+    }
+}

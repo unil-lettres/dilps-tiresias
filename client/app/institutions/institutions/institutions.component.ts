@@ -1,29 +1,18 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { InstitutionService } from '../services/institution.service';
-import { AbstractList } from '../../shared/components/AbstractList';
-import { InstitutionComponent } from '../institution/institution.component';
+import {Component, Injector} from '@angular/core';
+import {AbstractList} from '../../shared/components/AbstractList';
+import {Institutions, InstitutionsVariables} from '../../shared/generated-types';
+import {InstitutionComponent} from '../institution/institution.component';
+import {InstitutionService} from '../services/institution.service';
 
 @Component({
     selector: 'app-institutions',
     templateUrl: './institutions.component.html',
     styleUrls: ['./institutions.component.scss'],
-
 })
-export class InstitutionsComponent extends AbstractList {
+export class InstitutionsComponent extends AbstractList<Institutions['institutions'], InstitutionsVariables> {
+    public displayedColumns = ['name', 'locality'];
 
-    public displayedColumns = [
-        'name',
-        'locality',
-    ];
-
-    constructor(service: InstitutionService,
-                router: Router,
-                route: ActivatedRoute,
-                dialog: MatDialog) {
-
-        super('institutions', service, InstitutionComponent, router, route, dialog);
+    constructor(service: InstitutionService, injector: Injector) {
+        super(service, InstitutionComponent, injector);
     }
-
 }

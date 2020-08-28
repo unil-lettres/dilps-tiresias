@@ -14,6 +14,7 @@ class UserRoleType extends AbstractEnumType
             User::ROLE_STUDENT => 'A student',
             User::ROLE_JUNIOR => 'A junior editor',
             User::ROLE_SENIOR => 'A senior editor',
+            User::ROLE_MAJOR => 'A major editor',
             User::ROLE_ADMINISTRATOR => 'An administrator',
         ];
 

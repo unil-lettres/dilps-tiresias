@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppTest\Api;
+namespace ApplicationTest\Api;
 
 use Application\Api\Schema;
 use PHPUnit\Framework\TestCase;

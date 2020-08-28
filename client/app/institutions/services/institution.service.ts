@@ -1,43 +1,64 @@
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import {Inject, Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {SITE} from '../../app.config';
+
 import {
-    createInstitutionMutation,
-    deleteInstitutionsMutation,
+    CreateInstitution,
+    CreateInstitutionVariables,
+    DeleteInstitutions,
+    Institution,
+    InstitutionInput,
+    Institutions,
+    InstitutionsVariables,
+    InstitutionVariables,
+    Site,
+    UpdateInstitution,
+    UpdateInstitutionVariables,
+} from '../../shared/generated-types';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {
+    createInstitution,
+    deleteInstitutions,
     institutionQuery,
     institutionsQuery,
-    updateInstitutionMutation,
-} from './institutionQueries';
+    updateInstitution,
+} from './institution.queries';
 
-import {
-    CreateInstitutionMutation,
-    DeleteInstitutionsMutation,
-    InstitutionInput,
-    InstitutionQuery,
-    InstitutionsQuery,
-    UpdateInstitutionMutation,
-} from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-
-@Injectable()
-export class InstitutionService
-    extends AbstractModelService<InstitutionQuery['institution'],
-        InstitutionsQuery['institutions'],
-        CreateInstitutionMutation['createInstitution'],
-        UpdateInstitutionMutation['updateInstitution'],
-        DeleteInstitutionsMutation['deleteInstitutions']> {
-
-    constructor(apollo: Apollo) {
-        super(apollo,
+@Injectable({
+    providedIn: 'root',
+})
+export class InstitutionService extends AbstractContextualizedService<
+    Institution['institution'],
+    InstitutionVariables,
+    Institutions['institutions'],
+    InstitutionsVariables,
+    CreateInstitution['createInstitution'],
+    CreateInstitutionVariables,
+    UpdateInstitution['updateInstitution'],
+    UpdateInstitutionVariables,
+    DeleteInstitutions['deleteInstitutions'],
+    never
+> {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+        super(
+            apollo,
             'institution',
             institutionQuery,
             institutionsQuery,
-            createInstitutionMutation,
-            updateInstitutionMutation,
-            deleteInstitutionsMutation);
+            createInstitution,
+            updateInstitution,
+            deleteInstitutions,
+            site,
+        );
     }
 
-    public getEmptyObject(): InstitutionInput {
+    public getDefaultForClient(): InstitutionInput {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer(): InstitutionInput {
         return {
+            site: this.site,
             name: '',
             street: '',
             postcode: '',
@@ -48,5 +69,4 @@ export class InstitutionService
             country: null,
         };
     }
-
 }

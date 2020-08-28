@@ -2,9 +2,9 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 // Use puppeteer to control a headless Chrome
-process.env.CHROME_BIN = require('puppeteer').executablePath()
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -14,24 +14,23 @@ module.exports = function(config) {
             require('karma-jasmine-html-reporter'),
             require('karma-coverage-istanbul-reporter'),
             require('karma-scss-preprocessor'),
-            require('@angular-devkit/build-angular/plugins/karma')
+            require('@angular-devkit/build-angular/plugins/karma'),
         ],
-        files: [
-            { pattern: './client/styles.scss', included: true, watched: true }
-        ],
+        files: [{pattern: './client/styles.scss', included: true, watched: true}],
         preprocessors: {
-            './client/styles.scss': ['scss']
+            './client/styles.scss': ['scss'],
         },
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
-            captureConsole: true
+            captureConsole: true,
         },
         coverageIstanbulReporter: {
-            dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
+            dir: require('path').join(__dirname, 'coverage'),
+            reports: ['html', 'lcovonly'],
+            fixWebpackSourcePaths: true,
         },
         angularCli: {
-            environment: 'dev'
+            environment: 'dev',
         },
         reporters: ['progress', 'kjhtml'],
         port: 9876,
@@ -43,12 +42,12 @@ module.exports = function(config) {
         customLaunchers: {
             ChromeHeadlessCustom: {
                 base: 'ChromeHeadless',
-                flags: ['--no-sandbox']
-            }
+                flags: ['--no-sandbox'],
+            },
         },
         singleRun: false,
         browserNoActivityTimeout: 600000, // Wait 10 minutes before assuming browser crashed
         browserDisconnectTolerance: 10,
-        browserDisconnectTimeout : 500000
+        browserDisconnectTimeout: 500000,
     });
 };

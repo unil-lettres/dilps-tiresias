@@ -1,22 +1,37 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './shared/services/auth.guard';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './users/user/user.component';
-import { ListComponent } from './list/list.component';
-import { CardComponent } from './card/card.component';
-import { UsersComponent } from './users/users/users.component';
-import { CollectionsComponent } from './collections/collections/collections.component';
-import { CardResolver } from './card/services/card.resolver';
-import { InstitutionsComponent } from './institutions/institutions/institutions.component';
-import { ArtistsComponent } from './artists/artists/artists.component';
-import { ChangesComponent } from './changes/changes/changes.component';
-import { ChangeComponent } from './changes/change/change.component';
-import { UserResolver } from './users/services/user.resolver';
-import { AuthAdminGuard } from './shared/services/auth.admin.guard';
-import { QuizzComponent } from './quizz/quizz.component';
-import { CollectionVisibility, UserRole } from './shared/generated-types';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
+import {ArtistsComponent} from './artists/artists/artists.component';
+import {CardComponent} from './card/card.component';
+import {CardResolver} from './card/services/card.resolver';
+import {ChangeComponent} from './changes/change/change.component';
+import {ChangesComponent} from './changes/changes/changes.component';
+import {CollectionsComponent} from './collections/collections/collections.component';
+import {FakeCollectionResolver} from './collections/services/fake-collection.resolver';
+import {DocumentTypesComponent} from './document-types/document-types/document-types.component';
+import {DomainsComponent} from './domains/domains/domains.component';
+import {HomeComponent} from './home/home.component';
+import {InstitutionsComponent} from './institutions/institutions/institutions.component';
+import {ListComponent} from './list/list.component';
+import {LoginComponent} from './login/login.component';
+import {MaterialsComponent} from './materials/materials/materials.component';
+import {NewsesComponent} from './news/newses/newses.component';
+import {PeriodsComponent} from './periods/periods/periods.component';
+import {QuizzComponent} from './quizz/quizz.component';
+import {EmptyComponent} from './shared/components/empty/empty.component';
+import {
+    CardFilterGroupCondition,
+    CollectionFilterGroupCondition,
+    CollectionVisibility,
+    UserRole,
+} from './shared/generated-types';
+import {AuthAdminGuard} from './shared/services/auth.admin.guard';
+import {AuthGuard} from './shared/services/auth.guard';
+import {StatisticsComponent} from './statistics/statistics/statistics.component';
+import {TagsComponent} from './tags/tags/tags.component';
+import {UserResolver} from './users/services/user.resolver';
+import {UserComponent} from './users/user/user.component';
+import {UsersComponent} from './users/users/users.component';
 
 export const routes: Routes = [
     {
@@ -33,6 +48,11 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
+                redirectTo: 'home',
+                pathMatch: 'full',
+            },
+            {
+                path: 'home',
                 component: ListComponent,
                 data: {
                     showLogo: true,
@@ -71,6 +91,46 @@ export const routes: Routes = [
                 canActivate: [AuthGuard],
             },
             {
+                path: 'antique-name',
+                component: AntiqueNamesComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'tag',
+                component: TagsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'material',
+                component: MaterialsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'domain',
+                component: DomainsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'period',
+                component: PeriodsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'document-type',
+                component: DocumentTypesComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'news',
+                component: NewsesComponent,
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'statistic',
+                component: StatisticsComponent,
+                canActivate: [AuthGuard],
+            },
+            {
                 path: 'notification',
                 component: ChangesComponent,
             },
@@ -91,15 +151,24 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: false,
-                    editionButtonsForRoles: [
-                        UserRole.administrator,
-                        UserRole.senior,
-                    ],
-                    filters: {
-                        isSource: false,
-                        visibilities: [
-                            CollectionVisibility.administrator,
-                            CollectionVisibility.member,
+                    // editionButtonsForRoles: [UserRole.administrator, UserRole.senior],
+                    filter: {
+                        groups: [
+                            {
+                                conditions: [
+                                    {
+                                        isSource: {equal: {value: false}},
+                                        visibility: {
+                                            in: {
+                                                values: [
+                                                    CollectionVisibility.administrator,
+                                                    CollectionVisibility.member,
+                                                ],
+                                            },
+                                        },
+                                    } as CollectionFilterGroupCondition,
+                                ],
+                            },
                         ],
                     },
                 },
@@ -110,6 +179,9 @@ export const routes: Routes = [
                         data: {
                             showLogo: false,
                             showDownloadCollectionForRoles: [UserRole.administrator],
+                        },
+                        resolve: {
+                            collection: FakeCollectionResolver,
                         },
                     },
                 ],
@@ -123,24 +195,22 @@ export const routes: Routes = [
                     showLogo: false,
                     showUnclassified: true,
                     showMyCards: true,
-                    filters: {
-                        isSource: false,
+                    filter: {
+                        groups: [{conditions: [{isSource: {equal: {value: false}}} as CollectionFilterGroupCondition]}],
                     },
                 },
                 children: [
                     {
+                        // Redirect to next route. Angular router dislikes usage of navigation with empty path
                         path: '',
+                        pathMatch: 'full',
+                        redirectTo: '/my-collection/unclassified',
+                    },
+                    {
+                        path: 'unclassified',
                         component: ListComponent,
                         data: {
-                            filter: {
-                                groups: [
-                                    {
-                                        conditions: [{
-                                            collections: {empty: {not: false}},
-                                        }],
-                                    },
-                                ],
-                            },
+                            filter: {groups: [{conditions: [{collections: {empty: {}}} as CardFilterGroupCondition]}]},
                         },
                     },
                     {
@@ -151,6 +221,9 @@ export const routes: Routes = [
                     {
                         path: ':collectionId',
                         component: ListComponent,
+                        resolve: {
+                            collection: FakeCollectionResolver,
+                        },
                     },
                 ],
             },
@@ -159,9 +232,9 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: [UserRole.administrator],
-                    editionButtonsForRoles: [UserRole.administrator],
+                    // editionButtonsForRoles: [UserRole.administrator],
                     filter: {
-                        isSource: true,
+                        groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}],
                     },
                 },
                 children: [
@@ -171,14 +244,20 @@ export const routes: Routes = [
                         data: {
                             showDownloadCollectionForRoles: [UserRole.administrator],
                             showLogo: false,
-                            filter: {},
+                            filter: {}, // overrides parent
+                        },
+                        resolve: {
+                            collection: FakeCollectionResolver,
                         },
                     },
                 ],
             },
+            {
+                path: 'empty',
+                component: EmptyComponent,
+            },
         ],
     },
-
 ];
 
 @NgModule({
@@ -189,5 +268,4 @@ export const routes: Routes = [
     ],
     exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

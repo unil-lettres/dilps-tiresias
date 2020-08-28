@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export const userMetaFragment = gql`
-fragment userMeta on User {
-    id
-    login
-    email
-}`;
-
+    fragment UserMeta on User {
+        id
+        login
+        email
+    }
+`;

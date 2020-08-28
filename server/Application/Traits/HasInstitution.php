@@ -23,8 +23,6 @@ trait HasInstitution
 
     /**
      * Get the institution this object belongs to
-     *
-     * @return null|Institution
      */
     public function getInstitution(): ?Institution
     {
@@ -35,8 +33,6 @@ trait HasInstitution
      * Set name of the institution this object belongs to.
      *
      * If the institution does not yet exist, it will be created automatically.
-     *
-     * @param null|string $institutionName
      */
     public function setInstitution(?string $institutionName): void
     {
@@ -46,6 +42,6 @@ trait HasInstitution
             return;
         }
 
-        $this->institution = _em()->getRepository(Institution::class)->getOrCreateByName($institutionName);
+        $this->institution = _em()->getRepository(Institution::class)->getOrCreateByName($institutionName, $this->getSite());
     }
 }

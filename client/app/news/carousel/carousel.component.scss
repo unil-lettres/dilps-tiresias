@@ -1,0 +1,33 @@
+:host {
+    display: flex;
+    flex-direction: column;
+
+    swiper {
+        height: 450px;
+        width: 800px;
+    }
+
+    .news {
+        position: relative;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .label {
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        max-width: calc(100% - 80px);
+        color: white;
+        text-align: left;
+    }
+
+    ::ng-deep .swiper-button-disabled {
+        display: none;
+    }
+}

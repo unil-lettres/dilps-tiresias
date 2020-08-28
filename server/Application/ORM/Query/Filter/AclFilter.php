@@ -7,7 +7,7 @@ namespace Application\ORM\Query\Filter;
 use Application\Model\Collection;
 use Application\Model\User;
 use Application\Repository\LimitedAccessSubQueryInterface;
-use Doctrine\ORM\Mapping\ClassMetaData;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 
 /**
@@ -35,35 +35,60 @@ class AclFilter extends SQLFilter
     private $subQueriesCache = [];
 
     /**
-     * Whether the filter is active
+     * The number of time the filter has been deactivated
      *
-     * @var bool
+     * @var int
      */
-    private $enabled = true;
+    private $disabledCount = 0;
 
     /**
-     * Enable or disable the filter
+     * Disable the ACL filter forever
+     *
+     * The only way to re-enable it is to create a new instance.
+     */
+    public function disableForever(): void
+    {
+        $this->setEnabled(false);
+    }
+
+    /**
+     * Run the given callable with ACL temporarily disabled
      *
      * This method MUST be used instead of `$entityManager->getFilters()->enable()` because
      * that method destroy the filter object and thus losing the current user. So to keep
      * our internal state intact we must implement a custom enable/disable mechanism.
      *
-     * @param bool $enabled
+     * @return mixed whatever the callable returned
      */
-    public function setEnabled(bool $enabled): void
+    public function runWithoutAcl(callable $callable)
     {
-        $this->enabled = $enabled;
+        $this->setEnabled(false);
+
+        try {
+            return $callable();
+        } finally {
+            $this->setEnabled(true);
+        }
     }
 
     /**
-     * @param ClassMetaData $targetEntity
+     * Enable or disable the filter
+     */
+    private function setEnabled(bool $enabled): void
+    {
+        if ($enabled) {
+            --$this->disabledCount;
+        } else {
+            ++$this->disabledCount;
+        }
+    }
+
+    /**
      * @param string $targetTableAlias
-     *
-     * @return string
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias): string
     {
-        if (!$this->enabled) {
+        if ($this->disabledCount > 0) {
             return '';
         }
 
@@ -79,8 +104,6 @@ class AclFilter extends SQLFilter
 
     /**
      * Set the current user for which we should apply access limitations
-     *
-     * @param null|User $user
      */
     public function setUser(?User $user): void
     {

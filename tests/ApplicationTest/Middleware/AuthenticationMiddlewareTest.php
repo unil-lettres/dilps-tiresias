@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Middleware;
 
+use Application\DBAL\Types\SiteType;
 use Application\Middleware\AuthenticationMiddleware;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use DateTimeImmutable;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Session\Session;
+use Mezzio\Session\SessionInterface;
+use Mezzio\Session\SessionMiddleware;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Session\Session;
-use Zend\Expressive\Session\SessionInterface;
-use Zend\Expressive\Session\SessionMiddleware;
 
 class AuthenticationMiddlewareTest extends TestCase
 {
@@ -106,7 +107,7 @@ class AuthenticationMiddlewareTest extends TestCase
             }
         };
 
-        $middleware = new AuthenticationMiddleware($userRepository);
+        $middleware = new AuthenticationMiddleware($userRepository, SiteType::DILPS);
         $middleware->process($request, $handler);
 
         return $session;

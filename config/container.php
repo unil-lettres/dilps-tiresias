@@ -1,12 +1,17 @@
 <?php
 
 declare(strict_types=1);
+
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\Config;
+use Laminas\ServiceManager\ServiceManager;
 
 require_once 'server/Debug.php';
+
+// Secure cookie usage
+ini_set('session.cookie_httponly', '1');
+ini_set('session.cookie_samesite', 'Strict');
 
 // Load configuration
 $config = require __DIR__ . '/config.php';
@@ -21,8 +26,6 @@ $container->setService('config', $config);
 
 /**
  * Returns the type registry
- *
- * @return Types
  */
 function _types(): Types
 {
@@ -33,8 +36,6 @@ function _types(): Types
 
 /**
  * Returns the EM
- *
- * @return EntityManager
  */
 function _em(): EntityManager
 {

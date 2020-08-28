@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -13,11 +15,13 @@ use GraphQL\Doctrine\Annotation as API;
  * @ORM\Entity(repositoryClass="Application\Repository\ChangeRepository")
  * @ORM\Table(name="`change`")
  */
-class Change extends AbstractModel
+class Change extends AbstractModel implements HasSiteInterface
 {
     const TYPE_CREATE = 'create';
     const TYPE_UPDATE = 'update';
     const TYPE_DELETE = 'delete';
+
+    use HasSite;
 
     /**
      * @var string
@@ -56,8 +60,6 @@ class Change extends AbstractModel
      * Get the type of change
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -68,8 +70,6 @@ class Change extends AbstractModel
      * Set the type of change
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
-     *
-     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -81,8 +81,6 @@ class Change extends AbstractModel
      *
      * It will be `null` if the change type is `create`, otherwise
      * it mus be set.
-     *
-     * @return null|Card
      */
     public function getOriginal(): ?Card
     {
@@ -91,8 +89,6 @@ class Change extends AbstractModel
 
     /**
      * Set the original card on which to apply change
-     *
-     * @param null|Card $original
      */
     public function setOriginal(?Card $original): void
     {
@@ -104,17 +100,12 @@ class Change extends AbstractModel
      *
      * It will be `null` if the change type is `delete`, otherwise
      * it mus be set.
-     *
-     * @return null|Card
      */
     public function getSuggestion(): ?Card
     {
         return $this->suggestion;
     }
 
-    /**
-     * @param null|Card $suggestion
-     */
     public function setSuggestion(?Card $suggestion): void
     {
         if ($this->suggestion) {
@@ -130,8 +121,6 @@ class Change extends AbstractModel
 
     /**
      * Get the message from the submitter explaining the reason of the change request
-     *
-     * @return string
      */
     public function getRequest(): string
     {
@@ -140,8 +129,6 @@ class Change extends AbstractModel
 
     /**
      * Set the message from the submitter explaining the reason of the change request
-     *
-     * @param string $request
      */
     public function setRequest(string $request): void
     {

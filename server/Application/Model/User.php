@@ -8,8 +8,13 @@ use Application\Acl\Acl;
 use Application\Api\Exception;
 use Application\ORM\Query\Filter\AclFilter;
 use Application\Traits\HasInstitution;
+use Application\Traits\HasName;
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Application\Utility;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -17,20 +22,26 @@ use GraphQL\Doctrine\Annotation as API;
  * User
  *
  * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
+ * @ORM\Table(uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"}),
+ *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
+ * })
  */
-class User extends AbstractModel
+class User extends AbstractModel implements HasSiteInterface
 {
     use HasInstitution;
+    use HasSite;
+    use HasName;
 
     /**
-     * Someone who is a normal user, not part of UNIL
+     * Someone who is a normal user, not part of AAI
      */
     const TYPE_DEFAULT = 'default';
 
     /**
-     * Someone who log in via UNIL system
+     * Someone who log in via AAI system
      */
-    const TYPE_UNIL = 'unil';
+    const TYPE_AAI = 'aai';
 
     /**
      * Empty shell used for legacy
@@ -41,12 +52,20 @@ class User extends AbstractModel
     const ROLE_STUDENT = 'student';
     const ROLE_JUNIOR = 'junior';
     const ROLE_SENIOR = 'senior';
+    const ROLE_MAJOR = 'major';
     const ROLE_ADMINISTRATOR = 'administrator';
 
     /**
      * @var User
      */
     private static $currentUser;
+
+    /**
+     * @var DoctrineCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
+     */
+    private $collections;
 
     /**
      * Set currently logged in user
@@ -64,8 +83,6 @@ class User extends AbstractModel
 
     /**
      * Returns currently logged user or null
-     *
-     * @return null|self
      */
     public static function getCurrent(): ?self
     {
@@ -75,20 +92,23 @@ class User extends AbstractModel
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=191)
      */
     private $login = '';
 
     /**
      * @var string
      *
+     * @API\Exclude
+     *
      * @ORM\Column(type="string", length=255)
+     * @API\Exclude
      */
     private $password = '';
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=191)
+     * @var null|string
+     * @ORM\Column(type="string", length=191, nullable=true)
      */
     private $email;
 
@@ -123,6 +143,7 @@ class User extends AbstractModel
      */
     public function __construct(string $role = self::ROLE_STUDENT)
     {
+        $this->collections = new ArrayCollection();
         $this->role = $role;
     }
 
@@ -130,8 +151,6 @@ class User extends AbstractModel
      * Set login (eg: johndoe)
      *
      * @API\Input(type="Application\Api\Scalar\LoginType")
-     *
-     * @param string $login
      */
     public function setLogin(string $login): void
     {
@@ -142,8 +161,6 @@ class User extends AbstractModel
      * Get login (eg: johndoe)
      *
      * @API\Field(type="Application\Api\Scalar\LoginType")
-     *
-     * @return string
      */
     public function getLogin(): string
     {
@@ -152,8 +169,6 @@ class User extends AbstractModel
 
     /**
      * Encrypt and change the user password
-     *
-     * @param string $password
      */
     public function setPassword(string $password): void
     {
@@ -170,8 +185,6 @@ class User extends AbstractModel
      * Returns the hashed password
      *
      * @API\Exclude
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -181,9 +194,9 @@ class User extends AbstractModel
     /**
      * Set email
      *
-     * @param string $email
+     * @API\Input(type="?Email")
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
@@ -191,9 +204,9 @@ class User extends AbstractModel
     /**
      * Get email
      *
-     * @return string
+     * @API\Field(type="?Email")
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -216,8 +229,6 @@ class User extends AbstractModel
      *
      * But the current user is **not** allowed to demote a user who has a higher role than himself.
      * That means that a Senior cannot demote an Admin to Student.
-     *
-     * @param string $role
      */
     public function setRole(string $role): void
     {
@@ -231,6 +242,7 @@ class User extends AbstractModel
             self::ROLE_STUDENT,
             self::ROLE_JUNIOR,
             self::ROLE_SENIOR,
+            self::ROLE_MAJOR,
             self::ROLE_ADMINISTRATOR,
         ];
 
@@ -258,8 +270,6 @@ class User extends AbstractModel
 
     /**
      * The date until the user is active. Or `null` if there is not limit in time
-     *
-     * @return null|DateTimeImmutable
      */
     public function getActiveUntil(): ?DateTimeImmutable
     {
@@ -268,8 +278,6 @@ class User extends AbstractModel
 
     /**
      * The date until the user is active. Or `null` if there is not limit in time
-     *
-     * @param null|DateTimeImmutable $activeUntil
      */
     public function setActiveUntil(?DateTimeImmutable $activeUntil): void
     {
@@ -278,8 +286,6 @@ class User extends AbstractModel
 
     /**
      * The date when the user agreed to the terms of usage
-     *
-     * @return null|DateTimeImmutable
      */
     public function getTermsAgreement(): ?DateTimeImmutable
     {
@@ -290,8 +296,6 @@ class User extends AbstractModel
      * The date when the user agreed to the terms of usage.
      *
      * A user cannot un-agree once he agreed.
-     *
-     * @param null|DateTimeImmutable $termsAgreement
      */
     public function setTermsAgreement(?DateTimeImmutable $termsAgreement): void
     {
@@ -302,8 +306,6 @@ class User extends AbstractModel
      * Set user type
      *
      * @API\Input(type="Application\Api\Enum\UserTypeType")
-     *
-     * @param string $type
      */
     public function setType(string $type): void
     {
@@ -314,8 +316,6 @@ class User extends AbstractModel
      * Get user type
      *
      * @API\Field(type="Application\Api\Enum\UserTypeType")
-     *
-     * @return string
      */
     public function getType(): string
     {
@@ -326,8 +326,6 @@ class User extends AbstractModel
      * Get a list of global permissions for this user
      *
      * @API\Field(type="GlobalPermissionsList")
-     *
-     * @return array
      */
     public function getGlobalPermissions(): array
     {
@@ -341,6 +339,12 @@ class User extends AbstractModel
             Dating::class,
             Institution::class,
             Tag::class,
+            Domain::class,
+            DocumentType::class,
+            News::class,
+            Period::class,
+            Material::class,
+            AntiqueName::class,
             self::class,
         ];
 
@@ -351,6 +355,13 @@ class User extends AbstractModel
         self::setCurrent($this);
         foreach ($types as $type) {
             $instance = new $type();
+
+            // Simulate current site on new object
+            if ($instance instanceof HasSiteInterface) {
+                $site = $this->getSite();
+                $instance->setSite($site);
+            }
+
             $sh = lcfirst(Utility::getShortClassName($instance));
             $result[$sh] = [];
 
@@ -362,5 +373,23 @@ class User extends AbstractModel
         self::setCurrent($previousUser);
 
         return $result;
+    }
+
+    /**
+     * Notify the Card that it was added to a Collection.
+     * This should only be called by Collection::addCard()
+     */
+    public function collectionAdded(Collection $collection): void
+    {
+        $this->collections->add($collection);
+    }
+
+    /**
+     * Notify the Card that it was removed from a Collection.
+     * This should only be called by Collection::removeCard()
+     */
+    public function collectionRemoved(Collection $collection): void
+    {
+        $this->collections->removeElement($collection);
     }
 }

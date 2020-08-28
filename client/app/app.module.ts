@@ -1,110 +1,159 @@
-import { map } from 'rxjs/operators';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { ApolloLink } from 'apollo-link';
-import { createUploadLink } from 'apollo-upload-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AgmCoreModule} from '@agm/core';
+import {AgmSnazzyInfoWindowModule} from '@agm/snazzy-info-window';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule, ErrorHandler} from '@angular/core';
+
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatSortModule} from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips';
+import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatExpansionModule} from '@angular/material/expansion';
 import {
     MAT_FORM_FIELD_DEFAULT_OPTIONS,
     MatFormFieldDefaultOptions,
-    DateAdapter,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
     MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatExpansionModule,
-    MatGridListModule,
-} from '@angular/material';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTableModule} from '@angular/material/table';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NavigationEnd, Router} from '@angular/router';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgProgressModule } from '@ngx-progressbar/core';
+import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
+import {
+    NaturalAlertModule,
+    NaturalDropdownComponentsModule,
+    NaturalFixedButtonModule,
+    NaturalHierarchicSelectorModule,
+    NaturalIconModule,
+    NaturalIconsConfig,
+    NaturalRelationsModule,
+    NaturalSearchModule,
+    NaturalSelectModule,
+    NaturalTableButtonModule,
+} from '@ecodev/natural';
+import {NgProgressModule} from 'ngx-progressbar';
+import {ngfModule} from 'angular-file';
+import {Apollo, ApolloModule} from 'apollo-angular';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {HighchartsChartModule} from 'highcharts-angular';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {SwiperModule} from 'ngx-swiper-wrapper';
+import {filter} from 'rxjs/operators';
+import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
+import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
 
-import { AppRoutingModule } from './app-routing.module';
-import { DownloadComponent } from './shared/components/download/download.component';
-import { AuthGuard } from './shared/services/auth.guard';
-import { ThemeService } from './shared/services/theme.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NetworkActivityService } from './shared/services/network-activity.service';
-import { UserService } from './users/services/user.service';
+import {AppRoutingModule} from './app-routing.module';
 
-import { AppComponent } from './app.component';
-import { UserComponent } from './users/user/user.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { BootLoaderComponent } from './shared/components/boot-loader/boot-loader.component';
-import { ListComponent } from './list/list.component';
-import { CardComponent } from './card/card.component';
-import { UsersComponent } from './users/users/users.component';
-import { TableButtonComponent } from './shared/components/table-button/table-button.component';
-import { CollectionsComponent } from './collections/collections/collections.component';
-import { UserResolver } from './users/services/user.resolver';
-import { FocusDirective } from './shared/directives/focus';
-import { CardResolver } from './card/services/card.resolver';
-import { CardService } from './card/services/card.service';
-import { CollectionComponent } from './collections/collection/collection.component';
-import { CollectionService } from './collections/services/collection.service';
-import { SelectComponent } from './shared/components/select/select.component';
-import { apolloDefaultOptions } from './shared/config/apollo.default.options';
-import { onError } from 'apollo-link-error';
-import { InstitutionService } from './institutions/services/institution.service';
-import { AlertService } from './shared/components/alert/alert.service';
-import { ConfirmComponent } from './shared/components/alert/confirm.component';
-import { TermsAgreementComponent } from './login/terms-agreement.component';
-import { InstitutionsComponent } from './institutions/institutions/institutions.component';
-import { InstitutionComponent } from './institutions/institution/institution.component';
-import { ArtistComponent } from './artists/artist/artist.component';
-import { ArtistsComponent } from './artists/artists/artists.component';
-import { ArtistService } from './artists/services/artist.service';
-import { ThesaurusComponent } from './shared/components/thesaurus/thesaurus.component';
-import { AgmCoreModule } from '@agm/core';
-import { AddressComponent } from './shared/components/address/address.component';
-import { DialogFooterComponent } from './shared/components/dialog-footer/dialog-footer.component';
-import { StampComponent } from './shared/components/stamp/stamp.component';
-import { ChangesComponent } from './changes/changes/changes.component';
-import { ChangeService } from './changes/services/change.service';
-import { ChangeComponent } from './changes/change/change.component';
-import { ngfModule } from 'angular-file';
-import { UploadService } from './shared/services/upload.service';
-import { FileDropDirective } from './shared/directives/file-drop.directive';
-import { CollectionSelectorComponent } from './shared/components/collection-selector/collection-selector.component';
-import { LinkMutationService } from './shared/services/link-mutation.service';
-import { RolePipe } from './shared/pipes/role.pipe';
-import { TypePipe } from './shared/pipes/type.pipe';
-import { AuthAdminGuard } from './shared/services/auth.admin.guard';
-import { QuizzComponent } from './quizz/quizz.component';
-import { NumberSelectorComponent } from './quizz/shared/number-selector/number-selector.component';
-import { MassEditComponent } from './shared/components/mass-edit/mass-edit.component';
-import { RelationsComponent } from './shared/components/relations/relations.component';
-
-import { NaturalGalleryModule } from '@ecodev/angular-natural-gallery';
-import { NaturalSearchModule } from '@ecodev/natural-search';
+import {AppComponent} from './app.component';
+import {SITE} from './app.config';
+import {ArtistComponent} from './artists/artist/artist.component';
+import {ArtistsComponent} from './artists/artists/artists.component';
+import {CardComponent} from './card/card.component';
+import {ChangeComponent} from './changes/change/change.component';
+import {ChangesComponent} from './changes/changes/changes.component';
+import {CollectionComponent} from './collections/collection/collection.component';
+import {CollectionsComponent} from './collections/collections/collections.component';
+import {DocumentTypeComponent} from './document-types/document-type/document-type.component';
+import {DocumentTypesComponent} from './document-types/document-types/document-types.component';
+import {DomainComponent} from './domains/domain/domain.component';
+import {DomainsComponent} from './domains/domains/domains.component';
+import {HomeComponent} from './home/home.component';
+import {InstitutionComponent} from './institutions/institution/institution.component';
+import {InstitutionsComponent} from './institutions/institutions/institutions.component';
+import {ListComponent} from './list/list.component';
+import {LoginComponent} from './login/login.component';
+import {TermsAgreementComponent} from './login/terms-agreement.component';
+import {MaterialComponent} from './materials/material/material.component';
+import {MaterialsComponent} from './materials/materials/materials.component';
+import {CarouselComponent} from './news/carousel/carousel.component';
+import {NewsComponent} from './news/news/news.component';
+import {NewsesComponent} from './news/newses/newses.component';
+import {PeriodComponent} from './periods/period/period.component';
+import {PeriodsComponent} from './periods/periods/periods.component';
+import {QuizzComponent} from './quizz/quizz.component';
+import {NumberSelectorComponent} from './quizz/shared/number-selector/number-selector.component';
+import {AddressComponent} from './shared/components/address/address.component';
+import {AlertService} from './shared/components/alert/alert.service';
+import {ConfirmComponent} from './shared/components/alert/confirm.component';
+import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
+import {CardSelectorComponent} from './shared/components/card-selector/card-selector.component';
+import {CollectionSelectorComponent} from './shared/components/collection-selector/collection-selector.component';
+import {DialogFooterComponent} from './shared/components/dialog-footer/dialog-footer.component';
+import {DownloadComponent} from './shared/components/download/download.component';
+import {LogoComponent} from './shared/components/logo/logo.component';
+import {EmptyComponent} from './shared/components/empty/empty.component';
+import {MassEditComponent} from './shared/components/mass-edit/mass-edit.component';
+import {StampComponent} from './shared/components/stamp/stamp.component';
+import {TableButtonComponent} from './shared/components/table-button/table-button.component';
+import {ThesaurusComponent} from './shared/components/thesaurus/thesaurus.component';
+import {apolloDefaultOptions, createApolloLink} from './shared/config/apollo.link.creator';
+import {FileDropDirective} from './shared/directives/file-drop.directive';
+import {FocusDirective} from './shared/directives/focus';
+import {RolePipe} from './shared/pipes/role.pipe';
+import {TruncatePipe} from './shared/pipes/truncate.pipe';
+import {TypePipe} from './shared/pipes/type.pipe';
+import {NetworkActivityService} from './shared/services/network-activity.service';
+import {StatisticService} from './statistics/services/statistic.service';
+import {StatisticComponent} from './statistics/statistic/statistic.component';
+import {StatisticsComponent} from './statistics/statistics/statistics.component';
+import {TagComponent} from './tags/tag/tag.component';
+import {TagsComponent} from './tags/tags/tags.component';
+import {UserComponent} from './users/user/user.component';
+import {UsersComponent} from './users/users/users.component';
+import {ViewGridComponent} from './view-grid/view-grid.component';
+import {ViewListComponent} from './view-list/view-list.component';
+import {ViewMapComponent} from './view-map/view-map.component';
+import {QuillModule} from 'ngx-quill';
+import {quillConfig} from './shared/config/quill.options';
+import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
+import {environment} from '../environments/environment';
+import {UrlValidatorDirective} from './shared/directives/url-validator.directive';
+import {UniqueCodeValidatorDirective} from './shared/directives/unique-code-validator.directive';
+import {StripTagsPipe} from './shared/pipes/strip-tags.pipe';
+import {OnlyLeavesPipe} from './shared/pipes/only-leaves.pipe';
+import {TypeLocationComponent} from './type-location/type-location.component';
+import {TypeNumericRangeComponent} from './type-numeric-range/type-numeric-range.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
-    appearance: 'legacy'
+    appearance: 'fill',
+};
+
+const icons: NaturalIconsConfig = {
+    material: {
+        svg: 'assets/icons/diamond.svg',
+    },
+    period: {
+        font: 'date_range',
+    },
+    tag: {
+        font: 'label',
+    },
+    'antique-name': {
+        svg: 'assets/icons/fire.svg',
+    },
 };
 
 @NgModule({
@@ -121,8 +170,9 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         CollectionsComponent,
         ConfirmComponent,
         FocusDirective,
+        UrlValidatorDirective,
+        UniqueCodeValidatorDirective,
         CollectionComponent,
-        SelectComponent,
         TermsAgreementComponent,
         InstitutionsComponent,
         InstitutionComponent,
@@ -137,12 +187,39 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         FileDropDirective,
         CollectionSelectorComponent,
         DownloadComponent,
+        LogoComponent,
         RolePipe,
         TypePipe,
+        StripTagsPipe,
+        OnlyLeavesPipe,
         QuizzComponent,
         NumberSelectorComponent,
         MassEditComponent,
-        RelationsComponent,
+        EmptyComponent,
+        ViewGridComponent,
+        ViewMapComponent,
+        ViewListComponent,
+        CarouselComponent,
+        NewsesComponent,
+        NewsComponent,
+        StatisticsComponent,
+        StatisticComponent,
+        DomainComponent,
+        DomainsComponent,
+        DocumentTypesComponent,
+        DocumentTypeComponent,
+        PeriodComponent,
+        PeriodsComponent,
+        TagComponent,
+        TagsComponent,
+        MaterialComponent,
+        MaterialsComponent,
+        CardSelectorComponent,
+        AntiqueNamesComponent,
+        AntiqueNameComponent,
+        TypeLocationComponent,
+        TypeNumericRangeComponent,
+        TruncatePipe,
     ],
     entryComponents: [
         ConfirmComponent,
@@ -155,6 +232,16 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         CollectionComponent,
         NumberSelectorComponent,
         MassEditComponent,
+        NewsComponent,
+        DomainComponent,
+        DocumentTypeComponent,
+        PeriodComponent,
+        TagComponent,
+        MaterialComponent,
+        CardSelectorComponent,
+        AntiqueNameComponent,
+        TypeLocationComponent,
+        TypeNumericRangeComponent,
     ],
     imports: [
         BrowserModule,
@@ -194,75 +281,56 @@ const formFieldDefaults: MatFormFieldDefaultOptions = {
         MatDatepickerModule,
         MatNativeDateModule,
         MatChipsModule,
+        MatCardModule,
         ngfModule,
+        AgmSnazzyInfoWindowModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyBIBMlG6xXDmpPERQgKdo_Dwhtz5SX5dto',
+            apiKey: environment.agmApiKey,
             libraries: ['places'],
         }),
+        NaturalDropdownComponentsModule,
+        NaturalIconModule.forRoot(icons),
+        NaturalRelationsModule,
+        NaturalSelectModule,
+        NaturalTableButtonModule,
+        NaturalAlertModule,
+        NaturalFixedButtonModule,
+        SwiperModule,
+        NaturalHierarchicSelectorModule,
+        HighchartsChartModule,
+        MatSortModule,
+        QuillModule.forRoot(quillConfig),
     ],
     providers: [
-        AuthGuard,
-        AuthAdminGuard,
-        ThemeService,
-        NetworkActivityService,
-        CollectionService,
-        UserService,
-        UserResolver,
-        CardResolver,
-        CardService,
-        AlertService,
-        InstitutionService,
-        ArtistService,
-        ChangeService,
-        UploadService,
-        LinkMutationService,
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults },
+        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
+        /* tslint:disable:no-string-literal */
+        {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
+        {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
     ],
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor(apollo: Apollo,
-                networkActivitySvc: NetworkActivityService,
-                alertSvc: AlertService,
-                private dateAdapter: DateAdapter<Date>) {
+    constructor(
+        apollo: Apollo,
+        networkActivityService: NetworkActivityService,
+        alertService: AlertService,
+        dateAdapter: DateAdapter<Date>,
+        statisticService: StatisticService,
+        router: Router,
+    ) {
+        // On each page change, record in stats
+        router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
+            statisticService.recordPage();
+        });
 
         dateAdapter.setLocale('fr-ch');
 
-        const link = createUploadLink({
-            uri: '/graphql',
-            credentials: 'include',
-        });
-
-        const middleware = new ApolloLink((operation, forward) => {
-            networkActivitySvc.increase();
-            return forward(operation).map(response => {
-                networkActivitySvc.decrease();
-                return response;
-            });
-        });
-
-        const errorLink = onError(({graphQLErrors, networkError}) => {
-
-            // Network errors seems not to be catched by above middleware, and we need to be informed to decrease pending queries
-            if (networkError) {
-                alertSvc.error('Une erreur est survenue sur le réseau');
-                networkActivitySvc.decrease();
-            }
-
-            // Graphql responses with errors are valid responses and are catched by the above middleware.
-            // There seems to be no need to do something here
-            // Seems we have no need to deal
-            if (graphQLErrors) {
-                alertSvc.error('Une erreur est survenue du côté du serveur');
-                networkActivitySvc.updateErrors(graphQLErrors);
-            }
-        });
+        const link = createApolloLink(networkActivityService, alertService);
 
         apollo.create({
-            link: middleware.concat(errorLink).concat(link),
+            link: link,
             cache: new InMemoryCache(),
             defaultOptions: apolloDefaultOptions,
         });
     }
-
 }

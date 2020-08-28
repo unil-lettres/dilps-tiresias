@@ -14,7 +14,8 @@ class PptxFactory
     {
         $imagine = $container->get(ImagineInterface::class);
         $imageService = $container->get(ImageService::class);
+        $site = $container->get('site');
 
-        return new PptxAction($imageService, $imagine);
+        return new PptxAction($imageService, $imagine, $site);
     }
 }

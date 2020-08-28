@@ -2,19 +2,24 @@
 
 declare(strict_types=1);
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
-use Zend\Diactoros\UploadedFile;
+use Laminas\Diactoros\UploadedFile;
 
 return [
     [
-        'query' => 'mutation ($inputCard: CardInput!) {
-            createCard(input: $inputCard) {
+        'query' => 'mutation ($inputCard: CardInput!, $collection: CollectionID) {
+            createCard(input: $inputCard, collection: $collection) {
                 name
                 fileSize
                 width
                 height
+                code
                 artists {
                     name
+                }
+                collections {
+                    id
                 }
             }
         }',
@@ -22,6 +27,7 @@ return [
             'inputCard' => [
                 // Fake a a file uploaded with incorrect data, to check if we trust them (we should not)
                 'file' => new UploadedFile('data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg', 999, UPLOAD_ERR_OK, 'card.jpg', 'text/plain'),
+                'site' => SiteType::DILPS,
                 'visibility' => Card::VISIBILITY_MEMBER,
                 'dating' => 'test dating',
                 'addition' => 'test addition',
@@ -48,6 +54,10 @@ return [
                     'Test artist 3000',
                     'New artist',
                 ],
+                'materials' => ['2000', '2001'],
+                'tags' => ['2000', '2001'],
+                'periods' => ['2000', '2001'],
+                'antiqueNames' => ['2000', '2001'],
             ],
         ],
     ],
@@ -58,6 +68,7 @@ return [
                 'fileSize' => 90188,
                 'width' => 960,
                 'height' => 425,
+                'code' => null,
                 'artists' => [
                     [
                         'name' => 'Test artist 3000',
@@ -66,6 +77,7 @@ return [
                         'name' => 'New artist',
                     ],
                 ],
+                'collections' => [],
             ],
         ],
     ],

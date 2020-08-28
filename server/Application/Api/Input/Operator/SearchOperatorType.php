@@ -6,6 +6,7 @@ namespace Application\Api\Input\Operator;
 
 use Application\Model\Artist;
 use Application\Model\Card;
+use Application\Model\Country;
 use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
@@ -64,12 +65,17 @@ class SearchOperatorType extends AbstractOperator
         $whitelistedFields = [
             'name',
             'expandedName',
+            'street',
             'locality',
+            'country',
             'material',
             'technique',
             'addition',
             'login',
             'email',
+            'dating',
+            'id',
+            'code',
         ];
 
         // Find most textual fields for the entity
@@ -87,12 +93,15 @@ class SearchOperatorType extends AbstractOperator
         if ($metadata->name === Card::class) {
             $institution = $uniqueNameFactory->createAliasName(Institution::class);
             $artist = $uniqueNameFactory->createAliasName(Artist::class);
+            $country = $uniqueNameFactory->createAliasName(Country::class);
 
             $queryBuilder->leftJoin($alias . '.institution', $institution);
             $queryBuilder->leftJoin($alias . '.artists', $artist);
+            $queryBuilder->leftJoin($alias . '.country', $country);
 
             $fields[] = $institution . '.name';
             $fields[] = $artist . '.name';
+            $fields[] = $country . '.name';
         }
 
         return $fields;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 
@@ -17,7 +18,7 @@ class UserRepositoryTest extends AbstractRepositoryTest
      */
     private $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->repository = _em()->getRepository(User::class);
@@ -25,10 +26,10 @@ class UserRepositoryTest extends AbstractRepositoryTest
 
     public function testGetLoginPassword(): void
     {
-        self::assertNull($this->repository->getLoginPassword('foo', 'bar'), 'wrong user');
-        self::assertNull($this->repository->getLoginPassword('administrator', 'bar'), 'wrong password');
+        self::assertNull($this->repository->getLoginPassword('foo', 'bar', SiteType::DILPS), 'wrong user');
+        self::assertNull($this->repository->getLoginPassword('administrator', 'bar', SiteType::DILPS), 'wrong password');
 
-        $user = $this->repository->getLoginPassword('administrator', 'administrator');
+        $user = $this->repository->getLoginPassword('administrator', 'administrator', SiteType::DILPS);
         self::assertNotNull($user);
         self::assertSame(1000, $user->getId());
 

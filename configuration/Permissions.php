@@ -29,6 +29,11 @@ return [
         'recursive' => false,
     ],
     [
+        'path' => 'htdocs/news-images',
+        'permissions' => '0770',
+        'recursive' => false,
+    ],
+    [
         'path' => 'bin/build.sh',
         'permissions' => '0770',
     ],

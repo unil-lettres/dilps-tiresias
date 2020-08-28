@@ -1,28 +1,25 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { NgProgress } from '@ngx-progressbar/core';
+import {Injectable} from '@angular/core';
+import {NgProgress} from 'ngx-progressbar';
+import {BehaviorSubject, Subject} from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class NetworkActivityService {
-
     /**
      * Count pending requests
-     * @type {number}
      */
     public pending = 0;
 
     /**
      * Observable specifying if app is loading or not
-     * @type {BehaviorSubject<number>}
      */
     public readonly isPending = new BehaviorSubject<boolean>(false);
-    public readonly errors = new BehaviorSubject<any[]>([]);
+    public readonly errors = new Subject<readonly Error[]>();
 
-    constructor(private progressService: NgProgress) {
-    }
+    constructor(private progressService: NgProgress) {}
 
-    public increase() {
-
+    public increase(): void {
         if (this.pending === 0) {
             this.progressService.ref().start();
         }
@@ -31,7 +28,7 @@ export class NetworkActivityService {
         this.isPending.next(this.pending > 0);
     }
 
-    public decrease() {
+    public decrease(): void {
         this.pending--;
         this.isPending.next(this.pending > 0);
 
@@ -42,14 +39,12 @@ export class NetworkActivityService {
                     this.progressService.ref().complete();
                 }
             }, 20);
-
         }
     }
 
-    public updateErrors(errors) {
+    public updateErrors(errors: readonly Error[]): void {
         if (errors && errors.length) {
             this.errors.next(errors);
         }
     }
-
 }

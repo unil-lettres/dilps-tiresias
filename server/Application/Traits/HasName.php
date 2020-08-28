@@ -29,18 +29,14 @@ trait HasName
 
     /**
      * Set name
-     *
-     * @param string $name
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Get name
-     *
-     * @return string
      */
     public function getName(): string
     {

@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { MatDialog, MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material';
-import { ConfirmComponent } from './confirm.component';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material/snack-bar';
+import {Observable} from 'rxjs';
+import {ConfirmComponent} from './confirm.component';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AlertService {
-
-    constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {
-    }
+    constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
     public info(message: string, duration: number = 1500): MatSnackBarRef<SimpleSnackBar> {
         return this.snackBar.open(message, null, {
@@ -26,8 +27,12 @@ export class AlertService {
         });
     }
 
-    public confirm(title: string, message: string, confirmText: string, cancelText: string = 'Annuler'): Observable<any> {
-
+    public confirm(
+        title: string,
+        message: string,
+        confirmText: string,
+        cancelText: string = 'Annuler',
+    ): Observable<any> {
         const dialog = this.dialog.open(ConfirmComponent, {
             data: {
                 title: title,

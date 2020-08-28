@@ -21,7 +21,7 @@ class LinkCollectionToCollection implements FieldInterface
                 'sourceCollection' => Type::nonNull(_types()->getId(Collection::class)),
                 'targetCollection' => Type::nonNull(_types()->getId(Collection::class)),
             ],
-            'resolve' => function ($root, array $args): Collection {
+            'resolve' => function (string $site, array $args): Collection {
                 $sourceCollection = $args['sourceCollection']->getEntity();
                 $targetCollection = $args['targetCollection']->getEntity();
 

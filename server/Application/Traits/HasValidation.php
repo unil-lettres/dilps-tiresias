@@ -44,8 +44,6 @@ trait HasValidation
 
     /**
      * Get image validation date
-     *
-     * @return null|DateTimeImmutable
      */
     public function getImageValidationDate(): ?DateTimeImmutable
     {
@@ -54,8 +52,6 @@ trait HasValidation
 
     /**
      * Get data validation date
-     *
-     * @return null|DateTimeImmutable
      */
     public function getDataValidationDate(): ?DateTimeImmutable
     {
@@ -64,8 +60,6 @@ trait HasValidation
 
     /**
      * Get the user who validated the image
-     *
-     * @return null|User
      */
     public function getImageValidator(): ?User
     {
@@ -74,8 +68,6 @@ trait HasValidation
 
     /**
      * Get the user who validated the data
-     *
-     * @return null|User
      */
     public function getDataValidator(): ?User
     {

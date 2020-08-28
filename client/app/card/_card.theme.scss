@@ -6,13 +6,40 @@
     $fg: map-get($theme, foreground);
 
     app-card {
-
         mat-toolbar.edition {
             background: mat-color($accent, 0.4);
         }
 
+        .rich-text {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            background: mat-color(
+                $fg,
+                base,
+                if(map-get($theme, is-dark), 0.1, 0.04)
+            ); // match official mat-form-field component style
+            padding: 10px 10px 0 10px;
+            border-bottom: 1px solid mat-color($fg, base, 0.5);
+        }
+
+        .ql-editor {
+            padding: 0.25em 0 0.75em 0;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        a[href] {
+            color: mat-color($accent);
+            overflow-wrap: break-word;
+        }
+
+        #fiches-additionnelles {
+            natural-table-button span {
+                white-space: normal;
+                line-height: 1.5em;
+            }
+        }
     }
-
 }
-
-

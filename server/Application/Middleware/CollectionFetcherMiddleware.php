@@ -25,17 +25,12 @@ class CollectionFetcherMiddleware extends AbstractAction implements MiddlewareIn
 
     /**
      * Fetch multiples cards from their ID
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $ids = explode(',', $request->getAttribute('ids'));
 
-        $cards = $this->cardRepository->getFindAllQuery(['collections' => $ids])->getQuery()->getResult();
+        $cards = $this->cardRepository->getFindAllByCollections($ids)->getQuery()->getResult();
         if (!$cards) {
             return $this->createError('No cards found in database for the collection with ids: ' . implode(', ', $ids));
         }

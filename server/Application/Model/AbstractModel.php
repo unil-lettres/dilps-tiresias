@@ -34,35 +34,35 @@ abstract class AbstractModel
     private $id;
 
     /**
-     * @var DateTimeImmutable
+     * @var null|DateTimeImmutable
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $creationDate;
 
     /**
-     * @var DateTimeImmutable
+     * @var null|DateTimeImmutable
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updateDate;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $creator;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $owner;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
@@ -70,8 +70,6 @@ abstract class AbstractModel
 
     /**
      * Get id
-     *
-     * @return null|int
      */
     public function getId(): ?int
     {
@@ -80,18 +78,14 @@ abstract class AbstractModel
 
     /**
      * Set creation date
-     *
-     * @param DateTimeImmutable $creationDate
      */
-    private function setCreationDate(DateTimeImmutable $creationDate = null): void
+    private function setCreationDate(DateTimeImmutable $creationDate): void
     {
         $this->creationDate = $creationDate;
     }
 
     /**
      * Get creation date
-     *
-     * @return null|DateTimeImmutable
      */
     public function getCreationDate(): ?DateTimeImmutable
     {
@@ -100,18 +94,14 @@ abstract class AbstractModel
 
     /**
      * Set update date
-     *
-     * @param DateTimeImmutable $updateDate
      */
-    private function setUpdateDate(DateTimeImmutable $updateDate = null): void
+    private function setUpdateDate(DateTimeImmutable $updateDate): void
     {
         $this->updateDate = $updateDate;
     }
 
     /**
      * Get update date
-     *
-     * @return null|DateTimeImmutable
      */
     public function getUpdateDate(): ?DateTimeImmutable
     {
@@ -123,15 +113,13 @@ abstract class AbstractModel
      *
      * @param User $creator
      */
-    private function setCreator(User $creator = null): void
+    private function setCreator(?User $creator): void
     {
         $this->creator = $creator;
     }
 
     /**
      * Get creator
-     *
-     * @return null|User
      */
     public function getCreator(): ?User
     {
@@ -145,15 +133,13 @@ abstract class AbstractModel
      *
      * @param User $owner
      */
-    public function setOwner(User $owner = null): void
+    public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
     }
 
     /**
      * Get owner
-     *
-     * @return null|User
      */
     public function getOwner(): ?User
     {
@@ -162,18 +148,14 @@ abstract class AbstractModel
 
     /**
      * Set updater
-     *
-     * @param null|User $updater
      */
-    private function setUpdater(User $updater = null): void
+    private function setUpdater(?User $updater): void
     {
         $this->updater = $updater;
     }
 
     /**
      * Get updater
-     *
-     * @return null|User
      */
     public function getUpdater(): ?User
     {
@@ -207,8 +189,6 @@ abstract class AbstractModel
      * Get permissions on this object for the current user
      *
      * @API\Field(type="Permissions")
-     *
-     * @return array
      */
     public function getPermissions(): array
     {

@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-boot-loader',
     templateUrl: './boot-loader.component.html',
 })
 export class BootLoaderComponent implements OnInit {
+    constructor() {}
 
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
-
+    public ngOnInit(): void {}
 }

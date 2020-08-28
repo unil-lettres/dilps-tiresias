@@ -6,11 +6,15 @@ namespace Application\Model;
 
 use Application\Traits\HasInstitution;
 use Application\Traits\HasName;
+use Application\Traits\HasParent;
+use Application\Traits\HasParentInterface;
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
+use Application\Traits\HasSorting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
-use InvalidArgumentException;
 
 /**
  * A collection of cards
@@ -18,10 +22,13 @@ use InvalidArgumentException;
  * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
  * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
  */
-class Collection extends AbstractModel
+class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
     use HasInstitution;
+    use HasSorting;
+    use HasParent;
+    use HasSite;
 
     const VISIBILITY_PRIVATE = 'private';
     const VISIBILITY_ADMINISTRATOR = 'administrator';
@@ -34,47 +41,29 @@ class Collection extends AbstractModel
     private $visibility = self::VISIBILITY_PRIVATE;
 
     /**
-     * Return whether this is publicly available to only to member, or only administrators, or only owner
-     *
-     * @API\Field(type="Application\Api\Enum\CollectionVisibilityType")
-     *
-     * @return string
-     */
-    public function getVisibility(): string
-    {
-        return $this->visibility;
-    }
-
-    /**
-     * Set whether this is publicly available to only to member, or only administrators, or only owner
-     *
-     * @API\Input(type="Application\Api\Enum\CollectionVisibilityType")
-     *
-     * @param string $visibility
-     */
-    public function setVisibility(string $visibility): void
-    {
-        $this->visibility = $visibility;
-    }
-
-    /**
      * @var string
      *
-     * @ORM\Column(type="text"))
+     * @ORM\Column(type="text")
      */
     private $description = '';
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean", options={"default" = false}))
+     * @ORM\Column(type="boolean", options={"default" = false})
      */
     private $isSource = false;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer", options={"default" = 0}))
+     * @var string
+     * @ORM\Column(type="string", length=191)
      */
-    private $sorting = 0;
+    private $copyrights = '';
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=191)
+     */
+    private $usageRights = '';
 
     /**
      * @var Collection
@@ -96,10 +85,9 @@ class Collection extends AbstractModel
 
     /**
      * @var DoctrineCollection
-     *
-     * @ORM\ManyToMany(targetEntity="Card", inversedBy="collections")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
-    private $cards;
+    private $users;
 
     /**
      * Constructor
@@ -107,13 +95,31 @@ class Collection extends AbstractModel
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->cards = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * Return whether this is publicly available to only to member, or only administrators, or only owner
+     *
+     * @API\Field(type="Application\Api\Enum\CollectionVisibilityType")
+     */
+    public function getVisibility(): string
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * Set whether this is publicly available to only to member, or only administrators, or only owner
+     *
+     * @API\Input(type="Application\Api\Enum\CollectionVisibilityType")
+     */
+    public function setVisibility(string $visibility): void
+    {
+        $this->visibility = $visibility;
     }
 
     /**
      * Set description
-     *
-     * @param string $description
      */
     public function setDescription(string $description): void
     {
@@ -122,8 +128,6 @@ class Collection extends AbstractModel
 
     /**
      * Get description
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -140,8 +144,6 @@ class Collection extends AbstractModel
 
     /**
      * Set whether the collection is a source ("main" collection)
-     *
-     * @param bool $isSource
      */
     public function setIsSource(bool $isSource): void
     {
@@ -149,130 +151,69 @@ class Collection extends AbstractModel
     }
 
     /**
-     * Get the parent collection containing this collection.
-     *
-     * @return null|Collection
+     * Set copyrights
      */
-    public function getParent(): ?self
+    public function setCopyrights(string $copyrights): void
     {
-        return $this->parent;
+        $this->copyrights = $copyrights;
     }
 
     /**
-     * Set the parent collection containing this collection.
-     *
-     * @param null|Collection $parent
+     * Get copyrights
      */
-    public function setParent(?self $parent): void
+    public function getCopyrights(): string
     {
-        // Remove from previous parent
-        if ($this->parent) {
-            $this->parent->children->removeElement($this);
-        }
-
-        // Add to new parent
-        if ($parent) {
-            $this->assertNotCyclic($parent);
-            $parent->children->add($this);
-        }
-
-        $this->parent = $parent;
-    }
-
-    private function assertNotCyclic(self $parentCandidate): void
-    {
-        $allChildren = $this->getAllChildren();
-
-        while ($parentCandidate) {
-            if (in_array($parentCandidate, $allChildren, true)) {
-                throw new InvalidArgumentException('Parent collection is invalid because it would create a cyclic hierarchy');
-            }
-
-            $parentCandidate = $parentCandidate->getParent();
-        }
+        return $this->copyrights;
     }
 
     /**
-     * Get children collections
+     * Set usageRights
      *
-     * @API\Field(type="Collection[]")
-     *
-     * @return DoctrineCollection
+     * @param string $usageRights
      */
-    public function getChildren(): DoctrineCollection
+    public function setUsageRights($usageRights): void
     {
-        return $this->children;
+        $this->usageRights = $usageRights;
     }
 
     /**
-     * Get recursively all children and grand-children
-     *
-     * @return Collection[]
+     * Get usageRights
      */
-    private function getAllChildren(): array
+    public function getUsageRights(): string
     {
-        $allChildren = [];
-        foreach ($this->getChildren() as $child) {
-            $allChildren[] = $child;
-            $allChildren = array_merge($allChildren, $child->getAllChildren());
-        }
-
-        return $allChildren;
+        return $this->usageRights;
     }
 
     /**
-     * Add card
+     * Get users
      *
-     * @param Card $card
+     * @API\Field(type="User[]")
      */
-    public function addCard(Card $card): void
+    public function getUsers(): DoctrineCollection
     {
-        if (!$this->cards->contains($card)) {
-            $this->cards[] = $card;
-            $card->collectionAdded($this);
+        return $this->users;
+    }
+
+    /**
+     * Add User
+     */
+    public function addUser(User $user): void
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
         }
     }
 
     /**
-     * Remove card
-     *
-     * @param Card $card
+     * Remove User
      */
-    public function removeCard(Card $card): void
+    public function removeUser(User $user): void
     {
-        $this->cards->removeElement($card);
-        $card->collectionRemoved($this);
+        $this->users->removeElement($user);
     }
 
-    /**
-     * Get cards
-     *
-     * @API\Field(type="Card[]")
-     *
-     * @return DoctrineCollection
-     */
-    public function getCards(): DoctrineCollection
+    public function hasUsers(): bool
     {
-        return $this->cards;
-    }
-
-    /**
-     * Get sorting value
-     *
-     * @return int
-     */
-    public function getSorting(): int
-    {
-        return $this->sorting;
-    }
-
-    /**
-     * Set sorting value
-     *
-     * @param int $sorting
-     */
-    public function setSorting(int $sorting): void
-    {
-        $this->sorting = $sorting;
+        return count($this->users) > 0;
     }
 }

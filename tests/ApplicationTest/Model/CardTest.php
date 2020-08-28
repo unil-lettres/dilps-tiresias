@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
+use Application\Model\Tag;
 use Application\Model\User;
 use Application\Utility;
+use GraphQL\Doctrine\Definition\EntityID;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CardTest extends TestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         User::setCurrent(null);
     }
@@ -70,6 +73,7 @@ class CardTest extends TestCase
         User::setCurrent($admin);
 
         $suggestion = new Card();
+        $suggestion->setSite(SiteType::DILPS);
         $suggestion->setVisibility(Card::VISIBILITY_MEMBER);
         $suggestion->setName('test name');
         $suggestion->setDating('2010');
@@ -84,7 +88,7 @@ class CardTest extends TestCase
         touch($suggestion->getPath());
 
         $collection = new Collection();
-        $collection->addCard($suggestion);
+        $suggestion->addCollection($collection);
 
         $original = new Card();
         $original->setVisibility(Card::VISIBILITY_PUBLIC);
@@ -102,7 +106,7 @@ class CardTest extends TestCase
         self::assertSame('Museum', $original->getInstitution()->getName(), 'institution should be copied');
         self::assertNotNull($original->getCountry(), 'country should be copied');
         self::assertNull($original->getOriginal(), 'original should not be copied over');
-        self::assertCount(1, $collection->getCards(), 'original should not be moved to intro a collection');
+        self::assertCount(0, $original->getCollections(), 'original should not be moved to intro a collection');
 
         self::assertNotEquals('', $original->getFilename(), 'should have file on disk');
         self::assertNotEquals($suggestion->getFilename(), $original->getFilename(), 'should not share the same file on disk');
@@ -184,10 +188,11 @@ class CardTest extends TestCase
     public function testGetPermissions(): void
     {
         $card = new Card();
+        $card->setSite(SiteType::DILPS);
         $actual = $card->getPermissions();
         $expected = [
             'create' => false,
-            'read' => false,
+            'read' => true,
             'update' => false,
             'delete' => false,
         ];
@@ -195,6 +200,7 @@ class CardTest extends TestCase
 
         // Make it the current user as creator
         $user = new User();
+        $user->setSite(SiteType::DILPS);
         User::setCurrent($user);
         $card->timestampCreation();
 
@@ -223,11 +229,6 @@ class CardTest extends TestCase
 
     /**
      * @dataProvider providerSetVisibility
-     *
-     * @param string $role
-     * @param string $previous
-     * @param string $next
-     * @param bool $shouldThrow
      */
     public function testSetVisibility(string $role, string $previous, string $next, bool $shouldThrow): void
     {
@@ -274,6 +275,7 @@ class CardTest extends TestCase
     public function testSetInstitution(): void
     {
         $card = new Card();
+        $card->setSite(SiteType::DILPS);
         self::assertNull($card->getInstitution());
 
         $card->setInstitution('foo');
@@ -289,5 +291,89 @@ class CardTest extends TestCase
         $institution3 = $card->getInstitution();
         self::assertNotSame($institution1, $institution3, 'can change for something else');
         self::assertSame('bar', $institution3->getName(), 'new name');
+    }
+
+    public function testSetTags(): void
+    {
+        $card = new Card();
+        $card->setSite('dilps');
+
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4000'),
+        ]);
+        self::assertEquals([], $this->toIds($card->getTags()), 'still empty because not leaf');
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'leaf added and parent automatically added');
+
+        $card->getTags()->clear();
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4000'),
+            new EntityID(_em(), Tag::class, '4001'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'also adding parent change nothing to result');
+
+        $card->getTags()->clear();
+        self::assertEquals([], $this->toIds($card->getTags()));
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+            new EntityID(_em(), Tag::class, '4004'),
+        ]);
+        self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'adding another parent change nothing to result');
+
+        $card->setTags([
+            new EntityID(_em(), Tag::class, '4001'),
+            new EntityID(_em(), Tag::class, '4005'),
+        ]);
+        self::assertEquals([4001, 4000, 4005, 4004], $this->toIds($card->getTags()), 'adding two leaves select everything');
+
+        $card->removeTag(_em()->getReference(Tag::class, 4000));
+        self::assertEquals([4001, 4000, 4005, 4004], $this->toIds($card->getTags()), 'removing parent has no effect');
+
+        $card->removeTag(_em()->getReference(Tag::class, 4001));
+        self::assertEquals([4005, 4004], $this->toIds($card->getTags()), 'removing child remove hierarchy');
+
+        $card->addTag(_em()->getReference(Tag::class, 4001));
+        self::assertEquals([4005, 4004, 4001, 4000], $this->toIds($card->getTags()), 'adding again child re-add hierarchy');
+    }
+
+    private function toIds(iterable $models): array
+    {
+        $ids = [];
+        foreach ($models as $model) {
+            $ids[] = $model->getId();
+        }
+
+        return $ids;
+    }
+
+    public function testCollectionRelation(): void
+    {
+        $card = new Card();
+        self::assertCount(0, $card->getCollections(), 'should have no collections');
+
+        $collection = new Collection();
+
+        $card->addCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should have the added collection');
+        self::assertSame($collection, $card->getCollections()->first(), 'should be able to retrieve added collection');
+
+        $card->addCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should still have the same unique collection');
+
+        $collection2 = new Collection();
+        $card->addCollection($collection2);
+        self::assertCount(2, $card->getCollections(), 'should be able to add second collection');
+
+        $card->removeCollection($collection);
+        self::assertCount(1, $card->getCollections(), 'should be able to remove first collection');
+        self::assertSame($collection2, $card->getCollections()->first(), 'should be have only second collection left');
     }
 }

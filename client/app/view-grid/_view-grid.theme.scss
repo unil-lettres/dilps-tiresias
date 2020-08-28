@@ -1,0 +1,25 @@
+@mixin view-grid($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $bg: map-get($theme, background);
+    $fg: map-get($theme, foreground);
+
+    natural-gallery {
+        .natural-gallery-js {
+            .button {
+                color: white;
+                background: black !important;
+                border-top: 1px solid #4c4747 !important;
+                opacity: 0.8;
+            }
+
+            .button:hover {
+                color: white;
+                background: black !important;
+                border-top: 1px solid #4c4747 !important;
+                opacity: 1;
+            }
+        }
+    }
+}

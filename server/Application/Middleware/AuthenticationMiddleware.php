@@ -7,12 +7,12 @@ namespace Application\Middleware;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use DateTimeImmutable;
+use Mezzio\Session\SessionInterface;
+use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Session\SessionInterface;
-use Zend\Expressive\Session\SessionMiddleware;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
@@ -21,18 +21,19 @@ class AuthenticationMiddleware implements MiddlewareInterface
      */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    /**
+     * @var string
+     */
+    private $site;
+
+    public function __construct(UserRepository $userRepository, string $site)
     {
         $this->userRepository = $userRepository;
+        $this->site = $site;
     }
 
     /**
      * Load current user from session if exists and still valid
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -60,9 +61,6 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
     /**
      * Check if Shibboleth session is available and if the user is already created in the database
-     *
-     * @param SessionInterface $session
-     * @param array $serverParams
      */
     private function shibboleth(SessionInterface $session, array $serverParams): void
     {
@@ -70,7 +68,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
             // User has Shibboleth session but no user session
             if (array_key_exists('mail', $serverParams)) {
                 // Check for the user in the db
-                $user = $this->userRepository->getOneByEmail($serverParams['mail']);
+                $user = $this->userRepository->getOneByEmail($serverParams['mail'], $this->site);
 
                 if (!$user) {
                     $login = $this->generateShibbolethLogin($serverParams);
@@ -78,7 +76,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
                     // Create user if a Shibboleth session is found but user cannot be found in the db
                     $user = $this->userRepository->createShibboleth(
                         $login,
-                        $serverParams['mail']
+                        $serverParams['mail'],
+                        $this->site
                     );
                 }
 
@@ -89,8 +88,6 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
     /**
      * Generate login for aai users based on received attributes
-     *
-     * @param array $serverParams
      *
      * @return string $login
      */

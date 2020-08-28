@@ -1,22 +1,30 @@
 :host {
-
     agm-map {
         height: 450px;
     }
 
-    #mapZone {
+    .lonlat {
+        min-width: 0;
+        width: 50%;
+    }
 
+    #mapZone {
         position: relative;
 
         #search {
             position: absolute;
-            z-index:5;
-            top:5px;
-            left:5px;
-            padding-bottom:-1.25em;
-            width:370px;
-            border-top-left-radius:3px;
-            border-top-right-radius:3px;
+            z-index: 5;
+            top: 5px;
+            left: 5px;
+            padding-bottom: -1.25em;
+            width: 370px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
         }
+    }
+
+    natural-select-enum {
+        display: block;
+        margin-top: 20px;
     }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Traits\HasName;
+use Application\Traits\HasSite;
+use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\UniqueConstraint(name="unique_name", columns={"name"})
  * })
  */
-class Artist extends AbstractModel
+class Artist extends AbstractModel implements HasSiteInterface
 {
     use HasName;
+    use HasSite;
 }

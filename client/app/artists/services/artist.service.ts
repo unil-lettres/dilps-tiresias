@@ -1,45 +1,50 @@
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import {
-    createArtistMutation,
-    deleteArtistsMutation,
-    artistQuery,
-    artistsQuery,
-    updateArtistMutation,
-} from './artistQueries';
+import {Injectable, Inject} from '@angular/core';
+import {Apollo} from 'apollo-angular';
 
 import {
-    CreateArtistMutation,
-    DeleteArtistsMutation,
-    ArtistQuery,
-    ArtistsQuery,
-    UpdateArtistMutation,
+    Artist,
     ArtistInput,
+    Artists,
+    ArtistsVariables,
+    ArtistVariables,
+    CreateArtist,
+    CreateArtistVariables,
+    DeleteArtists,
+    Site,
+    UpdateArtist,
+    UpdateArtistVariables,
 } from '../../shared/generated-types';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
+import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {SITE} from '../../app.config';
 
-@Injectable()
-export class ArtistService
-    extends AbstractModelService<ArtistQuery['artist'],
-        ArtistsQuery['artists'],
-        CreateArtistMutation['createArtist'],
-        UpdateArtistMutation['updateArtist'],
-        DeleteArtistsMutation['deleteArtists']> {
-
-    constructor(apollo: Apollo) {
-        super(apollo,
-            'artist',
-            artistQuery,
-            artistsQuery,
-            createArtistMutation,
-            updateArtistMutation,
-            deleteArtistsMutation);
+@Injectable({
+    providedIn: 'root',
+})
+export class ArtistService extends AbstractContextualizedService<
+    Artist['artist'],
+    ArtistVariables,
+    Artists['artists'],
+    ArtistsVariables,
+    CreateArtist['createArtist'],
+    CreateArtistVariables,
+    UpdateArtist['updateArtist'],
+    UpdateArtistVariables,
+    DeleteArtists['deleteArtists'],
+    never
+> {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+        super(apollo, 'artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
     }
 
-    public getEmptyObject(): ArtistInput {
+    public getDefaultForClient(): ArtistInput {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer(): ArtistInput {
         return {
             name: '',
+            site: this.site,
         };
     }
-
 }

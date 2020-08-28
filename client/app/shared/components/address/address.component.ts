@@ -1,30 +1,50 @@
-import { Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
-import { MapsAPILoader, MapTypeStyle } from '@agm/core';
-import { FormControl } from '@angular/forms';
-import { AddressService } from './address.service';
-import { merge } from 'lodash';
-import { CountryService } from '../../../countries/services/country.service';
-import { CountriesQuery } from '../../generated-types';
+import {AgmMap, MapsAPILoader, MapTypeStyle} from '@agm/core';
+import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild, Inject} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
-// import { } from 'googlemaps';
-import {} from 'googlemaps';
+import {merge} from 'lodash';
+import {CountryService} from '../../../countries/services/country.service';
+import {
+    Card_card,
+    Card_card_institution,
+    CardInput,
+    Countries,
+    CountriesVariables,
+    Institution_institution,
+    Site,
+} from '../../generated-types';
+import {AddressService} from './address.service';
+import {SITE} from '../../../app.config';
 
 @Component({
     selector: 'app-address',
     templateUrl: './address.component.html',
     styleUrls: ['./address.component.scss'],
-    providers: [
-        AddressService,
-        CountryService,
-    ],
+    providers: [AddressService, CountryService],
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnInit, OnChanges {
+    @ViewChild('input', {static: true}) public inputRef: ElementRef;
 
-    @ViewChild('input') public inputRef: ElementRef;
+    /**
+     * If true, layouts vertically some side by side elements
+     */
+    @Input() public vertical = false;
 
-    @Input() vertical = false;
-    @Input() readonly = false;
-    @Input() model;
+    /**
+     * Prevents fields edition
+     */
+    @Input() public readonly = false;
+
+    /**
+     * If Dilps mode, show everything, otherwise hide some stuff for Tiresias
+     */
+    @Input() public isDilps = true;
+
+    /**
+     * Object reference is directly modified
+     */
+    @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
 
     public formCtrl = new FormControl();
 
@@ -34,184 +54,188 @@ export class AddressComponent implements OnInit {
 
     public icon;
 
+    @ViewChild(AgmMap) public map: AgmMap;
+
     public mapStyles: MapTypeStyle[] = [
         {
-            'elementType': 'geometry',
-            'stylers': [
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#f5f5f5',
+                    color: '#f5f5f5',
                 },
             ],
         },
         {
-            'elementType': 'labels.icon',
-            'stylers': [
+            elementType: 'labels.icon',
+            stylers: [
                 {
-                    'visibility': 'off',
+                    visibility: 'off',
                 },
             ],
         },
         {
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#3c8bc7',
+                    color: '#3c8bc7',
                 },
             ],
         },
         {
-            'elementType': 'labels.text.stroke',
-            'stylers': [
+            elementType: 'labels.text.stroke',
+            stylers: [
                 {
-                    'color': '#f5f5f5',
+                    color: '#f5f5f5',
                 },
             ],
         },
         {
-            'featureType': 'administrative.land_parcel',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'administrative.land_parcel',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#bdbdbd',
+                    color: '#bdbdbd',
                 },
             ],
         },
         {
-            'featureType': 'poi',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'poi',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#eeeeee',
+                    color: '#eeeeee',
                 },
             ],
         },
         {
-            'featureType': 'poi',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'poi',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#3c8bc7',
+                    color: '#3c8bc7',
                 },
             ],
         },
         {
-            'featureType': 'poi.park',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'poi.park',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#e5e5e5',
+                    color: '#e5e5e5',
                 },
             ],
         },
         {
-            'featureType': 'poi.park',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'poi.park',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#9e9e9e',
+                    color: '#9e9e9e',
                 },
             ],
         },
         {
-            'featureType': 'road',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#ffffff',
+                    color: '#ffffff',
                 },
             ],
         },
         {
-            'featureType': 'road.arterial',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'road.arterial',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#757575',
+                    color: '#757575',
                 },
             ],
         },
         {
-            'featureType': 'road.highway',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'road.highway',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#dadada',
+                    color: '#dadada',
                 },
             ],
         },
         {
-            'featureType': 'road.highway',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'road.highway',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#616161',
+                    color: '#616161',
                 },
             ],
         },
         {
-            'featureType': 'road.local',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'road.local',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#9e9e9e',
+                    color: '#9e9e9e',
                 },
             ],
         },
         {
-            'featureType': 'transit.line',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'transit.line',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#e5e5e5',
+                    color: '#e5e5e5',
                 },
             ],
         },
         {
-            'featureType': 'transit.station',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'transit.station',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#eeeeee',
+                    color: '#eeeeee',
                 },
             ],
         },
         {
-            'featureType': 'water',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'water',
+            elementType: 'geometry',
+            stylers: [
                 {
-                    'color': '#3c8bc7',
+                    color: '#3c8bc7',
                 },
             ],
         },
         {
-            'featureType': 'water',
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            featureType: 'water',
+            elementType: 'labels.text.fill',
+            stylers: [
                 {
-                    'color': '#9e9e9e',
+                    color: '#9e9e9e',
                 },
             ],
         },
     ];
-
+    public countries: Countries['countries']['items'];
     private autocomplete;
-    public countries: CountriesQuery['countries']['items'];
 
-    constructor(private mapsAPILoader: MapsAPILoader,
-                private ngZone: NgZone,
-                private addressService: AddressService,
-                private countryService: CountryService) {
-    }
+    constructor(
+        private mapsAPILoader: MapsAPILoader,
+        private ngZone: NgZone,
+        private addressService: AddressService,
+        private countryService: CountryService,
+        @Inject(SITE) public readonly site: Site,
+    ) {}
 
+    public ngOnInit(): void {
+        const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
+        qvm.set('pagination', {pagination: {pageSize: 9999}});
 
-    ngOnInit() {
-
-        this.countryService.getAll({pagination: {pageSize: 9999}}).subscribe(countries => this.countries = countries.items);
+        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
 
         if (this.model && this.model.latitude && this.model.longitude) {
-            this.latitude = this.model.latitude;
-            this.longitude = this.model.longitude;
+            this.latitude = +this.model.latitude;
+            this.longitude = +this.model.longitude;
             this.zoom = 12;
         }
 
@@ -225,31 +249,26 @@ export class AddressComponent implements OnInit {
                 });
             });
         });
-
     }
 
-    public updateSearch() {
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (this.model) {
+            this.latitude = +this.model.latitude;
+            this.longitude = +this.model.longitude;
+        }
+    }
+
+    public updateSearch(): void {
         const address = this.getAddressAsString();
         this.formCtrl.setValue(address);
     }
 
-    public search() {
+    public search(): void {
         this.updateSearch();
         this.inputRef.nativeElement.focus(); // focus in input to open google suggestions
     }
 
-    private getAddressAsString() {
-        const address = [
-            this.model.street,
-            this.model.postcode,
-            this.model.locality,
-            this.model.country ? this.model.country.name : this.model.country,
-        ];
-        return address.filter(v => !!v).join(', ');
-    }
-
-    public onPlaceChange() {
-
+    public onPlaceChange(): void {
         const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
 
         // verify result
@@ -265,31 +284,36 @@ export class AddressComponent implements OnInit {
         merge(this.model, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev) {
+    public onMarkerDrag(ev): void {
         this.latitude = ev.coords.lat;
         this.longitude = ev.coords.lng;
 
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-            location: {
-                lat: ev.coords.lat,
-                lng: ev.coords.lng,
-            },
-        }, (places) => {
-            const address = this.addressService.buildAddress(places[0]) as any;
-            merge(this.model, address);
-            this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
-            this.updateSearch();
-        });
+        this.model.latitude = this.latitude;
+        this.model.longitude = this.longitude;
 
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode(
+            {
+                location: {
+                    lat: ev.coords.lat,
+                    lng: ev.coords.lng,
+                },
+            },
+            places => {
+                const address = this.addressService.buildAddress(places[0], false) as any;
+                merge(this.model, address);
+                this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
+                this.updateSearch();
+            },
+        );
     }
 
-    public getIcon(color = '#ff9800') {
-
+    public getIcon(color = '#ff9800'): void {
         const iconSize = 48;
         const icon: any = {
-            path: 'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
-                  '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
+            path:
+                'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
+                '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
             fillOpacity: 1,
             strokeWeight: 0,
             scale: 1,
@@ -302,4 +326,18 @@ export class AddressComponent implements OnInit {
         return icon;
     }
 
+    private getAddressAsString(): string {
+        const address = [
+            this.model.street,
+            this.model.postcode,
+            this.model.locality,
+            this.model.country ? this.model.country.name : this.model.country,
+        ];
+        return address.filter(v => !!v).join(', ');
+    }
+
+    public recenter(): void {
+        this.latitude = +this.model.latitude;
+        this.longitude = +this.model.longitude;
+    }
 }

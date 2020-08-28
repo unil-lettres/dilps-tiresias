@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { isUndefined, mapValues, trim } from 'lodash';
+import {Injectable} from '@angular/core';
+import {isUndefined, mapValues, trim} from 'lodash';
 
 export interface Address {
     street?: string;
@@ -11,9 +11,10 @@ export interface Address {
     longitude?: number;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AddressService {
-
     /**
      * Binds gmap semantic with string we should retrieve
      */
@@ -25,14 +26,10 @@ export class AddressService {
         country: 'short_name',
     };
 
-    constructor() {
-    }
+    constructor() {}
 
-    public buildAddress(place: any) {
-
-        const tmpGAddress = mapValues(this.config, function() {
-            return '';
-        });
+    public buildAddress(place: any, withLatLon: boolean = true): void {
+        const tmpGAddress = mapValues(this.config, () => '');
 
         place.address_components.forEach((addressComponent: any) => {
             const addressType = addressComponent.types[0];
@@ -41,26 +38,29 @@ export class AddressService {
             }
         });
 
-        const address = {
+        const address: any = {
             street: trim(tmpGAddress.route + ' ' + tmpGAddress.street_number),
             postcode: tmpGAddress.postal_code,
             locality: tmpGAddress.locality,
             countryIso2: tmpGAddress.country,
-            latitude: place.geometry.location.lat(),
-            longitude: place.geometry.location.lng(),
         };
+
+        if (withLatLon) {
+            address.latitude = place.geometry.location.lat();
+            address.longitude = place.geometry.location.lng();
+        }
 
         return address;
     }
 
-    public toString(address: Address) {
+    public toString(address: Address): string {
         let text = '';
         text += address.street ? address.street : '';
         text += address.postcode ? ' ' + address.postcode : '';
         text += address.locality ? ' ' + address.locality : '';
         text += address.area ? ' ' + address.area : '';
         text += address.country ? ' ' + address.country : '';
+
         return text;
     }
-
 }

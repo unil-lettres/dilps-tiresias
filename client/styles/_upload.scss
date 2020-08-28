@@ -2,7 +2,7 @@
     $primary: map-get($theme, primary);
 
     [appFileDrop] {
-        position:relative;
+        position: relative;
     }
 
     .app-file-drag-n-drop-overlay {
@@ -23,7 +23,6 @@
         color: mat-color($primary, default-contrast);
         font-size: 5vw;
         line-height: 1.3em;
-        text-align: center
+        text-align: center;
     }
-
 }

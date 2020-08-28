@@ -1,32 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { CollectionService } from '../services/collection.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IncrementSubject } from '../../shared/services/increment-subject';
-import { MatDialog } from '@angular/material';
-import { CollectionComponent } from '../collection/collection.component';
-import { Literal } from '../../shared/types';
-import { UserService } from '../../users/services/user.service';
-import { CollectionsQueryVariables, UserRole } from '../../shared/generated-types';
-import { isArray } from 'lodash';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {isArray} from 'lodash';
+import {CollectionsVariables, LogicalOperator, UserRole} from '../../shared/generated-types';
+import {UserService} from '../../users/services/user.service';
+import {CollectionComponent} from '../collection/collection.component';
+import {CollectionService} from '../services/collection.service';
 
 @Component({
     selector: 'app-collections',
     templateUrl: './collections.component.html',
     styleUrls: ['./collections.component.scss'],
 })
-export class CollectionsComponent implements OnInit {
-
+export class CollectionsComponent extends NaturalAbstractController implements OnInit {
     public collections = [];
-    private queryVariables = new IncrementSubject<CollectionsQueryVariables>();
 
     /**
      * Show "unclassified" category on the top of the page
-     * @type {boolean}
      */
     public showUnclassified = false;
+
     /**
      * Show "my cards" category on the top of the page
-     * @type {boolean}
      */
     public showMyCards = false;
 
@@ -34,59 +30,58 @@ export class CollectionsComponent implements OnInit {
      * Can create permissions
      */
     public canCreate = false;
-
-    public searchedTerm;
-
-    private pageSize = 50;
-
-    private defaultFilters = {
-        filters: {
-            search: '',
-            parents: [],
-        },
-        pagination: {
-            pageIndex: 0,
-            pageSize: this.pageSize,
-        },
-    };
-
     public user;
     public hasMore = false;
-    public showEditButtons = true;
+    private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
+    private pageSize = 50;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private collectionsSvc: CollectionService,
-                private dialog: MatDialog,
-                private userSvc: UserService) {
+    private defaultVariables: CollectionsVariables = {
+        filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
+    };
+
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private collectionsService: CollectionService,
+        private dialog: MatDialog,
+        private userService: UserService,
+    ) {
+        super();
     }
 
-    ngOnInit() {
-
-        this.userSvc.getCurrentUser().subscribe(user => {
+    public ngOnInit(): void {
+        this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
-            this.showEditButtons = this.showEditionButtons();
+            // this.showEditButtons = this.showEditionButtons();
             this.canCreate = this.showCreateButton(this.route.snapshot.data.creationButtonForRoles, this.user);
-
         });
 
-        this.queryVariables.patch(this.defaultFilters);
-        this.route.data.subscribe((data: Literal) => {
+        this.queryVariables.set('variables', this.defaultVariables);
+        this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
+
+        this.route.data.subscribe(data => {
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, this.user);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
 
-            const filters = data.filters ? data.filters : {};
+            this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
             if (data.creator) {
-                filters.creators = [data.creator.id];
+                this.queryVariables.set('creator', {
+                    filter: {
+                        groups: [
+                            {conditions: [{owner: {in: {values: [data.creator.id]}}}]},
+                            {
+                                groupLogic: LogicalOperator.OR,
+                                conditions: [{users: {have: {values: [this.user.id]}}}],
+                            },
+                        ],
+                    },
+                });
             }
-
-            this.queryVariables.patch({filters: filters});
         });
 
-        const queryRef = this.collectionsSvc.watchAll(this.queryVariables);
-        queryRef.valueChanges.subscribe((collections: any) => {
+        this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe((collections: any) => {
             if (collections.pageIndex === 0) {
                 this.collections = collections.items;
             } else {
@@ -94,11 +89,59 @@ export class CollectionsComponent implements OnInit {
             }
             this.hasMore = collections.length > this.collections.length;
         });
-
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user) {
+    public toggle(collection): void {
+        if (collection.children) {
+            this.removeChildren(collection);
+        } else {
+            this.getChildren(collection);
+        }
+    }
 
+    public removeChildren(collection): void {
+        collection.children = null;
+    }
+
+    public getChildren(collection): void {
+        const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
+        qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
+        this.collectionsService.getAll(qvm).subscribe(results => {
+            collection.children = results.items;
+        });
+    }
+
+    public search(term): void {
+        this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});
+    }
+
+    public more(): void {
+        const nextPage = this.queryVariables.variables.value.pagination.pageIndex + 1;
+        this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
+    }
+
+    public edit(event, collection): void {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const dialogRef = this.dialog.open(CollectionComponent, {
+            width: '800px',
+            data: {item: collection},
+        });
+
+        dialogRef.afterClosed().subscribe(data => {
+            // if returned data is null, it means deletion
+            if (data === null) {
+                this.router.navigate(['..'], {relativeTo: this.route.firstChild});
+            }
+        });
+    }
+
+    public add(): void {
+        this.dialog.open(CollectionComponent, {width: '800px'});
+    }
+
+    private showCreateButton(allowedRoles: boolean | UserRole[], user): boolean {
         if (!allowedRoles || !user) {
             return false;
         }
@@ -117,46 +160,4 @@ export class CollectionsComponent implements OnInit {
 
         return false;
     }
-
-    public showEditionButtons() {
-        const authorizedRoles = this.route.snapshot.data.editionButtonsForRoles;
-        if (!authorizedRoles) {
-            return true;
-        }
-
-        return authorizedRoles.indexOf(this.user.role) > -1;
-    }
-
-    public search(term) {
-        this.queryVariables.patch({filters: {search: term}});
-    }
-
-    public more() {
-        const nextPage = this.queryVariables.getValue().pagination.pageIndex + 1;
-        this.queryVariables.patch({pagination: {pageIndex: nextPage}});
-    }
-
-    public edit(event, collection) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const dialogRef = this.dialog.open(CollectionComponent, {
-            width: '800px',
-            data: {item: collection},
-        });
-
-        dialogRef.afterClosed().subscribe(data => {
-            // if returned data is null, it means deletion
-            if (data === null) {
-                this.router.navigate(['..'], {relativeTo: this.route.firstChild});
-            }
-        });
-    }
-
-    public add() {
-        this.dialog.open(CollectionComponent, {
-            width: '800px',
-        });
-    }
-
 }

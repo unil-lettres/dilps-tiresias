@@ -7,14 +7,15 @@
 
     app-quizz {
         .attribute {
-
             background: mat-color($warn, 0.3);
+
             .attributeAnswer:hover {
                 background: mat-color($warn, 0.2);
             }
 
             &.valid {
                 background: mat-color($primary, 0.3);
+
                 .attributeAnswer:hover {
                     background: mat-color($primary, 0.2);
                 }
@@ -22,6 +23,3 @@
         }
     }
 }
-
-
-

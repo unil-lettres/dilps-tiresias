@@ -1,32 +1,33 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Institution">
-            <div fxLayout="column" fxLayoutGap="10px" class="padding-v">
+            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field>
-                    <input matInput
-                           type="text"
-                           name="name"
-                           placeholder="Nom"
-                           [(ngModel)]="data.item.name"
-                           [readonly]="data?.item?.permissions && !data.item.permissions.update"
-                    >
+                    <mat-label>Nom</mat-label>
+                    <input
+                        [(ngModel)]="data.item.name"
+                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        matInput
+                    />
                 </mat-form-field>
-                <app-address *ngIf="data.item.street !== undefined"
-                             [(model)]="data.item"
-                             [readonly]="data?.item?.permissions && !data.item.permissions.update"
+
+                <app-address
+                    *ngIf="data.item.street !== undefined"
+                    [model]="data.item"
+                    [readonly]="data?.item?.permissions && !data.item.permissions.update"
                 ></app-address>
             </div>
         </mat-tab>
-
     </mat-tab-group>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <app-dialog-footer fxFlex
-                       [canCreate]="user?.globalPermissions?.institution?.create"
-                       [item]="data.item"
-                       (create)="create()"
-                       (update)="update()"
-                       (delete)="delete()"
+    <app-dialog-footer
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
+        [canCreate]="user?.globalPermissions?.institution?.create"
+        [item]="data.item"
+        fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

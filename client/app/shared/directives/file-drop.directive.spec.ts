@@ -1,28 +1,21 @@
-import { FileDropDirective } from './file-drop.directive';
-import { Component } from '@angular/core';
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { UploadService } from '../services/upload.service';
+import {Component} from '@angular/core';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {UploadService} from '../services/upload.service';
+import {FileDropDirective} from './file-drop.directive';
 
 @Component({
     template: '<div appFileDrop>foo bar</div>',
 })
-class ContainerComponent {
-}
+class ContainerComponent {}
 
 describe('FileDropDirective', () => {
-
     let fixture: ComponentFixture<ContainerComponent>;
     let component: any;
     let uploadSvc: UploadService;
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                ContainerComponent,
-                FileDropDirective,
-            ],
-            providers: [
-                UploadService,
-            ],
+            declarations: [ContainerComponent, FileDropDirective],
+            providers: [UploadService],
         }).compileComponents();
     }));
 
@@ -35,14 +28,13 @@ describe('FileDropDirective', () => {
         inject([UploadService], (uploadService: UploadService) => {
             uploadSvc = uploadService;
         })();
-
     });
 
-    it('should create an instance', ((done) => {
+    it('should create an instance', done => {
         expect(fixture).toBeTruthy();
         expect(component).toBeTruthy();
 
-        const event: CustomEvent & { dataTransfer?: any } = new CustomEvent('dragover', {
+        const event: CustomEvent & {dataTransfer?: any} = new CustomEvent('dragover', {
             bubbles: true,
             cancelable: true,
         });
@@ -60,8 +52,7 @@ describe('FileDropDirective', () => {
             expect(element.className).toBe('');
 
             // Subscribe to event
-            uploadSvc.filesChanged.subscribe(() => {
-            });
+            uploadSvc.filesChanged.subscribe(() => {});
             element.dispatchEvent(event);
 
             // After a short while the class must have been changed
@@ -69,8 +60,6 @@ describe('FileDropDirective', () => {
                 expect(element.className).toBe('app-file-drag-n-drop-file-over');
                 done();
             }, 220);
-
         }, 220);
-
-    }));
+    });
 });

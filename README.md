@@ -1,13 +1,12 @@
-# Dilps
+# Dilps/Tiresias
 
-Master: [![Build Status](https://travis-ci.com/unil-lettres/dilps.svg?branch=master)](https://travis-ci.com/unil-lettres/dilps) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps/?branch=master)
+Master: [![Build Status](https://travis-ci.com/unil-lettres/dilps-tiresias.svg?branch=master)](https://travis-ci.com/unil-lettres/dilps) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=master)
 
-Development: [![Build Status](https://travis-ci.com/unil-lettres/dilps.svg?branch=develop)](https://travis-ci.com/unil-lettres/dilps) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps/?branch=develop)
+Development: [![Build Status](https://travis-ci.com/unil-lettres/dilps-tiresias.svg?branch=develop)](https://travis-ci.com/unil-lettres/dilps) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=develop)
 
 ## Introduction
 
-Dilps is a web application based on GraphQL for the API and Angular for the client.
-
+Dilps/Tiresias is a web application based on GraphQL for the API and Angular for the client.
 
 ## Installation
 
@@ -15,8 +14,9 @@ The recommended way to get a working copy is the following:
 
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
-3. Configure database in `config/autoload/local.php` (see example ``config/autoload/local.php.dist``)
+3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
 4. Finally, build the app:
+
 ```sh
 ./bin/build.sh
 ```
@@ -31,7 +31,7 @@ To switch the API to development (to enable logging), run:
 composer development-enable
 ```
 
-Logs will be available in ``logs/all.log``.
+Logs will be available in `logs/all.log`.
 
 #### Configuration caching
 
@@ -48,7 +48,7 @@ $ composer clear-config-cache
 
 ### Client
 
-Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4300/`. The app will
+Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4400/`. The app will
 automatically reload if you change any of the source files.
 
 ## Testing
@@ -73,4 +73,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ### Protractor
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-

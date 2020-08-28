@@ -1,26 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { countryQuery, countriesQuery } from './countryQueries';
+import {Injectable} from '@angular/core';
+import {NaturalAbstractModelService} from '@ecodev/natural';
+import {Apollo} from 'apollo-angular';
+import {Countries, CountriesVariables, Country, CountryVariables} from '../../shared/generated-types';
+import {countriesQuery, countryQuery} from './country.queries';
 
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import { CountriesQuery, CountryQuery } from '../../shared/generated-types';
-
-@Injectable()
-export class CountryService
-    extends AbstractModelService<CountryQuery['country'],
-        CountriesQuery['countries'],
-        null,
-        null,
-        null> {
-
+@Injectable({
+    providedIn: 'root',
+})
+export class CountryService extends NaturalAbstractModelService<
+    Country['country'],
+    CountryVariables,
+    Countries['countries'],
+    CountriesVariables,
+    null,
+    never,
+    null,
+    never,
+    null,
+    never
+> {
     constructor(apollo: Apollo) {
-        super(apollo,
-            'country',
-            countryQuery,
-            countriesQuery,
-            null,
-            null,
-            null);
+        super(apollo, 'country', countryQuery, countriesQuery, null, null, null);
     }
-
 }

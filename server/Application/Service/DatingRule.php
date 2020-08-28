@@ -28,8 +28,6 @@ class DatingRule
     ];
 
     /**
-     * @param string $input
-     *
      * @return Dating[]
      */
     public function compute(string $input): array
@@ -59,10 +57,6 @@ class DatingRule
      * Replace roman number into numeric
      *
      * This use hardcoded Roman numbers as seen in old Dilps
-     *
-     * @param string $input
-     *
-     * @return string
      */
     private function replaceRoman(string $input): string
     {
@@ -78,12 +72,6 @@ class DatingRule
 
     /**
      * Create a DateTime but force year 1 instead of year 0
-     *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     *
-     * @return DateTimeImmutable
      */
     private static function toDateTime(int $year, int $month, int $day): DateTimeImmutable
     {

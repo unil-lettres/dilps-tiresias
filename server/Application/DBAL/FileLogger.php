@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\DBAL;
 
 use Doctrine\DBAL\Logging\DebugStack;
+use Exception;
 
 /**
  * Writes DB queries as log messages in logs/db.log.
@@ -16,7 +17,7 @@ class FileLogger extends DebugStack
     public function __construct()
     {
         if (file_exists(self::LOG_FILE) && !is_writable(self::LOG_FILE)) {
-            throw new \Exception(self::LOG_FILE . ' is not writable');
+            throw new Exception(self::LOG_FILE . ' is not writable');
         }
     }
 
@@ -31,8 +32,6 @@ class FileLogger extends DebugStack
 
     /**
      * Log the query to file
-     *
-     * @param array $query
      */
     private function log(array $query): void
     {

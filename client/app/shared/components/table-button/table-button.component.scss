@@ -1,5 +1,4 @@
 app-table-button {
-
     flex: inherit;
     display: inherit;
     align-items: inherit;
@@ -20,10 +19,10 @@ app-table-button {
             display: flex;
             flex-direction: row;
             align-items: center;
+
             & > :not(:last-child) {
                 margin-right: 5px;
             }
         }
     }
-
 }

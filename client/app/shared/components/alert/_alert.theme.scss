@@ -1,5 +1,4 @@
 @mixin alert($theme) {
-
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $warn: map-get($theme, warn);
@@ -14,7 +13,4 @@
         background-color: mat-color($warn) !important;
         color: mat-color($warn, default-contrast) !important;
     }
-
 }
-
-

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class TypesFactory
 {
@@ -22,11 +23,8 @@ class TypesFactory
             \Application\Api\Enum\OrderType::class,
             \Application\Api\Enum\UserRoleType::class,
             \Application\Api\Enum\UserTypeType::class,
-            \Application\Api\Input\Filter\OldArtistFilterType::class,
-            \Application\Api\Input\Filter\OldCardFilterType::class,
-            \Application\Api\Input\Filter\OldCollectionFilterType::class,
-            \Application\Api\Input\Filter\OldInstitutionFilterType::class,
-            \Application\Api\Input\Filter\OldUserFilterType::class,
+            \Application\Api\Enum\PrecisionType::class,
+            \Application\Api\Enum\SiteType::class,
             \Application\Api\Input\PaginationInputType::class,
             \Application\Api\MutationType::class,
             \Application\Api\Output\GlobalPermissionsListType::class,
@@ -35,11 +33,13 @@ class TypesFactory
             \Application\Api\QueryType::class,
             \Application\Api\Scalar\DateTimeType::class,
             \Application\Api\Scalar\LoginType::class,
+            \Application\Api\Scalar\EmailType::class,
+            \Application\Api\Scalar\UrlType::class,
             \GraphQL\Upload\UploadType::class,
         ];
 
         $aliases = [
-            \DateTimeImmutable::class => \Application\Api\Scalar\DateTimeType::class,
+            DateTimeImmutable::class => \Application\Api\Scalar\DateTimeType::class,
             'datetime_immutable' => \Application\Api\Scalar\DateTimeType::class,
         ];
 
@@ -54,9 +54,9 @@ class TypesFactory
             'invokables' => $invokables,
             'aliases' => $aliases,
             'services' => [
-//                // This is not quite right because it allow to compare a string with a json array.
-//                // TODO: either hide the json_array filter or find a cleaner solution
-//                'json_array' => GraphQL\Type\Definition\Type::string(),
+                //                // This is not quite right because it allow to compare a string with a json array.
+                //                // TODO: either hide the json filter or find a cleaner solution
+                'json' => \GraphQL\Type\Definition\Type::string(),
             ],
             'abstract_factories' => [
                 \Application\Api\Output\PaginationTypeFactory::class,

@@ -4,20 +4,9 @@
 --
 -- Typical usage would be:
 --
---     more bin/generate-script-to-migrate-files.sql | mysql --raw -u dilps -p dilps
+--     more bin/generate-script-to-migrate-files.sql | mysql --raw -u {user} -p {database} > migrate-tiresias-data.sh
 
-SELECT CONCAT(
-           'cp "',
-           ng_img_base.base,
-           '/cache/',
-           ng_img.collectionid,
-           '-',
-           ng_img.imageid,
-           '.jpg" ',
-           '"data/images/',
-           '"'
-       ) AS '#!/usr/bin/env bash'
-FROM ng_img
-  JOIN ng_collection ON ng_img.collectionid = ng_collection.collectionid
-  JOIN ng_img_base ON ng_collection.collectionid = ng_img_base.collectionid
-ORDER BY ng_img_base.base, ng_img.filename, ng_img.imageid;
+SELECT CONCAT('cp "/var/www/html/tdata/', fonds.fond, '/cache/', meta.id, '.jpg" "/var/www/html/dilps/data/images/tiresias-', meta.id, '.jpg"') AS '#!/usr/bin/env bash'
+FROM meta
+JOIN fonds ON meta.fond = fonds.id
+ORDER BY meta.fond, meta.id;

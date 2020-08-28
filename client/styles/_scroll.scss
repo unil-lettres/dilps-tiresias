@@ -1,5 +1,4 @@
 @mixin scroll($theme) {
-
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
@@ -11,7 +10,7 @@
     perfect-scrollbar {
         .ps__rail-y,
         .ps__rail-x {
-            background: transparent !important
+            background: transparent !important;
         }
 
         .ps__thumb-y::before {
@@ -26,7 +25,7 @@
         .ps__thumb-x {
             background: transparent !important;
             &::before {
-                content: "";
+                content: '';
                 display: block;
                 position: absolute;
                 top: 0;
@@ -48,11 +47,9 @@
 
         .ps__rail-x {
             height: $scrollWidth + 2 !important;
-
         }
         .ps__thumb-x {
             height: $scrollWidth !important;
         }
     }
-
 }

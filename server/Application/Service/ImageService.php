@@ -27,11 +27,6 @@ class ImageService
 
     /**
      * Resize image as JPG and return the path to the resized version
-     *
-     * @param Card $card
-     * @param int $maxHeight
-     *
-     * @return string
      */
     public function resize(Card $card, int $maxHeight): string
     {

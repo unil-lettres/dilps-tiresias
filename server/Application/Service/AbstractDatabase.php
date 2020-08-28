@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
+use Exception;
+
 /**
  * Tool to reload the entire local database from remote database for a given site
  * Requirements:
@@ -22,8 +24,8 @@ abstract class AbstractDatabase
     private static function dumpDataRemotely($remote, $dumpFile): void
     {
         $sshCmd = <<<STRING
-        ssh $remote "cd /sites/$remote/ && php7.1 bin/dump-data $dumpFile"
-STRING;
+                    ssh $remote "cd /sites/$remote/ && php7.4 bin/dump-data.php $dumpFile"
+            STRING;
 
         echo "dumping data $dumpFile on $remote...\n";
         self::executeLocalCommand($sshCmd);
@@ -44,7 +46,7 @@ STRING;
         $password = $dbConfig['password'];
 
         echo "dumping $dumpFile...\n";
-        $dumpCmd = "mysqldump -v --user=$username --password=$password --host=$host $database | gzip > data/dump/$dumpFile";
+        $dumpCmd = "mysqldump -v --user=$username --password=$password --host=$host $database | gzip > $dumpFile";
         self::executeLocalCommand($dumpCmd);
     }
 
@@ -57,8 +59,8 @@ STRING;
     private static function copyFile($remote, $dumpFile): void
     {
         $copyCmd = <<<STRING
-        scp $remote:$dumpFile $dumpFile
-STRING;
+                    rsync -avz --progress $remote:$dumpFile $dumpFile
+            STRING;
 
         echo "copying dump to $dumpFile ...\n";
         self::executeLocalCommand($copyCmd);
@@ -81,7 +83,7 @@ STRING;
         $dumpFile = realpath($dumpFile);
         echo "loading dump $dumpFile...\n";
         if (!is_readable($dumpFile)) {
-            throw new \Exception("Cannot read dump file \"$dumpFile\"");
+            throw new Exception("Cannot read dump file \"$dumpFile\"");
         }
 
         self::executeLocalCommand(PHP_BINARY . ' ./vendor/bin/doctrine orm:schema-tool:drop --ansi --full-database --force');
@@ -103,8 +105,6 @@ STRING;
      * Execute a shell command and throw exception if fails
      *
      * @param string $command
-     *
-     * @throws \Exception
      */
     public static function executeLocalCommand($command): void
     {
@@ -112,7 +112,7 @@ STRING;
         $fullCommand = "$command 2>&1";
         passthru($fullCommand, $return_var);
         if ($return_var) {
-            throw new \Exception('FAILED executing: ' . $command);
+            throw new Exception('FAILED executing: ' . $command);
         }
     }
 }

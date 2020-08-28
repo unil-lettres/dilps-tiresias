@@ -9,6 +9,7 @@ use Application\Model\User;
 use Application\Service\ImageService;
 use Application\Stream\TemporaryFile;
 use Imagine\Image\ImagineInterface;
+use Laminas\Diactoros\Response;
 use PhpOffice\PhpPresentation\DocumentLayout;
 use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Shape\RichText;
@@ -20,7 +21,6 @@ use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response;
 
 /**
  * Serve multiples cards as PowerPoint file
@@ -41,6 +41,11 @@ class PptxAction extends AbstractAction
     private $imageService;
 
     /**
+     * @var string
+     */
+    private $site;
+
+    /**
      * @var bool
      */
     private $needSeparator = false;
@@ -55,27 +60,23 @@ class PptxAction extends AbstractAction
      */
     private $backgroundColor = Color::COLOR_BLACK;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine)
+    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
     {
         $this->imageService = $imageService;
         $this->imagine = $imagine;
+        $this->site = $site;
     }
 
     /**
      * Serve multiples cards as PowerPoint file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $this->textColor = $request->getAttribute('textColor', $this->textColor);
         $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);
         $cards = $request->getAttribute('cards');
-        //w(count($cards));
-        $title = 'DILPS ' . date('c', time());
+
+        $title = $this->site . '_' . date('c', time());
         $presentation = $this->export($cards, $title);
 
         // Write to disk
@@ -98,9 +99,6 @@ class PptxAction extends AbstractAction
      * Export all cards into a presentation
      *
      * @param Card[] $cards
-     * @param string $title
-     *
-     * @return PhpPresentation
      */
     private function export(array $cards, string $title): PhpPresentation
     {
@@ -109,12 +107,11 @@ class PptxAction extends AbstractAction
         // Set a few meta data
         $properties = $presentation->getDocumentProperties();
         $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
-        $properties->setLastModifiedBy('DILPS');
+        $properties->setLastModifiedBy($this->site);
         $properties->setTitle($title);
-        $properties->setSubject('Présentation PowerPoint générée par le système DILPS');
+        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->site);
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
-        $properties->setKeywords("Université de Lausanne, Section d'Histoire de l'art");
-        $properties->setCategory("Histoire de l'art");
+        $properties->setKeywords('Université de Lausanne');
 
         // Remove default slide
         $presentation->removeSlideByIndex(0);
@@ -208,6 +205,8 @@ class PptxAction extends AbstractAction
         if (!$value) {
             return;
         }
+
+        $value = strip_tags($value);
 
         if ($this->needSeparator) {
             $textRun = $shape->createTextRun(', ');

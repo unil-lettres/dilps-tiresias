@@ -1,32 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" >
-        <title>Dilps</title>
-        <base href="/" >
+        <meta charset="utf-8" />
+        <title></title>
+        <base href="/" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1" >
-        <link rel="icon" type="image/x-icon" href="favicon.ico" >
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
     </head>
-    <body>
-        <body class="mat-typography">
-
-            <app-root class="defaultDark">
-                <div class="bootloader">
-                    <div class="sk-folding-cube">
-                        <div class="sk-cube1 sk-cube"></div>
-                        <div class="sk-cube2 sk-cube"></div>
-                        <div class="sk-cube4 sk-cube"></div>
-                        <div class="sk-cube3 sk-cube"></div>
-                    </div>
+    <body class="mat-typography">
+        <app-root>
+            <div class="bootloader">
+                <div class="sk-folding-cube">
+                    <div class="sk-cube1 sk-cube"></div>
+                    <div class="sk-cube2 sk-cube"></div>
+                    <div class="sk-cube4 sk-cube"></div>
+                    <div class="sk-cube3 sk-cube"></div>
                 </div>
-            </app-root>
+            </div>
+        </app-root>
 
-            <script>
-                var appRoot = document.getElementsByTagName('app-root')[0];
-                appRoot.className = localStorage.getItem('dilps-theme') ? localStorage.getItem('dilps-theme') : 'defaultDark';
-            </script>
-
-        </body>
+        <script>
+            window.APP_SITE = window.location.hostname.indexOf('tiresias') > -1 ? 'tiresias' : 'dilps';
+            const appRoot = document.getElementsByTagName('app-root')[0];
+            const dilpsTheme = localStorage.getItem('dilps-theme');
+            const tiresiasTheme = localStorage.getItem('tiresias-theme');
+            const theme = window.APP_SITE === 'tiresias' ? tiresiasTheme : dilpsTheme;
+            appRoot.className = theme || 'dilps-production-dark';
+        </script>
     </body>
 </html>

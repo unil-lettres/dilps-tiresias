@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 use Application\Action\GraphQLAction;
 use GraphQL\Upload\UploadMiddleware;
+use Mezzio\Application;
+use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
+use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Application;
-use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
-use Zend\Expressive\MiddlewareFactory;
 
 /*
  * Setup routes with a single request method:
@@ -31,13 +31,13 @@ use Zend\Expressive\MiddlewareFactory;
  * $app->route(
  *     '/contact',
  *     Application\Action\ContactAction::class,
- *     Zend\Expressive\Router\Route::HTTP_METHOD_ANY,
+ *     Mezzio\Router\Route::HTTP_METHOD_ANY,
  *     'contact'
  * );
  */
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    /** @var \Zend\Expressive\Application $app */
+    /** @var \Mezzio\Application $app */
     $app->post('/graphql', [
         BodyParamsMiddleware::class,
         UploadMiddleware::class,
@@ -53,6 +53,11 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\PptxAction::class,
     ], 'pptx');
 
+    $app->get('/xlsx/{ids:\d+[,\d]*}', [
+        \Application\Middleware\CardsFetcherMiddleware::class,
+        \Application\Action\XlsxAction::class,
+    ], 'xlsx');
+
     $app->get('/zip/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
         \Application\Middleware\CardsFetcherMiddleware::class,
         \Application\Action\ZipAction::class,
@@ -63,10 +68,21 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\PptxAction::class,
     ], 'pptx/collection');
 
+    $app->get('/xlsx/collection/{ids:\d+[,\d]*}', [
+        \Application\Middleware\CollectionFetcherMiddleware::class,
+        \Application\Action\XlsxAction::class,
+    ], 'xlsx/collection');
+
     $app->get('/zip/collection/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
         \Application\Middleware\CollectionFetcherMiddleware::class,
         \Application\Action\ZipAction::class,
     ], 'zip/collection');
 
+    $app->get('/template', [
+        \Application\Action\TemplateAction::class,
+    ], 'template');
+
     $app->get('/auth', \Application\Middleware\ShibbolethMiddleware::class);
+
+    $app->get('/detail[/]', \Application\Middleware\LegacyRedirectMiddleware::class);
 };

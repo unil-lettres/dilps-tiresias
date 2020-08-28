@@ -1,18 +1,20 @@
-@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700);
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
+@import '../node_modules/quill/dist/quill.bubble.css';
 @import 'styles/themes';
 @import 'app/shared/components/boot-loader/boot-loader.external';
 @import 'app/collections/collections/collections.external';
 @import 'app/shared/components/thesaurus/thesaurus.external';
 @import 'styles/layout';
-@import 'app/card/card.external';
 @import 'app/list/list.external';
+@import 'app/view-grid/view-grid.external';
 
 body {
     margin: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -68,6 +70,7 @@ perfect-scrollbar {
 
 #appContent {
     height: 100vh;
+
     router-outlet + * {
         height: 100vh;
         min-height: 0;
@@ -94,6 +97,7 @@ perfect-scrollbar {
     top: -0.12em;
 }
 
+natural-search,
 .searchField {
     font-size: 16px;
 }
@@ -106,4 +110,9 @@ perfect-scrollbar {
 .mat-table mat-cell {
     align-items: flex-start;
     padding: 0 3px;
+}
+
+// Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
+app-view-map agm-map div.gm-style > div:last-child {
+    top: 75px !important;
 }

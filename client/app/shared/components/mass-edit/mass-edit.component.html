@@ -1,14 +1,21 @@
-<h2 mat-dialog-title class="mat-card-title">Edition de masse</h2>
+<h2 class="mat-card-title" mat-dialog-title>Edition de masse</h2>
 
 <mat-dialog-content>
     <div fxLayout="column">
         <p class="mat-body">Les champs vides sont ignorés.</p>
-        <app-card [hideToolbar]="true" [hideImage]="true" [(model)]="card" [hideCards]="true" style="height:500px;"></app-card>
+        <app-card
+            [model]="card"
+            [hideCards]="true"
+            [hideImage]="true"
+            [hideToolbar]="true"
+            style="height: 500px;"
+            [hideCode]="true"
+        ></app-card>
     </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <div fxFlex></div>
     <button mat-button mat-dialog-close>Annuler</button>
-    <button mat-button mat-raised-button color="primary" [mat-dialog-close]="card">Valider</button>
+    <button [mat-dialog-close]="card" color="primary" mat-button mat-raised-button>Valider</button>
 </mat-dialog-actions>

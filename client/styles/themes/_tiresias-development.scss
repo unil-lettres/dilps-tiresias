@@ -1,0 +1,17 @@
+$primary: mat-palette($mat-amber);
+$accent: mat-palette($mat-blue);
+$warn: mat-palette($mat-red);
+
+.tiresias-development {
+    $theme-light: mat-light-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-light, foreground), base);
+    @include angular-material-theme($theme-light);
+    @include components-theme($theme-light);
+}
+
+.tiresias-development-dark {
+    $theme-dark: mat-dark-theme($primary, $accent, $warn);
+    color: mat-color(map-get($theme-dark, foreground), base);
+    @include angular-material-theme($theme-dark);
+    @include components-theme($theme-dark);
+}

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
-use Application\Model\User;
 use Application\Repository\CardRepository;
 
 /**
@@ -18,7 +18,7 @@ class CardRepositoryTest extends AbstractRepositoryTest
      */
     private $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->repository = _em()->getRepository(Card::class);
@@ -28,6 +28,7 @@ class CardRepositoryTest extends AbstractRepositoryTest
     {
         $card = new Card('test card');
 
+        $card->setSite(SiteType::DILPS);
         $card->setFilename('test card.jpg');
         $this->getEntityManager()->persist($card);
         $this->getEntityManager()->flush();
@@ -37,13 +38,6 @@ class CardRepositoryTest extends AbstractRepositoryTest
 
         $this->getEntityManager()->remove($card);
         $this->getEntityManager()->flush();
-        self::assertFileNotExists($card->getPath(), 'test file must have been deleted when record was deleted');
-    }
-
-    public function testRandom(): void
-    {
-        User::setCurrent(_em()->getReference(User::class, 1000));
-        $result = $this->repository->getFindAllQuery([], [['field' => 'random', 'order' => 'ASC']])->getQuery()->getResult();
-        self::assertCount(7, $result);
+        self::assertFileDoesNotExist($card->getPath(), 'test file must have been deleted when record was deleted');
     }
 }

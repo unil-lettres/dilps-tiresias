@@ -2,10 +2,9 @@
     $primary: map-get($theme, primary);
     .bootloader {
         background: mat-color($primary);
+
         .sk-folding-cube .sk-cube:before {
             background-color: mat-color($primary, default-contrast, 100);
         }
     }
 }
-
-

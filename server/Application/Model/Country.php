@@ -24,8 +24,6 @@ class Country extends AbstractModel
 
     /**
      * Set ISO 3166-1 alpha-2 country code
-     *
-     * @param string $code
      */
     public function setCode(string $code): void
     {
@@ -34,8 +32,6 @@ class Country extends AbstractModel
 
     /**
      * Get ISO 3166-1 alpha-2 country code
-     *
-     * @return string
      */
     public function getCode(): string
     {

@@ -1,5 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="stretch stretch" *ngIf="item" class="mat-caption">
-
+<div *ngIf="item" class="mat-caption" fxLayout="column" fxLayoutAlign="stretch stretch">
     <div *ngIf="item.creationDate || item.creator">
         Créé
         <span *ngIf="item.creator"> par {{ item.creator.login }}</span>
@@ -31,5 +30,4 @@
             le {{ item.imageValidationDate | date: 'dd.MM.yyyy' }} à {{ item.imageValidationDate | date: 'HH:mm' }}
         </span>
     </div>
-
 </div>

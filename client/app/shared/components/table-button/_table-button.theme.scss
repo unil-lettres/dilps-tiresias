@@ -1,5 +1,4 @@
 @mixin table-button($theme) {
-
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
     $background: map-get($theme, background);
@@ -19,5 +18,4 @@
             }
         }
     }
-
 }

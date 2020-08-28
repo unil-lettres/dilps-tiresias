@@ -5,20 +5,9 @@ declare(strict_types=1);
 namespace Application\Repository;
 
 use Application\Model\Artist;
-use Doctrine\ORM\QueryBuilder;
 
 class ArtistRepository extends AbstractRepository
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('artist');
-
-        $this->applySearch($qb, $filters, 'artist');
-        $this->applySorting($qb, $sorting, 'artist');
-
-        return $qb;
-    }
-
     /**
      * Get or create artists by their given names
      *
@@ -26,7 +15,7 @@ class ArtistRepository extends AbstractRepository
      *
      * @return Artist[]
      */
-    public function getOrCreateByNames(array $names): array
+    public function getOrCreateByNames(array $names, string $site): array
     {
         if (!$names) {
             return [];
@@ -37,7 +26,10 @@ class ArtistRepository extends AbstractRepository
             return trim($value);
         }, $names));
 
-        $artists = $this->findByName($names);
+        $artists = $this->findBy([
+            'name' => $names,
+            'site' => $site,
+        ]);
 
         $found = [];
         foreach ($artists as $artist) {
@@ -47,6 +39,7 @@ class ArtistRepository extends AbstractRepository
         $notFound = array_diff($names, $found);
         foreach ($notFound as $name) {
             $artist = new Artist();
+            $artist->setSite($site);
             $this->getEntityManager()->persist($artist);
             $artist->setName($name);
             $artists[] = $artist;

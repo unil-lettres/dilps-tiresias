@@ -9,8 +9,8 @@ use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
+use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Expressive\Session\SessionMiddleware;
 
 /**
  * A thin wrapper to serve GraphQL via HTTP or CLI
@@ -24,22 +24,18 @@ class Server
      */
     private $config;
 
-    public function __construct(bool $debug)
+    public function __construct(bool $debug, string $site)
     {
         GraphQL::setDefaultFieldResolver(new DefaultFieldResolver());
         $this->config = ServerConfig::create([
             'schema' => new Schema(),
             'queryBatching' => true,
             'debug' => $debug ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE : false,
+            'rootValue' => $site,
         ]);
         $this->server = new StandardServer($this->config);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     *
-     * @return ExecutionResult
-     */
     public function execute(ServerRequestInterface $request): ExecutionResult
     {
         if (!$request->getParsedBody()) {
@@ -55,8 +51,6 @@ class Server
 
     /**
      * Send response to CLI
-     *
-     * @param ExecutionResult $result
      */
     public function sendCli(ExecutionResult $result): void
     {

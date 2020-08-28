@@ -1,10 +1,21 @@
 <h2 mat-dialog-title>Licence</h2>
 <mat-dialog-content>
-    <p>La responsabilité de la Faculté des lettres n'est pas engagée en cas d'utilisation erronée de la base de données DILPS ou de dommages informatiques causés par l'utilisateur.</p>
-    <p>Les enseignants et étudiants bénéficiaires s'engagent à n'utiliser les images qu'à des fins pédagogiques et professionnelles (pas de publication), selon l'article 19 de la Loi fédérale sur les droits d'auteur et droits voisins (LDA) qui stipule que l'usage privé d'œuvres divulguées est autorisé, notamment par un maître et ses élèves à des fins pédagogiques.</p>
-    <p>La Faculté des Lettres ne peut être rendue fautive en cas de restriction d'accès à la base de données DILPS pendant des phases de test ou de mises à jour.</p>
+    <p>
+        La responsabilité de la Faculté des lettres n'est pas engagée en cas d'utilisation erronée de la base de données
+        DILPS ou de dommages informatiques causés par l'utilisateur.
+    </p>
+    <p>
+        Les enseignants et étudiants bénéficiaires s'engagent à n'utiliser les images qu'à des fins pédagogiques et
+        professionnelles (pas de publication), selon l'article 19 de la Loi fédérale sur les droits d'auteur et droits
+        voisins (LDA) qui stipule que l'usage privé d'œuvres divulguées est autorisé, notamment par un maître et ses
+        élèves à des fins pédagogiques.
+    </p>
+    <p>
+        La Faculté des Lettres ne peut être rendue fautive en cas de restriction d'accès à la base de données DILPS
+        pendant des phases de test ou de mises à jour.
+    </p>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button mat-dialog-close>Refuser</button>
-    <button mat-button [mat-dialog-close]="true">Accepter</button>
+    <button [mat-dialog-close]="true" mat-button>Accepter</button>
 </mat-dialog-actions>

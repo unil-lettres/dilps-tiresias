@@ -1,46 +1,56 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {Inject, Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {SITE} from '../../app.config';
+import {Site} from '../generated-types';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ThemeService {
-
-    private darkActivated: boolean;
-
     public readonly themes = [
-        'default',
+        'dilps-production',
+        'dilps-staging',
+        'dilps-development',
+        'tiresias-production',
+        'tiresias-staging',
+        'tiresias-development',
     ];
 
     public readonly theme: BehaviorSubject<string> = new BehaviorSubject(this.themes[0]);
+    private darkActivated: boolean;
 
-    constructor() {
-        const theme = localStorage.getItem('dilps-theme');
-        this.theme.next(theme ? theme : this.themes[0] + 'Dark');
-        if (theme && theme.indexOf('Dark') > -1) {
+    private storageKey = null;
+
+    constructor(@Inject(SITE) site: Site) {
+        this.storageKey = site + '-theme';
+
+        const theme = localStorage.getItem(this.storageKey);
+
+        this.theme.next(theme);
+        if (theme && theme.indexOf('-dark') > -1) {
             this.darkActivated = true;
         }
     }
 
-    get isDark() {
-        return this.darkActivated;
-    }
-
-    public set(theme: string) {
-        if (this.darkActivated && theme.indexOf('Dark') === -1) {
-            theme += 'Dark';
-        } else {
-            theme = theme.replace('Dark', '');
+    public set(theme: string): void {
+        // Set default theme if stored theme don't exist
+        if (!theme || (theme && this.themes.indexOf(theme.replace('-dark', '')) < 0)) {
+            this.set(this.themes[0]);
+            return;
         }
-        localStorage.setItem('dilps-theme', theme);
+
+        if (this.darkActivated && theme.indexOf('-dark') === -1) {
+            theme += '-dark';
+        } else {
+            theme = theme.replace('-dark', '');
+        }
+
+        localStorage.setItem(this.storageKey, theme);
         this.theme.next(theme);
     }
 
-    public setNightMode(val: boolean) {
-        this.darkActivated = val;
+    public toggleNightMode(): void {
+        this.darkActivated = !this.darkActivated;
         this.set(this.theme.getValue());
     }
-
-    public toggle() {
-        this.setNightMode(!this.darkActivated);
-    }
-
 }

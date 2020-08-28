@@ -14,12 +14,16 @@ return [
                     'password' => '',
                     'port' => 3306,
                     'driverOptions' => [
-                        \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4',
+                        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4',
                     ],
                     'defaultTableOptions' => [
                         'charset' => 'utf8mb4',
                         'collate' => 'utf8mb4_unicode_ci',
                     ],
+                ],
+
+                'doctrine_mapping_types' => [
+                    'point' => 'point',
                 ],
             ],
         ],
@@ -40,15 +44,21 @@ return [
                 ],
                 'numeric_functions' => [
                     'rand' => \DoctrineExtensions\Query\Mysql\Rand::class,
+                    'native_in' => \Application\ORM\Query\NativeIn::class,
+                    'geomfromtext' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText::class,
+                    'st_distance' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STDistance::class,
                 ],
             ],
         ],
         'types' => [
             'UserType' => Application\DBAL\Types\UserTypeType::class,
+            'Precision' => Application\DBAL\Types\PrecisionType::class,
+            'Site' => Application\DBAL\Types\SiteType::class,
             'UserRole' => Application\DBAL\Types\UserRoleType::class,
             'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
             'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
             'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
+            'point' => CrEOF\Spatial\DBAL\Types\Geography\PointType::class,
         ],
         // migrations configuration
         'migrations_configuration' => [

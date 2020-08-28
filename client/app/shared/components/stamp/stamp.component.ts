@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-stamp',
@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./stamp.component.scss'],
 })
 export class StampComponent {
-    @Input() item;
+    @Input() public item;
 }

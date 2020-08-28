@@ -14,8 +14,15 @@ global $container;
 /** @var ImagineInterface $imagine */
 $imagine = $container->get(ImagineInterface::class);
 
+if ($argc > 1) {
+    parse_str(implode('&', array_slice($argv, 1)), $_GET);
+}
+
+// If a "site" parameter is available, it will be used to filter the records to update.
+$site = $_GET['site'] ?? null;
+
 $connection = _em()->getConnection();
-$filesInDb = _em()->getRepository(Card::class)->getFilenamesForDimensionUpdate();
+$filesInDb = _em()->getRepository(Card::class)->getFilenamesForDimensionUpdate($site);
 $count = 0;
 $total = count($filesInDb);
 foreach ($filesInDb as $i => $card) {

@@ -5,48 +5,26 @@ declare(strict_types=1);
 namespace Application\Repository;
 
 use Application\Model\Card;
+use Application\Model\Collection;
 use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
+use PDO;
 
 class CardRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
+    public function getFindAllByCollections(array $collections = []): QueryBuilder
     {
         $qb = $this->createQueryBuilder('card');
 
-        if (isset($filters['collections'])) {
-            if (\count($filters['collections']) > 0) {
+        if (isset($collections)) {
+            if (\count($collections) > 0) {
                 $qb->join('card.collections', 'collection');
                 $qb->andWhere('collection.id IN (:collections)');
-                $qb->setParameter('collections', $filters['collections']);
+                $qb->setParameter('collections', $collections);
             } else {
                 $qb->andWhere('card.collections IS EMPTY');
             }
         }
-        if (@$filters['ids'] ?? false) {
-            $qb->andWhere('card.id IN (:ids)');
-            $qb->setParameter('ids', $filters['ids']);
-        }
-
-        if (isset($filters['creators'])) {
-            if (\count($filters['creators']) > 0) {
-                $qb->andWhere('card.creator IN (:creators)');
-                $qb->setParameter('creators', $filters['creators']);
-            } else {
-                $qb->andWhere('card.creator IS NULL');
-            }
-        }
-
-        if (isset($filters['hasImage'])) {
-            if ($filters['hasImage'] === true) {
-                $qb->andWhere("card.filename != ''");
-            } elseif ($filters['hasImage'] === false) {
-                $qb->andWhere("card.filename = ''");
-            }
-        }
-
-        $this->applySearch($qb, $filters, 'card');
-        $this->applySorting($qb, $sorting, 'card');
 
         return $qb;
     }
@@ -57,10 +35,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card is public
      * - card is member and user is logged in
      * - card owner or creator is the user
-     *
-     * @param null|User $user
-     *
-     * @return string
+     * - card's collection responsible is the user
      */
     public function getAccessibleSubQuery(?User $user): string
     {
@@ -78,7 +53,11 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
         if ($user) {
             $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-            $qb->orWhere('card.owner_id = ' . $userId . ' OR card.creator_id = ' . $userId);
+            $qb->leftJoin('card', 'card_collection', 'card_collection', 'card_collection.card_id = card.id')
+                ->leftJoin('card_collection', 'collection_user', 'collection_user', 'card_collection.collection_id = collection_user.collection_id')
+                ->orWhere('card.owner_id = ' . $userId)
+                ->orWhere('card.creator_id = ' . $userId)
+                ->orWhere('collection_user.user_id = ' . $userId);
         }
 
         return $qb->getSQL();
@@ -95,7 +74,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->from('card')
             ->select('DISTINCT CONCAT("data/images/", filename)')
             ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll(\PDO::FETCH_COLUMN);
+            ->orderBy('filename')->execute()->fetchAll(PDO::FETCH_COLUMN);
 
         return $filenames;
     }
@@ -105,7 +84,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      *
      * @return string[]
      */
-    public function getFilenamesForDimensionUpdate(): array
+    public function getFilenamesForDimensionUpdate(?string $site = null): array
     {
         $filenames = $this->getEntityManager()->getConnection()->createQueryBuilder()
             ->from('card')
@@ -114,8 +93,43 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->addSelect('height')
             ->addSelect('CONCAT("data/images/", filename) AS filename')
             ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll();
+            ->orderBy('filename');
 
-        return $filenames;
+        if ($site) {
+            $filenames
+                ->where('site = "' . $site . '"');
+        }
+
+        return $filenames->execute()->fetchAll();
+    }
+
+    /**
+     * Return the next available Account code
+     */
+    public function getNextCodeAvailable(Collection $collection): string
+    {
+        static $latest = null;
+        if (!$latest) {
+            $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
+                ->select('IFNULL(MAX(card.id) + 1, 1)')
+                ->from('card', 'card');
+            $latest = $qb->execute()->fetchColumn();
+        } else {
+            ++$latest;
+        }
+
+        return $collection->getName() . '-' . $latest;
+    }
+
+    /**
+     * Get a card from it's legacy id.
+     */
+    public function getOneByLegacyId(int $legacy_id): ?Card
+    {
+        return $this->getAclFilter()->runWithoutAcl(function () use ($legacy_id) {
+            return $this->findOneBy([
+                'legacyId' => $legacy_id,
+            ]);
+        });
     }
 }

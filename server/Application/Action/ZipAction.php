@@ -9,10 +9,10 @@ use Application\Model\User;
 use Application\Service\ImageService;
 use Application\Stream\TemporaryFile;
 use Imagine\Image\ImagineInterface;
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response;
 use ZipArchive;
 
 /**
@@ -29,6 +29,11 @@ class ZipAction extends AbstractAction
      * @var ImageService
      */
     private $imageService;
+
+    /**
+     * @var string
+     */
+    private $site;
 
     /**
      * @var bool
@@ -50,19 +55,15 @@ class ZipAction extends AbstractAction
      */
     private $fileIndex = 0;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine)
+    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
     {
         $this->imageService = $imageService;
         $this->imagine = $imagine;
+        $this->site = $site;
     }
 
     /**
      * Serve multiples cards as zip file
-     *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -72,7 +73,7 @@ class ZipAction extends AbstractAction
 
         // Write to disk
         $tempFile = tempnam('data/tmp/', 'zip');
-        $title = 'DILPS ' . date('c', time());
+        $title = $this->site . '_' . date('c', time());
         $this->export($cards, $tempFile);
 
         $headers = [
@@ -90,7 +91,6 @@ class ZipAction extends AbstractAction
      * Export all cards into a zip file
      *
      * @param Card[] $cards
-     * @param string $file
      */
     private function export(array $cards, string $file): void
     {
@@ -137,7 +137,7 @@ class ZipAction extends AbstractAction
         $html .= '<!DOCTYPE html>';
         $html .= '<html lang="fr">';
         $html .= '<head>';
-        $html .= '<title>Base de données DILPS</title>';
+        $html .= '<title>Base de données ' . $this->site . '</title>';
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         $html .= '<meta name="author" content="' . (User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
         $html .= '<style>';

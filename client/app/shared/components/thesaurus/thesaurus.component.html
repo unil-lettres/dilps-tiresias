@@ -1,38 +1,40 @@
 <mat-form-field class="innerSpacing">
-
     <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
-        <mat-chip *ngFor="let item of items" [removable]="!readonly" (removed)="removeTerm(item)" fxLayoutRow="row">
-            <mat-icon *ngIf="previewComponent" class="mat-chip-remove" (click)="openItem(item)">remove_red_eye</mat-icon>
-            <span>
-                <span>{{ item.name }}</span>
-                <br *ngIf="item.locality && !readonly">
+        <mat-label>{{ placeholder }}</mat-label>
+        <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayout="row">
+            <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove"
+                >remove_red_eye</mat-icon
+            >
+            <div fxFlex>
+                <span>{{ getLabel(item) }}</span>
+                <br *ngIf="item.locality && !readonly" />
                 <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
-            </span>
+            </div>
 
-            <mat-icon matChipRemove *ngIf="!readonly">cancel</mat-icon>
+            <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input #input
-               [fxShow]="!readonly || items.length === 0"
-               [readonly]="readonly"
-               [formControl]="formCtrl"
-               [placeholder]="placeholder"
-               [matChipInputFor]="chipList"
-               [matAutocomplete]="autocomplete"
-               (ngModelChange)="onSearch($event)"
-               (focus)="startSearch()"
-               (keydown.enter)="onEnter($event)"
+
+        <input
+            (focus)="focus()"
+            (keydown.enter)="onEnter($event)"
+            [formControl]="formControl"
+            [fxShow]="!readonly || items.length === 0"
+            [matAutocomplete]="autocomplete"
+            [matChipInputFor]="chipList"
+            [readonly]="readonly"
         />
     </mat-chip-list>
 
     <!-- Autocomplete menu -->
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">
-        <mat-option *ngFor="let item of suggestionsObs | async" [value]="item" class="multiline">
+        <mat-option *ngFor="let item of suggestions" [value]="item" class="multiline">
             <div fxLayout="column">
                 <div>{{ item.name }}</div>
                 <div *ngIf="item?.locality" class="mat-caption">{{ item.locality }}</div>
             </div>
         </mat-option>
-        <div style="padding:5px 10px" class="mat-caption" *ngIf="moreNbItems > 0" i18n>{{ moreNbItems }} élément(s) supplémentaire(s)</div>
+        <div *ngIf="moreNbItems > 0" class="mat-caption" i18n style="padding: 5px 10px;">
+            {{ moreNbItems }} élément(s) supplémentaire(s)
+        </div>
     </mat-autocomplete>
-
 </mat-form-field>

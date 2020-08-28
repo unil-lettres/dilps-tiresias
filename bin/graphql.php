@@ -6,13 +6,14 @@
  * This is useful to introspect the entire schema for JS unit tests
  */
 use Application\Api\Server;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Session\Session;
-use Zend\Expressive\Session\SessionMiddleware;
+use Application\DBAL\Types\SiteType;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Session\Session;
+use Mezzio\Session\SessionMiddleware;
 
 require_once __DIR__ . '/../htdocs/index.php';
 
-$server = new Server(true);
+$server = new Server(true, SiteType::DILPS);
 $request = new ServerRequest();
 $request = $request->withMethod('POST')->withHeader('content-type', 'application/json')->withParsedBody([
     'query' => $argv[1] ?? '',

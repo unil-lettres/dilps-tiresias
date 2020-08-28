@@ -9,7 +9,8 @@
         @include centerContent();
 
         &.menuMinimized {
-            &, perfect-scrollbar {
+            &,
+            perfect-scrollbar {
                 width: 0;
                 min-width: 64px;
             }

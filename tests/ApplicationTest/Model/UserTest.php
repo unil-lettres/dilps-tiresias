@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
+use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         User::setCurrent(null);
     }
@@ -17,6 +18,7 @@ class UserTest extends TestCase
     public function testGetGlobalPermissions(): void
     {
         $user = new User();
+        $user->setSite(SiteType::DILPS);
         $actual = $user->getGlobalPermissions();
         $expected = [
             'artist' => [
@@ -46,6 +48,24 @@ class UserTest extends TestCase
             'user' => [
                 'create' => false,
             ],
+            'domain' => [
+                'create' => false,
+            ],
+            'documentType' => [
+                'create' => false,
+            ],
+            'news' => [
+                'create' => false,
+            ],
+            'period' => [
+                'create' => false,
+            ],
+            'material' => [
+                'create' => false,
+            ],
+            'antiqueName' => [
+                'create' => false,
+            ],
         ];
 
         self::assertEquals($expected, $actual);
@@ -64,10 +84,10 @@ class UserTest extends TestCase
                 'create' => true,
             ],
             'country' => [
-                'create' => true,
+                'create' => false,
             ],
             'dating' => [
-                'create' => true,
+                'create' => false,
             ],
             'institution' => [
                 'create' => true,
@@ -78,12 +98,31 @@ class UserTest extends TestCase
             'user' => [
                 'create' => true,
             ],
+            'domain' => [
+                'create' => true,
+            ],
+            'documentType' => [
+                'create' => true,
+            ],
+            'news' => [
+                'create' => true,
+            ],
+            'period' => [
+                'create' => true,
+            ],
+            'material' => [
+                'create' => true,
+            ],
+            'antiqueName' => [
+                'create' => true,
+            ],
         ];
 
         User::setCurrent($user);
         self::assertSame($user, User::getCurrent());
 
         $admin = new User(User::ROLE_ADMINISTRATOR);
+        $admin->setSite(SiteType::DILPS);
         $actualForAdmin = $admin->getGlobalPermissions();
 
         self::assertEquals($expectedForAdmin, $actualForAdmin);
@@ -93,11 +132,6 @@ class UserTest extends TestCase
 
     /**
      * @dataProvider providerSetRole
-     *
-     * @param string $currentRole
-     * @param string $oldRole
-     * @param string $newRole
-     * @param null|string $exception
      */
     public function testSetRole(string $currentRole, string $oldRole, string $newRole, ?string $exception): void
     {
@@ -129,7 +163,11 @@ class UserTest extends TestCase
             'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role to senior'],
             'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role to junior'],
 
+            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
+            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
+
             [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
+            [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
             [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_ADMINISTRATOR, null],
             [User::ROLE_ADMINISTRATOR, User::ROLE_ADMINISTRATOR, User::ROLE_STUDENT, null],
         ];

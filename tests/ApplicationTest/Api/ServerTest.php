@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace AppTest\Api;
+namespace ApplicationTest\Api;
 
 use Application\Api\Server;
+use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use ApplicationTest\Traits\TestWithTransaction;
+use Laminas\Diactoros\ServerRequest;
+use Mezzio\Session\Session;
+use Mezzio\Session\SessionMiddleware;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\ServerRequest;
-use Zend\Expressive\Session\Session;
-use Zend\Expressive\Session\SessionMiddleware;
 
 class ServerTest extends TestCase
 {
@@ -18,20 +19,16 @@ class ServerTest extends TestCase
 
     /**
      * @dataProvider providerQuery
-     *
-     * @param null|string $user
-     * @param ServerRequest $request
-     * @param array $expected
      */
     public function testQuery(?string $user, ServerRequest $request, array $expected): void
     {
-        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin($user));
+        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin($user, SiteType::DILPS));
 
         // Use this flag to easily debug API test issues
         $debug = false;
 
         // Configure server
-        $server = new Server($debug);
+        $server = new Server($debug, SiteType::DILPS);
 
         // Execute query
         $actual = $server->execute($request)->toArray();

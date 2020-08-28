@@ -23,8 +23,8 @@ class DatingTest extends TestCase
         $dating->setFrom($d1);
         $d2 = $dating->getFrom();
 
-        $this->assertNotSame($d1, $d2);
-        $this->assertEquals($d1, $d2);
+        self::assertNotSame($d1, $d2);
+        self::assertEquals($d1, $d2);
     }
 
     public function testTo(): void
@@ -34,8 +34,8 @@ class DatingTest extends TestCase
         $dating->setTo($d1);
         $d2 = $dating->getTo();
 
-        $this->assertNotSame($d1, $d2);
-        $this->assertEquals($d1, $d2);
+        self::assertNotSame($d1, $d2);
+        self::assertEquals($d1, $d2);
     }
 
     public function testDatingRelation(): void

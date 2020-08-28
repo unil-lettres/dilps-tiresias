@@ -16,7 +16,7 @@ abstract class Viewer implements FieldInterface
                 'name' => 'viewer',
                 'type' => _types()->getOutput(User::class),
                 'description' => 'Represents currently logged-in user',
-                'resolve' => function ($root, array $args): ?User {
+                'resolve' => function (string $site, array $args): ?User {
                     return User::getCurrent();
                 },
             ];

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Api\Field;
 
-use Application\Api\Exception;
 use Application\Api\Helper;
 use Application\Api\Input\PaginationInputType;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
-use Application\Model\Collection;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use GraphQL\Type\Definition\Type;
 use ReflectionClass;
@@ -21,10 +19,6 @@ abstract class Standard
 {
     /**
      * Returns standard fields to query the object
-     *
-     * @param string $class
-     *
-     * @return array
      */
     public static function buildQuery(string $class): array
     {
@@ -42,18 +36,20 @@ abstract class Standard
                 'name' => $plural,
                 'type' => _types()->get($shortName . 'Pagination'),
                 'args' => $listArgs,
-                'resolve' => function ($root, array $args) use ($class): array {
-                    if (($args['filters'] ?? false) && ($args['filter'] ?? false)) {
-                        throw new Exception('Cannot use `filter` and `filters` at the same time');
+                'resolve' => function (string $site, array $args) use ($class, $metadata): array {
+                    // If null or empty list is provided by client, fallback on default sorting
+                    $sorting = $args['sorting'] ?? [];
+                    if (!$sorting) {
+                        $sorting = self::getDefaultSorting($metadata);
                     }
-                    if ($args['filters'] ?? false) {
-                        $queryArgs = [$args['filters'] ?? []];
-                        $queryArgs[] = $args['sorting'];
 
-                        $qb = _em()->getRepository($class)->getFindAllQuery(...$queryArgs);
-                    } else {
-                        $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $args['sorting'] ?? []);
-                    }
+                    // And **always** sort by ID
+                    $sorting[] = [
+                        'field' => 'id',
+                        'order' => 'ASC',
+                    ];
+
+                    $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
 
                     $result = Helper::paginate($args['pagination'], $qb);
 
@@ -64,7 +60,7 @@ abstract class Standard
                 'name' => $name,
                 'type' => _types()->getOutput($class),
                 'args' => $singleArgs,
-                'resolve' => function ($root, array $args): ?AbstractModel {
+                'resolve' => function (string $site, array $args): ?AbstractModel {
                     $object = $args['id']->getEntity();
 
                     Helper::throwIfDenied($object, 'read');
@@ -77,17 +73,12 @@ abstract class Standard
 
     /**
      * Returns standard fields to mutate the object
-     *
-     * @param string $class
-     *
-     * @return array
      */
     public static function buildMutation(string $class): array
     {
         $reflect = new ReflectionClass($class);
         $name = $reflect->getShortName();
         $plural = self::makePlural($name);
-        $lowerName = lcfirst($name);
 
         return [
             [
@@ -97,13 +88,19 @@ abstract class Standard
                 'args' => [
                     'input' => Type::nonNull(_types()->getInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($class, $lowerName): AbstractModel {
-                    // Check ACL
+                'resolve' => function (string $site, array $args) use ($class): AbstractModel {
                     $object = new $class();
+
+                    // Be sure that site is set first
+                    $input = $args['input'];
+                    if ($input['site'] ?? false) {
+                        Helper::hydrate($object, ['site' => $input['site']]);
+                    }
+
+                    // Check ACL
                     Helper::throwIfDenied($object, 'create');
 
                     // Do it
-                    $input = $args['input'];
                     Helper::hydrate($object, $input);
                     _em()->persist($object);
                     _em()->flush();
@@ -119,7 +116,7 @@ abstract class Standard
                     'id' => Type::nonNull(_types()->getId($class)),
                     'input' => Type::nonNull(_types()->getPartialInput($class)),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): AbstractModel {
+                'resolve' => function (string $site, array $args): AbstractModel {
                     $object = $args['id']->getEntity();
 
                     // Check ACL
@@ -141,7 +138,7 @@ abstract class Standard
                 'args' => [
                     'ids' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getId($class)))),
                 ],
-                'resolve' => function ($root, array $args) use ($lowerName): bool {
+                'resolve' => function (string $site, array $args): bool {
                     foreach ($args['ids'] as $id) {
                         $object = $id->getEntity();
 
@@ -166,10 +163,9 @@ abstract class Standard
      * @param string $ownerClass The class owning the relation
      * @param string $otherClass The other class, not-owning the relation
      * @param bool $byName if true, the name of $other will define the relation instead of its ID
-     *
-     * @return array
+     * @param string $privilege the ACL privilege to assert before linking, usually "update", but in edge cases a custom one
      */
-    public static function buildRelationMutation(string $ownerClass, string $otherClass, bool $byName = false): array
+    public static function buildRelationMutation(string $ownerClass, string $otherClass, bool $byName = false, string $privilege = 'update'): array
     {
         $ownerReflect = new ReflectionClass($ownerClass);
         $ownerName = $ownerReflect->getShortName();
@@ -196,7 +192,7 @@ abstract class Standard
                 'description' => 'Create a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation already exists, it will have no effect.',
                 'args' => $args,
-                'resolve' => function ($root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], true);
@@ -204,8 +200,11 @@ abstract class Standard
                         $other = $args[$lowerOtherName]->getEntity();
                     }
 
+                    // If privilege is linkCard, exceptionally test ACL on other, instead of owner, because other is the collection to which a card will be added
+                    $objectForAcl = $privilege === 'linkCard' ? $other : $owner;
+
                     // Check ACL
-                    Helper::throwIfDenied($owner, 'update');
+                    Helper::throwIfDenied($objectForAcl, $privilege);
 
                     // Do it
                     $method = 'add' . $otherName;
@@ -221,7 +220,7 @@ abstract class Standard
                 'description' => 'Delete a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation does not exist, it will have no effect.',
                 'args' => $args,
-                'resolve' => function ($root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName): AbstractModel {
+                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], false);
@@ -229,8 +228,11 @@ abstract class Standard
                         $other = $args[$lowerOtherName]->getEntity();
                     }
 
+                    // If privilege is linkCard, exceptionally test ACL on other, instead of owner, because other is the collection to which a card will be added
+                    $objectForAcl = $privilege === 'linkCard' ? $other : $owner;
+
                     // Check ACL
-                    Helper::throwIfDenied($owner, 'update');
+                    Helper::throwIfDenied($objectForAcl, $privilege);
 
                     // Do it
                     if ($other) {
@@ -247,12 +249,6 @@ abstract class Standard
 
     /**
      * Load object from DB and optionally create new one if not found
-     *
-     * @param string $class
-     * @param string $name
-     * @param bool $createIfNotFound
-     *
-     * @return null|AbstractModel
      */
     private static function getByName(string $class, string $name, bool $createIfNotFound): ?AbstractModel
     {
@@ -270,10 +266,6 @@ abstract class Standard
 
     /**
      * Returns the plural form of the given name
-     *
-     * @param string $name
-     *
-     * @return string
      */
     private static function makePlural(string $name): string
     {
@@ -286,10 +278,6 @@ abstract class Standard
 
     /**
      * Return arguments used for the list
-     *
-     * @param string $class
-     *
-     * @return array
      */
     private static function getListArguments(ClassMetadata $class, string $classs, string $name): array
     {
@@ -305,14 +293,6 @@ abstract class Standard
             ],
         ];
 
-        $filterTypeClass = 'Old' . $class->getReflectionClass()->getShortName() . 'Filter';
-        if (_types()->has($filterTypeClass)) {
-            $listArgs[] = [
-                'name' => 'filters',
-                'type' => _types()->get($filterTypeClass),
-            ];
-        }
-
         $listArgs[] = PaginationInputType::build();
 
         return $listArgs;
@@ -320,10 +300,6 @@ abstract class Standard
 
     /**
      * Return arguments used for single item
-     *
-     * @param string $class
-     *
-     * @return array
      */
     private static function getSingleArguments(string $class): array
     {
@@ -336,10 +312,6 @@ abstract class Standard
 
     /**
      * Get default sorting values with some fallback for some special cases
-     *
-     * @param ClassMetadata $class
-     *
-     * @return array
      */
     private static function getDefaultSorting(ClassMetadata $class): array
     {
@@ -349,17 +321,21 @@ abstract class Standard
                 'field' => 'creationDate',
                 'order' => 'DESC',
             ];
-        } elseif ($class->getName() === Collection::class) {
+        }
+
+        if ($class->hasField('sorting')) {
+            $defaultSorting[] = [
+                'field' => 'sorting',
+                'order' => 'ASC',
+            ];
+        }
+
+        if ($class->hasField('name')) {
             $defaultSorting[] = [
                 'field' => 'name',
                 'order' => 'ASC',
             ];
         }
-
-        $defaultSorting[] = [
-            'field' => 'id',
-            'order' => 'ASC',
-        ];
 
         return $defaultSorting;
     }

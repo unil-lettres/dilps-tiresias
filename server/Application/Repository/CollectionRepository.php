@@ -7,52 +7,9 @@ namespace Application\Repository;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
-use Doctrine\ORM\QueryBuilder;
 
 class CollectionRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
 {
-    public function getFindAllQuery(array $filters = [], array $sorting = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('collection');
-
-        if (isset($filters['isSource'])) {
-            $qb->andWhere('collection.isSource = :isSource');
-            $qb->setParameter('isSource', $filters['isSource']);
-        }
-
-        if (isset($filters['creators'])) {
-            if (\count($filters['creators']) > 0) {
-                $qb->andWhere('collection.creator IN (:creators)');
-                $qb->setParameter('creators', $filters['creators']);
-            } else {
-                $qb->andWhere('collection.creator IS NULL');
-            }
-        }
-
-        if (isset($filters['parents'])) {
-            if (\count($filters['parents']) > 0) {
-                $qb->andWhere('collection.parent IN (:parents)');
-                $qb->setParameter('parents', $filters['parents']);
-            } else {
-                $qb->andWhere('collection.parent IS NULL');
-            }
-        }
-
-        if (isset($filters['visibilities'])) {
-            if (\count($filters['visibilities']) > 0) {
-                $qb->andWhere('collection.visibility IN (:visibilities)');
-                $qb->setParameter('visibilities', $filters['visibilities']);
-            } else {
-                $qb->andWhere('collection.visibility IS NULL');
-            }
-        }
-
-        $this->applySearch($qb, $filters, 'collection');
-        $this->applySorting($qb, $sorting, 'collection');
-
-        return $qb;
-    }
-
     /**
      * Returns pure SQL to get ID of all collections that are accessible to given user.
      *
@@ -60,11 +17,8 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      *
      * - collection is member and user is logged in
      * - collection is admin and user is admin
-     * - collection owner or creator is the user
-     *
-     * @param null|User $user
-     *
-     * @return string
+     * - collection owner, creator or responsible is the user
+     * - collection parent is accessible (recursively)
      */
     public function getAccessibleSubQuery(?User $user): string
     {
@@ -72,38 +26,56 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
             return '-1';
         }
 
+        // Todo : grant access to collections visible by admins to majors ?
         $visibility = [Collection::VISIBILITY_MEMBER];
         if ($user->getRole() === User::ROLE_ADMINISTRATOR) {
             $visibility[] = Collection::VISIBILITY_ADMINISTRATOR;
         }
 
-        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
-            ->select('collection.id')
-            ->from('collection')
-            ->where('collection.visibility IN (' . $this->quoteArray($visibility) . ')');
+        $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+        $visibility = $this->quoteArray($visibility);
 
-        if ($user) {
-            $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-            $qb->orWhere('collection.owner_id = ' . $userId . ' OR collection.creator_id = ' . $userId);
-        }
+        $isAccessible = <<<STRING
+                        collection.visibility IN ($visibility)
+                        OR collection.owner_id = $userId
+                        OR collection.creator_id = $userId
+                        OR cu.user_id = $userId 
+            STRING;
 
-        return $qb->getSQL();
+        $sql = <<<STRING
+            WITH RECURSIVE parent AS (
+
+            SELECT collection.id, collection.parent_id FROM collection
+            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            WHERE
+            parent_id IS NULL 
+            AND ($isAccessible)
+
+            UNION
+
+            SELECT collection.id, collection.parent_id FROM collection
+            INNER JOIN parent ON collection.parent_id = parent.id
+            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            WHERE
+            $isAccessible
+
+            ) SELECT id FROM parent
+            STRING;
+
+        return $sql;
     }
 
     /**
      * Duplicate all accessible images from source collection into target collection
-     *
-     * @param Collection $sourceCollection
-     * @param Collection $targetCollection
      */
     public function linkCollectionToCollection(Collection $sourceCollection, Collection $targetCollection): void
     {
         $cardSubQuery = $this->getEntityManager()->getRepository(Card::class)->getAccessibleSubQuery(User::getCurrent());
 
         $connection = $this->getEntityManager()->getConnection();
-        $connection->query('REPLACE INTO collection_card (collection_id, card_id)
+        $connection->query('REPLACE INTO card_collection (collection_id, card_id)
             SELECT ' . $connection->quote($targetCollection->getId()) . ' AS collection_id, card_id
-            FROM collection_card
+            FROM card_collection
             WHERE
             collection_id = ' . $connection->quote($sourceCollection->getId()) . '
             AND card_id IN (' . $cardSubQuery . ')');

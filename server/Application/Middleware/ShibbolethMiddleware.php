@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Application\Middleware;
 
 use Interop\Container\ContainerInterface;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 class ShibbolethMiddleware implements MiddlewareInterface
 {
@@ -23,12 +23,6 @@ class ShibbolethMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Redirect to specific moodle url if moodle parameter found in the query params
@@ -45,6 +39,14 @@ class ShibbolethMiddleware implements MiddlewareInterface
             return new RedirectResponse($quizzUrl, 302);
         }
 
-        return new RedirectResponse('/', 302);
+        // Redirect to return url if return url is found in the query params
+        if (array_key_exists('returnUrl', $request->getQueryParams())) {
+            $returnUrl = $request->getQueryParams()['returnUrl'] ? $request->getQueryParams()['returnUrl'] : '/';
+
+            return new RedirectResponse($returnUrl, 302);
+        }
+
+        // Redirect to the standard path otherwise
+        return new RedirectResponse('/login', 302);
     }
 }

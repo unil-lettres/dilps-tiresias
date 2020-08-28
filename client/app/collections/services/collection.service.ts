@@ -1,77 +1,105 @@
-import { forkJoin } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import {Inject, Injectable} from '@angular/core';
+import {NaturalLinkMutationService} from '@ecodev/natural';
+import {Apollo} from 'apollo-angular';
+import {forkJoin, Observable, ObservableInput} from 'rxjs';
+import {SITE} from '../../app.config';
+import {
+    Cards_cards_items,
+    Collection,
+    CollectionInput,
+    Collections,
+    CollectionsVariables,
+    CollectionVariables,
+    CollectionVisibility,
+    CreateCollection,
+    CreateCollectionVariables,
+    DeleteCollections,
+    LinkCollectionToCollection,
+    LinkCollectionToCollectionVariables,
+    Site,
+    UpdateCollection,
+    UpdateCollectionVariables,
+} from '../../shared/generated-types';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+
 import {
     collectionQuery,
     collectionsQuery,
-    createCollectionMutation,
-    deleteCollectionsMutation,
-    updateCollectionMutation,
-    linkCollectionToCollectionMutation,
-} from './collectionQueries';
-import { AbstractModelService } from '../../shared/services/abstract-model.service';
-import {
-    CollectionInput,
-    CollectionQuery,
-    CollectionsQuery,
-    CreateCollectionMutation,
-    DeleteCollectionsMutation,
-    UpdateCollectionMutation,
-    CollectionVisibility,
-} from '../../shared/generated-types';
+    createCollection,
+    deleteCollections,
+    linkCollectionToCollection,
+    updateCollection,
+} from './collection.queries';
+import {FakeCollection} from './fake-collection.resolver';
 
-import { LinkMutationService } from '../../shared/services/link-mutation.service';
-
-@Injectable()
-export class CollectionService
-    extends AbstractModelService<CollectionQuery['collection'],
-        CollectionsQuery['collections'],
-        CreateCollectionMutation['createCollection'],
-        UpdateCollectionMutation['updateCollection'],
-        DeleteCollectionsMutation['deleteCollections']> {
-
-    constructor(apollo: Apollo, private linkSvc: LinkMutationService) {
-        super(apollo,
+@Injectable({
+    providedIn: 'root',
+})
+export class CollectionService extends AbstractContextualizedService<
+    Collection['collection'],
+    CollectionVariables,
+    Collections['collections'],
+    CollectionsVariables,
+    CreateCollection['createCollection'],
+    CreateCollectionVariables,
+    UpdateCollection['updateCollection'],
+    UpdateCollectionVariables,
+    DeleteCollections['deleteCollections'],
+    never
+> {
+    constructor(apollo: Apollo, private linkService: NaturalLinkMutationService, @Inject(SITE) site: Site) {
+        super(
+            apollo,
             'collection',
             collectionQuery,
             collectionsQuery,
-            createCollectionMutation,
-            updateCollectionMutation,
-            deleteCollectionsMutation);
+            createCollection,
+            updateCollection,
+            deleteCollections,
+            site,
+        );
     }
 
-    public getEmptyObject(): CollectionInput {
+    public getDefaultForClient(): CollectionInput {
+        return this.getDefaultForServer();
+    }
+
+    public getDefaultForServer(): CollectionInput {
         return {
+            site: this.site,
             name: '',
             description: '',
             isSource: false,
             sorting: 0,
             visibility: CollectionVisibility.private,
             institution: null,
+            parent: null,
+            usageRights: '',
+            copyrights: '',
         };
     }
 
-    public link(collection, images) {
+    public link(collection, images): Observable<unknown> {
         const observables = [];
         images.forEach(image => {
-            observables.push(this.linkSvc.link(collection, image));
+            observables.push(this.linkService.link(collection, image));
         });
 
         return forkJoin(observables);
     }
 
-    public unlink(collection, images) {
+    public unlink(collection: FakeCollection, images: Cards_cards_items[]): Observable<unknown> {
         const observables = [];
         images.forEach(image => {
-            observables.push(this.linkSvc.unlink(collection, image));
+            observables.push(this.linkService.unlink(collection, image));
         });
 
         return forkJoin(observables);
     }
 
-    public linkCollectionToCollection(sourceCollection, targetCollection) {
-        return this.apollo.mutate({
-            mutation: linkCollectionToCollectionMutation,
+    public linkCollectionToCollection(sourceCollection, targetCollection): Observable<unknown> {
+        return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
+            mutation: linkCollectionToCollection,
             variables: {
                 sourceCollection: sourceCollection.id,
                 targetCollection: targetCollection.id,

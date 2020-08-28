@@ -13,7 +13,8 @@ class AuthenticationFactory
     public function __invoke(ContainerInterface $container)
     {
         $entityManager = $container->get(EntityManager::class);
+        $site = $container->get('site');
 
-        return new AuthenticationMiddleware($entityManager->getRepository(User::class));
+        return new AuthenticationMiddleware($entityManager->getRepository(User::class), $site);
     }
 }

@@ -1,69 +1,114 @@
-<div fxLayout="column" [fxLayoutGap]="vertical ? '0px' : '10px'">
+<div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
-        <input matInput [readonly]="readonly" name="street" placeholder="Rue" [(ngModel)]="model.street" (keyup.enter)="search()" >
+        <mat-label>Rue</mat-label>
+        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput maxlength="255" />
+        <mat-hint align="end" *ngIf="model.street?.length > 200" [ngClass]="{strong: model.street?.length >= 255}">
+            {{ model.street.length }} / 255
+        </mat-hint>
     </mat-form-field>
 
-    <div [fxLayout]="vertical ? 'column': 'row'" [fxLayoutGap]="vertical ? '0px' : '10px'">
-        <mat-form-field *ngIf="!readonly || !!model?.postcode">
-            <input matInput [readonly]="readonly" name="postcode" placeholder="NPA" [(ngModel)]="model.postcode" (keyup.enter)="search()"
+    <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column' : 'row'">
+        <mat-form-field *ngIf="isDilps && (!readonly || !!model?.postcode)">
+            <mat-label>NPA</mat-label>
+            <input
+                (keyup.enter)="search()"
+                [(ngModel)]="model.postcode"
+                [readonly]="readonly"
+                matInput
+                maxlength="20"
+            />
+            <mat-hint
+                align="end"
+                *ngIf="model.postcode?.length > 15"
+                [ngClass]="{strong: model.postcode?.length >= 20}"
             >
-        </mat-form-field>
-        <mat-form-field [fxFlex]="!vertical"
-                        *ngIf="!readonly || !!model?.locality"
-        >
-            <input matInput
-                   [readonly]="readonly"
-                   name="locality"
-                   placeholder="Localité"
-                   [(ngModel)]="model.locality"
-                   (keyup.enter)="search()"
-            >
+                {{ model.postcode.length }} / 20
+            </mat-hint>
         </mat-form-field>
 
-        <app-select *ngIf="countries && (!readonly || !!model?.postcode)"
-                    [items]="countries"
-                    [(model)]="model.country"
-                    [showIcon]="false"
-                    (keyup.enter)="search()"
-                    placeholder="Pays"
-                    [autoActiveFirstOption]="true"
-                    [readonly]="readonly"
-        ></app-select>
+        <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
+            <mat-label>Localité</mat-label>
+            <input
+                (keyup.enter)="search()"
+                [(ngModel)]="model.locality"
+                [readonly]="readonly"
+                matInput
+                maxlength="191"
+            />
+            <mat-hint
+                align="end"
+                *ngIf="model.locality?.length > 150"
+                [ngClass]="{strong: model.locality?.length >= 191}"
+            >
+                {{ model.locality.length }} / 191
+            </mat-hint>
+        </mat-form-field>
+
+        <natural-select
+            (keyup.enter)="search()"
+            *ngIf="countries && (!readonly || !!model?.country)"
+            [(ngModel)]="model.country"
+            [disabled]="readonly"
+            [service]="countryService"
+            [showIcon]="false"
+            placeholder="Pays"
+        ></natural-select>
     </div>
 </div>
 
 <div id="mapZone">
-    <mat-form-field id="search"
-                    class="mat-elevation-z4"
-                    floatLabel="never" [fxShow]="!readonly"
-    >
-        <input matInput
-               placeholder="Chercher"
-               autocorrect="off"
-               autocapitalize="off"
-               spellcheck="off"
-               type="text"
-               class="form-control"
-               #input
-               [formControl]="formCtrl"
-        >
+    <mat-form-field [fxShow]="!readonly" class="mat-elevation-z4" floatLabel="never" id="search">
+        <mat-label>Chercher</mat-label>
+        <input
+            #input
+            [formControl]="formCtrl"
+            autocapitalize="off"
+            autocorrect="off"
+            class="form-control"
+            matInput
+            spellcheck="off"
+        />
     </mat-form-field>
 
     <!-- Map -->
-    <agm-map [latitude]="model?.latitude"
-             [longitude]="model?.longitude"
-             [zoom]="zoom"
-             [styles]="mapStyles"
-             [scrollwheel]="false"
-             *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
-             style="height:300px;"
+    <agm-map
+        *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [mapTypeControlOptions]="{position: 10}"
+        [mapTypeControl]="true"
+        [scrollwheel]="false"
+        [mapTypeId]="site === 'dilps' ? 'roadmap' : 'satellite'"
+        [styles]="mapStyles"
+        [zoom]="zoom"
     >
-        <agm-marker [latitude]="model?.latitude"
-                    [longitude]="model?.longitude"
-                    [markerDraggable]="!readonly"
-                    (dragEnd)="onMarkerDrag($event)"
-                    [iconUrl]="icon"
+        <agm-marker
+            (dragEnd)="onMarkerDrag($event)"
+            [iconUrl]="icon"
+            [latitude]="model?.latitude"
+            [longitude]="model?.longitude"
+            [markerDraggable]="!readonly"
         ></agm-marker>
     </agm-map>
-
 </div>
+
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">
+    <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
+        <mat-label>Latitude</mat-label>
+        <input (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!readonly || !!model?.longitude" class="lonlat">
+        <mat-label>Longitude</mat-label>
+        <input (ngModelChange)="recenter()" [(ngModel)]="model.longitude" [readonly]="readonly" matInput />
+    </mat-form-field>
+</div>
+
+<!-- Todo : allow to nullify --><!-- Todo : test this component suggestion system, that is new in project -->
+<natural-select-enum
+    *ngIf="!isDilps && (!readonly || !!model?.precision)"
+    [(ngModel)]="model.precision"
+    enumName="Precision"
+    placeholder="Précision"
+    [disabled]="readonly"
+></natural-select-enum>

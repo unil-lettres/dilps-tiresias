@@ -6,14 +6,12 @@
     $fg: map-get($theme, foreground);
 
     app-address {
-
         #mapZone {
             #search {
                 background: mat-color($bg, background);
             }
 
             mat-form-field {
-
                 .mat-form-field-wrapper {
                     margin-bottom: -1.25em;
                 }
@@ -22,13 +20,10 @@
                     margin-left: 10px;
                     margin-right: 10px;
                     padding: 0.4375em 0;
-                    border-top:0.6em solid transparent;
-                    border-bottom:0.6em solid transparent;
+                    border-top: 0.6em solid transparent;
+                    border-bottom: 0.6em solid transparent;
                 }
             }
         }
     }
-
 }
-
-

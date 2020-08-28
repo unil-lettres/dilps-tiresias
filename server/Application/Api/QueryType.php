@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\Viewer;
 use Application\Api\Field\Standard;
+use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\Country;
+use Application\Model\DocumentType;
+use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\Material;
+use Application\Model\News;
+use Application\Model\Period;
+use Application\Model\Statistic;
+use Application\Model\Tag;
 use Application\Model\User;
 use GraphQL\Type\Definition\ObjectType;
 
@@ -21,6 +30,7 @@ class QueryType extends ObjectType
     {
         $specializedFields = [
             Viewer::build(),
+            ExtraStatistics::build(),
         ];
 
         $fields = array_merge(
@@ -32,7 +42,15 @@ class QueryType extends ObjectType
             Standard::buildQuery(Card::class),
             Standard::buildQuery(Institution::class),
             Standard::buildQuery(User::class),
-            Standard::buildQuery(Country::class)
+            Standard::buildQuery(Country::class),
+            Standard::buildQuery(DocumentType::class),
+            Standard::buildQuery(Domain::class),
+            Standard::buildQuery(Material::class),
+            Standard::buildQuery(News::class),
+            Standard::buildQuery(Period::class),
+            Standard::buildQuery(Statistic::class),
+            Standard::buildQuery(Tag::class),
+            Standard::buildQuery(AntiqueName::class),
         );
 
         $config = [

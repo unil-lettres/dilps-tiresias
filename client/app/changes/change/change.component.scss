@@ -1,9 +1,11 @@
 :host {
     display: flex;
     flex-direction: column;
-    min-height:0;
+    min-height: 0;
 
-    .containerWithToolbar, .test, app-card {
+    .containerWithToolbar,
+    .test,
+    app-card {
         min-height: 0;
     }
 }
