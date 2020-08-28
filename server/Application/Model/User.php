@@ -242,6 +242,7 @@ class User extends AbstractModel implements HasSiteInterface
             self::ROLE_STUDENT,
             self::ROLE_JUNIOR,
             self::ROLE_SENIOR,
+            self::ROLE_MAJOR,
             self::ROLE_ADMINISTRATOR,
         ];
 

@@ -163,7 +163,11 @@ class UserTest extends TestCase
             'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role to senior'],
             'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role to junior'],
 
+            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
+            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
+
             [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
+            [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
             [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_ADMINISTRATOR, null],
             [User::ROLE_ADMINISTRATOR, User::ROLE_ADMINISTRATOR, User::ROLE_STUDENT, null],
         ];
