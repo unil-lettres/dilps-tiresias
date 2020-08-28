@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) {}
 
     public ngOnInit(): void {
-        this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/login';
+        this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
         const logout = this.route.snapshot.queryParams.logout || false;
 
         // Attempt to skip login if user is already logged in
