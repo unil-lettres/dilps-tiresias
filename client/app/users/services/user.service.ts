@@ -50,8 +50,6 @@ export class UserService extends AbstractContextualizedService<
     DeleteUsers['deleteUsers'],
     never
 > {
-    private currentUser: Viewer['viewer'] | null = null;
-
     constructor(apollo: Apollo, private route: ActivatedRoute, private router: Router, @Inject(SITE) site: Site) {
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
@@ -76,20 +74,12 @@ export class UserService extends AbstractContextualizedService<
     }
 
     public getCurrentUser(): Observable<Viewer['viewer']> {
-        if (this.currentUser) {
-            return of(this.currentUser);
-        }
-
         return this.apollo
             .query<Viewer>({
                 query: viewerQuery,
+                fetchPolicy: 'cache-first',
             })
-            .pipe(
-                map(({data: {viewer}}) => {
-                    this.currentUser = viewer;
-                    return viewer;
-                }),
-            );
+            .pipe(map(result => result.data.viewer));
     }
 
     public getRole(role: UserRole): {name: UserRole; text: string} {
@@ -160,7 +150,6 @@ export class UserService extends AbstractContextualizedService<
             })
             .subscribe(result => {
                 const v = result.data!.logout;
-                this.currentUser = null;
                 this.apollo
                     .getClient()
                     .clearStore()
