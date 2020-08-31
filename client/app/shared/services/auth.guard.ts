@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {UserService} from '../../users/services/user.service';
 import {Observable} from 'rxjs';
@@ -20,6 +20,11 @@ export class AuthGuard implements CanActivate {
                 if (!user && !this.userService.hasTempAccess()) {
                     this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
                     return false;
+                }
+
+                if (user && !user.termsAgreement) {
+                    this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+                    return true;
                 }
 
                 return true;
