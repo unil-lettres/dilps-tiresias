@@ -34,17 +34,21 @@ foreach ($filesInDb as $i => $card) {
         continue;
     }
 
-    $image = $imagine->open($card['filename']);
-    $size = $image->getSize();
+    try {
+        $image = $imagine->open($card['filename']);
+        $size = $image->getSize();
 
-    // To force clearing the cache of Imagick
-    $image->__destruct();
+        // To force clearing the cache of Imagick
+        $image->__destruct();
 
-    $width = $size->getWidth();
-    $height = $size->getHeight();
+        $width = $size->getWidth();
+        $height = $size->getHeight();
 
-    if ($width !== (int) $card['width'] || $height !== (int) $card['height']) {
-        $count += $connection->update('card', ['width' => $width, 'height' => $height], ['id' => $card['id']]);
+        if ($width !== (int) $card['width'] || $height !== (int) $card['height']) {
+            $count += $connection->update('card', ['width' => $width, 'height' => $height], ['id' => $card['id']]);
+        }
+    } catch (\Exception $e) {
+        echo $card['filename'] . ' (' . $e->getMessage() . ")\n";
     }
 }
 

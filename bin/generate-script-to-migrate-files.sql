@@ -6,7 +6,7 @@
 --
 --     more bin/generate-script-to-migrate-files.sql | mysql --raw -u {user} -p {database} > migrate-tiresias-data.sh
 
-SELECT CONCAT('cp "/var/www/html/tdata/', fonds.fond, '/cache/', meta.id, '.jpg" "/var/www/html/dilps/data/images/tiresias-', meta.id, '.jpg"') AS '#!/usr/bin/env bash'
+SELECT CONCAT('cp "/path/to/input/data/', fonds.fond, '/cache/', meta.id, '.jpg" "/path/to/output/data/tiresias-', meta.id, '.jpg"') AS '#!/usr/bin/env bash'
 FROM meta
 JOIN fonds ON meta.fond = fonds.id
 ORDER BY meta.fond, meta.id;
