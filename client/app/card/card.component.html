@@ -575,7 +575,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.documentType)"
                     [model]="model.documentType"
-                    (modelChange)="model.institution = $event"
+                    (modelChange)="model.documentType = $event"
                     [allowFreeText]="false"
                     [multiple]="false"
                     [previewComponent]="DocumentTypeComponent"
