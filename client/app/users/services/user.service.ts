@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Apollo} from 'apollo-angular';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
@@ -137,6 +137,16 @@ export class UserService extends AbstractContextualizedService<
             .mutate<Login, LoginVariables>({
                 mutation: loginMutation,
                 variables: loginData,
+                update: (proxy, result) => {
+                    const login = result.data!.login;
+
+                    // Inject the freshly logged in user as the current user into Apollo data store
+                    const data = {viewer: login};
+                    proxy.writeQuery({
+                        query: viewerQuery,
+                        data,
+                    });
+                },
             })
             .pipe(map(result => result.data!.login));
     }

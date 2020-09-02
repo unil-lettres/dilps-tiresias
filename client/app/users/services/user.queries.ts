@@ -32,6 +32,57 @@ const userDetailsFragment = gql`
     ${userMetaFragment}
 `;
 
+const viewerFragment = gql`
+    fragment ViewerFragment on User {
+        ...UserDetails
+        globalPermissions {
+            artist {
+                create
+            }
+            card {
+                create
+            }
+            change {
+                create
+            }
+            collection {
+                create
+            }
+            dating {
+                create
+            }
+            institution {
+                create
+            }
+            user {
+                create
+            }
+            domain {
+                create
+            }
+            documentType {
+                create
+            }
+            antiqueName {
+                create
+            }
+            news {
+                create
+            }
+            period {
+                create
+            }
+            material {
+                create
+            }
+            tag {
+                create
+            }
+        }
+    }
+    ${userDetailsFragment}
+`;
+
 export const usersQuery = gql`
     query Users($filter: UserFilter, $sorting: [UserSorting!], $pagination: PaginationInput) {
         users(filter: $filter, sorting: $sorting, pagination: $pagination) {
@@ -101,10 +152,10 @@ export const deleteUsers = gql`
 export const loginMutation = gql`
     mutation Login($login: Login!, $password: String!) {
         login(login: $login, password: $password) {
-            ...UserDetails
+            ...ViewerFragment
         }
     }
-    ${userDetailsFragment}
+    ${viewerFragment}
 `;
 
 export const logoutMutation = gql`
@@ -116,52 +167,8 @@ export const logoutMutation = gql`
 export const viewerQuery = gql`
     query Viewer {
         viewer {
-            ...UserDetails
-            globalPermissions {
-                artist {
-                    create
-                }
-                card {
-                    create
-                }
-                change {
-                    create
-                }
-                collection {
-                    create
-                }
-                dating {
-                    create
-                }
-                institution {
-                    create
-                }
-                user {
-                    create
-                }
-                domain {
-                    create
-                }
-                documentType {
-                    create
-                }
-                antiqueName {
-                    create
-                }
-                news {
-                    create
-                }
-                period {
-                    create
-                }
-                material {
-                    create
-                }
-                tag {
-                    create
-                }
-            }
+            ...ViewerFragment
         }
     }
-    ${userDetailsFragment}
+    ${viewerFragment}
 `;
