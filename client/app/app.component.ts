@@ -23,12 +23,15 @@ export class AppComponent implements OnInit {
 
     private lastTheme;
 
+    private favIcon: HTMLLinkElement = document.querySelector('#favIcon');
+
     constructor(
         private themeService: ThemeService,
         private overlayContainer: OverlayContainer,
         @Inject(SITE) private site: Site,
     ) {
         themeService.set(site + '-' + environment.environment);
+        this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
     }
 
     public ngOnInit(): void {

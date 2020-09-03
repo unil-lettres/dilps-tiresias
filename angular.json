@@ -19,7 +19,7 @@
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
                         "polyfills": "client/polyfills.ts",
-                        "assets": ["client/assets", "client/favicon.ico"],
+                        "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
                         "scripts": []
                     },
@@ -102,7 +102,7 @@
                         "tsConfig": "client/tsconfig.spec.json",
                         "scripts": [],
                         "styles": ["client/styles.scss"],
-                        "assets": ["client/assets", "client/favicon.ico"]
+                        "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"]
                     }
                 },
                 "lint": {

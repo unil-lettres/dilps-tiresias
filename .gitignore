@@ -8,7 +8,7 @@
 !/data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg
 !/data/images/5da49355cbcff.jpeg
 /htdocs/news-images/
-/htdocs/favicon.ico
+/htdocs/*.ico
 /htdocs/*.html
 /htdocs/*.js
 /htdocs/*.map
