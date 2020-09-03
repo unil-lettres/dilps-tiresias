@@ -8,7 +8,7 @@ interface Hierarchic {
  * Return only the items that are leaves of the tree
  */
 export function onlyLeaves<T extends Hierarchic>(value: T[]): T[] {
-    return value.filter(tag => !tag.hasChildren);
+    return value?.filter(tag => !tag.hasChildren) || [];
 }
 
 @Pipe({
