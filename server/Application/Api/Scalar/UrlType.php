@@ -13,6 +13,6 @@ class UrlType extends AbstractStringBasedType
      */
     protected function isValid($value): bool
     {
-        return is_string($value) && filter_var($value, FILTER_VALIDATE_URL);
+        return $value === '' || (is_string($value) && filter_var($value, FILTER_VALIDATE_URL));
     }
 }

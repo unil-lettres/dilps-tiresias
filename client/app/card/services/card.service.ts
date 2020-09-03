@@ -198,10 +198,6 @@ export class CardService extends AbstractContextualizedService<
             delete input.file;
         }
 
-        if (input.url === '') {
-            delete input.url;
-        }
-
         return input;
     }
 

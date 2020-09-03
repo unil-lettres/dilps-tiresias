@@ -61,10 +61,6 @@ export class NewsService extends AbstractContextualizedService<
             delete input.file;
         }
 
-        if (input.url === '') {
-            delete input.url;
-        }
-
         return input;
     }
 }
