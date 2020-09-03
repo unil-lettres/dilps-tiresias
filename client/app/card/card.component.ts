@@ -66,7 +66,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * External card data
      */
-    @Input() public model: CardInput;
+    @Input() public model: CardInput & {id?: string};
 
     /**
      * The card as fetched from DB, if applicable.
@@ -548,6 +548,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
                 if (selection) {
                     this.model = Object.assign(omit(selection, 'id'), {
+                        id: this.fetchedModel.id,
                         artists: selection.artists.map(a => a.name),
                         institution: selection.institution?.name ?? null,
                         visibility: this.model.visibility,
