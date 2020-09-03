@@ -549,6 +549,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 if (selection) {
                     this.model = Object.assign(omit(selection, 'id'), {
                         id: this.fetchedModel.id,
+                        code: this.fetchedModel.code,
                         artists: selection.artists.map(a => a.name),
                         institution: selection.institution?.name ?? null,
                         visibility: this.model.visibility,
