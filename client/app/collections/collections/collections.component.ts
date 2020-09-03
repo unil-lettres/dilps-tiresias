@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash';
 import {CollectionsVariables, LogicalOperator, UserRole} from '../../shared/generated-types';
-import {UserService} from '../../users/services/user.service';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 
@@ -44,23 +43,18 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         private router: Router,
         private collectionsService: CollectionService,
         private dialog: MatDialog,
-        private userService: UserService,
     ) {
         super();
     }
 
     public ngOnInit(): void {
-        this.userService.getCurrentUser().subscribe(user => {
-            this.user = user;
-            // this.showEditButtons = this.showEditionButtons();
-            this.canCreate = this.showCreateButton(this.route.snapshot.data.creationButtonForRoles, this.user);
-        });
-
         this.queryVariables.set('variables', this.defaultVariables);
         this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
 
         this.route.data.subscribe(data => {
-            this.canCreate = this.showCreateButton(data.creationButtonForRoles, this.user);
+            // data.creator is the logged in user here.
+
+            this.canCreate = this.showCreateButton(data.creationButtonForRoles, data.creator);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
 
@@ -73,7 +67,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
                             {conditions: [{owner: {in: {values: [data.creator.id]}}}]},
                             {
                                 groupLogic: LogicalOperator.OR,
-                                conditions: [{users: {have: {values: [this.user.id]}}}],
+                                conditions: [{users: {have: {values: [data.creator.id]}}}],
                             },
                         ],
                     },
