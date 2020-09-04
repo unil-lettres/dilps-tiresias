@@ -128,6 +128,10 @@
         </mat-toolbar>
 
         <perfect-scrollbar fxFlex>
+            <br />
+            <br />
+            <pre class="debug">materials : {{ model.materials | json }}</pre>
+
             <div class="padding scrolled" fxLayout="column" fxLayoutAlign="start stretch">
                 <div *ngIf="user?.role === 'administrator'" fxLayout="column">
                     <div fxLayout="row">
