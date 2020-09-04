@@ -319,14 +319,10 @@ class Card extends AbstractModel implements HasSiteInterface
      *
      * Non-existing artists will be created automatically.
      *
-     * @param null|string[] $artistNames
+     * @param string[] $artistNames
      */
-    public function setArtists(?array $artistNames): void
+    public function setArtists(array $artistNames): void
     {
-        if (!$artistNames) {
-            return;
-        }
-
         $this->artists->clear();
 
         $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames, $this->getSite());
@@ -338,14 +334,10 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Set all materials at once.
      *
-     * @param null|Material[] $materials
+     * @param Material[] $materials
      */
-    public function setMaterials(?array $materials): void
+    public function setMaterials(array $materials): void
     {
-        if (!$materials) {
-            return;
-        }
-
         $this->setEntireCollection($materials, $this->materials, Material::class);
         $this->addEntireHierarchy($this->materials);
     }
@@ -353,42 +345,30 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Set all antiqueNames at once.
      *
-     * @param null|AntiqueName[] $antiqueNames
+     * @param AntiqueName[] $antiqueNames
      */
-    public function setAntiqueNames(?array $antiqueNames): void
+    public function setAntiqueNames(array $antiqueNames): void
     {
-        if (!$antiqueNames) {
-            return;
-        }
-
         $this->setEntireCollection($antiqueNames, $this->antiqueNames, AntiqueName::class);
     }
 
     /**
      * Set all periods at once.
      *
-     * @param null|Period[] $periods
+     * @param Period[] $periods
      */
-    public function setPeriods(?array $periods): void
+    public function setPeriods(array $periods): void
     {
-        if (!$periods) {
-            return;
-        }
-
         $this->setEntireCollection($periods, $this->periods, Period::class);
     }
 
     /**
      * Set all tags at once.
      *
-     * @param null|Tag[] $tags
+     * @param Tag[] $tags
      */
-    public function setTags(?array $tags): void
+    public function setTags(array $tags): void
     {
-        if (!$tags) {
-            return;
-        }
-
         $this->setEntireCollection($tags, $this->tags, Tag::class);
         $this->addEntireHierarchy($this->tags);
     }
