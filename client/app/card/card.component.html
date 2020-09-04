@@ -655,7 +655,7 @@
                     ></quill-editor>
                 </div>
 
-                <mat-form-field *ngIf="edit || !!model.page">
+                <mat-form-field *ngIf="isDilps && (edit || !!model.page)">
                     <mat-label>Page</mat-label>
                     <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10" />
                     <mat-hint

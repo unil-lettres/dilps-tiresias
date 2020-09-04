@@ -42,47 +42,6 @@ export const adminConfig: NaturalSearchFacets = [
     providedIn: 'root',
 })
 export class NaturalSearchFacetsService {
-    private commonFacets: NaturalSearchFacets = [
-        {
-            display: 'Titre',
-            field: 'nameOrExpandedName',
-            component: TypeTextComponent,
-            transform: replaceOperatorByField,
-        },
-        {
-            display: 'Supplément',
-            field: 'addition',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        },
-        {
-            display: 'Localité',
-            field: 'localityOrInstitutionLocality',
-            component: TypeTextComponent,
-            transform: replaceOperatorByField,
-        },
-        {
-            display: 'Institution',
-            field: 'institution.name',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        },
-        {
-            display: 'Source',
-            field: 'literature',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        },
-        {
-            display: 'Géolocalisation',
-            field: 'custom',
-            name: 'location',
-            component: TypeLocationComponent,
-            showValidateButton: true,
-            transform: replaceOperatorByName,
-        },
-    ];
-
     private dilpsFacets: NaturalSearchFacets = [
         {
             display: '[Inclure Tiresias]',
@@ -228,12 +187,6 @@ export class NaturalSearchFacetsService {
         {
             display: 'Référence',
             field: 'code',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        },
-        {
-            display: 'Supplément',
-            field: 'addition',
             component: TypeTextComponent,
             transform: wrapLike,
         },
