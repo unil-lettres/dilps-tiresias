@@ -31,7 +31,7 @@ class ImageService
     public function resize(Card $card, int $maxHeight): string
     {
         if ($card->getHeight() <= $maxHeight) {
-            return $card->getPath();
+            $maxHeight = $card->getHeight();
         }
 
         $basename = pathinfo($card->getFilename(), PATHINFO_FILENAME);
