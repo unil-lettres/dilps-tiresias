@@ -36,6 +36,12 @@ trait TestWithTransaction
     {
         $this->getEntityManager()->rollback();
         $this->getEntityManager()->clear();
+
+        // Reset AUTO_INCREMENT to the highest ID (actually not 1), because some tests will increase it by creating
+        // and deleting cards and other test rely on this value to be deterministic. And this cannot be done inside
+        // the test themselves, because ALTER TABLE will break existing DB transaction
+        $this->getEntityManager()->getConnection()->exec('ALTER TABLE card AUTO_INCREMENT = 1;');
+
         $this->getEntityManager()->getConnection()->close();
     }
 }

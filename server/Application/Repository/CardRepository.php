@@ -104,21 +104,27 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     }
 
     /**
-     * Return the next available Account code
+     * Return the next available code
      */
     public function getNextCodeAvailable(Collection $collection): string
     {
-        static $latest = null;
-        if (!$latest) {
-            $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
-                ->select('IFNULL(MAX(card.id) + 1, 1)')
-                ->from('card', 'card');
-            $latest = $qb->execute()->fetchColumn();
+        static $nextId = null;
+
+        if (!$nextId) {
+            $connection = _em()->getConnection();
+            $database = $connection->quote($connection->getDatabase());
+
+            $sql = "SELECT `AUTO_INCREMENT`
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_SCHEMA = $database
+                AND TABLE_NAME = 'card'";
+
+            $nextId = (int) $connection->fetchColumn($sql);
         } else {
-            ++$latest;
+            ++$nextId;
         }
 
-        return $collection->getName() . '-' . $latest;
+        return $collection->getName() . '-' . $nextId;
     }
 
     /**
