@@ -349,6 +349,16 @@ FROM meta
          INNER JOIN fonds ON meta.fond = fonds.id
          LEFT JOIN lieux AS locality ON locality.id = l2_lieux;
 
+UPDATE card
+    INNER JOIN meta ON meta.id = card.legacy_id
+SET card.name = TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REGEXP_SUBSTR(meta.description, '[^.]*.[^.]*'), '[b]', '<strong>'), '[/b]', '</strong>'), '[i]', '<em>'), '[/i]', '</em>'), '[u]', '<span style="text-decoration: underline;">'), '[/u]', '</span>'), '[nl]', '<br>'))
+WHERE
+      meta.description NOT LIKE '%[t]%'
+  AND meta.description NOT LIKE '%[/t]%'
+  AND TRIM(meta.description) <> ''
+  AND TRIM(card.name) = ''
+  AND CHAR_LENGTH(TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REGEXP_SUBSTR(meta.description, '[^.]*.[^.]*'), '[b]', '<strong>'), '[/b]', '</strong>'), '[i]', '<em>'), '[/i]', '</em>'), '[u]', '<span style="text-decoration: underline;">'), '[/u]', '</span>'), '[nl]', '<br>'))) < 191;
+
 -- Link card to their institution by names
 UPDATE card
     INNER JOIN meta ON meta.id + @card_offset = card.id
