@@ -1,38 +1,38 @@
 {
     "/graphql": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/image": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/news-image": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/pptx": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/xlsx": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/zip": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/template": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/auth": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     },
     "/detail": {
-        "target": "https://dilps.lan",
+        "target": "http://dilps.lan",
         "secure": false
     }
 }
