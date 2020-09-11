@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {domainHierarchicConfig} from '../../shared/hierarchic-configurations/DomainConfiguration';
 import {UserService} from '../../users/services/user.service';
@@ -10,7 +10,7 @@ import {DomainService} from '../services/domain.service';
     selector: 'app-domain',
     templateUrl: './domain.component.html',
 })
-export class DomainComponent extends AbstractDetail {
+export class DomainComponent extends AbstractDetailDirective {
     public hierarchicConfig = domainHierarchicConfig;
 
     constructor(

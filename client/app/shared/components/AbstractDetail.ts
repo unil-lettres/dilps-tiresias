@@ -6,7 +6,7 @@ import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 
 @Directive()
-export class AbstractDetail implements OnInit {
+export class AbstractDetailDirective implements OnInit {
     public user;
 
     public data: any = {

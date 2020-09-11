@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {ArtistService} from '../services/artist.service';
@@ -9,7 +9,7 @@ import {ArtistService} from '../services/artist.service';
     selector: 'app-artist',
     templateUrl: './artist.component.html',
 })
-export class ArtistComponent extends AbstractDetail {
+export class ArtistComponent extends AbstractDetailDirective {
     constructor(
         service: ArtistService,
         alertService: AlertService,

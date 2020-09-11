@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {periodHierarchicConfig} from '../../shared/hierarchic-configurations/PeriodConfiguration';
 import {UserService} from '../../users/services/user.service';
@@ -12,7 +12,7 @@ import {formatYearRange} from '../../shared/services/utility';
     selector: 'app-period',
     templateUrl: './period.component.html',
 })
-export class PeriodComponent extends AbstractDetail {
+export class PeriodComponent extends AbstractDetailDirective {
     public hierarchicConfig = periodHierarchicConfig;
 
     public displayWith(item: Periods_periods_items): string {
