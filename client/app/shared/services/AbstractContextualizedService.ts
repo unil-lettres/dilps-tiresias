@@ -35,7 +35,7 @@ export class AbstractContextualizedService<
      *
      * This is typically a site or state ID, but it could be something else to further filter the query
      */
-    public getContextForAll(): Partial<Vall> {
+    public getPartialVariablesForAll(): Partial<Vall> {
         if (this.site) {
             return {filter: {groups: [{conditions: [{site: {in: {values: [this.site]}}}]}]}} as any; // todo : why as any ?
         }
