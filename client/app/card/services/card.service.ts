@@ -202,7 +202,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     // In Card specific case, don't context lists
-    public getContextForAll(): Partial<CardsVariables> {
+    public getPartialVariablesForAll(): Partial<CardsVariables> {
         return {};
     }
 
@@ -215,7 +215,7 @@ export class CardService extends AbstractContextualizedService<
         return this.create(object);
     }
 
-    protected getContextForCreation(object: Literal): Partial<CreateCardVariables> {
+    protected getPartialVariablesForCreation(object: Literal): Partial<CreateCardVariables> {
         const result = this.collectionIdForCreation ? {collection: this.collectionIdForCreation} : {};
         this.collectionIdForCreation = null;
 
