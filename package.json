@@ -1,5 +1,5 @@
 {
-    "name": "dilps",
+    "name": "dilps-tiresias",
     "private": true,
     "license": "MIT",
     "scripts": {
@@ -13,9 +13,12 @@
         "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
     },
+    "resolutions": {
+        "graphql": "14.7.0"
+    },
     "dependencies": {
-        "@agm/core": "^3.0.0-beta.0",
-        "@agm/snazzy-info-window": "^3.0.0-beta.0",
+        "@agm/core": "^1.1.0",
+        "@agm/snazzy-info-window": "^1.1.0",
         "@angular/animations": "^10.1.1",
         "@angular/cdk": "^10.2.0",
         "@angular/common": "^10.1.1",
