@@ -1,10 +1,11 @@
-import {OnInit} from '@angular/core';
+import {OnInit, Directive} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'lodash';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 
+@Directive()
 export class AbstractDetail implements OnInit {
     public user;
 
