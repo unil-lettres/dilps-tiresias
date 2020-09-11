@@ -5,7 +5,7 @@
         [options]="chartOptions"
         [(update)]="chartUpdated"
         [oneToOne]="true"
-        style="height: 400px;"
+        style="height: 400px"
     ></highcharts-chart>
 
     <div fxLayout="column" fxLayoutGap="20px">
@@ -20,12 +20,12 @@
 
             <ng-container matColumnDef="absolute">
                 <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let element" mat-cell style="text-align: right;">{{ element.value }}</td>
+                <td *matCellDef="let element" mat-cell style="text-align: right">{{ element.value }}</td>
             </ng-container>
 
             <ng-container matColumnDef="percent">
                 <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let element" mat-cell style="text-align: right;">{{ element.percent | percent }}</td>
+                <td *matCellDef="let element" mat-cell style="text-align: right">{{ element.percent | percent }}</td>
             </ng-container>
         </table>
     </div>
