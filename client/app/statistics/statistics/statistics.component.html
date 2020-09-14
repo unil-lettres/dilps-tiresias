@@ -2,7 +2,7 @@
     <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
     <div class="mat-headline">Statistiques</div>
     <mat-dialog-content>
-        <mat-tab-group>
+        <mat-tab-group naturalLinkableTab>
             <mat-tab label="Fréquentation">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
@@ -31,7 +31,7 @@
                 </ng-template>
             </mat-tab>
 
-            <mat-tab label="Fiches">
+            <mat-tab naturalLinkableTabName="card" label="Fiches">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutGap="10px">
@@ -68,7 +68,7 @@
                 </ng-template>
             </mat-tab>
 
-            <mat-tab label="Utilisateurs">
+            <mat-tab naturalLinkableTabName="user" label="Utilisateurs">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutGap="10px">
