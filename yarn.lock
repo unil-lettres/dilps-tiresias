@@ -1504,10 +1504,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-6.0.1.tgz#f1a17bc9893dda49526ce3237a809e46ee8e6484"
   integrity sha512-QNP9nCjYT+By5+RJFc1TyC9axA5s6Ga0Ru6iDUsY5f9vn+b37gT2QWd3d/S9oxK0/f0Ao/qqAI8RXjMLvZrWSQ==
 
-"@ecodev/natural@^20.0.0":
-  version "20.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-20.0.0.tgz#1d0423a984857e57f9e2ebe0be979c81b1c5a305"
-  integrity sha512-L60p6FfJkOd+82Axp10LUjP65XAunMElfhvj/Lz/kk6G/2jXt3rgCuB3wjMd77pLXNgnwU5OqJqECK35QOzhPw==
+"@ecodev/natural@^20.0.1":
+  version "20.0.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-20.0.1.tgz#cb823bb7091afb7fa95c2afac339513d838fcd1b"
+  integrity sha512-rrdx65SF85cCoqsHgNyZXIGoFaM5DCyAD9JeJfE3gJmnOXNX8y+YSISn1WpCTuR1l35ZQJR7WYtRleNa28vf3w==
   dependencies:
     tslib "^1.10.0"
 
