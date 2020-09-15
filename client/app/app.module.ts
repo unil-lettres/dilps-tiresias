@@ -43,6 +43,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
+    NaturalCommonModule,
     NaturalDropdownComponentsModule,
     NaturalFixedButtonModule,
     NaturalHierarchicSelectorModule,
@@ -300,6 +301,7 @@ const icons: NaturalIconsConfig = {
         HighchartsChartModule,
         MatSortModule,
         QuillModule.forRoot(quillConfig),
+        NaturalCommonModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
