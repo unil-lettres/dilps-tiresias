@@ -45,7 +45,6 @@
         "apollo-link-schema": "^1.2.5",
         "apollo-upload-client": "^13.0.0",
         "bugsnag-build-reporter": "^1.0.3",
-        "core-js": "^3.6.5",
         "graphql": "^14.7.0",
         "graphql-tag": "^2.11.0",
         "graphql-tools": "^4.0.8",
