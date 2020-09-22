@@ -594,7 +594,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             return 'Soumettre';
         }
 
-        return 'Suggérer l\'ajout';
+        return "Suggérer l'ajout";
     }
 
     public canSuggestCreate(): boolean {

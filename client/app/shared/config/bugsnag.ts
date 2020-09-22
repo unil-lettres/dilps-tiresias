@@ -1,12 +1,12 @@
-import bugsnag from '@bugsnag/js';
+import Bugsnag from '@bugsnag/js';
 import {environment} from '../../../environments/environment';
 import {BugsnagErrorHandler} from '@bugsnag/plugin-angular';
 
 /** Bugsnag client configuration */
-const bugsnagClient = bugsnag({
+const bugsnagClient = Bugsnag.start({
     apiKey: environment.bugsnagApiKey,
     releaseStage: environment.environment,
-    notifyReleaseStages: ['production', 'staging'],
+    enabledReleaseStages: ['production', 'staging'],
 });
 
 /** Factory which will return the Bugsnag error handler */

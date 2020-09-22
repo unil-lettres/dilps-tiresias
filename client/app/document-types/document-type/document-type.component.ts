@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {DocumentTypeService} from '../services/document-type.service';
@@ -9,7 +9,7 @@ import {DocumentTypeService} from '../services/document-type.service';
     selector: 'app-document-type',
     templateUrl: './document-type.component.html',
 })
-export class DocumentTypeComponent extends AbstractDetail {
+export class DocumentTypeComponent extends AbstractDetailDirective {
     constructor(
         service: DocumentTypeService,
         alertService: AlertService,

@@ -14,7 +14,7 @@ export class CarouselComponent implements OnInit {
         direction: 'horizontal',
         autoplay: true,
         speed: 1000,
-        a11y: true,
+        a11y: {enabled: true},
         slidesPerView: 1,
         navigation: true,
     };

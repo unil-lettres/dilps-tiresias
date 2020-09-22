@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
@@ -25,7 +25,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     selector: 'app-profile',
     templateUrl: './user.component.html',
 })
-export class UserComponent extends AbstractDetail {
+export class UserComponent extends AbstractDetailDirective {
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
 
     public roles = [];

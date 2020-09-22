@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {tagHierarchicConfig} from '../../shared/hierarchic-configurations/TagConfiguration';
 import {UserService} from '../../users/services/user.service';
@@ -10,7 +10,7 @@ import {TagService} from '../services/tag.service';
     selector: 'app-tag',
     templateUrl: './tag.component.html',
 })
-export class TagComponent extends AbstractDetail {
+export class TagComponent extends AbstractDetailDirective {
     public hierarchicConfig = tagHierarchicConfig;
 
     constructor(

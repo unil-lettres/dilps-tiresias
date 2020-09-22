@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {materialHierarchicConfig} from '../../shared/hierarchic-configurations/MaterialConfiguration';
 import {UserService} from '../../users/services/user.service';
@@ -10,7 +10,7 @@ import {MaterialService} from '../services/material.service';
     selector: 'app-material',
     templateUrl: './material.component.html',
 })
-export class MaterialComponent extends AbstractDetail {
+export class MaterialComponent extends AbstractDetailDirective {
     public hierarchicConfig = materialHierarchicConfig;
 
     constructor(

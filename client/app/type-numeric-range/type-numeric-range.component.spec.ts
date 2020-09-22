@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -32,25 +32,27 @@ describe('TypeNumericRangeComponent', () => {
         max: 10,
     };
 
-    beforeEach(async(() => {
-        const dialogRef = {close: () => true};
-        dialogCloseSpy = spyOn(dialogRef, 'close');
+    beforeEach(
+        waitForAsync(() => {
+            const dialogRef = {close: () => true};
+            dialogCloseSpy = spyOn(dialogRef, 'close');
 
-        TestBed.configureTestingModule({
-            declarations: [TypeNumericRangeComponent],
-            imports: [NoopAnimationsModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
-            providers: [
-                {
-                    provide: NATURAL_DROPDOWN_DATA,
-                    useValue: data,
-                },
-                {
-                    provide: NaturalDropdownRef,
-                    useValue: dialogRef,
-                },
-            ],
-        }).compileComponents();
-    }));
+            TestBed.configureTestingModule({
+                declarations: [TypeNumericRangeComponent],
+                imports: [NoopAnimationsModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+                providers: [
+                    {
+                        provide: NATURAL_DROPDOWN_DATA,
+                        useValue: data,
+                    },
+                    {
+                        provide: NaturalDropdownRef,
+                        useValue: dialogRef,
+                    },
+                ],
+            }).compileComponents();
+        }),
+    );
 
     function createComponent(
         c: FilterGroupConditionField | null,

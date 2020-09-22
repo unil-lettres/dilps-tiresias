@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {findKey} from 'lodash';
 import {InstitutionService} from '../../institutions/services/institution.service';
-import {AbstractDetail} from '../../shared/components/AbstractDetail';
+import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {CollectionVisibility, UserRole} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
@@ -13,7 +13,7 @@ import {CollectionService} from '../services/collection.service';
     selector: 'app-collection',
     templateUrl: './collection.component.html',
 })
-export class CollectionComponent extends AbstractDetail implements OnInit {
+export class CollectionComponent extends AbstractDetailDirective implements OnInit {
     public visibility = 1;
     public visibilities = {
         1: {

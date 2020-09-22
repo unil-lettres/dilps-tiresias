@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {waitForAsync, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {UploadService} from '../services/upload.service';
 import {FileDropDirective} from './file-drop.directive';
 
@@ -12,12 +12,14 @@ describe('FileDropDirective', () => {
     let fixture: ComponentFixture<ContainerComponent>;
     let component: any;
     let uploadSvc: UploadService;
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ContainerComponent, FileDropDirective],
-            providers: [UploadService],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [ContainerComponent, FileDropDirective],
+                providers: [UploadService],
+            }).compileComponents();
+        }),
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ContainerComponent);
