@@ -1491,18 +1491,19 @@
   resolved "https://registry.yarnpkg.com/@bugsnag/safe-json-stringify/-/safe-json-stringify-6.0.0.tgz#22abdcd83e008c369902976730c34c150148a758"
   integrity sha512-htzFO1Zc57S8kgdRK9mLcPVTW1BY2ijfH7Dk2CeZmspTWKdKqSo1iwmqrq2WtRjFlo8aRZYgLX0wFrDXF/9DLA==
 
-"@ecodev/angular-natural-gallery@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-7.0.1.tgz#b225802154d070fb53deb78ff41cd0a8e5ac576f"
-  integrity sha512-+kacS2Zq+g9F/AVqUPC+m8ZYBPiExZDhfg8geX23ixRrHf7Gxr0q+lLJ1ggO1Dol72dQ6oMCkRosf0wgI9dd1g==
+"@ecodev/angular-natural-gallery@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-8.0.0.tgz#172416ff5d0b82669aaaed62fde2acaba1200744"
+  integrity sha512-ojIhj06qZxvJd2unQu49NtcdEjS2f2iwfZo5ciQNIu8MIGJaV7fFoFP/JXaHqk3k/aIInSn9p1RYqwCJW1BBHw==
   dependencies:
-    "@ecodev/natural-gallery-js" "^6.0.1"
+    "@ecodev/natural-gallery-js" "^7.0.0"
     photoswipe "^4.1.3"
+    tslib "^2.0.0"
 
-"@ecodev/natural-gallery-js@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-6.0.1.tgz#f1a17bc9893dda49526ce3237a809e46ee8e6484"
-  integrity sha512-QNP9nCjYT+By5+RJFc1TyC9axA5s6Ga0Ru6iDUsY5f9vn+b37gT2QWd3d/S9oxK0/f0Ao/qqAI8RXjMLvZrWSQ==
+"@ecodev/natural-gallery-js@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
+  integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
 
 "@ecodev/natural@^21.0.1":
   version "21.0.1"

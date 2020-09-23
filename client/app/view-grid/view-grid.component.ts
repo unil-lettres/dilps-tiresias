@@ -63,7 +63,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     private enlargedHeight = 2000;
 
     public options: NaturalGalleryOptions = {
-        cover: true,
         gap: 5,
         showLabels: 'always',
         rowHeight: this.thumbnailHeight,

@@ -31,7 +31,7 @@
         "@bugsnag/core": "^7.3.4",
         "@bugsnag/js": "^7.3.4",
         "@bugsnag/plugin-angular": "^7.3.4",
-        "@ecodev/angular-natural-gallery": "^7.0.1",
+        "@ecodev/angular-natural-gallery": "^8.0.0",
         "@ecodev/natural": "^21.0.1",
         "@types/swiper": "^5.4.0",
         "angular-file": "^3.1.2",
