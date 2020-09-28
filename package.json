@@ -34,7 +34,6 @@
         "@ecodev/angular-natural-gallery": "^8.0.0",
         "@ecodev/natural": "^22.0.0",
         "@types/swiper": "^5.4.0",
-        "angular-file": "^3.1.2",
         "apollo": "^2.30.3",
         "apollo-angular": "^1.10.0",
         "apollo-angular-link-http": "^1.11.0",
