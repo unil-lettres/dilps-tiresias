@@ -20,7 +20,7 @@
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
-<div [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="column">
+<div fxFlex fxLayout="column">
     <mat-sidenav-container #navContainer fxFlex fxLayout="column">
         <mat-sidenav
             *ngIf="showNavigationMenu()"
@@ -99,12 +99,11 @@
                                     user.role === 'junior' ||
                                     user.role === 'major'
                                 "
-                                [ngfFixOrientation]="false"
                                 mat-list-item
                                 matTooltip="Ajouter une image"
                                 matTooltipPosition="after"
                                 multiple="1"
-                                ngfSelect
+                                naturalFileSelect
                             >
                                 <natural-icon mat-list-icon name="file_upload"></natural-icon>
                             </a>

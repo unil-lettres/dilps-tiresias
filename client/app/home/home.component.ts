@@ -17,6 +17,7 @@ import {NetworkActivityService} from '../shared/services/network-activity.servic
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
+import {FileSelection} from '@ecodev/natural';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -75,7 +76,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
     }
 
-    public uploadImages(files: File[]): void {
+    public uploadImages(selection: FileSelection): void {
+        const files = selection.valid;
         const excel = files.find(isExcel);
         if (excel) {
             this.uploadImagesAndExcel(
@@ -85,8 +87,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         } else {
             this.uploadImagesOnly(files);
         }
-
-        files.length = 0;
     }
 
     public uploadImagesOnly(files: File[]): void {
@@ -96,7 +96,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             return card;
         });
-        files.length = 0;
 
         const requireCollection = this.site === Site.tiresias;
         const collection$ = requireCollection ? this.selectCollection() : of(undefined);

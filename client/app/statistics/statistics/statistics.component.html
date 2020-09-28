@@ -3,7 +3,7 @@
     <div class="mat-headline">Statistiques</div>
     <mat-dialog-content>
         <mat-tab-group naturalLinkableTab>
-            <mat-tab label="Fréquentation">
+            <mat-tab id="frequentation" label="Fréquentation">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutGap="10px">
@@ -31,7 +31,7 @@
                 </ng-template>
             </mat-tab>
 
-            <mat-tab naturalLinkableTabName="card" label="Fiches">
+            <mat-tab id="card" label="Fiches">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutGap="10px">
@@ -68,7 +68,7 @@
                 </ng-template>
             </mat-tab>
 
-            <mat-tab naturalLinkableTabName="user" label="Utilisateurs">
+            <mat-tab id="user" label="Utilisateurs">
                 <ng-template matTabContent>
                     <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutGap="10px">

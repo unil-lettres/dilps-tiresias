@@ -6,7 +6,7 @@ export function shuffleArray(a: any[]): any[] {
     return a;
 }
 
-export function getBase64(file): Promise<null | string> {
+export function getBase64(file: File | null): Promise<null | string> {
     return new Promise((resolve, reject) => {
         if (!file) {
             reject(null);

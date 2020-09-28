@@ -1,4 +1,5 @@
-<div *ngIf="model" [ngfFixOrientation]="false" appFileDrop fxFlex fxLayout="row">
+<div *ngIf="model" naturalFileDrop fxFlex fxLayout="row">
+    <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier icie</div>
     <div [ngClass]="{containerWithToolbar: !hideToolbar}" fxFlex="400px" fxLayout="column">
         <mat-toolbar
             *ngIf="!hideToolbar"

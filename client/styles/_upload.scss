@@ -1,7 +1,7 @@
 @mixin upload($theme) {
     $primary: map-get($theme, primary);
 
-    [appFileDrop] {
+    [naturalFileDrop] {
         position: relative;
     }
 
@@ -9,7 +9,7 @@
         display: none;
     }
 
-    .app-file-drag-n-drop-file-over > .app-file-drag-n-drop-overlay {
+    .natural-file-over > .app-file-drag-n-drop-overlay {
         position: absolute;
         z-index: 99999;
         top: 0;

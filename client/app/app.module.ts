@@ -53,9 +53,9 @@ import {
     NaturalSearchModule,
     NaturalSelectModule,
     NaturalTableButtonModule,
+    NaturalFileModule,
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
-import {ngfModule} from 'angular-file';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {HighchartsChartModule} from 'highcharts-angular';
@@ -110,7 +110,6 @@ import {StampComponent} from './shared/components/stamp/stamp.component';
 import {TableButtonComponent} from './shared/components/table-button/table-button.component';
 import {ThesaurusComponent} from './shared/components/thesaurus/thesaurus.component';
 import {apolloDefaultOptions, createApolloLink} from './shared/config/apollo.link.creator';
-import {FileDropDirective} from './shared/directives/file-drop.directive';
 import {FocusDirective} from './shared/directives/focus';
 import {RolePipe} from './shared/pipes/role.pipe';
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
@@ -185,7 +184,6 @@ const icons: NaturalIconsConfig = {
         StampComponent,
         ChangesComponent,
         ChangeComponent,
-        FileDropDirective,
         CollectionSelectorComponent,
         DownloadComponent,
         LogoComponent,
@@ -261,7 +259,6 @@ const icons: NaturalIconsConfig = {
         MatNativeDateModule,
         MatChipsModule,
         MatCardModule,
-        ngfModule,
         AgmSnazzyInfoWindowModule,
         AgmCoreModule.forRoot({
             apiKey: environment.agmApiKey,
@@ -280,6 +277,7 @@ const icons: NaturalIconsConfig = {
         MatSortModule,
         QuillModule.forRoot(quillConfig),
         NaturalCommonModule,
+        NaturalFileModule,
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},

@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@an
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, merge, sortBy, omit} from 'lodash';
+import {findKey, sortBy, omit} from 'lodash';
 import {QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -48,19 +48,19 @@ import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurati
 import {periodHierarchicConfig} from '../shared/hierarchic-configurations/PeriodConfiguration';
 import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
-import {UploadService} from '../shared/services/upload.service';
 import {getBase64} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
+import {NaturalFileService} from '@ecodev/natural';
 
 @Component({
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
-    providers: [UploadService],
+    providers: [NaturalFileService],
 })
 export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
@@ -281,7 +281,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         public domainService: DomainService,
         public antiqueNameService: AntiqueNameService,
         public periodService: PeriodService,
-        private uploadService: UploadService,
+        private naturalFileService: NaturalFileService,
         private dialog: MatDialog,
         private userService: UserService,
         private statisticService: StatisticService,
@@ -354,15 +354,16 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    public watchUpload(): void {
-        this.uploadSub = this.uploadService.filesChanged.subscribe(files => {
+    private watchUpload(): void {
+        this.uploadSub = this.naturalFileService.filesChanged.subscribe(selection => {
+            const files = selection.valid;
             const file = files[files.length - 1];
             this.model.file = file;
             this.getBase64(file);
         });
     }
 
-    public unwatchUpload(): void {
+    private unwatchUpload(): void {
         if (this.uploadSub) {
             this.uploadSub.unsubscribe();
             this.uploadSub = null;
@@ -622,7 +623,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         return this.canSuggestUpdate();
     }
 
-    private getBase64(file): void {
+    private getBase64(file: File | null): void {
         getBase64(file).then(result => {
             this.imageData = result;
         });
