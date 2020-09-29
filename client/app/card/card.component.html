@@ -1,8 +1,8 @@
 <div *ngIf="model" naturalFileDrop fxFlex fxLayout="row">
     <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-    <div [ngClass]="{containerWithToolbar: !hideToolbar}" fxFlex="400px" fxLayout="column">
+    <div [ngClass]="{containerWithToolbar: showToolbar}" fxFlex="400px" fxLayout="column">
         <mat-toolbar
-            *ngIf="!hideToolbar"
+            *ngIf="showToolbar"
             [ngClass]="edit ? 'edition' : ''"
             color="app"
             fxFlex="none"
@@ -32,7 +32,7 @@
                 <button (click)="validateImage()" mat-menu-item>Valider l'image</button>
             </mat-menu>
 
-            <ng-container *ngIf="!hideTools">
+            <ng-container *ngIf="showTools">
                 <button
                     (click)="toggleEdit()"
                     *ngIf="!edit && fetchedModel?.permissions?.update"
@@ -152,7 +152,7 @@
                     <div *ngFor="let collection of sortedCollections">{{ collection.hierarchicName }}</div>
                 </div>
 
-                <mat-form-field *ngIf="!hideCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)">
+                <mat-form-field *ngIf="showCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)">
                     <mat-label>Référence</mat-label>
                     <input
                         [(ngModel)]="model.code"
@@ -773,7 +773,7 @@
                 </div>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
-                <div *ngIf="!hideCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
+                <div *ngIf="showCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
                     <br />
                     <div class="mat-title">Fiches additionnelles</div>
 
@@ -808,7 +808,7 @@
         </div>
     </div>
 
-    <div *ngIf="!hideImage" class="containerWithToolbar" fxFlex fxLayout="column">
+    <div *ngIf="showImage" class="containerWithToolbar" fxFlex fxLayout="column">
         <mat-toolbar
             [ngClass]="edit ? 'edition' : ''"
             color="app"

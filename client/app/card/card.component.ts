@@ -95,27 +95,27 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
      */
-    @Input() public hideCode = false;
+    @Input() public showCode = true;
 
     /**
      * Show/Hide toolbar
      */
-    @Input() public hideToolbar = false;
+    @Input() public showToolbar = true;
 
     /**
      * Show/Hide the right side of the card (image and actions in toolbar)
      */
-    @Input() public hideImage = false;
+    @Input() public showImage = true;
 
     /**
      * Hide related cards
      */
-    @Input() public hideCards = false;
+    @Input() public showCards = true;
 
     /**
      * Hide some toolbar actions
      */
-    @Input() public hideTools = false;
+    @Input() public showTools = true;
 
     /**
      * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if car is source or surggestion
