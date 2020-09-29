@@ -41,7 +41,7 @@ export class ChangeComponent implements OnInit {
         } else if (this.route.snapshot.params.cardId) {
             this.cardService.getOne(this.route.snapshot.params.cardId).subscribe(card => {
                 this.original = merge({}, card);
-                this.suggestion = merge({}, omit(card, 'id'), {
+                this.suggestion = merge({}, omit(card, 'id', '__typename'), {
                     original: card,
                     artists: card.artists.map(a => a.name),
                     institution: card.institution?.name ?? null,
