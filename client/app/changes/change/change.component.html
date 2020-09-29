@@ -28,7 +28,7 @@
 
         <button
             (click)="update()"
-            *ngIf="original"
+            *ngIf="!change && original"
             color="primary"
             mat-icon-button
             mat-raised-button
@@ -38,7 +38,7 @@
         </button>
         <button
             (click)="create()"
-            *ngIf="!original && suggestion"
+            *ngIf="!change && !original"
             color="primary"
             mat-icon-button
             mat-raised-button
@@ -50,35 +50,24 @@
 
     <div *ngIf="loaded" class="test" fxFlex fxLayout="row">
         <!-- Original -->
-        <div *ngIf="!change?.original && !original" fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <div *ngIf="!original" fxFlex fxLayout="column" fxLayoutAlign="center center">
             <div class="mat-display-1">Nouvelle fiche</div>
         </div>
-        <div *ngIf="change && change.original" fxFlex fxLayout="column">
-            <app-card [model]="change.original" fxFlex title="Original"></app-card>
-        </div>
         <div *ngIf="original" fxFlex fxLayout="column">
-            <app-card [model]="original" fxFlex title="Original"></app-card>
+            <app-card [fetchedModel]="original" fxFlex title="Original"></app-card>
         </div>
 
         <!-- Suggestion -->
-        <div *ngIf="!change?.suggestion && !suggestion" fxFlex fxLayout="column" fxLayoutAlign="center center">
+        <div *ngIf="!suggestionInput" fxFlex fxLayout="column" fxLayoutAlign="center center">
             <div class="mat-display-1">Suppression de la fiche</div>
         </div>
-        <div *ngIf="change && change.suggestion" fxFlex fxLayout="column">
+        <div *ngIf="suggestionInput" fxFlex fxLayout="column">
             <app-card
-                [model]="change.suggestion"
+                [model]="suggestionInput"
+                [fetchedModel]="fetchedSuggestion"
                 [editable]="true"
-                [imageSrc]="suggestionImageSrc"
-                fxFlex
-                title="Suggestion"
-            ></app-card>
-        </div>
-        <div *ngIf="suggestion" fxFlex fxLayout="column">
-            <app-card
-                [model]="suggestion"
-                [editable]="true"
-                [hideTools]="true"
-                [imageSrc]="suggestionImageSrc"
+                [hideTools]="!showTools"
+                [hideCards]="true"
                 fxFlex
                 title="Suggestion"
             ></app-card>

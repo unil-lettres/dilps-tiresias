@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@an
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, sortBy, omit} from 'lodash';
+import {findKey, sortBy} from 'lodash';
 import {QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -56,6 +56,13 @@ import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
 import {NaturalFileService} from '@ecodev/natural';
 
+export function cardToCardInput(fetchedModel: Card_card): CardInput & {id?: string} {
+    return Object.assign({}, fetchedModel, {
+        artists: fetchedModel.artists.map(a => a.name),
+        institution: fetchedModel.institution?.name ?? null,
+    });
+}
+
 @Component({
     selector: 'app-card',
     templateUrl: './card.component.html',
@@ -64,16 +71,26 @@ import {NaturalFileService} from '@ecodev/natural';
 })
 export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
-     * External card data
+     * The card as input used for the form and mutation.
+     *
+     * - Use only `[model]` for mass editing
+     * - Use `[model]` and also `[fetchedModel]` when showing the suggestion card of a change
+     *
+     * If only `[fetchedModel]` is given, then `model` will be automatically deduced.
      */
     @Input() public model: CardInput & {id?: string};
 
     /**
      * The card as fetched from DB, if applicable.
      *
-     * eg: it will be null if we are creating a new card, creating suggestion or mass editing
+     * - Use only `fetchedModel` when showing the original card of a change
+     * - Use `[model]` and also `[fetchedModel]` when showing the suggestion card of a change
+     *
+     * If only `[fetchedModel]` is given, then `model` will be automatically deduced.
+     *
+     * eg: it will be null if we are mass editing
      */
-    public fetchedModel: Card_card | null = null;
+    @Input() public fetchedModel: Card_card | null = null;
 
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
@@ -118,12 +135,12 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Url of resized images (2000px) to be displayed
      */
-    @Input() public imageSrc: string;
+    public imageSrc: string;
 
     /**
      * Url of full sized image (for download purpose)
      */
-    @Input() public imageSrcFull: string;
+    public imageSrcFull: string;
 
     /**
      * Default visibility
@@ -304,27 +321,30 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
 
         this.route.data.subscribe(data => (this.showLogo = data.showLogo));
 
-        if (this.model && !this.isFetchedCard(this.model)) {
-            // mass edit and create a change case
+        if (this.model && !this.fetchedModel) {
+            // When mass editing, show a form with an empty model (without any fetched model)
             this.initCard();
             this.edit = true;
-        } else if (this.model && this.isFetchedCard(this.model)) {
-            this.fetchedModel = this.model;
+        } else if (!this.model && this.fetchedModel) {
+            // When showing a change, we show the original card, and we can infer its model from fetched model
+            this.model = cardToCardInput(this.fetchedModel);
+            this.initCard();
+        } else if (this.model && this.fetchedModel) {
+            // When showing a change we show the suggestion card. The fetchedModel is given in order to have
+            // access to artists. And the model is also given so that the ChangeComponent is aware
+            // when the model is changed via our form.
+            // (An better alternative would be to create a new @Output that emits when model change)
             this.initCard();
         } else {
             this.route.params.subscribe(params => {
                 if (params.cardId) {
                     this.fetchedModel = this.route.snapshot.data.card;
-
-                    this.model = Object.assign({}, this.fetchedModel, {
-                        artists: this.fetchedModel.artists.map(a => a.name),
-                        institution: this.fetchedModel.institution?.name ?? null,
-                    });
-
+                    this.model = cardToCardInput(this.fetchedModel);
                     this.initCard();
-                } else if (!params.cardId && this.model && this.isFetchedCard(this.model)) {
-                    this.fetchedModel = this.model;
-                    this.initCard();
+                } else {
+                    throw new Error(
+                        'Could not find a model to work with. app-card must receive one of [model] or [fetchedModel], or both, or the route should contain a card ID.',
+                    );
                 }
             });
         }
@@ -548,18 +568,13 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
                 this.assertFetchedCard(this.fetchedModel);
 
                 if (selection) {
-                    this.model = Object.assign(omit(selection, 'id'), {
+                    this.fetchedModel = Object.assign({}, selection, {
                         id: this.fetchedModel.id,
                         code: this.fetchedModel.code,
-                        artists: selection.artists.map(a => a.name),
-                        institution: selection.institution?.name ?? null,
                         visibility: this.model.visibility,
                     });
 
-                    this.fetchedModel = Object.assign({}, selection, {
-                        id: this.fetchedModel.id,
-                        visibility: this.model.visibility,
-                    });
+                    this.model = cardToCardInput(this.fetchedModel);
 
                     this.initCard();
                 }
