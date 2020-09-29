@@ -60,12 +60,6 @@ export const routes: Routes = [
                 },
             },
             {
-                path: 'card/new',
-                component: CardComponent,
-                data: {showLogo: true},
-                runGuardsAndResolvers: 'always',
-            },
-            {
                 path: 'card/:cardId',
                 component: CardComponent,
                 resolve: {card: CardResolver},

@@ -549,11 +549,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    public copy(): void {
-        this.assertFetchedCard(this.fetchedModel);
-        this.router.navigate(['/card/new', {cardId: this.fetchedModel.id}]);
-    }
-
     public complete(): void {
         this.dialog
             .open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
