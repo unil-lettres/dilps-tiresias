@@ -8,7 +8,12 @@
     <div class="responsive-table" [fxShow]="showTable()">
         <table [dataSource]="dataSource" mat-table>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" mat-row></tr>
+            <tr
+                *matRowDef="let row; columns: displayedColumns"
+                [routerLink]="[row.id]"
+                mat-row
+                style="cursor: pointer"
+            ></tr>
 
             <!-- Type -->
             <ng-container matColumnDef="type">
