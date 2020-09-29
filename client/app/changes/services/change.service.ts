@@ -4,10 +4,12 @@ import {map} from 'rxjs/operators';
 import {
     AcceptChange,
     AcceptChange_acceptChange,
+    Card_card,
     Change,
     Changes,
     ChangesVariables,
     ChangeVariables,
+    CreateCard_createCard,
     RejectChange,
     Site,
     SuggestCreation,
@@ -83,7 +85,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestDeletion(card: {id}): Observable<SuggestDeletion_suggestDeletion> {
+    public suggestDeletion(card: Card_card): Observable<SuggestDeletion_suggestDeletion> {
         return this.apollo
             .mutate<SuggestDeletion>({
                 mutation: suggestDeletion,
@@ -100,7 +102,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestCreation(card: {id}): Observable<SuggestCreation_suggestCreation> {
+    public suggestCreation(card: CreateCard_createCard): Observable<SuggestCreation_suggestCreation> {
         return this.apollo
             .mutate<SuggestCreation>({
                 mutation: suggestCreation,
@@ -117,7 +119,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestUpdate(card: {id}): Observable<SuggestUpdate_suggestUpdate> {
+    public suggestUpdate(card: CreateCard_createCard): Observable<SuggestUpdate_suggestUpdate> {
         return this.apollo
             .mutate<SuggestUpdate>({
                 mutation: suggestUpdate,

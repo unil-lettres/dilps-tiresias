@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
     Card,
+    Card_card,
     CardInput,
     CardPartialInput,
     Cards,
@@ -154,7 +155,7 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public validateData(card: {id}): Observable<ValidateData_validateData> {
+    public validateData(card: Card_card): Observable<ValidateData_validateData> {
         return this.apollo
             .mutate<ValidateData>({
                 mutation: validateData,
@@ -172,7 +173,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public validateImage(card: {id}): Observable<ValidateImage_validateImage> {
+    public validateImage(card: Card_card): Observable<ValidateImage_validateImage> {
         return this.apollo
             .mutate<ValidateImage>({
                 mutation: validateImage,

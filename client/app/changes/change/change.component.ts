@@ -74,7 +74,7 @@ export class ChangeComponent implements OnInit {
     }
 
     public update(): void {
-        this.cardService.create(this.suggestion).subscribe((card: {id}) => {
+        this.cardService.create(this.suggestion).subscribe(card => {
             this.changeService.suggestUpdate(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });
@@ -82,7 +82,7 @@ export class ChangeComponent implements OnInit {
     }
 
     public create(): void {
-        this.cardService.create(this.suggestion).subscribe((card: {id}) => {
+        this.cardService.create(this.suggestion).subscribe(card => {
             this.changeService.suggestCreation(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });
