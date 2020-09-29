@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SafeStyle} from '@angular/platform-browser';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {getBase64} from '../../shared/services/utility';
+import {getBase64Url} from '../../shared/services/utility';
 import {UserService} from '../../users/services/user.service';
 import {NewsService} from '../services/news.service';
 
@@ -13,7 +13,7 @@ import {NewsService} from '../services/news.service';
     styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent extends AbstractDetailDirective {
-    public imageData: SafeStyle;
+    public imageData: string;
 
     constructor(
         service: NewsService,
@@ -27,7 +27,7 @@ export class NewsComponent extends AbstractDetailDirective {
 
     public upload(file): void {
         this.data.item.file = file;
-        getBase64(file).then(result => {
+        getBase64Url(file).then(result => {
             this.imageData = result;
         });
     }

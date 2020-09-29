@@ -48,7 +48,7 @@ import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurati
 import {periodHierarchicConfig} from '../shared/hierarchic-configurations/PeriodConfiguration';
 import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
-import {getBase64} from '../shared/services/utility';
+import {getBase64Url} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
@@ -634,7 +634,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private getBase64(file: File | null): void {
-        getBase64(file).then(result => {
+        getBase64Url(file).then(result => {
             this.imageData = result;
         });
     }

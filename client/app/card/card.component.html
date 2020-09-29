@@ -833,6 +833,6 @@
             class="image"
             fxFlex
         ></div>
-        <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image" fxFlex></div>
+        <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
     </div>
 </div>

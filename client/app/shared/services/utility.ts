@@ -6,7 +6,7 @@ export function shuffleArray(a: any[]): any[] {
     return a;
 }
 
-export function getBase64(file: File | null): Promise<null | string> {
+export function getBase64Url(file: File | null): Promise<null | string> {
     return new Promise((resolve, reject) => {
         if (!file) {
             reject(null);
@@ -14,7 +14,9 @@ export function getBase64(file: File | null): Promise<null | string> {
 
         const reader = new FileReader();
         reader.addEventListener('load', (ev: any) => {
-            resolve('data:image;base64,' + btoa(ev.target.result));
+            const base64 = btoa(ev.target.result);
+            const url = 'url(data:image;base64,' + base64 + ')';
+            resolve(url);
         });
         reader.readAsBinaryString(file);
     });

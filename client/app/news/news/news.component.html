@@ -51,7 +51,7 @@
                 />
 
                 <img *ngIf="!imageData && data?.item?.imageUrl" [attr.src]="data?.item?.imageUrl" />
-                <div *ngIf="imageData" [ngStyle]="{'background-image': 'url(' + imageData + ')'}" class="image"></div>
+                <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image"></div>
             </div>
         </mat-tab>
     </mat-tab-group>
