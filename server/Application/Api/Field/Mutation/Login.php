@@ -47,7 +47,7 @@ abstract class Login implements FieldInterface
                     return $user;
                 }
 
-                throw new Exception("Le nom d'utilisateur ou mot de passe est incorrect !");
+                throw new Exception("Le nom d'utilisateur ou mot de passe est incorrect");
             },
         ];
     }

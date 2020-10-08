@@ -18,6 +18,6 @@ describe('Login page', () => {
         expect(page.getParagraphText()).toEqual(
             "Veuillez choisir une méthode d'authentification ou\n" + 'utiliser le bouton "Accès public"',
         );
-        expect(page.getErrorMessage()).toEqual("Le nom d'utilisateur ou mot de passe est incorrect !");
+        expect(page.getErrorMessage()).toEqual("Le nom d'utilisateur ou mot de passe est incorrect");
     });
 });
