@@ -32,7 +32,7 @@
         "@bugsnag/js": "^7.3.4",
         "@bugsnag/plugin-angular": "^7.3.4",
         "@ecodev/angular-natural-gallery": "^8.0.0",
-        "@ecodev/natural": "^23.0.0",
+        "@ecodev/natural": "^24.0.0",
         "@types/swiper": "^5.4.0",
         "apollo": "^2.30.3",
         "apollo-angular": "^1.10.0",
