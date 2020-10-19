@@ -27,8 +27,6 @@
 /vendor/
 /client/app/shared/generated-schema.graphql
 /client/app/shared/generated-types.ts
-/client/environments/*
-!/client/environments/.gitkeep
 .env
 .DS_Store
 *.sql.gz
