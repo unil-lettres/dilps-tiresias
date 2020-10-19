@@ -12,7 +12,7 @@ services:
     - mysql
 
 env:
-    - DEPLOY_ENV=dev
+    - DEPLOY_ENV=prod
 
 cache:
     directories:
