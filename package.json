@@ -5,8 +5,8 @@
     "scripts": {
         "ng": "ng",
         "dev": "yarn codegen && ng serve",
-        "prod": "yarn codegen && ng build --prod --configuration=production",
-        "staging": "yarn codegen && ng build --prod --configuration=staging",
+        "prod": "yarn codegen --configuration=production && ng build --prod --configuration=production",
+        "staging": "yarn codegen --configuration=staging && ng build --prod --configuration=staging",
         "test": "yarn codegen && ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
