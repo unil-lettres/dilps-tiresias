@@ -11,6 +11,9 @@ addons:
 services:
     - mysql
 
+env:
+    - DEPLOY_ENV=dev
+
 cache:
     directories:
         - vendor
@@ -23,15 +26,15 @@ before_install:
     - nvm use 12
     - curl -o- -L https://yarnpkg.com/install.sh | bash
     - export PATH=$HOME/.yarn/bin:$PATH
+    - yes | pecl install imagick
 
 before_script:
     - mysql -e 'create database dilps;'
     - mysql -e "SET GLOBAL sql_mode = 'NO_ENGINE_SUBSTITUTION';"
     - cp config/autoload/local.php.dist config/autoload/local.php
     - cp env.example .env
-    - composer install --classmap-authoritative $NO_PROGRESS
-    - ./bin/load-test-data.php
     - ./bin/build.sh
+    - ./bin/load-test-data.php
 
 script:
     - ./vendor/bin/doctrine orm:validate-schema
