@@ -203,6 +203,7 @@ export const routes: Routes = [
                     {
                         path: 'unclassified',
                         component: ListComponent,
+                        resolve: {creator: UserResolver},
                         data: {
                             filter: {groups: [{conditions: [{collections: {empty: {}}} as CardFilterGroupCondition]}]},
                         },
