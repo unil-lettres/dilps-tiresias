@@ -4,13 +4,14 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "dev": "yarn codegen && ng serve",
-        "prod": "yarn codegen --configuration=production && ng build --prod --configuration=production",
-        "staging": "yarn codegen --configuration=staging && ng build --prod --configuration=staging",
+        "dev": "yarn codegen && yarn prettier && ng serve",
+        "prod": "yarn codegen --configuration=production && yarn prettier && ng build --prod --configuration=production",
+        "staging": "yarn codegen --configuration=staging && yarn prettier && ng build --prod --configuration=staging",
         "test": "yarn codegen && ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts && ts-node scripts/setenv.ts && prettier --write client/environments/*",
+        "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts && ts-node scripts/setenv.ts",
+        "prettier": "prettier --write client/environments/*",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
     },
     "dependencies": {
