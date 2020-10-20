@@ -10,7 +10,7 @@
         "test": "yarn codegen && ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts && ts-node ./scripts/setenv.ts",
+        "codegen": "./bin/dump-schema && apollo client:codegen -c apollo.config.js  --outputFlat --target typescript client/app/shared/generated-types.ts && ts-node scripts/setenv.ts && prettier --write client/environments/*",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
     },
     "dependencies": {

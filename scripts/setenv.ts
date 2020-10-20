@@ -5,13 +5,12 @@ const {argv} = require('yargs');
 require('dotenv').config();
 
 function createEnvironmentFile(path: string, env: string): void {
-    // Create the content of the environment file
-    const environmentFileContent = `export const environment = {
-   environment: "${env}",
-   agmApiKey: "${process.env.MAPS_API_KEY}",
-   bugsnagApiKey: "${process.env.BUGSNAG_API_KEY}"
-};
-`;
+    const data = {
+        environment: env,
+        agmApiKey: process.env.MAPS_API_KEY,
+        bugsnagApiKey: process.env.BUGSNAG_API_KEY,
+    };
+    const environmentFileContent = `export const environment = ${JSON.stringify(data)};`;
 
     // Write the content to the respective file
     writeFile(path, environmentFileContent, err => {
