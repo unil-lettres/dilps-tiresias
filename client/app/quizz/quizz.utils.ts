@@ -1,4 +1,4 @@
-import {isString, uniq} from 'lodash';
+import {isString, uniq} from 'lodash-es';
 import {Card} from '../shared/generated-types';
 
 export interface Result {

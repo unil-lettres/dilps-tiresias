@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {isArray} from 'lodash';
+import {isArray} from 'lodash-es';
 import {CollectionsVariables, LogicalOperator, UserRole} from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';

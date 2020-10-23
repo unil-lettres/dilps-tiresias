@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {CardService} from '../../card/services/card.service';
 import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';

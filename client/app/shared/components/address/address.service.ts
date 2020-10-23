@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isUndefined, mapValues, trim} from 'lodash';
+import {isUndefined, mapValues, trim} from 'lodash-es';
 
 export interface Address {
     street?: string;

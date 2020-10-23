@@ -3,7 +3,7 @@ import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, 
 import {FormControl} from '@angular/forms';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
 import {
     Card_card,

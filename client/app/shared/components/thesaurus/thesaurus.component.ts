@@ -11,7 +11,7 @@ import {
     NaturalHierarchicSelectorDialogService,
     NaturalQueryVariablesManager,
 } from '@ecodev/natural';
-import {clone, isArray, isObject, isString, merge} from 'lodash';
+import {clone, isArray, isObject, isString, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';

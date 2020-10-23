@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@an
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, sortBy} from 'lodash';
+import {findKey, sortBy} from 'lodash-es';
 import {QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';

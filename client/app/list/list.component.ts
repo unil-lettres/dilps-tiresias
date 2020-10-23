@@ -8,7 +8,7 @@ import {
     Sorting,
     toUrl,
 } from '@ecodev/natural';
-import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash';
+import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';

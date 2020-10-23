@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {Subscription} from 'rxjs';
 import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';

@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';

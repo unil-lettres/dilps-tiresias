@@ -1,5 +1,5 @@
 import {Literal} from '@ecodev/natural';
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {BehaviorSubject} from 'rxjs';
 
 /**
