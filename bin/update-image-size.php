@@ -39,7 +39,7 @@ foreach ($filesInDb as $i => $card) {
         $size = $image->getSize();
 
         // To force clearing the cache of Imagick
-        $image->__destruct();
+        unset($image);
 
         $width = $size->getWidth();
         $height = $size->getHeight();

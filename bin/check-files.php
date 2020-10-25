@@ -7,11 +7,14 @@
  * It is up to the user to then take appropriate action based on that information.
  */
 use Application\Model\Card;
+use Application\Repository\CardRepository;
 use Application\Utility;
 
 require_once __DIR__ . '/../htdocs/index.php';
 
-$filesInDb = _em()->getRepository(Card::class)->getFilenames();
+/** @var CardRepository $cardRepository */
+$cardRepository = _em()->getRepository(Card::class);
+$filesInDb = $cardRepository->getFilenames();
 $filesOnDisk = glob('data/images/*');
 
 $missingFiles = array_diff($filesInDb, $filesOnDisk);
