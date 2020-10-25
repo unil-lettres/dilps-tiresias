@@ -9,6 +9,7 @@ use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Exception;
 use GraphQL\Type\Definition\Type;
 
@@ -33,7 +34,10 @@ class AcceptChange implements FieldInterface
                     case Change::TYPE_CREATE:
                         $image = $change->getSuggestion();
                         $image->setOwner(User::getCurrent());
-                        $image->timestampUpdate();
+
+                        $changeSet = ['need some value here'];
+                        $fakeEvent = new PreUpdateEventArgs($image, _em(), $changeSet);
+                        $image->timestampUpdate($fakeEvent);
 
                         break;
                     case Change::TYPE_UPDATE:

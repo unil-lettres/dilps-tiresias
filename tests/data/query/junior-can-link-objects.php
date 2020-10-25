@@ -7,8 +7,14 @@ return [
         'query' => 'mutation {
             linkCardCollection(collection: 2002, card: 6005) {
                 id
+                updater {
+                    id
+                }
                 collections {
                     id
+                    updater {
+                        id
+                    }
                 }
             }
 
@@ -27,9 +33,11 @@ return [
         'data' => [
             'linkCardCollection' => [
                 'id' => '6005',
+                'updater' => null,
                 'collections' => [
                     [
                         'id' => '2002',
+                        'updater' => null,
                     ],
                 ],
             ],

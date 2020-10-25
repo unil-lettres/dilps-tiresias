@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Acl\Acl;
 use Application\Utility;
 use DateTimeImmutable;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -179,8 +180,12 @@ abstract class AbstractModel
      *
      * @ORM\PreUpdate
      */
-    public function timestampUpdate(): void
+    public function timestampUpdate(PreUpdateEventArgs $event): void
     {
+        if (!$event->getEntityChangeSet()) {
+            return;
+        }
+
         $this->setUpdateDate(Utility::getNow());
         $this->setUpdater(User::getCurrent());
     }
