@@ -15,7 +15,7 @@ The recommended way to get a working copy is the following:
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
 3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
-4. Copy & rename the example.env file to .env `cp env.example .env`. Replace the values if needed.
+4. Copy & rename the example.env file to .env (`cp env.example .env`). Replace the values if needed.
 5. Finally, build the app:
 
 ```sh

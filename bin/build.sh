@@ -37,7 +37,7 @@ echo "********************* Updating Node.js packages..."
 yarn install $NO_PROGRESS
 
 echo "********************* Updating all PHP dependencies via composer..."
-composer install --classmap-authoritative $NO_PROGRESS
+composer install --classmap-authoritative --no-interaction $NO_PROGRESS
 
 echo "********************* Clear cache"
 composer clear-config-cache
