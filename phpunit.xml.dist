@@ -2,18 +2,15 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="htdocs/index.php"
-         colors="true"
-         cacheResultFile="data/tmp/.phpunit.result.cache">
+         colors="true" cacheResultFile="data/tmp/.phpunit.result.cache">
+    <coverage>
+        <include>
+            <directory>./server</directory>
+        </include>
+    </coverage>
     <testsuites>
         <testsuite name="Application\\Tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <!-- Include only our own code for code coverage statistics -->
-            <directory>./server</directory>
-        </whitelist>
-    </filter>
 </phpunit>

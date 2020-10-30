@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
-use GraphQL\Error\Debug;
+use GraphQL\Error\DebugFlag;
 use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Server\ServerConfig;
@@ -30,7 +30,7 @@ class Server
         $this->config = ServerConfig::create([
             'schema' => new Schema(),
             'queryBatching' => true,
-            'debug' => $debug ? Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE : false,
+            'debugFlag' => $debug ? DebugFlag::INCLUDE_DEBUG_MESSAGE | DebugFlag::INCLUDE_TRACE : DebugFlag::NONE,
             'rootValue' => $site,
         ]);
         $this->server = new StandardServer($this->config);

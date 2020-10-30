@@ -95,12 +95,18 @@
 <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">
     <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
         <mat-label>Latitude</mat-label>
-        <input (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput />
+        <input type="number" (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput />
     </mat-form-field>
 
     <mat-form-field *ngIf="!readonly || !!model?.longitude" class="lonlat">
         <mat-label>Longitude</mat-label>
-        <input (ngModelChange)="recenter()" [(ngModel)]="model.longitude" [readonly]="readonly" matInput />
+        <input
+            type="number"
+            (ngModelChange)="recenter()"
+            [(ngModel)]="model.longitude"
+            [readonly]="readonly"
+            matInput
+        />
     </mat-form-field>
 </div>
 

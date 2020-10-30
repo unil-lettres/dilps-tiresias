@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace ApplicationTest\Api;
 
 use Application\Api\DefaultFieldResolver;
-use Application\Api\Schema;
 use Application\Model\User;
 use Doctrine\Common\Persistence\Proxy;
 use Doctrine\ORM\EntityNotFoundException;
+use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -77,7 +78,8 @@ class DefaultFieldResolverTest extends TestCase
             }
         };
 
-        $resolve = new ResolveInfo('field', [], null, new ObjectType(['name' => 'foo']), [], new Schema(), [], null, null, []);
+        $fieldDefinition = FieldDefinition::create(['name' => 'field', 'type' => Type::boolean()]);
+        $resolve = new ResolveInfo($fieldDefinition, [], new ObjectType(['name' => 'foo']), [], new \GraphQL\Type\Schema([]), [], null, null, []);
         $resolver = new DefaultFieldResolver();
         self::assertSame($expected, $resolver($model, [], [], $resolve));
     }
