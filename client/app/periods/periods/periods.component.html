@@ -31,7 +31,7 @@
                 <td *matCellDef="let element" mat-cell>
                     <natural-table-button
                         *ngIf="element.hasNavigation"
-                        [navigate]="getChildLink(element)"
+                        [navigate]="getChildLink(element.item)"
                         icon="chevron_right"
                         matTooltip="Déployer"
                     ></natural-table-button>
@@ -43,8 +43,8 @@
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
                     <app-table-button
-                        (click)="edit(element)"
-                        [label]="element.name"
+                        (click)="edit(element.item)"
+                        [label]="element.item.name"
                         icon="edit"
                         matTooltip="Éditer"
                     ></app-table-button>
@@ -54,13 +54,13 @@
             <!-- From Column -->
             <ng-container matColumnDef="from">
                 <th *matHeaderCellDef mat-header-cell>A partir de</th>
-                <td *matCellDef="let element" mat-cell>{{ element.from }}</td>
+                <td *matCellDef="let element" mat-cell>{{ element.item.from }}</td>
             </ng-container>
 
             <!-- To Column -->
             <ng-container matColumnDef="to">
                 <th *matHeaderCellDef mat-header-cell>Jusqu'à</th>
-                <td *matCellDef="let element" mat-cell>{{ element.to }}</td>
+                <td *matCellDef="let element" mat-cell>{{ element.item.to }}</td>
             </ng-container>
         </table>
     </div>

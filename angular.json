@@ -21,7 +21,8 @@
                         "polyfills": "client/polyfills.ts",
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
-                        "scripts": []
+                        "scripts": [],
+                        "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags", "zen-observable"]
                     },
                     "configurations": {
                         "production": {

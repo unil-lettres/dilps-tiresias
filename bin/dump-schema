@@ -5,14 +5,13 @@
  */
 const {execFileSync} = require('child_process');
 const fs = require('fs');
-const shell = require('shelljs');
 const utilities = require('graphql/utilities');
 const {buildClientSchema, printSchema} = require('graphql');
 
 function write(folder, filename, content) {
 
     if (!fs.existsSync(folder)) {
-        shell.mkdir('-p', folder);
+        fs.mkdirSync(folder, {recursive: true});
     }
 
     const fullPath = folder + filename;

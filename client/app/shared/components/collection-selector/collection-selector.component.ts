@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
-
 import {UserService} from '../../../users/services/user.service';
 import {
     Cards_cards_items,

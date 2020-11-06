@@ -31,7 +31,7 @@
                 <td *matCellDef="let element" mat-cell>
                     <natural-table-button
                         *ngIf="element.hasNavigation"
-                        [navigate]="getChildLink(element)"
+                        [navigate]="getChildLink(element.item)"
                         icon="chevron_right"
                         matTooltip="Déployer"
                     ></natural-table-button>
@@ -43,8 +43,8 @@
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
                     <app-table-button
-                        (click)="edit(element)"
-                        [label]="element.name"
+                        (click)="edit(element.item)"
+                        [label]="element.item.name"
                         icon="edit"
                         matTooltip="Éditer"
                     ></app-table-button>

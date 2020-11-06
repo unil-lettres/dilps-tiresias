@@ -3,7 +3,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {SITE} from '../../app.config';
 import {UserService} from '../../users/services/user.service';
 import {Site, UserType} from '../generated-types';
-import {MOCK_APOLLO_PROVIDER} from '../testing/MOCK_APOLLO_PROVIDER';
+import {MOCK_APOLLO_PROVIDER} from '../testing/MockApolloProvider';
 import {TypePipe} from './type.pipe';
 
 describe('TypePipe', () => {

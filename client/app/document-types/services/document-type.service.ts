@@ -1,6 +1,5 @@
-import {Injectable, Inject} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-
+import {Injectable, Inject} from '@angular/core';
 import {
     CreateDocumentType,
     CreateDocumentTypeVariables,

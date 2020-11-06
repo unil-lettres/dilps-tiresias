@@ -1,6 +1,6 @@
+import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Apollo} from 'apollo-angular';
 import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';

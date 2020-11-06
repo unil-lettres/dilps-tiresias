@@ -1,7 +1,6 @@
-import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
+import {Inject, Injectable} from '@angular/core';
 import {SITE} from '../../app.config';
-
 import {
     Statistic,
     Statistics,

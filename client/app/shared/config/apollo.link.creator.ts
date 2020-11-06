@@ -1,7 +1,6 @@
-import {DefaultOptions} from 'apollo-client/ApolloClient';
+import {ApolloLink, DefaultOptions} from '@apollo/client/core';
+import {onError} from '@apollo/client/link/error';
 import {NetworkActivityService} from '../services/network-activity.service';
-import {ApolloLink} from 'apollo-link';
-import {onError} from 'apollo-link-error';
 import {createUploadLink} from 'apollo-upload-client';
 import {AlertService} from '../components/alert/alert.service';
 

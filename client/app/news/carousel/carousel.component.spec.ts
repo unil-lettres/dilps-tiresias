@@ -2,8 +2,7 @@ import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
 import {SwiperModule} from 'ngx-swiper-wrapper';
 import {SITE} from '../../app.config';
 import {Site} from '../../shared/generated-types';
-import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MOCK_APOLLO_PROVIDER';
-
+import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';
 import {CarouselComponent} from './carousel.component';
 
 describe('CarouselComponent', () => {

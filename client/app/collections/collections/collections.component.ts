@@ -3,7 +3,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
-import {CollectionsVariables, LogicalOperator, UserRole} from '../../shared/generated-types';
+import {
+    Collections_collections_items,
+    CollectionsVariables,
+    LogicalOperator,
+    UserRole,
+} from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 
@@ -13,7 +18,12 @@ import {CollectionService} from '../services/collection.service';
     styleUrls: ['./collections.component.scss'],
 })
 export class CollectionsComponent extends NaturalAbstractController implements OnInit {
-    public collections = [];
+    public rootCollections: Collections_collections_items[] = [];
+
+    /**
+     * Children by parent ID
+     */
+    public readonly children = new Map<string, Collections_collections_items[]>();
 
     /**
      * Show "unclassified" category on the top of the page
@@ -75,33 +85,31 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             }
         });
 
-        this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe((collections: any) => {
+        this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe(collections => {
             if (collections.pageIndex === 0) {
-                this.collections = collections.items;
+                this.rootCollections = collections.items;
             } else {
-                this.collections = this.collections.concat(collections.items);
+                this.rootCollections = this.rootCollections.concat(collections.items);
             }
-            this.hasMore = collections.length > this.collections.length;
+
+            this.hasMore = collections.length > this.rootCollections.length;
         });
     }
 
-    public toggle(collection): void {
-        if (collection.children) {
-            this.removeChildren(collection);
+    public toggle(collection: Collections_collections_items): void {
+        if (this.children.has(collection.id)) {
+            this.children.delete(collection.id);
         } else {
             this.getChildren(collection);
         }
     }
 
-    public removeChildren(collection): void {
-        collection.children = null;
-    }
-
-    public getChildren(collection): void {
+    private getChildren(collection: Collections_collections_items): void {
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
+
         this.collectionsService.getAll(qvm).subscribe(results => {
-            collection.children = results.items;
+            this.children.set(collection.id, results.items);
         });
     }
 
@@ -114,7 +122,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    public edit(event, collection): void {
+    public edit(event, collection: Collections_collections_items): void {
         event.preventDefault();
         event.stopPropagation();
 

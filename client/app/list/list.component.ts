@@ -33,7 +33,6 @@ import {
     UserRole,
     Viewer,
 } from '../shared/generated-types';
-
 import {adminConfig, NaturalSearchFacetsService} from '../shared/natural-search-facets.service';
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';

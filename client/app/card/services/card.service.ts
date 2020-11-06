@@ -1,5 +1,5 @@
-import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
+import {Inject, Injectable} from '@angular/core';
 import {merge} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';

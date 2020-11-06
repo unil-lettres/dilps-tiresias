@@ -1,8 +1,9 @@
+import {Apollo} from 'apollo-angular';
+import {InMemoryCache} from '@apollo/client/core';
 import {AgmCoreModule} from '@agm/core';
 import {AgmSnazzyInfoWindowModule} from '@agm/snazzy-info-window';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule, ErrorHandler} from '@angular/core';
-
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
@@ -39,7 +40,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavigationEnd, Router} from '@angular/router';
-
 import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
@@ -56,17 +56,13 @@ import {
     NaturalFileModule,
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
-import {Apollo, ApolloModule} from 'apollo-angular';
-import {InMemoryCache} from 'apollo-cache-inmemory';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {SwiperModule} from 'ngx-swiper-wrapper';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
-
 import {AppRoutingModule} from './app-routing.module';
-
 import {AppComponent} from './app.component';
 import {SITE} from './app.config';
 import {ArtistComponent} from './artists/artist/artist.component';
@@ -226,7 +222,6 @@ const icons: NaturalIconsConfig = {
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        ApolloModule,
         BrowserAnimationsModule,
         MatButtonModule,
         MatCheckboxModule,

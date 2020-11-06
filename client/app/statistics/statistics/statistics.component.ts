@@ -1,3 +1,4 @@
+import {Apollo} from 'apollo-angular';
 import {Component, Inject} from '@angular/core';
 import {StatisticService} from '../services/statistic.service';
 import {NaturalAbstractController, NaturalQueryVariablesManager, Literal} from '@ecodev/natural';
@@ -12,7 +13,6 @@ import {
     Users_users_items,
 } from '../../shared/generated-types';
 import {StatisticInput} from '../statistic/statistic.component';
-import {Apollo} from 'apollo-angular';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
 import {SITE} from '../../app.config';

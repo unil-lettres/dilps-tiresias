@@ -1,6 +1,6 @@
+import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {Apollo} from 'apollo-angular';
 import {forkJoin, Observable, ObservableInput} from 'rxjs';
 import {SITE} from '../../app.config';
 import {
@@ -21,7 +21,6 @@ import {
     UpdateCollectionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-
 import {
     collectionQuery,
     collectionsQuery,

@@ -320,7 +320,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             this.items = [this._model as ThesaurusModel];
             this.notifyModel();
         } else if (this.multiple && isArray(this._model)) {
-            this.items = this._model;
+            this.items = clone(this._model); // clone to get rid of readonly
             this.notifyModel();
         }
     }

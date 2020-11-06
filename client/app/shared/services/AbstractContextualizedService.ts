@@ -1,5 +1,5 @@
-import {Literal, NaturalAbstractModelService, VariablesWithInput} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
+import {Literal, NaturalAbstractModelService, VariablesWithInput} from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
 import {Site} from '../../shared/generated-types';
 

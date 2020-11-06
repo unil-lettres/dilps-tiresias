@@ -1,5 +1,5 @@
-import {Injectable, Inject} from '@angular/core';
 import {Apollo} from 'apollo-angular';
+import {Injectable, Inject} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {
     AcceptChange,
@@ -61,7 +61,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.getClient().reFetchObservableQueries();
+                    this.apollo.client.reFetchObservableQueries();
 
                     return result.data!.acceptChange;
                 }),
@@ -78,7 +78,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.getClient().reFetchObservableQueries();
+                    this.apollo.client.reFetchObservableQueries();
 
                     return result.data!.rejectChange;
                 }),
@@ -95,7 +95,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.getClient().reFetchObservableQueries();
+                    this.apollo.client.reFetchObservableQueries();
 
                     return result.data!.suggestDeletion;
                 }),
@@ -112,7 +112,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.getClient().reFetchObservableQueries();
+                    this.apollo.client.reFetchObservableQueries();
 
                     return result.data!.suggestCreation;
                 }),
@@ -129,7 +129,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.getClient().reFetchObservableQueries();
+                    this.apollo.client.reFetchObservableQueries();
 
                     return result.data!.suggestUpdate;
                 }),
