@@ -108,7 +108,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
 
-        this.collectionsService.getAll(qvm).subscribe(results => {
+        this.collectionsService.watchAll(qvm, this.ngUnsubscribe).subscribe(results => {
             this.children.set(collection.id, results.items);
         });
     }
