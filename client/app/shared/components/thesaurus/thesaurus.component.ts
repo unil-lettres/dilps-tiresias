@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -13,6 +13,7 @@ import {
 } from '@ecodev/natural';
 import {clone, isArray, isObject, isString, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
+import {clone, isArray, isObject, isString, merge} from 'lodash';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 
@@ -29,7 +30,6 @@ interface ThesaurusModel {
     selector: 'app-thesaurus',
     templateUrl: './thesaurus.component.html',
     styleUrls: ['./thesaurus.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThesaurusComponent extends NaturalAbstractController implements OnInit {
     /**
