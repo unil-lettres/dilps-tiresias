@@ -269,7 +269,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -295,7 +295,7 @@
                         [readonly]="!edit"
                         matAutosizeMinRows="1"
                         matInput
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                 </mat-form-field>
 
@@ -315,7 +315,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -342,7 +342,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -369,7 +369,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -396,7 +396,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -555,7 +555,7 @@
                         [readonly]="!edit"
                         matAutosizeMinRows="1"
                         matInput
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                 </mat-form-field>
 
@@ -594,7 +594,7 @@
                         matInput
                         maxlength="191"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -613,7 +613,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -716,7 +716,7 @@
                         matInput
                         maxlength="255"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -745,7 +745,7 @@
                         type="url"
                         (change)="urlModel = url; updateFormValidity()"
                         matAutosizeMinRows="1"
-                        matTextareaAutosize
+                        [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                     <mat-hint

@@ -6,7 +6,7 @@ import {intersectionBy} from 'lodash-es';
 import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
-import {Cards_cards_items, Site} from '../shared/generated-types';
+import {Cards_cards, Cards_cards_items, Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-list',
@@ -17,7 +17,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource: NaturalDataSource<Cards_cards_items>;
+    @Input() public dataSource: NaturalDataSource<Cards_cards>;
 
     /**
      * Emits when data is required

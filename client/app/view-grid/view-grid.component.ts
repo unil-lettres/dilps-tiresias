@@ -7,7 +7,7 @@ import {merge} from 'lodash-es';
 import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
-import {Cards_cards_items} from '../shared/generated-types';
+import {Cards_cards, Cards_cards_items} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-grid',
@@ -23,7 +23,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource: NaturalDataSource<Cards_cards_items>;
+    @Input() public dataSource: NaturalDataSource<Cards_cards>;
 
     /**
      *
