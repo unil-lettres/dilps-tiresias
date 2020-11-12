@@ -68,7 +68,6 @@
         "@angular-devkit/build-angular": "^0.1002.0",
         "@angular/cli": "^10.2.0",
         "@angular/compiler-cli": "^10.2.3",
-        "@angular/language-service": "^10.2.3",
         "@types/apollo-upload-client": "^14.1.0",
         "@types/googlemaps": "^3.40.3",
         "@types/jasmine": "^3.6.1",
