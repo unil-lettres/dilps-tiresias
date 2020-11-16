@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Literal} from '@ecodev/natural';
 import {CardService} from '../../../card/services/card.service';
-import {CardInput} from '../../generated-types';
+import {CardInput, Site} from '../../generated-types';
 
 @Component({
     selector: 'app-mass-edit',
@@ -9,8 +11,14 @@ import {CardInput} from '../../generated-types';
 })
 export class MassEditComponent {
     public readonly card: CardInput;
+    public Site = Site;
+    public step = 2;
 
-    constructor(private cardService: CardService) {
+    constructor(private cardService: CardService, @Inject(MAT_DIALOG_DATA) public data: Literal) {
+        if (data?.forbidden?.length) {
+            this.step = 1;
+        }
+
         const card = cardService.getDefaultForServer();
         card.visibility = null;
         this.card = card;

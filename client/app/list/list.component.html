@@ -93,12 +93,7 @@
                 <mat-icon>burst_mode</mat-icon>
             </button>
 
-            <button
-                (click)="edit(selected)"
-                *ngIf="user?.role === 'administrator'"
-                mat-icon-button
-                matTooltip="Editer en masse"
-            >
+            <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
                 <mat-icon>edit</mat-icon>
             </button>
 

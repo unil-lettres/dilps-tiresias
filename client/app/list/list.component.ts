@@ -126,6 +126,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public viewMode: ViewMode = ViewMode.grid;
 
     public Site = Site;
+    public UserRole = UserRole;
 
     /**
      * Sorting applied when none is asked
@@ -354,11 +355,13 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     }
 
     public edit(selected: Cards_cards_items[]): void {
+        const forbidden = selected.filter(card => !card.permissions.update);
         const selection = selected.filter(card => card.permissions.update);
 
         this.dialog
             .open(MassEditComponent, {
-                width: '440px',
+                width: '500px',
+                data: {forbidden},
             })
             .afterClosed()
             .subscribe(model => {
@@ -476,5 +479,12 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
             ],
         ];
         this.search(this.naturalSearchSelections);
+    }
+
+    public canMassEdit(): boolean {
+        return (
+            this.user?.role &&
+            [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)
+        );
     }
 }
