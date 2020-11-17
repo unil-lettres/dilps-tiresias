@@ -160,14 +160,11 @@ export class UserService extends AbstractContextualizedService<
             })
             .subscribe(result => {
                 const v = result.data!.logout;
-                this.apollo
-                    .getClient()
-                    .clearStore()
-                    .then(() => {
-                        this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
-                            subject.next(v);
-                        });
+                this.apollo.client.clearStore().then(() => {
+                    this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
+                        subject.next(v);
                     });
+                });
             });
 
         return subject;
