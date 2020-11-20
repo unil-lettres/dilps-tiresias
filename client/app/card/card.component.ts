@@ -621,12 +621,7 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     public canSuggestUpdate(): boolean {
-        return (
-            this.user &&
-            this.fetchedModel &&
-            ((this.fetchedModel.owner && this.user.id !== this.fetchedModel.owner.id) ||
-                this.fetchedModel.visibility !== CardVisibility.private)
-        );
+        return UserService.canSuggestUpdate(this.user, this.fetchedModel);
     }
 
     public canSuggestDelete(): boolean {

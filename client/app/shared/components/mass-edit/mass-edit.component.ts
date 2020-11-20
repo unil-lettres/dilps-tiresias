@@ -14,8 +14,10 @@ export class MassEditComponent {
     public Site = Site;
     public step = 2;
 
+    public createSuggestions = false;
+
     constructor(private cardService: CardService, @Inject(MAT_DIALOG_DATA) public data: Literal) {
-        if (data?.forbidden?.length) {
+        if (data?.changeable?.length || data?.unchangeable?.length) {
             this.step = 1;
         }
 

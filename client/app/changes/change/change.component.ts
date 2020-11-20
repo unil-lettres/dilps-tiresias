@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {merge} from 'lodash-es';
+import {cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
-import {cardToCardInput} from '../../card/card.component';
 
 @Component({
     selector: 'app-change',

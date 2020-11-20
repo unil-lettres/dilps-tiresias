@@ -6,12 +6,13 @@ import {
     NaturalSearchSelections,
     PaginationInput,
     Sorting,
-    toUrl,
 } from '@ecodev/natural';
-import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash-es';
+import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../app.config';
+import {cardToCardInput} from '../card/card.component';
 import {CardService} from '../card/services/card.service';
+import {ChangeService} from '../changes/services/change.service';
 import {CollectionService} from '../collections/services/collection.service';
 import {FakeCollection} from '../collections/services/fake-collection.resolver';
 import {NumberSelectorComponent} from '../quizz/shared/number-selector/number-selector.component';
@@ -23,11 +24,14 @@ import {
 import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
+    Card,
     CardFilter,
     Cards,
     Cards_cards_items,
     CardSortingField,
     CardsVariables,
+    CardVisibility,
+    CreateCard_createCard,
     Site,
     SortingOrder,
     UserRole,
@@ -40,6 +44,21 @@ import {UserService} from '../users/services/user.service';
 import {ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
+
+const applyChanges = (destination, changes) => {
+    changes = clone(changes);
+    defaults(changes, destination);
+
+    if (changes.artists) {
+        changes.artists = changes.artists.map(a => (a.name ? a.name : a));
+    }
+
+    if (changes.institution) {
+        changes.institution = changes.institution.name ? changes.institution.name : changes.institution;
+    }
+
+    return changes;
+};
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -155,6 +174,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         injector: Injector,
         private statisticService: StatisticService,
         public facetService: NaturalSearchFacetsService,
+        private changeService: ChangeService,
         @Inject(SITE) public site: Site,
     ) {
         super(cardService, injector);
@@ -356,18 +376,23 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     public edit(selected: Cards_cards_items[]): void {
         const forbidden = selected.filter(card => !card.permissions.update);
+        const changeable = forbidden.filter(card => UserService.canSuggestUpdate(this.user, card));
+        const unchangeable = forbidden.filter(card => !UserService.canSuggestUpdate(this.user, card));
         const selection = selected.filter(card => card.permissions.update);
 
         this.dialog
             .open(MassEditComponent, {
                 width: '500px',
-                data: {forbidden},
+                data: {changeable, unchangeable},
             })
             .afterClosed()
-            .subscribe(model => {
-                if (!model) {
+            .subscribe(result => {
+                if (!result) {
                     return;
                 }
+
+                const model = result.model;
+                const createSuggestions = result.createSuggestions;
 
                 /**
                  * Pick attributes with values that are objects, numbers, non-empty array, non-empty strings
@@ -381,26 +406,48 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     );
                 });
 
+                console.log('changeAttributes', changeAttributes);
+
                 const observables = [];
                 for (const s of selection) {
-                    const changes = clone(changeAttributes);
-                    defaults(changes, s);
-
-                    if (changes.artists) {
-                        changes.artists = changes.artists.map(a => (a.name ? a.name : a));
-                    }
-
-                    if (changes.institution) {
-                        changes.institution = changes.institution.name ? changes.institution.name : changes.institution;
-                    }
-
+                    const changes = applyChanges(s, changeAttributes);
                     observables.push(this.cardService.updateNow(changes));
                 }
 
-                forkJoin(observables).subscribe(() => {
-                    this.alertService.info('Mis à jour');
-                    this.reset();
-                });
+                const suggestionsObservables = [];
+                if (createSuggestions) {
+                    changeable.forEach(changeableCard => {
+                        const destination = applyChanges(changeableCard, changeAttributes);
+                        const fetchedSuggestion = merge({}, destination, {
+                            original: changeableCard.id,
+                            visibility: CardVisibility.private,
+                        });
+                        suggestionsObservables.push(this.cardService.create(fetchedSuggestion));
+                    });
+                }
+
+                console.log('suggestionsObservables', suggestionsObservables);
+
+                // Last api call
+                const finish = () => {
+                    forkJoin(observables).subscribe(() => {
+                        this.alertService.info('Mis à jour');
+                        this.reset();
+                    });
+                };
+
+                if (suggestionsObservables) {
+                    forkJoin(suggestionsObservables).subscribe((results: CreateCard_createCard[]) => {
+                        console.log('results', results);
+                        results.forEach(card => {
+                            observables.push(this.changeService.suggestUpdate(card));
+                        });
+
+                        finish();
+                    });
+                } else {
+                    finish();
+                }
             });
     }
 
@@ -411,6 +458,38 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     public unselectAll(): void {
         this.selected = [];
         this.getViewComponent().unselectAll();
+    }
+
+    public search(naturalSearchSelections: NaturalSearchSelections): void {
+        super.search(naturalSearchSelections);
+        this.statisticService.recordSearch();
+    }
+
+    public searchByLocation($event: Location): void {
+        this.viewMode = ViewMode.grid;
+        this.naturalSearchSelections = [
+            [
+                {
+                    field: 'custom',
+                    name: 'location',
+                    condition: {
+                        distance: {
+                            longitude: $event.longitude,
+                            latitude: $event.latitude,
+                            distance: 200, // default to 200 meters
+                        },
+                    },
+                },
+            ],
+        ];
+        this.search(this.naturalSearchSelections);
+    }
+
+    public canMassEdit(): boolean {
+        return (
+            this.user?.role &&
+            [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)
+        );
     }
 
     protected getDataObservable(): Observable<Cards['cards']> {
@@ -454,37 +533,5 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         if (!this.naturalSearchFacets.some(conf => conf === adminConfig[0])) {
             this.naturalSearchFacets = this.naturalSearchFacets.concat(adminConfig);
         }
-    }
-
-    public search(naturalSearchSelections: NaturalSearchSelections): void {
-        super.search(naturalSearchSelections);
-        this.statisticService.recordSearch();
-    }
-
-    public searchByLocation($event: Location): void {
-        this.viewMode = ViewMode.grid;
-        this.naturalSearchSelections = [
-            [
-                {
-                    field: 'custom',
-                    name: 'location',
-                    condition: {
-                        distance: {
-                            longitude: $event.longitude,
-                            latitude: $event.latitude,
-                            distance: 200, // default to 200 meters
-                        },
-                    },
-                },
-            ],
-        ];
-        this.search(this.naturalSearchSelections);
-    }
-
-    public canMassEdit(): boolean {
-        return (
-            this.user?.role &&
-            [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)
-        );
     }
 }

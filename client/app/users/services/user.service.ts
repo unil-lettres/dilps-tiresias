@@ -1,10 +1,11 @@
-import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Apollo} from 'apollo-angular';
 import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
+    CardVisibility,
     CreateUser,
     CreateUserVariables,
     DeleteUsers,
@@ -52,6 +53,12 @@ export class UserService extends AbstractContextualizedService<
 > {
     constructor(apollo: Apollo, private route: ActivatedRoute, private router: Router, @Inject(SITE) site: Site) {
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
+    }
+
+    public static canSuggestUpdate(user, card): boolean {
+        return (
+            user && card && ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
+        );
     }
 
     public getDefaultForClient(): UserInput {

@@ -1,12 +1,7 @@
-<h2 class="mat-card-title" mat-dialog-title>Edition de masse</h2>
-
-<mat-dialog-content>
-    <div *ngIf="step === 1" fxLayout="column" fxLayoutGap="10px">
-        <p class="mat-body">
-            Vous n'avez pas les permissions pour éditer les fiches ci-dessous. Les modifications ne les affecteront pas.
-        </p>
-
-        <div *ngFor="let item of data?.forbidden" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+<!-- Template list -->
+<ng-template #listTemplate let-items>
+    <div fxLayout="column" fxLayoutGap="10px" class="padding-v">
+        <div *ngFor="let item of items" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <div class="image-wrapper">
                 <a [ngStyle]="{'background-image': 'url(/image/' + item.id + '/200)'}" class="image"></a>
             </div>
@@ -17,6 +12,25 @@
                 <div *ngIf="item?.institution?.name">{{ item?.institution?.name }}</div>
             </div>
         </div>
+    </div>
+</ng-template>
+
+<h2 class="mat-card-title" mat-dialog-title>Edition de masse</h2>
+
+<mat-dialog-content>
+    <div *ngIf="step === 1" fxLayout="column" fxLayoutGap="10px">
+        <p class="mat-body">
+            Vous n'avez pas les permissions pour éditer les fiches ci-dessous. Les modifications ne les affecteront pas.
+            Vous pouvez cependant créer des suggestions pour ces fiches, les modifications seront alors soumises pour
+            validation par un administrateur.
+        </p>
+
+        <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}"></ng-container>
+
+        <ng-container *ngIf="data?.unchangeable?.length">
+            <h2 class="mat-h2">Ces fiches seront ignorées :</h2>
+            <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.unchangeable}"></ng-container>
+        </ng-container>
     </div>
     <div fxLayout="column" *ngIf="step === 2">
         <p class="mat-body">Les champs vides sont ignorés.</p>
@@ -32,10 +46,19 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
+    <mat-checkbox [(ngModel)]="createSuggestions" *ngIf="data.changeable.length">Créer les suggestions</mat-checkbox>
     <div fxFlex></div>
     <button mat-button mat-dialog-close>Annuler</button>
     <button color="primary" mat-button mat-raised-button *ngIf="step === 1" (click)="step = 2">
         J'ai compris, continuer.
     </button>
-    <button [mat-dialog-close]="card" color="primary" mat-button mat-raised-button *ngIf="step === 2">Valider</button>
+    <button
+        [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
+        color="primary"
+        mat-button
+        mat-raised-button
+        *ngIf="step === 2"
+    >
+        Valider
+    </button>
 </mat-dialog-actions>

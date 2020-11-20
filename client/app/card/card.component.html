@@ -803,7 +803,7 @@
             </div>
         </perfect-scrollbar>
 
-        <div class="padding mat-elevation-z4">
+        <div class="padding" *ngIf="model">
             <app-stamp [item]="model"></app-stamp>
         </div>
     </div>
