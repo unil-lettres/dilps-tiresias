@@ -90,9 +90,11 @@
                 </form>
             </mat-expansion-panel>
 
-            <mat-divider></mat-divider>
+            <div fxLayout="column" fxLayoutGap="15px" *ngIf="site === Site.tiresias">
+                <mat-divider></mat-divider>
 
-            <a (click)="userService.startTempAccess()" mat-raised-button>Accès public</a>
+                <a (click)="userService.startTempAccess()" mat-raised-button> Accès public </a>
+            </div>
         </div>
     </div>
 

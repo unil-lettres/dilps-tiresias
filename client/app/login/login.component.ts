@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,6 +7,8 @@ import {Subscription} from 'rxjs';
 import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
+import {SITE} from '../app.config';
+import {Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-login',
@@ -14,6 +16,8 @@ import {finalize} from 'rxjs/operators';
     styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    public Site = Site;
+
     public loading = false;
 
     public status = 'default';
@@ -40,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         public userService: UserService,
         public dialog: MatDialog,
         public snackBar: MatSnackBar,
+        @Inject(SITE) public site: Site,
     ) {}
 
     public ngOnInit(): void {
