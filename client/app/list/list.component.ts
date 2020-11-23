@@ -406,8 +406,6 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     );
                 });
 
-                console.log('changeAttributes', changeAttributes);
-
                 const observables = [];
                 for (const s of selection) {
                     const changes = applyChanges(s, changeAttributes);
@@ -426,8 +424,6 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     });
                 }
 
-                console.log('suggestionsObservables', suggestionsObservables);
-
                 // Last api call
                 const finish = () => {
                     forkJoin(observables).subscribe(() => {
@@ -436,9 +432,8 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     });
                 };
 
-                if (suggestionsObservables) {
+                if (suggestionsObservables.length) {
                     forkJoin(suggestionsObservables).subscribe((results: CreateCard_createCard[]) => {
-                        console.log('results', results);
                         results.forEach(card => {
                             observables.push(this.changeService.suggestUpdate(card));
                         });
