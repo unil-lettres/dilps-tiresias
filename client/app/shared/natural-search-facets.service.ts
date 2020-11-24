@@ -3,25 +3,26 @@ import {
     FlagFacet,
     NaturalSearchFacets,
     replaceOperatorByField,
+    replaceOperatorByName,
     TypeHierarchicSelectorComponent,
-    TypeNumberComponent,
+    TypeNaturalSelectComponent,
     TypeSelectComponent,
     TypeTextComponent,
     wrapLike,
-    replaceOperatorByName,
 } from '@ecodev/natural';
 import {SITE} from '../app.config';
+import {DocumentTypeService} from '../document-types/services/document-type.service';
 import {DomainService} from '../domains/services/domain.service';
 import {MaterialService} from '../materials/services/material.service';
 import {PeriodService} from '../periods/services/period.service';
 import {TagService} from '../tags/services/tag.service';
+import {TypeLocationComponent} from '../type-location/type-location.component';
+import {TypeNumericRangeComponent} from '../type-numeric-range/type-numeric-range.component';
 import {CardFilterGroupCondition, CardVisibility, Site} from './generated-types';
 import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
 import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
 import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
-import {TypeLocationComponent} from '../type-location/type-location.component';
-import {TypeNumericRangeComponent} from '../type-numeric-range/type-numeric-range.component';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -132,6 +133,17 @@ export class NaturalSearchFacetsService {
             },
         },
         {
+            display: 'Type de document',
+            field: 'documentType',
+            showValidateButton: true,
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: this.documentTypeService,
+                placeholder: 'Type de document',
+                filter: {},
+            },
+        },
+        {
             display: 'Période',
             field: 'periods',
             component: TypeHierarchicSelectorComponent,
@@ -210,6 +222,7 @@ export class NaturalSearchFacetsService {
         private materialService: MaterialService,
         private domainService: DomainService,
         private tagService: TagService,
+        private documentTypeService: DocumentTypeService,
     ) {}
 
     public getFacets(): NaturalSearchFacets {

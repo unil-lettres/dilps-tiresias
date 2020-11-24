@@ -10,7 +10,6 @@ import {
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../app.config';
-import {cardToCardInput} from '../card/card.component';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
 import {CollectionService} from '../collections/services/collection.service';
@@ -24,7 +23,6 @@ import {
 import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
-    Card,
     CardFilter,
     Cards,
     Cards_cards_items,
