@@ -98,9 +98,14 @@
                         <div>{{ item.format || item.documentSize }}</div>
                     </div>
 
-                    <div *ngIf="item?.institution?.name">
+                    <div *ngIf="item.institution?.name">
                         <div>Lieu (Musée)</div>
-                        <div>{{ item?.institution?.name }}</div>
+                        <div>
+                            {{ item.institution?.name }},
+                            {{ item.institution.locality }}
+                            <span *ngIf="item.institution.locality && item.institution.country">,</span>
+                            {{ item.institution.country?.name }}
+                        </div>
                     </div>
 
                     <div *ngIf="item.literature">
