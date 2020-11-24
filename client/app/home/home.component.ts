@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     private redirectAfterCreation(collection?: CollectionSelectorResult): void {
-        const url = collection ? 'my-collection/' + collection.id : 'my-collection';
+        const url = collection ? 'my-collection/' + collection.id : 'my-collection/my-cards';
         this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => this.router.navigateByUrl(url));
     }
 
