@@ -11,7 +11,6 @@ use Exception;
  * Requirements:
  * - ssh access to remote server (via ~/.ssh/config)
  * - both local and remote sites must be accesible via: /sites/MY_SITE
- * - both local and remote config/autoload/local.php files must contains the database connection info
  */
 abstract class AbstractDatabase
 {
@@ -38,15 +37,10 @@ abstract class AbstractDatabase
      */
     public static function dumpData($dumpFile): void
     {
-        $config = require 'config/autoload/local.php';
-        $dbConfig = $config['doctrine']['connection']['orm_default']['params'];
-        $host = $dbConfig['host'];
-        $username = $dbConfig['user'];
-        $database = $dbConfig['dbname'];
-        $password = $dbConfig['password'];
+        $mysqlArgs = self::getMysqlArgs();
 
         echo "dumping $dumpFile...\n";
-        $dumpCmd = "mysqldump -v --user=$username --password=$password --host=$host $database | gzip > $dumpFile";
+        $dumpCmd = "mysqldump -v $mysqlArgs | gzip > $dumpFile";
         self::executeLocalCommand($dumpCmd);
     }
 
@@ -73,12 +67,7 @@ abstract class AbstractDatabase
      */
     public static function loadData($dumpFile): void
     {
-        $config = require 'config/autoload/local.php';
-        $dbConfig = $config['doctrine']['connection']['orm_default']['params'];
-        $host = $dbConfig['host'];
-        $username = $dbConfig['user'];
-        $database = $dbConfig['dbname'];
-        $password = $dbConfig['password'];
+        $mysqlArgs = self::getMysqlArgs();
 
         $dumpFile = realpath($dumpFile);
         echo "loading dump $dumpFile...\n";
@@ -87,8 +76,24 @@ abstract class AbstractDatabase
         }
 
         self::executeLocalCommand(PHP_BINARY . ' ./vendor/bin/doctrine orm:schema-tool:drop --ansi --full-database --force');
-        self::executeLocalCommand("gunzip -c \"$dumpFile\" | mysql --user=$username --password=$password --host=$host $database");
+        self::executeLocalCommand("gunzip -c \"$dumpFile\" | mysql $mysqlArgs");
         self::executeLocalCommand(PHP_BINARY . ' ./vendor/bin/doctrine-migrations --ansi migrations:migrate --no-interaction');
+    }
+
+    private static function getMysqlArgs(): string
+    {
+        $dbConfig = _em()->getConnection()->getParams();
+
+        $host = $dbConfig['host'] ?? 'localhost';
+        $username = $dbConfig['user'];
+        $database = $dbConfig['dbname'];
+        $password = $dbConfig['password'];
+        $port = $dbConfig['port'] ?? 3306;
+
+        // It's possible to have no password at all
+        $password = $password ? '-p' . $password : '';
+
+        return "--user=$username $password --host=$host --port=$port $database";
     }
 
     public static function loadRemoteData($remote): void
