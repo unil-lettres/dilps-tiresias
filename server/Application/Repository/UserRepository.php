@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Api\Exception;
 use Application\Model\User;
 use DateTimeImmutable;
 
@@ -17,8 +18,12 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
         /** @var User $user */
         $user = $this->getOneByLogin($login, $site);
 
-        if (!$user || ($user->getActiveUntil() && $user->getActiveUntil() < new DateTimeImmutable())) {
+        if (!$user) {
             return null;
+        }
+
+        if (($user->getActiveUntil() && $user->getActiveUntil() < new DateTimeImmutable())) {
+            throw new Exception("Ce compte n'est plus actif");
         }
 
         $hashFromDb = $user->getPassword();
