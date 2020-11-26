@@ -3,7 +3,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {forkJoin, Observable, of} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {fromArray} from 'rxjs/internal/observable/fromArray';
+import {bufferCount, concatMap, filter, last} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
@@ -35,6 +36,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     public user;
     public nav = 1;
     private routeParamsSub;
+    public progress?: number = null;
+    private uploaded = 0;
 
     constructor(
         public themeService: ThemeService,
@@ -109,9 +112,26 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.cardService.createWithCollection(input as CardInput, collection),
             );
 
-            forkJoin(observables).subscribe(() => {
-                this.redirectAfterCreation(collection);
-            });
+            if (observables) {
+                this.progress = 0;
+                this.alertService.info("L'upload et en cours", 7000);
+                fromArray(observables)
+                    .pipe(
+                        bufferCount(3),
+                        concatMap(chunkedObservables => {
+                            this.uploaded += chunkedObservables.length;
+                            this.progress = (this.uploaded / observables.length) * 100;
+                            return forkJoin([...chunkedObservables]);
+                        }),
+                        last(),
+                    )
+                    .subscribe(res => {
+                        this.alertService.info("L'upload est terminé");
+                        this.progress = null;
+                        this.uploaded = 0;
+                        this.redirectAfterCreation(collection); // we want it before upload has ended
+                    });
+            }
         });
     }
 

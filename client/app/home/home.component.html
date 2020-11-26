@@ -94,10 +94,11 @@
                             <a
                                 (filesChange)="uploadImages($event)"
                                 *ngIf="
-                                    user.role === 'administrator' ||
-                                    user.role === 'senior' ||
-                                    user.role === 'junior' ||
-                                    user.role === 'major'
+                                    progress === null &&
+                                    (user.role === 'administrator' ||
+                                        user.role === 'senior' ||
+                                        user.role === 'junior' ||
+                                        user.role === 'major')
                                 "
                                 mat-list-item
                                 matTooltip="Ajouter une image"
@@ -106,6 +107,15 @@
                                 naturalFileSelect
                             >
                                 <natural-icon mat-list-icon name="file_upload"></natural-icon>
+                            </a>
+
+                            <a mat-list-item *ngIf="progress > 0">
+                                <mat-progress-spinner
+                                    [value]="progress"
+                                    color="accent"
+                                    [diameter]="24"
+                                    [strokeWidth]="5"
+                                ></mat-progress-spinner>
                             </a>
 
                             <!-- Export template -->

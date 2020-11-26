@@ -1,6 +1,6 @@
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
-import {merge} from 'lodash-es';
+import {merge, mergeWith} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
@@ -15,6 +15,7 @@ import {
     CardVisibility,
     Collections_collections_items,
     CreateCard,
+    CreateCard_createCard,
     CreateCards,
     CreateCards_createCards,
     CreateCardsVariables,
@@ -42,7 +43,7 @@ import {
     validateImage,
 } from './card.queries';
 import {Observable} from 'rxjs';
-import {Literal} from '@ecodev/natural';
+import {Literal, mergeOverrideArray} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -213,7 +214,7 @@ export class CardService extends AbstractContextualizedService<
     ): Observable<CreateCard['createCard']> {
         this.collectionIdForCreation = collection ? collection.id : null;
 
-        return this.create(object);
+        return this.createWithoutRefetch(object);
     }
 
     protected getPartialVariablesForCreation(object: Literal): Partial<CreateCardVariables> {
@@ -238,5 +239,28 @@ export class CardService extends AbstractContextualizedService<
                 },
             })
             .pipe(map(result => result.data!.createCards));
+    }
+
+    public createWithoutRefetch(object: CardInput): Observable<CreateCard_createCard> {
+        this.throwIfObservable(object);
+
+        const variables = merge(
+            {},
+            {input: this.getInput(object)},
+            this.getPartialVariablesForCreation(object),
+        ) as CreateCardVariables;
+
+        return this.apollo
+            .mutate<CreateCard, CreateCardVariables>({
+                mutation: this.createMutation,
+                variables: variables,
+            })
+            .pipe(
+                map(result => {
+                    const newObject = this.mapCreation(result);
+
+                    return mergeWith(object, newObject, mergeOverrideArray);
+                }),
+            );
     }
 }
