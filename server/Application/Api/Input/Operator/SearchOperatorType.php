@@ -76,6 +76,7 @@ class SearchOperatorType extends AbstractOperator
             'dating',
             'id',
             'code',
+            'objectReference',
         ];
 
         // Find most textual fields for the entity
