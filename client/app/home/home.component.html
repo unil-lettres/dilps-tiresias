@@ -255,22 +255,21 @@
     [overlapTrigger]="false"
     class="padding error-menu"
     fxLayout="column"
-    fxLayoutGap="60px"
+    fxLayoutGap="20px"
 >
     <div
         (click)="$event.stopPropagation()"
         *ngFor="let error of errors"
         class="error"
         fxLayout="column"
-        mat-menu-item
         style="user-select: text"
     >
-        <span class="mat-caption" style="font-weight: bold">{{ error.category }}</span>
-        <span class="mat-caption">{{ error.message }}</span>
-        <span class="mat-caption">{{ error.debugMessage }}</span>
+        <span class="mat-caption" style="font-weight: bold" *ngIf="error.category">{{ error.category }}</span>
+        <span class="mat-caption" *ngIf="error.message">{{ error.message }}</span>
+        <span class="mat-caption" *ngIf="error.debugMessage">{{ error.debugMessage }}</span>
     </div>
     <button (click)="errors = []" mat-menu-item>
         <mat-icon>close</mat-icon>
-        Masquer
+        Effacer et fermer
     </button>
 </mat-menu>

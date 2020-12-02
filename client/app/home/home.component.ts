@@ -4,7 +4,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {forkJoin, Observable, of} from 'rxjs';
 import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {bufferCount, concatMap, filter, last} from 'rxjs/operators';
+import {bufferCount, catchError, concatMap, filter, finalize, last, map} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private dialog: MatDialog,
         private cardService: CardService,
+        private networkActivityService: NetworkActivityService,
         @Inject(SITE) public site: Site,
     ) {
         this.network.errors.next([]);
@@ -108,9 +109,15 @@ export class HomeComponent implements OnInit, OnDestroy {
                 return;
             }
 
-            const observables = inputs.map(input =>
-                this.cardService.createWithCollection(input as CardInput, collection),
-            );
+            const errors = [];
+            const observables = inputs.map(input => {
+                return this.cardService.createWithCollection(input as CardInput, collection).pipe(
+                    catchError(() => {
+                        errors.push(input);
+                        return of();
+                    }),
+                );
+            });
 
             if (observables) {
                 this.progress = 0;
@@ -125,8 +132,25 @@ export class HomeComponent implements OnInit, OnDestroy {
                         }),
                         last(),
                     )
-                    .subscribe(res => {
-                        this.alertService.info("L'upload est terminé");
+                    .subscribe(() => {
+                        if (errors.length) {
+                            this.networkActivityService.updateErrors(
+                                errors.map(f => {
+                                    return {name: '', message: "Erreur d'upload : " + f.file.name};
+                                }),
+                            );
+                            this.alertService.error(
+                                observables.length -
+                                    errors.length +
+                                    '/' +
+                                    observables.length +
+                                    ' images ont été uploadées. Voir détail dans la pastille en bas à gauche',
+                                15000,
+                            );
+                        } else {
+                            this.alertService.info("L'upload est terminé");
+                        }
+
                         this.progress = null;
                         this.uploaded = 0;
                         this.redirectAfterCreation(collection); // we want it before upload has ended
