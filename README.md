@@ -1,8 +1,8 @@
 # Dilps/Tiresias
 
-Master: [![Build Status](https://github.com/unil-lettres/dilps-tiresias/workflows/main/badge.svg)](https://github.com/unil-lettres/dilps-tiresias/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=master)
+Master: [![Build Status](https://travis-ci.com/unil-lettres/dilps-tiresias.svg?branch=master)](https://travis-ci.com/unil-lettres/dilps) [![Build Status](https://github.com/unil-lettres/dilps-tiresias/workflows/main/badge.svg)](https://github.com/unil-lettres/dilps-tiresias/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=master)
 
-Development: [![Build Status](https://github.com/unil-lettres/dilps-tiresias/workflows/main/badge.svg?branch=develop)](https://github.com/unil-lettres/dilps-tiresias/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=develop)
+Development: [![Build Status](https://travis-ci.com/unil-lettres/dilps-tiresias.svg?branch=develop)](https://travis-ci.com/unil-lettres/dilps) [![Build Status](https://github.com/unil-lettres/dilps-tiresias/workflows/main/badge.svg?branch=develop)](https://github.com/unil-lettres/dilps-tiresias/actions) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=develop)
 
 ## Introduction
 
