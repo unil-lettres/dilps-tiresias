@@ -82,6 +82,7 @@ import {InstitutionsComponent} from './institutions/institutions/institutions.co
 import {ListComponent} from './list/list.component';
 import {LoginComponent} from './login/login.component';
 import {TermsAgreementComponent} from './login/terms-agreement.component';
+import {WelcomeComponent} from './home/welcome.component';
 import {MaterialComponent} from './materials/material/material.component';
 import {MaterialsComponent} from './materials/materials/materials.component';
 import {CarouselComponent} from './news/carousel/carousel.component';
@@ -170,6 +171,7 @@ const icons: NaturalIconsConfig = {
         UniqueCodeValidatorDirective,
         CollectionComponent,
         TermsAgreementComponent,
+        WelcomeComponent,
         InstitutionsComponent,
         InstitutionComponent,
         ArtistComponent,

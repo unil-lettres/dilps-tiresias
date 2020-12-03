@@ -19,6 +19,7 @@ import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
 import {FileSelection} from '@ecodev/natural';
+import {WelcomeComponent} from './welcome.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -78,6 +79,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
             document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
         });
+
+        // Welcome dialog would be shown to visitors once per session
+        if (this.userService.hasTempAccess() && sessionStorage.getItem('welcomed') !== 'true') {
+            this.showWelcome();
+        }
     }
 
     public uploadImages(selection: FileSelection): void {
@@ -203,6 +209,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
 
         return applicableRoles.includes(this.user.role);
+    }
+
+    private showWelcome(): void {
+        this.dialog
+            .open(WelcomeComponent, {maxWidth: 500})
+            .afterClosed()
+            .subscribe(login => {
+                sessionStorage.setItem('welcomed', 'true');
+
+                if (login) {
+                    this.router.navigateByUrl('/login');
+                }
+            });
     }
 
     public mailto(): void {
