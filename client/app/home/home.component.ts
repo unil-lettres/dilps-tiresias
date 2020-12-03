@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         private alertService: AlertService,
         private dialog: MatDialog,
         private cardService: CardService,
-        private networkActivityService: NetworkActivityService,
         @Inject(SITE) public site: Site,
     ) {
         this.network.errors.next([]);
@@ -115,11 +114,11 @@ export class HomeComponent implements OnInit, OnDestroy {
                 return;
             }
 
-            const errors = [];
+            let errors = 0;
             const observables = inputs.map(input => {
                 return this.cardService.createWithCollection(input as CardInput, collection).pipe(
                     catchError(() => {
-                        errors.push(input);
+                        errors++;
                         return of();
                     }),
                 );
@@ -127,40 +126,45 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             if (observables) {
                 this.progress = 0;
-                this.alertService.info("L'upload et en cours", 7000);
+                this.snackBar.open("L'upload est en cours, ne fermez pas votre navigateur", 'Compris', {
+                    duration: 10000,
+                    verticalPosition: 'top',
+                    horizontalPosition: 'end',
+                });
+
                 fromArray(observables)
                     .pipe(
-                        bufferCount(3),
+                        bufferCount(1),
                         concatMap(chunkedObservables => {
                             this.uploaded += chunkedObservables.length;
                             this.progress = (this.uploaded / observables.length) * 100;
                             return forkJoin([...chunkedObservables]);
                         }),
-                        last(),
-                    )
-                    .subscribe(() => {
-                        if (errors.length) {
-                            this.networkActivityService.updateErrors(
-                                errors.map(f => {
-                                    return {name: '', message: "Erreur d'upload : " + f.file.name};
-                                }),
-                            );
-                            this.alertService.error(
-                                observables.length -
-                                    errors.length +
+                        finalize(() => {
+                            if (errors) {
+                                const message =
+                                    observables.length -
+                                    errors +
                                     '/' +
                                     observables.length +
-                                    ' images ont été uploadées. Voir détail dans la pastille en bas à gauche',
-                                15000,
-                            );
-                        } else {
-                            this.alertService.info("L'upload est terminé");
-                        }
+                                    ' images ont été uploadées. Voir détail dans la pastille en bas à gauche';
 
-                        this.progress = null;
-                        this.uploaded = 0;
-                        this.redirectAfterCreation(collection); // we want it before upload has ended
-                    });
+                                this.snackBar.open(message, 'Compris', {
+                                    duration: 15000,
+                                    panelClass: ['snackbar-error'],
+                                    verticalPosition: 'top',
+                                    horizontalPosition: 'end',
+                                });
+                            } else {
+                                this.alertService.info("L'upload est terminé");
+                            }
+
+                            this.progress = null;
+                            this.uploaded = 0;
+                            this.redirectAfterCreation(collection); // we want it before upload has ended
+                        }),
+                    )
+                    .subscribe(() => {});
             }
         });
     }

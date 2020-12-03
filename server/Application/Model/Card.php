@@ -26,6 +26,7 @@ use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\ImagineInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\UploadedFileInterface;
+use Throwable;
 
 /**
  * A card containing an image and some information about it
@@ -664,8 +665,12 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setFile(UploadedFileInterface $file): void
     {
-        $this->traitSetFile($file);
-        $this->readFileInfo();
+        try {
+            $this->traitSetFile($file);
+            $this->readFileInfo();
+        } catch (Throwable $e) {
+            throw new \Application\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
+        }
     }
 
     /**
