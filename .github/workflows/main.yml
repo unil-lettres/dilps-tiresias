@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
     build:
         runs-on: ubuntu-18.04
+
         env:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
 
@@ -18,6 +19,7 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
+
             - uses: shivammathur/setup-php@v2
               with:
                   php-version: '7.4'
@@ -43,21 +45,32 @@ jobs:
             - name: Setup problem matchers for PHPUnit
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            # Prepare our app
-            - run: mysql --protocol=tcp --user=root --execute='SET GLOBAL sql_mode = "";'
-            - run: cp env.example .env
-            - run: cp config/autoload/local.php.dist config/autoload/local.php
-            - run: ./bin/build.sh
-            - run: ./bin/load-test-data.php
+            - name: Prepare our app
+              id: app-build
+              run: |
+                mysql --protocol=tcp --user=root --execute='SET GLOBAL sql_mode = "";'
+                cp env.example .env
+                cp config/autoload/local.php.dist config/autoload/local.php
+                ./bin/build.sh
+                ./bin/load-test-data.php
 
-            # Lint and tests
-            - run: ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr
-            - run: ./vendor/bin/phpunit --coverage-clover coverage-clover.xml
-            - run: yarn lint
-            - run: ./node_modules/.bin/prettier --check .
-            - run: ./node_modules/.bin/ng test --progress false --watch=false --browsers ChromeHeadlessCustom
+            - name: Lint
+              id: app-lint
+              run: |
+                ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr
+                yarn lint
+                ./node_modules/.bin/prettier --check .
+
+            - name: Test PHP
+              id: app-test-php
+              run: ./vendor/bin/phpunit --coverage-clover coverage-clover.xml
+
+            - name: Test Angular
+              id: app-test-ng
+              run: ./node_modules/.bin/ng test --progress false --watch=false --browsers ChromeHeadlessCustom
 
             - name: Upload code coverage
+              id: app-upload-coverage
               run: |
                   curl -LO https://scrutinizer-ci.com/ocular.phar
                   php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
