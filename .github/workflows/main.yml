@@ -2,7 +2,9 @@ name: main
 on: [push, pull_request]
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-18.04
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
 
         services:
             mariadb:
@@ -59,3 +61,10 @@ jobs:
               run: |
                   curl -LO https://scrutinizer-ci.com/ocular.phar
                   php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
+
+            - uses: act10ns/slack@v1
+              with:
+                  status: ${{ job.status }}
+                  steps: ${{ toJson(steps) }}
+                  channel: '#-bot-ci'
+              if: always()
