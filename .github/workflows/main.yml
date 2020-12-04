@@ -18,22 +18,26 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
 
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout
+              uses: actions/checkout@v2
 
-            - uses: shivammathur/setup-php@v2
+            - name: PHP Setup
+              uses: shivammathur/setup-php@v2
               with:
                   php-version: '7.4'
                   coverage: pcov
                   tools: cs2pr
                   extensions: imagick
 
-            - uses: actions/cache@v2
+            - name: Cache composer
+              uses: actions/cache@v2
               with:
                   path: ~/.cache/composer
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
-            - uses: actions/cache@v2
+            - name: Cache Yarn
+              uses: actions/cache@v2
               with:
                   path: ~/.cache/yarn
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -46,7 +50,6 @@ jobs:
               run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
             - name: Prepare app
-              id: app-setup
               run: |
                   mysql --protocol=tcp --user=root --execute='SET GLOBAL sql_mode = "";'
                   cp env.example .env
@@ -57,15 +60,13 @@ jobs:
               run: ./bin/build.sh
 
             - name: Load test data
-              id: app-load-data
               run: ./bin/load-test-data.php
 
             - name: PHP CS Fixer
-              id: app-php-fixer
               run: ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr
 
-            - name: Yarn lint
-              id: app-yarn-lint
+            - name: TSLint
+              id: app-tslint
               run: yarn lint
 
             - name: Prettier
@@ -81,12 +82,12 @@ jobs:
               run: ./node_modules/.bin/ng test --progress false --watch=false --browsers ChromeHeadlessCustom
 
             - name: Upload code coverage
-              id: app-upload-coverage
               run: |
                   curl -LO https://scrutinizer-ci.com/ocular.phar
                   php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
 
-            - uses: act10ns/slack@v1
+            - name: Notify Slack
+              uses: act10ns/slack@v1
               with:
                   status: ${{ job.status }}
                   steps: ${{ toJson(steps) }}
