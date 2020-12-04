@@ -68,7 +68,10 @@ REPLACE INTO `card_collection` (`collection_id`, `card_id`) VALUES
 REPLACE INTO `change` (`id`, `original_id`, `suggestion_id`, `type`, `request`, `site`) VALUES
   (7000, NULL, 6001, 'create', 'I want to add new card to collection', 'dilps'),
   (7001, 6000, 6002, 'update', 'I want to edit existing card', 'dilps'),
-  (7002, 6000, NULL, 'delete', 'I want to delete existing card', 'dilps');
+  (7002, 6000, NULL, 'delete', 'I want to delete existing card', 'dilps'),
+  (7003, NULL, 6008, 'create', 'I want to add new card to collection', 'tiresias'),
+  (7004, 6007, 6009, 'update', 'I want to edit existing card', 'tiresias'),
+  (7005, 6007, NULL, 'delete', 'I want to delete existing card', 'tiresias');
 
 REPLACE INTO `dating` (`id`, `card_id`, `from`, `to`) VALUES
   (8000, 6000, '2451545', '2451545');
@@ -95,7 +98,9 @@ REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
 
 REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
   (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
-  (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg');
+  (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg'),
+  (10002, 'dilps', 'Test news 10002', 'This human feeds me, i should be a god lick plastic bags instantly break out into full speed gallop across the house for no reason attack the dog then pretend like nothing happened yet so you''re just gonna scroll by without saying meowdy?', 'https://example.com', 'test1.jpg'),
+  (10003, 'dilps', 'Test news 10003', 'That box? i can fit in that box. If human is on laptop sit on the keyboard eat too much then proceed to regurgitate all over living room carpet while humans eat dinner.', 'https://google.com', 'test2.jpg');
 
 REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
   (12000, 'Test antique name 12000', 'tiresias'),

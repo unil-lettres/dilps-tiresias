@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$args = require 'tests/data/query/student-can-create-card.php';
+$args = require 'student-can-create-card.php';
 
 // A public collection visible to major, not mutable itself, but still can add card to it
 $args[0]['variables']['collection'] = 2001;

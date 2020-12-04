@@ -104,20 +104,29 @@ class Acl extends \Laminas\Permissions\Acl\Acl
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Artist::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Card::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Change::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), 'create', new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Collection::class), null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])), new SameSite()));
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Institution::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Tag::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(User::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(DocumentType::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(DocumentType::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Domain::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Domain::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Material::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Material::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(AntiqueName::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(AntiqueName::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(News::class), null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Period::class), 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Period::class), null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, new ModelResource(Statistic::class), 'read');
     }

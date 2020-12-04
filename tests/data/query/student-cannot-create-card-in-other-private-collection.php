@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$args = require 'tests/data/query/student-can-create-card.php';
+$args = require 'student-can-create-card.php';
 
 // A private collection invisible to student
 $args[0]['variables']['collection'] = 2003;
