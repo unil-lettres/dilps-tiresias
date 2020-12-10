@@ -1,4 +1,4 @@
-<mat-form-field class="innerSpacing">
+<mat-form-field>
     <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
         <mat-label>{{ placeholder }}</mat-label>
         <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayout="row">

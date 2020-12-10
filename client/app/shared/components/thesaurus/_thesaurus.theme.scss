@@ -1,0 +1,20 @@
+@mixin thesaurus($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    $bg: map-get($theme, background);
+    $fg: map-get($theme, foreground);
+
+    $config: mat-get-color-config($theme);
+    $is-dark-theme: map-get($config, is-dark);
+    $label-color: mat-color($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
+
+    app-thesaurus {
+        mat-label {
+            color: $label-color;
+            font-size: 12px;
+            position: relative;
+            left: 5px;
+        }
+    }
+}

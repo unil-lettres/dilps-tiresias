@@ -5,6 +5,10 @@
     $bg: map-get($theme, background);
     $fg: map-get($theme, foreground);
 
+    $config: mat-get-color-config($theme);
+    $is-dark-theme: map-get($config, is-dark);
+    $label-color: mat-color($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
+
     app-card {
         mat-toolbar.edition {
             background: mat-color($accent, 0.4);
@@ -20,6 +24,16 @@
             ); // match official mat-form-field component style
             padding: 10px 10px 0 10px;
             border-bottom: 1px solid mat-color($fg, base, 0.5);
+
+            .label {
+                color: $label-color;
+                font-size: 10.5px;
+            }
+
+            .ql-container {
+                font-size: inherit !important;
+                font-family: inherit !important;
+            }
         }
 
         .ql-editor {
@@ -39,6 +53,24 @@
             natural-table-button span {
                 white-space: normal;
                 line-height: 1.5em;
+            }
+        }
+
+        natural-select .mat-form-field-appearance-fill.mat-form-field-disabled {
+            .mat-form-field-flex {
+                background-color: mat-color($fg, base, if($is-dark-theme, 0.1, 0.04));
+            }
+
+            .mat-form-field-label {
+                color: $label-color;
+            }
+
+            .mat-form-field-underline::before {
+                background-color: mat-color($fg, divider, if($is-dark-theme, 0.5, 0.42)) !important;
+            }
+
+            input {
+                color: mat-color($fg, text) !important;
             }
         }
     }

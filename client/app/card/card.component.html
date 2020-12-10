@@ -188,7 +188,7 @@
                 </mat-form-field>
 
                 <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
-                    <div class="mat-body-2">Titre</div>
+                    <div class="label">Titre</div>
                     <quill-editor
                         *ngIf="edit || !!model.name"
                         [ngModel]="model.name"
@@ -230,7 +230,7 @@
                     *ngIf="edit || (!!model.expandedName && model.expandedName != model.name)"
                     class="margin-bottom rich-text"
                 >
-                    <div class="mat-body-2">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
+                    <div class="label">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
                     <quill-editor
                         *ngIf="edit || !!model.expandedName"
                         [ngModel]="model.expandedName"
@@ -641,7 +641,7 @@
                 </div>
 
                 <div *ngIf="edit || !!model.literature" class="margin-v rich-text">
-                    <div class="mat-body-2">Source</div>
+                    <div class="label">Source</div>
                     <quill-editor
                         *ngIf="edit || !!model.literature"
                         [ngModel]="model.literature"
@@ -758,7 +758,7 @@
                 </mat-form-field>
 
                 <div *ngIf="!isDilps && edit" class="margin-bottom rich-text">
-                    <div class="mat-body-2">Description</div>
+                    <div class="label">Description</div>
                     <quill-editor
                         *ngIf="edit || !!model.urlDescription"
                         [ngModel]="model.urlDescription"

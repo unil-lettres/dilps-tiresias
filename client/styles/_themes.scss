@@ -22,6 +22,7 @@
 @import '../app/card/card.theme';
 @import '../app/quizz/quizz.theme';
 @import '../app/view-grid/view-grid.theme';
+@import '../app/shared/components/thesaurus/thesaurus.theme';
 
 // Include material core (only once !)
 @include mat-core($custom-typography-gt-sm);
@@ -45,6 +46,7 @@
     @include quizz($theme);
     @include hint($theme);
     @include view-grid($theme);
+    @include thesaurus($theme);
 }
 
 // Dilps
