@@ -6,7 +6,7 @@ import {intersectionBy} from 'lodash-es';
 import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
-import {Cards_cards, Cards_cards_items, Site} from '../shared/generated-types';
+import {Cards_cards, Cards_cards_items, Cards_cards_items_institution, Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-list',
@@ -73,5 +73,9 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
 
     public unselectAll(): void {
         this.selectionModel.clear();
+    }
+
+    public getAddress(institution: Cards_cards_items_institution): string {
+        return [institution.street, institution.locality, institution.country?.name].filter(v => !!v).join(', ');
     }
 }
