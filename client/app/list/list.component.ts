@@ -144,6 +144,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
 
     public Site = Site;
     public UserRole = UserRole;
+    public CardSortingField = CardSortingField;
 
     /**
      * Sorting applied when none is asked

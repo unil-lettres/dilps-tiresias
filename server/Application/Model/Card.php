@@ -51,6 +51,7 @@ use Throwable;
  *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\LocationOperatorType", type="string"),
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Artists"})
+ * @API\Sorting({"Application\Api\Input\Sorting\DocumentType"})
  */
 class Card extends AbstractModel implements HasSiteInterface
 {
