@@ -1,19 +1,25 @@
 <mat-menu #sortingMenu="matMenu" [overlapTrigger]="false">
-    <div (click)="sorting([{active: 'plainName', direction: 'asc', nullAsHighest: true}])" mat-menu-item>Titre</div>
-    <div (click)="sorting([{active: 'creationDate', direction: 'desc'}])" mat-menu-item>
+    <div (click)="sorting([{active: CardSortingField.plainName, direction: 'asc', nullAsHighest: true}])" mat-menu-item>
+        Titre
+    </div>
+    <div (click)="sorting([{active: CardSortingField.creationDate, direction: 'desc'}])" mat-menu-item>
         Date d'insertion <span *ngIf="site === Site.dilps">en tête</span>
     </div>
-    <div (click)="sorting([{active: 'updateDate', direction: 'desc'}])" mat-menu-item>
+    <div (click)="sorting([{active: CardSortingField.updateDate, direction: 'desc'}])" mat-menu-item>
         Date de dernière édition <span *ngIf="site === Site.dilps">en tête</span>
     </div>
-    <div (click)="sorting([{active: 'dating', direction: 'asc'}])" mat-menu-item>Datation</div>
-    <div (click)="sorting([{active: 'locality', direction: 'asc'}])" mat-menu-item>Lieu</div>
+    <div (click)="sorting([{active: CardSortingField.dating, direction: 'asc'}])" mat-menu-item>Datation</div>
+    <div (click)="sorting([{active: CardSortingField.locality, direction: 'asc'}])" mat-menu-item>Lieu</div>
     <div (click)="sorting([{active: CardSortingField.document, direction: 'asc'}])" mat-menu-item>Type de document</div>
-    <div (click)="sorting([{active: 'artists', direction: 'asc'}])" mat-menu-item *ngIf="site === Site.dilps">
+    <div
+        (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])"
+        mat-menu-item
+        *ngIf="site === Site.dilps"
+    >
         Artistes
     </div>
     <div
-        (click)="sorting([{active: 'code', direction: 'asc', nullAsHighest: true}])"
+        (click)="sorting([{active: CardSortingField.code, direction: 'asc', nullAsHighest: true}])"
         mat-menu-item
         *ngIf="site === Site.tiresias"
     >
