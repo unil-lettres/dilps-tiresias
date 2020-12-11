@@ -161,6 +161,12 @@ export class NaturalSearchFacetsService {
             transform: replaceOperatorByField,
         },
         {
+            display: 'Année de restitution',
+            field: 'techniqueDate',
+            component: TypeTextComponent,
+            transform: wrapLike,
+        },
+        {
             display: 'Géolocalisation',
             field: 'custom',
             name: 'location',
