@@ -8,7 +8,7 @@
     </div>
     <div (click)="sorting([{active: 'dating', direction: 'asc'}])" mat-menu-item>Datation</div>
     <div (click)="sorting([{active: 'locality', direction: 'asc'}])" mat-menu-item>Lieu</div>
-    <!--    <div (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])" mat-menu-item>Type de document</div>-->
+    <div (click)="sorting([{active: CardSortingField.document, direction: 'asc'}])" mat-menu-item>Type de document</div>
     <div (click)="sorting([{active: 'artists', direction: 'asc'}])" mat-menu-item *ngIf="site === Site.dilps">
         Artistes
     </div>
