@@ -9,7 +9,7 @@ import {ChangeService} from '../services/change.service';
     styleUrls: ['./changes.component.scss'],
 })
 export class ChangesComponent extends AbstractList<Changes['changes'], ChangesVariables> {
-    public displayedColumns = ['type', 'original', 'suggestion'];
+    public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
     constructor(service: ChangeService, injector: Injector) {
         super(service, null, injector);

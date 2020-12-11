@@ -6,7 +6,7 @@
     <div class="mat-headline">Notifications</div>
 
     <div class="responsive-table" [fxShow]="showTable()">
-        <table [dataSource]="dataSource" mat-table>
+        <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr
                 *matRowDef="let row; columns: displayedColumns"
@@ -31,6 +31,20 @@
             <ng-container matColumnDef="suggestion">
                 <th *matHeaderCellDef mat-header-cell>Suggestion</th>
                 <td *matCellDef="let element" mat-cell>{{ element.suggestion?.name }}</td>
+            </ng-container>
+
+            <!-- Creator -->
+            <ng-container matColumnDef="owner">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Utilisateur</th>
+                <td *matCellDef="let element" mat-cell>{{ element.owner?.login }}</td>
+            </ng-container>
+
+            <!-- Creation date -->
+            <ng-container matColumnDef="creationDate">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+                <td *matCellDef="let element" mat-cell>
+                    {{ element.creationDate | date: 'dd.MM.yyyy' }} à {{ element.creationDate | date: 'HH:mm' }}
+                </td>
             </ng-container>
         </table>
     </div>

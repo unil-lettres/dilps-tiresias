@@ -16,6 +16,11 @@ export const changesQuery = gql`
                     id
                     name
                 }
+                creationDate
+                owner {
+                    id
+                    login
+                }
             }
             pageSize
             pageIndex

@@ -1,6 +1,8 @@
+import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import {Injectable, Inject} from '@angular/core';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {SITE} from '../../app.config';
 import {
     AcceptChange,
     AcceptChange_acceptChange,
@@ -10,6 +12,7 @@ import {
     ChangesVariables,
     ChangeVariables,
     CreateCard_createCard,
+    JoinType,
     RejectChange,
     Site,
     SuggestCreation,
@@ -19,6 +22,7 @@ import {
     SuggestUpdate,
     SuggestUpdate_suggestUpdate,
 } from '../../shared/generated-types';
+import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
     acceptChange,
     changeQuery,
@@ -28,9 +32,6 @@ import {
     suggestDeletion,
     suggestUpdate,
 } from './change.queries';
-import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {SITE} from '../../app.config';
-import {Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -134,5 +135,11 @@ export class ChangeService extends AbstractContextualizedService<
                     return result.data!.suggestUpdate;
                 }),
             );
+    }
+
+    public getPartialVariablesForAll(): Partial<ChangesVariables> {
+        return {
+            filter: {groups: [{joins: {creator: {type: JoinType.leftJoin}}}]},
+        };
     }
 }

@@ -14,6 +14,8 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\ChangeRepository")
  * @ORM\Table(name="`change`")
+ *
+ * @API\Sorting({"Application\Api\Input\Sorting\Owner"})
  */
 class Change extends AbstractModel implements HasSiteInterface
 {
