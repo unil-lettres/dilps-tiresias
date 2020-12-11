@@ -8,9 +8,8 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
-use PDO;
 
-class CardRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class CardRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     public function getFindAllByCollections(array $collections = []): QueryBuilder
     {
@@ -37,8 +36,12 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card owner or creator is the user
      * - card's collection responsible is the user
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
+        if ($user && $user->getRole() === User::ROLE_ADMINISTRATOR) {
+            return '';
+        }
+
         $visibility = [Card::VISIBILITY_PUBLIC];
         if ($user) {
             $visibility[] = Card::VISIBILITY_MEMBER;
@@ -61,22 +64,6 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
         }
 
         return $qb->getSQL();
-    }
-
-    /**
-     * Returns all unique filename in DB
-     *
-     * @return string[]
-     */
-    public function getFilenames(): array
-    {
-        $filenames = $this->getEntityManager()->getConnection()->createQueryBuilder()
-            ->from('card')
-            ->select('DISTINCT CONCAT("data/images/", filename)')
-            ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll(PDO::FETCH_COLUMN);
-
-        return $filenames;
     }
 
     /**

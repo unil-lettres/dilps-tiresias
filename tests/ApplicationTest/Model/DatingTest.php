@@ -6,7 +6,7 @@ namespace ApplicationTest\Model;
 
 use Application\Model\Card;
 use Application\Model\Dating;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class DatingTest extends TestCase
     public function testFrom(): void
     {
         $dating = new Dating();
-        $d1 = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $d1 = new Chronos('now', new DateTimeZone('UTC'));
         $d1 = $d1->setDate(-1200, 2, 3)->setTime(0, 0, 0, 0);
         $dating->setFrom($d1);
         $d2 = $dating->getFrom();
@@ -30,7 +30,7 @@ class DatingTest extends TestCase
     public function testTo(): void
     {
         $dating = new Dating();
-        $d1 = new DateTimeImmutable('2010-02-03', new DateTimeZone('UTC'));
+        $d1 = new Chronos('2010-02-03', new DateTimeZone('UTC'));
         $dating->setTo($d1);
         $d2 = $dating->getTo();
 

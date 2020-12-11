@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Api\Enum;
 
 use Application\Model\User;
+use Ecodev\Felix\Api\Enum\EnumType;
 
-class UserTypeType extends AbstractEnumType
+class UserTypeType extends EnumType
 {
     public function __construct()
     {

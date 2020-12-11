@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Api\Enum;
 
 use Application\Model\Collection;
+use Ecodev\Felix\Api\Enum\EnumType;
 
-class CollectionVisibilityType extends AbstractEnumType
+class CollectionVisibilityType extends EnumType
 {
     public function __construct()
     {

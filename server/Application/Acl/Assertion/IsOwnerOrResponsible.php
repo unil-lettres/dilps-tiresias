@@ -19,6 +19,7 @@ class IsOwnerOrResponsible implements AssertionInterface
     /**
      * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of
      *
+     * @param \Ecodev\Felix\Acl\Acl $acl
      * @param RoleInterface $role
      * @param ResourceInterface $resource
      * @param string $privilege
@@ -32,7 +33,7 @@ class IsOwnerOrResponsible implements AssertionInterface
 
         // Without user no chance to be the owner
         if (!User::getCurrent()) {
-            return false;
+            return $acl->reject('it is not himself');
         }
 
         if (User::getCurrent() === $object->getOwner()) {
@@ -64,6 +65,6 @@ class IsOwnerOrResponsible implements AssertionInterface
             }
         }
 
-        return false;
+        return $acl->reject('it is not the owner, nor one of the responsible');
     }
 }

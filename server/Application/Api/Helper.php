@@ -8,6 +8,7 @@ use Application\Acl\Acl;
 use Application\Model\AbstractModel;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Definition\EntityID;
 
 abstract class Helper

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Field\FieldInterface;
 use Application\Api\Helper;
 use Application\Model\Collection;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 class LinkCollectionToCollection implements FieldInterface
@@ -21,7 +21,7 @@ class LinkCollectionToCollection implements FieldInterface
                 'sourceCollection' => Type::nonNull(_types()->getId(Collection::class)),
                 'targetCollection' => Type::nonNull(_types()->getId(Collection::class)),
             ],
-            'resolve' => function (string $site, array $args): Collection {
+            'resolve' => function (array $root, array $args): Collection {
                 $sourceCollection = $args['sourceCollection']->getEntity();
                 $targetCollection = $args['targetCollection']->getEntity();
 

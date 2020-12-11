@@ -12,7 +12,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Collection#2001" with privilege "linkCard"',
+                'message' => 'User "student" with role student is not allowed on resource "Collection#2001" with privilege "linkCard" because it is not the owner, nor one of the responsible',
                 'extensions' => [
                     'category' => 'Permissions',
                 ],

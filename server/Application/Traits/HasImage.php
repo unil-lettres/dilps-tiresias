@@ -94,13 +94,27 @@ trait HasImage
         }
     }
 
+    public function getMime(): string
+    {
+        $path = $this->getPath();
+        $mime = mime_content_type($path);
+        if ($mime === false) {
+            throw new Exception('Could not get mimetype for path: ' . $path);
+        }
+
+        if ($mime === 'image/svg') {
+            $mime = 'image/svg+xml';
+        }
+
+        return $mime;
+    }
+
     /**
      * Delete file and throw exception if MIME type is invalid
      */
     private function validateMimeType(): void
     {
-        $path = $this->getPath();
-        $mime = mime_content_type($path);
+        $mime = $this->getMime();
 
         // Validate image mimetype
         $acceptedMimeTypes = [
@@ -116,6 +130,7 @@ trait HasImage
         ];
 
         if (!in_array($mime, $acceptedMimeTypes, true)) {
+            $path = $this->getPath();
             unlink($path);
 
             throw new Exception('Invalid file type of: ' . $mime);

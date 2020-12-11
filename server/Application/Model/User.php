@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Acl\Acl;
-use Application\Api\Exception;
-use Application\ORM\Query\Filter\AclFilter;
+use Application\Repository\UserRepository;
 use Application\Traits\HasInstitution;
-use Application\Traits\HasName;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
-use Application\Utility;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
+use Ecodev\Felix\Model\CurrentUser;
+use Ecodev\Felix\Model\Traits\HasName;
+use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
@@ -27,7 +28,7 @@ use GraphQL\Doctrine\Annotation as API;
  *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
  * })
  */
-class User extends AbstractModel implements HasSiteInterface
+class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInterface
 {
     use HasInstitution;
     use HasSite;
@@ -71,14 +72,19 @@ class User extends AbstractModel implements HasSiteInterface
      * Set currently logged in user
      * WARNING: this method should only be called from \Application\Authentication\AuthenticationListener
      *
-     * @param \Application\Model\User $user
+     * @param User $user
      */
     public static function setCurrent(?self $user): void
     {
         self::$currentUser = $user;
 
         // Initalize ACL filter with current user if a logged in one exists
-        _em()->getFilters()->getFilter(AclFilter::class)->setUser($user);
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(self::class);
+        $aclFilter = $userRepository->getAclFilter();
+        $aclFilter->setUser($user);
+
+        CurrentUser::set($user);
     }
 
     /**
@@ -102,7 +108,6 @@ class User extends AbstractModel implements HasSiteInterface
      * @API\Exclude
      *
      * @ORM\Column(type="string", length=255)
-     * @API\Exclude
      */
     private $password = '';
 
@@ -119,13 +124,13 @@ class User extends AbstractModel implements HasSiteInterface
     private $role = self::ROLE_STUDENT;
 
     /**
-     * @var DateTimeImmutable
+     * @var Chronos
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $activeUntil;
 
     /**
-     * @var DateTimeImmutable
+     * @var Chronos
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $termsAgreement;
@@ -271,7 +276,7 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * The date until the user is active. Or `null` if there is not limit in time
      */
-    public function getActiveUntil(): ?DateTimeImmutable
+    public function getActiveUntil(): ?Chronos
     {
         return $this->activeUntil;
     }
@@ -279,7 +284,7 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * The date until the user is active. Or `null` if there is not limit in time
      */
-    public function setActiveUntil(?DateTimeImmutable $activeUntil): void
+    public function setActiveUntil(?Chronos $activeUntil): void
     {
         $this->activeUntil = $activeUntil;
     }
@@ -287,7 +292,7 @@ class User extends AbstractModel implements HasSiteInterface
     /**
      * The date when the user agreed to the terms of usage
      */
-    public function getTermsAgreement(): ?DateTimeImmutable
+    public function getTermsAgreement(): ?Chronos
     {
         return $this->termsAgreement;
     }
@@ -297,7 +302,7 @@ class User extends AbstractModel implements HasSiteInterface
      *
      * A user cannot un-agree once he agreed.
      */
-    public function setTermsAgreement(?DateTimeImmutable $termsAgreement): void
+    public function setTermsAgreement(?Chronos $termsAgreement): void
     {
         $this->termsAgreement = $termsAgreement;
     }

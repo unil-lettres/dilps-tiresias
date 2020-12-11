@@ -6,7 +6,8 @@ namespace Application\Action;
 
 use Application\Model\Card;
 use Application\Repository\CardRepository;
-use Application\Service\ImageService;
+use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Service\ImageResizer;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,20 +15,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class ImageAction extends AbstractAction
 {
-    /**
-     * @var CardRepository
-     */
-    private $cardRepository;
+    private CardRepository $cardRepository;
 
-    /**
-     * @var ImageService
-     */
-    private $imageService;
+    private ImageResizer $imageResizer;
 
-    public function __construct(CardRepository $cardRepository, ImageService $imageService)
+    public function __construct(CardRepository $cardRepository, ImageResizer $imageService)
     {
         $this->cardRepository = $cardRepository;
-        $this->imageService = $imageService;
+        $this->imageResizer = $imageService;
     }
 
     /**
@@ -50,7 +45,10 @@ class ImageAction extends AbstractAction
 
         $maxHeight = (int) $request->getAttribute('maxHeight');
         if ($maxHeight) {
-            $path = $this->imageService->resize($card, $maxHeight);
+            $accept = $request->getHeaderLine('accept');
+            $useWebp = mb_strpos($accept, 'image/webp') !== false;
+
+            $path = $this->imageResizer->resize($card, $maxHeight, $useWebp);
         }
 
         $resource = fopen($path, 'rb');

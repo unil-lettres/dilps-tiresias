@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
+use Ecodev\Felix\Migration\IrreversibleMigration;
 
-class Version20200213004216 extends AbstractMigration
+class Version20200213004216 extends IrreversibleMigration
 {
     public function up(Schema $schema): void
     {
@@ -32,7 +33,7 @@ class Version20200213004216 extends AbstractMigration
 
         $this->addSql('ALTER TABLE `change` ADD site ENUM(\'dilps\', \'tiresias\') NOT NULL COMMENT \'(DC2Type:Site)\'');
         $this->addSql('UPDATE `change`
-    LEFT JOIN card c on `change`.original_id = c.id
+    LEFT JOIN card c ON `change`.original_id = c.id
     LEFT JOIN card s ON `change`.suggestion_id = s.id
     SET `change`.site = IFNULL(c.site, s.site)');
     }

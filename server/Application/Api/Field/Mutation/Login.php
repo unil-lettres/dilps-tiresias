@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Exception;
-use Application\Api\Field\FieldInterface;
 use Application\Api\Scalar\LoginType;
 use Application\Model\Statistic;
 use Application\Model\User;
+use Ecodev\Felix\Api\Exception;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 use Mezzio\Session\SessionInterface;
 
@@ -24,7 +24,8 @@ abstract class Login implements FieldInterface
                 'login' => Type::nonNull(_types()->get(LoginType::class)),
                 'password' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function (string $site, array $args, SessionInterface $session): User {
+            'resolve' => function (array $root, array $args, SessionInterface $session): User {
+                $site = $root['site'];
 
                 // Logout
                 $session->clear();

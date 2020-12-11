@@ -5,20 +5,29 @@ declare(strict_types=1);
 namespace Application\Api\Input\Operator;
 
 use Application\Model\Artist;
+use Application\Model\Card;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\QueryBuilder;
-use GraphQL\Doctrine\Factory\UniqueNameFactory;
+use Ecodev\Felix\Api\Exception;
 
-class ArtistOrTechniqueAuthorOperatorType extends SearchOperatorType
+class ArtistOrTechniqueAuthorOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
 {
-    protected function getSearchableFields(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
+    protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
-        $artist = $uniqueNameFactory->createAliasName(Artist::class);
-        $queryBuilder->leftJoin($alias . '.artists', $artist);
+        if ($metadata->getName() === Card::class) {
+            return ['techniqueAuthor'];
+        }
 
+        if ($metadata->getName() === Artist::class) {
+            return ['name'];
+        }
+
+        throw new Exception('Unsupported type of object for ArtistOrTechniqueAuthor');
+    }
+
+    protected function getSearchableJoinedEntities(): array
+    {
         return [
-            $artist . '.name',
-            $alias . '.techniqueAuthor',
+            Card::class => ['artists'],
         ];
     }
 }

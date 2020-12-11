@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-class SiteType extends AbstractEnumType
+use Ecodev\Felix\DBAL\Types\EnumType;
+
+class SiteType extends EnumType
 {
     const DILPS = 'dilps';
     const TIRESIAS = 'tiresias';

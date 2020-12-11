@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
-use Application\Api\Exception;
 use Application\Model\User;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
 
 trait HasCode
 {

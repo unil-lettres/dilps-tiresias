@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\ORM;
 
-use Application\ORM\Query\Filter\AclFilter;
+use Ecodev\Felix\ORM\Query\Filter\AclFilter;
 use Psr\Container\ContainerInterface;
 
 class EntityManagerFactory

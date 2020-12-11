@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Api\Scalar;
 
+use Ecodev\Felix\Api\Scalar\AbstractStringBasedType;
+
 class LoginType extends AbstractStringBasedType
 {
     /**

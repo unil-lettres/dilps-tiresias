@@ -21,7 +21,7 @@ class ArtistOrTechniqueAuthorOperatorTypeTest extends \PHPUnit\Framework\TestCas
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '((artist1.name LIKE :filter1 OR a.techniqueAuthor LIKE :filter1))';
+        $expected = '(a.techniqueAuthor LIKE :filter1 OR artist1.name LIKE :filter1)';
         self::assertSame($expected, $actual);
 
         $joins = $qb->getDQLPart('join');

@@ -7,7 +7,7 @@
 use Application\Model\Card;
 use Imagine\Image\ImagineInterface;
 
-require_once __DIR__ . '/../htdocs/index.php';
+require_once 'server/cli.php';
 
 global $container;
 

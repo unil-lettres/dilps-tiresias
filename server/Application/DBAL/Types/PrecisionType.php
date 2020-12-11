@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-class PrecisionType extends AbstractEnumType
+use Ecodev\Felix\DBAL\Types\EnumType;
+
+class PrecisionType extends EnumType
 {
     const LOCALITY = 'locality';
     const SITE = 'site';

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Traits\HasInstitution;
-use Application\Traits\HasName;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
 use Application\Traits\HasSite;
@@ -14,6 +13,7 @@ use Application\Traits\HasSorting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Annotation as API;
 
 /**

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Migration;
 
 use Doctrine\DBAL\Schema\Schema;
+use Ecodev\Felix\Migration\IrreversibleMigration;
 
-class Version20191119141059 extends AbstractMigration
+class Version20191119141059 extends IrreversibleMigration
 {
     public function up(Schema $schema): void
     {

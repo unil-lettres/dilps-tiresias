@@ -6,7 +6,7 @@ namespace Application\Traits;
 
 use Application\Model\User;
 use Application\Utility;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,14 +15,14 @@ use Doctrine\ORM\Mapping as ORM;
 trait HasValidation
 {
     /**
-     * @var DateTimeImmutable
+     * @var Chronos
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $imageValidationDate;
 
     /**
-     * @var DateTimeImmutable
+     * @var Chronos
      *
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
@@ -45,7 +45,7 @@ trait HasValidation
     /**
      * Get image validation date
      */
-    public function getImageValidationDate(): ?DateTimeImmutable
+    public function getImageValidationDate(): ?Chronos
     {
         return $this->imageValidationDate;
     }
@@ -53,7 +53,7 @@ trait HasValidation
     /**
      * Get data validation date
      */
-    public function getDataValidationDate(): ?DateTimeImmutable
+    public function getDataValidationDate(): ?Chronos
     {
         return $this->dataValidationDate;
     }
@@ -79,7 +79,7 @@ trait HasValidation
      */
     public function validateImage(): void
     {
-        $this->imageValidationDate = Utility::getNow();
+        $this->imageValidationDate = new Chronos();
         $this->imageValidator = User::getCurrent();
     }
 
@@ -88,7 +88,7 @@ trait HasValidation
      */
     public function validateData(): void
     {
-        $this->dataValidationDate = Utility::getNow();
+        $this->dataValidationDate = new Chronos();
         $this->dataValidator = User::getCurrent();
     }
 }

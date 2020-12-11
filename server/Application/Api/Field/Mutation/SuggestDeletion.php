@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Field\FieldInterface;
 use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 class SuggestDeletion implements FieldInterface
@@ -22,7 +22,9 @@ class SuggestDeletion implements FieldInterface
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function (string $site, array $args): Change {
+            'resolve' => function (array $root, array $args): Change {
+                $site = $root['site'];
+
                 $original = $args['id']->getEntity();
                 $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_DELETE, $original, $args['request'], $site);
 

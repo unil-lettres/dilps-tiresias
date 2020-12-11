@@ -21,7 +21,7 @@ class LocalityOrInstitutionLocalityOperatorTypeTest extends \PHPUnit\Framework\T
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '((institution1.locality LIKE :filter1 OR a.locality LIKE :filter1))';
+        $expected = '(a.locality LIKE :filter1 OR institution1.locality LIKE :filter1)';
         self::assertSame($expected, $actual);
 
         $joins = $qb->getDQLPart('join');

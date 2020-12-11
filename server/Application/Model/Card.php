@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\Api\Exception;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
@@ -20,6 +19,8 @@ use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
+use Ecodev\Felix\Model\Image;
 use GraphQL\Doctrine\Annotation as API;
 use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
@@ -55,7 +56,7 @@ use Throwable;
  *     "Application\Api\Input\Sorting\DocumentType"
  * })
  */
-class Card extends AbstractModel implements HasSiteInterface
+class Card extends AbstractModel implements HasSiteInterface, Image
 {
     use HasCode;
     use HasRichTextName;
@@ -672,7 +673,7 @@ class Card extends AbstractModel implements HasSiteInterface
             $this->traitSetFile($file);
             $this->readFileInfo();
         } catch (Throwable $e) {
-            throw new \Application\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
+            throw new \Ecodev\Felix\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
         }
     }
 

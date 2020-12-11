@@ -8,7 +8,7 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
 
-class CollectionRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
      * Returns pure SQL to get ID of all collections that are accessible to given user.
@@ -20,7 +20,7 @@ class CollectionRepository extends AbstractRepository implements LimitedAccessSu
      * - collection owner, creator or responsible is the user
      * - collection parent is accessible (recursively)
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
         if (!$user) {
             return '-1';

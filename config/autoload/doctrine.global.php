@@ -40,11 +40,10 @@ return [
                 'proxy_dir' => 'data/cache/DoctrineORMModule/Proxy',
                 'generate_proxies' => false,
                 'filters' => [
-                    \Application\ORM\Query\Filter\AclFilter::class => \Application\ORM\Query\Filter\AclFilter::class,
+                    \Ecodev\Felix\ORM\Query\Filter\AclFilter::class => \Ecodev\Felix\ORM\Query\Filter\AclFilter::class,
                 ],
                 'numeric_functions' => [
                     'rand' => \DoctrineExtensions\Query\Mysql\Rand::class,
-                    'native_in' => \Application\ORM\Query\NativeIn::class,
                     'geomfromtext' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText::class,
                     'st_distance' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STDistance::class,
                 ],

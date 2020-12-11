@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Utility;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
@@ -47,7 +47,7 @@ class Dating extends AbstractModel
     /**
      * Return the automatically computed beginning of dating period
      */
-    public function getFrom(): DateTimeImmutable
+    public function getFrom(): Chronos
     {
         return Utility::julianToDate($this->from);
     }
@@ -55,7 +55,7 @@ class Dating extends AbstractModel
     /**
      * @API\Exclude
      */
-    public function setFrom(DateTimeImmutable $from): void
+    public function setFrom(Chronos $from): void
     {
         $this->from = Utility::dateToJulian($from);
     }
@@ -63,7 +63,7 @@ class Dating extends AbstractModel
     /**
      * Return the automatically computed end of dating period
      */
-    public function getTo(): DateTimeImmutable
+    public function getTo(): Chronos
     {
         return Utility::julianToDate($this->to);
     }
@@ -71,7 +71,7 @@ class Dating extends AbstractModel
     /**
      * @API\Exclude
      */
-    public function setTo(DateTimeImmutable $to): void
+    public function setTo(Chronos $to): void
     {
         $this->to = Utility::dateToJulian($to);
     }

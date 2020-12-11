@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Query;
 
-use Application\Api\Field\FieldInterface;
 use Application\Model\User;
+use Ecodev\Felix\Api\Field\FieldInterface;
 
 abstract class Viewer implements FieldInterface
 {
@@ -16,7 +16,7 @@ abstract class Viewer implements FieldInterface
                 'name' => 'viewer',
                 'type' => _types()->getOutput(User::class),
                 'description' => 'Represents currently logged-in user',
-                'resolve' => function (string $site, array $args): ?User {
+                'resolve' => function (array $root, array $args): ?User {
                     return User::getCurrent();
                 },
             ];

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Application\Api\Input\Operator;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\QueryBuilder;
-use GraphQL\Doctrine\Factory\UniqueNameFactory;
 
-class NameOrExpandedNameOperatorType extends SearchOperatorType
+class NameOrExpandedNameOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
 {
-    protected function getSearchableFields(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
+    protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
-        return [
-            $alias . '.name',
-            $alias . '.expandedName',
-        ];
+        return ['name', 'expandedName'];
+    }
+
+    protected function getSearchableJoinedEntities(): array
+    {
+        return [];
     }
 }

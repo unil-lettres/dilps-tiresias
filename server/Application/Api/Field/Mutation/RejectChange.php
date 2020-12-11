@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Field\FieldInterface;
 use Application\Api\Helper;
 use Application\Model\Change;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 class RejectChange implements FieldInterface
@@ -20,7 +20,7 @@ class RejectChange implements FieldInterface
             'args' => [
                 'id' => Type::nonNull(_types()->getId(Change::class)),
             ],
-            'resolve' => function (string $site, array $args): bool {
+            'resolve' => function (array $root, array $args): bool {
                 /** @var Change $change */
                 $change = $args['id']->getEntity();
 

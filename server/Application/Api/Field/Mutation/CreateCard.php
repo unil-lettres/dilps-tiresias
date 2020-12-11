@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Field\FieldInterface;
 use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Collection;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 /**
@@ -25,7 +25,7 @@ class CreateCard implements FieldInterface
                 'input' => Type::nonNull(_types()->getInput(Card::class)),
                 'collection' => _types()->getId(Collection::class),
             ],
-            'resolve' => function (string $site, array $args): Card {
+            'resolve' => function (array $root, array $args): Card {
                 // Check ACL
                 $object = new Card();
 

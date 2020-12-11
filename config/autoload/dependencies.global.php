@@ -17,9 +17,9 @@ return [
         // class name.
         'invokables' => [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
-            \Mezzio\Helper\ServerUrlHelper::class => \Mezzio\Helper\ServerUrlHelper::class,
-            \Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class => \Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class,
-            \Application\DBAL\FileLogger::class => \Application\DBAL\FileLogger::class,
+            \Mezzio\Helper\ServerUrlHelper::class,
+            \Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class,
+            \Ecodev\Felix\DBAL\Logging\ForwardSQLLogger::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
@@ -41,12 +41,16 @@ return [
             \Application\Action\ZipAction::class => \Application\Action\ZipFactory::class,
             \Application\Middleware\CardsFetcherMiddleware::class => \Application\Middleware\CardsFetcherFactory::class,
             \Application\Middleware\CollectionFetcherMiddleware::class => \Application\Middleware\CollectionFetcherFactory::class,
-            \Application\Service\ImageService::class => \Application\Service\ImageFactory::class,
+            \Ecodev\Felix\Service\ImageResizer::class => \Ecodev\Felix\Service\ImageResizerFactory::class,
             \Application\Middleware\AuthenticationMiddleware::class => \Application\Middleware\AuthenticationFactory::class,
             \Application\Middleware\ShibbolethMiddleware::class => \Application\Middleware\ShibbolethFactory::class,
             \Application\Middleware\LegacyRedirectMiddleware::class => \Application\Middleware\LegacyRedirectFactory::class,
             \GraphQL\Doctrine\Types::class => \Application\Api\TypesFactory::class,
-            \Imagine\Image\ImagineInterface::class => \Application\Service\ImagineFactory::class,
+            \Imagine\Image\ImagineInterface::class => \Ecodev\Felix\Service\ImagineFactory::class,
+            \Laminas\Log\LoggerInterface::class => \Ecodev\Felix\Log\LoggerFactory::class,
+            \Ecodev\Felix\Log\Writer\Db::class => \Application\Log\DbWriterFactory::class,
+            \Ecodev\Felix\Log\EventCompleter::class => \Ecodev\Felix\Log\EventCompleterFactory::class,
+            \Ecodev\Felix\Log\Writer\Mail::class => \Ecodev\Felix\Log\Writer\MailFactory::class,
         ],
     ],
 ];

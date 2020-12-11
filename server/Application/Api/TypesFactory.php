@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
 use Interop\Container\ContainerInterface;
@@ -25,22 +25,22 @@ class TypesFactory
             \Application\Api\Enum\UserTypeType::class,
             \Application\Api\Enum\PrecisionType::class,
             \Application\Api\Enum\SiteType::class,
-            \Application\Api\Input\PaginationInputType::class,
+            \Ecodev\Felix\Api\Input\PaginationInputType::class,
             \Application\Api\MutationType::class,
             \Application\Api\Output\GlobalPermissionsListType::class,
             \Application\Api\Output\GlobalPermissionsType::class,
-            \Application\Api\Output\PermissionsType::class,
+            \Ecodev\Felix\Api\Output\PermissionsType::class,
             \Application\Api\QueryType::class,
-            \Application\Api\Scalar\DateTimeType::class,
             \Application\Api\Scalar\LoginType::class,
-            \Application\Api\Scalar\EmailType::class,
-            \Application\Api\Scalar\UrlType::class,
+            \Ecodev\Felix\Api\Scalar\EmailType::class,
+            \Ecodev\Felix\Api\Scalar\UrlType::class,
             \GraphQL\Upload\UploadType::class,
+            \Ecodev\Felix\Api\Scalar\ChronosType::class,
         ];
 
         $aliases = [
-            DateTimeImmutable::class => \Application\Api\Scalar\DateTimeType::class,
-            'datetime_immutable' => \Application\Api\Scalar\DateTimeType::class,
+            \Cake\Chronos\Chronos::class => \Ecodev\Felix\Api\Scalar\ChronosType::class,
+            'datetime_immutable' => \Ecodev\Felix\Api\Scalar\ChronosType::class,
         ];
 
         // Automatically add aliases for GraphQL type name from the invokable types
@@ -59,7 +59,7 @@ class TypesFactory
                 'json' => \GraphQL\Type\Definition\Type::string(),
             ],
             'abstract_factories' => [
-                \Application\Api\Output\PaginationTypeFactory::class,
+                \Ecodev\Felix\Api\Output\PaginationTypeFactory::class,
             ],
         ]);
 

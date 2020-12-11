@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Middleware;
 
-use Application\Action\AbstractAction;
 use Application\Repository\CardRepository;
+use Ecodev\Felix\Action\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
