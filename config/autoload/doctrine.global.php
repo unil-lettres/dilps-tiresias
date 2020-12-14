@@ -58,6 +58,7 @@ return [
             'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
             'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
             'point' => CrEOF\Spatial\DBAL\Types\Geography\PointType::class,
+            'datetime_immutable' => Ecodev\Felix\DBAL\Types\ChronosType::class,
         ],
         // migrations configuration
         'migrations_configuration' => [
