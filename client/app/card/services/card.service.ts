@@ -137,7 +137,7 @@ export class CardService extends AbstractContextualizedService<
             periods: null,
             tags: null,
             antiqueNames: null,
-            domain: null,
+            domains: null,
             documentType: null,
             institution: null,
             street: '',

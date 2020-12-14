@@ -114,7 +114,7 @@ class XlsxAction extends AbstractXlsx
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getId());
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getName());
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getExpandedName());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableFullName($card->getDomain()));
+        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getDomains()));
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getPeriods()));
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getFrom());
         $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTo());

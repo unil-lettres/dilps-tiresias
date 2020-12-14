@@ -143,7 +143,10 @@ class Importer
 
         $card->setName($this->readString($sheet, $col++, $row));
         $card->setExpandedName($this->readString($sheet, $col++, $row));
-        $card->setDomain($this->readDomain($sheet, $col++, $row));
+        $domain = $this->readDomain($sheet, $col++, $row);
+        if ($domain) {
+            $card->addDomain($domain);
+        }
 
         $material = $this->readMaterial($sheet, $col++, $row);
         if ($material) {

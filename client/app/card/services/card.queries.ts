@@ -87,7 +87,7 @@ export const cardDetailsFragment = gql`
             hierarchicName
             hasChildren
         }
-        domain {
+        domains {
             id
             name
             hierarchicName

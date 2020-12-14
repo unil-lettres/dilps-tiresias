@@ -161,14 +161,11 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $documentType;
 
     /**
-     * @var null|Domain
+     * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Domain")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
+     * @ORM\ManyToMany(targetEntity="Domain")
      */
-    private $domain;
+    private $domains;
 
     /**
      * @var DoctrineCollection
@@ -223,6 +220,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $this->tags = new ArrayCollection();
         $this->datings = new ArrayCollection();
         $this->cards = new ArrayCollection();
+        $this->domains = new ArrayCollection();
         $this->periods = new ArrayCollection();
         $this->materials = new ArrayCollection();
     }
@@ -370,6 +368,20 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
+     * Set all domains at once.
+     *
+     * @param null|Domain[] $domains
+     */
+    public function setDomains(?array $domains): void
+    {
+        if (null === $domains) {
+            return;
+        }
+
+        $this->setEntireCollection($domains, $this->domains, Domain::class);
+    }
+
+    /**
      * Set all periods at once.
      *
      * @param null|Period[] $periods
@@ -497,14 +509,24 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $this->documentType = $documentType;
     }
 
-    public function getDomain(): ?Domain
+    /**
+     * Get domains
+     *
+     * @API\Field(type="Domain[]")
+     */
+    public function getDomains(): DoctrineCollection
     {
-        return $this->domain;
+        return $this->domains;
     }
 
-    public function setDomain(?Domain $domain): void
+    /**
+     * Add Domain
+     */
+    public function addDomain(Domain $domain): void
     {
-        $this->domain = $domain;
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+        }
     }
 
     /**
@@ -777,12 +799,12 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $original->artists = clone $this->artists;
         $original->tags = clone $this->tags;
         $original->materials = clone $this->materials;
+        $original->domains = clone $this->domains;
         $original->periods = clone $this->periods;
         $original->computeDatings();
         $original->institution = $this->institution;
         $original->country = $this->country;
         $original->documentType = $this->documentType;
-        $original->domain = $this->domain;
 
         // Copy file on disk
         if ($this->filename) {

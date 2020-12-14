@@ -213,17 +213,17 @@
                 </div>
 
                 <app-thesaurus
-                    *ngIf="!isDilps && (edit || !!model.domain)"
-                    [model]="model.domain"
-                    (modelChange)="model.domain = $event"
+                    *ngIf="!isDilps && (edit || !!model.domains?.length)"
+                    [model]="model.domains"
+                    (modelChange)="model.domains = $event"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="domainHierarchicConfig"
-                    [multiple]="false"
+                    [multiple]="true"
                     [previewComponent]="DomainComponent"
                     [readonly]="!edit"
                     [service]="domainService"
                     matTooltipPosition="after"
-                    placeholder="Domaine"
+                    placeholder="Domaines"
                 ></app-thesaurus>
 
                 <div

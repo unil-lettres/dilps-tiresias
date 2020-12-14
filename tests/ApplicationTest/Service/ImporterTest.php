@@ -74,7 +74,7 @@ class ImporterTest extends TestCase
         self::assertSame('The Valley', $c->getLocality());
         self::assertSame('Paris', $c->getProductionPlace());
         self::assertSame('REF972', $c->getObjectReference());
-        self::assertSame('Test domain 9001', $c->getDomain()->getName());
+        self::assertSame('Test domain 9001', $c->getDomains()->first()->getName());
         self::assertSame('John Rambo', $c->getTechniqueAuthor());
         self::assertSame('1997', $c->getTechniqueDate());
         self::assertSame(1.1231, $c->getLatitude());
