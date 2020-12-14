@@ -6,8 +6,9 @@ namespace Application\Action;
 
 use Application\Model\Card;
 use Application\Model\User;
-use Application\Service\ImageService;
 use Application\Stream\TemporaryFile;
+use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Laminas\Diactoros\Response;
 use PhpOffice\PhpPresentation\DocumentLayout;
@@ -36,9 +37,9 @@ class PptxAction extends AbstractAction
     private $imagine;
 
     /**
-     * @var ImageService
+     * @var ImageResizer
      */
-    private $imageService;
+    private $imageResizer;
 
     /**
      * @var string
@@ -60,9 +61,9 @@ class PptxAction extends AbstractAction
      */
     private $backgroundColor = Color::COLOR_BLACK;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
+    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
     {
-        $this->imageService = $imageService;
+        $this->imageResizer = $imageResizer;
         $this->imagine = $imagine;
         $this->site = $site;
     }
@@ -145,7 +146,7 @@ class PptxAction extends AbstractAction
 
     private function insertImage(Slide $slide, Card $card): void
     {
-        $path = $this->imageService->resize($card, 1200);
+        $path = $this->imageResizer->resize($card, 1200, false);
 
         // Get dimensions
         $image = $this->imagine->open($path);

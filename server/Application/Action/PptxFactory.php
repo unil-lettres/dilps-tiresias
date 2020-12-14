@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Action;
 
-use Application\Service\ImageService;
+use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Interop\Container\ContainerInterface;
 
@@ -13,9 +13,9 @@ class PptxFactory
     public function __invoke(ContainerInterface $container)
     {
         $imagine = $container->get(ImagineInterface::class);
-        $imageService = $container->get(ImageService::class);
+        $imageResizer = $container->get(ImageResizer::class);
         $site = $container->get('site');
 
-        return new PptxAction($imageService, $imagine, $site);
+        return new PptxAction($imageResizer, $imagine, $site);
     }
 }

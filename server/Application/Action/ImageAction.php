@@ -19,10 +19,10 @@ class ImageAction extends AbstractAction
 
     private ImageResizer $imageResizer;
 
-    public function __construct(CardRepository $cardRepository, ImageResizer $imageService)
+    public function __construct(CardRepository $cardRepository, ImageResizer $imageResizer)
     {
         $this->cardRepository = $cardRepository;
-        $this->imageResizer = $imageService;
+        $this->imageResizer = $imageResizer;
     }
 
     /**

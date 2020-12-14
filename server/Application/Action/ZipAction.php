@@ -6,8 +6,9 @@ namespace Application\Action;
 
 use Application\Model\Card;
 use Application\Model\User;
-use Application\Service\ImageService;
 use Application\Stream\TemporaryFile;
+use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -26,9 +27,9 @@ class ZipAction extends AbstractAction
     private $imagine;
 
     /**
-     * @var ImageService
+     * @var ImageResizer
      */
-    private $imageService;
+    private $imageResizer;
 
     /**
      * @var string
@@ -55,9 +56,9 @@ class ZipAction extends AbstractAction
      */
     private $fileIndex = 0;
 
-    public function __construct(ImageService $imageService, ImagineInterface $imagine, string $site)
+    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
     {
-        $this->imageService = $imageService;
+        $this->imageResizer = $imageResizer;
         $this->imagine = $imagine;
         $this->site = $site;
     }
@@ -115,7 +116,7 @@ class ZipAction extends AbstractAction
         }
 
         if ($this->maxHeight) {
-            $path = $this->imageService->resize($card, $this->maxHeight);
+            $path = $this->imageResizer->resize($card, $this->maxHeight, false);
         } else {
             $path = $card->getPath();
         }
