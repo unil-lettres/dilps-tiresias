@@ -33,9 +33,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<
-        Required<PaginationInput>
-    >();
+    @Output() public pagination: EventEmitter<PaginationInput> = new EventEmitter<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
@@ -104,8 +102,8 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
     }
 
-    public loadMore(ev): void {
-        this.pagination.emit({offset: ev.offset, pageSize: ev.limit, pageIndex: null});
+    public loadMore(ev: {offset: number; limit: number}): void {
+        this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
     public activate(event): void {
