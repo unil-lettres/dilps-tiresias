@@ -26,6 +26,7 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
+use Application\Model\File;
 use Application\Model\Institution;
 use Application\Model\Material;
 use Application\Model\News;
@@ -69,6 +70,7 @@ class MutationType extends ObjectType
             Standard::buildMutation(Period::class),
             Standard::buildMutation(Tag::class),
             Standard::buildMutation(AntiqueName::class),
+            Standard::buildMutation(File::class),
             Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),
             Standard::buildRelationMutation(Card::class, Collection::class, false, 'linkCard'),

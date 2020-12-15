@@ -15,6 +15,7 @@ use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
+use Application\Model\File;
 use Application\Model\Institution;
 use Application\Model\Material;
 use Application\Model\News;
@@ -51,6 +52,7 @@ class QueryType extends ObjectType
             Standard::buildQuery(Statistic::class),
             Standard::buildQuery(Tag::class),
             Standard::buildQuery(AntiqueName::class),
+            Standard::buildQuery(File::class),
         );
 
         $config = [

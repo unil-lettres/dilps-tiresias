@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Acl;
 
+use Application\Acl\Assertion\CanUpdateCard;
 use Application\Acl\Assertion\IsCreator;
 use Application\Acl\Assertion\IsNotSuggestion;
 use Application\Acl\Assertion\IsOwnerOrResponsible;
@@ -19,6 +20,7 @@ use Application\Model\Country;
 use Application\Model\Dating;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
+use Application\Model\File;
 use Application\Model\Institution;
 use Application\Model\Material;
 use Application\Model\News;
@@ -50,6 +52,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $institution = $this->createModelResource(Institution::class);
         $t = $this->createModelResource(Tag::class);
         $user = $this->createModelResource(User::class);
+        $file = $this->createModelResource(File::class);
 
         $documentType = $this->createModelResource(DocumentType::class);
         $domain = $this->createModelResource(Domain::class);
@@ -71,10 +74,12 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, $antiqueName, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $news, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $period, 'read');
+        $this->allow(User::ROLE_ANONYMOUS, $file, 'read');
 
         $this->allow(User::ROLE_STUDENT, $artist, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $card, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $card, ['update'], new All(new IsSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_STUDENT, $file, ['create', 'update', 'delete'], new CanUpdateCard());
         $this->allow(User::ROLE_STUDENT, $collection, 'read');
         $this->allow(User::ROLE_STUDENT, $change, 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, $change, 'create', new SameSite());
@@ -120,5 +125,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $period, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $period, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $statistic, 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, $file, 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, $file, ['create', 'update', 'delete'], new CanUpdateCard());
     }
 }
