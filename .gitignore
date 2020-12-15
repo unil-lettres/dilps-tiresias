@@ -4,6 +4,8 @@
 /data/cache/
 /data/dump/
 /data/images/
+/data/file/
+!/data/file/4k123pkopvs3iDFV948abcde.pdf
 /data/tmp/
 !/data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg
 !/data/images/5da49355cbcff.jpeg
