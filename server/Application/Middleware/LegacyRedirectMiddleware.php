@@ -14,15 +14,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LegacyRedirectMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private \Interop\Container\ContainerInterface $container;
 
-    /**
-     * @var CardRepository
-     */
-    private $cardRepository;
+    private \Application\Repository\CardRepository $cardRepository;
 
     public function __construct(CardRepository $cardRepository, ContainerInterface $container)
     {

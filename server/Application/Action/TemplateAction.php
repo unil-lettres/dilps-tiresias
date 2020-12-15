@@ -45,45 +45,21 @@ class TemplateAction extends AbstractXlsx
         'Précision',
     ];
 
-    /**
-     * @var int
-     */
-    private $row = 1;
+    private int $row = 1;
 
-    /**
-     * @var int
-     */
-    private $col = 1;
+    private int $col = 1;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
-    /**
-     * @var DomainRepository
-     */
-    private $domainRepository;
+    private DomainRepository $domainRepository;
 
-    /**
-     * @var PeriodRepository
-     */
-    private $periodRepository;
+    private PeriodRepository $periodRepository;
 
-    /**
-     * @var CountryRepository
-     */
-    private $countryRepository;
+    private CountryRepository $countryRepository;
 
-    /**
-     * @var MaterialRepository
-     */
-    private $materialRepository;
+    private MaterialRepository $materialRepository;
 
-    /**
-     * @var DocumentTypeRepository
-     */
-    private $documentTypeRepository;
+    private DocumentTypeRepository $documentTypeRepository;
 
     public function __construct(string $site, DomainRepository $domainRepository, PeriodRepository $periodRepository, CountryRepository $countryRepository, MaterialRepository $materialRepository, DocumentTypeRepository $documentTypeRepository)
     {

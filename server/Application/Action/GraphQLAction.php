@@ -14,12 +14,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class GraphQLAction implements MiddlewareInterface
 {
-    private $entityManger;
+    private EntityManager $entityManger;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
     public function __construct(EntityManager $entityManager, string $site)
     {

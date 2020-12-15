@@ -14,7 +14,7 @@ class Visibility implements AssertionInterface
     /**
      * @var string[]
      */
-    private $allowedVisibilities;
+    private array $allowedVisibilities;
 
     public function __construct(array $visibilities)
     {

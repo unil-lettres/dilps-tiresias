@@ -23,25 +23,19 @@ use Throwable;
 
 class Importer
 {
-    private $domains;
+    private array $domains;
 
-    private $documentTypes;
+    private array $documentTypes;
 
-    private $countries;
+    private array $countries;
 
-    private $materials;
+    private array $materials;
 
-    private $periods;
+    private array $periods;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private ?string $site = null;
 
-    /**
-     * @var null|Collection
-     */
-    private $collection;
+    private ?Collection $collection = null;
 
     public function __construct()
     {

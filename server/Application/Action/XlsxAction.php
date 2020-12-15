@@ -18,20 +18,11 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class XlsxAction extends AbstractXlsx
 {
-    /**
-     * @var int
-     */
-    private $row = 1;
+    private int $row = 1;
 
-    /**
-     * @var int
-     */
-    private $col = 1;
+    private int $col = 1;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
     public function __construct(string $site)
     {

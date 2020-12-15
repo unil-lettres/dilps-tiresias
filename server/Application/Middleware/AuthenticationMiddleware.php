@@ -16,15 +16,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
     public function __construct(UserRepository $userRepository, string $site)
     {

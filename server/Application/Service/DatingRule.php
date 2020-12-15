@@ -9,7 +9,7 @@ use Cake\Chronos\Chronos;
 
 class DatingRule
 {
-    private $replace = [
+    private array $replace = [
         '/zwischen[[:space:]]*([[:digit:]\.]+)[[:space:]]*(und|-)/' => '$1 - ',
         '/[[:space:]]*\(.*\)[[:space:]]*/' => '',
         '/(around|ca\.?|~|begonnen|ab|vor|nach)/' => '',

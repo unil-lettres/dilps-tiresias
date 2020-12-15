@@ -31,35 +31,17 @@ class PptxAction extends AbstractAction
     private const MARGIN = 10;
     private const LEGEND_HEIGHT = 75;
 
-    /**
-     * @var ImagineInterface
-     */
-    private $imagine;
+    private ImagineInterface $imagine;
 
-    /**
-     * @var ImageResizer
-     */
-    private $imageResizer;
+    private ImageResizer $imageResizer;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
-    /**
-     * @var bool
-     */
-    private $needSeparator = false;
+    private bool $needSeparator = false;
 
-    /**
-     * @var string
-     */
-    private $textColor = Color::COLOR_WHITE;
+    private string $textColor = Color::COLOR_WHITE;
 
-    /**
-     * @var string
-     */
-    private $backgroundColor = Color::COLOR_BLACK;
+    private string $backgroundColor = Color::COLOR_BLACK;
 
     public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
     {
@@ -136,7 +118,7 @@ class PptxAction extends AbstractAction
         $slide->setBackground();
 
         // Set background color
-        $backgroundColor = new \PhpOffice\PhpPresentation\Slide\Background\Color();
+        $backgroundColor = new Slide\Background\Color();
         $backgroundColor->setColor(new Color($this->backgroundColor));
         $slide->setBackground($backgroundColor);
 

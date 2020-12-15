@@ -21,40 +21,19 @@ use ZipArchive;
  */
 class ZipAction extends AbstractAction
 {
-    /**
-     * @var ImagineInterface
-     */
-    private $imagine;
+    private ImagineInterface $imagine;
 
-    /**
-     * @var ImageResizer
-     */
-    private $imageResizer;
+    private ImageResizer $imageResizer;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
-    /**
-     * @var bool
-     */
-    private $includeLegend = true;
+    private bool $includeLegend = true;
 
-    /**
-     * @var null|int
-     */
-    private $maxHeight;
+    private ?int $maxHeight = null;
 
-    /**
-     * @var ZipArchive
-     */
-    private $zip;
+    private ?ZipArchive $zip = null;
 
-    /**
-     * @var int
-     */
-    private $fileIndex = 0;
+    private int $fileIndex = 0;
 
     public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
     {

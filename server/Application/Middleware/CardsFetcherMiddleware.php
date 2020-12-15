@@ -13,10 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CardsFetcherMiddleware extends AbstractAction implements MiddlewareInterface
 {
-    /**
-     * @var CardRepository
-     */
-    private $cardRepository;
+    private CardRepository $cardRepository;
 
     public function __construct(CardRepository $cardRepository)
     {

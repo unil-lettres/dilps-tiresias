@@ -13,10 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class ShibbolethMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
