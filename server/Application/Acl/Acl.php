@@ -50,7 +50,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $country = $this->createModelResource(Country::class);
         $dating = $this->createModelResource(Dating::class);
         $institution = $this->createModelResource(Institution::class);
-        $t = $this->createModelResource(Tag::class);
+        $tag = $this->createModelResource(Tag::class);
         $user = $this->createModelResource(User::class);
         $file = $this->createModelResource(File::class);
 
@@ -67,7 +67,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, $country, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $dating, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $institution, 'read');
-        $this->allow(User::ROLE_ANONYMOUS, $t, 'read');
+        $this->allow(User::ROLE_ANONYMOUS, $tag, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $documentType, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $domain, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $material, 'read');
@@ -86,7 +86,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_STUDENT, $collection, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $collection, ['update', 'delete', 'linkCard'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_STUDENT, $institution, 'create', new SameSite());
-        $this->allow(User::ROLE_STUDENT, $t, 'create', new SameSite());
+        $this->allow(User::ROLE_STUDENT, $tag, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $user, 'read');
         $this->allow(User::ROLE_STUDENT, $user, ['update', 'delete'], new All(new IsMyself(), new SameSite()));
 
@@ -107,8 +107,8 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])), new SameSite()));
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, null, new SameSite());
-        $this->allow(User::ROLE_ADMINISTRATOR, $t, 'read');
-        $this->allow(User::ROLE_ADMINISTRATOR, $t, null, new SameSite());
+        $this->allow(User::ROLE_ADMINISTRATOR, $tag, 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, $tag, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $user, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $user, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $news, null, new SameSite());
