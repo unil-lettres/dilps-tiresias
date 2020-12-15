@@ -12,10 +12,7 @@ class FileRepositoryTest extends AbstractRepositoryTest
 {
     use LimitedAccessSubQuery;
 
-    /**
-     * @var FileRepository
-     */
-    private $repository;
+    private FileRepository $repository;
 
     protected function setUp(): void
     {

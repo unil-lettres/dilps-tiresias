@@ -16,10 +16,7 @@ use Application\Repository\UserRepository;
  */
 class ChangeRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var ChangeRepository
-     */
-    private $repository;
+    private ChangeRepository $repository;
 
     protected function setUp(): void
     {

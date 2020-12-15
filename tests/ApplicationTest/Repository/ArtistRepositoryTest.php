@@ -12,10 +12,7 @@ use Application\Repository\ArtistRepository;
  */
 class ArtistRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var ArtistRepository
-     */
-    private $repository;
+    private ArtistRepository $repository;
 
     protected function setUp(): void
     {

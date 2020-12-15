@@ -13,10 +13,7 @@ use Application\Repository\UserRepository;
  */
 class UserRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var UserRepository
-     */
-    private $repository;
+    private UserRepository $repository;
 
     protected function setUp(): void
     {

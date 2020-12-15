@@ -15,10 +15,7 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
 {
     use LimitedAccessSubQuery;
 
-    /**
-     * @var CollectionRepository
-     */
-    private $repository;
+    private CollectionRepository $repository;
 
     protected function setUp(): void
     {

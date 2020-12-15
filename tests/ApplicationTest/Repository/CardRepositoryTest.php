@@ -13,10 +13,7 @@ use Application\Repository\CardRepository;
  */
 class CardRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var CardRepository
-     */
-    private $repository;
+    private CardRepository $repository;
 
     protected function setUp(): void
     {

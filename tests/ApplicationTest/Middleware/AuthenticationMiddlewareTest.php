@@ -72,7 +72,7 @@ class AuthenticationMiddlewareTest extends TestCase
         User::setCurrent(null);
 
         $userRepository = new class($user) extends UserRepository {
-            private $user;
+            private ?User $user;
 
             public function __construct(?User $user)
             {
@@ -94,7 +94,7 @@ class AuthenticationMiddlewareTest extends TestCase
 
         $response = new Response();
         $handler = new class($response) implements RequestHandlerInterface {
-            private $response;
+            private ResponseInterface $response;
 
             public function __construct(ResponseInterface $response)
             {

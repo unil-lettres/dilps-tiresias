@@ -13,10 +13,7 @@ use Application\Repository\InstitutionRepository;
  */
 class InstitutionRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var InstitutionRepository
-     */
-    private $repository;
+    private InstitutionRepository  $repository;
 
     protected function setUp(): void
     {
