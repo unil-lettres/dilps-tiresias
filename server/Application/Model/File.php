@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Annotation as API;
 use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
@@ -30,6 +31,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
      */
     private $card;
 
+    use HasName;
     use \Ecodev\Felix\Model\Traits\File {
         setFile as traitSetFile;
     }
@@ -53,6 +55,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
     {
         try {
             $this->traitSetFile($file);
+            $this->setName($file->getClientFilename());
         } catch (Throwable $e) {
             throw new \Ecodev\Felix\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
         }

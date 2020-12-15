@@ -94,7 +94,7 @@ REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
   (12000, 'Test antique name 12000', 'tiresias'),
   (12001, 'Test antique name 12001', 'tiresias');
 
-REPLACE INTO file (id, card_id, filename, mime) VALUES
-(13000, 6000, '4k123pkopvs3iDFV948abcde.pdf', 'application/pdf');
+REPLACE INTO file (id, card_id, name, filename, mime) VALUES
+(13000, 6000, 'Test file 13000', '4k123pkopvs3iDFV948abcde.pdf', 'application/pdf');
 
 COMMIT ;
