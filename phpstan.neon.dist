@@ -1,0 +1,29 @@
+parameters:
+    level: 5
+    paths:
+        - bin/
+        - server/
+        - tests/
+    doctrine:
+        repositoryClass: Application\Repository\AbstractRepository
+    inferPrivatePropertyTypeFromConstructor: true
+    earlyTerminatingMethodCalls:
+        Application\Service\Importer:
+            - throwException
+
+    ignoreErrors:
+        - '~^Call to an undefined method Application\\Repository\\.*Repository::find(One)?By.*\(\)\.$~'
+        - '~^Call to an undefined method Application\\Repository\\AbstractRepository\<Application\\Model\\User\>::(getOneByEmail|getOneById)\(\)\.$~'
+        - '~^Property .* does not accept Application\\Repository\\AbstractRepository\<Application\\Model\\.*\>\.$~'
+        -
+            message: '~^Argument of an invalid type Application\\Model\\Card supplied for foreach, only iterables are supported\.$~'
+            path: server/Application/Model/Card.php
+            count: 1
+        -
+            message: '~^If condition is always true\.$~'
+            path: server/Application/Model/Dating.php
+            count: 1
+
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon

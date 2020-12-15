@@ -7,6 +7,7 @@ namespace Application\Api\Field\Mutation;
 use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
+use Application\Repository\ChangeRepository;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
@@ -26,7 +27,10 @@ class SuggestDeletion implements FieldInterface
                 $site = $root['site'];
 
                 $original = $args['id']->getEntity();
-                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_DELETE, $original, $args['request'], $site);
+
+                /** @var ChangeRepository $changeRepository */
+                $changeRepository = _em()->getRepository(Change::class);
+                $change = $changeRepository->getOrCreate(Change::TYPE_DELETE, $original, $args['request'], $site);
 
                 Helper::throwIfDenied($change, 'create');
 

@@ -70,7 +70,9 @@ class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\R
      */
     public function linkCollectionToCollection(Collection $sourceCollection, Collection $targetCollection): void
     {
-        $cardSubQuery = $this->getEntityManager()->getRepository(Card::class)->getAccessibleSubQuery(User::getCurrent());
+        /** @var CardRepository $cardRepository */
+        $cardRepository = $this->getEntityManager()->getRepository(Card::class);
+        $cardSubQuery = $cardRepository->getAccessibleSubQuery(User::getCurrent());
 
         $connection = $this->getEntityManager()->getConnection();
         $connection->query('REPLACE INTO card_collection (collection_id, card_id)

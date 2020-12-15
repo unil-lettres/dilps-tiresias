@@ -33,6 +33,8 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
 
     /**
      * Returns pure SQL to get ID of all objects that are accessible to given user.
+     *
+     * @param User $user
      */
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {

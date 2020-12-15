@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\ArtistRepository;
+use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
@@ -332,7 +334,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
         $this->artists->clear();
 
-        $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames, $this->getSite());
+        /** @var ArtistRepository $artistRepository */
+        $artistRepository = _em()->getRepository(Artist::class);
+        $artistNames = $artistRepository->getOrCreateByNames($artistNames, $this->getSite());
         foreach ($artistNames as $a) {
             $this->artists->add($a);
         }
@@ -341,7 +345,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all materials at once.
      *
-     * @param null|Material[] $materials
+     * @API\Input(type="?MaterialID[]")
+     *
+     * @param null|EntityID[] $materials
      */
     public function setMaterials(?array $materials): void
     {
@@ -356,7 +362,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all antiqueNames at once.
      *
-     * @param null|AntiqueName[] $antiqueNames
+     * @API\Input(type="?AntiqueNameID[]")
+     *
+     * @param null|EntityID[] $antiqueNames
      */
     public function setAntiqueNames(?array $antiqueNames): void
     {
@@ -370,7 +378,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all domains at once.
      *
-     * @param null|Domain[] $domains
+     * @API\Input(type="?DomainID[]")
+     *
+     * @param null|EntityID[] $domains
      */
     public function setDomains(?array $domains): void
     {
@@ -384,7 +394,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all periods at once.
      *
-     * @param null|Period[] $periods
+     * @API\Input(type="?PeriodID[]")
+     *
+     * @param null|EntityID[] $periods
      */
     public function setPeriods(?array $periods): void
     {
@@ -398,7 +410,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all tags at once.
      *
-     * @param null|Tag[] $tags
+     * @API\Input(type="?TagID[]")
+     *
+     * @param null|EntityID[] $tags
      */
     public function setTags(?array $tags): void
     {
@@ -599,7 +613,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
         // If we are new and don't have a code yet, set one automatically
         if (!$this->getId() && !$this->getCode() && $this->canUpdateCode()) {
-            $code = _em()->getRepository(self::class)->getNextCodeAvailable($collection);
+            /** @var CardRepository $userRepository */
+            $userRepository = _em()->getRepository(self::class);
+            $code = $userRepository->getNextCodeAvailable($collection);
             $this->setCode($code);
         }
     }

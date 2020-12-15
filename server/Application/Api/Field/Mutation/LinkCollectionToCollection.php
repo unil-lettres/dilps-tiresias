@@ -6,6 +6,7 @@ namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
 use Application\Model\Collection;
+use Application\Repository\CollectionRepository;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
@@ -27,7 +28,9 @@ class LinkCollectionToCollection implements FieldInterface
 
                 Helper::throwIfDenied($targetCollection, 'update');
 
-                _em()->getRepository(Collection::class)->linkCollectionToCollection($sourceCollection, $targetCollection);
+                /** @var CollectionRepository $collectionRepository */
+                $collectionRepository = _em()->getRepository(Collection::class);
+                $collectionRepository->linkCollectionToCollection($sourceCollection, $targetCollection);
 
                 return $targetCollection;
             },

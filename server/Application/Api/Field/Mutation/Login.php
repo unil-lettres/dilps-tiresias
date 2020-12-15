@@ -7,6 +7,8 @@ namespace Application\Api\Field\Mutation;
 use Application\Api\Scalar\LoginType;
 use Application\Model\Statistic;
 use Application\Model\User;
+use Application\Repository\StatisticRepository;
+use Application\Repository\UserRepository;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
@@ -31,7 +33,9 @@ abstract class Login implements FieldInterface
                 $session->clear();
                 User::setCurrent(null);
 
-                $user = _em()->getRepository(User::class)->getLoginPassword($args['login'], $args['password'], $site);
+                /** @var UserRepository $userRepository */
+                $userRepository = _em()->getRepository(User::class);
+                $user = $userRepository->getLoginPassword($args['login'], $args['password'], $site);
 
                 // If we successfully authenticated or we already were logged in, keep going
                 if ($user) {
@@ -39,8 +43,9 @@ abstract class Login implements FieldInterface
                     $session->set('user', $user->getId());
                     User::setCurrent($user);
 
-                    /** @var Statistic $statistic */
-                    $statistic = _em()->getRepository(Statistic::class)->getOrCreate($site);
+                    /** @var StatisticRepository $statisticRepository */
+                    $statisticRepository = _em()->getRepository(Statistic::class);
+                    $statistic = $statisticRepository->getOrCreate($site);
                     $statistic->recordLogin();
 
                     _em()->flush();

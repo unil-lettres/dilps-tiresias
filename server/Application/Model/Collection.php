@@ -66,7 +66,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     private $usageRights = '';
 
     /**
-     * @var Collection
+     * @var null|Collection
      *
      * @ORM\ManyToOne(targetEntity="Collection", inversedBy="children")
      * @ORM\JoinColumns({

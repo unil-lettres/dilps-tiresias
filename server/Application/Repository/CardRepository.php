@@ -15,14 +15,12 @@ class CardRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     {
         $qb = $this->createQueryBuilder('card');
 
-        if (isset($collections)) {
-            if (\count($collections) > 0) {
-                $qb->join('card.collections', 'collection');
-                $qb->andWhere('collection.id IN (:collections)');
-                $qb->setParameter('collections', $collections);
-            } else {
-                $qb->andWhere('card.collections IS EMPTY');
-            }
+        if (count($collections) > 0) {
+            $qb->join('card.collections', 'collection');
+            $qb->andWhere('collection.id IN (:collections)');
+            $qb->setParameter('collections', $collections);
+        } else {
+            $qb->andWhere('card.collections IS EMPTY');
         }
 
         return $qb;
@@ -69,7 +67,7 @@ class CardRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     /**
      * Returns all filename in DB and their id and sizes
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getFilenamesForDimensionUpdate(?string $site = null): array
     {

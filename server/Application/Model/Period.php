@@ -30,7 +30,7 @@ class Period extends AbstractModel implements HasParentInterface, HasSiteInterfa
     use HasSite;
 
     /**
-     * @var Period
+     * @var null|Period
      *
      * @ORM\ManyToOne(targetEntity="Period", inversedBy="children")
      * @ORM\JoinColumns({

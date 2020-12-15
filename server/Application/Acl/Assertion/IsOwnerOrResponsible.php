@@ -9,6 +9,7 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\User;
+use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -19,9 +20,9 @@ class IsOwnerOrResponsible implements AssertionInterface
     /**
      * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of
      *
-     * @param \Ecodev\Felix\Acl\Acl $acl
+     * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role
-     * @param ResourceInterface $resource
+     * @param ModelResource $resource
      * @param string $privilege
      *
      * @return bool

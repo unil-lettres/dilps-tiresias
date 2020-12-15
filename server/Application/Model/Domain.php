@@ -25,7 +25,7 @@ class Domain extends AbstractModel implements HasParentInterface, HasSiteInterfa
     use HasSite;
 
     /**
-     * @var Domain
+     * @var null|Domain
      *
      * @ORM\ManyToOne(targetEntity="Domain", inversedBy="children")
      * @ORM\JoinColumns({

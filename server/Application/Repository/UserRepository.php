@@ -15,7 +15,6 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      */
     public function getLoginPassword(string $login, string $password, string $site): ?User
     {
-        /** @var User $user */
         $user = $this->getOneByLogin($login, $site);
 
         if (!$user) {

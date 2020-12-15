@@ -6,6 +6,8 @@ namespace Application\Action;
 
 use Application\Model\AbstractModel;
 use Application\Model\Card;
+use Application\Model\Country;
+use Application\Model\DocumentType;
 use Application\Traits\HasParentInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -123,6 +125,9 @@ class XlsxAction extends AbstractXlsx
         ++$this->row;
     }
 
+    /**
+     * @param null|Country|DocumentType $model
+     */
     private function nullableName(?AbstractModel $model): string
     {
         return $model ? $model->getName() : '';

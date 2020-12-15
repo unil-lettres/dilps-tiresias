@@ -7,6 +7,7 @@ namespace Application\Api\Field;
 use Application\Api\Helper;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
+use Application\Repository\AbstractRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\Api\Input\PaginationInputType;
 use GraphQL\Type\Definition\Type;
@@ -253,7 +254,9 @@ abstract class Standard
     private static function getByName(string $class, string $name, bool $createIfNotFound): ?AbstractModel
     {
         $name = trim($name);
-        $other = _em()->getRepository($class)->findOneByName($name);
+        /** @var AbstractRepository $entityRepository */
+        $entityRepository = _em()->getRepository($class);
+        $other = $entityRepository->findOneByName($name);
 
         if (!$other && $createIfNotFound) {
             $other = new $class();

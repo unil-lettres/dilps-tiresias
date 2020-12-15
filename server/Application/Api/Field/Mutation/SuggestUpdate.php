@@ -7,6 +7,7 @@ namespace Application\Api\Field\Mutation;
 use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
+use Application\Repository\ChangeRepository;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
@@ -33,7 +34,9 @@ class SuggestUpdate implements FieldInterface
                     throw new Exception('An suggestion must have an original defined');
                 }
 
-                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_UPDATE, $suggestion, $args['request'], $site);
+                /** @var ChangeRepository $changeRepository */
+                $changeRepository = _em()->getRepository(Change::class);
+                $change = $changeRepository->getOrCreate(Change::TYPE_UPDATE, $suggestion, $args['request'], $site);
                 Helper::throwIfDenied($change, 'create');
 
                 if (!$change->getId()) {

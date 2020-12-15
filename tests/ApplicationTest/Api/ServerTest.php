@@ -8,6 +8,7 @@ use Application\Api\Schema;
 use Application\Api\Server;
 use Application\DBAL\Types\SiteType;
 use Application\Model\User;
+use Application\Repository\UserRepository;
 use ApplicationTest\Traits\TestWithTransaction;
 use Ecodev\Felix\Testing\Api\AbstractServer;
 
@@ -17,7 +18,9 @@ class ServerTest extends AbstractServer
 
     protected function setCurrentUser(?string $user): void
     {
-        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin($user, SiteType::DILPS));
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(User::class);
+        User::setCurrent($userRepository->getOneByLogin($user, SiteType::DILPS));
     }
 
     protected function createSchema(): \GraphQL\Type\Schema

@@ -14,6 +14,8 @@ use Application\Model\Dating;
 use Application\Model\Institution;
 use Application\Model\Tag;
 use Application\Model\User;
+use Application\Repository\UserRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\ORM\Query\Filter\AclFilter;
 use PHPUnit\Framework\TestCase;
 
@@ -100,9 +102,12 @@ class AclFilterTest extends TestCase
      */
     public function testFilter(?string $login, string $class, string $expected): void
     {
-        $user = _em()->getRepository(User::class)->getOneByLogin($login, SiteType::DILPS);
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(User::class);
+        $user = $userRepository->getOneByLogin($login, SiteType::DILPS);
         $filter = new AclFilter(_em());
         $filter->setUser($user);
+        /** @var ClassMetadata $targetEntity */
         $targetEntity = _em()->getMetadataFactory()->getMetadataFor($class);
         $actual = $filter->addFilterConstraint($targetEntity, 'test');
 

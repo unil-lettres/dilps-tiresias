@@ -32,7 +32,6 @@ class ImageAction extends AbstractAction
     {
         $id = $request->getAttribute('id');
 
-        /** @var Card $card */
         $card = $this->cardRepository->findOneById($id);
         if (!$card) {
             return $this->createError("Card $id not found in database");

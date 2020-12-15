@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Acl\Assertion;
 
 use Application\Model\File;
+use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
@@ -17,7 +18,7 @@ class CanUpdateCard implements AssertionInterface
      *
      * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role
-     * @param ResourceInterface $resource
+     * @param ModelResource $resource
      * @param string $privilege
      *
      * @return bool

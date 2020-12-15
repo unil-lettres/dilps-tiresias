@@ -25,7 +25,7 @@ class Material extends AbstractModel implements HasParentInterface, HasSiteInter
     use HasSite;
 
     /**
-     * @var Material
+     * @var null|Material
      *
      * @ORM\ManyToOne(targetEntity="Material", inversedBy="children")
      * @ORM\JoinColumns({

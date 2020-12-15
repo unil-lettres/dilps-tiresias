@@ -25,7 +25,7 @@ class Tag extends AbstractModel implements HasParentInterface, HasSiteInterface
     use HasSite;
 
     /**
-     * @var Tag
+     * @var null|Tag
      *
      * @ORM\ManyToOne(targetEntity="Tag", inversedBy="children")
      * @ORM\JoinColumns({
