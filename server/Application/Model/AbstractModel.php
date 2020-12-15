@@ -38,14 +38,14 @@ abstract class AbstractModel implements HasOwner, Model
     /**
      * @var null|Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $creationDate;
 
     /**
      * @var null|Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updateDate;
 

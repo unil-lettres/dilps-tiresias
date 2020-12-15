@@ -40,7 +40,7 @@ class TypesFactory
 
         $aliases = [
             \Cake\Chronos\Chronos::class => \Ecodev\Felix\Api\Scalar\ChronosType::class,
-            'datetime_immutable' => \Ecodev\Felix\Api\Scalar\ChronosType::class,
+            'datetime' => \Ecodev\Felix\Api\Scalar\ChronosType::class,
         ];
 
         // Automatically add aliases for GraphQL type name from the invokable types

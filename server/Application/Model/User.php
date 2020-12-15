@@ -125,13 +125,13 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * @var Chronos
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $activeUntil;
 
     /**
      * @var Chronos
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $termsAgreement;
 

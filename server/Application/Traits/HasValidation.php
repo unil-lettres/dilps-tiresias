@@ -17,14 +17,14 @@ trait HasValidation
     /**
      * @var Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $imageValidationDate;
 
     /**
      * @var Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dataValidationDate;
 
