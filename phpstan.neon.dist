@@ -2,6 +2,7 @@ parameters:
     level: 5
     paths:
         - bin/
+        - config/
         - server/
         - tests/
     doctrine:

@@ -85,7 +85,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Handler\TemplateHandler::class,
     ], 'template');
 
-    $app->get('/auth', \Application\Middleware\ShibbolethHandler::class);
+    $app->get('/auth', \Application\Handler\ShibbolethHandler::class);
 
-    $app->get('/detail[/]', \Application\Middleware\LegacyRedirectHandler::class);
+    $app->get('/detail[/]', \Application\Handler\LegacyRedirectHandler::class);
 };
