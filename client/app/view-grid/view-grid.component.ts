@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
@@ -51,6 +51,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
 
     /**
+     * Vertical scroll position cache
+     */
+    private scrollTop = 0;
+
+    /**
      * Row height of thumbails in grid
      */
     private thumbnailHeight = 300;
@@ -92,11 +97,28 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
             this.contentChange.emit({total: result.length});
         });
+
+        // Cache scroll when user... scrolls
+        this.scrollable.nativeElement.addEventListener('scroll', () => {
+            const scroll = this.scrollable.nativeElement.scrollTop;
+            if (scroll > 0) {
+                this.scrollTop = scroll;
+            }
+        });
+
+        // Restore scroll when component is retrieved from reuse strategy
+        this.router.events.subscribe((event: NavigationEnd) => {
+            if (event instanceof NavigationEnd) {
+                setTimeout(() => {
+                    this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                }, 200);
+            }
+        });
     }
 
     public ngAfterViewInit(): void {
         setTimeout(() => {
-            this.gallery.gallery.addEventListener('item-added-to-dom', event => {
+            this.gallery.gallery.addEventListener('item-added-to-dom', () => {
                 this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length});
             });
         });

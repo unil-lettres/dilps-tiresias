@@ -39,7 +39,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
@@ -62,6 +62,7 @@ import {SwiperModule} from 'ngx-swiper-wrapper';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
+import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SITE} from './app.config';
@@ -283,6 +284,7 @@ const icons: NaturalIconsConfig = {
         /* tslint:disable:no-string-literal */
         {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
+        {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
     ],
     bootstrap: [AppComponent],
 })
