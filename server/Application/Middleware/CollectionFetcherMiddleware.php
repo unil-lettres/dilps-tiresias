@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Application\Middleware;
 
 use Application\Repository\CardRepository;
-use Ecodev\Felix\Action\AbstractAction;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class CollectionFetcherMiddleware extends AbstractAction implements MiddlewareInterface
+class CollectionFetcherMiddleware extends AbstractMiddleware
 {
     private CardRepository $cardRepository;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\Country;
 use Application\Model\DocumentType;
@@ -19,7 +19,7 @@ class TemplateFactory
         $entityManager = $container->get(EntityManager::class);
         $site = $container->get('site');
 
-        return new TemplateAction(
+        return new TemplateHandler(
             $site,
             $entityManager->getRepository(Domain::class),
             $entityManager->getRepository(Period::class),

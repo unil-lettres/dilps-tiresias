@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
-use Application\Action\TemplateAction;
 use Application\DBAL\Types\PrecisionType;
+use Application\Handler\TemplateHandler;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
 use Application\Model\Collection;
@@ -100,7 +100,7 @@ class Importer
     {
         $col = 1;
         $row = 1;
-        foreach (TemplateAction::HEADERS as $header) {
+        foreach (TemplateHandler::HEADERS as $header) {
             $actual = $sheet->getCellByColumnAndRow($col, $row)->getValue();
             if ($actual !== $header) {
                 $this->throwException($col, $row, 'S\'attend à "' . $header . '", mais a vu "' . $actual . '"');

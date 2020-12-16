@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\Card;
 use Doctrine\ORM\EntityManager;
@@ -16,6 +16,6 @@ class ImageFactory
         $entityManager = $container->get(EntityManager::class);
         $imageResizer = $container->get(ImageResizer::class);
 
-        return new ImageAction($entityManager->getRepository(Card::class), $imageResizer);
+        return new ImageHandler($entityManager->getRepository(Card::class), $imageResizer);
     }
 }

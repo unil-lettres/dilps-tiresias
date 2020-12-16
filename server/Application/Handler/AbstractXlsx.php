@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\User;
 use Application\Stream\TemporaryFile;
@@ -10,9 +10,9 @@ use Laminas\Diactoros\Response;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-abstract class AbstractXlsx implements MiddlewareInterface
+abstract class AbstractXlsx implements RequestHandlerInterface
 {
     protected function createSpreadsheet(string $site): Spreadsheet
     {

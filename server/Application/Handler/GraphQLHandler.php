@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Api\Server;
 use Doctrine\ORM\EntityManager;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GraphQLAction implements MiddlewareInterface
+class GraphQLHandler implements RequestHandlerInterface
 {
     private EntityManager $entityManger;
 
@@ -28,7 +27,7 @@ class GraphQLAction implements MiddlewareInterface
      * Process an incoming server request and return a response, optionally delegating
      * to the next middleware component to create the response.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $server = new Server(true, $this->site);
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\DBAL\Types\PrecisionType;
 use Application\Repository\CountryRepository;
@@ -16,12 +16,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Serve XLSX template file
  */
-class TemplateAction extends AbstractXlsx
+class TemplateHandler extends AbstractXlsx
 {
     const HEADERS = [
 
@@ -74,7 +73,7 @@ class TemplateAction extends AbstractXlsx
     /**
      * Serve multiples cards as PowerPoint file
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $spreadsheet = $this->export();
 

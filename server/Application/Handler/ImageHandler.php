@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
-use Application\Model\Card;
 use Application\Repository\CardRepository;
-use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Handler\AbstractHandler;
 use Ecodev\Felix\Service\ImageResizer;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class ImageAction extends AbstractAction
+class ImageHandler extends AbstractHandler
 {
     private CardRepository $cardRepository;
 
@@ -28,7 +26,7 @@ class ImageAction extends AbstractAction
     /**
      * Serve an image from disk, with optional dynamic resizing
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $id = $request->getAttribute('id');
 

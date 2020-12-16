@@ -2,24 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\Card;
 use Application\Model\User;
 use Application\Stream\TemporaryFile;
-use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Handler\AbstractHandler;
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use ZipArchive;
 
 /**
  * Serve multiples cards as zip file
  */
-class ZipAction extends AbstractAction
+class ZipHandler extends AbstractHandler
 {
     private ImagineInterface $imagine;
 
@@ -45,7 +44,7 @@ class ZipAction extends AbstractAction
     /**
      * Serve multiples cards as zip file
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->includeLegend = (bool) $request->getAttribute('includeLegend', $this->includeLegend);
         $this->maxHeight = (int) $request->getAttribute('maxHeight', $this->maxHeight);

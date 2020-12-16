@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Interop\Container\ContainerInterface;
 
@@ -12,6 +12,6 @@ class XlsxFactory
     {
         $site = $container->get('site');
 
-        return new XlsxAction($site);
+        return new XlsxHandler($site);
     }
 }

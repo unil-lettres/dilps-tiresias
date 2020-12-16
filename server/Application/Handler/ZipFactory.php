@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
@@ -16,6 +16,6 @@ class ZipFactory
         $imageResizer = $container->get(ImageResizer::class);
         $site = $container->get('site');
 
-        return new ZipAction($imageResizer, $imagine, $site);
+        return new ZipHandler($imageResizer, $imagine, $site);
     }
 }

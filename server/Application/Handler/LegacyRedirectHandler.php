@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Application\Middleware;
+namespace Application\Handler;
 
 use Application\Repository\CardRepository;
 use Interop\Container\ContainerInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class LegacyRedirectMiddleware implements MiddlewareInterface
+class LegacyRedirectHandler implements RequestHandlerInterface
 {
-    private \Interop\Container\ContainerInterface $container;
+    private ContainerInterface $container;
 
-    private \Application\Repository\CardRepository $cardRepository;
+    private CardRepository $cardRepository;
 
     public function __construct(CardRepository $cardRepository, ContainerInterface $container)
     {
@@ -24,7 +23,7 @@ class LegacyRedirectMiddleware implements MiddlewareInterface
         $this->cardRepository = $cardRepository;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if (array_key_exists('id', $request->getQueryParams())) {
             $legacyId = $request->getQueryParams()['id'];

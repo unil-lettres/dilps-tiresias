@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Application\Middleware;
+namespace Application\Handler;
 
 use Interop\Container\ContainerInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ShibbolethMiddleware implements MiddlewareInterface
+class ShibbolethHandler implements RequestHandlerInterface
 {
     private ContainerInterface $container;
 
@@ -20,7 +19,7 @@ class ShibbolethMiddleware implements MiddlewareInterface
         $this->container = $container;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // Redirect to specific moodle url if moodle parameter found in the query params
         if (array_key_exists('moodle', $request->getQueryParams())) {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28e63f68ec432b025893267105d1ebbb",
+    "content-hash": "b415d66b44236727c2bca397e29d9803",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1741,16 +1741,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "4.0.3",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "c62580091ea298cbb8f59f4a8e796b192f17c8b0"
+                "reference": "49e3e427e7a6dd439fe07fe1ad380501a0bf0fdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/c62580091ea298cbb8f59f4a8e796b192f17c8b0",
-                "reference": "c62580091ea298cbb8f59f4a8e796b192f17c8b0",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/49e3e427e7a6dd439fe07fe1ad380501a0bf0fdf",
+                "reference": "49e3e427e7a6dd439fe07fe1ad380501a0bf0fdf",
                 "shasum": ""
             },
             "require": {
@@ -1795,9 +1795,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/4.0.3"
+                "source": "https://github.com/Ecodev/felix/tree/5.0.0"
             },
-            "time": "2020-12-14T09:00:46+00:00"
+            "time": "2020-12-16T07:29:24+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",

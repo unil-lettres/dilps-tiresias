@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace ApplicationTest\Action;
+namespace ApplicationTest\Handler;
 
-use Application\Action\TemplateAction;
+use Application\Handler\TemplateHandler;
 use ApplicationTest\Traits\TestWithTransaction;
 use Laminas\Diactoros\ServerRequest;
 
-class TemplateActionTest extends AbstractXlsxAction
+class TemplateHandlerTest extends AbstractXlsxHandler
 {
     use TestWithTransaction;
 
@@ -16,11 +16,11 @@ class TemplateActionTest extends AbstractXlsxAction
     {
         global $container;
 
-        /** @var TemplateAction $action */
-        $action = $container->get(TemplateAction::class);
+        /** @var TemplateHandler $handler */
+        $handler = $container->get(TemplateHandler::class);
         $request = new ServerRequest();
 
-        $spreadsheet = $this->getSpreadsheet($action, $request);
+        $spreadsheet = $this->getSpreadsheet($handler, $request);
 
         self::assertSame('Fichier image (avec ou sans extension)', $spreadsheet->getActiveSheet()->getCell('A1')->getValue());
     }

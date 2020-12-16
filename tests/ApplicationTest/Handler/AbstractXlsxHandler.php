@@ -2,26 +2,24 @@
 
 declare(strict_types=1);
 
-namespace ApplicationTest\Action;
+namespace ApplicationTest\Handler;
 
 use ApplicationTest\Traits\TestWithTransaction;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ZipArchive;
 
-class AbstractXlsxAction extends TestCase
+class AbstractXlsxHandler extends TestCase
 {
     use TestWithTransaction;
 
-    protected function getSpreadsheet(MiddlewareInterface $action, ServerRequestInterface $request): Spreadsheet
+    protected function getSpreadsheet(RequestHandlerInterface $handler, ServerRequestInterface $request): Spreadsheet
     {
         // Generate a response containing a spreadsheet
-        $handler = $this->createMock(RequestHandlerInterface::class);
-        $response = $action->process($request, $handler);
+        $response = $handler->handle($request);
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));

@@ -36,7 +36,7 @@
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.2",
         "creof/doctrine2-spatial": "^1.2",
-        "ecodev/felix": "^4.0",
+        "ecodev/felix": "^5.0",
         "ecodev/graphql-upload": "^6.0",
         "laminas/laminas-component-installer": "^2.3",
         "laminas/laminas-config-aggregator": "^1.3",

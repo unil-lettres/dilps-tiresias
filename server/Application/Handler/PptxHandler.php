@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\Card;
 use Application\Model\User;
 use Application\Stream\TemporaryFile;
-use Ecodev\Felix\Action\AbstractAction;
+use Ecodev\Felix\Handler\AbstractHandler;
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Laminas\Diactoros\Response;
@@ -21,12 +21,11 @@ use PhpOffice\PhpPresentation\Style\Color;
 use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Serve multiples cards as PowerPoint file
  */
-class PptxAction extends AbstractAction
+class PptxHandler extends AbstractHandler
 {
     private const MARGIN = 10;
     private const LEGEND_HEIGHT = 75;
@@ -53,7 +52,7 @@ class PptxAction extends AbstractAction
     /**
      * Serve multiples cards as PowerPoint file
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->textColor = $request->getAttribute('textColor', $this->textColor);
         $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);

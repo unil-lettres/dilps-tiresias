@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ApplicationTest\Action;
+namespace ApplicationTest\Handler;
 
-use Application\Action\XlsxAction;
 use Application\DBAL\Types\PrecisionType;
+use Application\Handler\XlsxHandler;
 use Application\Model\Card;
 use Application\Model\Country;
 use Application\Model\DocumentType;
@@ -14,7 +14,7 @@ use Application\Model\Period;
 use ApplicationTest\Traits\TestWithTransaction;
 use Laminas\Diactoros\ServerRequest;
 
-class XlsxActionTest extends AbstractXlsxAction
+class XlsxHandlerTest extends AbstractXlsxHandler
 {
     use TestWithTransaction;
 
@@ -22,8 +22,8 @@ class XlsxActionTest extends AbstractXlsxAction
     {
         global $container;
 
-        /** @var XlsxAction $action */
-        $action = $container->get(XlsxAction::class);
+        /** @var XlsxHandler $handler */
+        $handler = $container->get(XlsxHandler::class);
         $request = new ServerRequest();
 
         $card1 = new Card();
@@ -48,7 +48,7 @@ class XlsxActionTest extends AbstractXlsxAction
         $card2->setPrecision(PrecisionType::BUILDING);
 
         $request = $request->withAttribute('cards', [$card1, $card2]);
-        $spreadsheet = $this->getSpreadsheet($action, $request);
+        $spreadsheet = $this->getSpreadsheet($handler, $request);
 
         $sheet = $spreadsheet->getActiveSheet();
         self::assertSame('Id', $sheet->getCell('A1')->getValue());

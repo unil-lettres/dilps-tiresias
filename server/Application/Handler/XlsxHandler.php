@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Action;
+namespace Application\Handler;
 
 use Application\Model\AbstractModel;
 use Application\Model\Card;
@@ -13,12 +13,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Serve multiples cards as XLSX file
  */
-class XlsxAction extends AbstractXlsx
+class XlsxHandler extends AbstractXlsx
 {
     private int $row = 1;
 
@@ -34,7 +33,7 @@ class XlsxAction extends AbstractXlsx
     /**
      * Serve multiples cards as PowerPoint file
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $cards = $request->getAttribute('cards');
         $spreadsheet = $this->export($cards);
