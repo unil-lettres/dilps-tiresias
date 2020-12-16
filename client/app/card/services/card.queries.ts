@@ -29,6 +29,7 @@ export const cardDetailsFragment = gql`
         table
         isbn
         comment
+        corpus
         rights
         muserisUrl
         muserisCote

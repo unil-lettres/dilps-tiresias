@@ -126,6 +126,7 @@ export class CardService extends AbstractContextualizedService<
             table: '',
             isbn: '',
             comment: '',
+            corpus: '',
             rights: '',
             muserisUrl: '',
             muserisCote: '',

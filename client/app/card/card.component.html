@@ -252,6 +252,25 @@
                     ></quill-editor>
                 </div>
 
+                <mat-form-field *ngIf="edit || !!model.corpus">
+                    <mat-label>Corpus</mat-label>
+                    <textarea
+                        [(ngModel)]="model.corpus"
+                        [readonly]="!edit"
+                        matInput
+                        maxlength="255"
+                        matAutosizeMinRows="1"
+                        [matTextareaAutosize]="true"
+                    ></textarea>
+                    <mat-hint
+                        align="end"
+                        *ngIf="edit && model.corpus?.length > 200"
+                        [ngClass]="{strong: model.corpus?.length >= 255}"
+                    >
+                        {{ model.corpus.length }} / 255
+                    </mat-hint>
+                </mat-form-field>
+
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!artists?.length)"
                     (modelChange)="model.artists = $event"
