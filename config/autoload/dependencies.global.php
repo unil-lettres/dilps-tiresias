@@ -51,6 +51,7 @@ return [
             \Ecodev\Felix\Log\Writer\Db::class => \Application\Log\DbWriterFactory::class,
             \Ecodev\Felix\Log\EventCompleter::class => \Ecodev\Felix\Log\EventCompleterFactory::class,
             \Ecodev\Felix\Log\Writer\Mail::class => \Ecodev\Felix\Log\Writer\MailFactory::class,
+            \Ecodev\Felix\Action\FileAction::class => \Application\Action\FileFactory::class,
         ],
     ],
 ];

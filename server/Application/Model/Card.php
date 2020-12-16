@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\FileException;
 use Application\Repository\ArtistRepository;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
@@ -707,11 +708,12 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      */
     public function setFile(UploadedFileInterface $file): void
     {
+        $this->traitSetFile($file);
+
         try {
-            $this->traitSetFile($file);
             $this->readFileInfo();
         } catch (Throwable $e) {
-            throw new \Ecodev\Felix\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
+            throw new FileException($file, $e);
         }
     }
 

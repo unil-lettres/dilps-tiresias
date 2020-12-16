@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -54,7 +54,7 @@ import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
-import {NaturalFileService} from '@ecodev/natural';
+import {FileSelection} from '@ecodev/natural';
 
 export function cardToCardInput(fetchedModel: Card_card): CardInput & {id?: string} {
     return Object.assign({}, fetchedModel, {
@@ -67,9 +67,8 @@ export function cardToCardInput(fetchedModel: Card_card): CardInput & {id?: stri
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
-    providers: [NaturalFileService],
 })
-export class CardComponent implements OnInit, OnChanges, OnDestroy {
+export class CardComponent implements OnInit, OnChanges {
     /**
      * The card as input used for the form and mutation.
      *
@@ -267,12 +266,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     public edit = false;
 
     /**
-     * Cache for upload subscription
-     * Usefull for (de)activation toggle
-     */
-    private uploadSub;
-
-    /**
      * Sorted list collections by their hierarchicNames
      */
     public sortedCollections: Card_card_collections[] = [];
@@ -298,7 +291,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         public domainService: DomainService,
         public antiqueNameService: AntiqueNameService,
         public periodService: PeriodService,
-        private naturalFileService: NaturalFileService,
         private dialog: MatDialog,
         private userService: UserService,
         private statisticService: StatisticService,
@@ -307,7 +299,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
     @Input()
     set editable(val: boolean) {
         this.edit = val;
-        this.updateUploadWatching();
     }
 
     public updateFormValidity(): void {
@@ -349,7 +340,6 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
             });
         }
 
-        this.updateUploadWatching();
         this.statisticService.recordDetail();
     }
 
@@ -357,37 +347,15 @@ export class CardComponent implements OnInit, OnChanges, OnDestroy {
         this.initCard();
     }
 
-    public ngOnDestroy(): void {
-        this.unwatchUpload();
-    }
-
     public toggleEdit(): void {
         this.edit = !this.edit;
-        this.updateUploadWatching();
     }
 
-    public updateUploadWatching(): void {
-        if (this.edit) {
-            this.watchUpload();
-        } else {
-            this.unwatchUpload();
-        }
-    }
-
-    private watchUpload(): void {
-        this.uploadSub = this.naturalFileService.filesChanged.subscribe(selection => {
-            const files = selection.valid;
-            const file = files[files.length - 1];
-            this.model.file = file;
-            this.getBase64(file);
-        });
-    }
-
-    private unwatchUpload(): void {
-        if (this.uploadSub) {
-            this.uploadSub.unsubscribe();
-            this.uploadSub = null;
-        }
+    public dropImage(selection: FileSelection): void {
+        const files = selection.valid;
+        const file = files[files.length - 1];
+        this.model.file = file;
+        this.getBase64(file);
     }
 
     public initCard(): void {

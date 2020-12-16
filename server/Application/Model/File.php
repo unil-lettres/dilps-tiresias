@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Annotation as API;
@@ -47,7 +48,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
     }
 
     /**
-     * Set the image file
+     * Set the file
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
      */
@@ -55,15 +56,19 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
     {
         try {
             $this->traitSetFile($file);
-            $this->setName($file->getClientFilename());
+
+            // Default to filename as name
+            if (!$this->getName()) {
+                $this->setName($file->getClientFilename());
+            }
         } catch (Throwable $e) {
-            throw new \Ecodev\Felix\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
+            throw new FileException($file, $e);
         }
     }
 
     protected function getAcceptedMimeTypes(): array
     {
-        // This list should be kept in sync with client
+        // This list should be kept in sync with FilesComponent.accept
         return [
             'application/msword',
             'application/pdf',

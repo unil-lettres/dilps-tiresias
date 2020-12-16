@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use GraphQL\Doctrine\Annotation as API;
 use Psr\Http\Message\UploadedFileInterface;
+use Throwable;
 
 /**
  * Trait for all objects with a name
@@ -28,15 +30,19 @@ trait HasImage
      */
     public function setFile(UploadedFileInterface $file): void
     {
-        $this->generateUniqueFilename($file->getClientFilename());
+        try {
+            $this->generateUniqueFilename($file->getClientFilename());
 
-        $path = $this->getPath();
-        if (file_exists($path)) {
-            throw new Exception('A file already exist with the same name: ' . $this->getFilename());
+            $path = $this->getPath();
+            if (file_exists($path)) {
+                throw new Exception('A file already exist with the same name: ' . $this->getFilename());
+            }
+            $file->moveTo($path);
+
+            $this->validateMimeType();
+        } catch (Throwable $e) {
+            throw new FileException($file, $e);
         }
-        $file->moveTo($path);
-
-        $this->validateMimeType();
     }
 
     /**

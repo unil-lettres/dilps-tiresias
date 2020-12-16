@@ -1,4 +1,11 @@
-<div *ngIf="model" naturalFileDrop fxFlex fxLayout="row">
+<div
+    *ngIf="model"
+    naturalFileDrop
+    [fileSelectionDisabled]="!edit"
+    (filesChange)="dropImage($event)"
+    fxFlex
+    fxLayout="row"
+>
     <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
     <div [ngClass]="{containerWithToolbar: showToolbar}" fxFlex="400px" fxLayout="column">
         <mat-toolbar
@@ -795,6 +802,8 @@
                         </ng-template>
                     </natural-relations>
                 </div>
+
+                <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>
 
                 <div *ngIf="isDilps && collectionCopyrights">
                     <div class="mat-title">Droits d’utilisation</div>

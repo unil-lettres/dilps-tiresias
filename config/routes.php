@@ -48,6 +48,10 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Application\Action\ImageAction::class,
     ], 'image');
 
+    $app->get('/file/{id:\d+}[/{name}]', [
+        \Ecodev\Felix\Action\FileAction::class,
+    ], 'file');
+
     $app->get('/pptx/{ids:\d+[,\d]*}[/{backgroundColor:[\da-fA-F]{8}}[/{textColor:[\da-fA-F]{8}}]]', [
         \Application\Middleware\CardsFetcherMiddleware::class,
         \Application\Action\PptxAction::class,

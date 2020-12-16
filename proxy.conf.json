@@ -7,6 +7,10 @@
         "target": "https://dilps.lan",
         "secure": false
     },
+    "/file": {
+        "target": "https://dilps.lan",
+        "secure": false
+    },
     "/news-image": {
         "target": "https://dilps.lan",
         "secure": false

@@ -98,6 +98,10 @@ abstract class Standard
                         Helper::hydrate($object, ['site' => $input['site']]);
                     }
 
+                    if ($input['card'] ?? false) {
+                        Helper::hydrate($object, ['card' => $input['card']]);
+                    }
+
                     // Check ACL
                     Helper::throwIfDenied($object, 'create');
 
