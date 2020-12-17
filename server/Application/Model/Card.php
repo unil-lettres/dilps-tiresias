@@ -11,6 +11,7 @@ use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
 use Application\Traits\HasCode;
+use Application\Traits\HasFileSize;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasParentInterface;
@@ -69,6 +70,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     use HasValidation;
     use HasYearRange;
     use HasSite;
+    use HasFileSize;
     use HasImage {
         setFile as traitSetFile;
     }
@@ -84,12 +86,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      * @ORM\Column(type="CardVisibility", options={"default" = Card::VISIBILITY_PRIVATE})
      */
     private $visibility = self::VISIBILITY_PRIVATE;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $fileSize = 0;
 
     /**
      * @var int
@@ -645,24 +641,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     public function datingRemoved(Dating $dating): void
     {
         $this->datings->removeElement($dating);
-    }
-
-    /**
-     * Get file size in bytes
-     */
-    public function getFileSize(): int
-    {
-        return $this->fileSize;
-    }
-
-    /**
-     * Set file size in bytes
-     *
-     * @API\Exclude
-     */
-    public function setFileSize(int $fileSize): void
-    {
-        $this->fileSize = $fileSize;
     }
 
     /**
