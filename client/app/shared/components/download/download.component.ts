@@ -7,17 +7,11 @@ import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
 
-export type DownloadComponentData =
-    | {
-          denyLegendsDownload: boolean;
-          images: Cards_cards_items[];
-          collection?: never;
-      }
-    | {
-          denyLegendsDownload: boolean;
-          images?: never;
-          collection: FakeCollection;
-      };
+export type DownloadComponentData = {
+    denyLegendsDownload: boolean;
+    collections: FakeCollection[];
+    cards: Cards_cards_items[];
+};
 
 @Component({
     selector: 'app-download',
@@ -53,11 +47,8 @@ export class DownloadComponent implements OnInit {
         this.denyLegendsDownload = data.denyLegendsDownload;
         this.input.includeLegend = !this.denyLegendsDownload;
 
-        if (data.collection) {
-            this.input.collections.push(data.collection.id);
-        }
-
-        this.input.cards.push(...data.images.map(card => card.id));
+        this.input.collections.push(...data.collections.map(collection => collection.id));
+        this.input.cards.push(...data.cards.map(card => card.id));
     }
 
     public ngOnInit(): void {}

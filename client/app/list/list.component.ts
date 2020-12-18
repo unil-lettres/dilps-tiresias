@@ -310,11 +310,11 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     }
 
     public downloadSelection(selection: Cards_cards_items[]): void {
-        this.download({images: selection});
+        this.download({cards: selection});
     }
 
     public downloadCollection(collection): void {
-        this.download({collection});
+        this.download({collections: [collection]});
     }
 
     public unlinkFromCollection(selection: Cards_cards_items[]): void {
@@ -511,10 +511,15 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         );
     }
 
-    private download(selection: Partial<DownloadComponentData>): void {
-        const data = merge({denyLegendsDownload: !this.user}, selection);
+    private download(selection: Partial<Pick<DownloadComponentData, 'cards' | 'collections'>>): void {
+        const defaultValue: DownloadComponentData = {
+            denyLegendsDownload: !this.user,
+            cards: [],
+            collections: [],
+        };
+        const data = merge(defaultValue, selection);
 
-        this.dialog.open(DownloadComponent, {
+        this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
             width: '600px',
             data,
         });

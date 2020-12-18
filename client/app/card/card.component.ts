@@ -26,7 +26,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {DownloadComponent} from '../shared/components/download/download.component';
+import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {
     Card_card,
@@ -559,10 +559,11 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public download(card): void {
-        this.dialog.open(DownloadComponent, {
+        this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
             width: '600px',
             data: {
-                images: [card],
+                cards: [card],
+                collections: [],
                 denyLegendsDownload: !this.user,
             },
         });
