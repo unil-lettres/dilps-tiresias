@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
 import {Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
@@ -18,7 +18,7 @@ export type DownloadComponentData = {
     templateUrl: './download.component.html',
     styleUrls: ['./download.component.scss'],
 })
-export class DownloadComponent implements OnInit {
+export class DownloadComponent {
     public sizes = [
         {
             label: 'maximum',
@@ -50,8 +50,6 @@ export class DownloadComponent implements OnInit {
         this.input.collections.push(...data.collections.map(collection => collection.id));
         this.input.cards.push(...data.cards.map(card => card.id));
     }
-
-    public ngOnInit(): void {}
 
     public downloadPowerPoint(): void {
         this.input.format = ExportFormat.pptx;
