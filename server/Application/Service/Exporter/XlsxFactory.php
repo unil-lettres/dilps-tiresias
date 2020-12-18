@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Handler;
+namespace Application\Service\Exporter;
 
 use Interop\Container\ContainerInterface;
 
@@ -10,8 +10,6 @@ class XlsxFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $site = $container->get('site');
-
-        return new XlsxHandler($site);
+        return new Xlsx();
     }
 }

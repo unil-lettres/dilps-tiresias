@@ -1,8 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
-import {Cards_cards_items} from '../../generated-types';
+import {Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
+import {ExportService} from '../../../exports/services/export.service';
+import {SITE} from '../../../app.config';
+import {AlertService} from '../alert/alert.service';
 
 export type DownloadComponentData =
     | {
@@ -22,12 +25,10 @@ export type DownloadComponentData =
     styleUrls: ['./download.component.scss'],
 })
 export class DownloadComponent implements OnInit {
-    public includeLegend = true;
-    public size = '';
     public sizes = [
         {
             label: 'maximum',
-            value: '',
+            value: 0,
         },
         {
             label: 'moyen (1600 x 1200)',
@@ -39,57 +40,55 @@ export class DownloadComponent implements OnInit {
         },
     ];
 
-    public backgroundColor = '#000000';
-    public textColor = '#FFFFFF';
     public denyLegendsDownload = false;
+    public readonly input: CreateExportInput = this.exportService.getDefaultForServer();
 
     constructor(
         private dialogRef: MatDialogRef<ArtistComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DownloadComponentData,
+        @Inject(MAT_DIALOG_DATA) data: DownloadComponentData,
+        @Inject(SITE) private site: Site,
+        private readonly alertService: AlertService,
+        private readonly exportService: ExportService,
     ) {
         this.denyLegendsDownload = data.denyLegendsDownload;
-        this.includeLegend = !this.denyLegendsDownload;
+        this.input.includeLegend = !this.denyLegendsDownload;
+
+        if (data.collection) {
+            this.input.collections.push(data.collection.id);
+        }
+
+        this.input.cards.push(...data.images.map(card => card.id));
     }
 
     public ngOnInit(): void {}
 
     public downloadPowerPoint(): void {
-        const url =
-            '/pptx/' + this.getIds() + '/' + this.toRgba(this.backgroundColor) + '/' + this.toRgba(this.textColor);
-        (window.document.location as any) = url;
-        this.dialogRef.close();
+        this.input.format = ExportFormat.pptx;
+        this.download();
     }
 
     public downloadExcel(): void {
-        const url = '/xlsx/' + this.getIds();
-        (window.document.location as any) = url;
-        this.dialogRef.close();
+        this.input.format = ExportFormat.xlsx;
+        this.download();
     }
 
     public downloadZip(): void {
-        const url =
-            '/zip/' + this.getIds() + '/' + (this.includeLegend ? '1' : '0') + (this.size ? '/' + this.size : '');
-        (window.document.location as any) = url;
+        this.input.format = ExportFormat.zip;
+        this.download();
+    }
+
+    private download(): void {
+        this.exportService.create(this.input).subscribe(newExport => {
+            if (newExport.filename) {
+                const url = '/export/' + newExport.filename;
+                window.document.location.href = url;
+            } else {
+                this.alertService.info(
+                    'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
+                    8000,
+                );
+            }
+        });
         this.dialogRef.close();
-    }
-
-    private getIds(): string {
-        if (this.data.collection) {
-            return 'collection/' + this.data.collection.id;
-        }
-
-        return this.data.images.map(card => card.id).join(',');
-    }
-
-    /**
-     * Convert "#AABBCC" to "FFAABBCC"
-     */
-    private toRgba(rgb: string): string {
-        let result = rgb.replace('#', '');
-        if (result.length === 6) {
-            result = 'FF' + result;
-        }
-
-        return result;
     }
 }

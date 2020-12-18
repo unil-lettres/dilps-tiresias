@@ -27,6 +27,7 @@ class TypesFactory
             \Application\Api\Enum\SiteType::class,
             \Application\Api\Enum\UserRoleType::class,
             \Application\Api\Enum\UserTypeType::class,
+            \Application\Api\Input\CreateExportInputType::class,
             \Ecodev\Felix\Api\Input\PaginationInputType::class,
             \Application\Api\MutationType::class,
             \Application\Api\Output\GlobalPermissionsListType::class,

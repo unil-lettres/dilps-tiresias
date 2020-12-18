@@ -2,65 +2,55 @@
 
 declare(strict_types=1);
 
-namespace Application\Handler;
+namespace Application\Service\Exporter;
 
+use Application\Handler\TemplateHandler;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
 use Application\Model\Country;
 use Application\Model\DocumentType;
+use Application\Model\Export;
 use Application\Traits\HasParentInterface;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Doctrine\Common\Collections\Collection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Serve multiples cards as XLSX file
+ * Export multiples cards as XLSX file
  */
-class XlsxHandler extends AbstractXlsx
+class Xlsx implements Writer
 {
     private int $row = 1;
 
     private int $col = 1;
 
-    private string $site;
+    private Export $export;
 
-    public function __construct(string $site)
+    public function getExtension(): string
     {
-        $this->site = $site;
+        return 'xlsx';
     }
 
-    /**
-     * Serve multiples cards as PowerPoint file
-     */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function write(Export $export, string $title): void
     {
-        $cards = $request->getAttribute('cards');
-        $spreadsheet = $this->export($cards);
+        $this->row = 1;
+        $this->col = 1;
+        $this->export = $export;
 
-        return $this->createResponse($spreadsheet);
-    }
-
-    /**
-     * Export all cards into a presentation
-     *
-     * @param Card[] $cards
-     */
-    private function export(array $cards): Spreadsheet
-    {
-        $spreadsheet = $this->createSpreadsheet($this->site);
+        $spreadsheet = TemplateHandler::createSpreadsheet($export->getCreator(), $export->getSite(), $title);
         $sheet = $spreadsheet->getActiveSheet();
 
         $this->headers($sheet);
 
-        foreach ($cards as $card) {
+        foreach ($export->getCards() as $card) {
             $this->exportCard($sheet, $card);
         }
 
         $style = $sheet->getStyleByColumnAndRow(1, 1, $this->col, $this->row);
         $style->getAlignment()->setWrapText(true);
 
-        return $spreadsheet;
+        // Write to disk
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save($export->getPath());
     }
 
     private function headers(Worksheet $sheet): void
@@ -132,12 +122,7 @@ class XlsxHandler extends AbstractXlsx
         return $model ? $model->getName() : '';
     }
 
-    private function nullableFullName(?HasParentInterface $model): string
-    {
-        return $model ? $model->getHierarchicName() : '';
-    }
-
-    private function collection(\Doctrine\Common\Collections\Collection $collection): string
+    private function collection(Collection $collection): string
     {
         $lines = $collection->map(function ($model) {
             if ($model instanceof HasParentInterface) {

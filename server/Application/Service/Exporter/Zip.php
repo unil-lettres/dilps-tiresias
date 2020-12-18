@@ -2,85 +2,62 @@
 
 declare(strict_types=1);
 
-namespace Application\Handler;
+namespace Application\Service\Exporter;
 
 use Application\Model\Card;
+use Application\Model\Export;
 use Application\Model\User;
-use Application\Stream\TemporaryFile;
-use Ecodev\Felix\Handler\AbstractHandler;
+use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
-use Laminas\Diactoros\Response;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use ZipArchive;
 
 /**
- * Serve multiples cards as zip file
+ * Export multiples cards as zip file
  */
-class ZipHandler extends AbstractHandler
+class Zip implements Writer
 {
     private ImagineInterface $imagine;
 
     private ImageResizer $imageResizer;
 
-    private string $site;
-
-    private bool $includeLegend = true;
-
-    private ?int $maxHeight = null;
-
     private ?ZipArchive $zip = null;
 
     private int $fileIndex = 0;
 
-    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
+    private Export $export;
+
+    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine)
     {
         $this->imageResizer = $imageResizer;
         $this->imagine = $imagine;
-        $this->site = $site;
     }
 
-    /**
-     * Serve multiples cards as zip file
-     */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function getExtension(): string
     {
-        $this->includeLegend = (bool) $request->getAttribute('includeLegend', $this->includeLegend);
-        $this->maxHeight = (int) $request->getAttribute('maxHeight', $this->maxHeight);
-        $cards = $request->getAttribute('cards');
-
-        // Write to disk
-        $tempFile = tempnam('data/tmp/', 'zip');
-        $title = $this->site . '_' . date('c', time());
-        $this->export($cards, $tempFile);
-
-        $headers = [
-            'content-type' => 'application/zip',
-            'content-length' => filesize($tempFile),
-            'content-disposition' => 'inline; filename="' . $title . '.zip"',
-        ];
-        $stream = new TemporaryFile($tempFile);
-        $response = new Response($stream, 200, $headers);
-
-        return $response;
+        return 'zip';
     }
 
-    /**
-     * Export all cards into a zip file
-     *
-     * @param Card[] $cards
-     */
-    private function export(array $cards, string $file): void
+    public function write(Export $export, string $title): void
     {
+        $this->fileIndex = 0;
+        $this->export = $export;
         $this->zip = new ZipArchive();
-        $this->zip->open($file, ZipArchive::OVERWRITE);
+        $result = $this->zip->open($export->getPath(), ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-        foreach ($cards as $card) {
+        if ($result !== true) {
+            throw new Exception($this->zip->getStatusString());
+        }
+
+        foreach ($export->getCards() as $card) {
             $image = $this->insertImage($card);
-            if ($this->includeLegend) {
+            if ($this->export->isIncludeLegend()) {
                 $this->insertLegend($card, $image);
             }
+        }
+
+        if ($this->fileIndex === 0) {
+            $this->zip->addFromString('readme.txt', "Aucune fiche n'était exportable. Probablement parce qu'aucune fiche n'avait d'images.");
         }
 
         $this->zip->close();
@@ -93,8 +70,8 @@ class ZipHandler extends AbstractHandler
             return '';
         }
 
-        if ($this->maxHeight) {
-            $path = $this->imageResizer->resize($card, $this->maxHeight, false);
+        if ($this->export->getMaxHeight()) {
+            $path = $this->imageResizer->resize($card, $this->export->getMaxHeight(), false);
         } else {
             $path = $card->getPath();
         }
@@ -116,7 +93,7 @@ class ZipHandler extends AbstractHandler
         $html .= '<!DOCTYPE html>';
         $html .= '<html lang="fr">';
         $html .= '<head>';
-        $html .= '<title>Base de données ' . $this->site . '</title>';
+        $html .= '<title>Base de données ' . $this->export->getSite() . '</title>';
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         $html .= '<meta name="author" content="' . (User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
         $html .= '<style>';

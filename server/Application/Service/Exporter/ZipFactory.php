@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application\Handler;
+namespace Application\Service\Exporter;
 
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
@@ -14,8 +14,7 @@ class ZipFactory
     {
         $imagine = $container->get(ImagineInterface::class);
         $imageResizer = $container->get(ImageResizer::class);
-        $site = $container->get('site');
 
-        return new ZipHandler($imageResizer, $imagine, $site);
+        return new Zip($imageResizer, $imagine);
     }
 }

@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Application\Handler;
+namespace Application\Service\Exporter;
 
 use Application\Model\Card;
+use Application\Model\Export;
 use Application\Model\User;
-use Application\Stream\TemporaryFile;
-use Ecodev\Felix\Handler\AbstractHandler;
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
-use Laminas\Diactoros\Response;
 use PhpOffice\PhpPresentation\DocumentLayout;
 use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Shape\RichText;
@@ -19,13 +17,11 @@ use PhpOffice\PhpPresentation\Slide;
 use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Style\Color;
 use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Serve multiples cards as PowerPoint file
+ * Export multiples cards as PowerPoint file
  */
-class PptxHandler extends AbstractHandler
+class Pptx implements Writer
 {
     private const MARGIN = 10;
     private const LEGEND_HEIGHT = 75;
@@ -34,75 +30,53 @@ class PptxHandler extends AbstractHandler
 
     private ImageResizer $imageResizer;
 
-    private string $site;
-
     private bool $needSeparator = false;
 
     private string $textColor = Color::COLOR_WHITE;
 
     private string $backgroundColor = Color::COLOR_BLACK;
 
-    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine, string $site)
+    private Export $export;
+
+    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine)
     {
         $this->imageResizer = $imageResizer;
         $this->imagine = $imagine;
-        $this->site = $site;
     }
 
-    /**
-     * Serve multiples cards as PowerPoint file
-     */
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function getExtension(): string
     {
-        $this->textColor = $request->getAttribute('textColor', $this->textColor);
-        $this->backgroundColor = $request->getAttribute('backgroundColor', $this->backgroundColor);
-        $cards = $request->getAttribute('cards');
-
-        $title = $this->site . '_' . date('c', time());
-        $presentation = $this->export($cards, $title);
-
-        // Write to disk
-        $tempFile = tempnam('data/tmp/', 'pptx');
-        $writer = new PowerPoint2007($presentation);
-        $writer->save($tempFile);
-
-        $headers = [
-            'content-type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            'content-length' => filesize($tempFile),
-            'content-disposition' => 'inline; filename="' . $title . '.pptx"',
-        ];
-        $stream = new TemporaryFile($tempFile);
-        $response = new Response($stream, 200, $headers);
-
-        return $response;
+        return 'pptx';
     }
 
-    /**
-     * Export all cards into a presentation
-     *
-     * @param Card[] $cards
-     */
-    private function export(array $cards, string $title): PhpPresentation
+    public function write(Export $export, string $title): void
     {
+        $this->needSeparator = false;
+        $this->export = $export;
+        $this->textColor = str_replace('#', 'FF', $export->getTextColor());
+        $this->backgroundColor = str_replace('#', 'FF', $export->getBackgroundColor());
+
         $presentation = new PhpPresentation();
 
         // Set a few meta data
         $properties = $presentation->getDocumentProperties();
         $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
-        $properties->setLastModifiedBy($this->site);
+        $properties->setLastModifiedBy($this->export->getSite());
         $properties->setTitle($title);
-        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->site);
+        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->export->getSite());
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
         $properties->setKeywords('Université de Lausanne');
 
         // Remove default slide
         $presentation->removeSlideByIndex(0);
 
-        foreach ($cards as $card) {
+        foreach ($export->getCards() as $card) {
             $this->exportCard($presentation, $card);
         }
 
-        return $presentation;
+        // Write to disk
+        $writer = new PowerPoint2007($presentation);
+        $writer->save($this->export->getPath());
     }
 
     private function exportCard(PhpPresentation $presentation, Card $card): void

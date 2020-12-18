@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
-use Application\Model\Card;
+use Application\Api\Input\CreateExportInputType;
 use Application\Model\Export;
 use Application\Repository\ExportRepository;
+use Application\Service\Exporter\Exporter;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use Ecodev\Felix\Utility;
 use GraphQL\Type\Definition\Type;
@@ -24,15 +25,18 @@ class CreateExport implements FieldInterface
             'type' => Type::nonNull(_types()->getOutput(Export::class)),
             'description' => 'Create a new export',
             'args' => [
-                'input' => Type::nonNull(_types()->getInput(Export::class)),
-                'cards' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getId(Card::class)))),
+                'input' => Type::nonNull(_types()->get(CreateExportInputType::class)),
             ],
             'resolve' => function (array $root, array $args): Export {
                 // Check ACL
                 $object = new Export();
+                $input = $args['input'];
+
+                $collectionIds = Utility::modelToId($input['collections']);
+                $cardIds = Utility::modelToId($input['cards']);
+                unset($input['collections'], $input['cards']);
 
                 // Be sure that site is set first
-                $input = $args['input'];
                 Helper::hydrate($object, ['site' => $input['site']]);
 
                 // Check ACL
@@ -45,13 +49,20 @@ class CreateExport implements FieldInterface
                 _em()->flush();
 
                 // Actually inject all selected cards into export (either hand-picked or via collection)
-                $cardIds = Utility::modelToId($args['cards']);
                 /** @var ExportRepository $exportRepository */
                 $exportRepository = _em()->getRepository(Export::class);
-                $cardCount = $exportRepository->updateCards($object, $cardIds);
+                $cardCount = $exportRepository->updateCards($object, $collectionIds, $cardIds);
 
+                // Do small export right now
                 if ($cardCount < 200) {
-                    // TODO export now
+                    // Refresh object so we can properly load card from DB
+                    _em()->refresh($object);
+
+                    global $container;
+
+                    /** @var Exporter $exporter */
+                    $exporter = $container->get(Exporter::class);
+                    $exporter->export($object);
                 } else {
                     // TODO export async
                     $a = 1;

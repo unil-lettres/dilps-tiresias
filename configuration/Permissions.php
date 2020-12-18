@@ -34,6 +34,11 @@ return [
         'recursive' => false,
     ],
     [
+        'path' => 'htdocs/export',
+        'permissions' => '0770',
+        'recursive' => false,
+    ],
+    [
         'path' => 'bin/build.sh',
         'permissions' => '0770',
     ],

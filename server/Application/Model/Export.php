@@ -9,6 +9,7 @@ use Application\DBAL\Types\ExportStateType;
 use Application\Traits\HasFileSize;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
@@ -20,6 +21,8 @@ use GraphQL\Doctrine\Annotation as API;
  */
 class Export extends AbstractModel implements HasSiteInterface
 {
+    private const EXPORT_PATH = 'htdocs/export/';
+
     use HasSite;
     use HasFileSize;
 
@@ -31,9 +34,9 @@ class Export extends AbstractModel implements HasSiteInterface
      *
      * @var int
      *
-     * @ORM\Column(type="integer", options={"unsigned" = true})
+     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $cardCount;
+    private $cardCount = 0;
 
     /**
      * @var string
@@ -84,17 +87,14 @@ class Export extends AbstractModel implements HasSiteInterface
     private $backgroundColor = '#000000';
 
     /**
-     * The collection exported. This is only for informative purpose and only `cards`
+     * The collections exported. This is only for informative purpose and only `cards`
      * contains the real cards that will be exported.
      *
-     * @var null|Collection
+     * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Collection")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
+     * @ORM\ManyToMany(targetEntity="Collection")
      */
-    private $collection;
+    private $collections;
 
     /**
      * All cards to export, either picked one-by-one, or selected via a collection.
@@ -105,9 +105,25 @@ class Export extends AbstractModel implements HasSiteInterface
      */
     private $cards;
 
+    public function __construct()
+    {
+        $this->collections = new ArrayCollection();
+        $this->cards = new ArrayCollection();
+    }
+
     public function getCardCount(): int
     {
         return $this->cardCount;
+    }
+
+    /**
+     * Get absolute path to export on disk
+     *
+     * @API\Exclude
+     */
+    public function getPath(): string
+    {
+        return realpath('.') . '/' . self::EXPORT_PATH . $this->getFilename();
     }
 
     public function getFilename(): string
@@ -207,17 +223,18 @@ class Export extends AbstractModel implements HasSiteInterface
         $this->backgroundColor = $backgroundColor;
     }
 
-    public function getCollection(): ?Collection
+    /**
+     * @API\Exclude
+     */
+    public function getCollections(): DoctrineCollection
     {
-        return $this->collection;
-    }
-
-    public function setCollection(?Collection $collection): void
-    {
-        $this->collection = $collection;
+        return $this->collections;
     }
 
     /**
+     * This must **never** be exposed through API because it might contains thousands of
+     * objects and our API has no way paginate it.
+     *
      * @API\Exclude
      */
     public function getCards(): DoctrineCollection

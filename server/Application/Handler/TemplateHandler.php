@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Application\Handler;
 
 use Application\DBAL\Types\PrecisionType;
+use Application\Model\User;
 use Application\Repository\CountryRepository;
 use Application\Repository\DocumentTypeRepository;
 use Application\Repository\DomainRepository;
 use Application\Repository\MaterialRepository;
 use Application\Repository\PeriodRepository;
+use Application\Stream\TemporaryFile;
+use Laminas\Diactoros\Response;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 use PhpOffice\PhpSpreadsheet\NamedRange;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -85,7 +89,9 @@ class TemplateHandler extends AbstractXlsx
      */
     private function export(): Spreadsheet
     {
-        $spreadsheet = $this->createSpreadsheet($this->site);
+        $title = $this->site . '_' . date('c', time());
+
+        $spreadsheet = self::createSpreadsheet(User::getCurrent(), $this->site, $title);
         $sheet = $spreadsheet->getActiveSheet();
 
         $this->headers($sheet);
@@ -198,5 +204,41 @@ class TemplateHandler extends AbstractXlsx
             ->setPromptTitle('Choisissez dans la liste')
             ->setPrompt('Choisissez un élément de la liste.')
             ->setFormula1('=' . $name);
+    }
+
+    public static function createSpreadsheet(?User $user, string $site, string $title): Spreadsheet
+    {
+        $spreadsheet = new Spreadsheet();
+
+        // Set a few meta data
+        $properties = $spreadsheet->getProperties();
+        $properties->setCreator($user ? $user->getLogin() : '');
+        $properties->setLastModifiedBy($site);
+        $properties->setTitle($title);
+        $properties->setSubject('Généré par le système ' . $site);
+        $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
+        $properties->setKeywords('Université de Lausanne');
+
+        return $spreadsheet;
+    }
+
+    private function createResponse(Spreadsheet $spreadsheet): ResponseInterface
+    {
+        // Write to disk
+        $tempFile = tempnam('data/tmp/', 'xlsx');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
+
+        $headers = [
+            'content-type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'content-length' => filesize($tempFile),
+            'content-disposition' => 'inline; filename="' . $spreadsheet->getProperties()->getTitle() . '.xlsx"',
+        ];
+
+        $stream = new TemporaryFile($tempFile);
+        $response = new Response($stream, 200, $headers);
+
+        return $response;
     }
 }

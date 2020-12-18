@@ -20,6 +20,7 @@ use Application\Model\Country;
 use Application\Model\Dating;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
+use Application\Model\Export;
 use Application\Model\File;
 use Application\Model\Institution;
 use Application\Model\Material;
@@ -53,6 +54,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $tag = $this->createModelResource(Tag::class);
         $user = $this->createModelResource(User::class);
         $file = $this->createModelResource(File::class);
+        $export = $this->createModelResource(Export::class);
 
         $documentType = $this->createModelResource(DocumentType::class);
         $domain = $this->createModelResource(Domain::class);
@@ -75,6 +77,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, $news, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $period, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $file, 'read');
+        $this->allow(User::ROLE_ANONYMOUS, $export, ['read', 'create']);
 
         $this->allow(User::ROLE_STUDENT, $artist, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $card, 'create', new SameSite());

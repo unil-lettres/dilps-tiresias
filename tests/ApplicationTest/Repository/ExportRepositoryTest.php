@@ -35,13 +35,13 @@ class ExportRepositoryTest extends AbstractRepositoryTest
         self::assertSame($export1->getCardCount(), $this->getCardCount($export1), 'fixture should be coherent');
         self::assertSame($export2->getCardCount(), $this->getCardCount($export2), 'fixture should be coherent');
 
-        self::assertSame(1, $this->repository->updateCards($export1, [6000]), 'should not change with same values');
+        self::assertSame(1, $this->repository->updateCards($export1, [], [6000]), 'should not change with same values');
 
-        self::assertSame(2, $this->repository->updateCards($export2, []), 'should not change with same values');
+        self::assertSame(2, $this->repository->updateCards($export2, [2001], []), 'should not change with same values');
 
-        self::assertSame(3, $this->repository->updateCards($export1, [6000, 6001, 6003]), 'can add more cards to hand-picked cards');
+        self::assertSame(3, $this->repository->updateCards($export1, [], [6000, 6001, 6003]), 'can add more cards to hand-picked cards');
 
-        self::assertSame(4, $this->repository->updateCards($export2, [6007, 6008]), 'can add more cards to collection');
+        self::assertSame(4, $this->repository->updateCards($export2, [2001], [6007, 6008]), 'can add more cards to collection');
     }
 
     private function getCardCount(Export $export): int

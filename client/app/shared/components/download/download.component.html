@@ -4,14 +4,14 @@
             <div class="margin-top" fxLayout="column">
                 <mat-form-field>
                     <mat-label>Taille des images</mat-label>
-                    <mat-select [(value)]="size">
+                    <mat-select [(value)]="input.maxHeight">
                         <mat-option *ngFor="let s of sizes" [value]="s.value">
                             {{ s.label }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-checkbox [(ngModel)]="includeLegend" [disabled]="denyLegendsDownload"
+                <mat-checkbox [(ngModel)]="input.includeLegend" [disabled]="denyLegendsDownload"
                     >Inclure les légendes au format HTML
                 </mat-checkbox>
                 <br />
@@ -24,13 +24,13 @@
             <div class="padding" fxLayout="column">
                 <mat-form-field>
                     <mat-label>Couleur d'arrière-plan</mat-label>
-                    <input [(ngModel)]="backgroundColor" matInput maxlength="7" />
-                    <span [style.background]="backgroundColor" class="color" matSuffix></span>
+                    <input [(ngModel)]="input.backgroundColor" matInput maxlength="7" />
+                    <span [style.background]="input.backgroundColor" class="color" matSuffix></span>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Couleur du texte</mat-label>
-                    <input [(ngModel)]="textColor" matInput maxlength="7" />
-                    <span [style.background]="textColor" class="color" matSuffix></span>
+                    <input [(ngModel)]="input.textColor" matInput maxlength="7" />
+                    <span [style.background]="input.textColor" class="color" matSuffix></span>
                 </mat-form-field>
                 <div fxFlexAlign="end" fxLayout="row">
                     <button (click)="downloadPowerPoint()" color="primary" mat-flat-button>

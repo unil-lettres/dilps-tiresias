@@ -97,9 +97,12 @@ REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
 REPLACE INTO file (id, card_id, name, filename, mime) VALUES
 (13000, 6000, 'Test file 13000', '4k123pkopvs3iDFV948abcde.pdf', 'application/pdf');
 
-REPLACE INTO export (id, site, collection_id, card_count) VALUES
-(14000, 'dilps', null, 1),
-(14001, 'dilps', 2001, 2);
+REPLACE INTO export (id, site, card_count) VALUES
+(14000, 'dilps', 1),
+(14001, 'dilps', 2);
+
+REPLACE INTO export_collection (export_id, collection_id) VALUES
+(14001, 2001);
 
 REPLACE INTO export_card (export_id, card_id) VALUES
 (14000, 6000),

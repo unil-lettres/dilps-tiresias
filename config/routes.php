@@ -51,36 +51,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         \Ecodev\Felix\Handler\FileHandler::class,
     ], 'file');
 
-    $app->get('/pptx/{ids:\d+[,\d]*}[/{backgroundColor:[\da-fA-F]{8}}[/{textColor:[\da-fA-F]{8}}]]', [
-        \Application\Middleware\CardsFetcherMiddleware::class,
-        \Application\Handler\PptxHandler::class,
-    ], 'pptx');
-
-    $app->get('/xlsx/{ids:\d+[,\d]*}', [
-        \Application\Middleware\CardsFetcherMiddleware::class,
-        \Application\Handler\XlsxHandler::class,
-    ], 'xlsx');
-
-    $app->get('/zip/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
-        \Application\Middleware\CardsFetcherMiddleware::class,
-        \Application\Handler\ZipHandler::class,
-    ], 'zip');
-
-    $app->get('/pptx/collection/{ids:\d+[,\d]*}[/{backgroundColor:[\da-fA-F]{8}}[/{textColor:[\da-fA-F]{8}}]]', [
-        \Application\Middleware\CollectionFetcherMiddleware::class,
-        \Application\Handler\PptxHandler::class,
-    ], 'pptx/collection');
-
-    $app->get('/xlsx/collection/{ids:\d+[,\d]*}', [
-        \Application\Middleware\CollectionFetcherMiddleware::class,
-        \Application\Handler\XlsxHandler::class,
-    ], 'xlsx/collection');
-
-    $app->get('/zip/collection/{ids:\d+[,\d]*}[/{includeLegend:0|1}[/{maxHeight:\d+}]]', [
-        \Application\Middleware\CollectionFetcherMiddleware::class,
-        \Application\Handler\ZipHandler::class,
-    ], 'zip/collection');
-
     $app->get('/template', [
         \Application\Handler\TemplateHandler::class,
     ], 'template');
