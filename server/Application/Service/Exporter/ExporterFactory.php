@@ -13,7 +13,8 @@ class ExporterFactory
         $zip = $container->get(Zip::class);
         $pptx = $container->get(Pptx::class);
         $xlsx = $container->get(Xlsx::class);
+        $config = $container->get('config');
 
-        return new Exporter($zip, $pptx, $xlsx);
+        return new Exporter($zip, $pptx, $xlsx, $config['phpPath']);
     }
 }

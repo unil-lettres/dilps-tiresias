@@ -16,4 +16,6 @@ REPLACE INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+UPDATE export SET creator_id = 1000 WHERE id IN (14000, 14001);
+
 COMMIT ;

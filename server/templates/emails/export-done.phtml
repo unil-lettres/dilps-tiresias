@@ -1,0 +1,11 @@
+<?php declare(strict_types=1);
+$url = $this->serverUrl . '/export/' . $this->export->getFilename();
+?>
+
+<p>L'export demandé est désormais prêt. Vous pouvez commencer le téléchargement en cliquant sur le lien suivant :</p>
+
+<ul>
+    <li><a href="<?php echo $url ?>"><?php echo $url ?></a></li>
+</ul>
+
+<p>Le fichier sera supprimé après quelques jours.</p>

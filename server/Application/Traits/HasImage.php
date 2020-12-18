@@ -90,7 +90,8 @@ trait HasImage
     public function deleteFile(): void
     {
         $path = $this->getPath();
-        $config = require 'config/autoload/local.php';
+        global $container;
+        $config = $container->get('config');
         $unlink = $config['files']['unlink'];
 
         if (file_exists($path) && is_file($path)) {

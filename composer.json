@@ -46,6 +46,7 @@
         "mezzio/mezzio": "^3.2",
         "mezzio/mezzio-fastroute": "^3.0",
         "mezzio/mezzio-helpers": "^5.3",
+        "mezzio/mezzio-laminasviewrenderer": "^2.2",
         "mezzio/mezzio-session": "^1.4",
         "mezzio/mezzio-session-ext": "^1.10",
         "phpoffice/phppresentation": "^0.9.0",

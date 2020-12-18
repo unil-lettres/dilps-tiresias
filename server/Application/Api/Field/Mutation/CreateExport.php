@@ -28,8 +28,13 @@ class CreateExport implements FieldInterface
                 'input' => Type::nonNull(_types()->get(CreateExportInputType::class)),
             ],
             'resolve' => function (array $root, array $args): Export {
+                global $container;
+
+                /** @var Exporter $exporter */
+                $exporter = $container->get(Exporter::class);
+
                 // Check ACL
-                $object = new Export();
+                $export = new Export();
                 $input = $args['input'];
 
                 $collectionIds = Utility::modelToId($input['collections']);
@@ -37,38 +42,32 @@ class CreateExport implements FieldInterface
                 unset($input['collections'], $input['cards']);
 
                 // Be sure that site is set first
-                Helper::hydrate($object, ['site' => $input['site']]);
+                Helper::hydrate($export, ['site' => $input['site']]);
 
                 // Check ACL
-                Helper::throwIfDenied($object, 'create');
+                Helper::throwIfDenied($export, 'create');
 
                 // Do it
-                Helper::hydrate($object, $input);
+                Helper::hydrate($export, $input);
 
-                _em()->persist($object);
+                _em()->persist($export);
                 _em()->flush();
 
                 // Actually inject all selected cards into export (either hand-picked or via collection)
                 /** @var ExportRepository $exportRepository */
                 $exportRepository = _em()->getRepository(Export::class);
-                $cardCount = $exportRepository->updateCards($object, $collectionIds, $cardIds);
+                $cardCount = $exportRepository->updateCards($export, $collectionIds, $cardIds);
 
-                // Do small export right now
+                // Do small export right now, do big one async
                 if ($cardCount < 200) {
-                    // Refresh object so we can properly load card from DB
-                    _em()->refresh($object);
-
-                    global $container;
-
-                    /** @var Exporter $exporter */
-                    $exporter = $container->get(Exporter::class);
-                    $exporter->export($object);
+                    // Refresh export so we can properly load card from DB
+                    _em()->refresh($export);
+                    $exporter->export($export);
                 } else {
-                    // TODO export async
-                    $a = 1;
+                    $exporter->exportAsync($export);
                 }
 
-                return $object;
+                return $export;
             },
         ];
     }

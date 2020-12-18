@@ -17,11 +17,32 @@ class Exporter
 
     private Writer $xlsx;
 
-    public function __construct(Writer $zip, Writer $pptx, Writer $xlsx)
+    private string $phpPath;
+
+    public function __construct(Writer $zip, Writer $pptx, Writer $xlsx, string $phpPath)
     {
         $this->zip = $zip;
         $this->pptx = $pptx;
         $this->xlsx = $xlsx;
+        $this->phpPath = $phpPath;
+    }
+
+    /**
+     * Export asynchronously in a separate process.
+     *
+     * This should be the preferred way to do big export
+     */
+    public function exportAsync(Export $export): void
+    {
+        $args = [
+            realpath('bin/export.php'),
+            $export->getId(),
+        ];
+
+        $escapedArgs = array_map('escapeshellarg', $args);
+
+        $cmd = escapeshellcmd($this->phpPath) . ' ' . implode(' ', $escapedArgs) . ' > /dev/null 2>&1 &';
+        exec($cmd);
     }
 
     public function export(Export $export): void

@@ -54,6 +54,7 @@ return [
             'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
             'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
             'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
+            'MessageType' => Application\DBAL\Types\MessageTypeType::class,
             'ExportFormat' => Application\DBAL\Types\ExportFormatType::class,
             'ExportState' => Application\DBAL\Types\ExportStateType::class,
             'Precision' => Application\DBAL\Types\PrecisionType::class,
