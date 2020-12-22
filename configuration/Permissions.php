@@ -47,6 +47,10 @@ return [
         'permissions' => '0770',
     ],
     [
+        'path' => 'bin/delete-old-export.sh',
+        'permissions' => '0770',
+    ],
+    [
         'path' => 'bin/dump-data.php',
         'permissions' => '0770',
     ],
