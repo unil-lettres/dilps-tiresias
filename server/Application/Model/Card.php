@@ -188,11 +188,13 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $cards;
 
     /**
-     * @var null|Change
+     * There is actually 0 to 1 change, never more. And this is
+     * enforced by DB unique constraints on the mapping side
      *
-     * @ORM\OneToOne(targetEntity="Change", mappedBy="suggestion")
+     * @var DoctrineCollection
+     * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
-    private $change;
+    private $changes;
 
     /**
      * @var string
@@ -213,6 +215,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     {
         $this->setName($name);
 
+        $this->changes = new ArrayCollection();
         $this->collections = new ArrayCollection();
         $this->artists = new ArrayCollection();
         $this->antiqueNames = new ArrayCollection();
@@ -855,7 +858,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      */
     public function getChange(): ?Change
     {
-        return $this->change;
+        return $this->changes->first() ?: null;
     }
 
     /**
@@ -864,7 +867,10 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      */
     public function changeAdded(?Change $change): void
     {
-        $this->change = $change;
+        $this->changes->clear();
+        if ($change) {
+            $this->changes->add($change);
+        }
     }
 
     /**

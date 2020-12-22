@@ -44,9 +44,9 @@ class Change extends AbstractModel implements HasSiteInterface
     /**
      * @var null|Card
      *
-     * @ORM\OneToOne(targetEntity="Card", inversedBy="change")
+     * @ORM\ManyToOne(targetEntity="Card", inversedBy="changes")
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
+     *     @ORM\JoinColumn(unique=true, onDelete="CASCADE")
      * })
      */
     private $suggestion;
