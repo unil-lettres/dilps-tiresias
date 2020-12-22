@@ -38,6 +38,8 @@ class Pptx implements Writer
 
     private Export $export;
 
+    private PhpPresentation $presentation;
+
     public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine)
     {
         $this->imageResizer = $imageResizer;
@@ -49,17 +51,17 @@ class Pptx implements Writer
         return 'pptx';
     }
 
-    public function write(Export $export, string $title): void
+    public function initialize(Export $export, string $title): void
     {
         $this->needSeparator = false;
         $this->export = $export;
         $this->textColor = str_replace('#', 'FF', $export->getTextColor());
         $this->backgroundColor = str_replace('#', 'FF', $export->getBackgroundColor());
 
-        $presentation = new PhpPresentation();
+        $this->presentation = new PhpPresentation();
 
         // Set a few meta data
-        $properties = $presentation->getDocumentProperties();
+        $properties = $this->presentation->getDocumentProperties();
         $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
         $properties->setLastModifiedBy($this->export->getSite());
         $properties->setTitle($title);
@@ -68,18 +70,10 @@ class Pptx implements Writer
         $properties->setKeywords('Université de Lausanne');
 
         // Remove default slide
-        $presentation->removeSlideByIndex(0);
-
-        foreach ($export->getCards() as $card) {
-            $this->exportCard($presentation, $card);
-        }
-
-        // Write to disk
-        $writer = new PowerPoint2007($presentation);
-        $writer->save($this->export->getPath());
+        $this->presentation->removeSlideByIndex(0);
     }
 
-    private function exportCard(PhpPresentation $presentation, Card $card): void
+    public function write(Card $card): void
     {
         // Skip if no image
         if (!$card->hasImage() || !is_readable($card->getPath())) {
@@ -87,7 +81,7 @@ class Pptx implements Writer
         }
 
         // Create slide
-        $slide = $presentation->createSlide();
+        $slide = $this->presentation->createSlide();
         $slide->setBackground();
 
         // Set background color
@@ -97,6 +91,13 @@ class Pptx implements Writer
 
         $this->insertImage($slide, $card);
         $this->insertLegend($slide, $card);
+    }
+
+    public function finalize(): void
+    {
+        // Write to disk
+        $writer = new PowerPoint2007($this->presentation);
+        $writer->save($this->export->getPath());
     }
 
     private function insertImage(Slide $slide, Card $card): void

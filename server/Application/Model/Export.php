@@ -230,15 +230,4 @@ class Export extends AbstractModel implements HasSiteInterface
     {
         return $this->collections;
     }
-
-    /**
-     * This must **never** be exposed through API because it might contains thousands of
-     * objects and our API has no way paginate it.
-     *
-     * @API\Exclude
-     */
-    public function getCards(): DoctrineCollection
-    {
-        return $this->cards;
-    }
 }

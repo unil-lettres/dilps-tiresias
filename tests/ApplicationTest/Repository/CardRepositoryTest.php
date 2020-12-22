@@ -6,6 +6,7 @@ namespace ApplicationTest\Repository;
 
 use Application\DBAL\Types\SiteType;
 use Application\Model\Card;
+use Application\Model\Export;
 use Application\Repository\CardRepository;
 
 /**
@@ -36,5 +37,17 @@ class CardRepositoryTest extends AbstractRepositoryTest
         $this->getEntityManager()->remove($card);
         $this->getEntityManager()->flush();
         self::assertFileDoesNotExist($card->getPath(), 'test file must have been deleted when record was deleted');
+    }
+
+    public function testGetExportCards(): void
+    {
+        $export1 = $this->getEntityManager()->getReference(Export::class, 14000);
+        self::assertCount(1, $this->repository->getExportCards($export1, 0));
+        self::assertCount(0, $this->repository->getExportCards($export1, 1));
+
+        $export2 = $this->getEntityManager()->getReference(Export::class, 14001);
+        self::assertCount(2, $this->repository->getExportCards($export2, 0));
+        self::assertCount(1, $this->repository->getExportCards($export2, 1));
+        self::assertCount(0, $this->repository->getExportCards($export2, 2));
     }
 }

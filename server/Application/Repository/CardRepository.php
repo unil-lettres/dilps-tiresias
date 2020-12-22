@@ -6,10 +6,13 @@ namespace Application\Repository;
 
 use Application\Model\Card;
 use Application\Model\Collection;
+use Application\Model\Export;
 use Application\Model\User;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Ecodev\Felix\Repository\LimitedAccessSubQuery;
 
-class CardRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
+class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 {
     public function getFindAllByCollections(array $collections = []): QueryBuilder
     {
@@ -121,6 +124,34 @@ class CardRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
             return $this->findOneBy([
                 'legacyId' => $legacy_id,
             ]);
+        });
+    }
+
+    /**
+     * Returns **some** cards for the given export, starting at $firstResult
+     *
+     * This methods has to be called repeatedly with a different $firstResult in order
+     * to iterate over **all** cards of a given export
+     */
+    public function getExportCards(Export $export, int $firstResult): array
+    {
+        $qb = $this->createQueryBuilder('card');
+        $qb->select('card, artist, country, documentType, domain, institution, period')
+            ->innerJoin(Export::class, 'export', Join::WITH, 'card MEMBER OF export.cards')
+            ->leftJoin('card.artists', 'artist', Join::WITH)
+            ->leftJoin('card.country', 'country', Join::WITH)
+            ->leftJoin('card.documentType', 'documentType', Join::WITH)
+            ->leftJoin('card.domains', 'domain', Join::WITH)
+            ->leftJoin('card.institution', 'institution', Join::WITH)
+            ->leftJoin('card.periods', 'period', Join::WITH)
+            ->andWhere('export.id = :export')
+            ->setParameter('export', $export)
+            ->orderBy('card.id')
+            ->setMaxResults(250)
+            ->setFirstResult($firstResult);
+
+        return $this->getAclFilter()->runWithoutAcl(function () use ($qb) {
+            return $qb->getQuery()->getResult();
         });
     }
 }

@@ -12,12 +12,45 @@ use Application\Model\DocumentType;
 use Application\Model\Export;
 use Application\Model\Material;
 use Application\Model\Period;
-use Doctrine\Common\Collections\ArrayCollection;
+use Application\Service\Exporter\Pptx;
+use Application\Service\Exporter\Writer;
 use PHPUnit\Framework\TestCase;
 
 class AbstractWriter extends TestCase
 {
+    protected function export(Writer $writer, string $tempFile): void
+    {
+        $export = $this->createMockExport($tempFile);
+
+        $writer->initialize($export, 'Test Pptx');
+        foreach ($this->createMockCards() as $card) {
+            $writer->write($card);
+        }
+        $writer->finalize();
+    }
+
     protected function createMockExport(string $path): Export
+    {
+        $export = $this->getMockBuilder(Export::class)
+            ->onlyMethods(['getId', 'getSite', 'getPath'])
+            ->getMock();
+
+        $export->expects(self::any())
+            ->method('getId')
+            ->willReturn(333);
+
+        $export->expects(self::any())
+            ->method('getSite')
+            ->willReturn(SiteType::DILPS);
+
+        $export->expects(self::once())
+            ->method('getPath')
+            ->willReturn($path);
+
+        return $export;
+    }
+
+    protected function createMockCards(): array
     {
         $card1 = $this->getMockBuilder(Card::class)
             ->onlyMethods(['getId'])
@@ -55,26 +88,6 @@ class AbstractWriter extends TestCase
         $card2->setPrecision(PrecisionType::BUILDING);
         $card2->setFilename('dw4jV3zYSPsqE2CB8BcP8ABD0.jpg');
 
-        $export = $this->getMockBuilder(Export::class)
-            ->onlyMethods(['getId', 'getCards', 'getSite', 'getPath'])
-            ->getMock();
-
-        $export->expects(self::any())
-            ->method('getId')
-            ->willReturn(333);
-
-        $export->expects(self::once())
-            ->method('getCards')
-            ->willReturn(new ArrayCollection([$card1, $card2]));
-
-        $export->expects(self::any())
-            ->method('getSite')
-            ->willReturn(SiteType::DILPS);
-
-        $export->expects(self::once())
-            ->method('getPath')
-            ->willReturn($path);
-
-        return $export;
+        return [$card1, $card2];
     }
 }

@@ -17,12 +17,11 @@ class PptxTest extends AbstractWriter
     {
         global $container;
 
-        $tempFile = tempnam('data/tmp/', 'Pptx');
-        $export = $this->createMockExport($tempFile);
-
         /** @var Pptx $writer */
         $writer = $container->get(Pptx::class);
-        $writer->write($export, 'Test Pptx');
+        $tempFile = tempnam('data/tmp/', 'Pptx');
+
+        $this->export($writer, $tempFile);
 
         $presentation = $this->readPresentation($tempFile);
         self::assertSame(1, $presentation->getSlideCount());

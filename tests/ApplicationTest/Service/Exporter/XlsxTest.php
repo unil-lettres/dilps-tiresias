@@ -17,12 +17,12 @@ class XlsxTest extends AbstractWriter
     {
         global $container;
 
-        $tempFile = tempnam('data/tmp/', 'xlsx');
-        $export = $this->createMockExport($tempFile);
-
         /** @var Xlsx $writer */
         $writer = $container->get(Xlsx::class);
-        $writer->write($export, 'Test xlsx');
+        $tempFile = tempnam('data/tmp/', 'xlsx');
+
+        $this->export($writer, $tempFile);
+
         $spreadsheet = $this->readSpreadsheet($tempFile);
 
         $sheet = $spreadsheet->getActiveSheet();

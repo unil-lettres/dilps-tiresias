@@ -16,12 +16,11 @@ class ZipTest extends AbstractWriter
     {
         global $container;
 
-        $tempFile = tempnam('data/tmp/', 'zip');
-        $export = $this->createMockExport($tempFile);
-
         /** @var Zip $writer */
         $writer = $container->get(Zip::class);
-        $writer->write($export, 'Test zip');
+        $tempFile = tempnam('data/tmp/', 'zip');
+
+        $this->export($writer, $tempFile);
 
         // Assert that it is a valid ZIP file to prevent PhpSpreadsheet from hanging
         $zip = new ZipArchive();

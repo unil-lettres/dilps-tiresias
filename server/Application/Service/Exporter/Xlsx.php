@@ -12,6 +12,7 @@ use Application\Model\DocumentType;
 use Application\Model\Export;
 use Application\Traits\HasParentInterface;
 use Doctrine\Common\Collections\Collection;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
@@ -25,91 +26,95 @@ class Xlsx implements Writer
 
     private Export $export;
 
+    private Worksheet $sheet;
+
+    private Spreadsheet $spreadsheet;
+
     public function getExtension(): string
     {
         return 'xlsx';
     }
 
-    public function write(Export $export, string $title): void
+    public function initialize(Export $export, string $title): void
     {
         $this->row = 1;
         $this->col = 1;
         $this->export = $export;
 
-        $spreadsheet = TemplateHandler::createSpreadsheet($export->getCreator(), $export->getSite(), $title);
-        $sheet = $spreadsheet->getActiveSheet();
+        $this->spreadsheet = TemplateHandler::createSpreadsheet($export->getCreator(), $export->getSite(), $title);
+        $this->sheet = $this->spreadsheet->getActiveSheet();
 
-        $this->headers($sheet);
+        $this->headers();
+    }
 
-        foreach ($export->getCards() as $card) {
-            $this->exportCard($sheet, $card);
-        }
-
-        $style = $sheet->getStyleByColumnAndRow(1, 1, $this->col, $this->row);
+    public function finalize(): void
+    {
+        // Everything wraps text
+        $style = $this->sheet->getStyleByColumnAndRow(1, 1, $this->col, $this->row);
         $style->getAlignment()->setWrapText(true);
 
         // Write to disk
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-        $writer->save($export->getPath());
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($this->spreadsheet);
+        $writer->save($this->export->getPath());
     }
 
-    private function headers(Worksheet $sheet): void
+    private function headers(): void
     {
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Id');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre étendu');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Domaine');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Période');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise début');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise fin');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Pays de découverte');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Site/Lieu de découverte');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Lieu de production');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Référence de l\'objet');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Type de document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Auteur du document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Année du document');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Latitude');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Longitude');
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Précision');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Id');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Titre étendu');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Domaine');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Période');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise début');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Date précise fin');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Pays de découverte');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Site/Lieu de découverte');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Lieu de production');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Référence de l\'objet');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Type de document');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Auteur du document');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Année du document');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Latitude');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Longitude');
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, 'Précision');
 
-        $style = $sheet->getStyleByColumnAndRow(1, $this->row, $this->col, $this->row);
+        $style = $this->sheet->getStyleByColumnAndRow(1, $this->row, $this->col, $this->row);
         $style->getFont()->setBold(true);
 
         // Adjust column width
         for ($col = 1; $col < $this->col; ++$col) {
             if ($col !== 3) {
-                $sheet->getColumnDimensionByColumn($col)->setAutoSize(true);
+                $this->sheet->getColumnDimensionByColumn($col)->setAutoSize(true);
             } else {
-                $sheet->getColumnDimensionByColumn($col)->setWidth(50);
+                $this->sheet->getColumnDimensionByColumn($col)->setWidth(50);
             }
         }
 
-        $sheet->freezePaneByColumnAndRow(1, $this->row + 1);
+        $this->sheet->freezePaneByColumnAndRow(1, $this->row + 1);
 
         ++$this->row;
     }
 
-    private function exportCard(Worksheet $sheet, Card $card): void
+    public function write(Card $card): void
     {
         $this->col = 1;
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getId());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getName());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getExpandedName());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getDomains()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getPeriods()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getFrom());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTo());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getCountry()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLocality());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getProductionPlace());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getObjectReference());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getDocumentType()));
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueAuthor());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueDate());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLatitude());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLongitude());
-        $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getPrecision());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getId());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getName());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getExpandedName());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getDomains()));
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->collection($card->getPeriods()));
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getFrom());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTo());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getCountry()));
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLocality());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getProductionPlace());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getObjectReference());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $this->nullableName($card->getDocumentType()));
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueAuthor());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getTechniqueDate());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLatitude());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getLongitude());
+        $this->sheet->setCellValueByColumnAndRow($this->col++, $this->row, $card->getPrecision());
 
         ++$this->row;
     }

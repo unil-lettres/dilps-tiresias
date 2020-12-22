@@ -38,7 +38,7 @@ class Zip implements Writer
         return 'zip';
     }
 
-    public function write(Export $export, string $title): void
+    public function initialize(Export $export, string $title): void
     {
         $this->fileIndex = 0;
         $this->export = $export;
@@ -48,14 +48,18 @@ class Zip implements Writer
         if ($result !== true) {
             throw new Exception($this->zip->getStatusString());
         }
+    }
 
-        foreach ($export->getCards() as $card) {
-            $image = $this->insertImage($card);
-            if ($this->export->isIncludeLegend()) {
-                $this->insertLegend($card, $image);
-            }
+    public function write(Card $card): void
+    {
+        $image = $this->insertImage($card);
+        if ($this->export->isIncludeLegend()) {
+            $this->insertLegend($card, $image);
         }
+    }
 
+    public function finalize(): void
+    {
         if ($this->fileIndex === 0) {
             $this->zip->addFromString('readme.txt', "Aucune fiche n'était exportable. Probablement parce qu'aucune fiche n'avait d'images.");
         }

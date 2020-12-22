@@ -7,10 +7,23 @@ namespace Application\Service\Exporter;
 use Application\DBAL\Types\ExportFormatType;
 use Application\DBAL\Types\ExportStateType;
 use Application\Model\Export;
+use Application\Repository\CardRepository;
+use Application\Repository\ExportRepository;
+use Application\Service\MessageQueuer;
 use Ecodev\Felix\Api\Exception;
+use Ecodev\Felix\Service\Mailer;
+use InvalidArgumentException;
 
 class Exporter
 {
+    private ExportRepository $exportRepository;
+
+    private CardRepository $cardRepository;
+
+    private MessageQueuer $messageQueuer;
+
+    private Mailer $mailer;
+
     private Writer $zip;
 
     private Writer $pptx;
@@ -19,8 +32,20 @@ class Exporter
 
     private string $phpPath;
 
-    public function __construct(Writer $zip, Writer $pptx, Writer $xlsx, string $phpPath)
-    {
+    public function __construct(
+        ExportRepository $exportRepository,
+        CardRepository $cardRepository,
+        MessageQueuer $messageQueuer,
+        Mailer $mailer,
+        Writer $zip,
+        Writer $pptx,
+        Writer $xlsx,
+        string $phpPath
+    ) {
+        $this->exportRepository = $exportRepository;
+        $this->cardRepository = $cardRepository;
+        $this->messageQueuer = $messageQueuer;
+        $this->mailer = $mailer;
         $this->zip = $zip;
         $this->pptx = $pptx;
         $this->xlsx = $xlsx;
@@ -45,7 +70,13 @@ class Exporter
         exec($cmd);
     }
 
-    public function export(Export $export): void
+    /**
+     * Export immediately and return the v $export object
+     *
+     * Because this method will indirectly clear the EntityManager any existing object
+     * before calling this method will become invalid and must be re-fetched from DB.
+     */
+    public function export(Export $export): Export
     {
         $export->setState(ExportStateType::IN_PROGRESS);
         _em()->flush();
@@ -58,14 +89,43 @@ class Exporter
 
         $filename = $title . '-' . $suffix . '.' . $writer->getExtension();
         $export->setFilename($filename);
-        $writer->write($export, $title);
 
-        $export->setState(ExportStateType::DONE);
-        $export->setFileSize(filesize($export->getPath()));
+        $writer->initialize($export, $title);
+        $this->writeCards($writer, $export);
+        $writer->finalize();
+
+        $reloadExport = $this->exportRepository->findOneById($export->getId());
+        $reloadExport->setState(ExportStateType::DONE);
+        $reloadExport->setFileSize(filesize($export->getPath()));
+
         _em()->flush();
+
+        return $reloadExport;
     }
 
-    public function getWriter(Export $export): Writer
+    /**
+     * Export immediately and send an email to the export creator.
+     *
+     * This must only be used via CRON jobs, because export might be very long (several minutes)
+     * and the email is sent synchronously
+     */
+    public function exportAndSendMessage(int $id): void
+    {
+        /** @var null|Export $export */
+        $export = $this->exportRepository->findOneById($id);
+        if (!$export) {
+            throw new InvalidArgumentException('Could not find export with ID: ' . $id);
+        }
+
+        $export = $this->export($export);
+
+        $user = $export->getCreator();
+        $message = $this->messageQueuer->queueExportDone($user, $export);
+
+        $this->mailer->sendMessage($message);
+    }
+
+    private function getWriter(Export $export): Writer
     {
         switch ($export->getFormat()) {
             case ExportFormatType::ZIP:
@@ -76,6 +136,31 @@ class Exporter
                 return $this->xlsx;
             default:
                 throw new Exception('Invalid export format:' . $export->getFormat());
+        }
+    }
+
+    /**
+     * Write all cards in small batches to avoid exploding PHP memory
+     */
+    private function writeCards(Writer $writer, Export $export): void
+    {
+        $totalRecordsProcessed = 0;
+        while (true) {
+            $cards = $this->cardRepository->getExportCards($export, $totalRecordsProcessed);
+
+            // If nothing to process anymore, stop the whole thing
+            if (!$cards) {
+                break;
+            }
+
+            foreach ($cards as $card) {
+                $writer->write($card);
+
+                ++$totalRecordsProcessed;
+            }
+
+            _em()->flush();
+            _em()->clear();
         }
     }
 }

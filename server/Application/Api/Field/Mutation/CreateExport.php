@@ -62,7 +62,7 @@ class CreateExport implements FieldInterface
                 if ($cardCount < 200) {
                     // Refresh export so we can properly load card from DB
                     _em()->refresh($export);
-                    $exporter->export($export);
+                    $export = $exporter->export($export);
                 } else {
                     $exporter->exportAsync($export);
                 }
