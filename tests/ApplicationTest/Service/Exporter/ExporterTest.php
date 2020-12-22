@@ -30,6 +30,9 @@ class ExporterTest extends TestCase
         self::assertSame(182144, $export->getFileSize());
         self::assertNotEmpty($export->getFilename());
         self::assertFileExists($export->getPath());
+        self::assertNotNull($export->getStart());
+        self::assertNotNull($export->getDuration());
+        self::assertNotNull($export->getMemory());
 
         unlink($export->getPath());
     }
