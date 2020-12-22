@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Service\Exporter;
 
-use Application\DBAL\Types\ExportStateType;
+use Application\DBAL\Types\ExportStatusType;
 use Application\Model\Export;
 use Application\Service\Exporter\Exporter;
 use ApplicationTest\Traits\TestWithTransaction;
@@ -26,7 +26,7 @@ class ExporterTest extends TestCase
 
         $export = $exporter->export($export);
 
-        self::assertSame(ExportStateType::DONE, $export->getState());
+        self::assertSame(ExportStatusType::DONE, $export->getStatus());
         self::assertSame(182144, $export->getFileSize());
         self::assertNotEmpty($export->getFilename());
         self::assertFileExists($export->getPath());

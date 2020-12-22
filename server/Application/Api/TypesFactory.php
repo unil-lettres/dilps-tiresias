@@ -21,7 +21,7 @@ class TypesFactory
             \Application\Api\Enum\ChangeTypeType::class,
             \Application\Api\Enum\CollectionVisibilityType::class,
             \Application\Api\Enum\ExportFormatType::class,
-            \Application\Api\Enum\ExportStateType::class,
+            \Application\Api\Enum\ExportStatusType::class,
             \Application\Api\Enum\OrderType::class,
             \Application\Api\Enum\PrecisionType::class,
             \Application\Api\Enum\SiteType::class,

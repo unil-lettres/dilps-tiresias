@@ -3,20 +3,20 @@
 declare(strict_types=1);
 
 use Application\DBAL\Types\ExportFormatType;
-use Application\DBAL\Types\ExportStateType;
+use Application\DBAL\Types\ExportStatusType;
 use Application\DBAL\Types\SiteType;
 
 return [
     [
         'query' => 'mutation CreateExport($zip: CreateExportInput!, $pptx: CreateExportInput!, $xlsx: CreateExportInput!) {
             zip: createExport(input: $zip) {
-                state
+                status
             }
             pptx: createExport(input: $pptx) {
-                state
+                status
             }
             xlsx: createExport(input: $xlsx) {
-                state
+                status
             }
         }',
         'variables' => [
@@ -40,13 +40,13 @@ return [
     [
         'data' => [
             'zip' => [
-                'state' => ExportStateType::DONE,
+                'status' => ExportStatusType::DONE,
             ],
             'pptx' => [
-                'state' => ExportStateType::DONE,
+                'status' => ExportStatusType::DONE,
             ],
             'xlsx' => [
-                'state' => ExportStateType::DONE,
+                'status' => ExportStatusType::DONE,
             ],
         ],
     ],

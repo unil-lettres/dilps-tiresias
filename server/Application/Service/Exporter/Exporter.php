@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Service\Exporter;
 
 use Application\DBAL\Types\ExportFormatType;
-use Application\DBAL\Types\ExportStateType;
+use Application\DBAL\Types\ExportStatusType;
 use Application\Model\Export;
 use Application\Repository\CardRepository;
 use Application\Repository\ExportRepository;
@@ -78,7 +78,7 @@ class Exporter
      */
     public function export(Export $export): Export
     {
-        $export->setState(ExportStateType::IN_PROGRESS);
+        $export->setStatus(ExportStatusType::IN_PROGRESS);
         _em()->flush();
 
         $writer = $this->getWriter($export);
@@ -95,7 +95,7 @@ class Exporter
         $writer->finalize();
 
         $reloadExport = $this->exportRepository->findOneById($export->getId());
-        $reloadExport->setState(ExportStateType::DONE);
+        $reloadExport->setStatus(ExportStatusType::DONE);
         $reloadExport->setFileSize(filesize($export->getPath()));
 
         _em()->flush();

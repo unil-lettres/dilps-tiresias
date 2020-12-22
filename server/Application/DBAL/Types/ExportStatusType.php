@@ -6,7 +6,7 @@ namespace Application\DBAL\Types;
 
 use Ecodev\Felix\DBAL\Types\EnumType;
 
-class ExportStateType extends EnumType
+class ExportStatusType extends EnumType
 {
     const TODO = 'todo';
     const IN_PROGRESS = 'in_progress';

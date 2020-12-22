@@ -56,7 +56,7 @@ return [
             'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
             'MessageType' => Application\DBAL\Types\MessageTypeType::class,
             'ExportFormat' => Application\DBAL\Types\ExportFormatType::class,
-            'ExportState' => Application\DBAL\Types\ExportStateType::class,
+            'ExportStatus' => Application\DBAL\Types\ExportStatusType::class,
             'Precision' => Application\DBAL\Types\PrecisionType::class,
             'Site' => Application\DBAL\Types\SiteType::class,
             'UserRole' => Application\DBAL\Types\UserRoleType::class,

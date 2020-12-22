@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\DBAL\Types\ExportFormatType;
-use Application\DBAL\Types\ExportStateType;
+use Application\DBAL\Types\ExportStatusType;
 use Application\Traits\HasFileSize;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -48,9 +48,9 @@ class Export extends AbstractModel implements HasSiteInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="ExportState", options={"default" = ExportStateType::TODO})
+     * @ORM\Column(type="ExportStatus", options={"default" = ExportStatusType::TODO})
      */
-    private $state = ExportStateType::TODO;
+    private $status = ExportStatusType::TODO;
 
     /**
      * @var string
@@ -140,19 +140,19 @@ class Export extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * @API\Field(type="ExportState")
+     * @API\Field(type="ExportStatus")
      */
-    public function getState(): string
+    public function getStatus(): string
     {
-        return $this->state;
+        return $this->status;
     }
 
     /**
      * @API\Exclude
      */
-    public function setState(string $state): void
+    public function setStatus(string $status): void
     {
-        $this->state = $state;
+        $this->status = $status;
     }
 
     /**
