@@ -10,14 +10,14 @@ class ExportFormatType extends EnumType
 {
     const ZIP = 'zip';
     const PPTX = 'pptx';
-    const XLSX = 'xlsx';
+    const CSV = 'csv';
 
     protected function getPossibleValues(): array
     {
         return [
             self::ZIP,
             self::PPTX,
-            self::XLSX,
+            self::CSV,
         ];
     }
 }

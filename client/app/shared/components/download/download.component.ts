@@ -57,7 +57,7 @@ export class DownloadComponent {
     }
 
     public downloadExcel(): void {
-        this.input.format = ExportFormat.xlsx;
+        this.input.format = ExportFormat.csv;
         this.download();
     }
 

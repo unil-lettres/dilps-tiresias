@@ -51,7 +51,7 @@ return [
             \Application\Service\Exporter\Exporter::class => \Application\Service\Exporter\ExporterFactory::class,
             \Application\Service\Exporter\Zip::class => \Application\Service\Exporter\ZipFactory::class,
             \Application\Service\Exporter\Pptx::class => \Application\Service\Exporter\PptxFactory::class,
-            \Application\Service\Exporter\Xlsx::class => \Application\Service\Exporter\XlsxFactory::class,
+            \Application\Service\Exporter\Csv::class => \Application\Service\Exporter\XlsxFactory::class,
             \Application\Service\MessageQueuer::class => \Application\Service\MessageQueuerFactory::class,
             \Ecodev\Felix\Service\MessageRenderer::class => \Ecodev\Felix\Service\MessageRendererFactory::class,
             \Ecodev\Felix\Service\Mailer::class => \Application\Service\MailerFactory::class,

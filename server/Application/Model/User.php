@@ -57,10 +57,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     const ROLE_MAJOR = 'major';
     const ROLE_ADMINISTRATOR = 'administrator';
 
-    /**
-     * @var User
-     */
-    private static $currentUser;
+    private static ?User $currentUser = null;
 
     /**
      * @var DoctrineCollection
@@ -94,6 +91,19 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     public static function getCurrent(): ?self
     {
         return self::$currentUser;
+    }
+
+    /**
+     * After a `_em()->clear()` this will reload the current user, if any, in order
+     * to refresh all data and relations and keep everything else working
+     */
+    public static function reloadCurrentUser(): void
+    {
+        $user = self::$currentUser;
+        if ($user) {
+            $reloadedUser = _em()->getRepository(self::class)->getOneById($user->getId());
+            self::$currentUser = $reloadedUser;
+        }
     }
 
     /**

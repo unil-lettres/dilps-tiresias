@@ -17,7 +17,7 @@ class ExporterFactory
     {
         $zip = $container->get(Zip::class);
         $pptx = $container->get(Pptx::class);
-        $xlsx = $container->get(Xlsx::class);
+        $xlsx = $container->get(Csv::class);
         $config = $container->get('config');
         $messageQueuer = $container->get(MessageQueuer::class);
         $mailer = $container->get(Mailer::class);

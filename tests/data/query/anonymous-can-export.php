@@ -8,14 +8,14 @@ use Application\DBAL\Types\SiteType;
 
 return [
     [
-        'query' => 'mutation CreateExport($zip: CreateExportInput!, $pptx: CreateExportInput!, $xlsx: CreateExportInput!) {
+        'query' => 'mutation CreateExport($zip: CreateExportInput!, $pptx: CreateExportInput!, $csv: CreateExportInput!) {
             zip: createExport(input: $zip) {
                 status
             }
             pptx: createExport(input: $pptx) {
                 status
             }
-            xlsx: createExport(input: $xlsx) {
+            csv: createExport(input: $csv) {
                 status
             }
         }',
@@ -30,8 +30,8 @@ return [
                 'cards' => [6005],
                 'site' => SiteType::DILPS,
             ],
-            'xlsx' => [
-                'format' => ExportFormatType::XLSX,
+            'csv' => [
+                'format' => ExportFormatType::CSV,
                 'cards' => [6005],
                 'site' => SiteType::DILPS,
             ],
@@ -45,7 +45,7 @@ return [
             'pptx' => [
                 'status' => ExportStatusType::DONE,
             ],
-            'xlsx' => [
+            'csv' => [
                 'status' => ExportStatusType::DONE,
             ],
         ],

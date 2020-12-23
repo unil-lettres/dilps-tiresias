@@ -6,6 +6,7 @@ namespace Application\Service\Exporter;
 
 use Application\DBAL\Types\ExportFormatType;
 use Application\Model\Export;
+use Application\Model\User;
 use Application\Repository\CardRepository;
 use Application\Repository\ExportRepository;
 use Application\Service\MessageQueuer;
@@ -27,7 +28,7 @@ class Exporter
 
     private Writer $pptx;
 
-    private Writer $xlsx;
+    private Writer $csv;
 
     private string $phpPath;
 
@@ -38,7 +39,7 @@ class Exporter
         Mailer $mailer,
         Writer $zip,
         Writer $pptx,
-        Writer $xlsx,
+        Writer $csv,
         string $phpPath
     ) {
         $this->exportRepository = $exportRepository;
@@ -47,7 +48,7 @@ class Exporter
         $this->mailer = $mailer;
         $this->zip = $zip;
         $this->pptx = $pptx;
-        $this->xlsx = $xlsx;
+        $this->csv = $csv;
         $this->phpPath = $phpPath;
     }
 
@@ -77,9 +78,6 @@ class Exporter
      */
     public function export(Export $export): Export
     {
-        $export->markAsInProgress();
-        _em()->flush();
-
         $writer = $this->getWriter($export);
         $title = $export->getSite() . '-' . $export->getId();
 
@@ -87,12 +85,15 @@ class Exporter
         $suffix = bin2hex(random_bytes(5));
 
         $filename = $title . '-' . $suffix . '.' . $writer->getExtension();
-        $export->setFilename($filename);
+
+        $export->markAsInProgress($filename);
+        _em()->flush();
 
         $writer->initialize($export, $title);
         $this->writeCards($writer, $export);
         $writer->finalize();
 
+        User::reloadCurrentUser();
         $reloadExport = $this->exportRepository->findOneById($export->getId());
         $reloadExport->markAsDone();
         _em()->flush();
@@ -129,8 +130,8 @@ class Exporter
                 return $this->zip;
             case ExportFormatType::PPTX:
                 return $this->pptx;
-            case ExportFormatType::XLSX:
-                return $this->xlsx;
+            case ExportFormatType::CSV:
+                return $this->csv;
             default:
                 throw new Exception('Invalid export format:' . $export->getFormat());
         }

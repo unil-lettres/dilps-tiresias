@@ -20,14 +20,14 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Serve XLSX template file
  */
-class TemplateHandler extends AbstractXlsx
+class TemplateHandler implements RequestHandlerInterface
 {
     const HEADERS = [
-
         'Fichier image (avec ou sans extension)',
         'Titre',
         'Titre étendu',

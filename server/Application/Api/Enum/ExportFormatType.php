@@ -14,7 +14,7 @@ class ExportFormatType extends EnumType
         $config = [
             S::ZIP => 'Images',
             S::PPTX => 'PowerPoint',
-            S::XLSX => 'Excel',
+            S::CSV => 'Excel',
         ];
 
         parent::__construct($config);

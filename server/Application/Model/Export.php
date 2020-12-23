@@ -157,14 +157,6 @@ class Export extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * @API\Exclude
-     */
-    public function setFilename(string $filename): void
-    {
-        $this->filename = $filename;
-    }
-
-    /**
      * @API\Field(type="ExportStatus")
      */
     public function getStatus(): string
@@ -172,10 +164,11 @@ class Export extends AbstractModel implements HasSiteInterface
         return $this->status;
     }
 
-    public function markAsInProgress(): void
+    public function markAsInProgress(string $filename): void
     {
         $this->status = ExportStatusType::IN_PROGRESS;
         $this->start = new Chronos();
+        $this->filename = $filename;
     }
 
     public function markAsDone(): void
@@ -184,7 +177,11 @@ class Export extends AbstractModel implements HasSiteInterface
         $now = new Chronos();
         $this->duration = $now->getTimestamp() - $this->start->getTimestamp();
         $this->memory = (int) round(memory_get_peak_usage() / 1024 / 1024);
-        $this->fileSize = filesize($this->getPath());
+
+        $path = $this->getPath();
+        if (is_readable($path)) {
+            $this->fileSize = filesize($path);
+        }
     }
 
     /**
