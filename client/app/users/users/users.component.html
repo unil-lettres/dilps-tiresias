@@ -43,7 +43,7 @@
             <!-- Role Column -->
             <ng-container matColumnDef="role">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
-                <td *matCellDef="let element" mat-cell>{{ element.role | role }}</td>
+                <td *matCellDef="let element" mat-cell>{{ element.role | enum: 'UserRole' | async }}</td>
             </ng-container>
 
             <!-- Type Column -->

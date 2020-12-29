@@ -6,9 +6,10 @@ import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {UserType} from '../../shared/generated-types';
+import {UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
+import {IEnum, NaturalEnumService} from '@ecodev/natural';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password').value; // to get value in input tag
@@ -27,8 +28,8 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 })
 export class UserComponent extends AbstractDetailDirective {
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
-
-    public roles = [];
+    public roles: IEnum[] = [];
+    private userRolesAvailable: UserRole[] = [];
 
     public passwordGroupCtrl: FormGroup;
     public passwordCtrl: FormControl;
@@ -44,10 +45,11 @@ export class UserComponent extends AbstractDetailDirective {
         dialogRef: MatDialogRef<ArtistComponent>,
         public collectionService: CollectionService,
         @Inject(MAT_DIALOG_DATA) data: any,
+        naturalEnumService: NaturalEnumService,
     ) {
         super(service, alertService, dialogRef, userService, data);
 
-        this.roles = service.getRoles();
+        naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 
         this.passwordCtrl = new FormControl('');
         this.passwordConfirmationCtrl = new FormControl('');
@@ -69,9 +71,16 @@ export class UserComponent extends AbstractDetailDirective {
 
     protected postQuery(): void {
         this.institution = this.data.item.institution;
+        this.userService.getUserRolesAvailable(this.data.item).subscribe(userRoles => {
+            this.userRolesAvailable = userRoles;
+        });
     }
 
     protected postUpdate(model): void {
         this.institution = model.institution;
+    }
+
+    public roleDisabled(role: string): boolean {
+        return !this.userRolesAvailable.includes(role as UserRole);
     }
 }

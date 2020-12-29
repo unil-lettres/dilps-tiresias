@@ -6,6 +6,7 @@ namespace Application\Model;
 
 use Application\Acl\Acl;
 use Application\Repository\UserRepository;
+use Application\Service\Role;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -217,9 +218,9 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Returns whether the user is administrator and thus have can do anything.
+     * Get the user role
      *
-     * @API\Field(type="Application\Api\Enum\UserRoleType")
+     * @API\Field(type="UserRole")
      */
     public function getRole(): string
     {
@@ -229,45 +230,14 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Sets the user role
      *
-     * The current user is allowed to promote another user up to the same role as himself. So
-     * a Senior can promote a Student to Senior. Or an Admin can promote a Junior to Admin.
-     *
-     * But the current user is **not** allowed to demote a user who has a higher role than himself.
-     * That means that a Senior cannot demote an Admin to Student.
+     * @API\Input(type="UserRole")
      */
     public function setRole(string $role): void
     {
-        if ($role === $this->role) {
-            return;
-        }
+        if (!Role::canUpdate(self::getCurrent(), $this->role, $role)) {
+            $currentRole = self::getCurrent() ? self::getCurrent()->getRole() : self::ROLE_ANONYMOUS;
 
-        $currentRole = self::getCurrent() ? self::getCurrent()->getRole() : self::ROLE_ANONYMOUS;
-        $orderedRoles = [
-            self::ROLE_ANONYMOUS,
-            self::ROLE_STUDENT,
-            self::ROLE_JUNIOR,
-            self::ROLE_SENIOR,
-            self::ROLE_MAJOR,
-            self::ROLE_ADMINISTRATOR,
-        ];
-
-        $newFound = false;
-        $oldFound = false;
-        foreach ($orderedRoles as $r) {
-            if ($r === $this->role) {
-                $oldFound = true;
-            }
-            if ($r === $role) {
-                $newFound = true;
-            }
-
-            if ($r === $currentRole) {
-                break;
-            }
-        }
-
-        if (!$newFound || !$oldFound) {
-            throw new Exception($currentRole . ' is not allowed to change role to ' . $role);
+            throw new Exception($currentRole . ' is not allowed to change role from ' . $this->role . ' to ' . $role);
         }
 
         $this->role = $role;

@@ -109,7 +109,6 @@ import {TableButtonComponent} from './shared/components/table-button/table-butto
 import {ThesaurusComponent} from './shared/components/thesaurus/thesaurus.component';
 import {apolloDefaultOptions, createApolloLink} from './shared/config/apollo.link.creator';
 import {FocusDirective} from './shared/directives/focus';
-import {RolePipe} from './shared/pipes/role.pipe';
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
 import {TypePipe} from './shared/pipes/type.pipe';
 import {NetworkActivityService} from './shared/services/network-activity.service';
@@ -187,7 +186,6 @@ const icons: NaturalIconsConfig = {
         CollectionSelectorComponent,
         DownloadComponent,
         LogoComponent,
-        RolePipe,
         TypePipe,
         StripTagsPipe,
         OnlyLeavesPipe,

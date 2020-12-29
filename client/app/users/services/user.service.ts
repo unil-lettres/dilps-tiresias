@@ -16,8 +16,11 @@ import {
     UpdateUser,
     UpdateUserVariables,
     User,
+    User_user,
     UserInput,
     UserRole,
+    UserRolesAvailables,
+    UserRolesAvailablesVariables,
     Users,
     UsersVariables,
     UserType,
@@ -32,6 +35,7 @@ import {
     logoutMutation,
     updateUser,
     userQuery,
+    userRolesAvailableQuery,
     usersQuery,
     viewerQuery,
 } from './user.queries';
@@ -89,33 +93,19 @@ export class UserService extends AbstractContextualizedService<
             .pipe(map(result => result.data.viewer));
     }
 
-    public getRole(role: UserRole): {name: UserRole; text: string} {
-        return this.getRoles().find(r => r.name === role);
-    }
-
-    public getRoles(): {name: UserRole; text: string}[] {
-        return [
-            {
-                name: UserRole.student,
-                text: 'Etudiant',
-            },
-            {
-                name: UserRole.junior,
-                text: 'Etudiant junior',
-            },
-            {
-                name: UserRole.senior,
-                text: 'Senior',
-            },
-            {
-                name: UserRole.major,
-                text: 'Major',
-            },
-            {
-                name: UserRole.administrator,
-                text: 'Administrateur',
-            },
-        ];
+    public getUserRolesAvailable(user: User_user | null): Observable<UserRole[]> {
+        return this.apollo
+            .query<UserRolesAvailables, UserRolesAvailablesVariables>({
+                query: userRolesAvailableQuery,
+                variables: {
+                    user: user?.id,
+                },
+            })
+            .pipe(
+                map(result => {
+                    return result.data.userRolesAvailable;
+                }),
+            );
     }
 
     public getType(type: UserType): {name: UserType; text: string} {
