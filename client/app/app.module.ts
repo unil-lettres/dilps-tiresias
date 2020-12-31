@@ -133,6 +133,7 @@ import {OnlyLeavesPipe} from './shared/pipes/only-leaves.pipe';
 import {TypeLocationComponent} from './type-location/type-location.component';
 import {TypeNumericRangeComponent} from './type-numeric-range/type-numeric-range.component';
 import {FilesComponent} from './files/files/files.component';
+import {ErrorComponent} from './shared/components/error/error.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -218,6 +219,7 @@ const icons: NaturalIconsConfig = {
         TypeNumericRangeComponent,
         TruncatePipe,
         FilesComponent,
+        ErrorComponent,
     ],
     imports: [
         BrowserModule,
