@@ -10,7 +10,7 @@ import {TagService} from '../services/tag.service';
     selector: 'app-tag',
     templateUrl: './tag.component.html',
 })
-export class TagComponent extends AbstractDetailDirective {
+export class TagComponent extends AbstractDetailDirective<TagService> {
     public hierarchicConfig = tagHierarchicConfig;
 
     constructor(

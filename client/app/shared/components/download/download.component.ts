@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
-import {Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
+import {Card_card, Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
@@ -10,7 +10,7 @@ import {AlertService} from '../alert/alert.service';
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
     collections: FakeCollection[];
-    cards: Cards_cards_items[];
+    cards: (Cards_cards_items | Card_card)[];
 };
 
 @Component({

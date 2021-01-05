@@ -10,7 +10,7 @@ import {DomainService} from '../services/domain.service';
     selector: 'app-domain',
     templateUrl: './domain.component.html',
 })
-export class DomainComponent extends AbstractDetailDirective {
+export class DomainComponent extends AbstractDetailDirective<DomainService> {
     public hierarchicConfig = domainHierarchicConfig;
 
     constructor(

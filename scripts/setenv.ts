@@ -13,7 +13,7 @@ function createEnvironmentFile(path: string, env: string): void {
     const environmentFileContent = `export const environment = ${JSON.stringify(data)};`;
 
     // Write the content to the respective file
-    writeFile(path, environmentFileContent, err => {
+    writeFile(path, environmentFileContent, (err: NodeJS.ErrnoException | null) => {
         if (err) {
             console.log(err);
         }

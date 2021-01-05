@@ -10,7 +10,7 @@ import {MaterialService} from '../services/material.service';
     selector: 'app-material',
     templateUrl: './material.component.html',
 })
-export class MaterialComponent extends AbstractDetailDirective {
+export class MaterialComponent extends AbstractDetailDirective<MaterialService> {
     public hierarchicConfig = materialHierarchicConfig;
 
     constructor(

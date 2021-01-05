@@ -1,23 +1,29 @@
 {
     "compileOnSave": false,
-    "preserveWhitespaces": false,
     "compilerOptions": {
         "baseUrl": "./",
-        "downlevelIteration": true,
-        "importHelpers": true,
         "outDir": "./dist/out-tsc",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "declaration": false,
-        "module": "es2020",
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
+        "downlevelIteration": true,
         "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
         "strictNullChecks": false,
-        "noStrictGenericChecks": true,
         "target": "es2015",
-        "typeRoots": ["node_modules/@types"],
+        "module": "es2020",
         "lib": ["es2018", "dom"],
-        "paths": {},
         "allowSyntheticDefaultImports": true
+    },
+    "angularCompilerOptions": {
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true,
+        // Remove this when https://github.com/angular/angular/issues/37619 is fixed
+        "strictSafeNavigationTypes": false
     }
 }

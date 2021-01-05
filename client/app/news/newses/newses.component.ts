@@ -1,6 +1,5 @@
 import {Component, Injector} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
-import {Newses, NewsesVariables} from '../../shared/generated-types';
 import {NewsComponent} from '../news/news.component';
 import {NewsService} from '../services/news.service';
 
@@ -9,7 +8,7 @@ import {NewsService} from '../services/news.service';
     templateUrl: './newses.component.html',
     styleUrls: ['./newses.component.scss'],
 })
-export class NewsesComponent extends AbstractList<Newses['newses'], NewsesVariables> {
+export class NewsesComponent extends AbstractList<NewsService> {
     public displayedColumns = ['isActive', 'image', 'name', 'url'];
 
     constructor(service: NewsService, injector: Injector) {

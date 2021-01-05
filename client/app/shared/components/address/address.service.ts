@@ -6,10 +6,16 @@ export interface Address {
     postcode?: string;
     locality?: string;
     area?: string;
-    country?: string;
+    countryIso2?: string;
     latitude?: number;
     longitude?: number;
 }
+
+type PlaceModel =
+    | Pick<google.maps.places.PlaceResult, 'address_components' | 'geometry'>
+    | Pick<google.maps.GeocoderResult, 'address_components' | 'geometry'>;
+
+type Config = Record<string, keyof Pick<google.maps.GeocoderAddressComponent, 'long_name' | 'short_name'>>;
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +24,7 @@ export class AddressService {
     /**
      * Binds gmap semantic with string we should retrieve
      */
-    private config = {
+    private config: Config = {
         route: 'long_name',
         street_number: 'short_name',
         postal_code: 'short_name',
@@ -28,17 +34,17 @@ export class AddressService {
 
     constructor() {}
 
-    public buildAddress(place: any, withLatLon: boolean = true): void {
-        const tmpGAddress = mapValues(this.config, () => '');
+    public buildAddress(place: PlaceModel, withLatLon: boolean = true): Address {
+        const tmpGAddress: Record<string, string> = mapValues(this.config, () => '');
 
-        place.address_components.forEach((addressComponent: any) => {
+        place.address_components.forEach(addressComponent => {
             const addressType = addressComponent.types[0];
             if (!isUndefined(this.config[addressType])) {
                 tmpGAddress[addressType] = addressComponent[this.config[addressType]];
             }
         });
 
-        const address: any = {
+        const address: Address = {
             street: trim(tmpGAddress.route + ' ' + tmpGAddress.street_number),
             postcode: tmpGAddress.postal_code,
             locality: tmpGAddress.locality,
@@ -51,16 +57,5 @@ export class AddressService {
         }
 
         return address;
-    }
-
-    public toString(address: Address): string {
-        let text = '';
-        text += address.street ? address.street : '';
-        text += address.postcode ? ' ' + address.postcode : '';
-        text += address.locality ? ' ' + address.locality : '';
-        text += address.area ? ' ' + address.area : '';
-        text += address.country ? ' ' + address.country : '';
-
-        return text;
     }
 }

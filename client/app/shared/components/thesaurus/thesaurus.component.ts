@@ -5,18 +5,23 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
     HierarchicDialogResult,
+    Literal,
     NaturalAbstractController,
     NaturalAbstractModelService,
     NaturalHierarchicConfiguration,
     NaturalHierarchicSelectorDialogService,
     NaturalQueryVariablesManager,
+    PaginatedData,
+    QueryVariables,
 } from '@ecodev/natural';
 import {clone, isArray, isObject, isString, merge} from 'lodash';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
+import {ComponentType} from '@angular/cdk/overlay';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete/autocomplete';
 
-interface ThesaurusModel {
+export interface ThesaurusModel {
     name: string;
     locality?: string;
     hierarchicName?: string;
@@ -30,7 +35,22 @@ interface ThesaurusModel {
     templateUrl: './thesaurus.component.html',
     styleUrls: ['./thesaurus.component.scss'],
 })
-export class ThesaurusComponent extends NaturalAbstractController implements OnInit {
+export class ThesaurusComponent<
+        TService extends NaturalAbstractModelService<
+            any,
+            any,
+            PaginatedData<ThesaurusModel>,
+            QueryVariables,
+            any,
+            any,
+            any,
+            any,
+            any,
+            any
+        >
+    >
+    extends NaturalAbstractController
+    implements OnInit {
     /**
      * Reference to autocomplete
      */
@@ -44,7 +64,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * Service used as data source
      */
-    @Input() public service: NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>;
+    @Input() public service: TService;
 
     /**
      * Input label name
@@ -64,7 +84,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
     /**
      * Component that renders the detail view of an entry
      */
-    @Input() public previewComponent;
+    @Input() public previewComponent: ComponentType<unknown>;
 
     /**
      * Emits when a selection is done
@@ -188,7 +208,9 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             const nbTotal = data.length;
             const nbListed = Math.min(data.length, this.pageSize);
             this.moreNbItems = nbTotal - nbListed;
-            this.suggestions = data.items.filter(item => this.items.findIndex(term => term.name === item.name));
+            this.suggestions = data.items.filter((item: ThesaurusModel) =>
+                this.items.findIndex(term => term.name === item.name),
+            );
         });
     }
 
@@ -209,7 +231,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
             return;
         }
 
-        const selected = {};
+        const selected: Literal = {};
 
         if (this.items) {
             selected[selectAtKey] = this.items;
@@ -260,20 +282,21 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * On enter key, find if there is an active (focused) option in the mat-select).
      * If not add the term as is. If it does, add the selected option.
      */
-    public onEnter(event): void {
+    public onEnter(event: Event): void {
+        const target: HTMLInputElement = event.target as HTMLInputElement;
         if (!this.autocomplete.activeOption && this.allowFreeText) {
-            this.addTerm({name: event.target.value});
-            event.target.value = '';
+            this.addTerm({name: target.value});
+            target.value = '';
         } else if (this.autocomplete.activeOption) {
             this.addTerm(this.autocomplete.activeOption.value);
-            event.target.value = '';
+            target.value = '';
         }
     }
 
     /**
      * When click on a suggestion
      */
-    public selectSuggestion(event): void {
+    public selectSuggestion(event: MatAutocompleteSelectedEvent): void {
         this.addTerm(event.option.value);
     }
 
@@ -286,7 +309,7 @@ export class ThesaurusComponent extends NaturalAbstractController implements OnI
      * Grants unicity of elements.
      * Always close the panel (without resetting results)
      */
-    private addTerm(term: {name}): void {
+    private addTerm(term: ThesaurusModel): void {
         this.autocomplete.closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {

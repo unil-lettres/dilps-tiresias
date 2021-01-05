@@ -1,7 +1,7 @@
 import {AgmMap, MapsAPILoader, MapTypeStyle} from '@agm/core';
-import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild, Inject} from '@angular/core';
+import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {NaturalQueryVariablesManager} from '@ecodev/natural';
+import {Literal, NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
@@ -16,6 +16,7 @@ import {
 } from '../../generated-types';
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
+import {MouseEvent} from '@agm/core/map-types';
 
 @Component({
     selector: 'app-address',
@@ -52,7 +53,7 @@ export class AddressComponent implements OnInit, OnChanges {
     public longitude = 4.7176318;
     public zoom = 2;
 
-    public icon;
+    public icon: Literal | null;
 
     @ViewChild(AgmMap) public map: AgmMap;
 
@@ -217,13 +218,13 @@ export class AddressComponent implements OnInit, OnChanges {
         },
     ];
     public countries: Countries['countries']['items'];
-    private autocomplete;
+    private autocomplete: google.maps.places.Autocomplete | null = null;
 
     constructor(
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
         private addressService: AddressService,
-        private countryService: CountryService,
+        public countryService: CountryService,
         @Inject(SITE) public readonly site: Site,
     ) {}
 
@@ -284,7 +285,7 @@ export class AddressComponent implements OnInit, OnChanges {
         merge(this.model, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev): void {
+    public onMarkerDrag(ev: MouseEvent): void {
         this.latitude = ev.coords.lat;
         this.longitude = ev.coords.lng;
 
@@ -300,7 +301,7 @@ export class AddressComponent implements OnInit, OnChanges {
                 },
             },
             places => {
-                const address = this.addressService.buildAddress(places[0], false) as any;
+                const address = this.addressService.buildAddress(places[0], false);
                 merge(this.model, address);
                 this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
                 this.updateSearch();
@@ -308,9 +309,9 @@ export class AddressComponent implements OnInit, OnChanges {
         );
     }
 
-    public getIcon(color = '#ff9800'): void {
+    public getIcon(color = '#ff9800'): Literal {
         const iconSize = 48;
-        const icon: any = {
+        const icon: Literal = {
             path:
                 'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
                 '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',

@@ -24,10 +24,10 @@ import {DownloadComponent, DownloadComponentData} from '../shared/components/dow
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
+    CardInput,
     Cards,
     Cards_cards_items,
     CardSortingField,
-    CardsVariables,
     CardVisibility,
     CreateCard_createCard,
     Site,
@@ -39,24 +39,29 @@ import {adminConfig, NaturalSearchFacetsService} from '../shared/natural-search-
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
-import {ViewGridComponent} from '../view-grid/view-grid.component';
+import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
+import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
+import {PageEvent} from '@angular/material/paginator';
 
-const applyChanges = (destination, changes) => {
+function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): Partial<CardInput> {
     changes = clone(changes);
     defaults(changes, destination);
 
     if (changes.artists) {
-        changes.artists = changes.artists.map(a => (a.name ? a.name : a));
+        changes.artists = changes.artists.map((a: string | ThesaurusModel) => (typeof a === 'string' ? a : a.name));
     }
 
     if (changes.institution) {
-        changes.institution = changes.institution.name ? changes.institution.name : changes.institution;
+        changes.institution =
+            typeof changes.institution === 'string'
+                ? changes.institution
+                : (changes.institution as ThesaurusModel).name;
     }
 
     return changes;
-};
+}
 
 export interface ViewInterface {
     selectAll: () => Cards_cards_items[];
@@ -74,7 +79,7 @@ enum ViewMode {
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
 })
-export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVariables> implements OnInit {
+export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
     /**
      * Reference to grid component
      */
@@ -250,7 +255,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
     /**
      * On pagination request, dont persist for gallery as it's meaningless
      */
-    public pagination(event: Required<PaginationInput>, defer?: Promise<unknown>): void {
+    public pagination(event: PaginationInput | PageEvent, defer?: Promise<unknown>): void {
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
             super.pagination(event, defer);
@@ -260,7 +265,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         }
     }
 
-    public gridContentChange(event): void {
+    public gridContentChange(event: ContentChange): void {
         if (event.visible != null) {
             this.gridNumberVisibleItems = event.visible;
         }
@@ -313,7 +318,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
         this.download({cards: selection});
     }
 
-    public downloadCollection(collection): void {
+    public downloadCollection(collection: FakeCollection): void {
         this.download({collections: [collection]});
     }
 
@@ -390,7 +395,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     return;
                 }
 
-                const model = result.model;
+                const model: CardInput = result.model;
                 const createSuggestions = result.createSuggestions;
 
                 /**
@@ -405,13 +410,13 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                     );
                 });
 
-                const observables = [];
+                const observables: Observable<unknown>[] = [];
                 for (const s of selection) {
                     const changes = applyChanges(s, changeAttributes);
                     observables.push(this.cardService.updateNow(changes));
                 }
 
-                const suggestionsObservables = [];
+                const suggestionsObservables: Observable<CreateCard_createCard>[] = [];
                 if (createSuggestions) {
                     changeable.forEach(changeableCard => {
                         const destination = applyChanges(changeableCard, changeAttributes);
@@ -419,7 +424,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                             original: changeableCard.id,
                             visibility: CardVisibility.private,
                         });
-                        suggestionsObservables.push(this.cardService.create(fetchedSuggestion));
+                        suggestionsObservables.push(this.cardService.create(fetchedSuggestion as CardInput));
                     });
                 }
 
@@ -432,7 +437,7 @@ export class ListComponent extends NaturalAbstractList<Cards['cards'], CardsVari
                 };
 
                 if (suggestionsObservables.length) {
-                    forkJoin(suggestionsObservables).subscribe((results: CreateCard_createCard[]) => {
+                    forkJoin(suggestionsObservables).subscribe(results => {
                         results.forEach(card => {
                             observables.push(this.changeService.suggestUpdate(card));
                         });

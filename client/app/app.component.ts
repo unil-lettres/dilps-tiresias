@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
      */
     public initialized: boolean;
 
-    private lastTheme;
+    private lastTheme = '';
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon');
 

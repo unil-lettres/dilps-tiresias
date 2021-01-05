@@ -1,21 +1,17 @@
 import {isString, uniq} from 'lodash-es';
-import {Card} from '../shared/generated-types';
+import {Card_card} from '../shared/generated-types';
+import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 
-export interface Result {
-    name: boolean;
-    artists: boolean;
-    institution: boolean;
-    dating: boolean;
-}
+export type Result = Record<keyof Pick<Card_card, 'name' | 'artists' | 'institution' | 'dating'>, boolean>;
 
-export function test(formValue: string, card: Card['card']): Result {
+export function test(formValue: string, card: Card_card): Result {
     const commonPlaces = /(eglise|chapelle|musee)/g;
     const words = sanitize(formValue)
         .replace(commonPlaces, '')
         .split(/\W/)
         .filter(word => word.length > 3);
 
-    const result = {
+    const result: Result = {
         name: false,
         artists: false,
         institution: false,
@@ -23,7 +19,7 @@ export function test(formValue: string, card: Card['card']): Result {
     };
 
     for (const attribute of Object.keys(result)) {
-        const value = card[attribute];
+        const value = card[attribute as keyof Card_card];
         if (attribute === 'institution') {
             result[attribute] = testSingleThesaurus(words, value);
         } else if (attribute === 'artists') {
@@ -31,7 +27,7 @@ export function test(formValue: string, card: Card['card']): Result {
         } else if (attribute === 'dating') {
             result[attribute] = testString(words, value) || testDate(formValue, card.datings);
         } else if (isString(value)) {
-            result[attribute] = testString(words, value);
+            result[attribute as keyof Result] = testString(words, value);
         }
     }
 
@@ -53,7 +49,7 @@ function testString(words: string[], attributeValue: string): boolean {
     return false;
 }
 
-function testSingleThesaurus(words: string[], attributeValue): boolean {
+function testSingleThesaurus(words: string[], attributeValue: ThesaurusModel): boolean {
     if (!attributeValue) {
         return false;
     }
@@ -61,7 +57,7 @@ function testSingleThesaurus(words: string[], attributeValue): boolean {
     return testString(words, attributeValue.name);
 }
 
-function testMultipleThesaurus(words: string[], attributeValue): boolean {
+function testMultipleThesaurus(words: string[], attributeValue: ThesaurusModel[]): boolean {
     for (const item of attributeValue) {
         if (testSingleThesaurus(words, item)) {
             return true;
@@ -71,7 +67,7 @@ function testMultipleThesaurus(words: string[], attributeValue): boolean {
     return false;
 }
 
-function testDate(formValue: string, datings: Card['card']['datings']): boolean {
+function testDate(formValue: string, datings: Card_card['datings']): boolean {
     const years: string[] = uniq(formValue.match(/(-?\d+)/));
     if (years) {
         for (const year of years) {

@@ -6,7 +6,13 @@ import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {UserRole, UserType} from '../../shared/generated-types';
+import {
+    UpdateUser_updateUser,
+    UpdateUser_updateUser_institution,
+    User_user_institution,
+    UserRole,
+    UserType,
+} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService} from '@ecodev/natural';
@@ -26,7 +32,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     selector: 'app-profile',
     templateUrl: './user.component.html',
 })
-export class UserComponent extends AbstractDetailDirective {
+export class UserComponent extends AbstractDetailDirective<UserService> {
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
     public roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
@@ -35,7 +41,7 @@ export class UserComponent extends AbstractDetailDirective {
     public passwordCtrl: FormControl;
     public passwordConfirmationCtrl: FormControl;
 
-    public institution;
+    public institution: UpdateUser_updateUser_institution | User_user_institution | null = null;
 
     constructor(
         public institutionService: InstitutionService,
@@ -76,7 +82,7 @@ export class UserComponent extends AbstractDetailDirective {
         });
     }
 
-    protected postUpdate(model): void {
+    protected postUpdate(model: UpdateUser_updateUser): void {
         this.institution = model.institution;
     }
 

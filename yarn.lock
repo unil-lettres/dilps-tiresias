@@ -1327,10 +1327,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
   integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
 
-"@ecodev/natural@^27.1.1":
-  version "27.1.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-27.1.1.tgz#1fc48c8d06d8ac401084abf8a4b9cb645e479f28"
-  integrity sha512-8aZleBAAXizo2RzyTxCuKCKcKAUit7nTPASCpY34n+zaZFjoXwZ/b0OFfJUC/PHHxnpSpY3SCW2R3c2RWqTN8w==
+"@ecodev/natural@^28.0.0":
+  version "28.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-28.0.0.tgz#8a3cff2c98d0a72f778a892408089f5a3c7630fb"
+  integrity sha512-zSh8RgR0a/rn3N0yFJveLa8hqAg4JE0xKHbLvKzUqCzyBQyK+Kfj5uH64/7AP0pspZ8MWfqXDVA4ZM26pzWWIQ==
   dependencies:
     tslib "^2.0.0"
 
@@ -1694,6 +1694,13 @@
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.4.tgz#15925414e0ad2cd765bfef58842f7e26a7accb24"
   integrity sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==
+
+"@types/quill@^1.3.10":
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/@types/quill/-/quill-1.3.10.tgz#dc1f7b6587f7ee94bdf5291bc92289f6f0497613"
+  integrity sha512-IhW3fPW+bkt9MLNlycw8u8fWb7oO7W5URC9MfZYHBlA24rex9rs23D5DETChu1zvgVdc5ka64ICjJOgQMr6Shw==
+  dependencies:
+    parchment "^1.1.2"
 
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"
@@ -7980,7 +7987,7 @@ param-case@^3.0.3:
     dot-case "^3.0.3"
     tslib "^1.10.0"
 
-parchment@^1.1.4:
+parchment@^1.1.2, parchment@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/parchment/-/parchment-1.1.4.tgz#aeded7ab938fe921d4c34bc339ce1168bc2ffde5"
   integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==

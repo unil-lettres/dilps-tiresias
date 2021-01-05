@@ -1,7 +1,7 @@
 import {Apollo} from 'apollo-angular';
 import {Component, Inject} from '@angular/core';
 import {StatisticService} from '../services/statistic.service';
-import {NaturalAbstractController, NaturalQueryVariablesManager, Literal} from '@ecodev/natural';
+import {Literal, NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {
     ExtraStatistics,
     Site,
@@ -9,7 +9,6 @@ import {
     StatisticFilter,
     StatisticSortingField,
     StatisticsVariables,
-    UserFilter,
     Users_users_items,
 } from '../../shared/generated-types';
 import {StatisticInput} from '../statistic/statistic.component';
@@ -35,6 +34,7 @@ interface Values {
     searchCount: number;
     uniqueLoginCount: number;
 }
+
 interface Stat {
     name: string;
     values: Values;
@@ -45,6 +45,19 @@ interface Data {
     default: Stat;
     aai: Stat;
     total: Stat;
+}
+
+interface SeriesData {
+    anonymous: SerieData;
+    default: SerieData;
+    aai: SerieData;
+}
+
+interface SerieData {
+    pageCount: number[];
+    detailCount: number[];
+    searchCount: number[];
+    uniqueLoginCount: number[];
 }
 
 @Component({
@@ -116,7 +129,7 @@ export class StatisticsComponent extends NaturalAbstractController {
         statisticService.watchAll(this.frequentationQvm, this.ngUnsubscribe).subscribe(result => {
             this.reset();
 
-            const seriesData = {
+            const seriesData: SeriesData = {
                 anonymous: {
                     pageCount: [],
                     detailCount: [],
@@ -228,7 +241,7 @@ export class StatisticsComponent extends NaturalAbstractController {
         };
     }
 
-    private buildOneSeries(seriesData, key: keyof Values): void {
+    private buildOneSeries(seriesData: SeriesData, key: keyof Values): void {
         this.series.set(key, [
             {
                 name: this.data.anonymous.name,
@@ -331,7 +344,7 @@ export class StatisticsComponent extends NaturalAbstractController {
             });
     }
 
-    public displayFn(item): void {
-        return item ? item.login : null;
+    public displayFn(item: Users_users_items | string): string {
+        return item && typeof item !== 'string' ? item.login : '';
     }
 }

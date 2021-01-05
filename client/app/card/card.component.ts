@@ -55,13 +55,25 @@ import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
 import {FileSelection} from '@ecodev/natural';
+import {MatSliderChange} from '@angular/material/slider';
+import {ThemePalette} from '@angular/material/core';
 
-export function cardToCardInput(fetchedModel: Card_card): CardInput & {id?: string} {
+export type CardInputWithId = CardInput & {id?: string};
+
+export function cardToCardInput(fetchedModel: Card_card): CardInputWithId {
     return Object.assign({}, fetchedModel, {
         artists: fetchedModel.artists.map(a => a.name),
         institution: fetchedModel.institution?.name ?? null,
     });
 }
+
+export interface VisibilityConfig<V> {
+    value: V;
+    text: string;
+    color: ThemePalette;
+}
+
+export type Visibilities<V> = Record<number, VisibilityConfig<V>>;
 
 @Component({
     selector: 'app-card',
@@ -77,7 +89,7 @@ export class CardComponent implements OnInit, OnChanges {
      *
      * If only `[fetchedModel]` is given, then `model` will be automatically deduced.
      */
-    @Input() public model: CardInput & {id?: string};
+    @Input() public model: CardInputWithId;
 
     /**
      * The card as fetched from DB, if applicable.
@@ -149,11 +161,11 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * List of visibilities
      */
-    public visibilities = {
+    public visibilities: Visibilities<CardVisibility> = {
         1: {
             value: CardVisibility.private,
             text: 'par moi, les admins et les abonnés',
-            color: null,
+            color: undefined,
         },
         2: {
             value: CardVisibility.member,
@@ -425,7 +437,8 @@ export class CardComponent implements OnInit, OnChanges {
         return this.edit && this.canUpdateCode() && this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
-    public updateVisibility(ev): void {
+    public updateVisibility(ev: MatSliderChange): void {
+        // @ts-ignore
         this.model.visibility = this.visibilities[ev.value].value;
     }
 
@@ -558,7 +571,9 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public download(card): void {
+    public download(card: Card_card | null): void {
+        this.assertFetchedCard(card);
+
         this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
             width: '600px',
             data: {
@@ -603,9 +618,9 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public displayWith(item): string {
+    public displayWith(item: Cards_cards_items | string): string {
         // Turn HTML to plain text
-        return item ? item.name.replace(/<[^>]*>/g, '') + ' (' + item.id + ')' : '';
+        return item && typeof item !== 'string' ? item.name.replace(/<[^>]*>/g, '') + ' (' + item.id + ')' : '';
     }
 
     public useSuggestedCode(event: Event): void {

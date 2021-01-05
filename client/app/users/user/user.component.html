@@ -40,7 +40,7 @@
                 </div>
 
                 <app-thesaurus
-                    (modelChange)="data.item.institution = $event"
+                    (modelChange)="data.item.institution = $any($event)"
                     [model]="institution"
                     [multiple]="false"
                     [service]="institutionService"

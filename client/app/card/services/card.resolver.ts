@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {CardService} from './card.service';
 import {Card_card} from '../../shared/generated-types';
 import {ErrorService} from '../../shared/components/error/error.service';
@@ -20,5 +20,7 @@ export class CardResolver implements Resolve<Card_card> {
 
             return this.errorService.redirectIfError(observable);
         }
+
+        return of(null);
     }
 }

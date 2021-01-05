@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 import {SwiperConfigInterface} from 'ngx-swiper-wrapper';
-import {NewsesVariables} from '../../shared/generated-types';
+import {Newses_newses_items, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class CarouselComponent implements OnInit {
         navigation: true,
     };
 
-    public newses;
+    public newses: Newses_newses_items[] = [];
 
     constructor(public newsService: NewsService) {}
 

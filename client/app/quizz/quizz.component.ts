@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
-import {Card} from '../shared/generated-types';
+import {Card, Card_card_artists} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
 
 @Component({
@@ -14,12 +15,12 @@ import {Result, test} from './quizz.utils';
 export class QuizzComponent implements OnInit, OnDestroy {
     public cards: string[] = [];
     public card: Card['card'];
-    public imageSrc;
+    public imageSrc = '';
     public currentIndex = 0;
     public attributes: Result;
     public formCtrl: FormControl = new FormControl();
-    private routeParamsSub;
-    private formChangeSub;
+    private routeParamsSub: Subscription | null = null;
+    private formChangeSub: Subscription | null = null;
 
     constructor(private route: ActivatedRoute, private cardService: CardService) {}
 
@@ -47,7 +48,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
         this.getCard(this.cards[index + 1]);
     }
 
-    public getArtistsNames(artists): void {
+    public getArtistsNames(artists: Card_card_artists[]): string {
         return artists.map(a => a.name).join(', ');
     }
 

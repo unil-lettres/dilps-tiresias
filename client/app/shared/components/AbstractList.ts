@@ -1,20 +1,41 @@
 import {Injector, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {NaturalAbstractList, PaginatedData, QueryVariables} from '@ecodev/natural';
+import {
+    ExtractTallOne,
+    NaturalAbstractList,
+    NaturalAbstractModelService,
+    PaginatedData,
+    QueryVariables,
+} from '@ecodev/natural';
+import {Literal} from '@ecodev/natural/lib/types/types';
+import {ComponentType} from '@angular/cdk/overlay';
 
-export class AbstractList<Tall extends PaginatedData<any>, Vall extends QueryVariables>
-    extends NaturalAbstractList<Tall, Vall>
+export class AbstractList<
+        TService extends NaturalAbstractModelService<
+            any,
+            any,
+            PaginatedData<Literal>,
+            QueryVariables,
+            any,
+            any,
+            any,
+            any,
+            any,
+            any
+        >
+    >
+    extends NaturalAbstractList<TService>
     implements OnInit {
     public displayedColumns = ['name'];
 
     protected dialog: MatDialog;
 
-    constructor(service, private component, injector: Injector) {
+    constructor(service: TService, private component: ComponentType<unknown>, injector: Injector) {
         super(service, injector);
         this.dialog = injector.get(MatDialog);
     }
 
-    public edit(item): void {
+    public edit(item: ExtractTallOne<TService>): void {
         this.dialog.open(this.component, {
             width: '800px',
             data: {item: item},

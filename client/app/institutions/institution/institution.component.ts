@@ -9,7 +9,7 @@ import {InstitutionService} from '../services/institution.service';
     selector: 'app-institution',
     templateUrl: './institution.component.html',
 })
-export class InstitutionComponent extends AbstractDetailDirective {
+export class InstitutionComponent extends AbstractDetailDirective<InstitutionService> {
     constructor(
         service: InstitutionService,
         alertSvc: AlertService,

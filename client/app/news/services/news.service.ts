@@ -17,6 +17,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
+import {Literal} from '@ecodev/natural/lib/types/types';
 
 @Injectable({
     providedIn: 'root',
@@ -52,7 +53,7 @@ export class NewsService extends AbstractContextualizedService<
         };
     }
 
-    public getInput(object): NewsInput | NewsPartialInput {
+    public getInput(object: Literal): NewsInput | NewsPartialInput {
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server

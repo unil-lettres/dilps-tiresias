@@ -54,6 +54,7 @@ import {
     NaturalSelectModule,
     NaturalTableButtonModule,
     NaturalFileModule,
+    Literal,
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
 import {HighchartsChartModule} from 'highcharts-angular';
@@ -282,7 +283,7 @@ const icons: NaturalIconsConfig = {
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
         /* tslint:disable:no-string-literal */
-        {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
+        {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
     ],

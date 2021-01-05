@@ -2,13 +2,12 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge} from 'lodash-es';
 import {Subscription} from 'rxjs';
 import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
-import {Site} from '../shared/generated-types';
+import {Site, UserPartialInput, Viewer_viewer} from '../shared/generated-types';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Stores the received redirect URL until we need to use it (when login is successfull)
      */
-    public returnUrl: string;
+    public returnUrl = '/';
 
     public loginForm = {
         login: '',
@@ -90,16 +89,20 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
     }
 
-    private showTerms(user): void {
+    private showTerms(user: Viewer_viewer): void {
         this.dialog
             .open(TermsAgreementComponent, {maxWidth: 700})
             .afterClosed()
             .subscribe(accepted => {
                 if (accepted) {
-                    const date = {termsAgreement: new Date().toDateString()};
-                    this.userService.updateNow(merge({}, user, date)).subscribe(u => {
-                        this.redirect();
-                    });
+                    this.userService
+                        .updateNow({
+                            id: user.id,
+                            termsAgreement: new Date().toDateString(),
+                        } as UserPartialInput)
+                        .subscribe(u => {
+                            this.redirect();
+                        });
                 } else {
                     this.userService.logout();
                 }
@@ -116,7 +119,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Serializes and parses an URL to encode it.
      */
-    public encodeUrl(url): string {
+    public encodeUrl(url: string): string {
         return encodeURIComponent(url);
     }
 }

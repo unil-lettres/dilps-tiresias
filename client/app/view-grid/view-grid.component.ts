@@ -9,6 +9,11 @@ import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards_cards, Cards_cards_items} from '../shared/generated-types';
 
+export interface ContentChange {
+    visible?: number;
+    total?: number;
+}
+
 @Component({
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
@@ -38,7 +43,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public contentChange: EventEmitter<{visible?: number; total?: number}> = new EventEmitter();
+    @Output() public contentChange: EventEmitter<ContentChange> = new EventEmitter();
 
     /**
      * Emits when some cards are selected
@@ -107,7 +112,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
 
         // Restore scroll when component is retrieved from reuse strategy
-        this.router.events.subscribe((event: NavigationEnd) => {
+        this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 setTimeout(() => {
                     this.scrollable.nativeElement.scrollTop = this.scrollTop;
@@ -128,7 +133,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(event): void {
+    public activate(event: {model: Cards_cards_items}): void {
         this.router.navigate(['card', event.model.id]);
     }
 

@@ -9,7 +9,7 @@ import {ArtistService} from '../services/artist.service';
     selector: 'app-artist',
     templateUrl: './artist.component.html',
 })
-export class ArtistComponent extends AbstractDetailDirective {
+export class ArtistComponent extends AbstractDetailDirective<ArtistService> {
     constructor(
         service: ArtistService,
         alertService: AlertService,

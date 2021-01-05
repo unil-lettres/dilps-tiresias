@@ -110,7 +110,7 @@
                     <mat-icon>content_copy</mat-icon>
                 </button>
 
-                <button (click)="download(model)" mat-icon-button matTooltip="Télécharger">
+                <button (click)="download(fetchedModel)" mat-icon-button matTooltip="Télécharger">
                     <mat-icon>file_download</mat-icon>
                 </button>
 
@@ -147,7 +147,7 @@
                     </div>
                     <mat-slider
                         (input)="updateVisibility($event); visibility = $event.value"
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
                         [disabled]="!edit"
                         [max]="3"
                         [min]="1"
@@ -222,7 +222,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.domains?.length)"
                     [model]="model.domains"
-                    (modelChange)="model.domains = $event"
+                    (modelChange)="model.domains = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="domainHierarchicConfig"
                     [multiple]="true"
@@ -258,14 +258,14 @@
                         [(ngModel)]="model.corpus"
                         [readonly]="!edit"
                         matInput
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                 </mat-form-field>
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!artists?.length)"
-                    (modelChange)="model.artists = $event"
+                    (modelChange)="model.artists = $any($event)"
                     [matTooltip]="
                         !edit
                             ? ''
@@ -286,7 +286,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -311,7 +311,7 @@
                     <textarea
                         [(ngModel)]="model.addition"
                         [readonly]="!edit"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         matInput
                         [matTextareaAutosize]="true"
                     ></textarea>
@@ -332,7 +332,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -359,7 +359,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -386,7 +386,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -413,7 +413,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -428,7 +428,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.materials?.length)"
                     [model]="model.materials"
-                    (modelChange)="model.materials = $event"
+                    (modelChange)="model.materials = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="materialHierarchicConfig"
                     [multiple]="true"
@@ -453,7 +453,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.tags?.length)"
                     [model]="model.tags"
-                    (modelChange)="model.tags = $event"
+                    (modelChange)="model.tags = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="tagHierarchicConfig"
                     [multiple]="true"
@@ -468,7 +468,7 @@
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!institution)"
-                    (modelChange)="model.institution = $event"
+                    (modelChange)="model.institution = $any($event)"
                     [matTooltip]="
                         !edit
                             ? ''
@@ -500,7 +500,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
                     [model]="model.antiqueNames"
-                    (modelChange)="model.antiqueNames = $event"
+                    (modelChange)="model.antiqueNames = $any($event)"
                     [allowFreeText]="false"
                     [multiple]="true"
                     [previewComponent]="AntiqueNameComponent"
@@ -519,7 +519,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || model.periods?.length)"
                     [model]="model.periods"
-                    (modelChange)="model.periods = $event"
+                    (modelChange)="model.periods = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="periodHierarchicConfig"
                     [multiple]="true"
@@ -548,7 +548,7 @@
 
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!institution)"
-                    (modelChange)="model.institution = $event"
+                    (modelChange)="model.institution = $any($event)"
                     [model]="institution"
                     [multiple]="false"
                     [previewComponent]="InstitutionComponent"
@@ -571,7 +571,7 @@
                     <textarea
                         [(ngModel)]="model.objectReference"
                         [readonly]="!edit"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         matInput
                         [matTextareaAutosize]="true"
                     ></textarea>
@@ -594,7 +594,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.documentType)"
                     [model]="model.documentType"
-                    (modelChange)="model.documentType = $event"
+                    (modelChange)="model.documentType = $any($event)"
                     [allowFreeText]="false"
                     [multiple]="false"
                     [previewComponent]="DocumentTypeComponent"
@@ -611,7 +611,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="191"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -630,7 +630,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -733,7 +733,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -762,7 +762,7 @@
                         maxlength="255"
                         type="url"
                         (change)="urlModel = url; updateFormValidity()"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
@@ -823,8 +823,8 @@
             </div>
         </perfect-scrollbar>
 
-        <div class="padding" *ngIf="model">
-            <app-stamp [item]="model"></app-stamp>
+        <div class="padding" *ngIf="fetchedModel">
+            <app-stamp [item]="fetchedModel"></app-stamp>
         </div>
     </div>
 

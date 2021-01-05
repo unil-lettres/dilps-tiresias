@@ -5,6 +5,7 @@ import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
+    Cards_cards_items,
     CardVisibility,
     CreateUser,
     CreateUserVariables,
@@ -26,6 +27,7 @@ import {
     UserType,
     UserVariables,
     Viewer,
+    Viewer_viewer,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -59,7 +61,7 @@ export class UserService extends AbstractContextualizedService<
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
     }
 
-    public static canSuggestUpdate(user, card): boolean {
+    public static canSuggestUpdate(user: Viewer_viewer | null, card: Cards_cards_items | null): boolean {
         return (
             user && card && ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
         );

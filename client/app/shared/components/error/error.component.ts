@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
     styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent {
-    public readonly error: Error | null;
+    public readonly error: Error | null = null;
 
     constructor(errorService: ErrorService, route: ActivatedRoute) {
         this.error = errorService.getLastError();

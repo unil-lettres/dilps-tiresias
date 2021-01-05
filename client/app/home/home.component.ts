@@ -2,9 +2,9 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {forkJoin, Observable, of} from 'rxjs';
+import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {bufferCount, catchError, concatMap, filter, finalize, last, map} from 'rxjs/operators';
+import {bufferCount, catchError, concatMap, filter, finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
@@ -13,7 +13,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {CardInput, Site, UserRole} from '../shared/generated-types';
+import {CardInput, Site, UserRole, Viewer_viewer} from '../shared/generated-types';
 import {NetworkActivityService} from '../shared/services/network-activity.service';
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
@@ -33,10 +33,10 @@ function isExcel(file: File): boolean {
 export class HomeComponent implements OnInit, OnDestroy {
     public Site = Site;
 
-    public errors = [];
-    public user;
+    public errors: (Error & {debugMessage?: string; category?: string})[] = [];
+    public user: Viewer_viewer | null = null;
     public nav = 1;
-    private routeParamsSub;
+    private routeParamsSub: Subscription | null = null;
     public progress?: number = null;
     private uploaded = 0;
 

@@ -7,7 +7,9 @@ import {
     Collections_collections_items,
     CollectionsVariables,
     LogicalOperator,
+    SearchOperatorString,
     UserRole,
+    Viewer_viewer,
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
@@ -39,7 +41,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
      * Can create permissions
      */
     public canCreate = false;
-    public user;
+    public user: Viewer_viewer | null = null;
     public hasMore = false;
     private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
     private pageSize = 50;
@@ -113,7 +115,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         });
     }
 
-    public search(term): void {
+    public search(term: SearchOperatorString): void {
         this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});
     }
 
@@ -122,7 +124,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    public edit(event, collection: Collections_collections_items): void {
+    public edit(event: MouseEvent, collection: Collections_collections_items): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -143,7 +145,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user): boolean {
+    private showCreateButton(allowedRoles: boolean | UserRole[], user: Viewer_viewer | null): boolean {
         if (!allowedRoles || !user) {
             return false;
         }
