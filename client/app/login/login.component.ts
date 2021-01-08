@@ -96,9 +96,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             .subscribe(accepted => {
                 if (accepted) {
                     this.userService
-                        .updateNow({
+                        .updatePartially({
                             id: user.id,
-                            termsAgreement: new Date().toDateString(),
+                            termsAgreement: new Date(),
                         } as UserPartialInput)
                         .subscribe(u => {
                             this.redirect();
