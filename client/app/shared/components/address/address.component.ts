@@ -53,7 +53,7 @@ export class AddressComponent implements OnInit, OnChanges {
     public longitude = 4.7176318;
     public zoom = 2;
 
-    public icon: Literal | null;
+    public icon: google.maps.Symbol | null;
 
     @ViewChild(AgmMap) public map: AgmMap;
 
@@ -309,9 +309,9 @@ export class AddressComponent implements OnInit, OnChanges {
         );
     }
 
-    public getIcon(color = '#ff9800'): Literal {
+    public getIcon(color = '#ff9800'): google.maps.Symbol {
         const iconSize = 48;
-        const icon: Literal = {
+        const icon: google.maps.Symbol = {
             path:
                 'M24 4c-7.73 0-14 6.27-14 14 0 10.5 14 26 14 26s14-15.5 14-26c0-7.73-6.27-14-14-14zm0 ' +
                 '19c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z',
@@ -320,7 +320,6 @@ export class AddressComponent implements OnInit, OnChanges {
             scale: 1,
         };
 
-        icon.size = new google.maps.Size(iconSize, iconSize);
         icon.anchor = new google.maps.Point(iconSize / 2, iconSize);
         icon.fillColor = color;
 
