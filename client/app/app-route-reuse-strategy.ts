@@ -1,198 +1,123 @@
+import {ComponentRef} from '@angular/core';
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 
-/** Interface for object which can store both:
- * An ActivatedRouteSnapshot, which is useful for determining whether or not you should attach a route (see this.shouldAttach)
- * A DetachedRouteHandle, which is offered up by this.retrieve, in the case that you do want to attach the stored route
- */
-interface RouteStorageObject {
-    snapshot: ActivatedRouteSnapshot;
-    handle: DetachedRouteHandle;
+// Sources
+// ://github.com/angular/angular/issues/13869
+// ://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
+
+interface RouteStates {
+    max: number;
+    handles: {[handleKey: string]: DetachedRouteHandle};
+    handleKeys: string[];
 }
 
-const storeRoutes: string[] = [
-    'home',
-    'collection',
-    // 'collection/:collectionId',
-    // 'my-collection/unclassified',
-    // 'my-collection/my-cards',
-    // 'my-collection/:collectionId',
-    'source',
-    ':collectionId',
-    'unclassified',
-    'my-cards',
-    'my-collection',
-];
+function getResolvedUrl(route: ActivatedRouteSnapshot): string {
+    return route.pathFromRoot.map(v => v.url.map(segment => segment.toString()).join('/')).join('/');
+}
 
-export class AppRouteReuseStrategy extends RouteReuseStrategy {
-    /**
-     * Object which will store RouteStorageObjects indexed by keys
-     * The keys will all be a path (as in route.routeConfig.path)
-     * This allows us to see if we've got a route stored for the requested path
-     */
-    public storedRoutes: {[key: string]: RouteStorageObject} = {};
+function getConfiguredUrl(route: ActivatedRouteSnapshot): string {
+    return route.pathFromRoot
+        .filter(v => v.routeConfig)
+        .map(v => v.routeConfig!.path)
+        .join('/');
+}
 
-    /**
-     * Decides when the route should be stored
-     * If the route should be stored, I believe the boolean is indicating to a controller whether or not to fire this.store
-     * _When_ it is called though does not particularly matter, just know that this determines whether or not we store the route
-     * An idea of what to do here: check the route.routeConfig.path to see if it is a path you would like to store
-     * @param route This is, at least as I understand it, the route that the user is currently on, and we would like to know if we want to
-     *     store it
-     * @returns boolean indicating that we want to (true) or do not want to (false) store that route
-     */
+function getStoreKey(route: ActivatedRouteSnapshot): string {
+    const baseUrl = getResolvedUrl(route);
+
+    // this works, as ActivatedRouteSnapshot has only every one children ActivatedRouteSnapshot
+    // as you can't have more since urls like `/project/1,2` where you'd want to display 1 and 2 project at the
+    // same time
+    const childrenParts = [];
+    let deepestChild = route;
+    while (deepestChild.firstChild) {
+        deepestChild = deepestChild.firstChild;
+        childrenParts.push(deepestChild.url.join('/'));
+    }
+
+    // it's important to separate baseUrl with childrenParts so we don't have collisions.
+    return baseUrl + '////' + childrenParts.join('/');
+}
+
+const routes: {[routePath: string]: RouteStates} = {
+    '/home': {max: 1, handles: {}, handleKeys: []},
+    '/collection/:collectionId': {max: 1, handles: {}, handleKeys: []},
+    '/my-collection/unclassified': {max: 1, handles: {}, handleKeys: []},
+    '/my-collection/my-cards': {max: 1, handles: {}, handleKeys: []},
+    '/my-collection/my-collection': {max: 1, handles: {}, handleKeys: []},
+    '/source': {max: 1, handles: {}, handleKeys: []},
+};
+
+export class AppRouteReuseStrategy implements RouteReuseStrategy {
+    /** Determines if this route (and its subtree) should be detached to be reused later */
     public shouldDetach(route: ActivatedRouteSnapshot): boolean {
-        if (storeRoutes.indexOf(route.routeConfig.path) > -1) {
-            console.log('detaching', route.routeConfig.path);
-            return true;
-        } else {
-            return false;
+        return !!routes[getConfiguredUrl(route)];
+    }
+
+    /**
+     * Stores the detached route.
+     *
+     * Storing a `null` value should erase the previously stored value.
+     */
+    public store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void {
+        if (!route.routeConfig || !handle) {
+            return;
         }
-    }
 
-    /**
-     * Constructs object of type `RouteStorageObject` to store, and then stores it for later attachment
-     * @param route This is stored for later comparison to requested routes, see `this.shouldAttach`
-     * @param handle Later to be retrieved by this.retrieve, and offered up to whatever controller is using this class
-     */
-    public store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-        const storedRoute: RouteStorageObject = {
-            snapshot: route,
-            handle: handle,
-        };
+        const config = routes[getConfiguredUrl(route)];
 
-        console.log('store:', storedRoute, 'into: ', this.storedRoutes);
-        // routes are stored by path - the key is the path name,
-        // and the handle is stored under it so that you can only ever have one object stored for a single path
-        this.storedRoutes[route.routeConfig.path] = storedRoute;
-    }
+        if (config) {
+            const storeKey = getStoreKey(route);
 
-    /**
-     * Determines whether or not there is a stored route and, if there is, whether or not it should be rendered in place of requested route
-     * @param route The route the user requested
-     * @returns boolean indicating whether or not to render the stored route
-     */
-    public shouldAttach(route: ActivatedRouteSnapshot): boolean {
-        // this will be true if the route has been stored before
-        const canAttach = !!route.routeConfig && !!this.storedRoutes[route.routeConfig.path];
+            if (!config.handles[storeKey]) {
+                // add new handle
+                if (config.handleKeys.length >= config.max) {
+                    const oldestUrl = config.handleKeys[0];
+                    config.handleKeys.splice(0, 1);
 
-        // this decides whether the route already stored should be rendered in place of the requested route, and is the return value
-        // at this point we already know that the paths match because the storedResults key is the route.routeConfig.path
-        // so, if the route.params and route.queryParams also match, then we should reuse the component
-        if (canAttach) {
-            console.log(
-                'param comparison:',
-                this.compareObjects(route.params, this.storedRoutes[route.routeConfig.path].snapshot.params),
-                this.compareObjects(route.queryParams, this.storedRoutes[route.routeConfig.path].snapshot.queryParams),
-            );
+                    // this is important to work around memory leaks, as Angular will never destroy the Component
+                    // on its own once it got stored in our router strategy.
+                    const oldHandle = config.handles[oldestUrl] as {componentRef: ComponentRef<any>};
+                    oldHandle.componentRef.destroy();
 
-            const paramsMatch: boolean = this.compareObjects(
-                route.params,
-                this.storedRoutes[route.routeConfig.path].snapshot.params,
-            );
-            const queryParamsMatch: boolean = this.compareObjects(
-                route.queryParams,
-                this.storedRoutes[route.routeConfig.path].snapshot.queryParams,
-            );
-
-            console.log(
-                'deciding to attach...',
-                route.routeConfig.path,
-                route.params,
-                'does it match?',
-                this.storedRoutes[route.routeConfig.path].snapshot.routeConfig.path,
-                this.storedRoutes[route.routeConfig.path].snapshot.params,
-                'return: ',
-                paramsMatch,
-                queryParamsMatch,
-            );
-            return paramsMatch && queryParamsMatch;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Finds the locally stored instance of the requested route, if it exists, and returns it
-     * @param route New route the user has requested
-     * @returns DetachedRouteHandle object which can be used to render the component
-     */
-    public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-        // return null if the path does not have a routerConfig OR if there is no stored route for that routerConfig
-        if (!route.routeConfig || !this.storedRoutes[route.routeConfig.path]) {
-            return null;
-        }
-        console.log('retrieving', 'return: ', this.storedRoutes[route.routeConfig.path]);
-
-        /** returns handle when the route.routeConfig.path is already stored */
-        return this.storedRoutes[route.routeConfig.path].handle;
-    }
-
-    /**
-     * Determines whether or not the current route should be reused
-     * @param future The route the user is going to, as triggered by the router
-     * @param curr The route the user is currently on
-     * @returns boolean basically indicating true if the user intends to leave the current route
-     */
-    public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        console.log(
-            'deciding to reuse',
-            'future',
-            future.routeConfig,
-            'current',
-            curr.routeConfig,
-            'return: ',
-            future.routeConfig && future.routeConfig === curr.routeConfig,
-        );
-        return future.routeConfig && future.routeConfig === curr.routeConfig;
-    }
-
-    /**
-     * This nasty bugger finds out whether the objects are _traditionally_ equal to each other, like you might assume someone else would
-     * have put this function in vanilla JS already One thing to note is that it uses coercive comparison (==) on properties which both
-     * objects have, not strict comparison (===) Another important note is that the method only tells you if `compare` has all equal
-     * parameters to `base`, not the other way around
-     * @param base The base object which you would like to compare another object to
-     * @param compare The object to compare to base
-     * @returns boolean indicating whether or not the objects have all the same properties and those properties are ==
-     */
-    private compareObjects(base: any, compare: any): boolean {
-        // loop through all properties in base object
-        for (const baseProperty in base) {
-            // determine if comparison object has that property, if not: return false
-            if (compare.hasOwnProperty(baseProperty)) {
-                switch (typeof base[baseProperty]) {
-                    // if one is object and other is not: return false
-                    // if they are both objects, recursively call this comparison function
-                    case 'object':
-                        if (
-                            typeof compare[baseProperty] !== 'object' ||
-                            !this.compareObjects(base[baseProperty], compare[baseProperty])
-                        ) {
-                            return false;
-                        }
-                        break;
-                    // if one is function and other is not: return false
-                    // if both are functions, compare function.toString() results
-                    case 'function':
-                        if (
-                            typeof compare[baseProperty] !== 'function' ||
-                            base[baseProperty].toString() !== compare[baseProperty].toString()
-                        ) {
-                            return false;
-                        }
-                        break;
-                    // otherwise, see if they are equal using coercive comparison
-                    default:
-                        if (base[baseProperty] !== compare[baseProperty]) {
-                            return false;
-                        }
+                    delete config.handles[oldestUrl];
                 }
-            } else {
-                return false;
+                config.handles[storeKey] = handle;
+                config.handleKeys.push(storeKey);
+            }
+        }
+    }
+
+    /** Determines if this route (and its subtree) should be reattached */
+    public shouldAttach(route: ActivatedRouteSnapshot): boolean {
+        if (route.routeConfig) {
+            const config = routes[getConfiguredUrl(route)];
+
+            if (config) {
+                const storeKey = getStoreKey(route);
+                return !!config.handles[storeKey];
             }
         }
 
-        // returns true only after false HAS NOT BEEN returned through all loops
-        return true;
+        return false;
+    }
+
+    /** Retrieves the previously stored route */
+    public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
+        if (route.routeConfig) {
+            const config = routes[getConfiguredUrl(route)];
+
+            if (config) {
+                const storeKey = getStoreKey(route);
+                return config.handles[storeKey];
+            }
+        }
+
+        return null;
+    }
+
+    /** Determines if `curr` route should be reused */
+    public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+        return getResolvedUrl(future) === getResolvedUrl(curr) && future.routeConfig === curr.routeConfig;
     }
 }
