@@ -6,6 +6,7 @@ namespace Application\Api;
 
 use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\UserRolesAvailable;
+use Application\Api\Field\Query\ValidateExport;
 use Application\Api\Field\Query\Viewer;
 use Application\Api\Field\Standard;
 use Application\Model\AntiqueName;
@@ -35,6 +36,7 @@ class QueryType extends ObjectType
             Viewer::build(),
             ExtraStatistics::build(),
             UserRolesAvailable::build(),
+            ValidateExport::build(),
         ];
 
         $fields = array_merge(

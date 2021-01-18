@@ -10,10 +10,14 @@ import {
     ExportsVariables,
     ExportVariables,
     Site,
+    ValidateExport,
+    ValidateExportVariables,
 } from '../../shared/generated-types';
-import {createExport, exportQuery, exportsQuery} from './export.queries';
+import {createExport, exportQuery, exportsQuery, validateExportQuery} from './export.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -45,5 +49,19 @@ export class ExportService extends AbstractContextualizedService<
             cards: [],
             site: this.site,
         };
+    }
+
+    public validate(object: ValidateExportVariables['input']): Observable<ValidateExport['validateExport']> {
+        const variables = {
+            input: this.getInput(object),
+            ...this.getPartialVariablesForCreation(object),
+        };
+
+        return this.apollo
+            .query<ValidateExport, ValidateExportVariables>({
+                query: validateExportQuery,
+                variables: variables,
+            })
+            .pipe(map(result => result.data.validateExport));
     }
 }

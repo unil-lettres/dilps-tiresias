@@ -6,6 +6,7 @@ import {FakeCollection} from '../../../collections/services/fake-collection.reso
 import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
@@ -19,7 +20,7 @@ export type DownloadComponentData = {
     styleUrls: ['./download.component.scss'],
 })
 export class DownloadComponent {
-    public sizes = [
+    public readonly sizes = [
         {
             label: 'maximum',
             value: 0,
@@ -34,8 +35,11 @@ export class DownloadComponent {
         },
     ];
 
+    public validated = false;
     public denyLegendsDownload = false;
     public readonly input: CreateExportInput = this.exportService.getDefaultForServer();
+    public validationMessage: string | null = null;
+    public readonly pptxLabel = 'PowerPoint';
 
     constructor(
         private dialogRef: MatDialogRef<ArtistComponent>,
@@ -79,5 +83,15 @@ export class DownloadComponent {
             }
         });
         this.dialogRef.close();
+    }
+
+    public tabChange($event: MatTabChangeEvent): void {
+        if (!this.validated && $event.tab.textLabel === this.pptxLabel) {
+            this.input.format = ExportFormat.pptx;
+            this.exportService.validate(this.input).subscribe(validationMessage => {
+                this.validationMessage = validationMessage;
+                this.validated = true;
+            });
+        }
     }
 }

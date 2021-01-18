@@ -19,6 +19,7 @@
 @import '../app/collections/collections/collections.theme';
 @import '../app/shared/components/alert/alert.theme';
 @import '../app/shared/components/address/address.theme';
+@import '../app/shared/components/download/download.theme';
 @import '../app/card/card.theme';
 @import '../app/quizz/quizz.theme';
 @import '../app/view-grid/view-grid.theme';
@@ -47,6 +48,7 @@
     @include hint($theme);
     @include view-grid($theme);
     @include thesaurus($theme);
+    @include download-modal($theme);
 }
 
 // Dilps

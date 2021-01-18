@@ -25,4 +25,5 @@ return [
         'from' => 'noreply@dilps.lan', // Sender for emails
         'toOverride' => null, // Override recipient (TO) address of all emails, useful for testing
     ],
+    'exportPptxMaximumCardCount' => 200,
 ];

@@ -51,3 +51,9 @@ export const createExport = gql`
     }
     ${exportMinimalFragment}
 `;
+
+export const validateExportQuery = gql`
+    query ValidateExport($input: CreateExportInput!) {
+        validateExport(input: $input)
+    }
+`;
