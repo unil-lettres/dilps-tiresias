@@ -308,7 +308,7 @@ export class ThesaurusComponent<
 
     /**
      * Add term to list
-     * Grants unicity of elements.
+     * The elements are kept unique within the list.
      * Always close the panel (without resetting results)
      */
     private addTerm(term: ThesaurusModel): void {
