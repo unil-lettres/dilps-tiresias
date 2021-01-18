@@ -38,17 +38,19 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<PaginationInput> = new EventEmitter<PaginationInput>();
+    @Output() public readonly pagination: EventEmitter<PaginationInput> = new EventEmitter<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public contentChange: EventEmitter<ContentChange> = new EventEmitter();
+    @Output() public readonly contentChange: EventEmitter<ContentChange> = new EventEmitter();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
+    @Output() public readonly selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<
+        Cards_cards_items[]
+    >();
 
     /**
      * Reference to scrollable element

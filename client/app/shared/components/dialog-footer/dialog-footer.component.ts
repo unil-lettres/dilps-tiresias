@@ -25,7 +25,7 @@ export class DialogFooterComponent {
     @Input() public canCreate = false;
     @Input() public item!: Stamped & Model;
     @Input() public formCtrl: FormControl;
-    @Output() public create = new EventEmitter();
-    @Output() public update = new EventEmitter();
-    @Output() public delete = new EventEmitter();
+    @Output() public readonly create = new EventEmitter();
+    @Output() public readonly update = new EventEmitter();
+    @Output() public readonly delete = new EventEmitter();
 }

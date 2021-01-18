@@ -89,7 +89,9 @@ export class ThesaurusComponent<
     /**
      * Emits when a selection is done
      */
-    @Output() public modelChange = new EventEmitter<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
+    @Output() public readonly modelChange = new EventEmitter<
+        string | string[] | ThesaurusModel | ThesaurusModel[] | null
+    >();
 
     /**
      * Configuration for hierarchic relations

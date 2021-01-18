@@ -22,12 +22,14 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+    @Output() public readonly pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
+    @Output() public readonly selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<
+        Cards_cards_items[]
+    >();
     @Input() public selected: Cards_cards_items[] = [];
     public selectionModel = new SelectionModel<Cards_cards_items>(true);
     public cards: Cards_cards_items[] = [];
