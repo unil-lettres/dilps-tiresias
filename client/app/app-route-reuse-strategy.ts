@@ -46,6 +46,9 @@ const routes: {[routePath: string]: RouteStates} = {
     '/my-collection/my-cards': {max: 1, handles: {}, handleKeys: []},
     '/my-collection/my-collection': {max: 1, handles: {}, handleKeys: []},
     '/source': {max: 1, handles: {}, handleKeys: []},
+
+    // Needs to be higher than the maximum different collections navigated during a session
+    '/collection': {max: 100, handles: {}, handleKeys: []},
 };
 
 export class AppRouteReuseStrategy implements RouteReuseStrategy {
