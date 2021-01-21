@@ -252,7 +252,7 @@
                     ></quill-editor>
                 </div>
 
-                <mat-form-field *ngIf="edit || !!model.corpus">
+                <mat-form-field *ngIf="!isDilps && (edit || !!model.corpus)">
                     <mat-label>Corpus</mat-label>
                     <textarea
                         [(ngModel)]="model.corpus"
