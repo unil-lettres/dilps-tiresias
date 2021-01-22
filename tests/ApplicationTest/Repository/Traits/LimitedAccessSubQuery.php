@@ -7,6 +7,7 @@ namespace ApplicationTest\Repository\Traits;
 use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use Application\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use PDO;
 
 /**
@@ -14,13 +15,15 @@ use PDO;
  */
 trait LimitedAccessSubQuery
 {
+    abstract public function getEntityManager(): EntityManager;
+
     /**
      * @dataProvider providerGetAccessibleSubQuery
      */
     public function testGetAccessibleSubQuery(?string $login, array $expected): void
     {
         /** @var UserRepository $userRepository */
-        $userRepository = _em()->getRepository(User::class);
+        $userRepository = $this->getEntityManager()->getRepository(User::class);
         $user = $userRepository->getOneByLogin($login, SiteType::DILPS);
         $subQuery = $this->repository->getAccessibleSubQuery($user);
 
@@ -37,7 +40,7 @@ trait LimitedAccessSubQuery
         if ($subQuery === '-1') {
             $ids = [];
         } else {
-            $ids = _em()->getConnection()->executeQuery($subQuery)->fetchAll(PDO::FETCH_COLUMN);
+            $ids = $this->getEntityManager()->getConnection()->executeQuery($subQuery)->fetchAll(PDO::FETCH_COLUMN);
         }
 
         sort($ids);
