@@ -19,7 +19,6 @@ use Application\Api\Field\Mutation\SuggestCreation;
 use Application\Api\Field\Mutation\SuggestDeletion;
 use Application\Api\Field\Mutation\SuggestUpdate;
 use Application\Api\Field\Mutation\ValidateData;
-use Application\Api\Field\Mutation\ValidateExport;
 use Application\Api\Field\Mutation\ValidateImage;
 use Application\Api\Field\Standard;
 use Application\Model\AntiqueName;
