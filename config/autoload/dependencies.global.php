@@ -32,7 +32,7 @@ return [
             \Mezzio\Middleware\ErrorResponseGenerator::class => \Mezzio\Container\ErrorResponseGeneratorFactory::class,
             \Mezzio\Handler\NotFoundHandler::class => \Mezzio\Container\NotFoundHandlerFactory::class,
             'doctrine.entity_manager.orm_default' => \Application\ORM\EntityManagerFactory::class,
-            \Application\Handler\GraphQLHandler::class => \Application\Handler\GraphQLFactory::class,
+            \Ecodev\Felix\Handler\GraphQLHandler::class => \Application\Handler\GraphQLFactory::class,
             \Application\Handler\ImageHandler::class => \Application\Handler\ImageFactory::class,
             \Application\Handler\TemplateHandler::class => \Application\Handler\TemplateFactory::class,
             \Application\Middleware\CardsFetcherMiddleware::class => \Application\Middleware\CardsFetcherFactory::class,

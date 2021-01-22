@@ -22,6 +22,8 @@ trait HasInstitution
      */
     private $institution;
 
+    abstract public function getSite(): string;
+
     /**
      * Get the institution this object belongs to
      */

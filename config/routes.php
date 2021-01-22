@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Application\Handler\GraphQLHandler;
+use Ecodev\Felix\Handler\GraphQLHandler;
 use GraphQL\Upload\UploadMiddleware;
 use Mezzio\Application;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
