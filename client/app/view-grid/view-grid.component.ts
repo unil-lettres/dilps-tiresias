@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
@@ -8,6 +8,11 @@ import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards_cards, Cards_cards_items} from '../shared/generated-types';
+
+export interface ContentChange {
+    visible?: number;
+    total?: number;
+}
 
 @Component({
     selector: 'app-view-grid',
@@ -33,24 +38,29 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when data is required
      */
-    @Output() public pagination: EventEmitter<Required<PaginationInput>> = new EventEmitter<
-        Required<PaginationInput>
-    >();
+    @Output() public readonly pagination: EventEmitter<PaginationInput> = new EventEmitter<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public contentChange: EventEmitter<{visible?: number; total?: number}> = new EventEmitter();
+    @Output() public readonly contentChange: EventEmitter<ContentChange> = new EventEmitter();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<Cards_cards_items[]>();
+    @Output() public readonly selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<
+        Cards_cards_items[]
+    >();
 
     /**
      * Reference to scrollable element
      */
     @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
+
+    /**
+     * Vertical scroll position cache
+     */
+    private scrollTop = 0;
 
     /**
      * Row height of thumbails in grid
@@ -94,21 +104,38 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
             this.contentChange.emit({total: result.length});
         });
+
+        // Cache scroll when user... scrolls
+        this.scrollable.nativeElement.addEventListener('scroll', () => {
+            const scroll = this.scrollable.nativeElement.scrollTop;
+            if (scroll > 0) {
+                this.scrollTop = scroll;
+            }
+        });
+
+        // Restore scroll when component is retrieved from reuse strategy
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                setTimeout(() => {
+                    this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                }, 200);
+            }
+        });
     }
 
     public ngAfterViewInit(): void {
         setTimeout(() => {
-            this.gallery.gallery.addEventListener('item-added-to-dom', event => {
+            this.gallery.gallery.addEventListener('item-added-to-dom', () => {
                 this.contentChange.emit({visible: this.gallery.gallery.visibleCollection.length});
             });
         });
     }
 
-    public loadMore(ev): void {
-        this.pagination.emit({offset: ev.offset, pageSize: ev.limit, pageIndex: null});
+    public loadMore(ev: {offset: number; limit: number}): void {
+        this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(event): void {
+    public activate(event: {model: Cards_cards_items}): void {
         this.router.navigate(['card', event.model.id]);
     }
 

@@ -31,7 +31,7 @@ export class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     }
 }
 
-function parseFromControl(control: FormControl, key: string): number {
+function parseFromControl(control: AbstractControl, key: string): number {
     const c = control.get(key);
     if (!c) {
         return NaN;
@@ -43,7 +43,7 @@ function parseFromControl(control: FormControl, key: string): number {
 /**
  * From >= To
  */
-function toGreaterThanFrom(control: FormControl): ValidationErrors | null {
+function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
     const from = parseFromControl(control, 'from');
     const to = parseFromControl(control, 'to');
 

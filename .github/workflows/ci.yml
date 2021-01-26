@@ -65,6 +65,9 @@ jobs:
             - name: PHP CS Fixer
               run: ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr
 
+            - name: PHPStan
+              run: ./vendor/bin/phpstan analyse
+
             - name: TSLint
               id: app-tslint
               run: yarn lint

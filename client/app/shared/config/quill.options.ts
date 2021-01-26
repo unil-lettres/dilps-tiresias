@@ -1,9 +1,10 @@
 import {QuillConfig} from 'ngx-quill';
 import {pick} from 'lodash-es';
+import {Delta} from 'quill';
 
-export function keepOnlyTextAndBasicFormatting(node, delta): any {
-    const ops = [];
-    delta.ops.forEach(op => {
+export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta {
+    const ops: any[] = [];
+    delta.ops.forEach((op: any) => {
         if (op.insert && typeof op.insert === 'string') {
             ops.push({
                 insert: op.insert,

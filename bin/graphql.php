@@ -11,7 +11,7 @@ use Laminas\Diactoros\ServerRequest;
 use Mezzio\Session\Session;
 use Mezzio\Session\SessionMiddleware;
 
-require_once __DIR__ . '/../htdocs/index.php';
+require_once 'server/cli.php';
 
 $server = new Server(true, SiteType::DILPS);
 $request = new ServerRequest();

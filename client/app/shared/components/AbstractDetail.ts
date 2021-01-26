@@ -1,22 +1,38 @@
-import {OnInit, Directive} from '@angular/core';
+import {Directive, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'lodash-es';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
+import {ExtractTupdate, NaturalAbstractModelService, PaginatedData, QueryVariables} from '@ecodev/natural';
+import {Literal} from '@ecodev/natural/lib/types/types';
+import {Viewer_viewer} from '../generated-types';
 
 @Directive()
-export class AbstractDetailDirective implements OnInit {
-    public user;
+export class AbstractDetailDirective<
+    TService extends NaturalAbstractModelService<
+        unknown,
+        any,
+        PaginatedData<Literal>,
+        QueryVariables,
+        any,
+        any,
+        any,
+        any,
+        unknown,
+        any
+    >
+> implements OnInit {
+    public user: Viewer_viewer | null = null;
 
     public data: any = {
         item: {},
     };
 
     constructor(
-        public service,
+        public service: TService,
         private alertService: AlertService,
-        public dialogRef: MatDialogRef<ArtistComponent>,
+        public dialogRef: MatDialogRef<unknown>,
         public userService: UserService,
         data: any,
     ) {
@@ -64,5 +80,5 @@ export class AbstractDetailDirective implements OnInit {
 
     protected postQuery(): void {}
 
-    protected postUpdate(model): void {}
+    protected postUpdate(model: ExtractTupdate<TService>): void {}
 }

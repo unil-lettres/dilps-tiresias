@@ -5,6 +5,7 @@ import {UserService} from '../../users/services/user.service';
 import {Site, UserType} from '../generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../testing/MockApolloProvider';
 import {TypePipe} from './type.pipe';
+import {LOCAL_STORAGE, NaturalMemoryStorage} from '@ecodev/natural';
 
 describe('TypePipe', () => {
     beforeEach(() => {
@@ -20,7 +21,14 @@ describe('TypePipe', () => {
                     useClass: UserService,
                 },
                 MOCK_APOLLO_PROVIDER,
-                {provide: SITE, useValue: Site.tiresias},
+                {
+                    provide: SITE,
+                    useValue: Site.tiresias,
+                },
+                {
+                    provide: LOCAL_STORAGE,
+                    useClass: NaturalMemoryStorage,
+                },
             ],
         });
     });

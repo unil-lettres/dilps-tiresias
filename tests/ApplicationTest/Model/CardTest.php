@@ -11,7 +11,7 @@ use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\Tag;
 use Application\Model\User;
-use Application\Utility;
+use Cake\Chronos\Chronos;
 use GraphQL\Doctrine\Definition\EntityID;
 use PHPUnit\Framework\TestCase;
 
@@ -23,6 +23,7 @@ class CardTest extends TestCase
     protected function tearDown(): void
     {
         User::setCurrent(null);
+        Chronos::setTestNow(null);
     }
 
     public function testName(): void
@@ -172,16 +173,19 @@ class CardTest extends TestCase
         self::assertNull($card->getImageValidationDate());
         self::assertNull($card->getImageValidator());
 
+        $mockNow = '1999-09-02';
+        Chronos::setTestNow($mockNow);
+
         $card->validateData();
-        self::assertSame(Utility::getNow(), $card->getDataValidationDate());
+        self::assertSame($mockNow, $card->getDataValidationDate()->toDateString());
         self::assertSame($user, $card->getDataValidator());
         self::assertNull($card->getImageValidationDate());
         self::assertNull($card->getImageValidator());
 
         $card->validateImage();
-        self::assertSame(Utility::getNow(), $card->getDataValidationDate());
+        self::assertSame($mockNow, $card->getDataValidationDate()->toDateString());
         self::assertSame($user, $card->getDataValidator());
-        self::assertSame(Utility::getNow(), $card->getImageValidationDate());
+        self::assertSame($mockNow, $card->getImageValidationDate()->toDateString());
         self::assertSame($user, $card->getImageValidator());
     }
 

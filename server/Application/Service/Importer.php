@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
-use Application\Action\TemplateAction;
 use Application\DBAL\Types\PrecisionType;
+use Application\Handler\TemplateHandler;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
 use Application\Model\Collection;
@@ -14,6 +14,11 @@ use Application\Model\DocumentType;
 use Application\Model\Domain;
 use Application\Model\Material;
 use Application\Model\Period;
+use Application\Repository\CountryRepository;
+use Application\Repository\DocumentTypeRepository;
+use Application\Repository\DomainRepository;
+use Application\Repository\MaterialRepository;
+use Application\Repository\PeriodRepository;
 use Exception;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -23,33 +28,56 @@ use Throwable;
 
 class Importer
 {
-    private $domains;
-
-    private $documentTypes;
-
-    private $countries;
-
-    private $materials;
-
-    private $periods;
+    /**
+     * @var string[]
+     */
+    private array $domains;
 
     /**
-     * @var string
+     * @var string[]
      */
-    private $site;
+    private array $documentTypes;
 
     /**
-     * @var null|Collection
+     * @var string[]
      */
-    private $collection;
+    private array $countries;
+
+    /**
+     * @var string[]
+     */
+    private array $materials;
+
+    /**
+     * @var string[]
+     */
+    private array $periods;
+
+    private ?string $site = null;
+
+    private ?Collection $collection = null;
 
     public function __construct()
     {
-        $this->domains = _em()->getRepository(Domain::class)->getFullNames();
-        $this->periods = _em()->getRepository(Period::class)->getFullNames();
-        $this->materials = _em()->getRepository(Material::class)->getFullNames();
-        $this->countries = _em()->getRepository(Country::class)->getNames();
-        $this->documentTypes = _em()->getRepository(DocumentType::class)->getNames();
+        /** @var DomainRepository $domainRepository */
+        $domainRepository = _em()->getRepository(Domain::class);
+        $this->domains = $domainRepository->getFullNames();
+
+        /** @var PeriodRepository $periodRepository */
+        $periodRepository = _em()->getRepository(Period::class);
+        $this->periods = $periodRepository->getFullNames();
+
+        /** @var MaterialRepository $materialRepository */
+        $materialRepository = _em()->getRepository(Material::class);
+        $this->materials = $materialRepository->getFullNames();
+
+        /** @var CountryRepository $countryRepository */
+        $countryRepository = _em()->getRepository(Country::class);
+        $this->countries = $countryRepository->getNames();
+
+        /** @var DocumentTypeRepository $documentTypeRepository */
+        $documentTypeRepository = _em()->getRepository(DocumentType::class);
+        $this->documentTypes = $documentTypeRepository->getNames();
     }
 
     public function import(UploadedFileInterface $file, array $files, string $site, ?Collection $collection): array
@@ -72,7 +100,7 @@ class Importer
     {
         $col = 1;
         $row = 1;
-        foreach (TemplateAction::HEADERS as $header) {
+        foreach (TemplateHandler::HEADERS as $header) {
             $actual = $sheet->getCellByColumnAndRow($col, $row)->getValue();
             if ($actual !== $header) {
                 $this->throwException($col, $row, 'S\'attend à "' . $header . '", mais a vu "' . $actual . '"');
@@ -143,7 +171,10 @@ class Importer
 
         $card->setName($this->readString($sheet, $col++, $row));
         $card->setExpandedName($this->readString($sheet, $col++, $row));
-        $card->setDomain($this->readDomain($sheet, $col++, $row));
+        $domain = $this->readDomain($sheet, $col++, $row);
+        if ($domain) {
+            $card->addDomain($domain);
+        }
 
         $material = $this->readMaterial($sheet, $col++, $row);
         if ($material) {
@@ -184,27 +215,42 @@ class Importer
 
     private function readDomain(Worksheet $sheet, int $col, int $row): ?Domain
     {
-        return $this->read($sheet, $col, $row, Domain::class, $this->domains, 'Domaine');
+        /** @var null|Domain $result */
+        $result = $this->read($sheet, $col, $row, Domain::class, $this->domains, 'Domaine');
+
+        return $result;
     }
 
     private function readMaterial(Worksheet $sheet, int $col, int $row): ?Material
     {
-        return $this->read($sheet, $col, $row, Material::class, $this->materials, 'Materiel');
+        /** @var null|Material $result */
+        $result = $this->read($sheet, $col, $row, Material::class, $this->materials, 'Materiel');
+
+        return $result;
     }
 
     private function readPeriod(Worksheet $sheet, int $col, int $row): ?Period
     {
-        return $this->read($sheet, $col, $row, Period::class, $this->periods, 'Période');
+        /** @var null|Period $result */
+        $result = $this->read($sheet, $col, $row, Period::class, $this->periods, 'Période');
+
+        return $result;
     }
 
     private function readCountry(Worksheet $sheet, int $col, int $row): ?Country
     {
-        return $this->read($sheet, $col, $row, Country::class, $this->countries, 'Pays');
+        /** @var null|Country $result */
+        $result = $this->read($sheet, $col, $row, Country::class, $this->countries, 'Pays');
+
+        return $result;
     }
 
     private function readDocumentType(Worksheet $sheet, int $col, int $row): ?DocumentType
     {
-        return $this->read($sheet, $col, $row, DocumentType::class, $this->documentTypes, 'Type de document');
+        /** @var null|DocumentType $result */
+        $result = $this->read($sheet, $col, $row, DocumentType::class, $this->documentTypes, 'Type de document');
+
+        return $result;
     }
 
     private function readPrecision(Worksheet $sheet, int $col, int $row): ?string
@@ -252,7 +298,7 @@ class Importer
             return (int) $value;
         }
 
-        $this->throwException($col, $row, 'N\' pas un nombre entier: ' . $value);
+        $this->throwException($col, $row, 'N\'est pas un nombre entier: ' . $value);
     }
 
     private function readFloat(Worksheet $sheet, int $col, int $row): ?float
@@ -262,10 +308,10 @@ class Importer
             return null;
         }
 
-        if (is_numeric('123')) {
+        if (is_numeric($value)) {
             return (float) $value;
         }
 
-        $this->throwException($col, $row, 'N\' pas un nombre à virgule: ' . $value);
+        $this->throwException($col, $row, 'N\'est pas un nombre à virgule: ' . $value);
     }
 }

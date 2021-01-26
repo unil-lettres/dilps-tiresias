@@ -1,17 +1,19 @@
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {forkJoin, Observable, ObservableInput} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../../app.config';
 import {
     Cards_cards_items,
     Collection,
     CollectionInput,
     Collections,
+    Collections_collections_items,
     CollectionsVariables,
     CollectionVariables,
     CollectionVisibility,
     CreateCollection,
+    CreateCollection_createCollection,
     CreateCollectionVariables,
     DeleteCollections,
     LinkCollectionToCollection,
@@ -78,9 +80,12 @@ export class CollectionService extends AbstractContextualizedService<
         };
     }
 
-    public link(collection, images): Observable<unknown> {
-        const observables = [];
-        images.forEach(image => {
+    public link(
+        collection: CreateCollection_createCollection | Collections_collections_items,
+        cards: Cards_cards_items[],
+    ): Observable<unknown> {
+        const observables: Observable<unknown>[] = [];
+        cards.forEach(image => {
             observables.push(this.linkService.link(collection, image));
         });
 
@@ -88,7 +93,7 @@ export class CollectionService extends AbstractContextualizedService<
     }
 
     public unlink(collection: FakeCollection, images: Cards_cards_items[]): Observable<unknown> {
-        const observables = [];
+        const observables: Observable<unknown>[] = [];
         images.forEach(image => {
             observables.push(this.linkService.unlink(collection, image));
         });
@@ -96,7 +101,10 @@ export class CollectionService extends AbstractContextualizedService<
         return forkJoin(observables);
     }
 
-    public linkCollectionToCollection(sourceCollection, targetCollection): Observable<unknown> {
+    public linkCollectionToCollection(
+        sourceCollection: FakeCollection,
+        targetCollection: Collections_collections_items | CreateCollection_createCollection,
+    ): Observable<unknown> {
         return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
             mutation: linkCollectionToCollection,
             variables: {

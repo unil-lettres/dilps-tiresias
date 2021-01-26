@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Api\Enum;
 
 use Application\Model\Card;
+use Ecodev\Felix\Api\Enum\EnumType;
 
-class CardVisibilityType extends AbstractEnumType
+class CardVisibilityType extends EnumType
 {
     public function __construct()
     {

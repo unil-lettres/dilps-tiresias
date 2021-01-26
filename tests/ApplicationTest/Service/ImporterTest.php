@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Service;
 
-use Application\Action\TemplateAction;
+use Application\Handler\TemplateHandler;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Service\Importer;
@@ -42,7 +42,7 @@ class ImporterTest extends TestCase
     public function testImport(): void
     {
         $excel = $this->createExcel([
-            TemplateAction::HEADERS,
+            TemplateHandler::HEADERS,
             ['5da49355cbcff.jpeg', 'Super name', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
             ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'Test domain 9001', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', '1997', '1.1231', '123.132', 'building'],
         ]);
@@ -74,7 +74,7 @@ class ImporterTest extends TestCase
         self::assertSame('The Valley', $c->getLocality());
         self::assertSame('Paris', $c->getProductionPlace());
         self::assertSame('REF972', $c->getObjectReference());
-        self::assertSame('Test domain 9001', $c->getDomain()->getName());
+        self::assertSame('Test domain 9001', $c->getDomains()->first()->getName());
         self::assertSame('John Rambo', $c->getTechniqueAuthor());
         self::assertSame('1997', $c->getTechniqueDate());
         self::assertSame(1.1231, $c->getLatitude());
@@ -96,7 +96,7 @@ class ImporterTest extends TestCase
     public function testImportThrowsWithTooManyFiles(): void
     {
         $excel = $this->createExcel([
-            TemplateAction::HEADERS,
+            TemplateHandler::HEADERS,
         ]);
 
         $images = $this->createImages([
@@ -112,7 +112,7 @@ class ImporterTest extends TestCase
     public function testImportThrowsWithTooManyData(): void
     {
         $excel = $this->createExcel([
-            TemplateAction::HEADERS,
+            TemplateHandler::HEADERS,
             ['5da49355cbcff.jpeg', 'Super mario', 'tre etneruentuendu', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
             ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'Test domain 9001', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', '1997', '1.1231', '1231.132', 'building'],
 
@@ -126,7 +126,7 @@ class ImporterTest extends TestCase
     public function testImportThrowsWithInvalidData(): void
     {
         $excel = $this->createExcel([
-            TemplateAction::HEADERS,
+            TemplateHandler::HEADERS,
             ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'non-existing-domain', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', '1997', '1.1231', '1231.132', 'building'],
 
         ]);

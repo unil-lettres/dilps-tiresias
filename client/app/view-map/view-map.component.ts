@@ -76,7 +76,7 @@ export class ViewMapComponent extends NaturalAbstractController {
         });
     }
 
-    public updateBounds(markers): void {
+    public updateBounds(markers: Marker[]): void {
         this.bounds = new google.maps.LatLngBounds();
         markers.forEach(marker => {
             this.bounds.extend({lat: marker.latitude, lng: marker.longitude});

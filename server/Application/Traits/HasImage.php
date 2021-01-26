@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use GraphQL\Doctrine\Annotation as API;
 use Psr\Http\Message\UploadedFileInterface;
+use Throwable;
 
 /**
  * Trait for all objects with a name
@@ -28,15 +30,19 @@ trait HasImage
      */
     public function setFile(UploadedFileInterface $file): void
     {
-        $this->generateUniqueFilename($file->getClientFilename());
+        try {
+            $this->generateUniqueFilename($file->getClientFilename());
 
-        $path = $this->getPath();
-        if (file_exists($path)) {
-            throw new Exception('A file already exist with the same name: ' . $this->getFilename());
+            $path = $this->getPath();
+            if (file_exists($path)) {
+                throw new Exception('A file already exist with the same name: ' . $this->getFilename());
+            }
+            $file->moveTo($path);
+
+            $this->validateMimeType();
+        } catch (Throwable $e) {
+            throw new FileException($file, $e);
         }
-        $file->moveTo($path);
-
-        $this->validateMimeType();
     }
 
     /**
@@ -84,7 +90,8 @@ trait HasImage
     public function deleteFile(): void
     {
         $path = $this->getPath();
-        $config = require 'config/autoload/local.php';
+        global $container;
+        $config = $container->get('config');
         $unlink = $config['files']['unlink'];
 
         if (file_exists($path) && is_file($path)) {
@@ -94,13 +101,27 @@ trait HasImage
         }
     }
 
+    public function getMime(): string
+    {
+        $path = $this->getPath();
+        $mime = mime_content_type($path);
+        if ($mime === false) {
+            throw new Exception('Could not get mimetype for path: ' . $path);
+        }
+
+        if ($mime === 'image/svg') {
+            $mime = 'image/svg+xml';
+        }
+
+        return $mime;
+    }
+
     /**
      * Delete file and throw exception if MIME type is invalid
      */
     private function validateMimeType(): void
     {
-        $path = $this->getPath();
-        $mime = mime_content_type($path);
+        $mime = $this->getMime();
 
         // Validate image mimetype
         $acceptedMimeTypes = [
@@ -116,6 +137,7 @@ trait HasImage
         ];
 
         if (!in_array($mime, $acceptedMimeTypes, true)) {
+            $path = $this->getPath();
             unlink($path);
 
             throw new Exception('Invalid file type of: ' . $mime);

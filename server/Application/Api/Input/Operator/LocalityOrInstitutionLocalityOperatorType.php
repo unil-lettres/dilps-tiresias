@@ -4,21 +4,30 @@ declare(strict_types=1);
 
 namespace Application\Api\Input\Operator;
 
+use Application\Model\Card;
 use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\QueryBuilder;
-use GraphQL\Doctrine\Factory\UniqueNameFactory;
+use Ecodev\Felix\Api\Exception;
 
-class LocalityOrInstitutionLocalityOperatorType extends SearchOperatorType
+class LocalityOrInstitutionLocalityOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
 {
-    protected function getSearchableFields(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
+    protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
-        $institution = $uniqueNameFactory->createAliasName(Institution::class);
-        $queryBuilder->leftJoin($alias . '.institution', $institution);
+        if ($metadata->getName() === Card::class) {
+            return ['locality'];
+        }
 
+        if ($metadata->getName() === Institution::class) {
+            return ['locality'];
+        }
+
+        throw new Exception('Unsupported type of object for LocalityOrInstitutionLocality');
+    }
+
+    protected function getSearchableJoinedEntities(): array
+    {
         return [
-            $institution . '.locality',
-            $alias . '.locality',
+            Card::class => ['institution'],
         ];
     }
 }

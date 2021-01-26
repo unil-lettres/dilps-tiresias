@@ -4,6 +4,7 @@ import {CollectionService} from '../../../collections/services/collection.servic
 import {UserService} from '../../../users/services/user.service';
 import {
     Cards_cards_items,
+    Cards_cards_items_collections,
     CollectionFilter,
     Collections_collections_items,
     CreateCollection_createCollection,
@@ -82,7 +83,7 @@ export class CollectionSelectorComponent implements OnInit {
         this.linkInternal(this.collection);
     }
 
-    public unlink(image: Cards_cards_items, collection): void {
+    public unlink(image: Cards_cards_items, collection: Cards_cards_items_collections): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
             image.collections.splice(index, 1);

@@ -6,7 +6,7 @@
                     <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
                     <mat-slider
                         (input)="updateVisibility($event); visibility = $event.value"
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
                         [max]="3"
                         [min]="1"
                         [ngModel]="visibility"
@@ -34,7 +34,7 @@
                 </mat-form-field>
 
                 <app-thesaurus
-                    (modelChange)="data.item.institution = $event"
+                    (modelChange)="data.item.institution = $any($event)"
                     [model]="institution"
                     [multiple]="false"
                     [service]="institutionService"

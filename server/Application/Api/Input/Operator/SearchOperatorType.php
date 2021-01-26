@@ -9,60 +9,16 @@ use Application\Model\Card;
 use Application\Model\Country;
 use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\QueryBuilder;
-use GraphQL\Doctrine\Definition\Operator\AbstractOperator;
-use GraphQL\Doctrine\Factory\UniqueNameFactory;
-use GraphQL\Type\Definition\LeafType;
 
-class SearchOperatorType extends AbstractOperator
+class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
 {
-    protected function getConfiguration(LeafType $leafType): array
+    protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
+        if (in_array($metadata->getName(), [Institution::class, Artist::class, Country::class], true)) {
+            return ['name'];
+        }
+
         return [
-            'fields' => [
-                [
-                    'name' => 'value',
-                    'type' => self::nonNull($leafType),
-                ],
-            ],
-        ];
-    }
-
-    public function getDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $field, ?array $args): ?string
-    {
-        if (!$args) {
-            return null;
-        }
-
-        $words = preg_split('/[[:space:]]+/', $args['value'], -1, PREG_SPLIT_NO_EMPTY);
-        if (!$words) {
-            return null;
-        }
-
-        $fields = $this->getSearchableFields($uniqueNameFactory, $metadata, $queryBuilder, $alias);
-
-        // Build the WHERE clause
-        $wordWheres = [];
-        foreach ($words as $i => $word) {
-            $parameterName = $uniqueNameFactory->createParameterName();
-
-            $fieldWheres = [];
-            foreach ($fields as $field) {
-                $fieldWheres[] = $field . ' LIKE :' . $parameterName;
-            }
-
-            if ($fieldWheres) {
-                $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
-                $queryBuilder->setParameter($parameterName, '%' . $word . '%');
-            }
-        }
-
-        return '(' . implode(' AND ', $wordWheres) . ')';
-    }
-
-    protected function getSearchableFields(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
-    {
-        $whitelistedFields = [
             'name',
             'expandedName',
             'street',
@@ -78,33 +34,12 @@ class SearchOperatorType extends AbstractOperator
             'code',
             'objectReference',
         ];
+    }
 
-        // Find most textual fields for the entity
-        $fields = [];
-        foreach ($metadata->fieldMappings as $mapping) {
-            if (in_array($mapping['fieldName'], $whitelistedFields, true)) {
-                $fieldName = $mapping['fieldName'];
-                $field = $alias . '.' . $fieldName;
-
-                $fields[] = $field;
-            }
-        }
-
-        // Special case for Card to add joined fields
-        if ($metadata->name === Card::class) {
-            $institution = $uniqueNameFactory->createAliasName(Institution::class);
-            $artist = $uniqueNameFactory->createAliasName(Artist::class);
-            $country = $uniqueNameFactory->createAliasName(Country::class);
-
-            $queryBuilder->leftJoin($alias . '.institution', $institution);
-            $queryBuilder->leftJoin($alias . '.artists', $artist);
-            $queryBuilder->leftJoin($alias . '.country', $country);
-
-            $fields[] = $institution . '.name';
-            $fields[] = $artist . '.name';
-            $fields[] = $country . '.name';
-        }
-
-        return $fields;
+    protected function getSearchableJoinedEntities(): array
+    {
+        return [
+            Card::class => ['institution', 'artists', 'country'],
+        ];
     }
 }

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Application\Api\Enum;
 
 use Application\DBAL\Types\PrecisionType as P;
+use Ecodev\Felix\Api\Enum\EnumType;
 
-class PrecisionType extends AbstractEnumType
+class PrecisionType extends EnumType
 {
     public function __construct()
     {

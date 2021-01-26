@@ -40,7 +40,7 @@
                 </div>
 
                 <app-thesaurus
-                    (modelChange)="data.item.institution = $event"
+                    (modelChange)="data.item.institution = $any($event)"
                     [model]="institution"
                     [multiple]="false"
                     [service]="institutionService"
@@ -70,7 +70,13 @@
                 <mat-form-field>
                     <mat-label>Rôle</mat-label>
                     <mat-select [(value)]="data.item.role" [disabled]="user?.id === data?.item?.id">
-                        <mat-option *ngFor="let role of roles" [value]="role.name"> {{ role.text }}</mat-option>
+                        <mat-option
+                            *ngFor="let role of roles"
+                            [value]="role.value"
+                            [disabled]="roleDisabled(role.value)"
+                        >
+                            {{ role.name }}</mat-option
+                        >
                     </mat-select>
                 </mat-form-field>
 

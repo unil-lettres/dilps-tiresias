@@ -1,7 +1,7 @@
 <agm-map
     *ngIf="markers"
     [fitBoundsPadding]="{top: 250, right: 100, left: 100, bottom: 10}"
-    [fitBounds]="bounds"
+    [fitBounds]="$any(bounds)"
     [mapTypeControlOptions]="{position: 1}"
     [mapTypeControl]="true"
     [scrollwheel]="true"
@@ -10,7 +10,7 @@
 >
     <agm-marker
         *ngFor="let marker of markers"
-        [iconUrl]="marker.icon"
+        [iconUrl]="$any(marker.icon)"
         [latitude]="marker.latitude"
         [longitude]="marker.longitude"
     >

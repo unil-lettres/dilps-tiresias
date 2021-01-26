@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\Api\Exception;
+use Application\Api\FileException;
+use Application\Repository\ArtistRepository;
+use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
 use Application\Traits\HasAddress;
 use Application\Traits\HasCode;
+use Application\Traits\HasFileSize;
 use Application\Traits\HasImage;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasParentInterface;
@@ -20,6 +23,8 @@ use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
+use Ecodev\Felix\Model\Image;
 use GraphQL\Doctrine\Annotation as API;
 use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
@@ -55,7 +60,7 @@ use Throwable;
  *     "Application\Api\Input\Sorting\DocumentType"
  * })
  */
-class Card extends AbstractModel implements HasSiteInterface
+class Card extends AbstractModel implements HasSiteInterface, Image
 {
     use HasCode;
     use HasRichTextName;
@@ -65,6 +70,7 @@ class Card extends AbstractModel implements HasSiteInterface
     use HasValidation;
     use HasYearRange;
     use HasSite;
+    use HasFileSize;
     use HasImage {
         setFile as traitSetFile;
     }
@@ -80,12 +86,6 @@ class Card extends AbstractModel implements HasSiteInterface
      * @ORM\Column(type="CardVisibility", options={"default" = Card::VISIBILITY_PRIVATE})
      */
     private $visibility = self::VISIBILITY_PRIVATE;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private $fileSize = 0;
 
     /**
      * @var int
@@ -160,14 +160,11 @@ class Card extends AbstractModel implements HasSiteInterface
     private $documentType;
 
     /**
-     * @var null|Domain
+     * @var DoctrineCollection
      *
-     * @ORM\ManyToOne(targetEntity="Domain")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
+     * @ORM\ManyToMany(targetEntity="Domain")
      */
-    private $domain;
+    private $domains;
 
     /**
      * @var DoctrineCollection
@@ -191,11 +188,13 @@ class Card extends AbstractModel implements HasSiteInterface
     private $cards;
 
     /**
-     * @var null|Change
+     * There is actually 0 to 1 change, never more. And this is
+     * enforced by DB unique constraints on the mapping side
      *
-     * @ORM\OneToOne(targetEntity="Change", mappedBy="suggestion")
+     * @var DoctrineCollection
+     * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
-    private $change;
+    private $changes;
 
     /**
      * @var string
@@ -216,12 +215,14 @@ class Card extends AbstractModel implements HasSiteInterface
     {
         $this->setName($name);
 
+        $this->changes = new ArrayCollection();
         $this->collections = new ArrayCollection();
         $this->artists = new ArrayCollection();
         $this->antiqueNames = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->datings = new ArrayCollection();
         $this->cards = new ArrayCollection();
+        $this->domains = new ArrayCollection();
         $this->periods = new ArrayCollection();
         $this->materials = new ArrayCollection();
     }
@@ -333,7 +334,9 @@ class Card extends AbstractModel implements HasSiteInterface
 
         $this->artists->clear();
 
-        $artistNames = _em()->getRepository(Artist::class)->getOrCreateByNames($artistNames, $this->getSite());
+        /** @var ArtistRepository $artistRepository */
+        $artistRepository = _em()->getRepository(Artist::class);
+        $artistNames = $artistRepository->getOrCreateByNames($artistNames, $this->getSite());
         foreach ($artistNames as $a) {
             $this->artists->add($a);
         }
@@ -342,7 +345,9 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Set all materials at once.
      *
-     * @param null|Material[] $materials
+     * @API\Input(type="?MaterialID[]")
+     *
+     * @param null|EntityID[] $materials
      */
     public function setMaterials(?array $materials): void
     {
@@ -357,7 +362,9 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Set all antiqueNames at once.
      *
-     * @param null|AntiqueName[] $antiqueNames
+     * @API\Input(type="?AntiqueNameID[]")
+     *
+     * @param null|EntityID[] $antiqueNames
      */
     public function setAntiqueNames(?array $antiqueNames): void
     {
@@ -369,9 +376,27 @@ class Card extends AbstractModel implements HasSiteInterface
     }
 
     /**
+     * Set all domains at once.
+     *
+     * @API\Input(type="?DomainID[]")
+     *
+     * @param null|EntityID[] $domains
+     */
+    public function setDomains(?array $domains): void
+    {
+        if (null === $domains) {
+            return;
+        }
+
+        $this->setEntireCollection($domains, $this->domains, Domain::class);
+    }
+
+    /**
      * Set all periods at once.
      *
-     * @param null|Period[] $periods
+     * @API\Input(type="?PeriodID[]")
+     *
+     * @param null|EntityID[] $periods
      */
     public function setPeriods(?array $periods): void
     {
@@ -385,7 +410,9 @@ class Card extends AbstractModel implements HasSiteInterface
     /**
      * Set all tags at once.
      *
-     * @param null|Tag[] $tags
+     * @API\Input(type="?TagID[]")
+     *
+     * @param null|EntityID[] $tags
      */
     public function setTags(?array $tags): void
     {
@@ -496,14 +523,24 @@ class Card extends AbstractModel implements HasSiteInterface
         $this->documentType = $documentType;
     }
 
-    public function getDomain(): ?Domain
+    /**
+     * Get domains
+     *
+     * @API\Field(type="Domain[]")
+     */
+    public function getDomains(): DoctrineCollection
     {
-        return $this->domain;
+        return $this->domains;
     }
 
-    public function setDomain(?Domain $domain): void
+    /**
+     * Add Domain
+     */
+    public function addDomain(Domain $domain): void
     {
-        $this->domain = $domain;
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+        }
     }
 
     /**
@@ -576,7 +613,9 @@ class Card extends AbstractModel implements HasSiteInterface
 
         // If we are new and don't have a code yet, set one automatically
         if (!$this->getId() && !$this->getCode() && $this->canUpdateCode()) {
-            $code = _em()->getRepository(self::class)->getNextCodeAvailable($collection);
+            /** @var CardRepository $userRepository */
+            $userRepository = _em()->getRepository(self::class);
+            $code = $userRepository->getNextCodeAvailable($collection);
             $this->setCode($code);
         }
     }
@@ -605,24 +644,6 @@ class Card extends AbstractModel implements HasSiteInterface
     public function datingRemoved(Dating $dating): void
     {
         $this->datings->removeElement($dating);
-    }
-
-    /**
-     * Get file size in bytes
-     */
-    public function getFileSize(): int
-    {
-        return $this->fileSize;
-    }
-
-    /**
-     * Set file size in bytes
-     *
-     * @API\Exclude
-     */
-    public function setFileSize(int $fileSize): void
-    {
-        $this->fileSize = $fileSize;
     }
 
     /**
@@ -668,11 +689,12 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function setFile(UploadedFileInterface $file): void
     {
+        $this->traitSetFile($file);
+
         try {
-            $this->traitSetFile($file);
             $this->readFileInfo();
         } catch (Throwable $e) {
-            throw new \Application\Api\Exception('Erreur avec le fichier : ' . $file->getClientFilename(), 0, $e);
+            throw new FileException($file, $e);
         }
     }
 
@@ -776,12 +798,12 @@ class Card extends AbstractModel implements HasSiteInterface
         $original->artists = clone $this->artists;
         $original->tags = clone $this->tags;
         $original->materials = clone $this->materials;
+        $original->domains = clone $this->domains;
         $original->periods = clone $this->periods;
         $original->computeDatings();
         $original->institution = $this->institution;
         $original->country = $this->country;
         $original->documentType = $this->documentType;
-        $original->domain = $this->domain;
 
         // Copy file on disk
         if ($this->filename) {
@@ -836,7 +858,7 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function getChange(): ?Change
     {
-        return $this->change;
+        return $this->changes->first() ?: null;
     }
 
     /**
@@ -845,7 +867,10 @@ class Card extends AbstractModel implements HasSiteInterface
      */
     public function changeAdded(?Change $change): void
     {
-        $this->change = $change;
+        $this->changes->clear();
+        if ($change) {
+            $this->changes->add($change);
+        }
     }
 
     /**

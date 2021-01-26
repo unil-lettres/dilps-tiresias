@@ -40,7 +40,7 @@ return [
                 'proxy_dir' => 'data/cache/DoctrineORMModule/Proxy',
                 'generate_proxies' => false,
                 'filters' => [
-                    \Application\ORM\Query\Filter\AclFilter::class => \Application\ORM\Query\Filter\AclFilter::class,
+                    \Ecodev\Felix\ORM\Query\Filter\AclFilter::class => \Ecodev\Felix\ORM\Query\Filter\AclFilter::class,
                 ],
                 'numeric_functions' => [
                     'rand' => \DoctrineExtensions\Query\Mysql\Rand::class,
@@ -51,13 +51,17 @@ return [
             ],
         ],
         'types' => [
-            'UserType' => Application\DBAL\Types\UserTypeType::class,
+            'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
+            'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
+            'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
+            'MessageType' => Application\DBAL\Types\MessageTypeType::class,
+            'ExportFormat' => Application\DBAL\Types\ExportFormatType::class,
+            'ExportStatus' => Application\DBAL\Types\ExportStatusType::class,
             'Precision' => Application\DBAL\Types\PrecisionType::class,
             'Site' => Application\DBAL\Types\SiteType::class,
             'UserRole' => Application\DBAL\Types\UserRoleType::class,
-            'ChangeType' => Application\DBAL\Types\ChangeTypeType::class,
-            'CardVisibility' => Application\DBAL\Types\CardVisibilityType::class,
-            'CollectionVisibility' => Application\DBAL\Types\CollectionVisibilityType::class,
+            'UserType' => Application\DBAL\Types\UserTypeType::class,
+            'datetime' => Ecodev\Felix\DBAL\Types\ChronosType::class,
             'point' => CrEOF\Spatial\DBAL\Types\Geography\PointType::class,
         ],
         // migrations configuration

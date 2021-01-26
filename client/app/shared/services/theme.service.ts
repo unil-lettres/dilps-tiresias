@@ -17,9 +17,9 @@ export class ThemeService {
     ];
 
     public readonly theme: BehaviorSubject<string> = new BehaviorSubject(this.themes[0]);
-    private darkActivated: boolean;
+    private darkActivated = false;
 
-    private storageKey = null;
+    private storageKey = '';
 
     constructor(@Inject(SITE) site: Site) {
         this.storageKey = site + '-theme';

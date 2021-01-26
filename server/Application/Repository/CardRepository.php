@@ -6,24 +6,24 @@ namespace Application\Repository;
 
 use Application\Model\Card;
 use Application\Model\Collection;
+use Application\Model\Export;
 use Application\Model\User;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use PDO;
+use Ecodev\Felix\Repository\LimitedAccessSubQuery;
 
-class CardRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 {
     public function getFindAllByCollections(array $collections = []): QueryBuilder
     {
         $qb = $this->createQueryBuilder('card');
 
-        if (isset($collections)) {
-            if (\count($collections) > 0) {
-                $qb->join('card.collections', 'collection');
-                $qb->andWhere('collection.id IN (:collections)');
-                $qb->setParameter('collections', $collections);
-            } else {
-                $qb->andWhere('card.collections IS EMPTY');
-            }
+        if (count($collections) > 0) {
+            $qb->join('card.collections', 'collection');
+            $qb->andWhere('collection.id IN (:collections)');
+            $qb->setParameter('collections', $collections);
+        } else {
+            $qb->andWhere('card.collections IS EMPTY');
         }
 
         return $qb;
@@ -37,8 +37,12 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card owner or creator is the user
      * - card's collection responsible is the user
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
+        if ($user && $user->getRole() === User::ROLE_ADMINISTRATOR) {
+            return '';
+        }
+
         $visibility = [Card::VISIBILITY_PUBLIC];
         if ($user) {
             $visibility[] = Card::VISIBILITY_MEMBER;
@@ -64,25 +68,9 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     }
 
     /**
-     * Returns all unique filename in DB
-     *
-     * @return string[]
-     */
-    public function getFilenames(): array
-    {
-        $filenames = $this->getEntityManager()->getConnection()->createQueryBuilder()
-            ->from('card')
-            ->select('DISTINCT CONCAT("data/images/", filename)')
-            ->where('filename != ""')
-            ->orderBy('filename')->execute()->fetchAll(PDO::FETCH_COLUMN);
-
-        return $filenames;
-    }
-
-    /**
      * Returns all filename in DB and their id and sizes
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getFilenamesForDimensionUpdate(?string $site = null): array
     {
@@ -136,6 +124,34 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             return $this->findOneBy([
                 'legacyId' => $legacy_id,
             ]);
+        });
+    }
+
+    /**
+     * Returns **some** cards for the given export, starting at $firstResult
+     *
+     * This methods has to be called repeatedly with a different $firstResult in order
+     * to iterate over **all** cards of a given export
+     */
+    public function getExportCards(Export $export, int $firstResult): array
+    {
+        $qb = $this->createQueryBuilder('card');
+        $qb->select('card, artist, country, documentType, domain, institution, period')
+            ->innerJoin(Export::class, 'export', Join::WITH, 'card MEMBER OF export.cards')
+            ->leftJoin('card.artists', 'artist', Join::WITH)
+            ->leftJoin('card.country', 'country', Join::WITH)
+            ->leftJoin('card.documentType', 'documentType', Join::WITH)
+            ->leftJoin('card.domains', 'domain', Join::WITH)
+            ->leftJoin('card.institution', 'institution', Join::WITH)
+            ->leftJoin('card.periods', 'period', Join::WITH)
+            ->andWhere('export.id = :export')
+            ->setParameter('export', $export)
+            ->orderBy('card.id')
+            ->setMaxResults(250)
+            ->setFirstResult($firstResult);
+
+        return $this->getAclFilter()->runWithoutAcl(function () use ($qb) {
+            return $qb->getQuery()->getResult();
         });
     }
 }

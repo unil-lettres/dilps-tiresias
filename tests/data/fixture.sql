@@ -1,17 +1,5 @@
 START TRANSACTION;
 
-REPLACE INTO `user` (`id`, `login`, `email`, password, role, site) VALUES
-  (1000, 'administrator', 'administrator-dilps@example.com', MD5('administrator'), 'administrator', 'dilps'),
-  (1001, 'senior', 'senior-dilps@example.com', MD5('senior'), 'senior', 'dilps'),
-  (1002, 'junior', 'junior-dilps@example.com', MD5('junior'), 'junior', 'dilps'),
-  (1003, 'student', 'student-dilps@example.com', MD5('student'), 'student', 'dilps'),
-  (1004, 'administrator', 'administrator-tiresias@example.com', MD5('administrator'), 'administrator', 'tiresias'),
-  (1005, 'senior', 'senior-tiresias@example.com', MD5('senior'), 'senior', 'tiresias'),
-  (1006, 'junior', 'junior-tiresias@example.com', MD5('junior'), 'junior', 'tiresias'),
-  (1007, 'student', 'student-tiresias@example.com', MD5('student'), 'student', 'tiresias'),
-  (1008, 'major', 'major-tiresias@example.com', MD5('major'), 'major', 'tiresias'),
-  (1009, 'major', 'major-dilps@example.com', MD5('major'), 'major', 'dilps');
-
 REPLACE INTO `collection` (`id`, parent_id, owner_id, visibility, `name`, `description`, `site`) VALUES
   (2000, NULL, 1003, 'private', 'Test collection 2000', 'Roads? Where we''re going we don''t need roads.', 'dilps'),
   (2001, NULL, NULL, 'member', 'Test collection 2001', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'dilps'),
@@ -105,5 +93,20 @@ REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
 REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
   (12000, 'Test antique name 12000', 'tiresias'),
   (12001, 'Test antique name 12001', 'tiresias');
+
+REPLACE INTO file (id, card_id, name, filename, mime) VALUES
+(13000, 6000, 'Test file 13000', '4k123pkopvs3iDFV948abcde.pdf', 'application/pdf');
+
+REPLACE INTO export (id, site, card_count) VALUES
+(14000, 'dilps', 1),
+(14001, 'dilps', 2);
+
+REPLACE INTO export_collection (export_id, collection_id) VALUES
+(14001, 2001);
+
+REPLACE INTO export_card (export_id, card_id) VALUES
+(14000, 6000),
+(14001, 6001),
+(14001, 6002);
 
 COMMIT ;

@@ -43,7 +43,7 @@
                 </mat-form-field>
 
                 <input
-                    (change)="upload($event.target.files[0])"
+                    (change)="upload($event)"
                     [readonly]="data?.item?.permissions && !data.item.permissions.update"
                     name="Image"
                     placeholder="Lien"
@@ -64,7 +64,7 @@
         (update)="update()"
         [canCreate]="user?.globalPermissions?.news?.create"
         [item]="data.item"
-        [formCtrl]="url"
+        [formCtrl]="$any(url)"
         fxFlex
     ></app-dialog-footer>
 </mat-dialog-actions>

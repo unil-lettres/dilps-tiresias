@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Application\Api;
 
 use Application\Api\Field\Query\ExtraStatistics;
+use Application\Api\Field\Query\UserRolesAvailable;
+use Application\Api\Field\Query\ValidateExport;
 use Application\Api\Field\Query\Viewer;
 use Application\Api\Field\Standard;
 use Application\Model\AntiqueName;
@@ -15,6 +17,8 @@ use Application\Model\Collection;
 use Application\Model\Country;
 use Application\Model\DocumentType;
 use Application\Model\Domain;
+use Application\Model\Export;
+use Application\Model\File;
 use Application\Model\Institution;
 use Application\Model\Material;
 use Application\Model\News;
@@ -31,6 +35,8 @@ class QueryType extends ObjectType
         $specializedFields = [
             Viewer::build(),
             ExtraStatistics::build(),
+            UserRolesAvailable::build(),
+            ValidateExport::build(),
         ];
 
         $fields = array_merge(
@@ -51,6 +57,8 @@ class QueryType extends ObjectType
             Standard::buildQuery(Statistic::class),
             Standard::buildQuery(Tag::class),
             Standard::buildQuery(AntiqueName::class),
+            Standard::buildQuery(File::class),
+            Standard::buildQuery(Export::class),
         );
 
         $config = [

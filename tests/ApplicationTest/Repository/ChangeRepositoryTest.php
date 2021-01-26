@@ -9,16 +9,14 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
 use Application\Repository\ChangeRepository;
+use Application\Repository\UserRepository;
 
 /**
  * @group Repository
  */
 class ChangeRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var ChangeRepository
-     */
-    private $repository;
+    private ChangeRepository $repository;
 
     protected function setUp(): void
     {
@@ -28,7 +26,9 @@ class ChangeRepositoryTest extends AbstractRepositoryTest
 
     public function testGetOpenChange(): void
     {
-        User::setCurrent(_em()->getRepository(User::class)->getOneByLogin('administrator', SiteType::DILPS));
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(User::class);
+        User::setCurrent($userRepository->getOneByLogin('administrator', SiteType::DILPS));
         $request = '';
         $creationSuggestion = _em()->getReference(Card::class, 6001);
         $updateSuggestion = _em()->getReference(Card::class, 6002);

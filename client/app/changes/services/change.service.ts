@@ -52,7 +52,7 @@ export class ChangeService extends AbstractContextualizedService<
         super(apollo, 'change', changeQuery, changesQuery, null, null, null, site);
     }
 
-    public acceptChange(change: {id}): Observable<AcceptChange_acceptChange> {
+    public acceptChange(change: {id: string}): Observable<AcceptChange_acceptChange> {
         return this.apollo
             .mutate<AcceptChange>({
                 mutation: acceptChange,
@@ -69,7 +69,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public rejectChange(change: {id}): Observable<boolean> {
+    public rejectChange(change: {id: string}): Observable<boolean> {
         return this.apollo
             .mutate<RejectChange>({
                 mutation: rejectChange,

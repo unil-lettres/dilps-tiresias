@@ -32,6 +32,7 @@ import {TagsComponent} from './tags/tags/tags.component';
 import {UserResolver} from './users/services/user.resolver';
 import {UserComponent} from './users/user/user.component';
 import {UsersComponent} from './users/users/users.component';
+import {ErrorComponent} from './shared/components/error/error.component';
 
 export const routes: Routes = [
     {
@@ -250,6 +251,15 @@ export const routes: Routes = [
             {
                 path: 'empty',
                 component: EmptyComponent,
+            },
+            {
+                path: 'error',
+                component: ErrorComponent,
+            },
+            {
+                path: '**',
+                component: ErrorComponent,
+                data: {notFound: true},
             },
         ],
     },

@@ -1,4 +1,11 @@
-<div *ngIf="model" naturalFileDrop fxFlex fxLayout="row">
+<div
+    *ngIf="model"
+    naturalFileDrop
+    [fileSelectionDisabled]="!edit"
+    (filesChange)="dropImage($event)"
+    fxFlex
+    fxLayout="row"
+>
     <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
     <div [ngClass]="{containerWithToolbar: showToolbar}" fxFlex="400px" fxLayout="column">
         <mat-toolbar
@@ -103,7 +110,7 @@
                     <mat-icon>content_copy</mat-icon>
                 </button>
 
-                <button (click)="download(model)" mat-icon-button matTooltip="Télécharger">
+                <button (click)="download(fetchedModel)" mat-icon-button matTooltip="Télécharger">
                     <mat-icon>file_download</mat-icon>
                 </button>
 
@@ -140,7 +147,7 @@
                     </div>
                     <mat-slider
                         (input)="updateVisibility($event); visibility = $event.value"
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : null"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
                         [disabled]="!edit"
                         [max]="3"
                         [min]="1"
@@ -213,17 +220,17 @@
                 </div>
 
                 <app-thesaurus
-                    *ngIf="!isDilps && (edit || !!model.domain)"
-                    [model]="model.domain"
-                    (modelChange)="model.domain = $event"
+                    *ngIf="!isDilps && (edit || !!model.domains?.length)"
+                    [model]="model.domains"
+                    (modelChange)="model.domains = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="domainHierarchicConfig"
-                    [multiple]="false"
+                    [multiple]="true"
                     [previewComponent]="DomainComponent"
                     [readonly]="!edit"
                     [service]="domainService"
                     matTooltipPosition="after"
-                    placeholder="Domaine"
+                    placeholder="Domaines"
                 ></app-thesaurus>
 
                 <div
@@ -245,9 +252,20 @@
                     ></quill-editor>
                 </div>
 
+                <mat-form-field *ngIf="!isDilps && (edit || !!model.corpus)">
+                    <mat-label>Corpus</mat-label>
+                    <textarea
+                        [(ngModel)]="model.corpus"
+                        [readonly]="!edit"
+                        matInput
+                        [matAutosizeMinRows]="1"
+                        [matTextareaAutosize]="true"
+                    ></textarea>
+                </mat-form-field>
+
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!artists?.length)"
-                    (modelChange)="model.artists = $event"
+                    (modelChange)="model.artists = $any($event)"
                     [matTooltip]="
                         !edit
                             ? ''
@@ -268,7 +286,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -293,7 +311,7 @@
                     <textarea
                         [(ngModel)]="model.addition"
                         [readonly]="!edit"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         matInput
                         [matTextareaAutosize]="true"
                     ></textarea>
@@ -314,7 +332,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -341,7 +359,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -368,7 +386,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -395,7 +413,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -410,7 +428,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.materials?.length)"
                     [model]="model.materials"
-                    (modelChange)="model.materials = $event"
+                    (modelChange)="model.materials = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="materialHierarchicConfig"
                     [multiple]="true"
@@ -435,7 +453,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.tags?.length)"
                     [model]="model.tags"
-                    (modelChange)="model.tags = $event"
+                    (modelChange)="model.tags = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="tagHierarchicConfig"
                     [multiple]="true"
@@ -450,7 +468,7 @@
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!institution)"
-                    (modelChange)="model.institution = $event"
+                    (modelChange)="model.institution = $any($event)"
                     [matTooltip]="
                         !edit
                             ? ''
@@ -482,7 +500,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
                     [model]="model.antiqueNames"
-                    (modelChange)="model.antiqueNames = $event"
+                    (modelChange)="model.antiqueNames = $any($event)"
                     [allowFreeText]="false"
                     [multiple]="true"
                     [previewComponent]="AntiqueNameComponent"
@@ -501,7 +519,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || model.periods?.length)"
                     [model]="model.periods"
-                    (modelChange)="model.periods = $event"
+                    (modelChange)="model.periods = $any($event)"
                     [allowFreeText]="false"
                     [hierarchicSelectorConfig]="periodHierarchicConfig"
                     [multiple]="true"
@@ -530,7 +548,7 @@
 
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!institution)"
-                    (modelChange)="model.institution = $event"
+                    (modelChange)="model.institution = $any($event)"
                     [model]="institution"
                     [multiple]="false"
                     [previewComponent]="InstitutionComponent"
@@ -553,7 +571,7 @@
                     <textarea
                         [(ngModel)]="model.objectReference"
                         [readonly]="!edit"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         matInput
                         [matTextareaAutosize]="true"
                     ></textarea>
@@ -576,7 +594,7 @@
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.documentType)"
                     [model]="model.documentType"
-                    (modelChange)="model.documentType = $event"
+                    (modelChange)="model.documentType = $any($event)"
                     [allowFreeText]="false"
                     [multiple]="false"
                     [previewComponent]="DocumentTypeComponent"
@@ -593,7 +611,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="191"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -612,7 +630,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -715,7 +733,7 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
@@ -744,7 +762,7 @@
                         maxlength="255"
                         type="url"
                         (change)="urlModel = url; updateFormValidity()"
-                        matAutosizeMinRows="1"
+                        [matAutosizeMinRows]="1"
                         [matTextareaAutosize]="true"
                     ></textarea>
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
@@ -796,6 +814,8 @@
                     </natural-relations>
                 </div>
 
+                <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>
+
                 <div *ngIf="isDilps && collectionCopyrights">
                     <div class="mat-title">Droits d’utilisation</div>
                     <p>{{ collectionCopyrights }}</p>
@@ -803,8 +823,8 @@
             </div>
         </perfect-scrollbar>
 
-        <div class="padding" *ngIf="model">
-            <app-stamp [item]="model"></app-stamp>
+        <div class="padding" *ngIf="fetchedModel">
+            <app-stamp [item]="fetchedModel"></app-stamp>
         </div>
     </div>
 

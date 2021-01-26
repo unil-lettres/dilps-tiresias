@@ -6,7 +6,7 @@ namespace Application\Middleware;
 
 use Application\Model\User;
 use Application\Repository\UserRepository;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;
@@ -16,15 +16,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    /**
-     * @var string
-     */
-    private $site;
+    private string $site;
 
     public function __construct(UserRepository $userRepository, string $site)
     {
@@ -47,7 +41,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if ($session->has('user')) {
             $user = $this->userRepository->getOneById($session->get('user'));
 
-            if ($user && (!$user->getActiveUntil() || $user->getActiveUntil() > new DateTimeImmutable())) {
+            if ($user && (!$user->getActiveUntil() || $user->getActiveUntil() > new Chronos())) {
                 User::setCurrent($user);
             }
         }

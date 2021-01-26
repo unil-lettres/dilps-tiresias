@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Application\Api\Field;
 
 use Application\Api\Helper;
-use Application\Api\Input\PaginationInputType;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
+use Application\Repository\AbstractRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Ecodev\Felix\Api\Input\PaginationInputType;
 use GraphQL\Type\Definition\Type;
 use ReflectionClass;
 
@@ -36,7 +37,7 @@ abstract class Standard
                 'name' => $plural,
                 'type' => _types()->get($shortName . 'Pagination'),
                 'args' => $listArgs,
-                'resolve' => function (string $site, array $args) use ($class, $metadata): array {
+                'resolve' => function (array $root, array $args) use ($class, $metadata): array {
                     // If null or empty list is provided by client, fallback on default sorting
                     $sorting = $args['sorting'] ?? [];
                     if (!$sorting) {
@@ -60,7 +61,7 @@ abstract class Standard
                 'name' => $name,
                 'type' => _types()->getOutput($class),
                 'args' => $singleArgs,
-                'resolve' => function (string $site, array $args): ?AbstractModel {
+                'resolve' => function (array $root, array $args): ?AbstractModel {
                     $object = $args['id']->getEntity();
 
                     Helper::throwIfDenied($object, 'read');
@@ -88,13 +89,17 @@ abstract class Standard
                 'args' => [
                     'input' => Type::nonNull(_types()->getInput($class)),
                 ],
-                'resolve' => function (string $site, array $args) use ($class): AbstractModel {
+                'resolve' => function (array $root, array $args) use ($class): AbstractModel {
                     $object = new $class();
 
                     // Be sure that site is set first
                     $input = $args['input'];
                     if ($input['site'] ?? false) {
                         Helper::hydrate($object, ['site' => $input['site']]);
+                    }
+
+                    if ($input['card'] ?? false) {
+                        Helper::hydrate($object, ['card' => $input['card']]);
                     }
 
                     // Check ACL
@@ -116,7 +121,7 @@ abstract class Standard
                     'id' => Type::nonNull(_types()->getId($class)),
                     'input' => Type::nonNull(_types()->getPartialInput($class)),
                 ],
-                'resolve' => function (string $site, array $args): AbstractModel {
+                'resolve' => function (array $root, array $args): AbstractModel {
                     $object = $args['id']->getEntity();
 
                     // Check ACL
@@ -138,7 +143,7 @@ abstract class Standard
                 'args' => [
                     'ids' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getId($class)))),
                 ],
-                'resolve' => function (string $site, array $args): bool {
+                'resolve' => function (array $root, array $args): bool {
                     foreach ($args['ids'] as $id) {
                         $object = $id->getEntity();
 
@@ -192,7 +197,7 @@ abstract class Standard
                 'description' => 'Create a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation already exists, it will have no effect.',
                 'args' => $args,
-                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
+                'resolve' => function (array $root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], true);
@@ -220,7 +225,7 @@ abstract class Standard
                 'description' => 'Delete a relation between ' . $ownerName . ' and ' . $otherName . '.' . PHP_EOL . PHP_EOL .
                     'If the relation does not exist, it will have no effect.',
                 'args' => $args,
-                'resolve' => function (string $site, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
+                'resolve' => function (array $root, array $args) use ($lowerOwnerName, $lowerOtherName, $otherName, $otherClass, $byName, $privilege): AbstractModel {
                     $owner = $args[$lowerOwnerName]->getEntity();
                     if ($byName) {
                         $other = self::getByName($otherClass, $args[$lowerOtherName], false);
@@ -253,7 +258,9 @@ abstract class Standard
     private static function getByName(string $class, string $name, bool $createIfNotFound): ?AbstractModel
     {
         $name = trim($name);
-        $other = _em()->getRepository($class)->findOneByName($name);
+        /** @var AbstractRepository $entityRepository */
+        $entityRepository = _em()->getRepository($class);
+        $other = $entityRepository->findOneByName($name);
 
         if (!$other && $createIfNotFound) {
             $other = new $class();
@@ -293,7 +300,7 @@ abstract class Standard
             ],
         ];
 
-        $listArgs[] = PaginationInputType::build();
+        $listArgs[] = PaginationInputType::build(_types());
 
         return $listArgs;
     }

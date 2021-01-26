@@ -4,22 +4,31 @@ import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {CollectionVisibility, UserRole} from '../../shared/generated-types';
+import {
+    Collection_collection_institution,
+    CollectionVisibility,
+    UpdateCollection_updateCollection,
+    UpdateCollection_updateCollection_institution,
+    UserRole,
+    Users_users_items,
+} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
+import {MatSliderChange} from '@angular/material/slider';
+import {Visibilities} from '../../card/card.component';
 
 @Component({
     selector: 'app-collection',
     templateUrl: './collection.component.html',
 })
-export class CollectionComponent extends AbstractDetailDirective implements OnInit {
+export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public visibility = 1;
-    public visibilities = {
+    public visibilities: Visibilities<CollectionVisibility> = {
         1: {
             value: CollectionVisibility.private,
             text: 'par moi et les abonnés',
-            color: null,
+            color: undefined,
         },
         2: {
             value: CollectionVisibility.administrator,
@@ -33,7 +42,7 @@ export class CollectionComponent extends AbstractDetailDirective implements OnIn
         },
     };
 
-    public institution;
+    public institution: Collection_collection_institution | UpdateCollection_updateCollection_institution | null = null;
 
     public hierarchicConfig = collectionsHierarchicConfig;
 
@@ -50,7 +59,8 @@ export class CollectionComponent extends AbstractDetailDirective implements OnIn
         super(collectionService, alertService, dialogRef, userService, data);
     }
 
-    public updateVisibility(ev): void {
+    public updateVisibility(ev: MatSliderChange): void {
+        // @ts-ignore
         this.data.item.visibility = this.visibilities[ev.value].value;
     }
 
@@ -79,8 +89,8 @@ export class CollectionComponent extends AbstractDetailDirective implements OnIn
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    public displayFn(item): void {
-        return item ? item.login : null;
+    public displayFn(item: Users_users_items | string): string {
+        return item && typeof item !== 'string' ? item.login : '';
     }
 
     protected postQuery(): void {
@@ -92,7 +102,7 @@ export class CollectionComponent extends AbstractDetailDirective implements OnIn
         this.showVisibility = this.computeShowVisibility();
     }
 
-    protected postUpdate(model): void {
+    protected postUpdate(model: UpdateCollection_updateCollection): void {
         this.institution = model.institution;
     }
 }

@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Application\Middleware;
 
-use Application\Action\AbstractAction;
 use Application\Repository\CardRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class CollectionFetcherMiddleware extends AbstractAction implements MiddlewareInterface
+class CollectionFetcherMiddleware extends AbstractMiddleware
 {
-    /**
-     * @var CardRepository
-     */
-    private $cardRepository;
+    private CardRepository $cardRepository;
 
     public function __construct(CardRepository $cardRepository)
     {

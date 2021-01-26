@@ -153,15 +153,15 @@ class UserTest extends TestCase
     public function providerSetRole(): array
     {
         return [
-            [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role to junior'],
+            [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role from student to junior'],
 
             [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_STUDENT, null],
-            [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'student is not allowed to change role to junior'],
+            [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'student is not allowed to change role from student to junior'],
 
             [User::ROLE_JUNIOR, User::ROLE_STUDENT, User::ROLE_JUNIOR, null],
             [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_JUNIOR, null],
-            'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role to senior'],
-            'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role to junior'],
+            'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role from junior to senior'],
+            'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role from senior to junior'],
 
             [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
             [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],

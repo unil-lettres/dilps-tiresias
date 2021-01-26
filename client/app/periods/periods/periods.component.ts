@@ -1,6 +1,5 @@
 import {Component, Injector} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
-import {Periods, PeriodsVariables} from '../../shared/generated-types';
 import {PeriodComponent} from '../period/period.component';
 import {PeriodService} from '../services/period.service';
 
@@ -9,7 +8,7 @@ import {PeriodService} from '../services/period.service';
     templateUrl: './periods.component.html',
     styleUrls: ['./periods.component.scss'],
 })
-export class PeriodsComponent extends AbstractNavigableList<Periods['periods'], PeriodsVariables> {
+export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public displayedColumns = ['navigation', 'name', 'from', 'to'];
 
     constructor(service: PeriodService, injector: Injector) {

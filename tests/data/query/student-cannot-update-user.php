@@ -26,7 +26,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "User#1000" with privilege "update"',
+                'message' => 'User "student" with role student is not allowed on resource "User#1000" with privilege "update" because it is not himself',
                 'extensions' => [
                     'category' => 'Permissions',
                 ],

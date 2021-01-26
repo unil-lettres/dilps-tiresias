@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 
 return [
+    'hostname' => 'dilps.lan',
     'doctrine' => [
         'connection' => [
             'orm_default' => [
@@ -28,5 +29,22 @@ return [
     ],
     'files' => [
         'unlink' => true,
+    ],
+    'smtp' => [
+        'name' => 'mail.example.com',
+        'host' => 'mail.example.com',
+        'port' => 587,
+        'connection_class' => 'login',
+        'connection_config' => [
+            'username' => 'example@example.com',
+            'password' => '',
+            'ssl' => 'tls',
+        ],
+    ],
+    'email' => [
+        'from' => 'noreply@epicerio.lan', // Sender for emails
+    ],
+    'log' => [
+        'emails' => [], // List of developer emails to send bugs to
     ],
 ];

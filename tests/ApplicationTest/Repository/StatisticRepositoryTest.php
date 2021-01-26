@@ -10,10 +10,7 @@ use Application\Repository\StatisticRepository;
 
 class StatisticRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var StatisticRepository
-     */
-    private $repository;
+    private StatisticRepository  $repository;
 
     protected function setUp(): void
     {

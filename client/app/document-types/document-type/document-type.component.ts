@@ -9,7 +9,7 @@ import {DocumentTypeService} from '../services/document-type.service';
     selector: 'app-document-type',
     templateUrl: './document-type.component.html',
 })
-export class DocumentTypeComponent extends AbstractDetailDirective {
+export class DocumentTypeComponent extends AbstractDetailDirective<DocumentTypeService> {
     constructor(
         service: DocumentTypeService,
         alertService: AlertService,

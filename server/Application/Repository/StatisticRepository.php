@@ -8,7 +8,7 @@ use Application\Model\Statistic;
 use Application\Model\User;
 use Generator;
 
-class StatisticRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     public function getOrCreate(string $site): Statistic
     {
@@ -33,8 +33,10 @@ class StatisticRepository extends AbstractRepository implements LimitedAccessSub
 
     /**
      * Returns pure SQL to get ID of all objects that are accessible to given user.
+     *
+     * @param User $user
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
         if (!$user || $user->getRole() !== User::ROLE_ADMINISTRATOR) {
             return '-1';
@@ -102,6 +104,67 @@ $userClause
         return $this->toTableRows($site, 'Visibilité', $query);
     }
 
+    private function getPeriodClause(bool $isCreation, string $period): string
+    {
+        if ($period === 'all') {
+            return ' AND 1=1';
+        }
+        if ($period === 'month') {
+            $first = date('Y-m-01');
+            $last = date('Y-') . $this->formatMonth(date('m') + 1) . '-01';
+        } else {
+            $first = $period . date('-01-01');
+            $last = ((int) $period + 1) . date('-01-01');
+        }
+        $connection = $this->getEntityManager()->getConnection();
+        $field = $this->getDateField($isCreation);
+
+        return ' AND ' . $field . ' BETWEEN ' . $connection->quote($first) . ' AND ' . $connection->quote($last);
+    }
+
+    private function formatMonth(int $month): string
+    {
+        return str_pad((string) $month, 2, '0', STR_PAD_LEFT);
+    }
+
+    private function getDateField(bool $isCreation): string
+    {
+        return $isCreation ? 'creation_date' : 'update_date';
+    }
+
+    private function getUserClause(?User $user, bool $isCreation): string
+    {
+        $field = $isCreation ? 'creator_id' : 'updater_id';
+        if ($user) {
+            return ' AND ' . $field . ' = ' . $user->getId();
+        }
+
+        return '';
+    }
+
+    private function toTableRows(string $site, string $name, string $query): array
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $params = [
+            'site' => $site,
+        ];
+
+        $record = $connection->executeQuery($query, $params)->fetch();
+
+        $result = [];
+        foreach ($record as $key => $v) {
+            $result[] = [
+                'name' => $key,
+                'value' => (int) $v,
+            ];
+        }
+
+        return [
+            'name' => $name,
+            'rows' => $result,
+        ];
+    }
+
     private function getCardDescription(string $site, string $period, ?User $user, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
@@ -136,123 +199,6 @@ $userClause
 ";
 
         return $this->toTableRows($site, 'Géolocalisation', $query);
-    }
-
-    private function getUserType(string $site, string $period, bool $isCreation): array
-    {
-        $periodClause = $this->getPeriodClause($isCreation, $period);
-        $query = "SELECT
-SUM(CASE WHEN type = 'aai' THEN 1 ELSE 0 END) AS 'AAI',
-SUM(CASE WHEN type = 'default' THEN 1 ELSE 0 END) AS 'Externe',
-SUM(CASE WHEN type = 'legacy' THEN 1 ELSE 0 END) AS 'Legacy'
-FROM user
-WHERE 
-site = :site
-$periodClause
-";
-
-        return $this->toTableRows($site, 'Type', $query);
-    }
-
-    private function getUserRole(string $site, string $period, bool $isCreation): array
-    {
-        $periodClause = $this->getPeriodClause($isCreation, $period);
-        $query = "SELECT
-SUM(CASE WHEN role = 'student' THEN 1 ELSE 0 END) AS 'Etudiant',
-SUM(CASE WHEN role = 'junior' THEN 1 ELSE 0 END) AS 'Etudiant junior',
-SUM(CASE WHEN role = 'senior' THEN 1 ELSE 0 END) AS 'Senior',
-SUM(CASE WHEN role = 'administrator' THEN 1 ELSE 0 END) AS 'Administrateur'
-FROM user
-WHERE 
-site = :site
-$periodClause
-";
-
-        return $this->toTableRows($site, 'Rôles', $query);
-    }
-
-    private function toTableRows(string $site, string $name, string $query): array
-    {
-        $connection = $this->getEntityManager()->getConnection();
-        $params = [
-            'site' => $site,
-        ];
-
-        $record = $connection->executeQuery($query, $params)->fetch();
-
-        $result = [];
-        foreach ($record as $key => $v) {
-            $result[] = [
-                'name' => $key,
-                'value' => (int) $v,
-            ];
-        }
-
-        return [
-            'name' => $name,
-            'rows' => $result,
-        ];
-    }
-
-    private function getPeriodClause(bool $isCreation, string $period): string
-    {
-        if ($period === 'all') {
-            return ' AND 1=1';
-        }
-        if ($period === 'month') {
-            $first = date('Y-m-01');
-            $last = date('Y-') . $this->formatMonth(date('m') + 1) . '-01';
-        } else {
-            $first = $period . date('-01-01');
-            $last = ((int) $period + 1) . date('-01-01');
-        }
-        $connection = $this->getEntityManager()->getConnection();
-        $field = $this->getDateField($isCreation);
-
-        return ' AND ' . $field . ' BETWEEN ' . $connection->quote($first) . ' AND ' . $connection->quote($last);
-    }
-
-    private function getUserClause(?User $user, bool $isCreation): string
-    {
-        $field = $isCreation ? 'creator_id' : 'updater_id';
-        if ($user) {
-            return ' AND ' . $field . ' = ' . $user->getId();
-        }
-
-        return '';
-    }
-
-    private function countCardByMonth(string $site, string $period, string $table, bool $isCreation, string $groupingField, ?User $user = null): array
-    {
-        $field = $this->getDateField($isCreation);
-        $connection = $this->getEntityManager()->getConnection();
-        $month = "DATE_FORMAT($field, '%Y-%m')";
-        $periodClause = $this->getPeriodClause($isCreation, $period);
-        $userClause = $this->getUserClause($user, $isCreation);
-
-        $query = "SELECT $month AS date, $groupingField AS grouping, COUNT($field) AS count
-FROM $table
-WHERE 
-$field IS NOT NULL
-AND site = :site
-$periodClause
-$userClause
-GROUP BY $month, $groupingField 
-ORDER BY $month, $groupingField ASC
-";
-
-        $params = [
-            'site' => $site,
-        ];
-
-        $result = $connection->executeQuery($query, $params)->fetchAll();
-
-        return $result;
-    }
-
-    private function getDateField(bool $isCreation): string
-    {
-        return $isCreation ? 'creation_date' : 'update_date';
     }
 
     private function oneChart(string $site, string $period, string $table, bool $isCreation, string $field2, string $name, ?User $user = null): array
@@ -300,32 +246,32 @@ ORDER BY $month, $groupingField ASC
         return $data;
     }
 
-    private function months(string $first, string $last): Generator
+    private function countCardByMonth(string $site, string $period, string $table, bool $isCreation, string $groupingField, ?User $user = null): array
     {
-        $date = $first;
+        $field = $this->getDateField($isCreation);
+        $connection = $this->getEntityManager()->getConnection();
+        $month = "DATE_FORMAT($field, '%Y-%m')";
+        $periodClause = $this->getPeriodClause($isCreation, $period);
+        $userClause = $this->getUserClause($user, $isCreation);
 
-        [$year, $month] = explode('-', $date);
-        $year = (int) $year;
-        $month = (int) $month;
+        $query = "SELECT $month AS date, $groupingField AS grouping, COUNT($field) AS count
+FROM $table
+WHERE 
+$field IS NOT NULL
+AND site = :site
+$periodClause
+$userClause
+GROUP BY $month, $groupingField 
+ORDER BY $month, $groupingField ASC
+";
 
-        while ($date !== $last) {
-            yield $date;
+        $params = [
+            'site' => $site,
+        ];
 
-            if ($month === 12) {
-                $month = 1;
-                ++$year;
-            } else {
-                ++$month;
-            }
-            $date = $year . '-' . $this->formatMonth($month);
-        }
+        $result = $connection->executeQuery($query, $params)->fetchAll();
 
-        yield $date;
-    }
-
-    private function formatMonth(int $month): string
-    {
-        return str_pad((string) $month, 2, '0', STR_PAD_LEFT);
+        return $result;
     }
 
     private function groupByDateAndGroup(array $count, string $period): array
@@ -376,5 +322,61 @@ ORDER BY $month, $groupingField ASC
         ksort($result);
 
         return $result;
+    }
+
+    private function months(string $first, string $last): Generator
+    {
+        $date = $first;
+
+        [$year, $month] = explode('-', $date);
+        $year = (int) $year;
+        $month = (int) $month;
+
+        while ($date !== $last) {
+            yield $date;
+
+            if ($month === 12) {
+                $month = 1;
+                ++$year;
+            } else {
+                ++$month;
+            }
+            $date = $year . '-' . $this->formatMonth($month);
+        }
+
+        yield $date;
+    }
+
+    private function getUserType(string $site, string $period, bool $isCreation): array
+    {
+        $periodClause = $this->getPeriodClause($isCreation, $period);
+        $query = "SELECT
+SUM(CASE WHEN type = 'aai' THEN 1 ELSE 0 END) AS 'AAI',
+SUM(CASE WHEN type = 'default' THEN 1 ELSE 0 END) AS 'Externe',
+SUM(CASE WHEN type = 'legacy' THEN 1 ELSE 0 END) AS 'Legacy'
+FROM user
+WHERE 
+site = :site
+$periodClause
+";
+
+        return $this->toTableRows($site, 'Type', $query);
+    }
+
+    private function getUserRole(string $site, string $period, bool $isCreation): array
+    {
+        $periodClause = $this->getPeriodClause($isCreation, $period);
+        $query = "SELECT
+SUM(CASE WHEN role = 'student' THEN 1 ELSE 0 END) AS 'Etudiant',
+SUM(CASE WHEN role = 'junior' THEN 1 ELSE 0 END) AS 'Etudiant junior',
+SUM(CASE WHEN role = 'senior' THEN 1 ELSE 0 END) AS 'Senior',
+SUM(CASE WHEN role = 'administrator' THEN 1 ELSE 0 END) AS 'Administrateur'
+FROM user
+WHERE 
+site = :site
+$periodClause
+";
+
+        return $this->toTableRows($site, 'Rôles', $query);
     }
 }

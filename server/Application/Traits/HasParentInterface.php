@@ -29,4 +29,11 @@ interface HasParentInterface
      * Get children objects
      */
     public function getChildren(): Collection;
+
+    public function hasChildren(): bool;
+
+    /**
+     * @return self[]
+     */
+    public function getParentHierarchy(): array;
 }

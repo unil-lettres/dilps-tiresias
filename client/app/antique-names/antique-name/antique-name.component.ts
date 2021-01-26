@@ -9,7 +9,7 @@ import {AntiqueNameService} from '../services/antique-name.service';
     selector: 'app-antique-name',
     templateUrl: './antique-name.component.html',
 })
-export class AntiqueNameComponent extends AbstractDetailDirective {
+export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameService> {
     constructor(
         service: AntiqueNameService,
         alertService: AlertService,

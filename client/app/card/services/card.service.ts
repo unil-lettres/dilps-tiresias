@@ -45,6 +45,13 @@ import {
 import {Observable} from 'rxjs';
 import {Literal, mergeOverrideArray} from '@ecodev/natural';
 
+interface CardWithImage {
+    id?: string;
+    hasImage?: boolean;
+    height?: number;
+    width?: number;
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -66,7 +73,7 @@ export class CardService extends AbstractContextualizedService<
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
-    public static getImageFormat(card, height): {height: number; width: number} {
+    public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {
         height = card.height ? Math.min(card.height, height) : height;
         const ratio = card.width / card.height;
         return {
@@ -75,7 +82,7 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public static getImageLink(card, height): string {
+    public static getImageLink(card: CardWithImage | null, height: number): string {
         if (!card || !card.id || !card.hasImage) {
             return null;
         }
@@ -92,7 +99,10 @@ export class CardService extends AbstractContextualizedService<
     /**
      * Merge image src on src attribute of given gard
      */
-    public static formatImage(card: Cards_cards_items | null, height): (Cards_cards_items & {src: string}) | null {
+    public static formatImage(
+        card: Cards_cards_items | null,
+        height: number,
+    ): (Cards_cards_items & {src: string}) | null {
         if (!card) {
             return null;
         }
@@ -126,6 +136,7 @@ export class CardService extends AbstractContextualizedService<
             table: '',
             isbn: '',
             comment: '',
+            corpus: '',
             rights: '',
             muserisUrl: '',
             muserisCote: '',
@@ -137,7 +148,7 @@ export class CardService extends AbstractContextualizedService<
             periods: null,
             tags: null,
             antiqueNames: null,
-            domain: null,
+            domains: null,
             documentType: null,
             institution: null,
             street: '',

@@ -7,19 +7,11 @@
         "target": "https://dilps.lan",
         "secure": false
     },
+    "/file": {
+        "target": "https://dilps.lan",
+        "secure": false
+    },
     "/news-image": {
-        "target": "https://dilps.lan",
-        "secure": false
-    },
-    "/pptx": {
-        "target": "https://dilps.lan",
-        "secure": false
-    },
-    "/xlsx": {
-        "target": "https://dilps.lan",
-        "secure": false
-    },
-    "/zip": {
         "target": "https://dilps.lan",
         "secure": false
     },

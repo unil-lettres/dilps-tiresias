@@ -8,6 +8,7 @@ use Application\Acl\Acl;
 use Application\Model\AbstractModel;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Definition\EntityID;
 
 abstract class Helper
@@ -22,7 +23,7 @@ abstract class Helper
 
     public static function paginate(array $pagination, QueryBuilder $query): array
     {
-        $offset = $pagination['offset'] ?? 0;
+        $offset = $pagination['offset'];
         $pageIndex = $pagination['pageIndex'];
         $pageSize = $pagination['pageSize'];
 

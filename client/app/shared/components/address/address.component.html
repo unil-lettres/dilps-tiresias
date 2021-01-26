@@ -84,7 +84,7 @@
     >
         <agm-marker
             (dragEnd)="onMarkerDrag($event)"
-            [iconUrl]="icon"
+            [iconUrl]="$any(icon)"
             [latitude]="model?.latitude"
             [longitude]="model?.longitude"
             [markerDraggable]="!readonly"

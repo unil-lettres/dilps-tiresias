@@ -11,7 +11,8 @@ import {
 import {Observable} from 'rxjs';
 import {CardService} from '../../card/services/card.service';
 import {unique} from '@ecodev/natural';
-import {Card_card} from '../generated-types';
+import {Card_card, CardInput} from '../generated-types';
+import {CardInputWithId} from '../../card/card.component';
 
 @Directive({
     selector: '[appUniqueCode]',
@@ -24,7 +25,7 @@ import {Card_card} from '../generated-types';
     ],
 })
 export class UniqueCodeValidatorDirective implements AsyncValidator {
-    @Input('appUniqueCode') public model: Card_card;
+    @Input('appUniqueCode') public model: CardInputWithId;
 
     constructor(private cardService: CardService) {}
 

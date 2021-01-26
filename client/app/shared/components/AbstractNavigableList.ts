@@ -1,16 +1,34 @@
 import {Injector, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {NaturalAbstractNavigableList, PaginatedData, QueryVariables} from '@ecodev/natural';
+import {
+    ExtractTallOne,
+    NaturalAbstractModelService,
+    NaturalAbstractNavigableList,
+    PaginatedData,
+    QueryVariables,
+} from '@ecodev/natural';
+import {ComponentType} from '@angular/cdk/overlay';
 
 type BreadcrumbItem = {
     id: string;
     name: string;
-    parent;
-    parentHierarchy;
 };
 
-export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends QueryVariables>
-    extends NaturalAbstractNavigableList<Tall, Vall>
+export class AbstractNavigableList<
+        TService extends NaturalAbstractModelService<
+            any,
+            any,
+            PaginatedData<BreadcrumbItem>,
+            QueryVariables,
+            any,
+            any,
+            any,
+            any,
+            any,
+            any
+        >
+    >
+    extends NaturalAbstractNavigableList<TService>
     implements OnInit {
     public displayedColumns = ['navigation', 'name'];
 
@@ -19,12 +37,12 @@ export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends
      */
     protected dialog: MatDialog;
 
-    constructor(public service, private component, injector: Injector) {
+    constructor(public service: TService, private component: ComponentType<unknown>, injector: Injector) {
         super(service, injector);
         this.dialog = injector.get(MatDialog);
     }
 
-    public edit(item): void {
+    public edit(item: ExtractTallOne<TService>): void {
         this.dialog.open(this.component, {
             width: '800px',
             data: {item: item},
@@ -35,9 +53,5 @@ export class AbstractNavigableList<Tall extends PaginatedData<any>, Vall extends
         this.dialog.open(this.component, {
             width: '800px',
         });
-    }
-
-    protected getBreadcrumb(item: BreadcrumbItem): BreadcrumbItem[] {
-        return [...item.parentHierarchy, item];
     }
 }

@@ -8,7 +8,7 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
 
-class ChangeRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
      * Get an open change for the given suggestion
@@ -54,8 +54,12 @@ class ChangeRepository extends AbstractRepository implements LimitedAccessSubQue
      *
      * - change owner or creator is the user
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
+        if ($user && $user->getRole() === User::ROLE_ADMINISTRATOR) {
+            return '';
+        }
+
         if ($user) {
             $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
             $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()

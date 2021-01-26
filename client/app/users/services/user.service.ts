@@ -1,10 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Apollo} from 'apollo-angular';
-import {Observable, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {fromEvent, Observable, Subject} from 'rxjs';
+import {map, takeUntil} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
+    Cards_cards_items,
     CardVisibility,
     CreateUser,
     CreateUserVariables,
@@ -16,13 +17,17 @@ import {
     UpdateUser,
     UpdateUserVariables,
     User,
+    User_user,
     UserInput,
     UserRole,
+    UserRolesAvailables,
+    UserRolesAvailablesVariables,
     Users,
     UsersVariables,
     UserType,
     UserVariables,
     Viewer,
+    Viewer_viewer,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -32,30 +37,48 @@ import {
     logoutMutation,
     updateUser,
     userQuery,
+    userRolesAvailableQuery,
     usersQuery,
     viewerQuery,
 } from './user.queries';
+import {LOCAL_STORAGE, NaturalStorage} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends AbstractContextualizedService<
-    User['user'],
-    UserVariables,
-    Users['users'],
-    UsersVariables,
-    CreateUser['createUser'],
-    CreateUserVariables,
-    UpdateUser['updateUser'],
-    UpdateUserVariables,
-    DeleteUsers['deleteUsers'],
-    never
-> {
-    constructor(apollo: Apollo, private route: ActivatedRoute, private router: Router, @Inject(SITE) site: Site) {
+export class UserService
+    extends AbstractContextualizedService<
+        User['user'],
+        UserVariables,
+        Users['users'],
+        UsersVariables,
+        CreateUser['createUser'],
+        CreateUserVariables,
+        UpdateUser['updateUser'],
+        UpdateUserVariables,
+        DeleteUsers['deleteUsers'],
+        never
+    >
+    implements OnDestroy {
+    /**
+     * This key will be used to store the viewer ID, but that value should never
+     * be trusted, and it only exist to notify changes across browser tabs.
+     */
+    private readonly storageKey = 'viewer';
+    private readonly onDestroy = new Subject<void>();
+
+    constructor(
+        apollo: Apollo,
+        private route: ActivatedRoute,
+        private router: Router,
+        @Inject(SITE) site: Site,
+        @Inject(LOCAL_STORAGE) private readonly storage: NaturalStorage,
+    ) {
         super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
+        this.keepViewerSyncedAcrossBrowserTabs();
     }
 
-    public static canSuggestUpdate(user, card): boolean {
+    public static canSuggestUpdate(user: Viewer_viewer | null, card: Cards_cards_items | null): boolean {
         return (
             user && card && ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
         );
@@ -82,40 +105,26 @@ export class UserService extends AbstractContextualizedService<
 
     public getCurrentUser(): Observable<Viewer['viewer']> {
         return this.apollo
-            .query<Viewer>({
+            .query<Viewer, never>({
                 query: viewerQuery,
                 fetchPolicy: 'cache-first',
             })
             .pipe(map(result => result.data.viewer));
     }
 
-    public getRole(role: UserRole): {name: UserRole; text: string} {
-        return this.getRoles().find(r => r.name === role);
-    }
-
-    public getRoles(): {name: UserRole; text: string}[] {
-        return [
-            {
-                name: UserRole.student,
-                text: 'Etudiant',
-            },
-            {
-                name: UserRole.junior,
-                text: 'Etudiant junior',
-            },
-            {
-                name: UserRole.senior,
-                text: 'Senior',
-            },
-            {
-                name: UserRole.major,
-                text: 'Major',
-            },
-            {
-                name: UserRole.administrator,
-                text: 'Administrateur',
-            },
-        ];
+    public getUserRolesAvailable(user: User_user | null): Observable<UserRole[]> {
+        return this.apollo
+            .query<UserRolesAvailables, UserRolesAvailablesVariables>({
+                query: userRolesAvailableQuery,
+                variables: {
+                    user: user?.id,
+                },
+            })
+            .pipe(
+                map(result => {
+                    return result.data.userRolesAvailable;
+                }),
+            );
     }
 
     public getType(type: UserType): {name: UserType; text: string} {
@@ -139,23 +148,74 @@ export class UserService extends AbstractContextualizedService<
         ];
     }
 
-    public login(loginData: LoginVariables): Observable<Login['login']> {
-        return this.apollo
-            .mutate<Login, LoginVariables>({
-                mutation: loginMutation,
-                variables: loginData,
-                update: (proxy, result) => {
-                    const login = result.data!.login;
+    public ngOnDestroy(): void {
+        this.onDestroy.next();
+        this.onDestroy.complete();
+    }
 
-                    // Inject the freshly logged in user as the current user into Apollo data store
-                    const data = {viewer: login};
-                    proxy.writeQuery({
+    private keepViewerSyncedAcrossBrowserTabs(): void {
+        fromEvent<StorageEvent>(window, 'storage')
+            .pipe(takeUntil(this.onDestroy))
+            .subscribe(event => {
+                if (event.key !== this.storageKey) {
+                    return;
+                }
+
+                this.apollo
+                    .query<Viewer, never>({
                         query: viewerQuery,
-                        data,
+                        fetchPolicy: 'network-only',
+                    })
+                    .pipe(map(result => result.data.viewer))
+                    .subscribe(viewer => {
+                        if (viewer) {
+                            this.apollo.client.resetStore().then(() => {
+                                this.postLogin(viewer);
+
+                                // Navigate away from login page
+                                this.router.navigateByUrl('/home');
+                            });
+                        } else {
+                            this.logout();
+                        }
                     });
-                },
-            })
-            .pipe(map(result => result.data!.login));
+            });
+    }
+
+    public login(loginData: LoginVariables): Observable<Login['login']> {
+        const subject = new Subject<Login['login']>();
+
+        // Be sure to destroy all Apollo data, before changing user
+        this.apollo.client.resetStore().then(() => {
+            this.apollo
+                .mutate<Login, LoginVariables>({
+                    mutation: loginMutation,
+                    variables: loginData,
+                })
+                .pipe(
+                    map(result => {
+                        const viewer = result.data!.login;
+                        this.postLogin(viewer);
+
+                        return viewer;
+                    }),
+                )
+                .subscribe(subject);
+        });
+
+        return subject;
+    }
+
+    private postLogin(viewer: Viewer_viewer): void {
+        // Inject the freshly logged in user as the current user into Apollo data store
+        const data = {viewer: viewer};
+        this.apollo.client.writeQuery<Viewer, never>({
+            query: viewerQuery,
+            data,
+        });
+
+        // Broadcast viewer to other browser tabs
+        this.storage.setItem(this.storageKey, viewer.id);
     }
 
     public logout(): Observable<Logout['logout']> {
@@ -168,6 +228,9 @@ export class UserService extends AbstractContextualizedService<
             .subscribe(result => {
                 const v = result.data!.logout;
                 this.apollo.client.clearStore().then(() => {
+                    // Broadcast logout to other browser tabs
+                    this.storage.setItem(this.storageKey, '');
+
                     this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
                         subject.next(v);
                     });

@@ -4,30 +4,12 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
-use Application\ORM\Query\Filter\AclFilter;
 use Doctrine\ORM\EntityRepository;
+use Ecodev\Felix\Repository\Traits\Repository;
 
 abstract class AbstractRepository extends EntityRepository
 {
-    /**
-     * Returns the AclFilter to fetch ACL filtering SQL
-     */
-    public function getAclFilter(): AclFilter
-    {
-        return $this->getEntityManager()->getFilters()->getFilter(AclFilter::class);
-    }
-
-    /**
-     * Return all ID
-     */
-    protected function getAllIdsQuery(): string
-    {
-        $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
-            ->select('id')
-            ->from($this->getClassMetadata()->getTableName());
-
-        return $qb->getSQL();
-    }
+    use Repository;
 
     protected function quoteArray(array $values): string
     {

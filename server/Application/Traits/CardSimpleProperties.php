@@ -103,6 +103,12 @@ trait CardSimpleProperties
 
     /**
      * @var string
+     * @ORM\Column(type="text")
+     */
+    private $corpus = '';
+
+    /**
+     * @var string
      * @ORM\Column(type="string", options={"default" = ""})
      */
     private $rights = '';
@@ -269,6 +275,16 @@ trait CardSimpleProperties
     public function setComment(string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    public function getCorpus(): string
+    {
+        return $this->corpus;
+    }
+
+    public function setCorpus(string $corpus): void
+    {
+        $this->corpus = $corpus;
     }
 
     public function getRights(): string

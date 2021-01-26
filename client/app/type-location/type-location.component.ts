@@ -8,6 +8,7 @@ import {
     NaturalDropdownRef,
     FilterGroupConditionField,
 } from '@ecodev/natural';
+import {LocationOperatorString} from '../shared/generated-types';
 
 @Component({
     templateUrl: './type-location.component.html',
@@ -66,7 +67,7 @@ export class TypeLocationComponent implements DropdownComponent {
     }
 
     private reloadCondition(condition: FilterGroupConditionField | null): void {
-        const value = {
+        const value: LocationOperatorString = {
             longitude: null,
             latitude: null,
             distance: null,

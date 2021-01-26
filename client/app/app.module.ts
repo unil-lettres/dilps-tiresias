@@ -39,7 +39,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
 import {
     NaturalAlertModule,
@@ -54,6 +54,7 @@ import {
     NaturalSelectModule,
     NaturalTableButtonModule,
     NaturalFileModule,
+    Literal,
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
 import {HighchartsChartModule} from 'highcharts-angular';
@@ -62,6 +63,7 @@ import {SwiperModule} from 'ngx-swiper-wrapper';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
+import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SITE} from './app.config';
@@ -108,7 +110,6 @@ import {TableButtonComponent} from './shared/components/table-button/table-butto
 import {ThesaurusComponent} from './shared/components/thesaurus/thesaurus.component';
 import {apolloDefaultOptions, createApolloLink} from './shared/config/apollo.link.creator';
 import {FocusDirective} from './shared/directives/focus';
-import {RolePipe} from './shared/pipes/role.pipe';
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
 import {TypePipe} from './shared/pipes/type.pipe';
 import {NetworkActivityService} from './shared/services/network-activity.service';
@@ -132,6 +133,8 @@ import {StripTagsPipe} from './shared/pipes/strip-tags.pipe';
 import {OnlyLeavesPipe} from './shared/pipes/only-leaves.pipe';
 import {TypeLocationComponent} from './type-location/type-location.component';
 import {TypeNumericRangeComponent} from './type-numeric-range/type-numeric-range.component';
+import {FilesComponent} from './files/files/files.component';
+import {ErrorComponent} from './shared/components/error/error.component';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -185,7 +188,6 @@ const icons: NaturalIconsConfig = {
         CollectionSelectorComponent,
         DownloadComponent,
         LogoComponent,
-        RolePipe,
         TypePipe,
         StripTagsPipe,
         OnlyLeavesPipe,
@@ -217,6 +219,8 @@ const icons: NaturalIconsConfig = {
         TypeLocationComponent,
         TypeNumericRangeComponent,
         TruncatePipe,
+        FilesComponent,
+        ErrorComponent,
     ],
     imports: [
         BrowserModule,
@@ -279,8 +283,9 @@ const icons: NaturalIconsConfig = {
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
         /* tslint:disable:no-string-literal */
-        {provide: SITE, useValue: window['APP_SITE']}, // As defined in client/index.html
+        {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
+        {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
     ],
     bootstrap: [AppComponent],
 })

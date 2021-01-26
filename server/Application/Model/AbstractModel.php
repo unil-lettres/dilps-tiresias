@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Acl\Acl;
-use Application\Utility;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Model\HasOwner;
+use Ecodev\Felix\Model\Model;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
@@ -23,7 +24,7 @@ use GraphQL\Doctrine\Annotation as API;
  * })
  * @API\Sorting({"Application\Api\Input\Sorting\Random"})
  */
-abstract class AbstractModel
+abstract class AbstractModel implements HasOwner, Model
 {
     /**
      * @var int
@@ -35,16 +36,16 @@ abstract class AbstractModel
     private $id;
 
     /**
-     * @var null|DateTimeImmutable
+     * @var null|Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $creationDate;
 
     /**
-     * @var null|DateTimeImmutable
+     * @var null|Chronos
      *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updateDate;
 
@@ -80,7 +81,7 @@ abstract class AbstractModel
     /**
      * Set creation date
      */
-    private function setCreationDate(DateTimeImmutable $creationDate): void
+    private function setCreationDate(Chronos $creationDate): void
     {
         $this->creationDate = $creationDate;
     }
@@ -88,7 +89,7 @@ abstract class AbstractModel
     /**
      * Get creation date
      */
-    public function getCreationDate(): ?DateTimeImmutable
+    public function getCreationDate(): ?Chronos
     {
         return $this->creationDate;
     }
@@ -96,7 +97,7 @@ abstract class AbstractModel
     /**
      * Set update date
      */
-    private function setUpdateDate(DateTimeImmutable $updateDate): void
+    private function setUpdateDate(Chronos $updateDate): void
     {
         $this->updateDate = $updateDate;
     }
@@ -104,7 +105,7 @@ abstract class AbstractModel
     /**
      * Get update date
      */
-    public function getUpdateDate(): ?DateTimeImmutable
+    public function getUpdateDate(): ?Chronos
     {
         return $this->updateDate;
     }
@@ -170,7 +171,7 @@ abstract class AbstractModel
      */
     public function timestampCreation(): void
     {
-        $this->setCreationDate(Utility::getNow());
+        $this->setCreationDate(new Chronos());
         $this->setCreator(User::getCurrent());
         $this->setOwner(User::getCurrent());
     }
@@ -186,7 +187,7 @@ abstract class AbstractModel
             return;
         }
 
-        $this->setUpdateDate(Utility::getNow());
+        $this->setUpdateDate(new Chronos());
         $this->setUpdater(User::getCurrent());
     }
 

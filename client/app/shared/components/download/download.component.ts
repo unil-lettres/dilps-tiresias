@@ -1,33 +1,29 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
-import {Cards_cards_items} from '../../generated-types';
+import {Card_card, Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
+import {ExportService} from '../../../exports/services/export.service';
+import {SITE} from '../../../app.config';
+import {AlertService} from '../alert/alert.service';
+import {MatTabChangeEvent} from '@angular/material/tabs';
 
-export type DownloadComponentData =
-    | {
-          denyLegendsDownload: boolean;
-          images: Cards_cards_items[];
-          collection?: never;
-      }
-    | {
-          denyLegendsDownload: boolean;
-          images?: never;
-          collection: FakeCollection;
-      };
+export type DownloadComponentData = {
+    denyLegendsDownload: boolean;
+    collections: FakeCollection[];
+    cards: (Cards_cards_items | Card_card)[];
+};
 
 @Component({
     selector: 'app-download',
     templateUrl: './download.component.html',
     styleUrls: ['./download.component.scss'],
 })
-export class DownloadComponent implements OnInit {
-    public includeLegend = true;
-    public size = '';
-    public sizes = [
+export class DownloadComponent {
+    public readonly sizes = [
         {
             label: 'maximum',
-            value: '',
+            value: 0,
         },
         {
             label: 'moyen (1600 x 1200)',
@@ -39,57 +35,63 @@ export class DownloadComponent implements OnInit {
         },
     ];
 
-    public backgroundColor = '#000000';
-    public textColor = '#FFFFFF';
+    public validated = false;
     public denyLegendsDownload = false;
+    public readonly input: CreateExportInput = this.exportService.getDefaultForServer();
+    public validationMessage: string | null = null;
+    public readonly pptxLabel = 'PowerPoint';
 
     constructor(
         private dialogRef: MatDialogRef<ArtistComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DownloadComponentData,
+        @Inject(MAT_DIALOG_DATA) data: DownloadComponentData,
+        @Inject(SITE) private site: Site,
+        private readonly alertService: AlertService,
+        private readonly exportService: ExportService,
     ) {
         this.denyLegendsDownload = data.denyLegendsDownload;
-        this.includeLegend = !this.denyLegendsDownload;
+        this.input.includeLegend = !this.denyLegendsDownload;
+
+        this.input.collections.push(...data.collections.map(collection => collection.id));
+        this.input.cards.push(...data.cards.map(card => card.id));
     }
 
-    public ngOnInit(): void {}
-
     public downloadPowerPoint(): void {
-        const url =
-            '/pptx/' + this.getIds() + '/' + this.toRgba(this.backgroundColor) + '/' + this.toRgba(this.textColor);
-        (window.document.location as any) = url;
-        this.dialogRef.close();
+        this.input.format = ExportFormat.pptx;
+        this.download();
     }
 
     public downloadExcel(): void {
-        const url = '/xlsx/' + this.getIds();
-        (window.document.location as any) = url;
-        this.dialogRef.close();
+        this.input.format = ExportFormat.csv;
+        this.download();
     }
 
     public downloadZip(): void {
-        const url =
-            '/zip/' + this.getIds() + '/' + (this.includeLegend ? '1' : '0') + (this.size ? '/' + this.size : '');
-        (window.document.location as any) = url;
+        this.input.format = ExportFormat.zip;
+        this.download();
+    }
+
+    private download(): void {
+        this.exportService.create(this.input).subscribe(newExport => {
+            if (newExport.filename) {
+                const url = '/export/' + newExport.filename;
+                window.document.location.href = url;
+            } else {
+                this.alertService.info(
+                    'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
+                    8000,
+                );
+            }
+        });
         this.dialogRef.close();
     }
 
-    private getIds(): string {
-        if (this.data.collection) {
-            return 'collection/' + this.data.collection.id;
+    public tabChange($event: MatTabChangeEvent): void {
+        if (!this.validated && $event.tab.textLabel === this.pptxLabel) {
+            this.input.format = ExportFormat.pptx;
+            this.exportService.validate(this.input).subscribe(validationMessage => {
+                this.validationMessage = validationMessage;
+                this.validated = true;
+            });
         }
-
-        return this.data.images.map(card => card.id).join(',');
-    }
-
-    /**
-     * Convert "#AABBCC" to "FFAABBCC"
-     */
-    private toRgba(rgb: string): string {
-        let result = rgb.replace('#', '');
-        if (result.length === 6) {
-            result = 'FF' + result;
-        }
-
-        return result;
     }
 }

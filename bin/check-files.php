@@ -6,26 +6,13 @@
  *
  * It is up to the user to then take appropriate action based on that information.
  */
-use Application\Model\Card;
-use Application\Repository\CardRepository;
-use Application\Utility;
 
-require_once __DIR__ . '/../htdocs/index.php';
+use Ecodev\Felix\Service\FileChecker;
 
-/** @var CardRepository $cardRepository */
-$cardRepository = _em()->getRepository(Card::class);
-$filesInDb = $cardRepository->getFilenames();
-$filesOnDisk = glob('data/images/*');
+require_once 'server/cli.php';
 
-$missingFiles = array_diff($filesInDb, $filesOnDisk);
-$unneededFiles = array_diff($filesOnDisk, $filesInDb);
+$checker = new FileChecker(_em()->getConnection());
 
-Utility::printFiles('List of missing files on disk:', $missingFiles);
-Utility::printFiles('List of unneeded files on disk:', $unneededFiles);
-
-echo '
-Total files in DB     : ' . count($filesInDb) . '
-Total files on disk   : ' . count($filesOnDisk) . '
-Missing files on disk : ' . count($missingFiles) . '
-Unneeded files on disk: ' . count($unneededFiles) . '
-';
+$checker->check([
+    'card' => 'data/images/',
+]);

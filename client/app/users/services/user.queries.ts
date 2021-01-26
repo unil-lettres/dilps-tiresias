@@ -172,3 +172,9 @@ export const viewerQuery = gql`
     }
     ${viewerFragment}
 `;
+
+export const userRolesAvailableQuery = gql`
+    query UserRolesAvailables($user: UserID) {
+        userRolesAvailable(user: $user)
+    }
+`;

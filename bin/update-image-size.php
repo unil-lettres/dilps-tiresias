@@ -5,9 +5,10 @@
  * A script to update image size data in DB from file on disk
  */
 use Application\Model\Card;
+use Application\Repository\CardRepository;
 use Imagine\Image\ImagineInterface;
 
-require_once __DIR__ . '/../htdocs/index.php';
+require_once 'server/cli.php';
 
 global $container;
 
@@ -22,7 +23,9 @@ if ($argc > 1) {
 $site = $_GET['site'] ?? null;
 
 $connection = _em()->getConnection();
-$filesInDb = _em()->getRepository(Card::class)->getFilenamesForDimensionUpdate($site);
+/** @var CardRepository $cardRepository */
+$cardRepository = _em()->getRepository(Card::class);
+$filesInDb = $cardRepository->getFilenamesForDimensionUpdate($site);
 $count = 0;
 $total = count($filesInDb);
 foreach ($filesInDb as $i => $card) {

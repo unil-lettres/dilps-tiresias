@@ -1,12 +1,12 @@
 import {Apollo} from 'apollo-angular';
-import {Literal, NaturalAbstractModelService, VariablesWithInput} from '@ecodev/natural';
+import {Literal, NaturalAbstractModelService, PaginatedData, VariablesWithInput} from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
 import {Site} from '../../shared/generated-types';
 
 export class AbstractContextualizedService<
     Tone,
     Vone extends {id: string},
-    Tall,
+    Tall extends PaginatedData<Literal>,
     Vall,
     Tcreate,
     Vcreate extends VariablesWithInput,

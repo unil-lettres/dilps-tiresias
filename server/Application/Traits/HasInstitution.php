@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Application\Model\Institution;
+use Application\Repository\InstitutionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,8 @@ trait HasInstitution
      * })
      */
     private $institution;
+
+    abstract public function getSite(): string;
 
     /**
      * Get the institution this object belongs to
@@ -42,6 +45,8 @@ trait HasInstitution
             return;
         }
 
-        $this->institution = _em()->getRepository(Institution::class)->getOrCreateByName($institutionName, $this->getSite());
+        /** @var InstitutionRepository $institutionRepository */
+        $institutionRepository = _em()->getRepository(Institution::class);
+        $this->institution = $institutionRepository->getOrCreateByName($institutionName, $this->getSite());
     }
 }

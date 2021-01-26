@@ -8,7 +8,7 @@ use Application\DBAL\Types\SiteType;
 use Application\Middleware\AuthenticationMiddleware;
 use Application\Model\User;
 use Application\Repository\UserRepository;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequest;
 use Mezzio\Session\Session;
@@ -41,7 +41,7 @@ class AuthenticationMiddlewareTest extends TestCase
     public function testUserTooOld(): void
     {
         $user = new User();
-        $user->setActiveUntil(new DateTimeImmutable('2000-01-02'));
+        $user->setActiveUntil(new Chronos('2000-01-02'));
         $session = $this->process(true, $user);
 
         self::assertFalse($session->has('user'));
@@ -51,7 +51,7 @@ class AuthenticationMiddlewareTest extends TestCase
     public function testUserStillActive(): void
     {
         $user = new User();
-        $user->setActiveUntil(new DateTimeImmutable('2099-01-02'));
+        $user->setActiveUntil(new Chronos('2099-01-02'));
         $session = $this->process(true, $user);
 
         self::assertTrue($session->has('user'));
@@ -72,7 +72,7 @@ class AuthenticationMiddlewareTest extends TestCase
         User::setCurrent(null);
 
         $userRepository = new class($user) extends UserRepository {
-            private $user;
+            private ?User $user;
 
             public function __construct(?User $user)
             {
@@ -94,7 +94,7 @@ class AuthenticationMiddlewareTest extends TestCase
 
         $response = new Response();
         $handler = new class($response) implements RequestHandlerInterface {
-            private $response;
+            private ResponseInterface $response;
 
             public function __construct(ResponseInterface $response)
             {

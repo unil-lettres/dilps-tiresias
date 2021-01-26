@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Query;
 
-use Application\Api\Field\FieldInterface;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 abstract class ExtraStatistics implements FieldInterface
@@ -23,7 +23,9 @@ abstract class ExtraStatistics implements FieldInterface
                     'period' => Type::nonNull(Type::string()),
                     'user' => _types()->getId(User::class),
                 ],
-                'resolve' => function (string $site, array $args): string {
+                'resolve' => function (array $root, array $args): string {
+                    $site = $root['site'];
+
                     /** @var StatisticRepository $repository */
                     $repository = _em()->getRepository(Statistic::class);
                     $user = @$args['user'] ? $args['user']->getEntity() : null;

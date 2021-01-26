@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
-use Application\Api\Field\FieldInterface;
 use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Change;
+use Application\Repository\ChangeRepository;
+use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 class SuggestCreation implements FieldInterface
@@ -22,9 +23,14 @@ class SuggestCreation implements FieldInterface
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function (string $site, array $args): Change {
+            'resolve' => function (array $root, array $args): Change {
+                $site = $root['site'];
+
                 $suggestion = $args['id']->getEntity();
-                $change = _em()->getRepository(Change::class)->getOrCreate(Change::TYPE_CREATE, $suggestion, $args['request'], $site);
+
+                /** @var ChangeRepository $changeRepository */
+                $changeRepository = _em()->getRepository(Change::class);
+                $change = $changeRepository->getOrCreate(Change::TYPE_CREATE, $suggestion, $args['request'], $site);
 
                 Helper::throwIfDenied($change, 'create');
 

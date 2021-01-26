@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
      */
     public initialized: boolean;
 
-    private lastTheme;
+    private lastTheme = '';
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon');
 
@@ -36,7 +36,9 @@ export class AppComponent implements OnInit {
 
     public ngOnInit(): void {
         this.themeService.theme.subscribe(newTheme => {
-            document.body.classList.remove(this.lastTheme);
+            if (this.lastTheme) {
+                document.body.classList.remove(this.lastTheme);
+            }
 
             // Remove old theme class from overlay (dialogs, snackbars, etc...)
             this.themeService.themes.forEach(theme => {

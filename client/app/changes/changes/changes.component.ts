@@ -1,6 +1,5 @@
 import {Component, Injector} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
-import {Changes, ChangesVariables} from '../../shared/generated-types';
 import {ChangeService} from '../services/change.service';
 
 @Component({
@@ -8,7 +7,7 @@ import {ChangeService} from '../services/change.service';
     templateUrl: './changes.component.html',
     styleUrls: ['./changes.component.scss'],
 })
-export class ChangesComponent extends AbstractList<Changes['changes'], ChangesVariables> {
+export class ChangesComponent extends AbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
     constructor(service: ChangeService, injector: Injector) {

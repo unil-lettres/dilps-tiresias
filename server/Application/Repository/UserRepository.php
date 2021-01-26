@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
-use Application\Api\Exception;
 use Application\Model\User;
-use DateTimeImmutable;
+use Cake\Chronos\Chronos;
+use Ecodev\Felix\Api\Exception;
 
-class UserRepository extends AbstractRepository implements LimitedAccessSubQueryInterface
+class UserRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
      * Returns the user authenticated by its login and password
      */
     public function getLoginPassword(string $login, string $password, string $site): ?User
     {
-        /** @var User $user */
         $user = $this->getOneByLogin($login, $site);
 
         if (!$user) {
             return null;
         }
 
-        if (($user->getActiveUntil() && $user->getActiveUntil() < new DateTimeImmutable())) {
+        if (($user->getActiveUntil() && $user->getActiveUntil() < new Chronos())) {
             throw new Exception("Ce compte n'est plus actif");
         }
 
@@ -113,7 +112,7 @@ class UserRepository extends AbstractRepository implements LimitedAccessSubQuery
     /**
      * Returns pure SQL to get ID of all objects that are accessible to given user.
      */
-    public function getAccessibleSubQuery(?User $user): string
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
         if ($user) {
             return $this->getAllIdsQuery();

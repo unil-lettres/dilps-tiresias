@@ -29,6 +29,7 @@ export const cardDetailsFragment = gql`
         table
         isbn
         comment
+        corpus
         rights
         muserisUrl
         muserisCote
@@ -87,10 +88,11 @@ export const cardDetailsFragment = gql`
             hierarchicName
             hasChildren
         }
-        domain {
+        domains {
             id
             name
             hierarchicName
+            hasChildren
         }
         collections {
             id

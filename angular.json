@@ -7,6 +7,14 @@
             "root": "",
             "sourceRoot": "client",
             "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                },
+                "@schematics/angular:application": {
+                    "strict": true
+                }
+            },
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
@@ -110,7 +118,7 @@
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": ["client/tsconfig.app.json", "client/tsconfig.spec.json"],
-                        "exclude": ["**/node_modules/**", "**/data/tmp/**/*"]
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }
@@ -131,7 +139,7 @@
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": ["e2e/tsconfig.e2e.json"],
-                        "exclude": ["**/node_modules/**", "**/data/tmp/**/*"]
+                        "exclude": ["**/node_modules/**"]
                     }
                 }
             }

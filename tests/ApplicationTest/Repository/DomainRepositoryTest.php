@@ -9,10 +9,7 @@ use Application\Repository\DomainRepository;
 
 class DomainRepositoryTest extends AbstractRepositoryTest
 {
-    /**
-     * @var DomainRepository
-     */
-    private $repository;
+    private DomainRepository $repository;
 
     protected function setUp(): void
     {

@@ -103,7 +103,7 @@
                                 mat-list-item
                                 matTooltip="Ajouter une image"
                                 matTooltipPosition="after"
-                                multiple="1"
+                                [multiple]="true"
                                 naturalFileSelect
                             >
                                 <natural-icon mat-list-icon name="file_upload"></natural-icon>
@@ -266,7 +266,7 @@
     >
         <span class="mat-caption" style="font-weight: bold" *ngIf="error.category">{{ error.category }}</span>
         <span class="mat-caption" *ngIf="error.message">{{ error.message }}</span>
-        <span class="mat-caption" *ngIf="error.debugMessage">{{ error.debugMessage }}</span>
+        <span class="mat-caption" *ngIf="error?.debugMessage">{{ error?.debugMessage }}</span>
     </div>
     <button (click)="errors = []" mat-menu-item>
         <mat-icon>close</mat-icon>
