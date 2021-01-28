@@ -1,4 +1,5 @@
 /config/autoload/local.php
+/config/autoload/development.local.php
 /config/autoload/dilps.local.php
 /config/autoload/tiresias.local.php
 /config/development.config.php
