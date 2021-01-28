@@ -126,6 +126,7 @@ trait HasImage
         // Validate image mimetype
         $acceptedMimeTypes = [
             'image/bmp',
+            'image/x-ms-bmp',
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
