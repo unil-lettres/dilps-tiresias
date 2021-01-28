@@ -66,7 +66,10 @@ class Exporter
 
         $escapedArgs = array_map('escapeshellarg', $args);
 
-        $cmd = escapeshellcmd($this->phpPath) . ' ' . implode(' ', $escapedArgs) . ' > /dev/null 2>&1 &';
+        // Forward SERVER_NAME to CLI command
+        $env = 'SERVER_NAME=' . escapeshellarg(getenv('SERVER_NAME'));
+
+        $cmd = $env . ' ' . escapeshellcmd($this->phpPath) . ' ' . implode(' ', $escapedArgs) . ' > /dev/null 2>&1 &';
         exec($cmd);
     }
 
@@ -104,7 +107,7 @@ class Exporter
     /**
      * Export immediately and send an email to the export creator.
      *
-     * This must only be used via CRON jobs, because export might be very long (several minutes)
+     * This must only be used via CLI, because export might be very long (several minutes)
      * and the email is sent synchronously
      */
     public function exportAndSendMessage(int $id): void

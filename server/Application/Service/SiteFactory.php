@@ -20,14 +20,15 @@ class SiteFactory
         /** @var ServerRequestInterface $request */
         $request = $requestFactory();
 
-        $serverName = $request->getServerParams()['SERVER_NAME'] ?? 'dilps.lan';
+        return self::getSite($request->getServerParams()['SERVER_NAME'] ?? '');
+    }
 
+    public static function getSite(string $serverName): string
+    {
         if (preg_match('~tiresias~', $serverName)) {
-            $site = SiteType::TIRESIAS;
-        } else {
-            $site = SiteType::DILPS;
+            return SiteType::TIRESIAS;
         }
 
-        return $site;
+        return SiteType::DILPS;
     }
 }

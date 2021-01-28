@@ -2,14 +2,19 @@
 
 declare(strict_types=1);
 
+use Application\Service\SiteFactory;
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
+$site = SiteFactory::getSite(getenv('SERVER_NAME') ?: '');
+$siteConfigFile = "config/autoload/$site.local.php";
+$cacheConfigFile = "data/cache/config-cache.$site.php";
+
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
-    'config_cache_path' => 'data/cache/config-cache.php',
+    'config_cache_path' => $cacheConfigFile,
 ];
 
 $aggregator = new ConfigAggregator([
@@ -33,8 +38,9 @@ $aggregator = new ConfigAggregator([
     //   - `global.php`
     //   - `*.global.php`
     //   - `local.php`
-    //   - `*.local.php`
-    new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
+    new PhpFileProvider('config/autoload/{{,*.}global,local}.php'),
+    // Load site specific config if it exists
+    new PhpFileProvider($siteConfigFile),
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
 ], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
