@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Repository\CollectionRepository;
 use ApplicationTest\Repository\Traits\LimitedAccessSubQuery;
@@ -31,6 +32,26 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
             ['junior', [2001, 2002, 2004, 2005, 2007]],
             ['senior', [2001, 2002, 2004, 2005, 2007]],
             ['administrator', [2001, 2002, 2004, 2005, 2007]],
+        ];
+    }
+
+    /**
+     * @dataProvider providerGetCopyrights
+     */
+    public function testGetCopyrights(int $input, string $expected): void
+    {
+        $card = $this->createMock(Card::class);
+        $card->expects(self::once())->method('getId')->willReturn($input);
+
+        $actual = $this->repository->getCopyrights($card);
+        self::assertSame($expected, $actual);
+    }
+
+    public function providerGetCopyrights(): array
+    {
+        return [
+            [6000, '© ACME (Only if you ask nicely)'],
+            [6001, ''],
         ];
     }
 }

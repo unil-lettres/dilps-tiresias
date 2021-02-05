@@ -82,4 +82,22 @@ class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\R
             collection_id = ' . $connection->quote($sourceCollection->getId()) . '
             AND card_id IN (' . $cardSubQuery . ')');
     }
+
+    public function getCopyrights(Card $card): string
+    {
+        $sql = <<<STRING
+                SELECT GROUP_CONCAT(NULLIF(CONCAT_WS(
+                    ' ',
+                    NULLIF(TRIM(copyrights), ''),
+                    NULLIF(CONCAT('(', TRIM(usage_rights), ')'), '()')
+                ), '') ORDER BY id SEPARATOR ', ')
+                FROM collection
+                    INNER JOIN card_collection ON collection.id = card_collection.collection_id AND card_collection.card_id = :card
+                    WHERE collection.is_source
+            STRING;
+
+        $result = $this->getEntityManager()->getConnection()->fetchOne($sql, ['card' => $card->getId()]);
+
+        return $result ?? '';
+    }
 }

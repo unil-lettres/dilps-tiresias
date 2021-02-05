@@ -227,3 +227,9 @@ export const validateImage = gql`
     }
     ${cardDetailsFragment}
 `;
+
+export const collectionCopyrightsQuery = gql`
+    query CollectionCopyrights($card: CardID!) {
+        collectionCopyrights(card: $card)
+    }
+`;

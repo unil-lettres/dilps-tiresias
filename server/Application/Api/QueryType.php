@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use Application\Api\Field\Query\CollectionCopyrights;
 use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\UserRolesAvailable;
 use Application\Api\Field\Query\ValidateExport;
@@ -37,6 +38,7 @@ class QueryType extends ObjectType
             ExtraStatistics::build(),
             UserRolesAvailable::build(),
             ValidateExport::build(),
+            CollectionCopyrights::build(),
         ];
 
         $fields = array_merge(

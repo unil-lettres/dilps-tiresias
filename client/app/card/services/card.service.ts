@@ -13,6 +13,8 @@ import {
     CardsVariables,
     CardVariables,
     CardVisibility,
+    CollectionCopyrights,
+    CollectionCopyrightsVariables,
     Collections_collections_items,
     CreateCard,
     CreateCard_createCard,
@@ -35,6 +37,7 @@ import {AbstractContextualizedService} from '../../shared/services/AbstractConte
 import {
     cardQuery,
     cardsQuery,
+    collectionCopyrightsQuery,
     createCard,
     createCards,
     deleteCards,
@@ -273,5 +276,14 @@ export class CardService extends AbstractContextualizedService<
                     return mergeWith(object, newObject, mergeOverrideArray);
                 }),
             );
+    }
+
+    public getCollectionCopyrights(card: Card_card): Observable<string> {
+        return this.apollo
+            .query<CollectionCopyrights, CollectionCopyrightsVariables>({
+                query: collectionCopyrightsQuery,
+                variables: {card: card.id},
+            })
+            .pipe(map(result => result.data.collectionCopyrights));
     }
 }

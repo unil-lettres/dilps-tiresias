@@ -408,18 +408,8 @@ export class CardComponent implements OnInit, OnChanges {
             c => c.visibility !== CollectionVisibility.private,
         );
         this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
-        this.collectionCopyrights = this.fetchedModel.collections
-            .filter(c => c.isSource)
-            .map(c => {
-                if (c.copyrights && c.usageRights) {
-                    return `${c.copyrights} (${c.usageRights})`;
-                } else if (c.copyrights) {
-                    return c.copyrights;
-                } else {
-                    return c.usageRights;
-                }
-            })
-            .join(', ');
+
+        this.cardService.getCollectionCopyrights(this.fetchedModel).subscribe(v => (this.collectionCopyrights = v));
 
         if (this.fetchedModel.collections.length === 1 && this.fetchedModel.id) {
             const idForCode = this.fetchedModel.legacyId ?? this.fetchedModel.id;
