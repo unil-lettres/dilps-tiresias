@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Card_card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
 import {
     FileSelection,
@@ -21,7 +21,7 @@ interface Tuple {
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],
 })
-export class FilesComponent extends NaturalAbstractController {
+export class FilesComponent extends NaturalAbstractController implements OnInit {
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -60,15 +60,16 @@ export class FilesComponent extends NaturalAbstractController {
         }
     }
 
-    public readonly dataSource: NaturalDataSource<PaginatedData<Tuple>>;
+    public dataSource: NaturalDataSource<PaginatedData<Tuple>>;
     private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
 
     constructor(private readonly fileService: FileService, private readonly alertService: AlertService) {
         super();
+    }
 
+    public ngOnInit(): void {
         // Trigger column selection
         this.disabled = false;
-
         const files = this.fileService.getAll(this.filesQvm);
         this.dataSource = new NaturalDataSource<PaginatedData<Tuple>>(
             files.pipe(
