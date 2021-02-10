@@ -60,16 +60,17 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
         }
     }
 
-    public dataSource: NaturalDataSource<PaginatedData<Tuple>>;
+    public dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
     private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
 
     constructor(private readonly fileService: FileService, private readonly alertService: AlertService) {
         super();
+
+        // Trigger column selection
+        this.disabled = false;
     }
 
     public ngOnInit(): void {
-        // Trigger column selection
-        this.disabled = false;
         const files = this.fileService.getAll(this.filesQvm);
         this.dataSource = new NaturalDataSource<PaginatedData<Tuple>>(
             files.pipe(
