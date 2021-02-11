@@ -121,6 +121,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
     /** Determines if `curr` route should be reused */
     public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return getResolvedUrl(future) === getResolvedUrl(curr) && future.routeConfig === curr.routeConfig;
+        // If we want to preserve routes with parameters, add AND on instruction : getResolvedUrl(future) === getResolvedUrl(curr)
+        return future.routeConfig === curr.routeConfig;
     }
 }
