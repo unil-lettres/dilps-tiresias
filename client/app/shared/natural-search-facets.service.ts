@@ -123,7 +123,7 @@ export class NaturalSearchFacetsService {
         },
         {
             display: 'Domaine',
-            field: 'domain',
+            field: 'domains',
             component: TypeHierarchicSelectorComponent,
             showValidateButton: true,
             configuration: {
