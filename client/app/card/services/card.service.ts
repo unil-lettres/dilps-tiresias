@@ -90,7 +90,7 @@ export class CardService extends AbstractContextualizedService<
             return null;
         }
 
-        const imageLink = '/image/' + card.id;
+        const imageLink = '/api/image/' + card.id;
         if (!height) {
             return imageLink;
         }

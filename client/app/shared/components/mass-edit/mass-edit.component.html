@@ -3,7 +3,7 @@
     <div fxLayout="column" fxLayoutGap="10px" class="padding-v">
         <div *ngFor="let item of items" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <div class="image-wrapper">
-                <a [ngStyle]="{'background-image': 'url(/image/' + item.id + '/200)'}" class="image"></a>
+                <a [ngStyle]="{'background-image': 'url(/api/image/' + item.id + '/200)'}" class="image"></a>
             </div>
 
             <div>

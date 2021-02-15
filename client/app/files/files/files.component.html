@@ -5,7 +5,7 @@
         <ng-container matColumnDef="name">
             <td *matCellDef="let element" mat-cell>
                 <div *ngIf="element.file">
-                    <a [href]="'/file/' + element.file.id + '/' + element.file.name">{{ element.file.name }}</a>
+                    <a [href]="'/api/file/' + element.file.id + '/' + element.file.name">{{ element.file.name }}</a>
                 </div>
                 <div *ngIf="element.input">
                     {{ element.input.name }}

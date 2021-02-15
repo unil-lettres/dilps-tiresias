@@ -3,19 +3,11 @@
         "target": "https://dilps.lan",
         "secure": false
     },
-    "/image": {
-        "target": "https://dilps.lan",
-        "secure": false
-    },
-    "/file": {
+    "/api": {
         "target": "https://dilps.lan",
         "secure": false
     },
     "/news-image": {
-        "target": "https://dilps.lan",
-        "secure": false
-    },
-    "/template": {
         "target": "https://dilps.lan",
         "secure": false
     },
