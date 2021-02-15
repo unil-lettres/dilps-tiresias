@@ -1,3 +1,4 @@
+import {merge} from 'lodash';
 import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
@@ -138,8 +139,10 @@ export class ChangeService extends AbstractContextualizedService<
     }
 
     public getPartialVariablesForAll(): Partial<ChangesVariables> {
-        return {
+        const join = {
             filter: {groups: [{joins: {creator: {type: JoinType.leftJoin}}}]},
         };
+
+        return merge(super.getPartialVariablesForAll(), join); // care if parent changes, array may need concat or replacement
     }
 }
