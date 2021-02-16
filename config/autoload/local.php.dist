@@ -43,7 +43,7 @@ return [
     ],
     'email' => [
         'from' => 'no-reply@dilps.lan', // Sender for emails
-        'fromName' => 'Dilps/Tiresias'
+        'fromName' => 'Dilps/Tiresias',
     ],
     'log' => [
         'emails' => [], // List of developer emails to send bugs to
