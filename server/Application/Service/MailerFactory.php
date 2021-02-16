@@ -30,7 +30,7 @@ class MailerFactory
             $config['phpPath'],
             $config['email']['toOverride'] ?? null,
             $config['email']['from'],
-            'Dilps'
+            $config['email']['fromName'] ?? 'Dilps/Tiresias'
         );
     }
 }
