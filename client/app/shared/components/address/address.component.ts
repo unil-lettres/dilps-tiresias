@@ -1,7 +1,7 @@
-import {AgmMap, MapsAPILoader, MapTypeStyle} from '@agm/core';
+import {AgmMap, MapsAPILoader} from '@agm/core';
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Literal, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
@@ -16,7 +16,6 @@ import {
 } from '../../generated-types';
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
-import {MouseEvent} from '@agm/core/map-types';
 
 @Component({
     selector: 'app-address',
@@ -57,7 +56,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
     @ViewChild(AgmMap) public map: AgmMap;
 
-    public mapStyles: MapTypeStyle[] = [
+    public mapStyles: google.maps.MapTypeStyle[] = [
         {
             elementType: 'geometry',
             stylers: [
@@ -285,9 +284,9 @@ export class AddressComponent implements OnInit, OnChanges {
         merge(this.model, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev: MouseEvent): void {
-        this.latitude = ev.coords.lat;
-        this.longitude = ev.coords.lng;
+    public onMarkerDrag(ev: google.maps.MouseEvent): void {
+        this.latitude = ev.latLng.lat();
+        this.longitude = ev.latLng.lng();
 
         this.model.latitude = this.latitude;
         this.model.longitude = this.longitude;
@@ -296,8 +295,8 @@ export class AddressComponent implements OnInit, OnChanges {
         geocoder.geocode(
             {
                 location: {
-                    lat: ev.coords.lat,
-                    lng: ev.coords.lng,
+                    lat: this.latitude,
+                    lng: this.longitude,
                 },
             },
             places => {

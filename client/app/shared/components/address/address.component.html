@@ -75,13 +75,16 @@
         *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
         [latitude]="latitude"
         [longitude]="longitude"
-        [mapTypeControlOptions]="{position: 10}"
-        [mapTypeControl]="true"
         [scrollwheel]="false"
-        [mapTypeId]="site === 'dilps' ? 'roadmap' : 'satellite'"
+        [mapTypeId]="$any(site === 'dilps' ? 'roadmap' : 'satellite')"
         [styles]="mapStyles"
         [zoom]="zoom"
+        [disableDefaultUI]="true"
     >
+        <agm-zoom-control></agm-zoom-control>
+        <agm-map-type-control position="BOTTOM_LEFT"></agm-map-type-control>
+        <agm-street-view-control></agm-street-view-control>
+
         <agm-marker
             (dragEnd)="onMarkerDrag($event)"
             [iconUrl]="$any(icon)"

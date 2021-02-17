@@ -1,12 +1,13 @@
 /// <reference types="@types/googlemaps" />
 
 import {MapsAPILoader} from '@agm/core';
-import {Component, Input, Output, EventEmitter, NgZone, Inject} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, NgZone, Output} from '@angular/core';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {Cards_cards_items, Precision, Site} from '../shared/generated-types';
+import {SITE} from '../app.config';
 import Icon = google.maps.Icon;
 import LatLngBounds = google.maps.LatLngBounds;
-import {SITE} from '../app.config';
+import ControlPosition = google.maps.ControlPosition;
 
 export interface Location {
     longitude: number;

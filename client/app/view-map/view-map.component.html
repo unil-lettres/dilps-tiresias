@@ -2,12 +2,15 @@
     *ngIf="markers"
     [fitBoundsPadding]="{top: 250, right: 100, left: 100, bottom: 10}"
     [fitBounds]="$any(bounds)"
-    [mapTypeControlOptions]="{position: 1}"
-    [mapTypeControl]="true"
     [scrollwheel]="true"
-    [mapTypeId]="site === 'dilps' ? 'roadmap' : 'satellite'"
+    [mapTypeId]="$any(site === 'dilps' ? 'roadmap' : 'satellite')"
+    [disableDefaultUI]="true"
     style="width: 100%; height: 100%"
 >
+    <agm-zoom-control></agm-zoom-control>
+    <agm-map-type-control position="TOP_LEFT"></agm-map-type-control>
+    <agm-street-view-control></agm-street-view-control>
+
     <agm-marker
         *ngFor="let marker of markers"
         [iconUrl]="$any(marker.icon)"

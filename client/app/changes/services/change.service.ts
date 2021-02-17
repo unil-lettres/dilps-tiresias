@@ -1,4 +1,4 @@
-import {merge} from 'lodash';
+import {merge} from 'lodash-es';
 import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';

@@ -269,6 +269,7 @@ export const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
             paramsInheritanceStrategy: 'emptyOnly',
+            relativeLinkResolution: 'legacy',
         }),
     ],
     exports: [RouterModule],
