@@ -420,7 +420,7 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public canUpdateCode(): boolean {
-        return [UserRole.major, UserRole.administrator].includes(this.user.role);
+        return this.user && [UserRole.major, UserRole.administrator].includes(this.user.role);
     }
 
     public showSuggestedCode(): boolean {
@@ -575,7 +575,7 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public getSuggestAddLabel(): string {
-        if (this.user.role === UserRole.junior || this.user.role === UserRole.senior) {
+        if (this.user?.role === UserRole.junior || this.user?.role === UserRole.senior) {
             return 'Soumettre';
         }
 
