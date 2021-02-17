@@ -1323,11 +1323,12 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
   integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
 
-"@ecodev/natural@^30.0.0":
-  version "30.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-30.0.0.tgz#5b41ed72f007f5097622f92bc41515d1e1a43b68"
-  integrity sha512-n3FltZzuNbB+0Lh67ilY4mvw2TZ6vSrNebKAbdMyC1RoYQWnUgPu6yv3VDvau/qwozoT6IkiQk8plVxuoOZWdw==
+"@ecodev/natural@^30.0.2":
+  version "30.0.2"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-30.0.2.tgz#34827f5e37738ef1bd27793795f681ccfa12d7cf"
+  integrity sha512-lrPyaas1sSCGoLXPI3+pCumS92kXl56vftLoSE/vQ7MOvS2VLOVECvr7CeDRYKssuBntxtxlmd6hs5uUR4Daqw==
   dependencies:
+    ts-md5 "^1.2.7"
     tslib "^2.0.0"
 
 "@endemolshinegroup/cosmiconfig-typescript-loader@^1.0.0":
@@ -10687,6 +10688,11 @@ ts-is-defined@^1.0.0:
   integrity sha512-HmzqN8xWETXnfpXyUqMf5nvcZszn9aTNjxVIJ6R2aNNg14oLo3PCi9IRhsv+vg2C7TI90M7PyjBOrg4f6/nupA==
   dependencies:
     ts-tiny-invariant "0.0.3"
+
+ts-md5@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/ts-md5/-/ts-md5-1.2.7.tgz#b76471fc2fd38f0502441f6c3b9494ed04537401"
+  integrity sha512-emODogvKGWi1KO1l9c6YxLMBn6CEH3VrH5mVPIyOtxBG52BvV4jP3GWz6bOZCz61nLgBc3ffQYE4+EHfCD+V7w==
 
 ts-node@^8:
   version "8.10.2"

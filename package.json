@@ -35,7 +35,7 @@
         "@bugsnag/js": "^7.7.0",
         "@bugsnag/plugin-angular": "^7.7.0",
         "@ecodev/angular-natural-gallery": "^9.0.0",
-        "@ecodev/natural": "^30.0.0",
+        "@ecodev/natural": "^30.0.2",
         "@graphql-tools/mock": "^8.0.0",
         "@types/swiper": "^5.4.2",
         "apollo": "^2.31.1",
