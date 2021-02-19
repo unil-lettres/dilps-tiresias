@@ -608,9 +608,17 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public displayWith(item: Cards_cards_items | string): string {
+    public displayWith(item: Cards_cards_items | null): string {
+        if (!item) {
+            return '';
+        }
+
         // Turn HTML to plain text
-        return item && typeof item !== 'string' ? item.name.replace(/<[^>]*>/g, '') + ' (' + item.id + ')' : '';
+        const temp = document.createElement('div');
+        temp.innerHTML = item.name;
+        const namePlainText = temp.textContent || temp.innerText || '';
+
+        return namePlainText + ' (' + item.id + ')';
     }
 
     public useSuggestedCode(event: Event): void {
