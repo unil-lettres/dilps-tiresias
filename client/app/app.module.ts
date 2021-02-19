@@ -297,6 +297,7 @@ export class AppModule {
         dateAdapter: DateAdapter<Date>,
         statisticService: StatisticService,
         router: Router,
+        routeReuse: RouteReuseStrategy,
     ) {
         // On each page change, record in stats
         router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
@@ -305,7 +306,7 @@ export class AppModule {
 
         dateAdapter.setLocale('fr-ch');
 
-        const link = createApolloLink(networkActivityService, alertService);
+        const link = createApolloLink(networkActivityService, alertService, routeReuse as AppRouteReuseStrategy);
 
         apollo.create({
             link: link,

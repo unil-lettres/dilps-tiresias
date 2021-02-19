@@ -124,4 +124,15 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         // If we want to preserve routes with parameters, add AND on instruction : getResolvedUrl(future) === getResolvedUrl(curr)
         return future.routeConfig === curr.routeConfig;
     }
+
+    public clearHandlers(): void {
+        Object.keys(routes).forEach(routeName => {
+            routes[routeName].handleKeys.length = 0;
+            Object.keys(routes[routeName].handles).forEach(handleName => {
+                const handle = routes[routeName].handles[handleName] as {componentRef: ComponentRef<any>};
+                handle.componentRef.destroy();
+                delete routes[routeName].handles[handleName];
+            });
+        });
+    }
 }

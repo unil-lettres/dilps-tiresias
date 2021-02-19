@@ -1,5 +1,6 @@
 import {ApolloLink, DefaultOptions} from '@apollo/client/core';
 import {onError} from '@apollo/client/link/error';
+import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {NetworkActivityService} from '../services/network-activity.service';
 import {createUploadLink} from 'apollo-upload-client';
 import {AlertService} from '../components/alert/alert.service';
@@ -44,6 +45,7 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
 export function createApolloLink(
     networkActivityService: NetworkActivityService,
     alertService: AlertService,
+    routeReuseStrategy: AppRouteReuseStrategy,
 ): ApolloLink {
     const options = {
         uri: '/graphql',
@@ -51,6 +53,19 @@ export function createApolloLink(
     };
 
     const uploadInterceptor = new ApolloLink((operation, forward) => {
+        const resetReuseOperations = [
+            'CreateCard',
+            'UpdateCard',
+            'DeleteCards',
+            'CreateCollection',
+            'UpdateCollection',
+            'DeleteCollections',
+        ];
+
+        if (resetReuseOperations.includes(operation.operationName)) {
+            routeReuseStrategy.clearHandlers();
+        }
+
         networkActivityService.increase();
         return forward(operation).map(response => {
             networkActivityService.decrease();

@@ -1,10 +1,11 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {fromArray} from 'rxjs/internal/observable/fromArray';
 import {bufferCount, catchError, concatMap, filter, finalize} from 'rxjs/operators';
+import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private cardService: CardService,
         @Inject(SITE) public site: Site,
+        private routeReuse: RouteReuseStrategy,
     ) {
         this.network.errors.next([]);
     }
@@ -179,7 +181,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private redirectAfterCreation(collection?: CollectionSelectorResult): void {
         const url = collection ? 'my-collection/' + collection.id : 'my-collection/my-cards';
-        this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => this.router.navigateByUrl(url));
+        this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => {
+            this.router.navigateByUrl(url).then(() => {
+                (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+            });
+        });
     }
 
     private selectCollection(): Observable<CollectionSelectorResult | undefined> {
