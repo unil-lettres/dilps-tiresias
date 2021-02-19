@@ -116,3 +116,9 @@ natural-search,
 app-view-map agm-map div.gm-style > div:last-child {
     top: 75px !important;
 }
+
+// On /card/6000, keep the "Fiches additionnelles" aligned to the left so it is more
+// readable when name is long and wrapping
+app-card natural-relations natural-table-button .mat-button {
+    text-align: left;
+}
