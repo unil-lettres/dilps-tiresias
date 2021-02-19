@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Service\Exporter;
 
+use Application\Model\Card;
 use Application\Service\Exporter\Pptx;
 use ApplicationTest\Traits\TestWithTransaction;
+use Ecodev\Felix\Service\ImageResizer;
+use Imagine\Image\ImagineInterface;
 use PhpOffice\PhpPresentation\PhpPresentation;
+use PhpOffice\PhpPresentation\Reader\PowerPoint2007;
 use ZipArchive;
 
 class PptxTest extends AbstractWriter
@@ -17,8 +21,17 @@ class PptxTest extends AbstractWriter
     {
         global $container;
 
-        /** @var Pptx $writer */
-        $writer = $container->get(Pptx::class);
+        $imagine = $container->get(ImagineInterface::class);
+
+        $imageResizer = $this->createMock(ImageResizer::class);
+        $imageResizer->expects(self::atLeastOnce())
+            ->method('resize')
+            ->willReturnCallback(function (Card $card, int $maxHeight, bool $useWebp): string {
+                // Never resize anything
+                return $card->getPath();
+            });
+
+        $writer = new Pptx($imageResizer, $imagine);
         $tempFile = tempnam('data/tmp/', 'Pptx');
 
         $this->export($writer, $tempFile);
@@ -36,7 +49,7 @@ class PptxTest extends AbstractWriter
         $zip->close();
 
         // Re-read it
-        $reader = new \PhpOffice\PhpPresentation\Reader\PowerPoint2007();
+        $reader = new PowerPoint2007();
         $spreadsheet = $reader->load($filename);
         unlink($filename);
 
