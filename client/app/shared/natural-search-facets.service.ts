@@ -176,9 +176,9 @@ export class NaturalSearchFacetsService {
         },
         {
             display: 'Localité',
-            field: 'localityOrInstitutionLocality',
+            field: 'institution.locality',
             component: TypeTextComponent,
-            transform: replaceOperatorByField,
+            transform: wrapLike,
         },
         {
             display: 'Matériaux',
