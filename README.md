@@ -53,6 +53,10 @@ Build & run all the containers for this project:
 
 The project is compiled each time the containers are started (bin/build.sh). You'll get a **Build finished** message in the logs as soon as everything is ready to be used.
 
+To access the application container (apache-php):
+
+`docker exec -it dilps-tiresias-app bash`
+
 To stop all the containers used for this project:
 
 `docker-compose stop`
