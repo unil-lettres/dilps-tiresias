@@ -1,57 +1,57 @@
 version: '2.4'
 
 networks:
-  dilps-tiresias-net:
-    driver: bridge
+    dilps-tiresias-net:
+        driver: bridge
 
 services:
-  dilps-tiresias-app:
-    build:
-      context: ./dev/config/
-      dockerfile: app.dockerfile
-    env_file:
-      - ./dev/.env
-    volumes:
-      - ./:/var/www
-      - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/php.ini
-    working_dir: /var/www
-    links:
-      - dilps-tiresias-mysql:database
-      - dilps-tiresias-mailhog:mail
-    ports:
-      - "8181:80"
-    networks:
-      - dilps-tiresias-net
-    container_name: dilps-tiresias-app
-  dilps-tiresias-mysql:
-    image: mariadb:10.3
-    env_file:
-      - ./dev/.env
-    volumes:
-      - ./dev/db:/var/lib/mysql
-      - ./dev/config/my.cnf:/etc/mysql/my.cnf
-    ports:
-      - "3301:3306"
-    networks:
-      - dilps-tiresias-net
-    container_name: dilps-tiresias-mysql
-  dilps-tiresias-myadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    env_file:
-      - ./dev/.env
-    links:
-      - dilps-tiresias-mysql:database
-    ports:
-      - "9797:80"
-    networks:
-      - dilps-tiresias-net
-    container_name: dilps-tiresias-myadmin
-  dilps-tiresias-mailhog:
-    image: mailhog/mailhog:latest
-    expose:
-      - "1025"
-    ports:
-      - "8027:8025"
-    networks:
-      - dilps-tiresias-net
-    container_name: dilps-tiresias-mailhog
+    dilps-tiresias-app:
+        build:
+            context: ./dev/config/
+            dockerfile: app.dockerfile
+        env_file:
+            - ./dev/.env
+        volumes:
+            - ./:/var/www
+            - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/php.ini
+        working_dir: /var/www
+        links:
+            - dilps-tiresias-mysql:database
+            - dilps-tiresias-mailhog:mail
+        ports:
+            - '8181:80'
+        networks:
+            - dilps-tiresias-net
+        container_name: dilps-tiresias-app
+    dilps-tiresias-mysql:
+        image: mariadb:10.3
+        env_file:
+            - ./dev/.env
+        volumes:
+            - ./dev/db:/var/lib/mysql
+            - ./dev/config/my.cnf:/etc/mysql/my.cnf
+        ports:
+            - '3301:3306'
+        networks:
+            - dilps-tiresias-net
+        container_name: dilps-tiresias-mysql
+    dilps-tiresias-myadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        env_file:
+            - ./dev/.env
+        links:
+            - dilps-tiresias-mysql:database
+        ports:
+            - '9797:80'
+        networks:
+            - dilps-tiresias-net
+        container_name: dilps-tiresias-myadmin
+    dilps-tiresias-mailhog:
+        image: mailhog/mailhog:latest
+        expose:
+            - '1025'
+        ports:
+            - '8027:8025'
+        networks:
+            - dilps-tiresias-net
+        container_name: dilps-tiresias-mailhog

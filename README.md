@@ -22,7 +22,67 @@ The recommended way to get a working copy is the following:
 ./bin/build.sh
 ```
 
-## Development
+## Development with Docker
+
+### Docker installation
+
+A working [Docker](https://docs.docker.com/engine/installation/) installation is mandatory.
+
+### Environment variables file
+
+Please make sure to copy & rename the following files.
+
+- `cp env.example .env`
+- `cp config/autoload/local-docker.php.dist config/autoload/local.php`
+- `cp config/autoload/tiresias-docker.php.dist config/autoload/tiresias.local.php`
+- `cp dev/example.env dev/.env`
+
+You can replace the values if needed, but the default ones should work.
+
+### Edit hosts file
+
+Edit hosts file to point **dilps.docker** & **tiresias.docker** to your docker host.
+
+### Environment installation & configuration
+
+Run the following docker commands from the project root directory.
+
+Build & run all the containers for this project:
+
+`docker-compose up`
+
+The project is compiled each time the containers are started (bin/build.sh). You'll get a **Build finished** message in the logs as soon as everything is ready to be used.
+
+To stop all the containers used for this project:
+
+`docker-compose stop`
+
+### Frontends
+
+To access the main application please use the following link.
+
+- [http://dilps.docker:8181](http://dilps.docker:8181)
+- [http://tiresias.docker:8181](http://tiresias.docker:8181)
+
+#### phpMyAdmin
+
+To access the database please use the following link.
+
+[http://dilps.docker:9797](http://dilps.docker:9797)
+
+- Server: database
+- Username: user
+- Password: password
+
+#### MailHog
+
+To access mails please use the following link.
+
+[http://dilps.docker:8027](http://dilps.docker:8027)
+
+Or to get the messages in JSON format.
+
+[http://dilps.docker:8027/api/v2/messages](http://dilps.docker:8027/api/v2/messages)
 
 ### Server
 
@@ -44,13 +104,8 @@ You may need to clear the configuration cache in production when deploying if
 you deploy to the same directory. You may do so using the following:
 
 ```sh
-$ composer clear-config-cache
+composer clear-config-cache
 ```
-
-### Client
-
-Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4400/`. The app will
-automatically reload if you change any of the source files.
 
 ## Testing
 
