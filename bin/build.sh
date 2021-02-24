@@ -50,3 +50,7 @@ echo "********************* Updating database..."
 echo "********************* Building Angular application..."
 # Default environment is "prod" but can be overrided with "DEPLOY_ENV" envar
 yarn run ${DEPLOY_ENV:-prod}
+
+echo "***************************************************************"
+echo "********************* Build finished *************************"
+echo "***************************************************************"

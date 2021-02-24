@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'hostname' => 'tiresias.docker',
+    'email' => [
+        'from' => 'no-reply@tiresias.docker', // Sender for emails
+        'fromName' => 'Tiresias Docker',
+    ],
+];
