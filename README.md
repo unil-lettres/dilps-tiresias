@@ -63,7 +63,7 @@ To stop all the containers used for this project:
 
 ### Frontends
 
-To access the main application please use the following link.
+To access the main application please use the following links.
 
 - [http://dilps.docker:8181](http://dilps.docker:8181)
 - [http://tiresias.docker:8181](http://tiresias.docker:8181)
