@@ -56,7 +56,6 @@ export function createApolloLink(
         const resetReuseOperations = [
             'CreateCard',
             'UpdateCard',
-            'DeleteCards',
             'CreateCollection',
             'UpdateCollection',
             'DeleteCollections',

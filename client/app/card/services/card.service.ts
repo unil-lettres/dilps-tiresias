@@ -1,7 +1,9 @@
+import {RouteReuseStrategy} from '@angular/router';
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {merge, mergeWith} from 'lodash-es';
 import {map} from 'rxjs/operators';
+import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {SITE} from '../../app.config';
 import {
     Card,
@@ -72,7 +74,7 @@ export class CardService extends AbstractContextualizedService<
 > {
     private collectionIdForCreation: string | null = null;
 
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site, private routeReuse: RouteReuseStrategy) {
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
@@ -285,5 +287,16 @@ export class CardService extends AbstractContextualizedService<
                 variables: {card: card.id},
             })
             .pipe(map(result => result.data.collectionCopyrights));
+    }
+
+    public delete(objects: {id: string}[], resetRouteReuse: boolean = true): Observable<DeleteCards['deleteCards']> {
+        return super.delete(objects).pipe(
+            map(r => {
+                if (resetRouteReuse) {
+                    (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+                }
+                return r;
+            }),
+        );
     }
 }
