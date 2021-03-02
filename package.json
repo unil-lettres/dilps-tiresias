@@ -5,7 +5,7 @@
     "scripts": {
         "ng": "ng",
         "dev": "yarn codegen && yarn set-env && yarn clean-env && ng serve",
-        "dev-docker": "yarn codegen && yarn set-env && yarn clean-env && ng build",
+        "dev-docker": "yarn codegen && yarn set-env && yarn clean-env && ng build --watch --output-hashing=all",
         "prod": "yarn codegen && yarn set-env --configuration=production && yarn clean-env && ng build --prod --configuration=production",
         "staging": "yarn codegen && yarn set-env --configuration=staging && yarn clean-env && ng build --prod --configuration=staging",
         "test": "yarn codegen && ng test",

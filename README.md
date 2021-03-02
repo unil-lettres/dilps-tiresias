@@ -28,7 +28,7 @@ The recommended way to get a working copy is the following:
 
 A working [Docker](https://docs.docker.com/engine/installation/) installation is mandatory.
 
-### Environment variables file
+### Environment files
 
 Please make sure to copy & rename the following files.
 
