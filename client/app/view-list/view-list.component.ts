@@ -77,7 +77,11 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.selectionModel.clear();
     }
 
-    public getAddress(institution: Cards_cards_items_institution): string {
+    public getInstitutionAddress(institution: Cards_cards_items_institution): string {
         return [institution.street, institution.locality, institution.country?.name].filter(v => !!v).join(', ');
+    }
+
+    public getCardAddress(card: Cards_cards_items): string {
+        return [card.street, card.postcode, card.locality, card.country?.name].filter(v => !!v).join(', ');
     }
 }
