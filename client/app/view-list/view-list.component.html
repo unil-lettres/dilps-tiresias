@@ -107,7 +107,14 @@
                         <div>Lieu (Musée)</div>
                         <div>
                             {{ item.institution?.name }}<br />
-                            {{ getAddress(item.institution) }}
+                            {{ getInstitutionAddress(item.institution) }}
+                        </div>
+                    </div>
+
+                    <div *ngIf="item.street || item.locality || item.country?.name">
+                        <div>Adresse</div>
+                        <div>
+                            {{ getCardAddress(item) }}
                         </div>
                     </div>
 

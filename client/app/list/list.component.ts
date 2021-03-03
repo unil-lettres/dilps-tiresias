@@ -342,7 +342,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
             )
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardService.delete(selection).subscribe(() => {
+                    this.cardService.delete(selection, false).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.reset();
                     });

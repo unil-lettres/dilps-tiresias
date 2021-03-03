@@ -176,7 +176,7 @@ export class NaturalSearchFacetsService {
         },
         {
             display: 'Localité',
-            field: 'institution.locality',
+            field: 'locality',
             component: TypeTextComponent,
             transform: wrapLike,
         },
