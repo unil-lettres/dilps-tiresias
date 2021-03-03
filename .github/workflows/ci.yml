@@ -17,6 +17,12 @@ jobs:
                     MYSQL_DATABASE: dilps
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
 
+        strategy:
+            matrix:
+                php-versions: ['7.4', '8.0']
+
+        name: PHP${{ matrix.php-versions }}
+
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -24,10 +30,13 @@ jobs:
             - name: PHP Setup
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.4'
+                  php-version: ${{ matrix.php-versions }}
                   coverage: pcov
                   tools: cs2pr
                   extensions: imagick
+
+            - name: Show PHP version
+              run: php -v
 
             - name: Cache composer
               uses: actions/cache@v2
