@@ -38,6 +38,10 @@
 .DS_Store
 *.sql.gz
 
+/dev/.env
+/dev/db/*
+supervisord.log
+supervisord.pid
 
 # keep it at the end of the file
 !.gitkeep

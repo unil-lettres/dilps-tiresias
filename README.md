@@ -15,14 +15,86 @@ The recommended way to get a working copy is the following:
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
 3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
-4. Copy & rename the example.env file to .env (`cp env.example .env`). Replace the values if needed.
+4. Copy & rename the example.env file to .env (`cp example.env .env`). Replace the values if needed.
 5. Finally, build the app:
 
 ```sh
 ./bin/build.sh
 ```
 
-## Development
+## Development with Docker
+
+### Docker installation
+
+A working [Docker](https://docs.docker.com/engine/installation/) installation is mandatory.
+
+### Environment files
+
+Copy the following files:
+
+```sh
+cp example.env .env
+cp dev/example.env dev/.env
+cp config/autoload/local.php.dist config/autoload/local.php
+cp config/autoload/tiresias.local.php.dist config/autoload/tiresias.local.php
+```
+
+You can replace the values if needed, but the default ones should work.
+
+### Edit hosts file
+
+Edit hosts file to point `dilps.docker` and `tiresias.docker` to your docker host.
+
+### Environment installation & configuration
+
+Run the following docker commands from the project root directory.
+
+Build & run all the containers for this project:
+
+```sh
+docker-compose up
+```
+
+The project is compiled each time the containers are started (bin/build.sh). You'll get a **Build finished** message in the logs as soon as everything is ready to be used.
+
+To access the application container (apache-php):
+
+```sh
+docker exec -it dilps-tiresias-app bash
+```
+
+To stop all the containers used for this project:
+
+```sh
+docker-compose stop
+```
+
+### Frontends
+
+To access the main application please use the following links.
+
+- [http://dilps.docker:8181](http://dilps.docker:8181)
+- [http://tiresias.docker:8181](http://tiresias.docker:8181)
+
+#### phpMyAdmin
+
+To access the database please use the following link.
+
+[http://dilps.docker:9797](http://dilps.docker:9797)
+
+- Server: database
+- Username: user
+- Password: password
+
+#### MailHog
+
+To access mails please use the following link.
+
+[http://dilps.docker:8027](http://dilps.docker:8027)
+
+Or to get the messages in JSON format.
+
+[http://dilps.docker:8027/api/v2/messages](http://dilps.docker:8027/api/v2/messages)
 
 ### Server
 
@@ -44,13 +116,8 @@ You may need to clear the configuration cache in production when deploying if
 you deploy to the same directory. You may do so using the following:
 
 ```sh
-$ composer clear-config-cache
+composer clear-config-cache
 ```
-
-### Client
-
-Run `yarn dev` for a dev server. Navigate to `http://dilps.lan:4400/`. The app will
-automatically reload if you change any of the source files.
 
 ## Testing
 
