@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 return [
-    'hostname' => getenv('MYSQL_HOST') ? 'tiresias.docker' : 'tiresias.lan',
+    'hostname' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'tiresias.docker' : 'tiresias.lan',
     'email' => [
-        'from' => getenv('MYSQL_HOST') ? 'no-reply@tiresias.docker' : 'no-reply@tiresias.lan',
-        'fromName' => getenv('MYSQL_HOST') ? 'Docker Tiresias' : 'Local Tiresias',
+        'from' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'no-reply@tiresias.docker' : 'no-reply@tiresias.lan',
+        'fromName' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'Docker Tiresias' : 'Local Tiresias',
     ],
 ];

@@ -10,16 +10,16 @@ declare(strict_types=1);
  */
 
 return [
-    'hostname' => getenv('MYSQL_HOST') ? 'dilps.docker' : 'dilps.lan',
-    'phpPath' => getenv('MYSQL_HOST') ? '/usr/local/bin/php' : '/usr/bin/php7.4',
+    'hostname' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'dilps.docker' : 'dilps.lan',
+    'phpPath' => getenv('DEPLOY_ENV') === 'dev-docker' ? '/usr/local/bin/php' : '/usr/bin/php7.4',
     'doctrine' => [
         'connection' => [
             'orm_default' => [
                 'params' => [
                     'host' => getenv('MYSQL_HOST') ?: 'localhost',
                     'dbname' => getenv('MYSQL_DATABASE') ?: 'dilps',
-                    'user' => getenv('MYSQL_USER') ?: 'dilps',
-                    'password' => getenv('MYSQL_PASSWORD') ?: 'super-secret-password',
+                    'user' => getenv('MYSQL_USER') ?: 'root',
+                    'password' => getenv('MYSQL_PASSWORD') ?: '',
                     'port' => 3306,
                 ],
             ],
@@ -32,13 +32,13 @@ return [
         'unlink' => true,
     ],
     'smtp' => [
-        'name' => getenv('MYSQL_HOST') ? 'mail' : 'localhost',
-        'host' => getenv('MYSQL_HOST') ? 'mail' : 'localhost',
-        'port' => getenv('MYSQL_HOST') ? 1025 : 587,
+        'name' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'mail' : 'localhost',
+        'host' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'mail' : 'localhost',
+        'port' => getenv('DEPLOY_ENV') === 'dev-docker' ? 1025 : 587,
     ],
     'email' => [
-        'from' => getenv('MYSQL_HOST') ? 'no-reply@dilps.docker' : 'no-reply@dilps.lan',
-        'fromName' => getenv('MYSQL_HOST') ? 'Docker Dilps' : 'Local Dilps',
+        'from' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'no-reply@dilps.docker' : 'no-reply@dilps.lan',
+        'fromName' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'Docker Dilps' : 'Local Dilps',
     ],
     'log' => [
         'emails' => [], // List of developer emails to send bugs to
