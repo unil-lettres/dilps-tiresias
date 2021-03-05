@@ -35,8 +35,8 @@ Copy the following files:
 ```sh
 cp example.env .env
 cp dev/example.env dev/.env
-cp config/autoload/local-docker.php.dist config/autoload/local.php
-cp config/autoload/tiresias-docker.php.dist config/autoload/tiresias.local.php
+cp config/autoload/local.php.dist config/autoload/local.php
+cp config/autoload/tiresias.local.php.dist config/autoload/tiresias.local.php
 ```
 
 You can replace the values if needed, but the default ones should work.
