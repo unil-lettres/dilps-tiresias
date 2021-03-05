@@ -771,6 +771,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $blacklist = [
             'id',
             'visibility',
+            'code',
             '__initializer__',
             '__cloner__',
             '__isInitialized__',

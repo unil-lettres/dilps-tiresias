@@ -76,6 +76,7 @@ class CardTest extends TestCase
         $suggestion = new Card();
         $suggestion->setSite(SiteType::DILPS);
         $suggestion->setVisibility(Card::VISIBILITY_MEMBER);
+        $suggestion->setCode('code-suggestion');
         $suggestion->setName('test name');
         $suggestion->setDating('2010');
         $suggestion->setArtists(['John', 'Sarah']);
@@ -93,6 +94,7 @@ class CardTest extends TestCase
 
         $original = new Card();
         $original->setVisibility(Card::VISIBILITY_PUBLIC);
+        $original->setCode('code-original');
         $original->setWidth(456);
         $original->setHeight(456);
         $original->setFileSize(456);
@@ -100,6 +102,7 @@ class CardTest extends TestCase
         $suggestion->copyInto($original);
 
         self::assertSame(Card::VISIBILITY_PUBLIC, $original->getVisibility());
+        self::assertSame('code-original', $original->getCode());
         self::assertSame('test name', $original->getName());
         self::assertSame('2010', $original->getDating());
         self::assertSame('2010-01-01T00:00:00+00:00', $original->getDatings()->first()->getFrom()->format('c'), 'datings should be re-computed');

@@ -41,6 +41,7 @@ export class ChangeComponent implements OnInit {
                 this.original = this.change.original;
                 this.fetchedSuggestion = change.suggestion;
                 this.suggestionInput = this.fetchedSuggestion ? cardToCardInput(this.fetchedSuggestion) : null;
+                this.suggestionInput.code = '';
                 this.showTools = true;
                 this.loaded = true;
             });
@@ -53,6 +54,7 @@ export class ChangeComponent implements OnInit {
                     visibility: CardVisibility.private,
                 });
                 this.suggestionInput = cardToCardInput(this.fetchedSuggestion);
+                this.suggestionInput.code = '';
                 this.loaded = true;
             });
         } else {
