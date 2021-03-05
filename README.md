@@ -15,7 +15,7 @@ The recommended way to get a working copy is the following:
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
 3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
-4. Copy & rename the example.env file to .env (`cp env.example .env`). Replace the values if needed.
+4. Copy & rename the example.env file to .env (`cp example.env .env`). Replace the values if needed.
 5. Finally, build the app:
 
 ```sh
@@ -30,18 +30,20 @@ A working [Docker](https://docs.docker.com/engine/installation/) installation is
 
 ### Environment files
 
-Please make sure to copy & rename the following files.
+Copy the following files:
 
-- `cp env.example .env`
-- `cp config/autoload/local-docker.php.dist config/autoload/local.php`
-- `cp config/autoload/tiresias-docker.php.dist config/autoload/tiresias.local.php`
-- `cp dev/example.env dev/.env`
+```sh
+cp example.env .env
+cp dev/example.env dev/.env
+cp config/autoload/local-docker.php.dist config/autoload/local.php
+cp config/autoload/tiresias-docker.php.dist config/autoload/tiresias.local.php
+```
 
 You can replace the values if needed, but the default ones should work.
 
 ### Edit hosts file
 
-Edit hosts file to point **dilps.docker** & **tiresias.docker** to your docker host.
+Edit hosts file to point `dilps.docker` and `tiresias.docker` to your docker host.
 
 ### Environment installation & configuration
 
@@ -49,17 +51,23 @@ Run the following docker commands from the project root directory.
 
 Build & run all the containers for this project:
 
-`docker-compose up`
+```sh
+docker-compose up
+```
 
 The project is compiled each time the containers are started (bin/build.sh). You'll get a **Build finished** message in the logs as soon as everything is ready to be used.
 
 To access the application container (apache-php):
 
-`docker exec -it dilps-tiresias-app bash`
+```sh
+docker exec -it dilps-tiresias-app bash
+```
 
 To stop all the containers used for this project:
 
-`docker-compose stop`
+```sh
+docker-compose stop
+```
 
 ### Frontends
 

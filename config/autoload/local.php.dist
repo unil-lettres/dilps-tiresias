@@ -15,10 +15,10 @@ return [
         'connection' => [
             'orm_default' => [
                 'params' => [
-                    'host' => getenv('CI') ? '127.0.0.1' : 'localhost', // On GitHub Actions we want to connect via tcp, but locally we prefer socket
-                    'dbname' => 'dilps',
-                    'user' => 'root',
-                    'password' => '',
+                    'host' => getenv('MYSQL_HOST') ?: 'localhost',
+                    'dbname' => getenv('MYSQL_DATABASE') ?: 'dilps',
+                    'user' => getenv('MYSQL_USER') ?: 'root',
+                    'password' => getenv('MYSQL_PASSWORD') ?: '',
                     'port' => 3306,
                 ],
             ],
