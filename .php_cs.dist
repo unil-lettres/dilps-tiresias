@@ -3,6 +3,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->exclude('htdocs/data')
     ->exclude('data')
+    ->exclude('dev')
     ->exclude('node_modules')
     ->exclude('vendor')
     ->name('*.phtml')
