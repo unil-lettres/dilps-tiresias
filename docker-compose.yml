@@ -6,9 +6,7 @@ networks:
 
 services:
     dilps-tiresias-app:
-        build:
-            context: ./dev/config/
-            dockerfile: app.dockerfile
+        image: unillett/dilps-tiresias:v1.0
         env_file:
             - ./dev/.env
         volumes:
