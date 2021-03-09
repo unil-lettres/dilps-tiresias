@@ -4,6 +4,8 @@ import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {NetworkActivityService} from '../services/network-activity.service';
 import {createUploadLink} from 'apollo-upload-client';
 import {AlertService} from '../components/alert/alert.service';
+import {hasFilesAndProcessDate} from '@ecodev/natural';
+import {HttpBatchLink} from 'apollo-angular/http';
 
 export const apolloDefaultOptions: DefaultOptions = {
     query: {
@@ -45,6 +47,7 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
 export function createApolloLink(
     networkActivityService: NetworkActivityService,
     alertService: AlertService,
+    httpBatchLink: HttpBatchLink,
     routeReuseStrategy: AppRouteReuseStrategy,
 ): ApolloLink {
     const options = {
@@ -52,7 +55,7 @@ export function createApolloLink(
         credentials: 'include',
     };
 
-    const uploadInterceptor = new ApolloLink((operation, forward) => {
+    const routeReuseClearer = new ApolloLink((operation, forward) => {
         const resetReuseOperations = [
             'CreateCard',
             'UpdateCard',
@@ -65,16 +68,26 @@ export function createApolloLink(
             routeReuseStrategy.clearHandlers();
         }
 
+        return forward(operation);
+    });
+
+    const uploadInterceptor = new ApolloLink((operation, forward) => {
         networkActivityService.increase();
+
         return forward(operation).map(response => {
             networkActivityService.decrease();
             return response;
         });
     });
 
-    const httpLink = createUploadLink(options);
+    // If query has no file, batch it, otherwise upload only that query
+    const httpLink = ApolloLink.split(
+        operation => hasFilesAndProcessDate(operation.variables),
+        uploadInterceptor.concat(createUploadLink(options)),
+        httpBatchLink.create(options),
+    );
 
     const errorLink = createErrorLink(networkActivityService, alertService);
 
-    return uploadInterceptor.concat(errorLink).concat(httpLink);
+    return routeReuseClearer.concat(errorLink.concat(httpLink));
 }

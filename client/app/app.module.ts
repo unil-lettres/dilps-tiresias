@@ -2,7 +2,7 @@ import {Apollo} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 import {AgmCoreModule} from '@agm/core';
 import {AgmSnazzyInfoWindowModule} from '@agm/snazzy-info-window';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -42,9 +42,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {NaturalGalleryModule} from '@ecodev/angular-natural-gallery';
 import {
+    Literal,
     NaturalAlertModule,
     NaturalCommonModule,
     NaturalDropdownComponentsModule,
+    NaturalFileModule,
     NaturalFixedButtonModule,
     NaturalHierarchicSelectorModule,
     NaturalIconModule,
@@ -53,8 +55,6 @@ import {
     NaturalSearchModule,
     NaturalSelectModule,
     NaturalTableButtonModule,
-    NaturalFileModule,
-    Literal,
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
 import {HighchartsChartModule} from 'highcharts-angular';
@@ -135,6 +135,8 @@ import {TypeLocationComponent} from './type-location/type-location.component';
 import {TypeNumericRangeComponent} from './type-numeric-range/type-numeric-range.component';
 import {FilesComponent} from './files/files/files.component';
 import {ErrorComponent} from './shared/components/error/error.component';
+import {NetworkInterceptorService} from './shared/services/network-interceptor.service';
+import {HttpBatchLink} from 'apollo-angular/http';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -286,6 +288,11 @@ const icons: NaturalIconsConfig = {
         {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: NetworkInterceptorService,
+            multi: true,
+        },
     ],
     bootstrap: [AppComponent],
 })
@@ -298,6 +305,7 @@ export class AppModule {
         statisticService: StatisticService,
         router: Router,
         routeReuse: RouteReuseStrategy,
+        httpBatchLink: HttpBatchLink,
     ) {
         // On each page change, record in stats
         router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
@@ -306,7 +314,12 @@ export class AppModule {
 
         dateAdapter.setLocale('fr-ch');
 
-        const link = createApolloLink(networkActivityService, alertService, routeReuse as AppRouteReuseStrategy);
+        const link = createApolloLink(
+            networkActivityService,
+            alertService,
+            httpBatchLink,
+            routeReuse as AppRouteReuseStrategy,
+        );
 
         apollo.create({
             link: link,
