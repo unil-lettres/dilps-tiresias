@@ -18,6 +18,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Ecodev\Felix\ConfigProvider::class,
     \Laminas\Diactoros\ConfigProvider::class,
     \Mezzio\LaminasView\ConfigProvider::class,
     \Laminas\Log\ConfigProvider::class,
