@@ -56,13 +56,7 @@ export function createApolloLink(
     };
 
     const routeReuseClearer = new ApolloLink((operation, forward) => {
-        const resetReuseOperations = [
-            'CreateCard',
-            'UpdateCard',
-            'CreateCollection',
-            'UpdateCollection',
-            'DeleteCollections',
-        ];
+        const resetReuseOperations = ['CreateCard', 'CreateCollection', 'UpdateCollection', 'DeleteCollections'];
 
         if (resetReuseOperations.includes(operation.operationName)) {
             routeReuseStrategy.clearHandlers();

@@ -289,6 +289,20 @@ export class CardService extends AbstractContextualizedService<
             .pipe(map(result => result.data.collectionCopyrights));
     }
 
+    public updateNow(
+        object: UpdateCardVariables['input'],
+        resetRouteReuse: boolean = true,
+    ): Observable<UpdateCard['updateCard']> {
+        return super.updateNow(object).pipe(
+            map(r => {
+                if (resetRouteReuse) {
+                    (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+                }
+                return r;
+            }),
+        );
+    }
+
     public delete(objects: {id: string}[], resetRouteReuse: boolean = true): Observable<DeleteCards['deleteCards']> {
         return super.delete(objects).pipe(
             map(r => {

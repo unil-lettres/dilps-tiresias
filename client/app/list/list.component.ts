@@ -413,7 +413,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                 const observables: Observable<unknown>[] = [];
                 for (const s of selection) {
                     const changes = applyChanges(s, changeAttributes);
-                    observables.push(this.cardService.updateNow(changes));
+                    observables.push(this.cardService.updateNow(changes, false));
                 }
 
                 const suggestionsObservables: Observable<CreateCard_createCard>[] = [];
