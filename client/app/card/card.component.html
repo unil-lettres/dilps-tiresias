@@ -252,16 +252,16 @@
                     ></quill-editor>
                 </div>
 
-                <mat-form-field *ngIf="!isDilps && (edit || !!model.corpus)">
-                    <mat-label>Corpus</mat-label>
-                    <textarea
-                        [(ngModel)]="model.corpus"
-                        [readonly]="!edit"
-                        matInput
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
-                    ></textarea>
-                </mat-form-field>
+                <div *ngIf="!isDilps && (edit || !!model.corpus)" class="margin-bottom rich-text">
+                    <div class="label">Corpus</div>
+                    <quill-editor
+                        *ngIf="edit || !!model.corpus"
+                        [ngModel]="model.corpus"
+                        (ngModelChange)="model.corpus = $event || ''"
+                        [disabled]="!edit"
+                        bounds="self"
+                    ></quill-editor>
+                </div>
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!artists?.length)"

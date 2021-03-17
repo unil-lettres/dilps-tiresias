@@ -284,7 +284,7 @@ trait CardSimpleProperties
 
     public function setCorpus(string $corpus): void
     {
-        $this->corpus = $corpus;
+        $this->corpus = Utility::sanitizeRichText($corpus);
     }
 
     public function getRights(): string
