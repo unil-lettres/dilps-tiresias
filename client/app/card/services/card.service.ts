@@ -147,7 +147,7 @@ export class CardService extends AbstractContextualizedService<
             muserisCote: '',
             name: '',
             visibility: CardVisibility.private,
-            precision: Precision.site,
+            precision: Precision.locality,
             artists: null,
             materials: null,
             periods: null,
