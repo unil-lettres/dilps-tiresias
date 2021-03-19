@@ -105,10 +105,7 @@
 
                     <div *ngIf="item.institution?.name">
                         <div>Lieu (Musée)</div>
-                        <div>
-                            {{ item.institution?.name }}<br />
-                            {{ getInstitutionAddress(item.institution) }}
-                        </div>
+                        <div>{{ item.institution?.name }}<br /></div>
                     </div>
 
                     <div *ngIf="item.street || item.locality || item.country?.name">
