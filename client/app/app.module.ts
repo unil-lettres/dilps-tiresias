@@ -109,7 +109,6 @@ import {StampComponent} from './shared/components/stamp/stamp.component';
 import {TableButtonComponent} from './shared/components/table-button/table-button.component';
 import {ThesaurusComponent} from './shared/components/thesaurus/thesaurus.component';
 import {apolloDefaultOptions, createApolloLink} from './shared/config/apollo.link.creator';
-import {FocusDirective} from './shared/directives/focus';
 import {TruncatePipe} from './shared/pipes/truncate.pipe';
 import {TypePipe} from './shared/pipes/type.pipe';
 import {NetworkActivityService} from './shared/services/network-activity.service';
@@ -171,7 +170,6 @@ const icons: NaturalIconsConfig = {
         TableButtonComponent,
         CollectionsComponent,
         ConfirmComponent,
-        FocusDirective,
         UrlValidatorDirective,
         UniqueCodeValidatorDirective,
         CollectionComponent,
