@@ -51,10 +51,10 @@ export class CollectionsComponent extends NaturalAbstractController implements O
     };
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private collectionsService: CollectionService,
-        private dialog: MatDialog,
+        private readonly route: ActivatedRoute,
+        private readonly router: Router,
+        private readonly collectionsService: CollectionService,
+        private readonly dialog: MatDialog,
     ) {
         super();
     }

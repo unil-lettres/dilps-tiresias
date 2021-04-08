@@ -5,7 +5,7 @@ import {UserService} from '../../users/services/user.service';
     name: 'type',
 })
 export class TypePipe implements PipeTransform {
-    constructor(private userService: UserService) {}
+    constructor(private readonly userService: UserService) {}
 
     public transform(value: any, args?: any): string {
         const type = this.userService.getType(value);

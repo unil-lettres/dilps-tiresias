@@ -44,12 +44,12 @@ export class UserComponent extends AbstractDetailDirective<UserService> {
     public institution: UpdateUser_updateUser_institution | User_user_institution | null = null;
 
     constructor(
-        public institutionService: InstitutionService,
+        public readonly institutionService: InstitutionService,
         service: UserService,
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
-        public collectionService: CollectionService,
+        public readonly collectionService: CollectionService,
         @Inject(MAT_DIALOG_DATA) data: any,
         naturalEnumService: NaturalEnumService,
     ) {

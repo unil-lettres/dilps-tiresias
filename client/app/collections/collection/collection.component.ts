@@ -49,9 +49,9 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     public showVisibility = true;
 
     constructor(
-        public institutionService: InstitutionService,
-        public collectionService: CollectionService,
-        public userService: UserService,
+        public readonly institutionService: InstitutionService,
+        public readonly collectionService: CollectionService,
+        public readonly userService: UserService,
         alertService: AlertService,
         dialogRef: MatDialogRef<CollectionComponent>,
         @Inject(MAT_DIALOG_DATA) data: any,

@@ -24,11 +24,11 @@ export class ChangeComponent implements OnInit {
     public showTools = false;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private changeService: ChangeService,
-        private cardService: CardService,
-        private userService: UserService,
+        private readonly route: ActivatedRoute,
+        private readonly router: Router,
+        private readonly changeService: ChangeService,
+        private readonly cardService: CardService,
+        private readonly userService: UserService,
     ) {}
 
     public ngOnInit(): void {

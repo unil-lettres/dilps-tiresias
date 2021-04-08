@@ -21,7 +21,7 @@ export class CarouselComponent implements OnInit {
 
     public newses: Newses_newses_items[] = [];
 
-    constructor(public newsService: NewsService) {}
+    constructor(public readonly newsService: NewsService) {}
 
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();

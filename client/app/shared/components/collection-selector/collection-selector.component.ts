@@ -52,10 +52,10 @@ export class CollectionSelectorComponent implements OnInit {
     };
 
     constructor(
-        public collectionService: CollectionService,
-        private dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
-        private userService: UserService,
-        private alertService: AlertService,
+        public readonly collectionService: CollectionService,
+        private readonly dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
+        private readonly userService: UserService,
+        private readonly alertService: AlertService,
         @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData,
     ) {}
 

@@ -69,8 +69,8 @@ export class UserService
 
     constructor(
         apollo: Apollo,
-        private route: ActivatedRoute,
-        private router: Router,
+        private readonly route: ActivatedRoute,
+        private readonly router: Router,
         @Inject(SITE) site: Site,
         @Inject(LOCAL_STORAGE) private readonly storage: NaturalStorage,
     ) {

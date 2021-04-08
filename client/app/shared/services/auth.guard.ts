@@ -12,7 +12,11 @@ import {Site} from '../generated-types';
 export class AuthGuard implements CanActivate {
     public Site = Site;
 
-    constructor(private router: Router, private userService: UserService, @Inject(SITE) public site: Site) {}
+    constructor(
+        private readonly router: Router,
+        private readonly userService: UserService,
+        @Inject(SITE) public site: Site,
+    ) {}
 
     /**
      * App need user to be connected or explicit action to access the inner content. Login service provide anonymous user in second case

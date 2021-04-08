@@ -38,11 +38,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     private currentUser: Subscription;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        public userService: UserService,
-        public dialog: MatDialog,
-        public snackBar: MatSnackBar,
+        private readonly route: ActivatedRoute,
+        private readonly router: Router,
+        public readonly userService: UserService,
+        public readonly dialog: MatDialog,
+        public readonly snackBar: MatSnackBar,
         @Inject(SITE) public site: Site,
     ) {}
 

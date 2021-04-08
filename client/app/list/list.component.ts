@@ -173,12 +173,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     constructor(
         private cardService: CardService,
         private collectionService: CollectionService,
-        private userService: UserService,
-        private dialog: MatDialog,
+        private readonly userService: UserService,
+        private readonly dialog: MatDialog,
         injector: Injector,
-        private statisticService: StatisticService,
-        public facetService: NaturalSearchFacetsService,
-        private changeService: ChangeService,
+        private readonly statisticService: StatisticService,
+        public readonly facetService: NaturalSearchFacetsService,
+        private readonly changeService: ChangeService,
         @Inject(SITE) public site: Site,
     ) {
         super(cardService, injector);

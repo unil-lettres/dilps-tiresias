@@ -16,7 +16,7 @@ export class MassEditComponent {
 
     public createSuggestions = false;
 
-    constructor(private cardService: CardService, @Inject(MAT_DIALOG_DATA) public data: Literal) {
+    constructor(private readonly cardService: CardService, @Inject(MAT_DIALOG_DATA) public data: Literal) {
         if (data?.changeable?.length || data?.unchangeable?.length) {
             this.step = 1;
         }

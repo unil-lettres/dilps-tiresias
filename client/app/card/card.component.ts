@@ -301,11 +301,11 @@ export class CardComponent implements OnInit, OnChanges {
         public tagService: TagService,
         public documentTypeService: DocumentTypeService,
         public domainService: DomainService,
-        public antiqueNameService: AntiqueNameService,
-        public periodService: PeriodService,
-        private dialog: MatDialog,
-        private userService: UserService,
-        private statisticService: StatisticService,
+        public readonly antiqueNameService: AntiqueNameService,
+        public readonly periodService: PeriodService,
+        private readonly dialog: MatDialog,
+        private readonly userService: UserService,
+        private readonly statisticService: StatisticService,
     ) {}
 
     @Input()

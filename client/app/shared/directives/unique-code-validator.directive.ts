@@ -27,7 +27,7 @@ import {CardInputWithId} from '../../card/card.component';
 export class UniqueCodeValidatorDirective implements AsyncValidator {
     @Input('appUniqueCode') public model: CardInputWithId;
 
-    constructor(private cardService: CardService) {}
+    constructor(private readonly cardService: CardService) {}
 
     public validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
         const validator = unique('code', this.model.id, this.cardService);

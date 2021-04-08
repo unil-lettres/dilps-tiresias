@@ -9,7 +9,7 @@ import {UserRole} from '../generated-types';
     providedIn: 'root',
 })
 export class AuthAdminGuard implements CanActivate {
-    constructor(private router: Router, private userService: UserService) {}
+    constructor(private readonly router: Router, private readonly userService: UserService) {}
 
     /**
      * App need user to be connected or explicit action to access the inner content. Login service provide anonymous user in second case

@@ -12,7 +12,7 @@ import {catchError} from 'rxjs/operators';
 export class ErrorService {
     private lastError: Error | null = null;
 
-    constructor(private router: Router) {}
+    constructor(private readonly router: Router) {}
 
     /**
      * Redirect to error page and display given error

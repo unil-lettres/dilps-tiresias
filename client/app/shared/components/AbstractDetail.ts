@@ -30,10 +30,10 @@ export class AbstractDetailDirective<
     };
 
     constructor(
-        public service: TService,
-        private alertService: AlertService,
-        public dialogRef: MatDialogRef<unknown>,
-        public userService: UserService,
+        public readonly service: TService,
+        private readonly alertService: AlertService,
+        public readonly dialogRef: MatDialogRef<unknown>,
+        public readonly userService: UserService,
         data: any,
     ) {
         this.data = merge({item: this.service.getConsolidatedForClient()}, data);

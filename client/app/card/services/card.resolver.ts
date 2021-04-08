@@ -9,7 +9,7 @@ import {ErrorService} from '../../shared/components/error/error.service';
     providedIn: 'root',
 })
 export class CardResolver implements Resolve<Card_card> {
-    constructor(private cardService: CardService, private errorService: ErrorService) {}
+    constructor(private readonly cardService: CardService, private readonly errorService: ErrorService) {}
 
     /**
      * Resolve sites for routing service only at the moment

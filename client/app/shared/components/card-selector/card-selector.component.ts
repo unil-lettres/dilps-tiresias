@@ -10,7 +10,7 @@ import {Cards_cards_items} from '../../generated-types';
 export class CardSelectorComponent implements OnInit {
     public card: Cards_cards_items | null;
 
-    constructor(public cardService: CardService) {}
+    constructor(public readonly cardService: CardService) {}
 
     public ngOnInit(): void {}
 

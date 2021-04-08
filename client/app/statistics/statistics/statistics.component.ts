@@ -102,9 +102,9 @@ export class StatisticsComponent extends NaturalAbstractController {
     // public usersFilter: UserFilter;
 
     constructor(
-        private apollo: Apollo,
+        private readonly apollo: Apollo,
         statisticService: StatisticService,
-        public userService: UserService,
+        public readonly userService: UserService,
         @Inject(SITE) site: Site,
     ) {
         super();

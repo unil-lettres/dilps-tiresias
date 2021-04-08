@@ -220,10 +220,10 @@ export class AddressComponent implements OnInit, OnChanges {
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     constructor(
-        private mapsAPILoader: MapsAPILoader,
-        private ngZone: NgZone,
-        private addressService: AddressService,
-        public countryService: CountryService,
+        private readonly mapsAPILoader: MapsAPILoader,
+        private readonly ngZone: NgZone,
+        private readonly addressService: AddressService,
+        public readonly countryService: CountryService,
         @Inject(SITE) public readonly site: Site,
     ) {}
 

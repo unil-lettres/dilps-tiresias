@@ -140,8 +140,8 @@ export class ThesaurusComponent<
     private lockOpenDialog: boolean;
 
     constructor(
-        private dialog: MatDialog,
-        private hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
+        private readonly dialog: MatDialog,
+        private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});

@@ -17,7 +17,7 @@ export class NetworkActivityService {
     public readonly isPending = new BehaviorSubject<boolean>(false);
     public readonly errors = new Subject<readonly Error[]>();
 
-    constructor(private progressService: NgProgress) {}
+    constructor(private readonly progressService: NgProgress) {}
 
     public increase(): void {
         if (this.pending === 0) {

@@ -37,7 +37,11 @@ export class AbstractNavigableList<
      */
     protected dialog: MatDialog;
 
-    constructor(public service: TService, private component: ComponentType<unknown>, injector: Injector) {
+    constructor(
+        public readonly service: TService,
+        private readonly component: ComponentType<unknown>,
+        injector: Injector,
+    ) {
         super(service, injector);
         this.dialog = injector.get(MatDialog);
     }

@@ -21,11 +21,11 @@ export class AbstractContextualizedService<
         apollo: Apollo,
         protected readonly name: string,
         protected oneQuery: DocumentNode | null,
-        protected allQuery: DocumentNode | null,
-        protected createMutation: DocumentNode | null,
-        protected updateMutation: DocumentNode | null,
-        protected deleteMutation: DocumentNode | null,
-        public site: Site,
+        protected readonly allQuery: DocumentNode | null,
+        protected readonly createMutation: DocumentNode | null,
+        protected readonly updateMutation: DocumentNode | null,
+        protected readonly deleteMutation: DocumentNode | null,
+        public readonly site: Site,
     ) {
         super(apollo, name, oneQuery, allQuery, createMutation, updateMutation, deleteMutation);
     }

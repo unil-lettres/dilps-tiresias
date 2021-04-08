@@ -10,7 +10,7 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 export class BasicDataSource extends DataSource<any> {
-    constructor(private data: Observable<any> | any) {
+    constructor(private readonly data: Observable<any> | any) {
         super();
     }
 
