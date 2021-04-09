@@ -13,6 +13,7 @@ use Application\Service\MessageQueuer;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Service\Mailer;
 use InvalidArgumentException;
+use Throwable;
 
 class Exporter
 {
@@ -92,16 +93,30 @@ class Exporter
         $export->markAsInProgress($filename);
         _em()->flush();
 
-        $writer->initialize($export, $title);
-        $this->writeCards($writer, $export);
-        $writer->finalize();
+        try {
+            $writer->initialize($export, $title);
+            $this->writeCards($writer, $export);
+            $writer->finalize();
 
-        User::reloadCurrentUser();
-        $reloadExport = $this->exportRepository->findOneById($export->getId());
-        $reloadExport->markAsDone();
-        _em()->flush();
+            $reloadExport = $this->reloadExport($export);
+            $reloadExport->markAsDone();
+        } catch (Throwable $throwable) {
+            $reloadExport = $this->reloadExport($export);
+            $reloadExport->markAsErrored($throwable);
+
+            throw $throwable;
+        } finally {
+            _em()->flush();
+        }
 
         return $reloadExport;
+    }
+
+    private function reloadExport(Export $export): Export
+    {
+        User::reloadCurrentUser();
+
+        return $this->exportRepository->findOneById($export->getId());
     }
 
     /**

@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
+use Throwable;
 
 /**
  * An export of cards in various format
@@ -112,6 +113,11 @@ class Export extends AbstractModel implements HasSiteInterface
     private $memory;
 
     /**
+     * @ORM\Column(type="string", length=2000, options={"default" = ""})
+     */
+    private string $errorMessage = '';
+
+    /**
      * The collections exported. This is only for informative purpose and only `cards`
      * contains the real cards that will be exported.
      *
@@ -174,6 +180,18 @@ class Export extends AbstractModel implements HasSiteInterface
     public function markAsDone(): void
     {
         $this->status = ExportStatusType::DONE;
+        $this->stats();
+    }
+
+    public function markAsErrored(Throwable $throwable): void
+    {
+        $this->status = ExportStatusType::ERRORED;
+        $this->errorMessage = $throwable->getMessage();
+        $this->stats();
+    }
+
+    private function stats(): void
+    {
         $now = new Chronos();
         $this->duration = $now->getTimestamp() - $this->start->getTimestamp();
         $this->memory = (int) round(memory_get_peak_usage() / 1024 / 1024);

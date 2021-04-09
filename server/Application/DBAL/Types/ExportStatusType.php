@@ -11,6 +11,7 @@ class ExportStatusType extends EnumType
     const TODO = 'todo';
     const IN_PROGRESS = 'in_progress';
     const DONE = 'done';
+    const ERRORED = 'errored';
 
     protected function getPossibleValues(): array
     {
@@ -18,6 +19,7 @@ class ExportStatusType extends EnumType
             self::TODO,
             self::IN_PROGRESS,
             self::DONE,
+            self::ERRORED,
         ];
     }
 }
