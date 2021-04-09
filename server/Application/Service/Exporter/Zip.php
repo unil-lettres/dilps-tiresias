@@ -9,7 +9,6 @@ use Application\Model\Export;
 use Application\Model\User;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Service\ImageResizer;
-use Imagine\Image\ImagineInterface;
 use ZipArchive;
 
 /**
@@ -17,8 +16,6 @@ use ZipArchive;
  */
 class Zip implements Writer
 {
-    private ImagineInterface $imagine;
-
     private ImageResizer $imageResizer;
 
     private ?ZipArchive $zip = null;
@@ -27,10 +24,9 @@ class Zip implements Writer
 
     private Export $export;
 
-    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine)
+    public function __construct(ImageResizer $imageResizer)
     {
         $this->imageResizer = $imageResizer;
-        $this->imagine = $imagine;
     }
 
     public function getExtension(): string

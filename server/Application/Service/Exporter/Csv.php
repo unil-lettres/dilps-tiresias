@@ -18,8 +18,6 @@ use Ecodev\Felix\Api\Exception;
  */
 class Csv implements Writer
 {
-    private Export $export;
-
     /**
      * @var resource
      */
@@ -32,8 +30,6 @@ class Csv implements Writer
 
     public function initialize(Export $export, string $title): void
     {
-        $this->export = $export;
-
         $file = fopen($export->getPath(), 'w+b');
         if ($file === false) {
             throw new Exception('Cannot write to file');
