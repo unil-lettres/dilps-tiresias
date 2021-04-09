@@ -18,7 +18,7 @@ abstract class CollectionCopyrights implements FieldInterface
             [
                 'name' => 'collectionCopyrights',
                 'type' => Type::nonNull(Type::string()),
-                'description' => 'Represents currently logged-in user',
+                'description' => 'Returns the copyrights of given card',
                 'args' => [
                     'card' => Type::nonNull(_types()->getId(Card::class)),
                 ],
