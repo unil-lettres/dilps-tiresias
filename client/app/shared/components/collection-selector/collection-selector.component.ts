@@ -56,7 +56,7 @@ export class CollectionSelectorComponent implements OnInit {
         private readonly dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
         private readonly userService: UserService,
         private readonly alertService: AlertService,
-        @Inject(MAT_DIALOG_DATA) public data: CollectionSelectorData,
+        @Inject(MAT_DIALOG_DATA) public readonly data: CollectionSelectorData,
     ) {}
 
     public ngOnInit(): void {

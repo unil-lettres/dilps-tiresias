@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     constructor(
         private readonly router: Router,
         private readonly userService: UserService,
-        @Inject(SITE) public site: Site,
+        @Inject(SITE) public readonly site: Site,
     ) {}
 
     /**

@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     constructor(
         private readonly themeService: ThemeService,
         private readonly overlayContainer: OverlayContainer,
-        @Inject(SITE) private site: Site,
+        @Inject(SITE) private readonly site: Site,
     ) {
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';

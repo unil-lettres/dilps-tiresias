@@ -12,11 +12,11 @@ import {
 import {ErrorStateMatcher} from '@angular/material/core';
 import {BehaviorSubject} from 'rxjs';
 import {
+    DropdownComponent,
+    FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
     NaturalDropdownData,
     NaturalDropdownRef,
-    DropdownComponent,
-    FilterGroupConditionField,
 } from '@ecodev/natural';
 
 export interface TypeNumericRangeConfiguration {
@@ -72,7 +72,10 @@ export class TypeNumericRangeComponent implements DropdownComponent {
         step: null,
     };
 
-    constructor(@Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData, protected dropdownRef: NaturalDropdownRef) {
+    constructor(
+        @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData,
+        protected readonly dropdownRef: NaturalDropdownRef,
+    ) {
         this.configuration = {...this.defaults, ...(data.configuration as TypeNumericRangeConfiguration)};
 
         this.form = new FormGroup({

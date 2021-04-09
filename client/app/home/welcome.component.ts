@@ -9,7 +9,7 @@ import {Site} from '../shared/generated-types';
 export class WelcomeComponent implements OnInit {
     public Site = Site;
 
-    constructor(@Inject(SITE) public site: Site) {}
+    constructor(@Inject(SITE) public readonly site: Site) {}
 
     public ngOnInit(): void {}
 

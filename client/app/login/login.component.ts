@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         public readonly userService: UserService,
         public readonly dialog: MatDialog,
         public readonly snackBar: MatSnackBar,
-        @Inject(SITE) public site: Site,
+        @Inject(SITE) public readonly site: Site,
     ) {}
 
     public ngOnInit(): void {

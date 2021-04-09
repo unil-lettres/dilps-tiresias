@@ -179,7 +179,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         private readonly statisticService: StatisticService,
         public readonly facetService: NaturalSearchFacetsService,
         private readonly changeService: ChangeService,
-        @Inject(SITE) public site: Site,
+        @Inject(SITE) public readonly site: Site,
     ) {
         super(cardService, injector);
 

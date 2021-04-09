@@ -235,12 +235,12 @@ export class NaturalSearchFacetsService {
     ];
 
     constructor(
-        @Inject(SITE) public site: Site,
-        private periodService: PeriodService,
-        private materialService: MaterialService,
-        private domainService: DomainService,
-        private tagService: TagService,
-        private documentTypeService: DocumentTypeService,
+        @Inject(SITE) public readonly site: Site,
+        private readonly periodService: PeriodService,
+        private readonly materialService: MaterialService,
+        private readonly domainService: DomainService,
+        private readonly tagService: TagService,
+        private readonly documentTypeService: DocumentTypeService,
     ) {}
 
     public getFacets(): NaturalSearchFacets {

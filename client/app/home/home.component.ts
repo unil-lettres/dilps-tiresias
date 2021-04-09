@@ -51,8 +51,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         private readonly alertService: AlertService,
         private readonly dialog: MatDialog,
         private readonly cardService: CardService,
-        @Inject(SITE) public site: Site,
-        private routeReuse: RouteReuseStrategy,
+        @Inject(SITE) public readonly site: Site,
+        private readonly routeReuse: RouteReuseStrategy,
     ) {
         this.network.errors.next([]);
     }

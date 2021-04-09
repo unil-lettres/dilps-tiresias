@@ -44,7 +44,7 @@ export class DownloadComponent {
     constructor(
         private readonly dialogRef: MatDialogRef<ArtistComponent>,
         @Inject(MAT_DIALOG_DATA) data: DownloadComponentData,
-        @Inject(SITE) private site: Site,
+        @Inject(SITE) private readonly site: Site,
         private readonly alertService: AlertService,
         private readonly exportService: ExportService,
     ) {

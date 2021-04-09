@@ -74,7 +74,7 @@ export class CardService extends AbstractContextualizedService<
 > {
     private collectionIdForCreation: string | null = null;
 
-    constructor(apollo: Apollo, @Inject(SITE) site: Site, private routeReuse: RouteReuseStrategy) {
+    constructor(apollo: Apollo, @Inject(SITE) site: Site, private readonly routeReuse: RouteReuseStrategy) {
         super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
