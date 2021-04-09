@@ -6,7 +6,7 @@ namespace Application\Service\Exporter;
 
 use Interop\Container\ContainerInterface;
 
-class XlsxFactory
+class CsvFactory
 {
     public function __invoke(ContainerInterface $container)
     {

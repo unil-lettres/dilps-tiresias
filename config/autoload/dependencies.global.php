@@ -31,7 +31,7 @@ return [
             \Application\Middleware\AuthenticationMiddleware::class => \Application\Middleware\AuthenticationFactory::class,
             \Application\Middleware\CardsFetcherMiddleware::class => \Application\Middleware\CardsFetcherFactory::class,
             \Application\Middleware\CollectionFetcherMiddleware::class => \Application\Middleware\CollectionFetcherFactory::class,
-            \Application\Service\Exporter\Csv::class => \Application\Service\Exporter\XlsxFactory::class,
+            \Application\Service\Exporter\Csv::class => \Application\Service\Exporter\CsvFactory::class,
             \Application\Service\Exporter\Exporter::class => \Application\Service\Exporter\ExporterFactory::class,
             \Application\Service\Exporter\Pptx::class => \Application\Service\Exporter\PptxFactory::class,
             \Application\Service\Exporter\Zip::class => \Application\Service\Exporter\ZipFactory::class,
