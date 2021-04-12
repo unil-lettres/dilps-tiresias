@@ -1323,10 +1323,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
   integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
 
-"@ecodev/natural@^32.0.2":
-  version "32.0.2"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-32.0.2.tgz#8ed001c4379c8c65610e895d78d5070de2a7f419"
-  integrity sha512-0STj9CpqCGDaGYujWgfuvndLXwPhxfbBx1z1Gqd2LTF9pV6IvsQg3KCCZl5XDj4UVtBUITpxJYaWfukN1wr7NA==
+"@ecodev/natural@^32.1.0":
+  version "32.1.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-32.1.0.tgz#ebb1a4c9ce28e23242088398ec16a51227ea50c7"
+  integrity sha512-lo+bHvZ9LhNTmqH3o+959PKhzjMouodCyEuEiV1rWFGKbWyREZBwSeyy3FmVLKkdFlkLR8Q3FEc5CRhMP5n6QQ==
   dependencies:
     ts-md5 "^1.2.7"
     tslib "^2.0.0"
