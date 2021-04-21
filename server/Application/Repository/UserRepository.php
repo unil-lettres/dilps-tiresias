@@ -102,6 +102,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
         $user->setType(User::TYPE_AAI);
         $user->setRole(User::ROLE_STUDENT);
         $user->setSite($site);
+        $user->setName('');
 
         _em()->persist($user);
         _em()->flush();
