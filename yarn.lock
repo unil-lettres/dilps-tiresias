@@ -1323,10 +1323,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
   integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
 
-"@ecodev/natural@^32.1.0":
-  version "32.1.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-32.1.0.tgz#ebb1a4c9ce28e23242088398ec16a51227ea50c7"
-  integrity sha512-lo+bHvZ9LhNTmqH3o+959PKhzjMouodCyEuEiV1rWFGKbWyREZBwSeyy3FmVLKkdFlkLR8Q3FEc5CRhMP5n6QQ==
+"@ecodev/natural@^33.0.0":
+  version "33.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-33.0.0.tgz#5021cdf949d82a42a1d422dc74db8f32ed908018"
+  integrity sha512-Va0sTPMM4BjahhAj6RRsyPvKZQ7Kjx8VTSrLW8zskTXtQg+IRlBFBSA+YJjCPq4t75LwzmqSQHU+hv02gkj1gg==
   dependencies:
     ts-md5 "^1.2.7"
     tslib "^2.0.0"
@@ -7336,6 +7336,7 @@ minipass-fetch@^1.3.0, minipass-fetch@^1.3.2:
   resolved "https://registry.yarnpkg.com/minipass-fetch/-/minipass-fetch-1.3.3.tgz#34c7cea038c817a8658461bf35174551dce17a0a"
   integrity sha512-akCrLDWfbdAWkMLBxJEeWTdNsjML+dt5YgOI4gJ53vuO0vrmYQkUPxa6j6V65s9CcePIr2SSWqjT2EcrNseryQ==
   dependencies:
+    encoding "^0.1.12"
     minipass "^3.1.0"
     minipass-sized "^1.0.3"
     minizlib "^2.0.0"

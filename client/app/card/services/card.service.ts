@@ -48,7 +48,7 @@ import {
     validateImage,
 } from './card.queries';
 import {Observable} from 'rxjs';
-import {Literal, mergeOverrideArray} from '@ecodev/natural';
+import {Literal, mergeOverrideArray, WithId} from '@ecodev/natural';
 
 interface CardWithImage {
     id?: string;
@@ -290,7 +290,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     public updateNow(
-        object: UpdateCardVariables['input'],
+        object: WithId<CardPartialInput>,
         resetRouteReuse: boolean = true,
     ): Observable<UpdateCard['updateCard']> {
         return super.updateNow(object).pipe(

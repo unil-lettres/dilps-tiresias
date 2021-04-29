@@ -6,6 +6,7 @@ import {
     NaturalSearchSelections,
     PaginationInput,
     Sorting,
+    WithId,
 } from '@ecodev/natural';
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
@@ -45,22 +46,23 @@ import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 import {PageEvent} from '@angular/material/paginator';
 
-function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): Partial<CardInput> {
-    changes = clone(changes);
-    defaults(changes, destination);
+function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): WithId<Partial<CardInput>> {
+    const result = {
+        id: destination.id,
+        ...clone(changes),
+    };
+    defaults(result, destination);
 
-    if (changes.artists) {
-        changes.artists = changes.artists.map((a: string | ThesaurusModel) => (typeof a === 'string' ? a : a.name));
+    if (result.artists) {
+        result.artists = result.artists.map((a: string | ThesaurusModel) => (typeof a === 'string' ? a : a.name));
     }
 
-    if (changes.institution) {
-        changes.institution =
-            typeof changes.institution === 'string'
-                ? changes.institution
-                : (changes.institution as ThesaurusModel).name;
+    if (result.institution) {
+        result.institution =
+            typeof result.institution === 'string' ? result.institution : (result.institution as ThesaurusModel).name;
     }
 
-    return changes;
+    return result;
 }
 
 export interface ViewInterface {

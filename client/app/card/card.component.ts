@@ -441,6 +441,10 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public update(): void {
+        if (!this.isFetchedCard(this.model)) {
+            return;
+        }
+
         this.cardService.updateNow(this.model).subscribe(card => {
             this.alertService.info('Mis à jour');
             this.institution = card.institution;

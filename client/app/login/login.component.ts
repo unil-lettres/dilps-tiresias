@@ -7,7 +7,7 @@ import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
-import {Site, UserPartialInput, Viewer_viewer} from '../shared/generated-types';
+import {Site, Viewer_viewer} from '../shared/generated-types';
 
 @Component({
     selector: 'app-login',
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                         .updatePartially({
                             id: user.id,
                             termsAgreement: new Date(),
-                        } as UserPartialInput)
+                        })
                         .subscribe(u => {
                             this.redirect();
                         });
