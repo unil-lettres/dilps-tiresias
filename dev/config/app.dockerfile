@@ -24,7 +24,6 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php -- --inst
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends nodejs &&\
-    npm config set registry https://registry.npm.taobao.org --global &&\
     npm install --global gulp-cli yarn
 
 # Enable apache configurations & modules
