@@ -31,7 +31,7 @@
         "@angular/platform-browser": "^11.2.13",
         "@angular/platform-browser-dynamic": "^11.2.13",
         "@angular/router": "^11.2.13",
-        "@apollo/client": "^3.3.16",
+        "@apollo/client": "^3.3.17",
         "@bugsnag/core": "^7.7.0",
         "@bugsnag/js": "^7.7.0",
         "@bugsnag/plugin-angular": "^7.7.0",
