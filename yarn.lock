@@ -1322,19 +1322,22 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha1-jwOiKgTeQ3JU6M6MyEujlokoh1I=
 
-"@ecodev/angular-natural-gallery@^9.0.0":
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-9.0.0.tgz#42dfacaf746a7f88575bf0507276e84e4ae435f7"
-  integrity sha512-++vz0dLyzS17Z6fnR3emB43iknhFeu+Z+4To+sqQAyqLglburUWuOf30dT+zjnrATcQMcRT/HJqKkgbS82ILeA==
+"@ecodev/angular-natural-gallery@^10.0.2":
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-10.0.2.tgz#34e8ba1179d0c5b3284a817aa474256b919be512"
+  integrity sha512-fShMF6Iuz4LaDI0eyTm2KuXtkJh/Z9blyCO5Xbz3z4NiArGoIbFcjjSYhgR5CEJRrdIA8dlwt5vGOV2ABS0fAg==
   dependencies:
-    "@ecodev/natural-gallery-js" "^7.0.0"
+    "@ecodev/natural-gallery-js" "^8.0.1"
+    "@types/photoswipe" "^4.1.1"
     photoswipe "^4.1.3"
     tslib "^2.0.0"
 
-"@ecodev/natural-gallery-js@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-7.0.0.tgz#eb7fd958456e9f4902a64bb65b99b560d0778af3"
-  integrity sha512-OZf+c0Ghzuk1eUlw/Aos/9PpEz6Ej1KuozRKN3Zr0KXpL2KR9kRJG84TXBUzJhU7xlSUYS6PBZ6QknItjsibWw==
+"@ecodev/natural-gallery-js@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-8.0.1.tgz#c3cfc21d6bdf5f0353ef498da16c92bfe8f5baf6"
+  integrity sha512-nVGiJsYlBfgWyk9MM/s+PD1N/Dg2VzEZQZUaZHrP25mfbDyx4IPmvKGR+I5Z7ALfu+HxpkcnS4R5mqNzoBzN+Q==
+  dependencies:
+    lodash-es "^4.17.21"
 
 "@ecodev/natural@^33.0.0":
   version "33.0.0"
@@ -1785,6 +1788,11 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/photoswipe@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@types/photoswipe/-/photoswipe-4.1.1.tgz#3d76ed9698775ea17a1191578e4d0eeb331024a2"
+  integrity sha512-5ffGZEWjDqARuX/04uH/913zwkz/z9fuCVgMAnToeDBwOcN7P0xJE5LCrX50EiuyfpWN2AlkAIFwRfhaWYs6mw==
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -6894,6 +6902,11 @@ lodash-es@^4.17.15:
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.20.tgz#29f6332eefc60e849f869c264bc71126ad61e8f7"
   integrity sha512-JD1COMZsq8maT6mnuz1UMV0jvYD0E0aUsSOdrr1/nAG3dhqQXwRRgeW0cSqH1U43INKcqxaiVIQNOUDld7gRDA==
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
@@ -7321,7 +7334,6 @@ minipass-fetch@^1.3.0, minipass-fetch@^1.3.2:
   resolved "https://registry.yarnpkg.com/minipass-fetch/-/minipass-fetch-1.3.3.tgz#34c7cea038c817a8658461bf35174551dce17a0a"
   integrity sha512-akCrLDWfbdAWkMLBxJEeWTdNsjML+dt5YgOI4gJ53vuO0vrmYQkUPxa6j6V65s9CcePIr2SSWqjT2EcrNseryQ==
   dependencies:
-    encoding "^0.1.12"
     minipass "^3.1.0"
     minipass-sized "^1.0.3"
     minizlib "^2.0.0"

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outpu
 import {NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
-import {NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
+import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
 import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
@@ -14,6 +14,8 @@ export interface ContentChange {
     total?: number;
 }
 
+type GalleryItem = Cards_cards_items & ModelAttributes;
+
 @Component({
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
@@ -23,7 +25,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to gallery
      */
-    @ViewChild('gallery') public gallery: NaturalGalleryComponent;
+    @ViewChild('gallery') public gallery: NaturalGalleryComponent<GalleryItem>;
 
     /**
      * DataSource containing cards
@@ -131,11 +133,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
     }
 
-    public loadMore(ev: {offset: number; limit: number}): void {
+    public loadMore(ev: CustomEventDetailMap<GalleryItem>['pagination']): void {
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(event: {model: Cards_cards_items}): void {
+    public activate(event: CustomEventDetailMap<GalleryItem>['activate']): void {
         this.router.navigate(['card', event.model.id]);
     }
 
@@ -147,10 +149,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.gallery.gallery.unselectAllItems();
     }
 
-    private formatImages(cards: Cards_cards_items[]): Cards_cards_items[] {
+    private formatImages(cards: Cards_cards_items[]): GalleryItem[] {
         const selected = this.selected.map(c => c.id);
 
-        cards = cards.map(card => {
+        return cards.map(card => {
             const cardWithThumb = CardService.formatImage(card, this.thumbnailHeight);
             const cardWithBig = CardService.formatImage(card, this.enlargedHeight);
 
@@ -186,7 +188,5 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
             return merge({}, card, thumb, big, fields);
         });
-
-        return cards;
     }
 }
