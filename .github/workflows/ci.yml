@@ -29,6 +29,11 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            - name: Node Setup
+              uses: actions/setup-node@v2
+              with:
+                node-version: '14'
+
             - name: PHP Setup
               uses: shivammathur/setup-php@v2
               with:

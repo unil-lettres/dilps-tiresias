@@ -6,7 +6,7 @@ networks:
 
 services:
     dilps-tiresias-app:
-        image: unillett/dilps-tiresias:v1.1
+        image: unillett/dilps-tiresias:v1.2
         env_file:
             - ./dev/.env
         volumes:
