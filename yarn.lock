@@ -1339,10 +1339,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^33.1.0":
-  version "33.1.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-33.1.0.tgz#104b33024d323dbc59b867a2974d57d24cf0e413"
-  integrity sha512-uKUfNJWwxTmCtDZY8JaIoh5KUHXJLzxX/kZT7xmE919c2AIDXPtA9IY/Q3BOB+O7UXB/YbjojqgqlvwgEWtlTg==
+"@ecodev/natural@^34.0.0":
+  version "34.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-34.0.0.tgz#7bc01fe84a9c8f3e046893f83d5c37187280258f"
+  integrity sha512-IYyemCBh/ZY7hYSL6nJaGM/GZhmiffxgSIXBEOmAFmSVeYLLeFwSuQVzlum2c8qfMjZHqeQzhb/QhFnL0+uehw==
   dependencies:
     ts-md5 "^1.2.7"
     tslib "^2.0.0"
