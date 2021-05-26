@@ -1,17 +1,18 @@
-$primary: mat-palette($mat-deep-orange);
-$accent: mat-palette($mat-blue);
-$warn: mat-palette($mat-red);
+@use '~@angular/material' as mat;
+$primary: mat.define-palette(mat.$deep-orange-palette);
+$accent: mat.define-palette(mat.$blue-palette);
+$warn: mat.define-palette(mat.$red-palette);
 
 .tiresias-staging {
-    $theme-light: mat-light-theme($primary, $accent, $warn);
-    color: mat-color(map-get($theme-light, foreground), base);
-    @include angular-material-theme($theme-light);
+    $theme-light: mat.define-light-theme($primary, $accent, $warn);
+    color: mat.get-color-from-palette(map-get($theme-light, foreground), base);
+    @include mat.all-component-themes($theme-light);
     @include components-theme($theme-light);
 }
 
 .tiresias-staging-dark {
-    $theme-dark: mat-dark-theme($primary, $accent, $warn);
-    color: mat-color(map-get($theme-dark, foreground), base);
-    @include angular-material-theme($theme-dark);
+    $theme-dark: mat.define-dark-theme($primary, $accent, $warn);
+    color: mat.get-color-from-palette(map-get($theme-dark, foreground), base);
+    @include mat.all-component-themes($theme-dark);
     @include components-theme($theme-dark);
 }

@@ -26,10 +26,11 @@ export class AbstractNavigableList<
             any,
             any,
             any
-        >
+        >,
     >
     extends NaturalAbstractNavigableList<TService>
-    implements OnInit {
+    implements OnInit
+{
     public displayedColumns = ['navigation', 'name'];
 
     /**

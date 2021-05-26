@@ -22,10 +22,11 @@ export class AbstractList<
             any,
             any,
             any
-        >
+        >,
     >
     extends NaturalAbstractList<TService>
-    implements OnInit {
+    implements OnInit
+{
     public displayedColumns = ['name'];
 
     protected dialog: MatDialog;

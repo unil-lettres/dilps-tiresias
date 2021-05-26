@@ -47,10 +47,11 @@ export class ThesaurusComponent<
             any,
             any,
             any
-        >
+        >,
     >
     extends NaturalAbstractController
-    implements OnInit {
+    implements OnInit
+{
     /**
      * Reference to autocomplete
      */

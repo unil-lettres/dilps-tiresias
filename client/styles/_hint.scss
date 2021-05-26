@@ -1,8 +1,9 @@
+@use '~@angular/material' as mat;
 @mixin hint($theme) {
     $warn: map-get($theme, warn);
 
     // Allow to show a hint a bit more visible when it's important
     mat-hint.strong {
-        color: mat-color($warn) !important;
+        color: mat.get-color-from-palette($warn) !important;
     }
 }

@@ -6,8 +6,8 @@
             placeholder="De"
             formControlName="from"
             [errorStateMatcher]="matcher"
-            [min]="configuration.min"
-            [max]="configuration.max"
+            [attr.min]="configuration.min"
+            [attr.max]="configuration.max"
             [step]="configuration.step"
             (keydown.enter)="close()"
         />
@@ -30,8 +30,8 @@
             placeholder="à"
             formControlName="to"
             [errorStateMatcher]="matcher"
-            [min]="configuration.min"
-            [max]="configuration.max"
+            [attr.min]="configuration.min"
+            [attr.max]="configuration.max"
             [step]="configuration.step"
             (keydown.enter)="close()"
         />

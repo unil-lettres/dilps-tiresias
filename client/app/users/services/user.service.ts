@@ -59,7 +59,8 @@ export class UserService
         DeleteUsers['deleteUsers'],
         never
     >
-    implements OnDestroy {
+    implements OnDestroy
+{
     /**
      * This key will be used to store the viewer ID, but that value should never
      * be trusted, and it only exist to notify changes across browser tabs.

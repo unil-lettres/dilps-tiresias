@@ -3,9 +3,9 @@
  * See source doc here https://github.com/angular/material2/tree/master/src/lib/core/theming
  */
 // Import theming files full relative way or karma will display warning
-@import '../../node_modules/@angular/material/theming';
-@import '../../node_modules/@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
-@import '../../node_modules/@ecodev/natural/theming/natural.theme';
+@use '~@angular/material' as mat;
+@import '~@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
+@import '~@ecodev/natural/theming/natural.theme';
 @import 'typography';
 @import '../app/app.theme';
 @import '../app/shared/components/boot-loader/boot-loader.theme';
@@ -26,7 +26,7 @@
 @import '../app/shared/components/thesaurus/thesaurus.theme';
 
 // Include material core (only once !)
-@include mat-core($custom-typography-gt-sm);
+@include mat.core($custom-typography-gt-sm);
 
 // Include components themes
 @mixin components-theme($theme) {

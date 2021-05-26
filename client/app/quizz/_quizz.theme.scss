@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin quizz($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -7,17 +8,17 @@
 
     app-quizz {
         .attribute {
-            background: mat-color($warn, 0.3);
+            background: mat.get-color-from-palette($warn, 0.3);
 
             .attributeAnswer:hover {
-                background: mat-color($warn, 0.2);
+                background: mat.get-color-from-palette($warn, 0.2);
             }
 
             &.valid {
-                background: mat-color($primary, 0.3);
+                background: mat.get-color-from-palette($primary, 0.3);
 
                 .attributeAnswer:hover {
-                    background: mat-color($primary, 0.2);
+                    background: mat.get-color-from-palette($primary, 0.2);
                 }
             }
         }

@@ -1,10 +1,11 @@
+@use '~@angular/material' as mat;
 @mixin boot-loader($theme) {
     $primary: map-get($theme, primary);
     .bootloader {
-        background: mat-color($primary);
+        background: mat.get-color-from-palette($primary);
 
         .sk-folding-cube .sk-cube:before {
-            background-color: mat-color($primary, default-contrast, 100);
+            background-color: mat.get-color-from-palette($primary, default-contrast, 100);
         }
     }
 }

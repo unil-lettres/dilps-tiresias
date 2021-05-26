@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin scroll($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -32,7 +33,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: mat-color($foreground, base, 0.5);
+                background: mat.get-color-from-palette($foreground, base, 0.5);
                 border-radius: 99px;
             }
         }

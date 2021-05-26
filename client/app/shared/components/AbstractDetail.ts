@@ -21,8 +21,9 @@ export class AbstractDetailDirective<
         any,
         unknown,
         any
-    >
-> implements OnInit {
+    >,
+> implements OnInit
+{
     public user: Viewer_viewer | null = null;
 
     public data: any = {

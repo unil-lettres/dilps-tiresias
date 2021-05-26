@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin app($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -6,14 +7,14 @@
     $foreground: map-get($theme, foreground);
 
     app-root {
-        background: mat-color($background, background);
+        background: mat.get-color-from-palette($background, background);
     }
 
     ng-progress {
         .ng-bar {
             height: 3px !important;
-            background-color: mat-color($accent) !important;
-            box-shadow: mat-color($accent) 0 0 5px !important;
+            background-color: mat.get-color-from-palette($accent) !important;
+            box-shadow: mat.get-color-from-palette($accent) 0 0 5px !important;
         }
 
         .ng-meteor {
@@ -21,7 +22,7 @@
             transform: none !important;
             width: 25px !important;
             top: 0 !important;
-            box-shadow: mat-color($accent) 0 0 20px !important;
+            box-shadow: mat.get-color-from-palette($accent) 0 0 20px !important;
         }
     }
 }

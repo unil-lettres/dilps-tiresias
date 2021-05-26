@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin collections($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -6,6 +7,6 @@
     $fg: map-get($theme, foreground);
 
     .mat-list-item.active {
-        background: mat-color($bg, card);
+        background: mat.get-color-from-palette($bg, card);
     }
 }

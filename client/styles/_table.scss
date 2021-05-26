@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin table($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -14,12 +15,12 @@
         mat-row {
             align-items: stretch;
             &:hover {
-                background: mat-color($background, hover);
+                background: mat.get-color-from-palette($background, hover);
             }
         }
 
         mat-header-row {
-            background: mat-color($background, app-bar);
+            background: mat.get-color-from-palette($background, app-bar);
         }
     }
 }

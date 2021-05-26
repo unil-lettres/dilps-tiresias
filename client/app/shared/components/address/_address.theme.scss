@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @mixin address($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -8,7 +9,7 @@
     app-address {
         #mapZone {
             #search {
-                background: mat-color($bg, background);
+                background: mat.get-color-from-palette($bg, background);
             }
 
             mat-form-field {

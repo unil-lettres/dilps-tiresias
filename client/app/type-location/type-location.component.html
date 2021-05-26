@@ -4,8 +4,8 @@
         <input
             (keydown.enter)="close()"
             [formControl]="latitudeCtrl"
-            [min]="-90"
-            [max]="90"
+            [attr.min]="-90"
+            [attr.max]="90"
             [required]="true"
             matInput
             type="number"
@@ -20,8 +20,8 @@
         <input
             (keydown.enter)="close()"
             [formControl]="longitudeCtrl"
-            [min]="-180"
-            [max]="180"
+            [attr.min]="-180"
+            [attr.max]="180"
             [required]="true"
             matInput
             type="number"
@@ -36,7 +36,7 @@
         <input
             (keydown.enter)="close()"
             [formControl]="distanceCtrl"
-            [min]="1"
+            [attr.min]="1"
             [step]="50"
             [required]="true"
             matInput

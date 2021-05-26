@@ -15,7 +15,7 @@ export class AbstractContextualizedService<
     Tdelete,
     Vdelete extends {
         ids: string[];
-    }
+    },
 > extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete, Vdelete> {
     constructor(
         apollo: Apollo,
