@@ -173,8 +173,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     };
 
     constructor(
-        private cardService: CardService,
-        private collectionService: CollectionService,
+        private readonly cardService: CardService,
+        private readonly collectionService: CollectionService,
         private readonly userService: UserService,
         private readonly dialog: MatDialog,
         injector: Injector,

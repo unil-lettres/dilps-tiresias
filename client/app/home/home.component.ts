@@ -42,10 +42,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     private uploaded = 0;
 
     constructor(
-        public themeService: ThemeService,
-        public route: ActivatedRoute,
-        public router: Router,
-        public userService: UserService,
+        public readonly themeService: ThemeService,
+        public readonly route: ActivatedRoute,
+        public readonly router: Router,
+        public readonly userService: UserService,
         private readonly network: NetworkActivityService,
         private readonly snackBar: MatSnackBar,
         private readonly alertService: AlertService,

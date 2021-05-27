@@ -24,7 +24,7 @@ export class TypeLocationComponent implements DropdownComponent {
 
     constructor(
         @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<never>,
-        protected dropdownRef: NaturalDropdownRef,
+        protected readonly dropdownRef: NaturalDropdownRef,
     ) {
         this.form = new FormGroup({
             longitude: this.longitudeCtrl,
