@@ -45,6 +45,7 @@ import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 import {PageEvent} from '@angular/material/paginator';
+import {takeUntil} from 'rxjs/operators';
 
 function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): WithId<Partial<CardInput>> {
     const result = {
@@ -493,8 +494,11 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         );
     }
 
+    /**
+     * Override to never use cache
+     */
     protected getDataObservable(): Observable<Cards['cards']> {
-        return this.service.watchAll(this.variablesManager, this.ngUnsubscribe, 'network-only');
+        return this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntil(this.ngUnsubscribe));
     }
 
     /**

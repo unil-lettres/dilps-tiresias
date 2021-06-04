@@ -13,6 +13,7 @@ import {
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
     selector: 'app-collections',
@@ -87,15 +88,18 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             }
         });
 
-        this.collectionsService.watchAll(this.queryVariables, this.ngUnsubscribe).subscribe(collections => {
-            if (collections.pageIndex === 0) {
-                this.rootCollections = collections.items;
-            } else {
-                this.rootCollections = this.rootCollections.concat(collections.items);
-            }
+        this.collectionsService
+            .watchAll(this.queryVariables)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(collections => {
+                if (collections.pageIndex === 0) {
+                    this.rootCollections = collections.items;
+                } else {
+                    this.rootCollections = this.rootCollections.concat(collections.items);
+                }
 
-            this.hasMore = collections.length > this.rootCollections.length;
-        });
+                this.hasMore = collections.length > this.rootCollections.length;
+            });
     }
 
     public toggle(collection: Collections_collections_items): void {
@@ -110,9 +114,12 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
 
-        this.collectionsService.watchAll(qvm, this.ngUnsubscribe).subscribe(results => {
-            this.children.set(collection.id, results.items);
-        });
+        this.collectionsService
+            .watchAll(qvm)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(results => {
+                this.children.set(collection.id, results.items);
+            });
     }
 
     public search(term: SearchOperatorString): void {

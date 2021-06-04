@@ -15,6 +15,7 @@ import {StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
 import {SITE} from '../../app.config';
+import {takeUntil} from 'rxjs/operators';
 
 function formatDate(date: Date): string {
     const month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
@@ -126,76 +127,81 @@ export class StatisticsComponent extends NaturalAbstractController {
         this.reset();
         this.update();
 
-        statisticService.watchAll(this.frequentationQvm, this.ngUnsubscribe).subscribe(result => {
-            this.reset();
+        statisticService
+            .watchAll(this.frequentationQvm)
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(result => {
+                this.reset();
 
-            const seriesData: SeriesData = {
-                anonymous: {
-                    pageCount: [],
-                    detailCount: [],
-                    searchCount: [],
-                    uniqueLoginCount: [],
-                },
-                default: {
-                    pageCount: [],
-                    detailCount: [],
-                    searchCount: [],
-                    uniqueLoginCount: [],
-                },
-                aai: {
-                    pageCount: [],
-                    detailCount: [],
-                    searchCount: [],
-                    uniqueLoginCount: [],
-                },
-            };
+                const seriesData: SeriesData = {
+                    anonymous: {
+                        pageCount: [],
+                        detailCount: [],
+                        searchCount: [],
+                        uniqueLoginCount: [],
+                    },
+                    default: {
+                        pageCount: [],
+                        detailCount: [],
+                        searchCount: [],
+                        uniqueLoginCount: [],
+                    },
+                    aai: {
+                        pageCount: [],
+                        detailCount: [],
+                        searchCount: [],
+                        uniqueLoginCount: [],
+                    },
+                };
 
-            result.items.map(s => {
-                this.data.total.values.detailCount += s.anonymousDetailCount + s.defaultDetailCount + s.aaiDetailCount;
-                this.data.total.values.pageCount += s.anonymousPageCount + s.defaultPageCount + s.aaiPageCount;
-                this.data.total.values.searchCount += s.anonymousSearchCount + s.defaultSearchCount + s.aaiSearchCount;
-                this.data.total.values.uniqueLoginCount += s.defaultUniqueLoginCount + s.aaiUniqueLoginCount;
+                result.items.map(s => {
+                    this.data.total.values.detailCount +=
+                        s.anonymousDetailCount + s.defaultDetailCount + s.aaiDetailCount;
+                    this.data.total.values.pageCount += s.anonymousPageCount + s.defaultPageCount + s.aaiPageCount;
+                    this.data.total.values.searchCount +=
+                        s.anonymousSearchCount + s.defaultSearchCount + s.aaiSearchCount;
+                    this.data.total.values.uniqueLoginCount += s.defaultUniqueLoginCount + s.aaiUniqueLoginCount;
 
-                this.data.anonymous.values.detailCount += s.anonymousDetailCount;
-                this.data.default.values.detailCount += s.defaultDetailCount;
-                this.data.aai.values.detailCount += s.aaiDetailCount;
+                    this.data.anonymous.values.detailCount += s.anonymousDetailCount;
+                    this.data.default.values.detailCount += s.defaultDetailCount;
+                    this.data.aai.values.detailCount += s.aaiDetailCount;
 
-                this.data.anonymous.values.pageCount += s.anonymousPageCount;
-                this.data.default.values.pageCount += s.defaultPageCount;
-                this.data.aai.values.pageCount += s.aaiPageCount;
+                    this.data.anonymous.values.pageCount += s.anonymousPageCount;
+                    this.data.default.values.pageCount += s.defaultPageCount;
+                    this.data.aai.values.pageCount += s.aaiPageCount;
 
-                this.data.anonymous.values.searchCount += s.anonymousSearchCount;
-                this.data.default.values.searchCount += s.defaultSearchCount;
-                this.data.aai.values.searchCount += s.aaiSearchCount;
+                    this.data.anonymous.values.searchCount += s.anonymousSearchCount;
+                    this.data.default.values.searchCount += s.defaultSearchCount;
+                    this.data.aai.values.searchCount += s.aaiSearchCount;
 
-                this.data.default.values.uniqueLoginCount += s.defaultUniqueLoginCount;
-                this.data.aai.values.uniqueLoginCount += s.aaiUniqueLoginCount;
+                    this.data.default.values.uniqueLoginCount += s.defaultUniqueLoginCount;
+                    this.data.aai.values.uniqueLoginCount += s.aaiUniqueLoginCount;
 
-                this.categories.push(s.date);
+                    this.categories.push(s.date);
 
-                seriesData.anonymous.pageCount.push(s.anonymousPageCount);
-                seriesData.default.pageCount.push(s.defaultPageCount);
-                seriesData.aai.pageCount.push(s.aaiPageCount);
+                    seriesData.anonymous.pageCount.push(s.anonymousPageCount);
+                    seriesData.default.pageCount.push(s.defaultPageCount);
+                    seriesData.aai.pageCount.push(s.aaiPageCount);
 
-                seriesData.anonymous.detailCount.push(s.anonymousDetailCount);
-                seriesData.default.detailCount.push(s.defaultDetailCount);
-                seriesData.aai.detailCount.push(s.aaiDetailCount);
+                    seriesData.anonymous.detailCount.push(s.anonymousDetailCount);
+                    seriesData.default.detailCount.push(s.defaultDetailCount);
+                    seriesData.aai.detailCount.push(s.aaiDetailCount);
 
-                seriesData.anonymous.searchCount.push(s.anonymousSearchCount);
-                seriesData.default.searchCount.push(s.defaultSearchCount);
-                seriesData.aai.searchCount.push(s.aaiSearchCount);
+                    seriesData.anonymous.searchCount.push(s.anonymousSearchCount);
+                    seriesData.default.searchCount.push(s.defaultSearchCount);
+                    seriesData.aai.searchCount.push(s.aaiSearchCount);
 
-                seriesData.default.uniqueLoginCount.push(s.defaultUniqueLoginCount);
-                seriesData.aai.uniqueLoginCount.push(s.aaiUniqueLoginCount);
+                    seriesData.default.uniqueLoginCount.push(s.defaultUniqueLoginCount);
+                    seriesData.aai.uniqueLoginCount.push(s.aaiUniqueLoginCount);
+                });
+
+                this.buildOneSeries(seriesData, 'pageCount');
+                this.buildOneSeries(seriesData, 'detailCount');
+                this.buildOneSeries(seriesData, 'searchCount');
+                this.buildOneSeries(seriesData, 'uniqueLoginCount');
+
+                this.applyFrequentationTypeSelection();
             });
-
-            this.buildOneSeries(seriesData, 'pageCount');
-            this.buildOneSeries(seriesData, 'detailCount');
-            this.buildOneSeries(seriesData, 'searchCount');
-            this.buildOneSeries(seriesData, 'uniqueLoginCount');
-
-            this.applyFrequentationTypeSelection();
-        });
     }
 
     private reset(): void {

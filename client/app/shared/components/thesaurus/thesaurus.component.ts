@@ -204,7 +204,7 @@ export class ThesaurusComponent<
             return;
         }
 
-        this.resultsCache = this.service.watchAll(this.variablesManager, this.ngUnsubscribe);
+        this.resultsCache = this.service.watchAll(this.variablesManager).pipe(takeUntil(this.ngUnsubscribe));
 
         // Init query
         this.resultsCache.subscribe(data => {
