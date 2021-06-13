@@ -1,6 +1,7 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin hint($theme) {
-    $warn: map-get($theme, warn);
+    $warn: map.get($theme, warn);
 
     // Allow to show a hint a bit more visible when it's important
     mat-hint.strong {

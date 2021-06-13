@@ -1,9 +1,10 @@
+@use "sass:map";
 @mixin view-grid($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $bg: map-get($theme, background);
-    $fg: map-get($theme, foreground);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $warn: map.get($theme, warn);
+    $bg: map.get($theme, background);
+    $fg: map.get($theme, foreground);
 
     natural-gallery {
         .natural-gallery-js {

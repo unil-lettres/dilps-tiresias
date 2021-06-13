@@ -1,4 +1,6 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
+@use '../components.theme';
 
 $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: rgba(white, 0.87);
@@ -43,8 +45,8 @@ $dilps-warn: mat.define-palette(mat.$red-palette);
 $dilps-theme-light: mat.define-light-theme($dilps-primary, $dilps-accent, $dilps-warn);
 $dilps-theme-dark: mat.define-dark-theme($dilps-primary, $dilps-accent, $dilps-warn);
 
-$baseColorLight: mat.get-color-from-palette(map-get($dilps-theme-light, foreground), base);
-$baseColorDark: mat.get-color-from-palette(map-get($dilps-theme-dark, foreground), base);
+$baseColorLight: mat.get-color-from-palette(map.get($dilps-theme-light, foreground), base);
+$baseColorDark: mat.get-color-from-palette(map.get($dilps-theme-dark, foreground), base);
 
 @include mat.all-component-themes($dilps-theme-light);
 
@@ -54,14 +56,14 @@ $warn: mat.define-palette(mat.$red-palette);
 
 .dilps-production {
     $theme-light: mat.define-light-theme($primary, $accent, $warn);
-    color: mat.get-color-from-palette(map-get($theme-light, foreground), base);
+    color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
     @include mat.all-component-themes($theme-light);
-    @include components-theme($theme-light);
+    @include components.components-theme($theme-light);
 }
 
 .dilps-production-dark {
     $theme-dark: mat.define-dark-theme($primary, $accent, $warn);
-    color: mat.get-color-from-palette(map-get($theme-dark, foreground), base);
+    color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
     @include mat.all-component-themes($theme-dark);
-    @include components-theme($theme-dark);
+    @include components.components-theme($theme-dark);
 }

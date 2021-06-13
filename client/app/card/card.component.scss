@@ -1,9 +1,9 @@
-@import '../../styles/utils';
+@use '../../styles/utils';
 
 :host {
     display: flex;
     flex: auto;
-    @include fixedToolbar();
+    @include utils.fixedToolbar();
 
     .image {
         background-size: contain;

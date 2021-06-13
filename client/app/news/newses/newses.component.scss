@@ -1,7 +1,7 @@
-@import '../../../styles/utils';
+@use '../../../styles/utils';
 
 :host {
-    @include fixedToolbar();
+    @include utils.fixedToolbar();
 
     .image {
         height: 48px;

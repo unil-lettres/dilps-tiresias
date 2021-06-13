@@ -1,9 +1,10 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin toolbar($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $background: map.get($theme, background);
+    $foreground: map.get($theme, foreground);
 
     mat-toolbar[color='app'] {
         //background: rgba(66,66,66 , 0.7);

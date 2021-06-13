@@ -1,18 +1,21 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
+@use '../components.theme';
+
 $primary: mat.define-palette(mat.$deep-orange-palette);
 $accent: mat.define-palette(mat.$blue-palette);
 $warn: mat.define-palette(mat.$red-palette);
 
 .tiresias-staging {
     $theme-light: mat.define-light-theme($primary, $accent, $warn);
-    color: mat.get-color-from-palette(map-get($theme-light, foreground), base);
+    color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
     @include mat.all-component-themes($theme-light);
-    @include components-theme($theme-light);
+    @include components.components-theme($theme-light);
 }
 
 .tiresias-staging-dark {
     $theme-dark: mat.define-dark-theme($primary, $accent, $warn);
-    color: mat.get-color-from-palette(map-get($theme-dark, foreground), base);
+    color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
     @include mat.all-component-themes($theme-dark);
-    @include components-theme($theme-dark);
+    @include components.components-theme($theme-dark);
 }

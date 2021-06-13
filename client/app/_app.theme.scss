@@ -1,10 +1,11 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin app($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $warn: map.get($theme, warn);
+    $background: map.get($theme, background);
+    $foreground: map.get($theme, foreground);
 
     app-root {
         background: mat.get-color-from-palette($background, background);

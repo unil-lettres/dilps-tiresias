@@ -1,6 +1,7 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin upload($theme) {
-    $primary: map-get($theme, primary);
+    $primary: map.get($theme, primary);
 
     [naturalFileDrop] {
         position: relative;

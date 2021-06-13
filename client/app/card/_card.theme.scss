@@ -1,15 +1,16 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @use '~@angular/material/core/theming/theming';
 
 @mixin card($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $bg: map-get($theme, background);
-    $fg: map-get($theme, foreground);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $warn: map.get($theme, warn);
+    $bg: map.get($theme, background);
+    $fg: map.get($theme, foreground);
 
     $config: theming.get-color-config($theme);
-    $is-dark-theme: map-get($config, is-dark);
+    $is-dark-theme: map.get($config, is-dark);
     $label-color: mat.get-color-from-palette($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
 
     app-card {
@@ -23,7 +24,7 @@
             background: mat.get-color-from-palette(
                 $fg,
                 base,
-                if(map-get($theme, is-dark), 0.1, 0.04)
+                if(map.get($theme, is-dark), 0.1, 0.04)
             ); // match official mat-form-field component style
             padding: 10px 10px 0 10px;
             border-bottom: 1px solid mat.get-color-from-palette($fg, base, 0.5);

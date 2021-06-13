@@ -1,9 +1,9 @@
-@import '../../styles/utils';
+@use '../../styles/utils';
 
 :host {
     display: flex;
     flex-direction: column;
-    @include fixedToolbar();
+    @include utils.fixedToolbar();
 
     app-view-grid {
         position: relative;

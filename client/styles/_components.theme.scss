@@ -3,7 +3,6 @@
  * See source doc here https://github.com/angular/material2/tree/master/src/lib/core/theming
  */
 // Import theming files full relative way or karma will display warning
-@use '~@angular/material' as mat;
 @use '~@ecodev/natural/theming/natural.theme';
 @use "sass:meta";
 @use '~@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
@@ -25,9 +24,6 @@
 @use '../app/quizz/quizz.theme';
 @use '../app/view-grid/view-grid.theme';
 @use '../app/shared/components/thesaurus/thesaurus.theme';
-
-// Include material core (only once !)
-@include mat.core(typography.$custom-typography-gt-sm);
 
 // Include components themes
 @mixin components-theme($theme) {
@@ -51,13 +47,3 @@
     @include thesaurus.thesaurus($theme);
     @include download.download-modal($theme);
 }
-
-// Dilps
-@include meta.load-css('themes/dilps-production');
-@include meta.load-css('themes/dilps-development');
-@include meta.load-css('themes/dilps-staging');
-
-// Tiresias
-@include meta.load-css('themes/tiresias-production');
-@include meta.load-css('themes/tiresias-development');
-@include meta.load-css('themes/tiresias-staging');

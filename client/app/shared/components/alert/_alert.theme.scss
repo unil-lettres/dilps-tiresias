@@ -1,10 +1,11 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin alert($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $bg: map-get($theme, background);
-    $fg: map-get($theme, foreground);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $warn: map.get($theme, warn);
+    $bg: map.get($theme, background);
+    $fg: map.get($theme, foreground);
 
     .mat-snack-bar-container {
         margin-top: 10px;

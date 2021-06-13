@@ -1,9 +1,9 @@
-@import '../../../styles/utils';
+@use '../../../styles/utils';
 
 :host {
     display: flex;
     flex-direction: row;
-    @include fixedToolbar();
+    @include utils.fixedToolbar();
 
     mat-nav-list {
         &,

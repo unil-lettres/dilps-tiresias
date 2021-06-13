@@ -1,13 +1,14 @@
+@use "sass:meta";
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 @import '~material-design-icons/iconfont/material-icons.css';
 @import '~quill/dist/quill.bubble.css';
-@import 'styles/themes';
-@import 'app/shared/components/boot-loader/boot-loader.external';
-@import 'app/collections/collections/collections.external';
-@import 'app/shared/components/thesaurus/thesaurus.external';
-@import 'styles/layout';
-@import 'app/list/list.external';
-@import 'app/view-grid/view-grid.external';
+@include meta.load-css('styles/themes');
+@include meta.load-css('app/shared/components/boot-loader/boot-loader.external');
+@include meta.load-css('app/collections/collections/collections.external');
+@include meta.load-css('app/shared/components/thesaurus/thesaurus.external');
+@include meta.load-css('styles/layout');
+@include meta.load-css('app/list/list.external');
+@include meta.load-css('app/view-grid/view-grid.external');
 
 body {
     margin: 0;

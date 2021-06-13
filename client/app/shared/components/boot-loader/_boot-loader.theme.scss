@@ -1,6 +1,7 @@
+@use "sass:map";
 @use '~@angular/material' as mat;
 @mixin boot-loader($theme) {
-    $primary: map-get($theme, primary);
+    $primary: map.get($theme, primary);
     .bootloader {
         background: mat.get-color-from-palette($primary);
 
