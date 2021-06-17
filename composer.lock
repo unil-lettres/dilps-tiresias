@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d2365e3fe91e2b8420269beff7f1625",
+    "content-hash": "1e83a1e906067a877ddce260096b7334",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1732,16 +1732,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "5.3.1",
+            "version": "5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "196d3aedbcc86ec6e621779a0d736ad0d323feda"
+                "reference": "6471a386a4ca03572368b60cda7fa4ad86787afd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/196d3aedbcc86ec6e621779a0d736ad0d323feda",
-                "reference": "196d3aedbcc86ec6e621779a0d736ad0d323feda",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/6471a386a4ca03572368b60cda7fa4ad86787afd",
+                "reference": "6471a386a4ca03572368b60cda7fa4ad86787afd",
                 "shasum": ""
             },
             "require": {
@@ -1762,7 +1762,7 @@
                 "laminas/laminas-view": "^2.11",
                 "mezzio/mezzio-session": "^1.3",
                 "moneyphp/money": "^3.3",
-                "php": "^7.2"
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "@stable",
@@ -1791,9 +1791,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/5.3.1"
+                "source": "https://github.com/Ecodev/felix/tree/5.5.1"
             },
-            "time": "2021-04-06T03:18:46+00:00"
+            "time": "2021-06-17T02:21:56+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
