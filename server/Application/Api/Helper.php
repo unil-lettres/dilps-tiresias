@@ -23,9 +23,9 @@ abstract class Helper
 
     public static function paginate(array $pagination, QueryBuilder $query): array
     {
-        $offset = $pagination['offset'];
-        $pageIndex = $pagination['pageIndex'];
-        $pageSize = $pagination['pageSize'];
+        $offset = max(0, $pagination['offset']);
+        $pageIndex = max(0, $pagination['pageIndex']);
+        $pageSize = max(0, $pagination['pageSize']);
 
         $paginator = new Paginator($query);
         $paginator
