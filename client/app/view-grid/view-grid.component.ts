@@ -23,6 +23,11 @@ type GalleryItem = Cards_cards_items & ModelAttributes;
 })
 export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
     /**
+     * Only used to help typescript understand the generic type of <natural-gallery>
+     */
+    public readonly emptyItemsList: GalleryItem[] = [];
+
+    /**
      * Reference to gallery
      */
     @ViewChild('gallery') public gallery: NaturalGalleryComponent<GalleryItem>;
@@ -31,7 +36,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      * DataSource containing cards
      */
     @Input() public dataSource: NaturalDataSource<Cards_cards>;
-
     /**
      *
      */

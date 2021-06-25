@@ -43,25 +43,19 @@ describe('Quizz tester', () => {
     } as Card['card'];
 
     it('simple match', () => {
-        expect(test('', card)).toEqual(
-            {
-                name: false,
-                artists: false,
-                institution: false,
-                dating: false,
-            },
-            'empty string should match nothing',
-        );
+        expect(test('', card)).withContext('empty string should match nothing').toEqual({
+            name: false,
+            artists: false,
+            institution: false,
+            dating: false,
+        });
 
-        expect(test('of', card)).toEqual(
-            {
-                name: false,
-                artists: false,
-                institution: false,
-                dating: false,
-            },
-            'short words are entirely ignored',
-        );
+        expect(test('of', card)).withContext('short words are entirely ignored').toEqual({
+            name: false,
+            artists: false,
+            institution: false,
+            dating: false,
+        });
 
         expect(test('balloon', card)).toEqual({
             name: true,
@@ -70,15 +64,12 @@ describe('Quizz tester', () => {
             dating: false,
         });
 
-        expect(test('ballöön', card)).toEqual(
-            {
-                name: true,
-                artists: false,
-                institution: false,
-                dating: false,
-            },
-            'accents are ignored',
-        );
+        expect(test('ballöön', card)).withContext('accents are ignored').toEqual({
+            name: true,
+            artists: false,
+            institution: false,
+            dating: false,
+        });
 
         expect(test('john', card)).toEqual({
             name: false,
@@ -115,34 +106,27 @@ describe('Quizz tester', () => {
             dating: true,
         });
 
-        expect(test('1603', cardShortSpan)).toEqual(
-            {
-                name: false,
-                artists: false,
-                institution: false,
-                dating: true,
-            },
-            'exact year should match',
-        );
+        expect(test('1603', cardShortSpan)).withContext('exact year should match').toEqual({
+            name: false,
+            artists: false,
+            institution: false,
+            dating: true,
+        });
 
-        expect(test('1625', cardShortSpan)).toEqual(
-            {
-                name: false,
-                artists: false,
-                institution: false,
-                dating: true,
-            },
-            'year should match with some margin',
-        );
+        expect(test('1625', cardShortSpan)).withContext('year should match with some margin').toEqual({
+            name: false,
+            artists: false,
+            institution: false,
+            dating: true,
+        });
 
-        expect(test('1603', cardWithoutDatings)).toEqual(
-            {
+        expect(test('1603', cardWithoutDatings))
+            .withContext('year should match raw dating even if datings is absent')
+            .toEqual({
                 name: false,
                 artists: false,
                 institution: false,
                 dating: true,
-            },
-            'year should match raw dating even if datings is absent',
-        );
+            });
     });
 });
