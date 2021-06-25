@@ -29,13 +29,7 @@
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
                         "scripts": [],
-                        "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags", "zen-observable"],
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
-                        "optimization": false,
-                        "namedChunks": true
+                        "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags", "zen-observable"]
                     },
                     "configurations": {
                         "production": {
@@ -45,13 +39,7 @@
                                     "maximumWarning": "6kb"
                                 }
                             ],
-                            "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
                             "fileReplacements": [
                                 {
                                     "replace": "client/environments/environment.ts",
@@ -66,13 +54,7 @@
                                     "maximumWarning": "6kb"
                                 }
                             ],
-                            "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
                             "fileReplacements": [
                                 {
                                     "replace": "client/environments/environment.ts",
@@ -80,7 +62,14 @@
                                 }
                             ]
                         },
-                        "development": {}
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
                     },
                     "defaultConfiguration": "production"
                 },
