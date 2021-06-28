@@ -2,9 +2,8 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
-import {forkJoin, Observable, of, Subscription} from 'rxjs';
-import {fromArray} from 'rxjs/internal/observable/fromArray';
-import {bufferCount, catchError, concatMap, filter, finalize} from 'rxjs/operators';
+import {EMPTY, Observable, of, Subscription} from 'rxjs';
+import {catchError, concatMap, filter, finalize, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -102,7 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     public uploadImagesOnly(files: File[]): void {
         const inputs = files.map(file => {
-            const card = this.cardService.getConsolidatedForClient();
+            const card = this.cardService.getConsolidatedForClient() as CardInput;
             card.file = file;
 
             return card;
@@ -116,58 +115,60 @@ export class HomeComponent implements OnInit, OnDestroy {
                 return;
             }
 
+            const total = inputs.length;
+            if (!total) {
+                return;
+            }
+
             let errors = 0;
-            const observables = inputs.map(input => {
-                return this.cardService.createWithCollection(input as CardInput, collection).pipe(
-                    catchError(() => {
-                        errors++;
-                        return of();
-                    }),
-                );
+
+            this.progress = 0;
+            this.snackBar.open("L'upload est en cours, ne fermez pas votre navigateur", 'Compris', {
+                duration: 10000,
+                verticalPosition: 'top',
+                horizontalPosition: 'end',
             });
 
-            if (observables) {
-                this.progress = 0;
-                this.snackBar.open("L'upload est en cours, ne fermez pas votre navigateur", 'Compris', {
-                    duration: 10000,
-                    verticalPosition: 'top',
-                    horizontalPosition: 'end',
-                });
+            of(...inputs)
+                .pipe(
+                    concatMap(input => {
+                        return this.cardService.createWithCollection(input, collection).pipe(
+                            catchError(() => {
+                                errors++;
 
-                fromArray(observables)
-                    .pipe(
-                        bufferCount(1),
-                        concatMap(chunkedObservables => {
-                            this.uploaded += chunkedObservables.length;
-                            this.progress = (this.uploaded / observables.length) * 100;
-                            return forkJoin([...chunkedObservables]);
-                        }),
-                        finalize(() => {
-                            if (errors) {
-                                const message =
-                                    observables.length -
-                                    errors +
-                                    '/' +
-                                    observables.length +
-                                    ' images ont été uploadées. Voir détail dans la pastille en bas à gauche';
+                                return EMPTY;
+                            }),
+                            tap(() => {
+                                this.uploaded++;
+                                this.progress = (this.uploaded / total) * 100;
+                            }),
+                        );
+                    }),
+                    finalize(() => {
+                        if (errors) {
+                            const message =
+                                total -
+                                errors +
+                                '/' +
+                                total +
+                                ' images ont été uploadées. Voir détail dans la pastille en bas à gauche';
 
-                                this.snackBar.open(message, 'Compris', {
-                                    duration: 15000,
-                                    panelClass: ['snackbar-error'],
-                                    verticalPosition: 'top',
-                                    horizontalPosition: 'end',
-                                });
-                            } else {
-                                this.alertService.info("L'upload est terminé");
-                            }
+                            this.snackBar.open(message, 'Compris', {
+                                duration: 15000,
+                                panelClass: ['snackbar-error'],
+                                verticalPosition: 'top',
+                                horizontalPosition: 'end',
+                            });
+                        } else {
+                            this.alertService.info("L'upload est terminé");
+                        }
 
-                            this.progress = null;
-                            this.uploaded = 0;
-                            this.redirectAfterCreation(collection); // we want it before upload has ended
-                        }),
-                    )
-                    .subscribe(() => {});
-            }
+                        this.progress = null;
+                        this.uploaded = 0;
+                        this.redirectAfterCreation(collection); // we want it before upload has ended
+                    }),
+                )
+                .subscribe();
         });
     }
 
