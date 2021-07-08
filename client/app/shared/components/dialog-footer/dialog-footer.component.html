@@ -4,7 +4,7 @@
     <button mat-button mat-dialog-close>Annuler</button>
 
     <button (click)="delete.emit(item)" *ngIf="item.id && item?.permissions?.delete" color="warn" mat-raised-button>
-        <mat-icon>delete_forever</mat-icon>
+        <natural-icon name="delete_forever"></natural-icon>
         Supprimer
     </button>
 
@@ -15,7 +15,7 @@
         color="primary"
         mat-raised-button
     >
-        <mat-icon>save</mat-icon>
+        <natural-icon name="save"></natural-icon>
         Enregistrer
     </button>
 
@@ -26,7 +26,7 @@
         color="primary"
         mat-raised-button
     >
-        <mat-icon>add</mat-icon>
+        <natural-icon name="add"></natural-icon>
         Ajouter
     </button>
 </div>

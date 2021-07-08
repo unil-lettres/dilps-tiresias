@@ -4,7 +4,7 @@
             <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
             <div fxFlex></div>
             <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
-                <mat-icon>add</mat-icon>
+                <natural-icon name="add"></natural-icon>
             </button>
         </mat-toolbar>
 
@@ -52,7 +52,7 @@
                                 *ngIf="collection.permissions.update || collection.permissions.delete"
                                 mat-icon-button
                             >
-                                <mat-icon>edit</mat-icon>
+                                <natural-icon name="edit"></natural-icon>
                             </button>
                         </a>
                         <ng-container
@@ -70,7 +70,7 @@
                     ></ng-container>
 
                     <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
-                        <mat-icon mat-list-icon>keyboard_arrow_down</mat-icon>
+                        <natural-icon mat-list-icon name="keyboard_arrow_down"></natural-icon>
                         <span matLine>Afficher d'avantage</span>
                     </a>
                 </mat-nav-list>

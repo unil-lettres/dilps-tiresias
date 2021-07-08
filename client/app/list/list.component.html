@@ -39,7 +39,7 @@
             mat-icon-button
             matTooltip="Grille"
         >
-            <mat-icon>view_compact</mat-icon>
+            <natural-icon name="view_compact"></natural-icon>
         </button>
 
         <button
@@ -48,7 +48,7 @@
             mat-icon-button
             matTooltip="Liste"
         >
-            <mat-icon>view_list</mat-icon>
+            <natural-icon name="view_list"></natural-icon>
         </button>
 
         <button
@@ -57,7 +57,7 @@
             mat-icon-button
             matTooltip="Carte"
         >
-            <mat-icon>map</mat-icon>
+            <natural-icon name="map"></natural-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -69,7 +69,7 @@
                 fxFlex
             ></natural-search>
             <button [matMenuTriggerFor]="sortingMenu" mat-button mat-icon-button matTooltip="Trier">
-                <mat-icon>sort</mat-icon>
+                <natural-icon name="sort"></natural-icon>
             </button>
         </div>
 
@@ -83,7 +83,7 @@
                 mat-icon-button
                 matTooltip="Ajouter à une collection"
             >
-                <mat-icon>library_add</mat-icon>
+                <natural-icon name="library_add"></natural-icon>
             </button>
             <button
                 (click)="unlinkFromCollection(selected)"
@@ -91,19 +91,19 @@
                 mat-icon-button
                 matTooltip="Supprimer de la collection"
             >
-                <mat-icon>close</mat-icon>
+                <natural-icon name="close"></natural-icon>
             </button>
 
             <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Télécharger">
-                <mat-icon>file_download</mat-icon>
+                <natural-icon name="file_download"></natural-icon>
             </button>
 
             <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <mat-icon>burst_mode</mat-icon>
+                <natural-icon name="burst_mode"></natural-icon>
             </button>
 
             <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
-                <mat-icon>edit</mat-icon>
+                <natural-icon name="edit"></natural-icon>
             </button>
 
             <button
@@ -113,7 +113,7 @@
                 mat-icon-button
                 matTooltip="Supprimer la fiche définitivement"
             >
-                <mat-icon>delete_forever</mat-icon>
+                <natural-icon name="delete_forever"></natural-icon>
             </button>
         </ng-container>
 
@@ -124,7 +124,7 @@
                 mat-icon-button
                 matTooltip="Ajouter la collection à une autre collection"
             >
-                <mat-icon>library_add</mat-icon>
+                <natural-icon name="library_add"></natural-icon>
             </button>
 
             <button
@@ -133,16 +133,16 @@
                 mat-icon-button
                 matTooltip="Télécharger la collection"
             >
-                <mat-icon>file_download</mat-icon>
+                <natural-icon name="file_download"></natural-icon>
             </button>
 
             <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <mat-icon>burst_mode</mat-icon>
+                <natural-icon name="burst_mode"></natural-icon>
             </button>
         </ng-container>
 
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
-            <mat-icon>select_all</mat-icon>
+            <natural-icon name="select_all"></natural-icon>
         </button>
 
         <button
@@ -151,7 +151,7 @@
             mat-icon-button
             matTooltip="Sélectionner les images visibles"
         >
-            <mat-icon>select_all</mat-icon>
+            <natural-icon name="select_all"></natural-icon>
         </button>
 
         <div *ngIf="viewMode === ViewMode.grid">

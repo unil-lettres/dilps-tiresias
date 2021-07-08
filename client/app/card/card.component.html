@@ -46,7 +46,7 @@
                     [matTooltip]="'Passer en mode édition'"
                     mat-icon-button
                 >
-                    <mat-icon>edit</mat-icon>
+                    <natural-icon name="edit"></natural-icon>
                 </button>
 
                 <button
@@ -58,7 +58,7 @@
                     matTooltip="Enregistrer"
                     [disabled]="!formIsValid"
                 >
-                    <mat-icon>save</mat-icon>
+                    <natural-icon name="save"></natural-icon>
                 </button>
 
                 <button
@@ -69,7 +69,7 @@
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
-                    <mat-icon>add_alert</mat-icon>
+                    <natural-icon name="add_alert"></natural-icon>
                 </button>
 
                 <button
@@ -80,7 +80,7 @@
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
-                    <mat-icon>add_alert</mat-icon>
+                    <natural-icon name="add_alert"></natural-icon>
                 </button>
 
                 <button
@@ -89,7 +89,7 @@
                     mat-icon-button
                     matTooltip="Créer"
                 >
-                    <mat-icon>add</mat-icon>
+                    <natural-icon name="add"></natural-icon>
                 </button>
 
                 <button
@@ -98,7 +98,7 @@
                     mat-icon-button
                     matTooltip="Valider"
                 >
-                    <mat-icon>spellcheck</mat-icon>
+                    <natural-icon name="spellcheck"></natural-icon>
                 </button>
 
                 <button
@@ -107,11 +107,11 @@
                     mat-icon-button
                     matTooltip="Importer les données d'une autre fiche"
                 >
-                    <mat-icon>content_copy</mat-icon>
+                    <natural-icon name="content_copy"></natural-icon>
                 </button>
 
                 <button (click)="download(fetchedModel)" mat-icon-button matTooltip="Télécharger">
-                    <mat-icon>file_download</mat-icon>
+                    <natural-icon name="file_download"></natural-icon>
                 </button>
 
                 <button
@@ -120,7 +120,7 @@
                     mat-icon-button
                     matTooltip="Ajouter à une collection"
                 >
-                    <mat-icon>library_add</mat-icon>
+                    <natural-icon name="library_add"></natural-icon>
                 </button>
 
                 <button
@@ -130,7 +130,7 @@
                     mat-icon-button
                     matTooltip="Supprimer"
                 >
-                    <mat-icon>delete_forever</mat-icon>
+                    <natural-icon name="delete_forever"></natural-icon>
                 </button>
             </ng-container>
         </mat-toolbar>
@@ -179,7 +179,7 @@
                         *ngIf="showSuggestedCode()"
                         [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
                     >
-                        <mat-icon>refresh</mat-icon>
+                        <natural-icon name="refresh"></natural-icon>
                     </button>
 
                     <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors.maxlength"
@@ -844,7 +844,7 @@
                 mat-icon-button
                 matTooltip="Télécharger l'image"
             >
-                <mat-icon>file_download</mat-icon>
+                <natural-icon name="file_download"></natural-icon>
             </a>
         </mat-toolbar>
         <div
