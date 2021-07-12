@@ -25,6 +25,6 @@ const schemaLiteral = JSON.parse(schemaJsonString).data;
 const schemaObject = buildClientSchema(schemaLiteral);
 const schemaSdlString = printSchema(schemaObject);
 
-const disableTsLintMessage = '/* tslint:disable */\n';
+const disableTsLintMessage = '/* tslint:disable */\n// @ts-nocheck\n';
 write('data/tmp/schema/', 'index.ts', disableTsLintMessage + 'export const schema = ' + schemaJsonString + ';');
 write('client/app/shared/', 'generated-schema.graphql', schemaSdlString);
