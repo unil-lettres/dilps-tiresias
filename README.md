@@ -82,7 +82,7 @@ To access the database please use the following link.
 
 [http://dilps.docker:9797](http://dilps.docker:9797)
 
-- Server: database
+- Server: dilps-tiresias-mysql
 - Username: user
 - Password: password
 

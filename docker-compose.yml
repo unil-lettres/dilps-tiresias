@@ -13,9 +13,6 @@ services:
             - ./:/var/www
             - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/php.ini
         working_dir: /var/www
-        links:
-            - dilps-tiresias-mysql:database
-            - dilps-tiresias-mailhog:mail
         ports:
             - '8181:80'
         networks:
@@ -37,8 +34,6 @@ services:
         image: phpmyadmin/phpmyadmin:latest
         env_file:
             - ./dev/.env
-        links:
-            - dilps-tiresias-mysql:database
         ports:
             - '9797:80'
         networks:
