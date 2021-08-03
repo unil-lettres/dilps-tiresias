@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Stamped} from '../stamp/stamp.component';
 
-interface Model {
+type Model = Stamped & {
     id: string;
     permissions: {
         /**
@@ -14,7 +14,7 @@ interface Model {
          */
         delete: boolean;
     };
-}
+};
 
 @Component({
     selector: 'app-dialog-footer',
@@ -23,9 +23,9 @@ interface Model {
 })
 export class DialogFooterComponent {
     @Input() public canCreate = false;
-    @Input() public item!: Stamped & Model;
+    @Input() public item!: Model;
     @Input() public formCtrl: FormControl;
-    @Output() public readonly create = new EventEmitter();
-    @Output() public readonly update = new EventEmitter();
-    @Output() public readonly delete = new EventEmitter();
+    @Output() public readonly create = new EventEmitter<Model>();
+    @Output() public readonly update = new EventEmitter<Model>();
+    @Output() public readonly delete = new EventEmitter<Model>();
 }
