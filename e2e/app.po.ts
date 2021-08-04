@@ -1,11 +1,13 @@
-import {browser, by, element} from 'protractor';
+import {Page, Response} from '@playwright/test';
 
 export class AppPage {
-    public navigateTo(): Promise<void> {
-        return browser.get('/') as Promise<void>;
+    constructor(private readonly page: Page) {}
+
+    public navigateTo(): Promise<null | Response> {
+        return this.page.goto('/');
     }
 
     public getParagraphText(): Promise<unknown> {
-        return element(by.css('app-root .login-info')).getText() as Promise<string>;
+        return this.page.innerText('app-root .login-info');
     }
 }

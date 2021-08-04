@@ -138,6 +138,6 @@ To run PHPunit test:
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-### Protractor
+### End to end
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `yarn e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).

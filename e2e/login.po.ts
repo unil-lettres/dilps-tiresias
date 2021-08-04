@@ -1,36 +1,30 @@
-import {browser, by, element, ExpectedConditions} from 'protractor';
+import {Page, Response} from '@playwright/test';
 
 export class LoginPage {
-    public navigateTo(): Promise<void> {
-        return browser.get('/') as Promise<void>;
+    constructor(private readonly page: Page) {}
+
+    public navigateTo(): Promise<null | Response> {
+        return this.page.goto('/');
     }
 
-    public fillCredentials(credentials): void {
-        element(by.css('.mat-expansion-panel')).click();
+    public async fillCredentials(username: string, password: string): Promise<unknown> {
+        await this.page.click('.mat-expansion-panel');
 
-        const login = element(by.css('[name="login"]'));
-        browser.wait(ExpectedConditions.visibilityOf(login), 3000, 'login took too long to appear');
-        login.sendKeys(credentials.username);
-        const password = element(by.css('[name="password"]'));
-        browser.wait(ExpectedConditions.visibilityOf(password), 3000, 'password took too long to appear');
-        password.sendKeys(credentials.password);
+        await this.page.type('[name="login"]', username);
+        await this.page.type('[name="password"]', password);
 
-        element(by.css('[type="submit"]')).click();
+        return this.page.click('[type="submit"]');
     }
 
-    public acceptLicense(): void {
-        const modalButton = element(by.css('[ng-reflect-dialog-result="true"]'));
-        browser.wait(ExpectedConditions.visibilityOf(modalButton), 3000, 'button took too long to appear');
-        modalButton.click();
+    public acceptLicense(): Promise<void> {
+        return this.page.click('[ng-reflect-dialog-result="true"]');
     }
 
     public getParagraphText(): Promise<string> {
-        return element(by.css('app-root .login-info')).getText() as Promise<string>;
+        return this.page.innerText('app-root .login-info');
     }
 
     public getErrorMessage(): Promise<string> {
-        const error = element(by.css('.mat-simple-snackbar'));
-        browser.wait(ExpectedConditions.visibilityOf(error), 3000, 'error took too long to appear');
-        return error.getText() as Promise<string>;
+        return this.page.innerText('.mat-simple-snackbar');
     }
 }
