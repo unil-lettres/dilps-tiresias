@@ -4,7 +4,7 @@ export class AppPage {
     constructor(private readonly page: Page) {}
 
     public navigateTo(): Promise<null | Response> {
-        return this.page.goto('/');
+        return this.page.goto('');
     }
 
     public getParagraphText(): Promise<unknown> {
