@@ -26,6 +26,7 @@ class AuthenticationMiddlewareTest extends TestCase
         $session = $this->process(false, null);
 
         self::assertFalse($session->has('user'));
+        self::assertTrue($session->has('other'));
         self::assertNull(User::getCurrent());
     }
 
@@ -35,6 +36,7 @@ class AuthenticationMiddlewareTest extends TestCase
         $session = $this->process(true, $user);
 
         self::assertFalse($session->has('user'));
+        self::assertFalse($session->has('other'));
         self::assertNull(User::getCurrent());
     }
 
@@ -64,6 +66,7 @@ class AuthenticationMiddlewareTest extends TestCase
         $session = $this->process(true, $user);
 
         self::assertTrue($session->has('user'));
+        self::assertTrue($session->has('other'));
         self::assertSame($user, User::getCurrent());
     }
 
@@ -85,7 +88,7 @@ class AuthenticationMiddlewareTest extends TestCase
             }
         };
 
-        $session = new Session([]);
+        $session = new Session(['other' => 'foo']);
         if ($userInSession) {
             $session->set('user', 123);
         }

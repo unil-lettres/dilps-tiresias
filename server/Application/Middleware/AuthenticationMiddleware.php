@@ -44,10 +44,12 @@ class AuthenticationMiddleware implements MiddlewareInterface
             if ($user && (!$user->getActiveUntil() || $user->getActiveUntil() > new Chronos())) {
                 User::setCurrent($user);
             }
-        }
 
-        if (!User::getCurrent()) {
-            $session->clear();
+            // If we were supposed to be logged in, but the user is not available anymore, that means the user
+            // was forcibly logged out (likely deleted), so we clear his entire session
+            if (!User::getCurrent()) {
+                $session->clear();
+            }
         }
 
         return $handler->handle($request);
