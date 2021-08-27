@@ -1,11 +1,9 @@
 import {Directive, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'lodash-es';
-import {ArtistComponent} from '../../artists/artist/artist.component';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
-import {ExtractTupdate, NaturalAbstractModelService, PaginatedData, QueryVariables} from '@ecodev/natural';
-import {Literal} from '@ecodev/natural/lib/types/types';
+import {ExtractTupdate, Literal, NaturalAbstractModelService, PaginatedData, QueryVariables} from '@ecodev/natural';
 import {Viewer_viewer} from '../generated-types';
 
 @Directive()

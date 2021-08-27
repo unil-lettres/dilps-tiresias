@@ -2,12 +2,12 @@ import {Injector, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     ExtractTallOne,
+    Literal,
     NaturalAbstractList,
     NaturalAbstractModelService,
     PaginatedData,
     QueryVariables,
 } from '@ecodev/natural';
-import {Literal} from '@ecodev/natural/lib/types/types';
 import {ComponentType} from '@angular/cdk/overlay';
 
 export class AbstractList<

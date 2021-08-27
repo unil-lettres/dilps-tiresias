@@ -17,7 +17,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
-import {Literal} from '@ecodev/natural/lib/types/types';
+import {Literal} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',

@@ -6,7 +6,7 @@ import {periodHierarchicConfig} from '../../shared/hierarchic-configurations/Per
 import {UserService} from '../../users/services/user.service';
 import {PeriodService} from '../services/period.service';
 import {formatYearRange} from '../../shared/services/utility';
-import {Literal} from '@ecodev/natural/lib/types/types';
+import {Literal} from '@ecodev/natural';
 
 @Component({
     selector: 'app-period',
