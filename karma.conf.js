@@ -44,5 +44,6 @@ module.exports = function (config) {
         browserNoActivityTimeout: 600000, // Wait 10 minutes before assuming browser crashed
         browserDisconnectTolerance: 10,
         browserDisconnectTimeout: 500000,
+        failOnSkippedTests: true,
     });
 };
