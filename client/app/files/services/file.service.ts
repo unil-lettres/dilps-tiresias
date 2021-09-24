@@ -35,7 +35,7 @@ export class FileService extends NaturalAbstractModelService<
         return {
             card: null,
             name: '',
-            file: '',
+            file: null,
         };
     }
 }

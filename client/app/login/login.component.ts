@@ -8,6 +8,7 @@ import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {Site, Viewer_viewer} from '../shared/generated-types';
+import {formatIsoDateTime} from '@ecodev/natural';
 
 @Component({
     selector: 'app-login',
@@ -98,7 +99,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.userService
                         .updatePartially({
                             id: user.id,
-                            termsAgreement: new Date(),
+                            termsAgreement: formatIsoDateTime(new Date()),
                         })
                         .subscribe(u => {
                             this.redirect();

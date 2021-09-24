@@ -1,4 +1,4 @@
-import {isString, uniq} from 'lodash-es';
+import {uniq} from 'lodash-es';
 import {Card_card} from '../shared/generated-types';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 
@@ -12,24 +12,11 @@ export function test(formValue: string, card: Card_card): Result {
         .filter(word => word.length > 3);
 
     const result: Result = {
-        name: false,
-        artists: false,
-        institution: false,
-        dating: false,
+        name: testString(words, card.name),
+        artists: testMultipleThesaurus(words, card.artists),
+        institution: testSingleThesaurus(words, card.institution),
+        dating: testString(words, card.dating) || testDate(formValue, card.datings),
     };
-
-    for (const attribute of Object.keys(result)) {
-        const value = card[attribute as keyof Card_card];
-        if (attribute === 'institution') {
-            result[attribute] = testSingleThesaurus(words, value);
-        } else if (attribute === 'artists') {
-            result[attribute] = testMultipleThesaurus(words, value);
-        } else if (attribute === 'dating') {
-            result[attribute] = testString(words, value) || testDate(formValue, card.datings);
-        } else if (isString(value)) {
-            result[attribute as keyof Result] = testString(words, value);
-        }
-    }
 
     return result;
 }
