@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 @use '~@angular/material' as mat;
 @mixin hint($theme) {
     $warn: map.get($theme, warn);

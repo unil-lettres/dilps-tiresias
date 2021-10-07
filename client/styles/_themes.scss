@@ -5,7 +5,7 @@
 // Import theming files full relative way or karma will display warning
 @use '~@angular/material' as mat;
 @use '~@ecodev/natural/theming/natural.theme';
-@use "sass:meta";
+@use 'sass:meta';
 @use '~@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
 @use 'typography';
 @use '../app/app.theme';
