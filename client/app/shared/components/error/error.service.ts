@@ -35,7 +35,7 @@ export class ErrorService {
             catchError(error => {
                 this.redirectError(error);
 
-                return throwError(error);
+                return throwError(() => error);
             }),
         );
     }
