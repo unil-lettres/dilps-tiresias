@@ -88,7 +88,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
                 ->where('site = "' . $site . '"');
         }
 
-        return $filenames->execute()->fetchAll();
+        return $filenames->execute()->fetchAllAssociative();
     }
 
     /**
@@ -107,7 +107,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
                 WHERE TABLE_SCHEMA = $database
                 AND TABLE_NAME = 'card'";
 
-            $nextId = (int) $connection->fetchColumn($sql);
+            $nextId = (int) $connection->fetchOne($sql);
         } else {
             ++$nextId;
         }

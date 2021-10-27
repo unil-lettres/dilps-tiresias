@@ -149,7 +149,7 @@ $userClause
             'site' => $site,
         ];
 
-        $record = $connection->executeQuery($query, $params)->fetch();
+        $record = $connection->executeQuery($query, $params)->fetchAssociative();
 
         $result = [];
         foreach ($record as $key => $v) {
@@ -269,7 +269,7 @@ ORDER BY $month, $groupingField ASC
             'site' => $site,
         ];
 
-        $result = $connection->executeQuery($query, $params)->fetchAll();
+        $result = $connection->executeQuery($query, $params)->fetchAllAssociative();
 
         return $result;
     }

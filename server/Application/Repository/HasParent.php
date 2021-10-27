@@ -24,7 +24,7 @@ trait HasParent
     SELECT child.id, child.parent_id, CONCAT(parent.fullName, " > ", child.name) AS fullName FROM ' . $table . ' AS child JOIN parent ON child.parent_id = parent.id
 ) SELECT id, fullName FROM parent ORDER BY fullName ASC';
 
-        $records = $connection->executeQuery($sql)->fetchAll();
+        $records = $connection->executeQuery($sql)->fetchAllAssociative();
 
         $result = [];
         foreach ($records as $r) {

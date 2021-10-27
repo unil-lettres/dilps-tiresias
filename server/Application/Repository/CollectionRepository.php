@@ -75,7 +75,7 @@ class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\R
         $cardSubQuery = $cardRepository->getAccessibleSubQuery(User::getCurrent());
 
         $connection = $this->getEntityManager()->getConnection();
-        $connection->query('REPLACE INTO card_collection (collection_id, card_id)
+        $connection->executeStatement('REPLACE INTO card_collection (collection_id, card_id)
             SELECT ' . $connection->quote($targetCollection->getId()) . ' AS collection_id, card_id
             FROM card_collection
             WHERE

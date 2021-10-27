@@ -20,7 +20,7 @@ trait HasName
 
         $sql = 'SELECT id, name FROM ' . $table . ' ORDER BY name ASC';
 
-        $records = $connection->executeQuery($sql)->fetchAll();
+        $records = $connection->executeQuery($sql)->fetchAllAssociative();
 
         $result = [];
         foreach ($records as $r) {
