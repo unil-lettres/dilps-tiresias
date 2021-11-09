@@ -1,18 +1,16 @@
-:host {
-    img {
-        max-width: 100%;
-    }
+img {
+    max-width: 100%;
+}
 
-    input[type='file'] {
-        font-size: 18px;
-        line-height: 18px;
-    }
+input[type='file'] {
+    font-size: 18px;
+    line-height: 18px;
+}
 
-    .image {
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.33);
-        height: 400px;
-    }
+.image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.33);
+    height: 400px;
 }

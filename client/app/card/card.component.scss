@@ -4,11 +4,11 @@
     display: flex;
     flex: auto;
     @include utils.fixedToolbar();
+}
 
-    .image {
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.33);
-    }
+.image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.33);
 }

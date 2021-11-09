@@ -1,11 +1,9 @@
-:host {
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-    mat-form-field {
-        width: 120px;
-    }
+mat-form-field {
+    width: 120px;
 }

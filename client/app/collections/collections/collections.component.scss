@@ -4,15 +4,14 @@
     display: flex;
     flex-direction: row;
     @include utils.fixedToolbar();
+}
+mat-nav-list {
+    &,
+    & * {
+        white-space: normal;
+    }
 
-    mat-nav-list {
-        &,
-        & * {
-            white-space: normal;
-        }
-
-        .description {
-            margin-top: 4px;
-        }
+    .description {
+        margin-top: 4px;
     }
 }

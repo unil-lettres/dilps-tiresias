@@ -4,16 +4,16 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+}
 
-    #menu {
-        @include utils.centerContent();
+#menu {
+    @include utils.centerContent();
 
-        &.menuMinimized {
-            &,
-            perfect-scrollbar {
-                width: 0;
-                min-width: 64px;
-            }
+    &.menuMinimized {
+        &,
+        perfect-scrollbar {
+            width: 0;
+            min-width: 64px;
         }
     }
 }

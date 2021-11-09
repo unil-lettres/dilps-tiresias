@@ -7,20 +7,20 @@
     & > div {
         margin: auto;
     }
+}
 
-    app-carousel {
-        margin-left: 50px;
+app-carousel {
+    margin-left: 50px;
+}
+
+.shib-link {
+    flex: auto;
+
+    img {
+        height: 100px;
     }
+}
 
-    .shib-link {
-        flex: auto;
-
-        img {
-            height: 100px;
-        }
-    }
-
-    .login-info {
-        text-align: center;
-    }
+.login-info {
+    text-align: center;
 }

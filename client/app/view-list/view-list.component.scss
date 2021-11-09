@@ -1,94 +1,94 @@
+$gap: 10px;
+
 :host {
-    $gap: 10px;
-
     display: flex;
+}
 
-    .scrollable {
+.scrollable {
+    flex: 1;
+    overflow: auto;
+}
+
+.scrolled {
+    max-width: 1130px;
+    margin-top: 64px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+mat-paginator {
+    margin-top: $gap;
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: $gap;
+    padding: $gap;
+
+    & > *:not(:last-child) {
+        margin-right: $gap;
+    }
+
+    &:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .line-body {
         flex: 1;
-        overflow: auto;
-    }
 
-    .scrolled {
-        max-width: 1130px;
-        margin-top: 64px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+        .line-body-table {
+            display: table;
+            width: 100%;
 
-    mat-paginator {
-        margin-top: $gap;
-    }
+            & > *:not(:last-child) {
+                margin-bottom: 2 * $gap;
+            }
 
-    .line {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        margin-bottom: $gap;
-        padding: $gap;
-
-        & > *:not(:last-child) {
-            margin-right: $gap;
-        }
-
-        &:nth-child(odd) {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .line-body {
-            flex: 1;
-
-            .line-body-table {
-                display: table;
-                width: 100%;
-
-                & > *:not(:last-child) {
-                    margin-bottom: 2 * $gap;
-                }
+            & > div {
+                display: table-row;
 
                 & > div {
-                    display: table-row;
+                    display: table-cell;
+                    padding: 5px;
 
-                    & > div {
-                        display: table-cell;
-                        padding: 5px;
+                    &:first-child {
+                        width: 25%;
+                        font-weight: bold;
+                    }
 
-                        &:first-child {
-                            width: 25%;
-                            font-weight: bold;
-                        }
-
-                        &:last-child {
-                            width: 75%;
-                            padding-bottom: 1.5 * $gap;
-                        }
+                    &:last-child {
+                        width: 75%;
+                        padding-bottom: 1.5 * $gap;
                     }
                 }
             }
         }
+    }
 
-        mat-checkbox {
-            margin-right: 20px;
-        }
+    mat-checkbox {
+        margin-right: 20px;
+    }
 
-        .image-wrapper {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
+    .image-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-            border-radius: 3px;
-            background: rgba(0, 0, 0, 0.5);
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        height: 200px;
+        width: 300px;
+        padding: $gap;
+
+        .image {
             height: 200px;
             width: 300px;
-            padding: $gap;
-
-            .image {
-                height: 200px;
-                width: 300px;
-                background-size: contain;
-                background-position: center;
-                background-repeat: no-repeat;
-            }
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
     }
 }

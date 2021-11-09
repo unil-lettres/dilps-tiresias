@@ -2,17 +2,16 @@
 
 :host {
     @include utils.fixedToolbar();
+}
+.image {
+    height: 48px;
+    width: 48px;
+    border-radius: 999px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-    .image {
-        height: 48px;
-        width: 48px;
-        border-radius: 999px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .cdk-column-image {
-        max-width: 48px;
-    }
+.cdk-column-image {
+    max-width: 48px;
 }
