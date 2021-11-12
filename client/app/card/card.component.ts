@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, sortBy} from 'lodash-es';
+import {findKey, omit, sortBy} from 'lodash-es';
 import {QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -542,10 +542,10 @@ export class CardComponent implements OnInit, OnChanges {
                         id: this.fetchedModel.id,
                         code: this.fetchedModel.code,
                         visibility: this.model.visibility,
+                        permissions: {update: true},
                     });
 
                     this.model = cardToCardInput(this.fetchedModel);
-
                     this.initCard();
                 }
             });
