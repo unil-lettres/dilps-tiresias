@@ -542,7 +542,7 @@ export class CardComponent implements OnInit, OnChanges {
                         id: this.fetchedModel.id,
                         code: this.fetchedModel.code,
                         visibility: this.model.visibility,
-                        permissions: {update: true},
+                        permissions: this.fetchedModel.permissions,
                     });
 
                     this.model = cardToCardInput(this.fetchedModel);
