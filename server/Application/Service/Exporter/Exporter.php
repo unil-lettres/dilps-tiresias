@@ -160,10 +160,9 @@ class Exporter
      */
     private function writeCards(Writer $writer, Export $export): void
     {
-        $totalRecordsProcessed = 0;
+        $lastCardId = 0;
         while (true) {
-            $cards = $this->cardRepository->getExportCards($export, $totalRecordsProcessed);
-
+            $cards = $this->cardRepository->getExportCards($export, $lastCardId);
             // If nothing to process anymore, stop the whole thing
             if (!$cards) {
                 break;
@@ -171,8 +170,7 @@ class Exporter
 
             foreach ($cards as $card) {
                 $writer->write($card);
-
-                ++$totalRecordsProcessed;
+                $lastCardId = $card->getId();
             }
 
             _em()->flush();

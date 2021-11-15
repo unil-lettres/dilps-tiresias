@@ -43,11 +43,11 @@ class CardRepositoryTest extends AbstractRepositoryTest
     {
         $export1 = $this->getEntityManager()->getReference(Export::class, 14000);
         self::assertCount(1, $this->repository->getExportCards($export1, 0));
-        self::assertCount(0, $this->repository->getExportCards($export1, 1));
+        self::assertCount(0, $this->repository->getExportCards($export1, 6000));
 
         $export2 = $this->getEntityManager()->getReference(Export::class, 14001);
         self::assertCount(2, $this->repository->getExportCards($export2, 0));
-        self::assertCount(1, $this->repository->getExportCards($export2, 1));
-        self::assertCount(0, $this->repository->getExportCards($export2, 2));
+        self::assertCount(1, $this->repository->getExportCards($export2, 6001));
+        self::assertCount(0, $this->repository->getExportCards($export2, 6002));
     }
 }

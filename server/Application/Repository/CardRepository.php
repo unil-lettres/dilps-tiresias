@@ -130,25 +130,30 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     /**
      * Returns **some** cards for the given export, starting at $firstResult
      *
-     * This methods has to be called repeatedly with a different $firstResult in order
+     * This method has to be called repeatedly with a different $firstResult in order
      * to iterate over **all** cards of a given export
      */
-    public function getExportCards(Export $export, int $firstResult): array
+    public function getExportCards(Export $export, int $lastCard): array
     {
+        $cardIds = $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            'SELECT card_id FROM export_card WHERE export_id = :export AND card_id > :lastCard ORDER BY card_id LIMIT 250',
+            [
+                'export' => $export->getId(),
+                'lastCard' => $lastCard,
+            ],
+        );
+
         $qb = $this->createQueryBuilder('card');
         $qb->select('card, artist, country, documentType, domain, institution, period')
-            ->innerJoin(Export::class, 'export', Join::WITH, 'card MEMBER OF export.cards')
             ->leftJoin('card.artists', 'artist', Join::WITH)
             ->leftJoin('card.country', 'country', Join::WITH)
             ->leftJoin('card.documentType', 'documentType', Join::WITH)
             ->leftJoin('card.domains', 'domain', Join::WITH)
             ->leftJoin('card.institution', 'institution', Join::WITH)
             ->leftJoin('card.periods', 'period', Join::WITH)
-            ->andWhere('export.id = :export')
-            ->setParameter('export', $export)
-            ->orderBy('card.id')
-            ->setMaxResults(250)
-            ->setFirstResult($firstResult);
+            ->andWhere('card.id IN (:cards)')
+            ->setParameter('cards', $cardIds)
+            ->orderBy('card.id');
 
         return $this->getAclFilter()->runWithoutAcl(function () use ($qb) {
             return $qb->getQuery()->getResult();
