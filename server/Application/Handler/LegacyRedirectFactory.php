@@ -14,6 +14,6 @@ class LegacyRedirectFactory
     {
         $entityManager = $container->get(EntityManager::class);
 
-        return new LegacyRedirectHandler($entityManager->getRepository(Card::class), $container);
+        return new LegacyRedirectHandler($entityManager->getRepository(Card::class));
     }
 }

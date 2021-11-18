@@ -63,7 +63,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.18",
         "laminas/laminas-development-mode": "^3.3",
-        "phpstan/phpstan-doctrine": "^0.12.33",
+        "phpstan/phpstan-doctrine": "@stable",
         "phpunit/phpunit": "^9.5"
     }
 }

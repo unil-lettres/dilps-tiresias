@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Handler;
 
 use Application\Repository\CardRepository;
-use Interop\Container\ContainerInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,13 +12,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LegacyRedirectHandler implements RequestHandlerInterface
 {
-    private ContainerInterface $container;
-
     private CardRepository $cardRepository;
 
-    public function __construct(CardRepository $cardRepository, ContainerInterface $container)
+    public function __construct(CardRepository $cardRepository)
     {
-        $this->container = $container;
         $this->cardRepository = $cardRepository;
     }
 

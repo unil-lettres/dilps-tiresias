@@ -25,6 +25,9 @@ parameters:
             path: server/Application/Model/Dating.php
             count: 1
 
+        - '~^Property Application\\Model\\AbstractModel\:\:\$id is never written, only read\.$~'
+        - '~^Property Application\\Model\\Export\:\:\$.* is never read, only written\.$~'
+
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-doctrine/rules.neon
