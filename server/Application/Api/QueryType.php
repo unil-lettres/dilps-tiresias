@@ -43,7 +43,6 @@ class QueryType extends ObjectType
 
         $fields = array_merge(
             $specializedFields,
-
             Standard::buildQuery(Artist::class),
             Standard::buildQuery(Change::class),
             Standard::buildQuery(Collection::class),

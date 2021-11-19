@@ -8,8 +8,8 @@ use Ecodev\Felix\DBAL\Types\EnumType;
 
 class SiteType extends EnumType
 {
-    const DILPS = 'dilps';
-    const TIRESIAS = 'tiresias';
+    public const DILPS = 'dilps';
+    public const TIRESIAS = 'tiresias';
 
     protected function getPossibleValues(): array
     {

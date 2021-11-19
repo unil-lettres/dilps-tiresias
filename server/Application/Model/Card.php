@@ -77,9 +77,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     private const IMAGE_PATH = 'data/images/';
 
-    const VISIBILITY_PRIVATE = 'private';
-    const VISIBILITY_MEMBER = 'member';
-    const VISIBILITY_PUBLIC = 'public';
+    public const VISIBILITY_PRIVATE = 'private';
+    public const VISIBILITY_MEMBER = 'member';
+    public const VISIBILITY_PUBLIC = 'public';
 
     /**
      * @var string

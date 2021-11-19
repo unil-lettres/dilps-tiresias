@@ -27,7 +27,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class TemplateHandler implements RequestHandlerInterface
 {
-    const HEADERS = [
+    public const HEADERS = [
         'Fichier image (avec ou sans extension)',
         'Titre',
         'Titre étendu',

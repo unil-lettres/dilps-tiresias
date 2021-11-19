@@ -78,7 +78,6 @@ class MutationType extends ObjectType
             Standard::buildRelationMutation(Card::class, Collection::class, false, 'linkCard'),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
-
             $specializedFields,
         );
 

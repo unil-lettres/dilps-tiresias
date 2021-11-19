@@ -19,9 +19,9 @@ use GraphQL\Doctrine\Annotation as API;
  */
 class Change extends AbstractModel implements HasSiteInterface
 {
-    const TYPE_CREATE = 'create';
-    const TYPE_UPDATE = 'update';
-    const TYPE_DELETE = 'delete';
+    public const TYPE_CREATE = 'create';
+    public const TYPE_UPDATE = 'update';
+    public const TYPE_DELETE = 'delete';
 
     use HasSite;
 

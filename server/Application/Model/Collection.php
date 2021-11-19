@@ -30,9 +30,9 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     use HasParent;
     use HasSite;
 
-    const VISIBILITY_PRIVATE = 'private';
-    const VISIBILITY_ADMINISTRATOR = 'administrator';
-    const VISIBILITY_MEMBER = 'member';
+    public const VISIBILITY_PRIVATE = 'private';
+    public const VISIBILITY_ADMINISTRATOR = 'administrator';
+    public const VISIBILITY_MEMBER = 'member';
 
     /**
      * @var string

@@ -38,24 +38,24 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Someone who is a normal user, not part of AAI
      */
-    const TYPE_DEFAULT = 'default';
+    public const TYPE_DEFAULT = 'default';
 
     /**
      * Someone who log in via AAI system
      */
-    const TYPE_AAI = 'aai';
+    public const TYPE_AAI = 'aai';
 
     /**
      * Empty shell used for legacy
      */
-    const TYPE_LEGACY = 'legacy';
+    public const TYPE_LEGACY = 'legacy';
 
-    const ROLE_ANONYMOUS = 'anonymous';
-    const ROLE_STUDENT = 'student';
-    const ROLE_JUNIOR = 'junior';
-    const ROLE_SENIOR = 'senior';
-    const ROLE_MAJOR = 'major';
-    const ROLE_ADMINISTRATOR = 'administrator';
+    public const ROLE_ANONYMOUS = 'anonymous';
+    public const ROLE_STUDENT = 'student';
+    public const ROLE_JUNIOR = 'junior';
+    public const ROLE_SENIOR = 'senior';
+    public const ROLE_MAJOR = 'major';
+    public const ROLE_ADMINISTRATOR = 'administrator';
 
     private static ?User $currentUser = null;
 
