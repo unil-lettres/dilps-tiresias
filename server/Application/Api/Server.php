@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Api;
 
 /**
- * A thin wrapper to serve GraphQL via HTTP or CLI
+ * A thin wrapper to serve GraphQL via HTTP or CLI.
  */
 class Server extends \Ecodev\Felix\Api\Server
 {

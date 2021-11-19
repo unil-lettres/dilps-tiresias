@@ -16,7 +16,7 @@ use Ecodev\Felix\Utility;
 use GraphQL\Type\Definition\Type;
 
 /**
- * Custom implementation to inject lots of cards via collection without loading each cards
+ * Custom implementation to inject lots of cards via collection without loading each cards.
  */
 class CreateExport implements FieldInterface
 {

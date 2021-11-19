@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * An artist
+ * An artist.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\ArtistRepository")
  * @ORM\Table(uniqueConstraints={

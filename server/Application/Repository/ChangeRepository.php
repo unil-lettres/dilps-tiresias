@@ -11,7 +11,7 @@ use Application\Model\User;
 class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
-     * Get an open change for the given suggestion
+     * Get an open change for the given suggestion.
      */
     public function getOrCreate(string $type, Card $card, string $request, string $site): Change
     {

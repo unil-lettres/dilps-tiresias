@@ -7,7 +7,7 @@ namespace Application\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait for all objects with an optional year range
+ * Trait for all objects with an optional year range.
  */
 trait HasYearRange
 {
@@ -26,7 +26,7 @@ trait HasYearRange
     private $to;
 
     /**
-     * Return the from year
+     * Return the from year.
      */
     public function getFrom(): ?int
     {
@@ -39,7 +39,7 @@ trait HasYearRange
     }
 
     /**
-     * Return the to year
+     * Return the to year.
      */
     public function getTo(): ?int
     {

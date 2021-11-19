@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * A tag
+ * A tag.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\TagRepository")
  */

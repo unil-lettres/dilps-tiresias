@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class SiteFactory
 {
     /**
-     * Return the current site, dilps or tiresias, from the request host name
+     * Return the current site, dilps or tiresias, from the request host name.
      */
     public function __invoke(ContainerInterface $container): string
     {

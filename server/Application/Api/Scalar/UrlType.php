@@ -14,7 +14,7 @@ class UrlType extends AbstractStringBasedType
     public $description = 'An absolute web URL that must start with `http` or `https` or be empty.';
 
     /**
-     * Validate an URL
+     * Validate an URL.
      *
      * @param mixed $value
      */

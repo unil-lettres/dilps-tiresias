@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * Trait for all objects with file size
+ * Trait for all objects with file size.
  */
 trait HasFileSize
 {
@@ -19,7 +19,7 @@ trait HasFileSize
     private $fileSize = 0;
 
     /**
-     * Get file size in bytes
+     * Get file size in bytes.
      */
     public function getFileSize(): int
     {
@@ -27,7 +27,7 @@ trait HasFileSize
     }
 
     /**
-     * Set file size in bytes
+     * Set file size in bytes.
      *
      * @API\Exclude
      */

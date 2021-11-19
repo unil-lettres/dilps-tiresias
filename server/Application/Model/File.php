@@ -12,7 +12,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 /**
- * An uploaded file that is related to a card (pdf/docx/xlsx/etc.)
+ * An uploaded file that is related to a card (pdf/docx/xlsx/etc.).
  *
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\Repository\FileRepository")
@@ -32,10 +32,10 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
      */
     private $card;
 
-    use HasName;
     use \Ecodev\Felix\Model\Traits\File {
         setFile as traitSetFile;
     }
+    use HasName;
 
     public function setCard(Card $card): void
     {
@@ -48,7 +48,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
     }
 
     /**
-     * Set the file
+     * Set the file.
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
      */

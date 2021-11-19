@@ -21,7 +21,7 @@ use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * User
+ * User.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
  * @ORM\Table(uniqueConstraints={
@@ -32,21 +32,21 @@ use GraphQL\Doctrine\Annotation as API;
 class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInterface
 {
     use HasInstitution;
-    use HasSite;
     use HasName;
+    use HasSite;
 
     /**
-     * Someone who is a normal user, not part of AAI
+     * Someone who is a normal user, not part of AAI.
      */
     public const TYPE_DEFAULT = 'default';
 
     /**
-     * Someone who log in via AAI system
+     * Someone who log in via AAI system.
      */
     public const TYPE_AAI = 'aai';
 
     /**
-     * Empty shell used for legacy
+     * Empty shell used for legacy.
      */
     public const TYPE_LEGACY = 'legacy';
 
@@ -68,7 +68,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Set currently logged in user
-     * WARNING: this method should only be called from \Application\Authentication\AuthenticationListener
+     * WARNING: this method should only be called from \Application\Authentication\AuthenticationListener.
      *
      * @param User $user
      */
@@ -86,7 +86,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Returns currently logged user or null
+     * Returns currently logged user or null.
      */
     public static function getCurrent(): ?self
     {
@@ -95,7 +95,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * After a `_em()->clear()` this will reload the current user, if any, in order
-     * to refresh all data and relations and keep everything else working
+     * to refresh all data and relations and keep everything else working.
      */
     public static function reloadCurrentUser(): void
     {
@@ -153,7 +153,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     private $type = self::TYPE_DEFAULT;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $role role for new user
      */
@@ -164,7 +164,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Set login (eg: johndoe)
+     * Set login (eg: johndoe).
      *
      * @API\Input(type="Application\Api\Scalar\LoginType")
      */
@@ -174,7 +174,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get login (eg: johndoe)
+     * Get login (eg: johndoe).
      *
      * @API\Field(type="Application\Api\Scalar\LoginType")
      */
@@ -184,7 +184,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Encrypt and change the user password
+     * Encrypt and change the user password.
      */
     public function setPassword(string $password): void
     {
@@ -198,7 +198,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Returns the hashed password
+     * Returns the hashed password.
      *
      * @API\Exclude
      */
@@ -208,7 +208,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @API\Input(type="?Email")
      */
@@ -218,7 +218,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @API\Field(type="?Email")
      */
@@ -228,7 +228,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get the user role
+     * Get the user role.
      *
      * @API\Field(type="UserRole")
      */
@@ -238,7 +238,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Sets the user role
+     * Sets the user role.
      *
      * @API\Input(type="UserRole")
      */
@@ -254,7 +254,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * The date until the user is active. Or `null` if there is not limit in time
+     * The date until the user is active. Or `null` if there is not limit in time.
      */
     public function getActiveUntil(): ?Chronos
     {
@@ -262,7 +262,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * The date until the user is active. Or `null` if there is not limit in time
+     * The date until the user is active. Or `null` if there is not limit in time.
      */
     public function setActiveUntil(?Chronos $activeUntil): void
     {
@@ -270,7 +270,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * The date when the user agreed to the terms of usage
+     * The date when the user agreed to the terms of usage.
      */
     public function getTermsAgreement(): ?Chronos
     {
@@ -288,7 +288,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Set user type
+     * Set user type.
      *
      * @API\Input(type="Application\Api\Enum\UserTypeType")
      */
@@ -298,7 +298,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get user type
+     * Get user type.
      *
      * @API\Field(type="Application\Api\Enum\UserTypeType")
      */
@@ -308,7 +308,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get a list of global permissions for this user
+     * Get a list of global permissions for this user.
      *
      * @API\Field(type="GlobalPermissionsList")
      */
@@ -362,7 +362,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Notify the Card that it was added to a Collection.
-     * This should only be called by Collection::addCard()
+     * This should only be called by Collection::addCard().
      */
     public function collectionAdded(Collection $collection): void
     {
@@ -371,7 +371,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Notify the Card that it was removed from a Collection.
-     * This should only be called by Collection::removeCard()
+     * This should only be called by Collection::removeCard().
      */
     public function collectionRemoved(Collection $collection): void
     {

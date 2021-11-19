@@ -14,7 +14,7 @@ class LoginType extends AbstractStringBasedType
     public $description = 'A user login is a non-empty string containing only letters, digits, `.` and `-`.';
 
     /**
-     * Validate a login
+     * Validate a login.
      *
      * @param mixed $value
      */

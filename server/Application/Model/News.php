@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * A news
+ * A news.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\NewsRepository")
  */
@@ -21,10 +21,10 @@ class News extends AbstractModel implements HasSiteInterface
 {
     private const IMAGE_PATH = 'htdocs/news-images/';
 
-    use HasName;
-    use HasSorting;
     use HasImage;
+    use HasName;
     use HasSite;
+    use HasSorting;
     use HasUrl;
 
     /**
@@ -41,7 +41,7 @@ class News extends AbstractModel implements HasSiteInterface
     private $isActive = false;
 
     /**
-     * Set description
+     * Set description.
      */
     public function setDescription(string $description): void
     {
@@ -49,7 +49,7 @@ class News extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Get description
+     * Get description.
      */
     public function getDescription(): string
     {
@@ -57,7 +57,7 @@ class News extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Relative URL to image
+     * Relative URL to image.
      */
     public function getImageUrl(): string
     {

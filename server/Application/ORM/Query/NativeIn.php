@@ -26,7 +26,7 @@ class NativeIn extends FunctionNode
     private $isNot;
 
     /**
-     * Generate DQL `IN` clause with a native subquery
+     * Generate DQL `IN` clause with a native subquery.
      *
      * @param string $field DQL for the field
      * @param string $nativeSql native SQL subquery

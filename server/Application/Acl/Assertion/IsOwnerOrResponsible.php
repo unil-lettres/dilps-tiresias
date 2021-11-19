@@ -18,7 +18,7 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 class IsOwnerOrResponsible implements AssertionInterface
 {
     /**
-     * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of
+     * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of.
      *
      * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role

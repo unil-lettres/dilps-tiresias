@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * An antique / ancient name
+ * An antique / ancient name.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\AntiqueNameRepository")
  */

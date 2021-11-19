@@ -8,7 +8,7 @@ use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait for all objects with a richt text name and an automatic plain version (to sort and filter on)
+ * Trait for all objects with a richt text name and an automatic plain version (to sort and filter on).
  */
 trait HasRichTextName
 {
@@ -25,7 +25,7 @@ trait HasRichTextName
     private $plainName = '';
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $name
      */
@@ -35,7 +35,7 @@ trait HasRichTextName
     }
 
     /**
-     * Set name
+     * Set name.
      */
     public function setName(string $name): void
     {
@@ -44,7 +44,7 @@ trait HasRichTextName
     }
 
     /**
-     * Get name
+     * Get name.
      */
     public function getName(): string
     {

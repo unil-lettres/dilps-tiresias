@@ -66,7 +66,7 @@ class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\R
     }
 
     /**
-     * Duplicate all accessible images from source collection into target collection
+     * Duplicate all accessible images from source collection into target collection.
      */
     public function linkCollectionToCollection(Collection $sourceCollection, Collection $targetCollection): void
     {

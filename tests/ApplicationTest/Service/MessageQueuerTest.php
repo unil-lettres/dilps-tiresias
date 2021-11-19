@@ -75,7 +75,7 @@ class MessageQueuerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Custom assert that will not produce gigantic diff
+     * Custom assert that will not produce gigantic diff.
      */
     private function assertFile(string $file, string $actual): void
     {

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
 /**
- * A statistic to record activity per month
+ * A statistic to record activity per month.
  *
  * - "Page" is any visited pages
  * - "Detail" is the detail page of a card
@@ -28,7 +28,7 @@ class Statistic extends AbstractModel implements HasSiteInterface
     use HasSite;
 
     /**
-     * A year and month, eg: '2019-02'
+     * A year and month, eg: '2019-02'.
      *
      * @var string
      *

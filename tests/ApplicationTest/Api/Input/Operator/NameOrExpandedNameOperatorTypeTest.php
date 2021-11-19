@@ -21,7 +21,7 @@ class NameOrExpandedNameOperatorTypeTest extends \PHPUnit\Framework\TestCase
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '(a.name LIKE :filter1 OR a.expandedName LIKE :filter1)';
+        $expected = '(a.expandedName LIKE :filter1 OR a.name LIKE :filter1)';
         self::assertSame($expected, $actual);
 
         $joins = $qb->getDQLPart('join');

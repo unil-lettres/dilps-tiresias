@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * A country
+ * A country.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\CountryRepository")
  */
@@ -23,7 +23,7 @@ class Country extends AbstractModel
     private $code = '';
 
     /**
-     * Set ISO 3166-1 alpha-2 country code
+     * Set ISO 3166-1 alpha-2 country code.
      */
     public function setCode(string $code): void
     {
@@ -31,7 +31,7 @@ class Country extends AbstractModel
     }
 
     /**
-     * Get ISO 3166-1 alpha-2 country code
+     * Get ISO 3166-1 alpha-2 country code.
      */
     public function getCode(): string
     {

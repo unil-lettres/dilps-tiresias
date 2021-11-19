@@ -34,9 +34,7 @@ class NativeInTest extends TestCase
     public function testNativeIn(string $dql, string $expected): void
     {
         $query = _em()->createQuery($dql);
-        $actual = _em()->getRepository(User::class)->getAclFilter()->runWithoutAcl(function () use ($query) {
-            return $query->getSQL();
-        });
+        $actual = _em()->getRepository(User::class)->getAclFilter()->runWithoutAcl(fn () => $query->getSQL());
 
         self::assertSame($expected, $actual);
     }

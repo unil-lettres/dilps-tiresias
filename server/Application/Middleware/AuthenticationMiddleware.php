@@ -27,7 +27,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Load current user from session if exists and still valid
+     * Load current user from session if exists and still valid.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -56,7 +56,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Check if Shibboleth session is available and if the user is already created in the database
+     * Check if Shibboleth session is available and if the user is already created in the database.
      */
     private function shibboleth(SessionInterface $session, array $serverParams): void
     {
@@ -83,7 +83,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Generate login for aai users based on received attributes
+     * Generate login for aai users based on received attributes.
      *
      * @return string $login
      */

@@ -11,7 +11,7 @@ class FileRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     /**
      * Returns pure SQL to get ID of all files that are accessible to given user.
      * A file is accessible if:
-     * - the file card is accessible
+     * - the file card is accessible.
      */
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {

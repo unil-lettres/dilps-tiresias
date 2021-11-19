@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * A domain
+ * A domain.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\DomainRepository")
  */

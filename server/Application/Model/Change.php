@@ -59,7 +59,7 @@ class Change extends AbstractModel implements HasSiteInterface
     private $request = '';
 
     /**
-     * Get the type of change
+     * Get the type of change.
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
      */
@@ -69,7 +69,7 @@ class Change extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Set the type of change
+     * Set the type of change.
      *
      * @API\Field(type="Application\Api\Enum\ChangeTypeType")
      */
@@ -79,7 +79,7 @@ class Change extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Get the original card on which to apply change
+     * Get the original card on which to apply change.
      *
      * It will be `null` if the change type is `create`, otherwise
      * it mus be set.
@@ -90,7 +90,7 @@ class Change extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Set the original card on which to apply change
+     * Set the original card on which to apply change.
      */
     public function setOriginal(?Card $original): void
     {
@@ -122,7 +122,7 @@ class Change extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Get the message from the submitter explaining the reason of the change request
+     * Get the message from the submitter explaining the reason of the change request.
      */
     public function getRequest(): string
     {
@@ -130,7 +130,7 @@ class Change extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Set the message from the submitter explaining the reason of the change request
+     * Set the message from the submitter explaining the reason of the change request.
      */
     public function setRequest(string $request): void
     {

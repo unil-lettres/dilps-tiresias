@@ -9,7 +9,7 @@ use Application\Model\Institution;
 class InstitutionRepository extends AbstractRepository
 {
     /**
-     * Get or create an institution by its name
+     * Get or create an institution by its name.
      *
      * @return Institution
      */

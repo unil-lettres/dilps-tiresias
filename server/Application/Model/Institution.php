@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * An institution
+ * An institution.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\InstitutionRepository")
  * @ORM\Table(indexes={
@@ -24,7 +24,7 @@ use Ecodev\Felix\Model\Traits\HasName;
  */
 class Institution extends AbstractModel implements HasSiteInterface
 {
-    use HasName;
     use HasAddress;
+    use HasName;
     use HasSite;
 }

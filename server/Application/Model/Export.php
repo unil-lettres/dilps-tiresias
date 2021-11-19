@@ -17,7 +17,7 @@ use GraphQL\Doctrine\Annotation as API;
 use Throwable;
 
 /**
- * An export of cards in various format
+ * An export of cards in various format.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\ExportRepository")
  */
@@ -25,8 +25,8 @@ class Export extends AbstractModel implements HasSiteInterface
 {
     private const EXPORT_PATH = 'htdocs/export/';
 
-    use HasSite;
     use HasFileSize;
+    use HasSite;
 
     /**
      * Number of card exported.
@@ -89,7 +89,7 @@ class Export extends AbstractModel implements HasSiteInterface
     private $backgroundColor = '#000000';
 
     /**
-     * Start time of export process
+     * Start time of export process.
      *
      * @var null|Chronos
      * @ORM\Column(type="datetime", nullable=true)
@@ -97,7 +97,7 @@ class Export extends AbstractModel implements HasSiteInterface
     private $start;
 
     /**
-     * Duration of export process in seconds
+     * Duration of export process in seconds.
      *
      * @var null|int
      * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
@@ -105,7 +105,7 @@ class Export extends AbstractModel implements HasSiteInterface
     private $duration;
 
     /**
-     * Peak memory usage in MiB
+     * Peak memory usage in MiB.
      *
      * @var null|int
      * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
@@ -148,7 +148,7 @@ class Export extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Get absolute path to export on disk
+     * Get absolute path to export on disk.
      *
      * @API\Exclude
      */

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 /**
- * A field to arbitrarily sort records
+ * A field to arbitrarily sort records.
  */
 trait HasSorting
 {
@@ -17,7 +17,7 @@ trait HasSorting
     private $sorting = 0;
 
     /**
-     * Set sorting
+     * Set sorting.
      */
     public function setSorting(int $sorting): void
     {
@@ -25,7 +25,7 @@ trait HasSorting
     }
 
     /**
-     * Get sorting
+     * Get sorting.
      */
     public function getSorting(): int
     {

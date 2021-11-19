@@ -7,26 +7,26 @@ namespace Application\Traits;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Any object which has a parent, modeling a hierarchy of objects
+ * Any object which has a parent, modeling a hierarchy of objects.
  */
 interface HasParentInterface
 {
     /**
-     * Get name
+     * Get name.
      */
     public function getName(): string;
 
     public function getHierarchicName(): string;
 
     /**
-     * Returns the parent, or null if this is a root object
+     * Returns the parent, or null if this is a root object.
      *
      * @return null|HasParentInterface
      */
     public function getParent(): ?self;
 
     /**
-     * Get children objects
+     * Get children objects.
      */
     public function getChildren(): Collection;
 

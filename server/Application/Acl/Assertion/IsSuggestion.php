@@ -14,7 +14,7 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 class IsSuggestion implements AssertionInterface
 {
     /**
-     * Assert that the card is a suggestion (has a change)
+     * Assert that the card is a suggestion (has a change).
      *
      * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role

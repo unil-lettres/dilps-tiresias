@@ -19,7 +19,7 @@ class CollectionFetcherMiddleware extends AbstractMiddleware
     }
 
     /**
-     * Fetch multiples cards from their ID
+     * Fetch multiples cards from their ID.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

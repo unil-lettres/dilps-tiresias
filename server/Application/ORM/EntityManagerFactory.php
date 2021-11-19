@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 class EntityManagerFactory
 {
     /**
-     * Return the preferred driver available on this system
+     * Return the preferred driver available on this system.
      *
      * @return \Doctrine\ORM\EntityManager
      */

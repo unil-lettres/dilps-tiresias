@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * Trait for all objects with an URL
+ * Trait for all objects with an URL.
  */
 trait HasUrl
 {

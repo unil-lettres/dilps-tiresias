@@ -9,7 +9,7 @@ use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerInterface;
 
-/**
+/*
  * Setup routes with a single request method:
  *
  * $app->get('/', App\Handler\HomePageHandler::class, 'home');
@@ -36,7 +36,7 @@ use Psr\Container\ContainerInterface;
  * );
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    /** @var \Mezzio\Application $app */
+    // @var \Mezzio\Application $app
     $app->post('/graphql', [
         BodyParamsMiddleware::class,
         UploadMiddleware::class,

@@ -23,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Serve XLSX template file
+ * Serve XLSX template file.
  */
 class TemplateHandler implements RequestHandlerInterface
 {
@@ -75,7 +75,7 @@ class TemplateHandler implements RequestHandlerInterface
     }
 
     /**
-     * Serve multiples cards as PowerPoint file
+     * Serve multiples cards as PowerPoint file.
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -85,7 +85,7 @@ class TemplateHandler implements RequestHandlerInterface
     }
 
     /**
-     * Export all cards into a presentation
+     * Export all cards into a presentation.
      */
     private function export(): Spreadsheet
     {

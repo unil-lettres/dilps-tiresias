@@ -9,7 +9,7 @@ use Application\Repository\InstitutionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait for all objects belonging to an institution
+ * Trait for all objects belonging to an institution.
  */
 trait HasInstitution
 {
@@ -25,7 +25,7 @@ trait HasInstitution
     abstract public function getSite(): string;
 
     /**
-     * Get the institution this object belongs to
+     * Get the institution this object belongs to.
      */
     public function getInstitution(): ?Institution
     {

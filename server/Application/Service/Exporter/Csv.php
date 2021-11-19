@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\Collection;
 use Ecodev\Felix\Api\Exception;
 
 /**
- * Export multiples cards as CSV file
+ * Export multiples cards as CSV file.
  */
 class Csv implements Writer
 {

@@ -17,18 +17,18 @@ use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * A collection of cards
+ * A collection of cards.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
  * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
  */
 class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
-    use HasName;
     use HasInstitution;
-    use HasSorting;
+    use HasName;
     use HasParent;
     use HasSite;
+    use HasSorting;
 
     public const VISIBILITY_PRIVATE = 'private';
     public const VISIBILITY_ADMINISTRATOR = 'administrator';
@@ -90,7 +90,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     private $users;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -99,7 +99,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Return whether this is publicly available to only to member, or only administrators, or only owner
+     * Return whether this is publicly available to only to member, or only administrators, or only owner.
      *
      * @API\Field(type="Application\Api\Enum\CollectionVisibilityType")
      */
@@ -109,7 +109,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Set whether this is publicly available to only to member, or only administrators, or only owner
+     * Set whether this is publicly available to only to member, or only administrators, or only owner.
      *
      * @API\Input(type="Application\Api\Enum\CollectionVisibilityType")
      */
@@ -119,7 +119,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Set description
+     * Set description.
      */
     public function setDescription(string $description): void
     {
@@ -127,7 +127,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Get description
+     * Get description.
      */
     public function getDescription(): string
     {
@@ -135,7 +135,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Returns whether the collection is a source ("main" collection)
+     * Returns whether the collection is a source ("main" collection).
      */
     public function isSource(): bool
     {
@@ -143,7 +143,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Set whether the collection is a source ("main" collection)
+     * Set whether the collection is a source ("main" collection).
      */
     public function setIsSource(bool $isSource): void
     {
@@ -151,7 +151,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Set copyrights
+     * Set copyrights.
      */
     public function setCopyrights(string $copyrights): void
     {
@@ -159,7 +159,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Get copyrights
+     * Get copyrights.
      */
     public function getCopyrights(): string
     {
@@ -167,7 +167,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Set usageRights
+     * Set usageRights.
      *
      * @param string $usageRights
      */
@@ -177,7 +177,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Get usageRights
+     * Get usageRights.
      */
     public function getUsageRights(): string
     {
@@ -185,7 +185,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @API\Field(type="User[]")
      */
@@ -195,7 +195,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Add User
+     * Add User.
      */
     public function addUser(User $user): void
     {
@@ -205,7 +205,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Remove User
+     * Remove User.
      */
     public function removeUser(User $user): void
     {

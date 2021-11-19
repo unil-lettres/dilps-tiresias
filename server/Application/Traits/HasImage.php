@@ -12,7 +12,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 /**
- * Trait for all objects with a name
+ * Trait for all objects with a name.
  */
 trait HasImage
 {
@@ -24,7 +24,7 @@ trait HasImage
     private $filename = '';
 
     /**
-     * Set the image file
+     * Set the image file.
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
      */
@@ -46,7 +46,7 @@ trait HasImage
     }
 
     /**
-     * Set filename (without path)
+     * Set filename (without path).
      *
      * @API\Exclude
      */
@@ -56,7 +56,7 @@ trait HasImage
     }
 
     /**
-     * Get filename (without path)
+     * Get filename (without path).
      *
      * @API\Exclude
      */
@@ -71,7 +71,7 @@ trait HasImage
     }
 
     /**
-     * Get absolute path to image on disk
+     * Get absolute path to image on disk.
      *
      * @API\Exclude
      */
@@ -117,7 +117,7 @@ trait HasImage
     }
 
     /**
-     * Delete file and throw exception if MIME type is invalid
+     * Delete file and throw exception if MIME type is invalid.
      */
     private function validateMimeType(): void
     {
@@ -146,7 +146,7 @@ trait HasImage
     }
 
     /**
-     * Generate unique filename while trying to preserver original extension
+     * Generate unique filename while trying to preserver original extension.
      */
     private function generateUniqueFilename(string $originalFilename): void
     {

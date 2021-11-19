@@ -24,10 +24,10 @@ use GraphQL\Doctrine\Annotation as API;
 class Period extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
-    use HasSorting;
     use HasParent;
-    use HasYearRange;
     use HasSite;
+    use HasSorting;
+    use HasYearRange;
 
     /**
      * @var null|Period
@@ -53,7 +53,7 @@ class Period extends AbstractModel implements HasParentInterface, HasSiteInterfa
     }
 
     /**
-     * Get children periods
+     * Get children periods.
      *
      * @API\Field(type="Period[]")
      */

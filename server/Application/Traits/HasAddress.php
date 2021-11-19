@@ -69,7 +69,7 @@ trait HasAddress
     private $country;
 
     /**
-     * Get latitude
+     * Get latitude.
      */
     public function getLatitude(): ?float
     {
@@ -77,7 +77,7 @@ trait HasAddress
     }
 
     /**
-     * Set latitude
+     * Set latitude.
      */
     public function setLatitude(?float $latitude): void
     {
@@ -95,7 +95,7 @@ trait HasAddress
     }
 
     /**
-     * Get longitude
+     * Get longitude.
      */
     public function getLongitude(): ?float
     {
@@ -103,7 +103,7 @@ trait HasAddress
     }
 
     /**
-     * Set longitude
+     * Set longitude.
      */
     public function setLongitude(?float $longitude): void
     {

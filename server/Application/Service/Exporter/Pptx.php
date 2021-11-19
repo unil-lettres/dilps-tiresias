@@ -19,7 +19,7 @@ use PhpOffice\PhpPresentation\Style\Color;
 use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
 
 /**
- * Export multiples cards as PowerPoint file
+ * Export multiples cards as PowerPoint file.
  */
 class Pptx implements Writer
 {

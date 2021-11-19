@@ -13,7 +13,7 @@ use Laminas\Mail\Transport\TransportInterface;
 class MailerFactory
 {
     /**
-     * Return a configured mailer
+     * Return a configured mailer.
      */
     public function __invoke(ContainerInterface $container): Mailer
     {

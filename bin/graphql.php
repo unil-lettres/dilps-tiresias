@@ -3,7 +3,7 @@
 
 /**
  * A script to run a GraphQL query and print result as JSON
- * This is useful to introspect the entire schema for JS unit tests
+ * This is useful to introspect the entire schema for JS unit tests.
  */
 use Application\Api\Server;
 use Application\DBAL\Types\SiteType;

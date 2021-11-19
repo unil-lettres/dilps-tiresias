@@ -11,7 +11,7 @@ use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
 
 /**
- * Custom implementation to have an optional collection
+ * Custom implementation to have an optional collection.
  */
 class CreateCard implements FieldInterface
 {

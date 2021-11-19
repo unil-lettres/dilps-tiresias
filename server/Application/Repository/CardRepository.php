@@ -35,7 +35,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card is public
      * - card is member and user is logged in
      * - card owner or creator is the user
-     * - card's collection responsible is the user
+     * - card's collection responsible is the user.
      */
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
@@ -68,7 +68,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     }
 
     /**
-     * Returns all filename in DB and their id and sizes
+     * Returns all filename in DB and their id and sizes.
      *
      * @return string[][]
      */
@@ -92,7 +92,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     }
 
     /**
-     * Return the next available code
+     * Return the next available code.
      */
     public function getNextCodeAvailable(Collection $collection): string
     {
@@ -128,7 +128,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
     }
 
     /**
-     * Returns **some** cards for the given export, starting at $firstResult
+     * Returns **some** cards for the given export, starting at $firstResult.
      *
      * This method has to be called repeatedly with a different $firstResult in order
      * to iterate over **all** cards of a given export
@@ -155,8 +155,6 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->setParameter('cards', $cardIds)
             ->orderBy('card.id');
 
-        return $this->getAclFilter()->runWithoutAcl(function () use ($qb) {
-            return $qb->getQuery()->getResult();
-        });
+        return $this->getAclFilter()->runWithoutAcl(fn () => $qb->getQuery()->getResult());
     }
 }

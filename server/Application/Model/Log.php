@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * Log
+ * Log.
  *
  * @ORM\Table(indexes={
  *     @ORM\Index(name="priority", columns={"creation_date"}),

@@ -10,7 +10,7 @@ if (!$id) {
     throw new InvalidArgumentException('Specify the ID of the export to be exported');
 }
 
-/** @var Exporter $exporter */
+// @var Exporter $exporter
 try {
     $exporter = $container->get(Exporter::class);
     $exporter->exportAndSendMessage($id);

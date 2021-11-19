@@ -11,7 +11,7 @@ use Ecodev\Felix\Api\Exception;
 class UserRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
-     * Returns the user authenticated by its login and password
+     * Returns the user authenticated by its login and password.
      */
     public function getLoginPassword(string $login, string $password, string $site): ?User
     {
@@ -67,9 +67,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      */
     public function getOneById(int $id): ?User
     {
-        $user = $this->getAclFilter()->runWithoutAcl(function () use ($id) {
-            return $this->findOneById($id);
-        });
+        $user = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneById($id));
 
         return $user;
     }

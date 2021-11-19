@@ -24,7 +24,7 @@ class ImageHandler extends AbstractHandler
     }
 
     /**
-     * Serve an image from disk, with optional dynamic resizing
+     * Serve an image from disk, with optional dynamic resizing.
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

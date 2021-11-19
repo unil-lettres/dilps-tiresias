@@ -9,7 +9,7 @@ use Application\Model\Artist;
 class ArtistRepository extends AbstractRepository
 {
     /**
-     * Get or create artists by their given names
+     * Get or create artists by their given names.
      *
      * @param string[] $names
      *
@@ -22,9 +22,7 @@ class ArtistRepository extends AbstractRepository
         }
 
         // Dedup and trim whitespaces
-        $names = array_unique(array_map(function ($value) {
-            return trim($value);
-        }, $names));
+        $names = array_unique(array_map(fn ($value) => trim($value), $names));
 
         $artists = $this->findBy([
             'name' => $names,

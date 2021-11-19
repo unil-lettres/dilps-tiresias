@@ -15,8 +15,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class TemplateHandlerTest extends TestCase
 {
-    use TestWithTransaction;
     use TestWithSpreadsheet;
+    use TestWithTransaction;
 
     public function testProcess(): void
     {

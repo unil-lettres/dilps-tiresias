@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
 /**
- * Trait for all objects with a site to separate them from each other
+ * Trait for all objects with a site to separate them from each other.
  */
 trait HasSite
 {

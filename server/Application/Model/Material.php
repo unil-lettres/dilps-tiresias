@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
 
 /**
- * A material
+ * A material.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\MaterialRepository")
  */

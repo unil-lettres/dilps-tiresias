@@ -11,7 +11,7 @@ use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Doctrine\Sorting\SortingInterface;
 
 /**
- * Sort items by their owner's full name
+ * Sort items by their owner's full name.
  */
 class Owner implements SortingInterface
 {

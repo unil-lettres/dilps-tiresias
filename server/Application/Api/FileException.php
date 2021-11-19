@@ -8,7 +8,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 /**
- * Exception when something goes wrong with a file upload
+ * Exception when something goes wrong with a file upload.
  */
 class FileException extends \Ecodev\Felix\Api\Exception
 {

@@ -16,7 +16,7 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 class SameSite implements AssertionInterface
 {
     /**
-     * Assert that the object has been created by the current user
+     * Assert that the object has been created by the current user.
      *
      * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role

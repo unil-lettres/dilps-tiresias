@@ -61,7 +61,7 @@ class DatingYearRangeOperatorType extends AbstractOperator
     }
 
     /**
-     * Return DQL to match a period defined by `to` and `from` fields on the $alias table with the period defined by $from and $to DQL parameter names
+     * Return DQL to match a period defined by `to` and `from` fields on the $alias table with the period defined by $from and $to DQL parameter names.
      */
     public static function matchPeriods(string $alias, string $from, string $to): string
     {

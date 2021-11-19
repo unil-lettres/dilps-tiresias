@@ -10,7 +10,7 @@ namespace Application\Repository;
 trait HasName
 {
     /**
-     * Returns an array of fullNames and their ID for all domains
+     * Returns an array of fullNames and their ID for all domains.
      */
     public function getNames(): array
     {

@@ -45,7 +45,7 @@ class Dating extends AbstractModel
     private $card;
 
     /**
-     * Return the automatically computed beginning of dating period
+     * Return the automatically computed beginning of dating period.
      */
     public function getFrom(): Chronos
     {
@@ -61,7 +61,7 @@ class Dating extends AbstractModel
     }
 
     /**
-     * Return the automatically computed end of dating period
+     * Return the automatically computed end of dating period.
      */
     public function getTo(): Chronos
     {

@@ -54,7 +54,7 @@ trait HasParent
     }
 
     /**
-     * Get children
+     * Get children.
      */
     public function getChildren(): Collection
     {
@@ -62,7 +62,7 @@ trait HasParent
     }
 
     /**
-     * Has children
+     * Has children.
      */
     public function hasChildren(): bool
     {
@@ -83,7 +83,7 @@ trait HasParent
     }
 
     /**
-     * Get recursively all children and grand-children
+     * Get recursively all children and grand-children.
      *
      * @return HasParentInterface[]
      */

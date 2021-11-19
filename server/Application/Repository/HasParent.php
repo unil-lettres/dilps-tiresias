@@ -10,7 +10,7 @@ namespace Application\Repository;
 trait HasParent
 {
     /**
-     * Returns an array of fullNames and their ID for all domains
+     * Returns an array of fullNames and their ID for all domains.
      */
     public function getFullNames(): array
     {

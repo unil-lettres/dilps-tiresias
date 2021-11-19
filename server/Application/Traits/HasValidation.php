@@ -10,7 +10,7 @@ use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Fields to represent data and image validation
+ * Fields to represent data and image validation.
  */
 trait HasValidation
 {
@@ -43,7 +43,7 @@ trait HasValidation
     private $dataValidator;
 
     /**
-     * Get image validation date
+     * Get image validation date.
      */
     public function getImageValidationDate(): ?Chronos
     {
@@ -51,7 +51,7 @@ trait HasValidation
     }
 
     /**
-     * Get data validation date
+     * Get data validation date.
      */
     public function getDataValidationDate(): ?Chronos
     {
@@ -59,7 +59,7 @@ trait HasValidation
     }
 
     /**
-     * Get the user who validated the image
+     * Get the user who validated the image.
      */
     public function getImageValidator(): ?User
     {
@@ -67,7 +67,7 @@ trait HasValidation
     }
 
     /**
-     * Get the user who validated the data
+     * Get the user who validated the data.
      */
     public function getDataValidator(): ?User
     {
@@ -75,7 +75,7 @@ trait HasValidation
     }
 
     /**
-     * Mark the image as validated now by current user
+     * Mark the image as validated now by current user.
      */
     public function validateImage(): void
     {
@@ -84,7 +84,7 @@ trait HasValidation
     }
 
     /**
-     * Mark the data as validated now by current user
+     * Mark the data as validated now by current user.
      */
     public function validateData(): void
     {

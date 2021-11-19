@@ -75,7 +75,7 @@ class Exporter
     }
 
     /**
-     * Export immediately and return the v $export object
+     * Export immediately and return the v $export object.
      *
      * Because this method will indirectly clear the EntityManager any existing object
      * before calling this method will become invalid and must be re-fetched from DB.
@@ -156,7 +156,7 @@ class Exporter
     }
 
     /**
-     * Write all cards in small batches to avoid exploding PHP memory
+     * Write all cards in small batches to avoid exploding PHP memory.
      */
     private function writeCards(Writer $writer, Export $export): void
     {

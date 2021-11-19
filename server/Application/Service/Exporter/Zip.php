@@ -12,7 +12,7 @@ use Ecodev\Felix\Service\ImageResizer;
 use ZipArchive;
 
 /**
- * Export multiples cards as zip file
+ * Export multiples cards as zip file.
  */
 class Zip implements Writer
 {

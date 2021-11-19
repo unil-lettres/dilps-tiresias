@@ -30,7 +30,7 @@ abstract class Helper
         $paginator = new Paginator($query);
         $paginator
             ->getQuery()
-            ->setFirstResult($offset ? $offset : $pageSize * $pageIndex)
+            ->setFirstResult($offset ?: $pageSize * $pageIndex)
             ->setMaxResults($pageSize);
 
         $pagination['length'] = $paginator->count();

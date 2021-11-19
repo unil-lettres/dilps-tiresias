@@ -34,7 +34,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 /**
- * A card containing an image and some information about it
+ * A card containing an image and some information about it.
  *
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Application\Repository\CardRepository")
@@ -62,18 +62,18 @@ use Throwable;
  */
 class Card extends AbstractModel implements HasSiteInterface, Image
 {
-    use HasCode;
-    use HasRichTextName;
-    use HasInstitution;
-    use HasAddress;
     use CardSimpleProperties;
-    use HasValidation;
-    use HasYearRange;
-    use HasSite;
+    use HasAddress;
+    use HasCode;
     use HasFileSize;
     use HasImage {
         setFile as traitSetFile;
     }
+    use HasInstitution;
+    use HasRichTextName;
+    use HasSite;
+    use HasValidation;
+    use HasYearRange;
 
     private const IMAGE_PATH = 'data/images/';
 
@@ -189,7 +189,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * There is actually 0 to 1 change, never more. And this is
-     * enforced by DB unique constraints on the mapping side
+     * enforced by DB unique constraints on the mapping side.
      *
      * @var DoctrineCollection<Change>
      * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
@@ -209,7 +209,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $legacyId;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct(string $name = '')
     {
@@ -228,7 +228,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Return whether this is publicly available to everybody, or only member, or only owner
+     * Return whether this is publicly available to everybody, or only member, or only owner.
      *
      * @API\Field(type="Application\Api\Enum\CardVisibilityType")
      */
@@ -238,7 +238,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set whether this is publicly available to everybody, or only member, or only owner
+     * Set whether this is publicly available to everybody, or only member, or only owner.
      *
      * @API\Input(type="Application\Api\Enum\CardVisibilityType")
      */
@@ -257,7 +257,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get collections this card belongs to
+     * Get collections this card belongs to.
      *
      * @API\Field(type="Collection[]")
      */
@@ -310,7 +310,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Return the automatically computed dating periods
+     * Return the automatically computed dating periods.
      *
      * @API\Field(type="Dating[]")
      */
@@ -428,9 +428,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     {
         $collection->clear();
 
-        $ids = array_map(function (EntityID $m) {
-            return $m->getId();
-        }, $entityIds);
+        $ids = array_map(fn (EntityID $m) => $m->getId(), $entityIds);
 
         $repository = _em()->getRepository($class);
         $objects = $repository->findBy([
@@ -444,7 +442,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get artists
+     * Get artists.
      *
      * @API\Field(type="Artist[]")
      */
@@ -454,7 +452,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get antiqueNames
+     * Get antiqueNames.
      *
      * @API\Field(type="AntiqueName[]")
      */
@@ -464,7 +462,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add tag
+     * Add tag.
      */
     public function addTag(Tag $tag): void
     {
@@ -475,7 +473,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Remove tag
+     * Remove tag.
      */
     public function removeTag(Tag $tag): void
     {
@@ -484,7 +482,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @API\Field(type="Tag[]")
      */
@@ -494,7 +492,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * The original card if this is a suggestion
+     * The original card if this is a suggestion.
      *
      * @return null|Card
      */
@@ -504,7 +502,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Defines this card as suggestion for the $original
+     * Defines this card as suggestion for the $original.
      *
      * @param null|Card $original
      */
@@ -524,7 +522,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get domains
+     * Get domains.
      *
      * @API\Field(type="Domain[]")
      */
@@ -534,7 +532,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add Domain
+     * Add Domain.
      */
     public function addDomain(Domain $domain): void
     {
@@ -544,7 +542,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get periods
+     * Get periods.
      *
      * @API\Field(type="Period[]")
      */
@@ -554,7 +552,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add Period
+     * Add Period.
      */
     public function addPeriod(Period $period): void
     {
@@ -564,7 +562,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Remove Period
+     * Remove Period.
      */
     public function removePeriod(Period $period): void
     {
@@ -572,7 +570,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get materials
+     * Get materials.
      *
      * @API\Field(type="Material[]")
      */
@@ -582,7 +580,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add Material
+     * Add Material.
      */
     public function addMaterial(Material $material): void
     {
@@ -594,7 +592,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Remove Material
+     * Remove Material.
      */
     public function removeMaterial(Material $material): void
     {
@@ -603,7 +601,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add this card into the given collection
+     * Add this card into the given collection.
      */
     public function addCollection(Collection $collection): void
     {
@@ -621,7 +619,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Remove this card from given collection
+     * Remove this card from given collection.
      */
     public function removeCollection(Collection $collection): void
     {
@@ -630,7 +628,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Notify the Card that a Dating was added.
-     * This should only be called by Dating::setCard()
+     * This should only be called by Dating::setCard().
      */
     public function datingAdded(Dating $dating): void
     {
@@ -639,7 +637,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Notify the Card that a Dating was removed.
-     * This should only be called by Dating::setCard()
+     * This should only be called by Dating::setCard().
      */
     public function datingRemoved(Dating $dating): void
     {
@@ -647,7 +645,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get image width
+     * Get image width.
      */
     public function getWidth(): int
     {
@@ -655,7 +653,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set image width
+     * Set image width.
      *
      * @API\Exclude
      */
@@ -665,7 +663,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get image height
+     * Get image height.
      */
     public function getHeight(): int
     {
@@ -673,7 +671,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set image height
+     * Set image height.
      *
      * @API\Exclude
      */
@@ -683,7 +681,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set the image file
+     * Set the image file.
      *
      * @API\Input(type="?GraphQL\Upload\UploadType")
      */
@@ -699,7 +697,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get legacy id
+     * Get legacy id.
      */
     public function getLegacyId(): ?int
     {
@@ -707,7 +705,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set legacy id
+     * Set legacy id.
      *
      * @API\Exclude
      */
@@ -717,7 +715,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Read dimension and size from file on disk
+     * Read dimension and size from file on disk.
      */
     private function readFileInfo(): void
     {
@@ -759,7 +757,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Copy most of this card data into the given card
+     * Copy most of this card data into the given card.
      *
      * @param Card $original
      */
@@ -814,7 +812,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get related cards
+     * Get related cards.
      *
      * @API\Field(type="Card[]")
      */
@@ -824,7 +822,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Add related card
+     * Add related card.
      *
      * @param Card $card
      */
@@ -844,7 +842,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Remove related card
+     * Remove related card.
      *
      * @param Card $card
      */
@@ -855,7 +853,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Return the change this card is a suggestion for, if any
+     * Return the change this card is a suggestion for, if any.
      */
     public function getChange(): ?Change
     {
@@ -864,7 +862,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Notify the Card that it was added to a Change.
-     * This should only be called by Change::addCard()
+     * This should only be called by Change::addCard().
      */
     public function changeAdded(?Change $change): void
     {
@@ -875,7 +873,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Set documentSize
+     * Set documentSize.
      */
     public function setDocumentSize(string $documentSize): void
     {
@@ -883,7 +881,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
-     * Get documentSize
+     * Get documentSize.
      */
     public function getDocumentSize(): string
     {

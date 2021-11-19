@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\MessageRenderer;
 
 /**
- * Service to queue new message for pre-defined purposes
+ * Service to queue new message for pre-defined purposes.
  */
 class MessageQueuer
 {
@@ -39,7 +39,7 @@ class MessageQueuer
     }
 
     /**
-     * Create a message by rendering the template
+     * Create a message by rendering the template.
      */
     private function createMessage(?User $user, string $email, string $subject, string $type, array $mailParams): Message
     {

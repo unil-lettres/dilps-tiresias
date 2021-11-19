@@ -18,7 +18,7 @@ trait HasCode
     private $code;
 
     /**
-     * Set code
+     * Set code.
      */
     public function setCode(?string $code): void
     {
@@ -34,7 +34,7 @@ trait HasCode
     }
 
     /**
-     * Get code
+     * Get code.
      */
     public function getCode(): ?string
     {
@@ -42,7 +42,7 @@ trait HasCode
     }
 
     /**
-     * Simple ACL check
+     * Simple ACL check.
      */
     private function canUpdateCode(): bool
     {

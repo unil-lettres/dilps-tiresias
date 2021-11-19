@@ -14,7 +14,7 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 class CanUpdateCard implements AssertionInterface
 {
     /**
-     * Assert that the card that the object belongs to can be updated
+     * Assert that the card that the object belongs to can be updated.
      *
      * @param \Application\Acl\Acl $acl
      * @param RoleInterface $role
