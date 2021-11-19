@@ -107,35 +107,35 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $dating = '';
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Collection>
      *
      * @ORM\ManyToMany(targetEntity="Collection")
      */
     private $collections;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Artist>
      *
      * @ORM\ManyToMany(targetEntity="Artist")
      */
     private $artists;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<AntiqueName>
      *
      * @ORM\ManyToMany(targetEntity="AntiqueName")
      */
     private $antiqueNames;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Tag>
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
     private $tags;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Dating>
      *
      * @ORM\OneToMany(targetEntity="Dating", mappedBy="card")
      */
@@ -160,28 +160,28 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $documentType;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Domain>
      *
      * @ORM\ManyToMany(targetEntity="Domain")
      */
     private $domains;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Period>
      *
      * @ORM\ManyToMany(targetEntity="Period")
      */
     private $periods;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Material>
      *
      * @ORM\ManyToMany(targetEntity="Material")
      */
     private $materials;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Card>
      *
      * @ORM\ManyToMany(targetEntity="Card")
      */
@@ -191,7 +191,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      * There is actually 0 to 1 change, never more. And this is
      * enforced by DB unique constraints on the mapping side
      *
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Change>
      * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
     private $changes;
@@ -203,7 +203,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private $documentSize = '';
 
     /**
-     * @var int
+     * @var null|int
      * @ORM\Column(name="legacy_id", type="integer", nullable=true)
      */
     private $legacyId;

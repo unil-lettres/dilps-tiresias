@@ -35,7 +35,7 @@ class Domain extends AbstractModel implements HasParentInterface, HasSiteInterfa
     private $parent;
 
     /**
-     * @var Collection
+     * @var Collection<Domain>
      *
      * @ORM\OneToMany(targetEntity="Domain", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})

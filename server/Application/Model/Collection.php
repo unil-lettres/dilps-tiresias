@@ -76,7 +76,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     private $parent;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Collection>
      *
      * @ORM\OneToMany(targetEntity="Collection", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})
@@ -84,7 +84,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     private $children;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<User>
      * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
     private $users;

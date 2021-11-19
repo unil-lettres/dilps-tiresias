@@ -60,7 +60,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     private static ?User $currentUser = null;
 
     /**
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Collection>
      *
      * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
      */

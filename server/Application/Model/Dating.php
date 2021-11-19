@@ -39,7 +39,7 @@ class Dating extends AbstractModel
      *
      * @ORM\ManyToOne(targetEntity="Card", inversedBy="datings")
      * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
+     *     @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * })
      */
     private $card;

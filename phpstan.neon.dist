@@ -7,6 +7,7 @@ parameters:
         - tests/
     doctrine:
         repositoryClass: Application\Repository\AbstractRepository
+        objectManagerLoader: tests/object-manager.php
     inferPrivatePropertyTypeFromConstructor: true
     earlyTerminatingMethodCalls:
         Application\Service\Importer:
@@ -14,8 +15,6 @@ parameters:
 
     ignoreErrors:
         - '~^Call to an undefined method Application\\Repository\\.*Repository::find(One)?By.*\(\)\.$~'
-        - '~^Call to an undefined method Application\\Repository\\AbstractRepository\<Application\\Model\\User\>::(getOneByEmail|getOneById)\(\)\.$~'
-        - '~^Property .* does not accept Application\\Repository\\AbstractRepository\<Application\\Model\\.*\>\.$~'
         -
             message: '~^Argument of an invalid type Application\\Model\\Card supplied for foreach, only iterables are supported\.$~'
             path: server/Application/Model/Card.php
@@ -24,9 +23,6 @@ parameters:
             message: '~^If condition is always true\.$~'
             path: server/Application/Model/Dating.php
             count: 1
-
-        - '~^Property Application\\Model\\AbstractModel\:\:\$id is never written, only read\.$~'
-        - '~^Property Application\\Model\\Export\:\:\$.* is never read, only written\.$~'
 
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

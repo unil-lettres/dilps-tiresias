@@ -29,14 +29,14 @@ trait HasValidation
     private $dataValidationDate;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */
     private $imageValidator;
 
     /**
-     * @var User
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="User")
      */

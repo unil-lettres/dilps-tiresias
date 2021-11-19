@@ -35,7 +35,7 @@ class Material extends AbstractModel implements HasParentInterface, HasSiteInter
     private $parent;
 
     /**
-     * @var Collection
+     * @var Collection<Material>
      *
      * @ORM\OneToMany(targetEntity="Material", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})

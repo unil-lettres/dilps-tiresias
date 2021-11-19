@@ -40,7 +40,7 @@ class Period extends AbstractModel implements HasParentInterface, HasSiteInterfa
     private $parent;
 
     /**
-     * @var Collection
+     * @var Collection<Period>
      *
      * @ORM\OneToMany(targetEntity="Period", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})

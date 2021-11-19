@@ -121,7 +121,7 @@ class Export extends AbstractModel implements HasSiteInterface
      * The collections exported. This is only for informative purpose and only `cards`
      * contains the real cards that will be exported.
      *
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Collection>
      *
      * @ORM\ManyToMany(targetEntity="Collection")
      */
@@ -130,7 +130,7 @@ class Export extends AbstractModel implements HasSiteInterface
     /**
      * All cards to export, either picked one-by-one, or selected via a collection.
      *
-     * @var DoctrineCollection
+     * @var DoctrineCollection<Card>
      *
      * @ORM\ManyToMany(targetEntity="Card")
      */

@@ -35,7 +35,7 @@ class Tag extends AbstractModel implements HasParentInterface, HasSiteInterface
     private $parent;
 
     /**
-     * @var Collection
+     * @var Collection<Tag>
      *
      * @ORM\OneToMany(targetEntity="Tag", mappedBy="parent")
      * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})

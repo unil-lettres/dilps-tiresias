@@ -32,7 +32,7 @@ class Change extends AbstractModel implements HasSiteInterface
     private $type = self::TYPE_UPDATE;
 
     /**
-     * @var Card
+     * @var null|Card
      *
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({

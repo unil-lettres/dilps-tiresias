@@ -62,7 +62,7 @@ trait HasAddress
     private $area = '';
 
     /**
-     * @var Country
+     * @var null|Country
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
