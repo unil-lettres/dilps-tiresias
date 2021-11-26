@@ -19,7 +19,7 @@ services:
             - dilps-tiresias-net
         container_name: dilps-tiresias-app
     dilps-tiresias-mysql:
-        image: mariadb:10.3
+        image: mariadb:10.4
         env_file:
             - ./dev/.env
         volumes:
