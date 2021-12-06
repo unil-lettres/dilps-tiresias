@@ -123,3 +123,9 @@ app-view-map agm-map div.gm-style > div:last-child {
 app-card natural-relations natural-table-button .mat-button {
     text-align: left;
 }
+
+// It is possible that the server returns error message on multiple line (eg: when ACL with multiple assertions fail),
+// so we try to preserve that formatting, while still wrapping if necessary
+simple-snack-bar > span {
+    white-space: pre-wrap;
+}
