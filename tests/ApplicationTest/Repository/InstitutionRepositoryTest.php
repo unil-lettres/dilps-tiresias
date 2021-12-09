@@ -8,9 +8,6 @@ use Application\DBAL\Types\SiteType;
 use Application\Model\Institution;
 use Application\Repository\InstitutionRepository;
 
-/**
- * @group Repository
- */
 class InstitutionRepositoryTest extends AbstractRepositoryTest
 {
     private InstitutionRepository  $repository;

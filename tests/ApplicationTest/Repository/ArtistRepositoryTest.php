@@ -7,9 +7,6 @@ namespace ApplicationTest\Repository;
 use Application\Model\Artist;
 use Application\Repository\ArtistRepository;
 
-/**
- * @group Repository
- */
 class ArtistRepositoryTest extends AbstractRepositoryTest
 {
     private ArtistRepository $repository;

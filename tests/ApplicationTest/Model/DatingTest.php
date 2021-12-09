@@ -10,9 +10,6 @@ use Cake\Chronos\Chronos;
 use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Model
- */
 class DatingTest extends TestCase
 {
     public function testFrom(): void

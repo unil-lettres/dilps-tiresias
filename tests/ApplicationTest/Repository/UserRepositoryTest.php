@@ -8,9 +8,6 @@ use Application\DBAL\Types\SiteType;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 
-/**
- * @group Repository
- */
 class UserRepositoryTest extends AbstractRepositoryTest
 {
     private UserRepository $repository;

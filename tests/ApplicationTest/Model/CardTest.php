@@ -15,9 +15,6 @@ use Cake\Chronos\Chronos;
 use GraphQL\Doctrine\Definition\EntityID;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Model
- */
 class CardTest extends TestCase
 {
     protected function tearDown(): void

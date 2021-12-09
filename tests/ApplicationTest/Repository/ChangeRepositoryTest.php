@@ -11,9 +11,6 @@ use Application\Model\User;
 use Application\Repository\ChangeRepository;
 use Application\Repository\UserRepository;
 
-/**
- * @group Repository
- */
 class ChangeRepositoryTest extends AbstractRepositoryTest
 {
     private ChangeRepository $repository;

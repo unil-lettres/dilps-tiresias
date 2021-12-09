@@ -9,9 +9,6 @@ use Application\Model\Card;
 use Application\Model\Export;
 use Application\Repository\CardRepository;
 
-/**
- * @group Repository
- */
 class CardRepositoryTest extends AbstractRepositoryTest
 {
     private CardRepository $repository;

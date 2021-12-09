@@ -9,9 +9,6 @@ use Application\Model\Collection;
 use Application\Repository\CollectionRepository;
 use ApplicationTest\Repository\Traits\LimitedAccessSubQuery;
 
-/**
- * @group Repository
- */
 class CollectionRepositoryTest extends AbstractRepositoryTest
 {
     use LimitedAccessSubQuery;
