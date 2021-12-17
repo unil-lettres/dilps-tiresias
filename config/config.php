@@ -44,6 +44,6 @@ $aggregator = new ConfigAggregator([
     new PhpFileProvider($siteConfigFile),
     // Load development config if it exists
     new PhpFileProvider('config/development.config.php'),
-], $cacheConfig['config_cache_path'], [\Laminas\ZendFrameworkBridge\ConfigPostProcessor::class]);
+], $cacheConfig['config_cache_path']);
 
 return $aggregator->getMergedConfig();
