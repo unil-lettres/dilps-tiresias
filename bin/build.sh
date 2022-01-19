@@ -8,7 +8,7 @@ if id "$DEPLOY_USER" >/dev/null 2>&1; then
 
     if [ ! "$DEPLOY_USER" == "$USER" ]; then
         echo "Restarting script with user '$DEPLOY_USER'"
-        sudo -H -u $DEPLOY_USER "${BASH_SOURCE}"
+        sudo -EH -u $DEPLOY_USER "${BASH_SOURCE}"
         exit
     fi
 
