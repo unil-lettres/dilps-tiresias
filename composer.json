@@ -5,7 +5,11 @@
     "homepage": "https://github.com/ecodev/dilps",
     "license": "MIT",
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "laminas/laminas-component-installer": true
+        }
     },
     "scripts": {
         "development-disable": "laminas-development-mode disable",
