@@ -37,7 +37,7 @@ class ImageHandler extends AbstractHandler
         $maxHeight = (int) $request->getAttribute('maxHeight');
         if ($maxHeight) {
             $accept = $request->getHeaderLine('accept');
-            $useWebp = mb_strpos($accept, 'image/webp') !== false;
+            $useWebp = str_contains($accept, 'image/webp');
 
             $path = $this->imageResizer->resize($card, $maxHeight, $useWebp);
         }
