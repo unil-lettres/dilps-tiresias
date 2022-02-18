@@ -38,24 +38,24 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Someone who is a normal user, not part of AAI.
      */
-    public const TYPE_DEFAULT = 'default';
+    final public const TYPE_DEFAULT = 'default';
 
     /**
      * Someone who log in via AAI system.
      */
-    public const TYPE_AAI = 'aai';
+    final public const TYPE_AAI = 'aai';
 
     /**
      * Empty shell used for legacy.
      */
-    public const TYPE_LEGACY = 'legacy';
+    final public const TYPE_LEGACY = 'legacy';
 
-    public const ROLE_ANONYMOUS = 'anonymous';
-    public const ROLE_STUDENT = 'student';
-    public const ROLE_JUNIOR = 'junior';
-    public const ROLE_SENIOR = 'senior';
-    public const ROLE_MAJOR = 'major';
-    public const ROLE_ADMINISTRATOR = 'administrator';
+    final public const ROLE_ANONYMOUS = 'anonymous';
+    final public const ROLE_STUDENT = 'student';
+    final public const ROLE_JUNIOR = 'junior';
+    final public const ROLE_SENIOR = 'senior';
+    final public const ROLE_MAJOR = 'major';
+    final public const ROLE_ADMINISTRATOR = 'administrator';
 
     private static ?User $currentUser = null;
 
@@ -64,7 +64,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      *
      * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
      */
-    private $collections;
+    private DoctrineCollection $collections;
 
     /**
      * Set currently logged in user
@@ -107,50 +107,40 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=191)
      */
-    private $login = '';
+    private string $login = '';
 
     /**
-     * @var string
-     *
      * @API\Exclude
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $password = '';
+    private string $password = '';
 
     /**
-     * @var null|string
      * @ORM\Column(type="string", length=191, nullable=true)
      */
-    private $email;
+    private ?string $email = null;
 
     /**
-     * @var string
      * @ORM\Column(type="UserRole", options={"default" = User::ROLE_STUDENT})
      */
-    private $role = self::ROLE_STUDENT;
+    private string $role = self::ROLE_STUDENT;
 
     /**
-     * @var Chronos
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $activeUntil;
+    private ?\Cake\Chronos\Chronos $activeUntil = null;
 
     /**
-     * @var Chronos
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $termsAgreement;
+    private ?\Cake\Chronos\Chronos $termsAgreement = null;
 
     /**
-     * @var string
      * @ORM\Column(type="UserType", options={"default" = User::TYPE_DEFAULT})
      */
-    private $type = self::TYPE_DEFAULT;
+    private string $type = self::TYPE_DEFAULT;
 
     /**
      * Constructor.

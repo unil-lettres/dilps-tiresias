@@ -19,10 +19,9 @@ parameters:
             message: '~^Argument of an invalid type Application\\Model\\Card supplied for foreach, only iterables are supported\.$~'
             path: server/Application/Model/Card.php
             count: 1
-        -
-            message: '~^If condition is always true\.$~'
-            path: server/Application/Model/Dating.php
-            count: 1
+
+        # Tolerate a permissive model, but strict DB
+        - '~^Property Application\\Model\\.*\:\:\$.* type mapping mismatch\: property can contain Application\\Model\\.*\|null but database expects Application\\Model\\.*\.$~'
 
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

@@ -28,17 +28,14 @@ class News extends AbstractModel implements HasSiteInterface
     use HasUrl;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
-    private $description = '';
+    private string $description = '';
 
     /**
-     * @var bool
      * @ORM\Column(type="boolean", options={"default" = false})
      */
-    private $isActive = false;
+    private bool $isActive = false;
 
     /**
      * Set description.

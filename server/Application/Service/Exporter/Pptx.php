@@ -26,10 +26,6 @@ class Pptx implements Writer
     private const MARGIN = 10;
     private const LEGEND_HEIGHT = 75;
 
-    private ImagineInterface $imagine;
-
-    private ImageResizer $imageResizer;
-
     private bool $needSeparator = false;
 
     private string $textColor = Color::COLOR_WHITE;
@@ -40,10 +36,8 @@ class Pptx implements Writer
 
     private PhpPresentation $presentation;
 
-    public function __construct(ImageResizer $imageResizer, ImagineInterface $imagine)
+    public function __construct(private readonly ImageResizer $imageResizer, private readonly ImagineInterface $imagine)
     {
-        $this->imageResizer = $imageResizer;
-        $this->imagine = $imagine;
     }
 
     public function getExtension(): string

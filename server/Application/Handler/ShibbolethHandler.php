@@ -12,11 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class ShibbolethHandler implements RequestHandlerInterface
 {
-    private ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
+    public function __construct(private readonly ContainerInterface $container)
     {
-        $this->container = $container;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

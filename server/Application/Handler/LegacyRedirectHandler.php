@@ -12,11 +12,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LegacyRedirectHandler implements RequestHandlerInterface
 {
-    private CardRepository $cardRepository;
-
-    public function __construct(CardRepository $cardRepository)
+    public function __construct(private readonly CardRepository $cardRepository)
     {
-        $this->cardRepository = $cardRepository;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

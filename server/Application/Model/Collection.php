@@ -30,40 +30,34 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     use HasSite;
     use HasSorting;
 
-    public const VISIBILITY_PRIVATE = 'private';
-    public const VISIBILITY_ADMINISTRATOR = 'administrator';
-    public const VISIBILITY_MEMBER = 'member';
+    final public const VISIBILITY_PRIVATE = 'private';
+    final public const VISIBILITY_ADMINISTRATOR = 'administrator';
+    final public const VISIBILITY_MEMBER = 'member';
 
     /**
-     * @var string
      * @ORM\Column(type="CollectionVisibility", options={"default" = Collection::VISIBILITY_PRIVATE})
      */
-    private $visibility = self::VISIBILITY_PRIVATE;
+    private string $visibility = self::VISIBILITY_PRIVATE;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
-    private $description = '';
+    private string $description = '';
 
     /**
-     * @var bool
      * @ORM\Column(type="boolean", options={"default" = false})
      */
-    private $isSource = false;
+    private bool $isSource = false;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=191)
      */
-    private $copyrights = '';
+    private string $copyrights = '';
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=191)
      */
-    private $usageRights = '';
+    private string $usageRights = '';
 
     /**
      * @var null|Collection
@@ -87,7 +81,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * @var DoctrineCollection<User>
      * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
-    private $users;
+    private DoctrineCollection $users;
 
     /**
      * Constructor.

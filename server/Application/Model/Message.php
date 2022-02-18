@@ -17,14 +17,12 @@ class Message extends AbstractModel implements \Ecodev\Felix\Model\Message
     use \Ecodev\Felix\Model\Traits\Message;
 
     /**
-     * @var null|User
-     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="CASCADE")
      * })
      */
-    private $recipient;
+    private ?\Application\Model\User $recipient = null;
 
     /**
      * Set recipient.

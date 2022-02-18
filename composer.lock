@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9859cff91e2fa5c17c656b4e913b626",
+    "content-hash": "7d2302119e6c87175a6aacb7656eee69",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -321,16 +321,16 @@
         },
         {
             "name": "creof/wkb-parser",
-            "version": "v2.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/creof/wkb-parser.git",
-                "reference": "1ddb69da8cc90607dd528fd9992ef1fc10cc8839"
+                "reference": "97ac770f241adce3c46e3feb96e0e092531c833d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/creof/wkb-parser/zipball/1ddb69da8cc90607dd528fd9992ef1fc10cc8839",
-                "reference": "1ddb69da8cc90607dd528fd9992ef1fc10cc8839",
+                "url": "https://api.github.com/repos/creof/wkb-parser/zipball/97ac770f241adce3c46e3feb96e0e092531c833d",
+                "reference": "97ac770f241adce3c46e3feb96e0e092531c833d",
                 "shasum": ""
             },
             "require": {
@@ -342,6 +342,7 @@
                 "phpunit/phpunit": ">=4.8",
                 "satooshi/php-coveralls": "~1.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -373,7 +374,7 @@
                 "issues": "https://github.com/creof/wkb-parser/issues",
                 "source": "https://github.com/creof/wkb-parser/tree/master"
             },
-            "time": "2016-05-22T22:47:16+00:00"
+            "time": "2022-02-15T22:46:31+00:00"
         },
         {
             "name": "creof/wkt-parser",
@@ -9506,6 +9507,12 @@
     ],
     "aliases": [
         {
+            "package": "creof/wkb-parser",
+            "version": "9999999-dev",
+            "alias": "2.3.0",
+            "alias_normalized": "2.3.0.0"
+        },
+        {
             "package": "imagine/imagine",
             "version": "dev-develop",
             "alias": "1.2",
@@ -9514,6 +9521,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "creof/wkb-parser": 20,
         "imagine/imagine": 20,
         "friendsofphp/php-cs-fixer": 0,
         "phpstan/phpstan-doctrine": 0

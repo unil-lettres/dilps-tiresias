@@ -19,44 +19,37 @@ use GraphQL\Doctrine\Annotation as API;
  */
 class Change extends AbstractModel implements HasSiteInterface
 {
-    public const TYPE_CREATE = 'create';
-    public const TYPE_UPDATE = 'update';
-    public const TYPE_DELETE = 'delete';
+    final public const TYPE_CREATE = 'create';
+    final public const TYPE_UPDATE = 'update';
+    final public const TYPE_DELETE = 'delete';
 
     use HasSite;
 
     /**
-     * @var string
      * @ORM\Column(type="ChangeType", options={"default" = Change::TYPE_UPDATE})
      */
-    private $type = self::TYPE_UPDATE;
+    private string $type = self::TYPE_UPDATE;
 
     /**
-     * @var null|Card
-     *
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="CASCADE")
      * })
      */
-    private $original;
+    private ?\Application\Model\Card $original = null;
 
     /**
-     * @var null|Card
-     *
      * @ORM\ManyToOne(targetEntity="Card", inversedBy="changes")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(unique=true, onDelete="CASCADE")
      * })
      */
-    private $suggestion;
+    private ?\Application\Model\Card $suggestion = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text")
      */
-    private $request = '';
+    private string $request = '';
 
     /**
      * Get the type of change.

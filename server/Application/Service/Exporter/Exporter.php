@@ -17,40 +17,8 @@ use Throwable;
 
 class Exporter
 {
-    private ExportRepository $exportRepository;
-
-    private CardRepository $cardRepository;
-
-    private MessageQueuer $messageQueuer;
-
-    private Mailer $mailer;
-
-    private Writer $zip;
-
-    private Writer $pptx;
-
-    private Writer $csv;
-
-    private string $phpPath;
-
-    public function __construct(
-        ExportRepository $exportRepository,
-        CardRepository $cardRepository,
-        MessageQueuer $messageQueuer,
-        Mailer $mailer,
-        Writer $zip,
-        Writer $pptx,
-        Writer $csv,
-        string $phpPath
-    ) {
-        $this->exportRepository = $exportRepository;
-        $this->cardRepository = $cardRepository;
-        $this->messageQueuer = $messageQueuer;
-        $this->mailer = $mailer;
-        $this->zip = $zip;
-        $this->pptx = $pptx;
-        $this->csv = $csv;
-        $this->phpPath = $phpPath;
+    public function __construct(private readonly ExportRepository $exportRepository, private readonly CardRepository $cardRepository, private readonly MessageQueuer $messageQueuer, private readonly Mailer $mailer, private readonly Writer $zip, private readonly Writer $pptx, private readonly Writer $csv, private readonly string $phpPath)
+    {
     }
 
     /**
@@ -143,16 +111,12 @@ class Exporter
 
     private function getWriter(Export $export): Writer
     {
-        switch ($export->getFormat()) {
-            case ExportFormatType::ZIP:
-                return $this->zip;
-            case ExportFormatType::PPTX:
-                return $this->pptx;
-            case ExportFormatType::CSV:
-                return $this->csv;
-            default:
-                throw new Exception('Invalid export format:' . $export->getFormat());
-        }
+        return match ($export->getFormat()) {
+            ExportFormatType::ZIP => $this->zip,
+            ExportFormatType::PPTX => $this->pptx,
+            ExportFormatType::CSV => $this->csv,
+            default => throw new Exception('Invalid export format:' . $export->getFormat()),
+        };
     }
 
     /**

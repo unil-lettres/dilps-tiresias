@@ -15,13 +15,10 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 class Visibility implements AssertionInterface
 {
     /**
-     * @var string[]
+     * @param string[] $allowedVisibilities
      */
-    private array $allowedVisibilities;
-
-    public function __construct(array $visibilities)
+    public function __construct(private readonly array $allowedVisibilities)
     {
-        $this->allowedVisibilities = $visibilities;
     }
 
     /**

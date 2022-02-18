@@ -8,7 +8,7 @@ use Ecodev\Felix\DBAL\Types\EnumType;
 
 class MessageTypeType extends EnumType
 {
-    public const EXPORT_DONE = 'export_done';
+    final public const EXPORT_DONE = 'export_done';
 
     protected function getPossibleValues(): array
     {

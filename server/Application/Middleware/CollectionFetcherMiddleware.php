@@ -11,11 +11,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CollectionFetcherMiddleware extends AbstractMiddleware
 {
-    private CardRepository $cardRepository;
-
-    public function __construct(CardRepository $cardRepository)
+    public function __construct(private readonly CardRepository $cardRepository)
     {
-        $this->cardRepository = $cardRepository;
     }
 
     /**
@@ -23,7 +20,7 @@ class CollectionFetcherMiddleware extends AbstractMiddleware
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $ids = explode(',', $request->getAttribute('ids'));
+        $ids = explode(',', (string) $request->getAttribute('ids'));
 
         $cards = $this->cardRepository->getFindAllByCollections($ids)->getQuery()->getResult();
         if (!$cards) {

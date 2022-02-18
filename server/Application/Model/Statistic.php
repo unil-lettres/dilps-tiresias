@@ -30,102 +30,74 @@ class Statistic extends AbstractModel implements HasSiteInterface
     /**
      * A year and month, eg: '2019-02'.
      *
-     * @var string
-     *
      * @ORM\Column(type="string", length=7)
      */
-    private $date;
+    private string $date;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $anonymousPageCount = 0;
+    private int $anonymousPageCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $defaultPageCount = 0;
+    private int $defaultPageCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $aaiPageCount = 0;
+    private int $aaiPageCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $anonymousDetailCount = 0;
+    private int $anonymousDetailCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $defaultDetailCount = 0;
+    private int $defaultDetailCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $aaiDetailCount = 0;
+    private int $aaiDetailCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $anonymousSearchCount = 0;
+    private int $anonymousSearchCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $defaultSearchCount = 0;
+    private int $defaultSearchCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $aaiSearchCount = 0;
+    private int $aaiSearchCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $defaultLoginCount = 0;
+    private int $defaultLoginCount = 0;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $aaiLoginCount = 0;
+    private int $aaiLoginCount = 0;
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="json")
      */
-    private $defaultLogins = [];
+    private array $defaultLogins = [];
 
     /**
-     * @var array
-     *
      * @ORM\Column(type="json")
      */
-    private $aaiLogins = [];
+    private array $aaiLogins = [];
 
     public function getDate(): string
     {

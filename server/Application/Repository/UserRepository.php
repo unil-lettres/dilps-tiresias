@@ -50,12 +50,10 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      */
     public function getOneByLogin(?string $login, string $site): ?User
     {
-        $user = $this->getAclFilter()->runWithoutAcl(function () use ($login, $site) {
-            return $this->findOneBy([
-                'login' => $login,
-                'site' => $site,
-            ]);
-        });
+        $user = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
+            'login' => $login,
+            'site' => $site,
+        ]));
 
         return $user;
     }
@@ -79,12 +77,10 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      */
     public function getOneByEmail(?string $email, string $site): ?User
     {
-        $user = $this->getAclFilter()->runWithoutAcl(function () use ($email, $site) {
-            return $this->findOneBy([
-                'email' => $email,
-                'site' => $site,
-            ]);
-        });
+        $user = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
+            'email' => $email,
+            'site' => $site,
+        ]));
 
         return $user;
     }

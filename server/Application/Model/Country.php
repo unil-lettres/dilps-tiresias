@@ -17,10 +17,9 @@ class Country extends AbstractModel
     use HasName;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=2, unique=true)
      */
-    private $code = '';
+    private string $code = '';
 
     /**
      * Set ISO 3166-1 alpha-2 country code.

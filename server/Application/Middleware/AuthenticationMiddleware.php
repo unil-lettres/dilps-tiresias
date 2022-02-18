@@ -16,14 +16,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    private UserRepository $userRepository;
-
-    private string $site;
-
-    public function __construct(UserRepository $userRepository, string $site)
+    public function __construct(private readonly UserRepository $userRepository, private readonly string $site)
     {
-        $this->userRepository = $userRepository;
-        $this->site = $site;
     }
 
     /**
@@ -91,20 +85,11 @@ class AuthenticationMiddleware implements MiddlewareInterface
     {
         if (array_key_exists('uid', $serverParams)) {
             if (array_key_exists('homeOrganization', $serverParams)) {
-                switch ($serverParams['homeOrganization']) {
-                    case 'unil.ch':
-                        $login = '-unil-' . $serverParams['uid'];
-
-                        break;
-                    case 'unine.ch':
-                        $login = '-unine-' . $serverParams['uid'];
-
-                        break;
-                    default:
-                        $login = '-aai-' . $serverParams['uid'];
-
-                        break;
-                }
+                $login = match ($serverParams['homeOrganization']) {
+                    'unil.ch' => '-unil-' . $serverParams['uid'],
+                    'unine.ch' => '-unine-' . $serverParams['uid'],
+                    default => '-aai-' . $serverParams['uid'],
+                };
             } else {
                 $login = '-aai-' . $serverParams['uid'];
             }

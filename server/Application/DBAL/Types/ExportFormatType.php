@@ -8,9 +8,9 @@ use Ecodev\Felix\DBAL\Types\EnumType;
 
 class ExportFormatType extends EnumType
 {
-    public const ZIP = 'zip';
-    public const PPTX = 'pptx';
-    public const CSV = 'csv';
+    final public const ZIP = 'zip';
+    final public const PPTX = 'pptx';
+    final public const CSV = 'csv';
 
     protected function getPossibleValues(): array
     {

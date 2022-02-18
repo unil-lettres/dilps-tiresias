@@ -8,10 +8,10 @@ use Ecodev\Felix\DBAL\Types\EnumType;
 
 class ExportStatusType extends EnumType
 {
-    public const TODO = 'todo';
-    public const IN_PROGRESS = 'in_progress';
-    public const DONE = 'done';
-    public const ERRORED = 'errored';
+    final public const TODO = 'todo';
+    final public const IN_PROGRESS = 'in_progress';
+    final public const DONE = 'done';
+    final public const ERRORED = 'errored';
 
     protected function getPossibleValues(): array
     {

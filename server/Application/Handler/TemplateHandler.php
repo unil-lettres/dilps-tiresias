@@ -27,7 +27,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class TemplateHandler implements RequestHandlerInterface
 {
-    public const HEADERS = [
+    final public const HEADERS = [
         'Fichier image (avec ou sans extension)',
         'Titre',
         'Titre étendu',
@@ -52,26 +52,8 @@ class TemplateHandler implements RequestHandlerInterface
 
     private int $col = 1;
 
-    private string $site;
-
-    private DomainRepository $domainRepository;
-
-    private PeriodRepository $periodRepository;
-
-    private CountryRepository $countryRepository;
-
-    private MaterialRepository $materialRepository;
-
-    private DocumentTypeRepository $documentTypeRepository;
-
-    public function __construct(string $site, DomainRepository $domainRepository, PeriodRepository $periodRepository, CountryRepository $countryRepository, MaterialRepository $materialRepository, DocumentTypeRepository $documentTypeRepository)
+    public function __construct(private readonly string $site, private readonly DomainRepository $domainRepository, private readonly PeriodRepository $periodRepository, private readonly CountryRepository $countryRepository, private readonly MaterialRepository $materialRepository, private readonly DocumentTypeRepository $documentTypeRepository)
     {
-        $this->site = $site;
-        $this->domainRepository = $domainRepository;
-        $this->periodRepository = $periodRepository;
-        $this->countryRepository = $countryRepository;
-        $this->materialRepository = $materialRepository;
-        $this->documentTypeRepository = $documentTypeRepository;
     }
 
     /**

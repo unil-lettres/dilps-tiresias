@@ -16,17 +16,14 @@ use ZipArchive;
  */
 class Zip implements Writer
 {
-    private ImageResizer $imageResizer;
-
     private ?ZipArchive $zip = null;
 
     private int $fileIndex = 0;
 
     private Export $export;
 
-    public function __construct(ImageResizer $imageResizer)
+    public function __construct(private readonly ImageResizer $imageResizer)
     {
-        $this->imageResizer = $imageResizer;
     }
 
     public function getExtension(): string

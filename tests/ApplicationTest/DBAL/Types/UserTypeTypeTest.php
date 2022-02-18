@@ -11,15 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class UserTypeTypeTest extends TestCase
 {
-    /**
-     * @var UserTypeType
-     */
-    private $type;
+    private \Application\DBAL\Types\UserTypeType $type;
 
-    /**
-     * @var AbstractPlatform
-     */
-    private $platform;
+    private \Doctrine\DBAL\Platforms\AbstractPlatform $platform;
 
     protected function setUp(): void
     {

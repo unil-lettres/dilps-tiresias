@@ -13,12 +13,10 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
     public function getOrCreate(string $site): Statistic
     {
         $date = date('Y-m');
-        $statistic = $this->getAclFilter()->runWithoutAcl(function () use ($date, $site) {
-            return $this->findOneBy([
-                'date' => $date,
-                'site' => $site,
-            ]);
-        });
+        $statistic = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
+            'date' => $date,
+            'site' => $site,
+        ]));
 
         if (!$statistic) {
             $statistic = new Statistic();

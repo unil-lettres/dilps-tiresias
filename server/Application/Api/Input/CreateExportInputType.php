@@ -18,41 +18,39 @@ class CreateExportInputType extends InputObjectType
         // Here we use non-standard input to inject collections and cards for which we do not want setters in model
         $config = [
             'description' => 'An export of cards in various format',
-            'fields' => function (): array {
-                return [
-                    'format' => [
-                        'type' => _types()->get(ExportFormatType::class),
-                        'defaultValue' => \Application\DBAL\Types\ExportFormatType::ZIP,
-                    ],
-                    'maxHeight' => [
-                        'type' => self::int(),
-                        'defaultValue' => 0,
-                    ],
-                    'includeLegend' => [
-                        'type' => self::boolean(),
-                        'defaultValue' => true,
-                    ],
-                    'textColor' => [
-                        'type' => _types()->get(ColorType::class),
-                        'defaultValue' => '#FFFFFF',
-                    ],
-                    'backgroundColor' => [
-                        'type' => _types()->get(ColorType::class),
-                        'defaultValue' => '#000000',
-                    ],
-                    'site' => [
-                        'type' => self::nonNull(_types()->get(SiteType::class)),
-                    ],
-                    'collections' => [
-                        'type' => self::nonNull(self::listOf(self::nonNull(_types()->getId(Collection::class)))),
-                        'defaultValue' => [],
-                    ],
-                    'cards' => [
-                        'type' => self::nonNull(self::listOf(self::nonNull(_types()->getId(Card::class)))),
-                        'defaultValue' => [],
-                    ],
-                ];
-            },
+            'fields' => fn (): array => [
+                'format' => [
+                    'type' => _types()->get(ExportFormatType::class),
+                    'defaultValue' => \Application\DBAL\Types\ExportFormatType::ZIP,
+                ],
+                'maxHeight' => [
+                    'type' => self::int(),
+                    'defaultValue' => 0,
+                ],
+                'includeLegend' => [
+                    'type' => self::boolean(),
+                    'defaultValue' => true,
+                ],
+                'textColor' => [
+                    'type' => _types()->get(ColorType::class),
+                    'defaultValue' => '#FFFFFF',
+                ],
+                'backgroundColor' => [
+                    'type' => _types()->get(ColorType::class),
+                    'defaultValue' => '#000000',
+                ],
+                'site' => [
+                    'type' => self::nonNull(_types()->get(SiteType::class)),
+                ],
+                'collections' => [
+                    'type' => self::nonNull(self::listOf(self::nonNull(_types()->getId(Collection::class)))),
+                    'defaultValue' => [],
+                ],
+                'cards' => [
+                    'type' => self::nonNull(self::listOf(self::nonNull(_types()->getId(Card::class)))),
+                    'defaultValue' => [],
+                ],
+            ],
         ];
 
         parent::__construct($config);

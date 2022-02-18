@@ -34,83 +34,67 @@ class Export extends AbstractModel implements HasSiteInterface
      * This is kept separated from cards and collection, because those could
      * be deleted and we want to keep the count of card forever.
      *
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $cardCount = 0;
+    private int $cardCount = 0;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=2000, options={"default" = ""})
      */
-    private $filename = '';
+    private string $filename = '';
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="ExportStatus", options={"default" = ExportStatusType::TODO})
      */
-    private $status = ExportStatusType::TODO;
+    private string $status = ExportStatusType::TODO;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="ExportFormat", options={"default" = ExportFormatType::ZIP})
      */
-    private $format = ExportFormatType::ZIP;
+    private string $format = ExportFormatType::ZIP;
 
     /**
      * Max height of image. Zero means no max.
      *
-     * @var int
-     *
      * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
-    private $maxHeight = 0;
+    private int $maxHeight = 0;
 
     /**
-     * @var bool
      * @ORM\Column(type="boolean", options={"default" = true})
      */
-    private $includeLegend = true;
+    private bool $includeLegend = true;
 
     /**
-     * @var string
      * @ORM\Column(type="string", options={"default" = "#FFFFFF"})
      */
-    private $textColor = '#FFFFFF';
+    private string $textColor = '#FFFFFF';
 
     /**
-     * @var string
      * @ORM\Column(type="string", options={"default" = "#000000"})
      */
-    private $backgroundColor = '#000000';
+    private string $backgroundColor = '#000000';
 
     /**
      * Start time of export process.
      *
-     * @var null|Chronos
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $start;
+    private ?\Cake\Chronos\Chronos $start = null;
 
     /**
      * Duration of export process in seconds.
      *
-     * @var null|int
      * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
      */
-    private $duration;
+    private ?int $duration = null;
 
     /**
      * Peak memory usage in MiB.
      *
-     * @var null|int
      * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
      */
-    private $memory;
+    private ?int $memory = null;
 
     /**
      * @ORM\Column(type="string", length=2000, options={"default" = ""})
@@ -125,7 +109,7 @@ class Export extends AbstractModel implements HasSiteInterface
      *
      * @ORM\ManyToMany(targetEntity="Collection")
      */
-    private $collections;
+    private DoctrineCollection $collections;
 
     /**
      * All cards to export, either picked one-by-one, or selected via a collection.
@@ -134,7 +118,7 @@ class Export extends AbstractModel implements HasSiteInterface
      *
      * @ORM\ManyToMany(targetEntity="Card")
      */
-    private $cards;
+    private DoctrineCollection $cards;
 
     public function __construct()
     {

@@ -23,14 +23,12 @@ use Throwable;
 class File extends AbstractModel implements \Ecodev\Felix\Model\File
 {
     /**
-     * @var Card
-     *
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * })
      */
-    private $card;
+    private \Application\Model\Card $card;
 
     use \Ecodev\Felix\Model\Traits\File {
         setFile as traitSetFile;

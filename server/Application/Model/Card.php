@@ -77,115 +77,108 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     private const IMAGE_PATH = 'data/images/';
 
-    public const VISIBILITY_PRIVATE = 'private';
-    public const VISIBILITY_MEMBER = 'member';
-    public const VISIBILITY_PUBLIC = 'public';
+    final public const VISIBILITY_PRIVATE = 'private';
+    final public const VISIBILITY_MEMBER = 'member';
+    final public const VISIBILITY_PUBLIC = 'public';
 
     /**
-     * @var string
      * @ORM\Column(type="CardVisibility", options={"default" = Card::VISIBILITY_PRIVATE})
      */
-    private $visibility = self::VISIBILITY_PRIVATE;
+    private string $visibility = self::VISIBILITY_PRIVATE;
 
     /**
-     * @var int
      * @ORM\Column(type="integer")
      */
-    private $width = 0;
+    private int $width = 0;
 
     /**
-     * @var int
      * @ORM\Column(type="integer")
      */
-    private $height = 0;
+    private int $height = 0;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", options={"default" = ""})
      */
-    private $dating = '';
+    private string $dating = '';
 
     /**
      * @var DoctrineCollection<Collection>
      *
      * @ORM\ManyToMany(targetEntity="Collection")
      */
-    private $collections;
+    private DoctrineCollection $collections;
 
     /**
      * @var DoctrineCollection<Artist>
      *
      * @ORM\ManyToMany(targetEntity="Artist")
      */
-    private $artists;
+    private DoctrineCollection $artists;
 
     /**
      * @var DoctrineCollection<AntiqueName>
      *
      * @ORM\ManyToMany(targetEntity="AntiqueName")
      */
-    private $antiqueNames;
+    private DoctrineCollection $antiqueNames;
 
     /**
      * @var DoctrineCollection<Tag>
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
-    private $tags;
+    private DoctrineCollection $tags;
 
     /**
      * @var DoctrineCollection<Dating>
      *
      * @ORM\OneToMany(targetEntity="Dating", mappedBy="card")
      */
-    private $datings;
+    private DoctrineCollection $datings;
 
     /**
-     * @var null|Card
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="SET NULL")
      * })
      */
-    private $original;
+    private ?\Application\Model\Card $original = null;
 
     /**
-     * @var null|DocumentType
      * @ORM\ManyToOne(targetEntity="DocumentType")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="SET NULL")
      * })
      */
-    private $documentType;
+    private ?\Application\Model\DocumentType $documentType = null;
 
     /**
      * @var DoctrineCollection<Domain>
      *
      * @ORM\ManyToMany(targetEntity="Domain")
      */
-    private $domains;
+    private DoctrineCollection $domains;
 
     /**
      * @var DoctrineCollection<Period>
      *
      * @ORM\ManyToMany(targetEntity="Period")
      */
-    private $periods;
+    private DoctrineCollection $periods;
 
     /**
      * @var DoctrineCollection<Material>
      *
      * @ORM\ManyToMany(targetEntity="Material")
      */
-    private $materials;
+    private DoctrineCollection $materials;
 
     /**
      * @var DoctrineCollection<Card>
      *
      * @ORM\ManyToMany(targetEntity="Card")
      */
-    private $cards;
+    private DoctrineCollection $cards;
 
     /**
      * There is actually 0 to 1 change, never more. And this is
@@ -194,19 +187,17 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      * @var DoctrineCollection<Change>
      * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
-    private $changes;
+    private DoctrineCollection $changes;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=191)
      */
-    private $documentSize = '';
+    private string $documentSize = '';
 
     /**
-     * @var null|int
      * @ORM\Column(name="legacy_id", type="integer", nullable=true)
      */
-    private $legacyId;
+    private ?int $legacyId = null;
 
     /**
      * Constructor.
@@ -758,8 +749,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Copy most of this card data into the given card.
-     *
-     * @param Card $original
      */
     public function copyInto(self $original): void
     {
@@ -823,8 +812,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Add related card.
-     *
-     * @param Card $card
      */
     public function addCard(self $card): void
     {
@@ -843,8 +830,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Remove related card.
-     *
-     * @param Card $card
      */
     public function removeCard(self $card): void
     {

@@ -27,48 +27,36 @@ use GraphQL\Doctrine\Annotation as API;
 abstract class AbstractModel implements HasOwner, Model
 {
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * @var null|Chronos
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $creationDate;
+    private ?\Cake\Chronos\Chronos $creationDate = null;
 
     /**
-     * @var null|Chronos
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateDate;
+    private ?\Cake\Chronos\Chronos $updateDate = null;
 
     /**
-     * @var null|User
-     *
      * @ORM\ManyToOne(targetEntity="User")
      */
-    private $creator;
+    private ?\Application\Model\User $creator = null;
 
     /**
-     * @var null|User
-     *
      * @ORM\ManyToOne(targetEntity="User")
      */
-    private $owner;
+    private ?\Application\Model\User $owner = null;
 
     /**
-     * @var null|User
-     *
      * @ORM\ManyToOne(targetEntity="User")
      */
-    private $updater;
+    private ?\Application\Model\User $updater = null;
 
     /**
      * Get id.

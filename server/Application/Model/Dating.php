@@ -21,28 +21,22 @@ use GraphQL\Doctrine\Annotation as API;
 class Dating extends AbstractModel
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="`from`", type="integer")
      */
-    private $from;
+    private int $from;
 
     /**
-     * @var int
-     *
      * @ORM\Column(name="`to`", type="integer")
      */
-    private $to;
+    private int $to;
 
     /**
-     * @var Card
-     *
      * @ORM\ManyToOne(targetEntity="Card", inversedBy="datings")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * })
      */
-    private $card;
+    private ?\Application\Model\Card $card = null;
 
     /**
      * Return the automatically computed beginning of dating period.

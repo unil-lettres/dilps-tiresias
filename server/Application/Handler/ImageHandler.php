@@ -13,14 +13,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class ImageHandler extends AbstractHandler
 {
-    private CardRepository $cardRepository;
-
-    private ImageResizer $imageResizer;
-
-    public function __construct(CardRepository $cardRepository, ImageResizer $imageResizer)
+    public function __construct(private readonly CardRepository $cardRepository, private readonly ImageResizer $imageResizer)
     {
-        $this->cardRepository = $cardRepository;
-        $this->imageResizer = $imageResizer;
     }
 
     /**

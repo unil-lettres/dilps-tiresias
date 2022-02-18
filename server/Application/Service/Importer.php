@@ -31,27 +31,27 @@ class Importer
     /**
      * @var string[]
      */
-    private array $domains;
+    private readonly array $domains;
 
     /**
      * @var string[]
      */
-    private array $documentTypes;
+    private readonly array $documentTypes;
 
     /**
      * @var string[]
      */
-    private array $countries;
+    private readonly array $countries;
 
     /**
      * @var string[]
      */
-    private array $materials;
+    private readonly array $materials;
 
     /**
      * @var string[]
      */
-    private array $periods;
+    private readonly array $periods;
 
     private ?string $site = null;
 
@@ -139,7 +139,7 @@ class Importer
         return $cards;
     }
 
-    private function throwException(int $column, int $row, string $message, ?Throwable $previousException = null): void
+    private function throwException(int $column, int $row, string $message, ?Throwable $previousException = null): never
     {
         $cell = Coordinate::stringFromColumnIndex($column) . $row;
         $message = 'Erreur dans la cellule ' . $cell . ': ' . $message;

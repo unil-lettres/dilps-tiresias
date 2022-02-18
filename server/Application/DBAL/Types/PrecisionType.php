@@ -8,9 +8,9 @@ use Ecodev\Felix\DBAL\Types\EnumType;
 
 class PrecisionType extends EnumType
 {
-    public const LOCALITY = 'locality';
-    public const SITE = 'site';
-    public const BUILDING = 'building';
+    final public const LOCALITY = 'locality';
+    final public const SITE = 'site';
+    final public const BUILDING = 'building';
 
     protected function getPossibleValues(): array
     {

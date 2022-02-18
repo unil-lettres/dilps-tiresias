@@ -26,10 +26,8 @@ class PptxTest extends AbstractWriter
         $imageResizer = $this->createMock(ImageResizer::class);
         $imageResizer->expects(self::atLeastOnce())
             ->method('resize')
-            ->willReturnCallback(function (Card $card, int $maxHeight, bool $useWebp): string {
-                // Never resize anything
-                return $card->getPath();
-            });
+            ->willReturnCallback(fn (Card $card, int $maxHeight, bool $useWebp): string // Never resize anything
+=> $card->getPath());
 
         $writer = new Pptx($imageResizer, $imagine);
         $tempFile = tempnam('data/tmp/', 'Pptx');
