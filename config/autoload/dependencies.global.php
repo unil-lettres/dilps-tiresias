@@ -23,6 +23,8 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             'doctrine.entity_manager.orm_default' => \Application\ORM\EntityManagerFactory::class,
+            \Doctrine\Migrations\Configuration\Migration\ConfigurationLoader::class => \Roave\PsrContainerDoctrine\Migrations\ConfigurationLoaderFactory::class,
+            \Doctrine\Migrations\DependencyFactory::class => \Roave\PsrContainerDoctrine\Migrations\DependencyFactoryFactory::class,
             'site' => \Application\Service\SiteFactory::class,
             \Application\Handler\ImageHandler::class => \Application\Handler\ImageFactory::class,
             \Application\Handler\LegacyRedirectHandler::class => \Application\Handler\LegacyRedirectFactory::class,

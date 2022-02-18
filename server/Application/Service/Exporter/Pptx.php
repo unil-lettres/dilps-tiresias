@@ -120,12 +120,12 @@ class Pptx implements Writer
         $shape->setPath($path);
 
         if ($ratio > $availableRatio) {
-            $shape->setWidth($availableWidth - 2 * self::MARGIN);
+            $shape->setWidth((int) ($availableWidth - 2 * self::MARGIN));
             $shape->setOffsetX(self::MARGIN);
-            $shape->setOffsetY(($availableHeight - $shape->getHeight()) / 2 + self::MARGIN);
+            $shape->setOffsetY((int) (($availableHeight - $shape->getHeight()) / 2 + self::MARGIN));
         } else {
-            $shape->setHeight($availableHeight - 2 * self::MARGIN);
-            $shape->setOffsetX(($availableWidth - $shape->getWidth()) / 2 + self::MARGIN);
+            $shape->setHeight((int) ($availableHeight - 2 * self::MARGIN));
+            $shape->setOffsetX((int) (($availableWidth - $shape->getWidth()) / 2 + self::MARGIN));
             $shape->setOffsetY(self::MARGIN);
         }
     }
@@ -134,9 +134,9 @@ class Pptx implements Writer
     {
         $shape = $slide->createRichTextShape();
         $shape->setHeight(self::LEGEND_HEIGHT);
-        $shape->setWidth($slide->getParent()->getLayout()->getCX(DocumentLayout::UNIT_PIXEL) - 2 * self::MARGIN);
+        $shape->setWidth((int) ($slide->getParent()->getLayout()->getCX(DocumentLayout::UNIT_PIXEL) - 2 * self::MARGIN));
         $shape->setOffsetX(self::MARGIN);
-        $shape->setOffsetY($slide->getParent()->getLayout()->getCY(DocumentLayout::UNIT_PIXEL) - self::LEGEND_HEIGHT - self::MARGIN);
+        $shape->setOffsetY((int) ($slide->getParent()->getLayout()->getCY(DocumentLayout::UNIT_PIXEL) - self::LEGEND_HEIGHT - self::MARGIN));
         $shape->getActiveParagraph()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
         $this->needSeparator = false;

@@ -21,8 +21,8 @@ class DomainRepositoryTest extends AbstractRepositoryTest
     {
         $actual = $this->repository->getFullNames();
         $expected = [
-            'Test domain 9000' => '9000',
-            'Test domain 9001' => '9001',
+            'Test domain 9000' => 9000,
+            'Test domain 9001' => 9001,
         ];
 
         self::assertSame($expected, $actual);

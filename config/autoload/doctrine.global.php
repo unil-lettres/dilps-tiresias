@@ -6,7 +6,7 @@ return [
     'doctrine' => [
         'connection' => [
             'orm_default' => [
-                'driverClass' => Doctrine\DBAL\Driver\PDOMySql\Driver::class,
+                'driverClass' => Doctrine\DBAL\Driver\PDO\MySQL\Driver::class,
                 'params' => [
                     'host' => 'localhost',
                     'dbname' => 'dilps',
@@ -65,10 +65,12 @@ return [
             'point' => CrEOF\Spatial\DBAL\Types\Geography\PointType::class,
         ],
         // migrations configuration
-        'migrations_configuration' => [
+        'migrations' => [
             'orm_default' => [
-                'directory' => 'server/Application/Migration',
-                'namespace' => 'Application\Migration',
+                'custom_template' => 'config/migration-template.txt',
+                'migrations_paths' => [
+                    'Application\Migration' => 'server/Application/Migration',
+                ],
             ],
         ],
     ],

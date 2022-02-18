@@ -18,10 +18,9 @@ jobs:
                     MYSQL_DATABASE: dilps
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
 
-        continue-on-error: ${{ matrix.php-versions == '8.0'}}
         strategy:
             matrix:
-                php-versions: ['7.4', '8.0']
+                php-versions: ['8.1']
 
         name: PHP${{ matrix.php-versions }}
 
