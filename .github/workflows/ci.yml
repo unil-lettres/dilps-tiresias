@@ -27,6 +27,8 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v2
+              with:
+                  fetch-depth: 2
 
             - name: Node Setup
               uses: actions/setup-node@v2
@@ -101,8 +103,8 @@ jobs:
 
             - name: Upload code coverage
               run: |
-                  curl -LO https://scrutinizer-ci.com/ocular.phar
-                  php ocular.phar code-coverage:upload --format=php-clover coverage-clover.xml
+                  composer global require scrutinizer/ocular
+                  ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage-clover.xml
 
             - name: Notify Slack
               uses: act10ns/slack@v1
