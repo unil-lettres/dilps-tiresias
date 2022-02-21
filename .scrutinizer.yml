@@ -11,9 +11,9 @@ coding_style:
 
 build:
     environment:
+        image: default-bionic
+        php: 8.1
         node: 14
-        php:
-            version: '8.1'
     nodes:
         analysis:
             tests:
