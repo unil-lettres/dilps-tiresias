@@ -67,6 +67,9 @@ return [
         // migrations configuration
         'migrations' => [
             'orm_default' => [
+                'table_storage' => [
+                    'table_name' => 'doctrine_migration_versions',
+                ],
                 'custom_template' => 'config/migration-template.txt',
                 'migrations_paths' => [
                     'Application\Migration' => 'server/Application/Migration',
