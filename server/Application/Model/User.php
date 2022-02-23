@@ -130,12 +130,12 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\Cake\Chronos\Chronos $activeUntil = null;
+    private ?Chronos $activeUntil = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\Cake\Chronos\Chronos $termsAgreement = null;
+    private ?Chronos $termsAgreement = null;
 
     /**
      * @ORM\Column(type="UserType", options={"default" = User::TYPE_DEFAULT})

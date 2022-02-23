@@ -36,7 +36,7 @@ class Change extends AbstractModel implements HasSiteInterface
      *     @ORM\JoinColumn(onDelete="CASCADE")
      * })
      */
-    private ?\Application\Model\Card $original = null;
+    private ?Card $original = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Card", inversedBy="changes")
@@ -44,7 +44,7 @@ class Change extends AbstractModel implements HasSiteInterface
      *     @ORM\JoinColumn(unique=true, onDelete="CASCADE")
      * })
      */
-    private ?\Application\Model\Card $suggestion = null;
+    private ?Card $suggestion = null;
 
     /**
      * @ORM\Column(type="text")

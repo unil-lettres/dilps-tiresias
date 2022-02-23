@@ -22,7 +22,7 @@ class Message extends AbstractModel implements \Ecodev\Felix\Model\Message
      *     @ORM\JoinColumn(onDelete="CASCADE")
      * })
      */
-    private ?\Application\Model\User $recipient = null;
+    private ?User $recipient = null;
 
     /**
      * Set recipient.

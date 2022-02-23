@@ -80,7 +80,7 @@ class Export extends AbstractModel implements HasSiteInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\Cake\Chronos\Chronos $start = null;
+    private ?Chronos $start = null;
 
     /**
      * Duration of export process in seconds.

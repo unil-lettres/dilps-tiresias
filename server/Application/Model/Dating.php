@@ -36,7 +36,7 @@ class Dating extends AbstractModel
      *     @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
      * })
      */
-    private ?\Application\Model\Card $card = null;
+    private ?Card $card = null;
 
     /**
      * Return the automatically computed beginning of dating period.

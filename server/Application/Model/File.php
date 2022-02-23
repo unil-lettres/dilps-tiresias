@@ -28,7 +28,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
      *     @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * })
      */
-    private \Application\Model\Card $card;
+    private Card $card;
 
     use \Ecodev\Felix\Model\Traits\File {
         setFile as traitSetFile;

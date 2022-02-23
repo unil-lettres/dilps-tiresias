@@ -142,7 +142,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      *     @ORM\JoinColumn(onDelete="SET NULL")
      * })
      */
-    private ?\Application\Model\Card $original = null;
+    private ?Card $original = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="DocumentType")
@@ -150,7 +150,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      *     @ORM\JoinColumn(onDelete="SET NULL")
      * })
      */
-    private ?\Application\Model\DocumentType $documentType = null;
+    private ?DocumentType $documentType = null;
 
     /**
      * @var DoctrineCollection<Domain>

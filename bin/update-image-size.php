@@ -50,7 +50,7 @@ foreach ($filesInDb as $i => $card) {
         if ($width !== (int) $card['width'] || $height !== (int) $card['height']) {
             $count += $connection->update('card', ['width' => $width, 'height' => $height], ['id' => $card['id']]);
         }
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         echo $card['filename'] . ' (' . $e->getMessage() . ")\n";
     }
 }
