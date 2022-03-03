@@ -9,7 +9,7 @@ import {TagComponent} from '../tag/tag.component';
     styleUrls: ['./tags.component.scss'],
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
-    constructor(service: TagService, injector: Injector) {
+    public constructor(service: TagService, injector: Injector) {
         super(service, TagComponent, injector);
     }
 }

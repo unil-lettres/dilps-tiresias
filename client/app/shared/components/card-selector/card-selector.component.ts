@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CardService} from '../../../card/services/card.service';
 import {Cards_cards_items} from '../../generated-types';
 
@@ -7,12 +7,10 @@ import {Cards_cards_items} from '../../generated-types';
     templateUrl: './card-selector.component.html',
     styleUrls: ['./card-selector.component.scss'],
 })
-export class CardSelectorComponent implements OnInit {
+export class CardSelectorComponent {
     public card: Cards_cards_items | null;
 
-    constructor(public readonly cardService: CardService) {}
-
-    public ngOnInit(): void {}
+    public constructor(public readonly cardService: CardService) {}
 
     public displayWith(item: Cards_cards_items | string): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';

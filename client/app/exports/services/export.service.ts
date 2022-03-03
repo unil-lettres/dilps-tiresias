@@ -34,7 +34,7 @@ export class ExportService extends AbstractContextualizedService<
     never,
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'export', exportQuery, exportsQuery, createExport, null, null, site);
     }
 

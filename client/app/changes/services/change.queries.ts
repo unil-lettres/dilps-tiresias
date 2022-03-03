@@ -1,4 +1,4 @@
-import {gql} from 'apollo-angular';
+import {gql} from '@apollo/client/core';
 import {cardDetailsFragment} from '../../card/services/card.queries';
 import {userMetaFragment} from '../../shared/queries/fragments';
 

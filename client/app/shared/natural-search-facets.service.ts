@@ -234,7 +234,7 @@ export class NaturalSearchFacetsService {
         },
     ];
 
-    constructor(
+    public constructor(
         @Inject(SITE) public readonly site: Site,
         private readonly periodService: PeriodService,
         private readonly materialService: MaterialService,

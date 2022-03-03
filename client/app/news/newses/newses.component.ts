@@ -11,7 +11,7 @@ import {NewsService} from '../services/news.service';
 export class NewsesComponent extends AbstractList<NewsService> {
     public displayedColumns = ['isActive', 'image', 'name', 'url'];
 
-    constructor(service: NewsService, injector: Injector) {
+    public constructor(service: NewsService, injector: Injector) {
         super(service, NewsComponent, injector);
     }
 }

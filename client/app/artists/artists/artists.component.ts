@@ -9,7 +9,7 @@ import {ArtistService} from '../services/artist.service';
     styleUrls: ['./artists.component.scss'],
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
-    constructor(service: ArtistService, injector: Injector) {
+    public constructor(service: ArtistService, injector: Injector) {
         super(service, ArtistComponent, injector);
     }
 }

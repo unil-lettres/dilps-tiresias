@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ErrorComponent {
     public readonly error: Error | null = null;
 
-    constructor(errorService: ErrorService, route: ActivatedRoute) {
+    public constructor(errorService: ErrorService, route: ActivatedRoute) {
         this.error = errorService.getLastError();
 
         if (route.snapshot.data.notFound) {

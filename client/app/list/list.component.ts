@@ -173,7 +173,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         offset: null,
     };
 
-    constructor(
+    public constructor(
         private readonly cardService: CardService,
         private readonly collectionService: CollectionService,
         private readonly userService: UserService,
@@ -432,7 +432,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                 }
 
                 // Last api call
-                const finish = () => {
+                const finish = (): void => {
                     forkJoin(observables).subscribe(() => {
                         this.alertService.info('Mis à jour');
                         this.reset();

@@ -13,7 +13,7 @@ import {TagService} from '../services/tag.service';
 export class TagComponent extends AbstractDetailDirective<TagService> {
     public hierarchicConfig = tagHierarchicConfig;
 
-    constructor(
+    public constructor(
         service: TagService,
         alertService: AlertService,
         userService: UserService,

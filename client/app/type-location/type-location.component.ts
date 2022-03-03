@@ -22,7 +22,7 @@ export class TypeLocationComponent implements DropdownComponent {
     public latitudeCtrl = new FormControl();
     public distanceCtrl = new FormControl();
 
-    constructor(
+    public constructor(
         @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<never>,
         protected readonly dropdownRef: NaturalDropdownRef,
     ) {

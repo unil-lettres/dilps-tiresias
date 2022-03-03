@@ -43,7 +43,7 @@ export class UserComponent extends AbstractDetailDirective<UserService> {
 
     public institution: UpdateUser_updateUser_institution | User_user_institution | null = null;
 
-    constructor(
+    public constructor(
         public readonly institutionService: InstitutionService,
         service: UserService,
         alertService: AlertService,

@@ -9,7 +9,7 @@ import {AbstractNavigableList} from '../../shared/components/AbstractNavigableLi
     styleUrls: ['./domains.component.scss'],
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
-    constructor(service: DomainService, injector: Injector) {
+    public constructor(service: DomainService, injector: Injector) {
         super(service, DomainComponent, injector);
     }
 }

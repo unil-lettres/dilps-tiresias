@@ -68,7 +68,7 @@ export class UserService
     private readonly storageKey = 'viewer';
     private readonly onDestroy = new Subject<void>();
 
-    constructor(
+    public constructor(
         apollo: Apollo,
         private readonly route: ActivatedRoute,
         private readonly router: Router,

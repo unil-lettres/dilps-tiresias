@@ -48,7 +48,11 @@ export class CollectionService extends AbstractContextualizedService<
     DeleteCollections['deleteCollections'],
     never
 > {
-    constructor(apollo: Apollo, private readonly linkService: NaturalLinkMutationService, @Inject(SITE) site: Site) {
+    public constructor(
+        apollo: Apollo,
+        private readonly linkService: NaturalLinkMutationService,
+        @Inject(SITE) site: Site,
+    ) {
         super(
             apollo,
             'collection',

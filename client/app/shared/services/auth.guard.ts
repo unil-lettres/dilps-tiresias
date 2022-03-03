@@ -12,7 +12,7 @@ import {Site} from '../generated-types';
 export class AuthGuard implements CanActivate {
     public Site = Site;
 
-    constructor(
+    public constructor(
         private readonly router: Router,
         private readonly userService: UserService,
         @Inject(SITE) public readonly site: Site,

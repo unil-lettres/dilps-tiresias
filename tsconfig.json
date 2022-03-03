@@ -25,5 +25,7 @@
         "strictTemplates": true,
         // Remove this when https://github.com/angular/angular/issues/37619 is fixed
         "strictSafeNavigationTypes": false
-    }
+    },
+    // Otherwise, eslint parses our temp files and crashes, see https://github.com/typescript-eslint/typescript-eslint/issues/1192
+    "exclude": ["data/", "htdocs/"]
 }

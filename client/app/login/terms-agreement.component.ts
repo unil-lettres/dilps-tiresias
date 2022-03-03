@@ -4,8 +4,4 @@ import {Component, OnInit} from '@angular/core';
     selector: 'app-terms-agreement',
     templateUrl: './terms-agreement.component.html',
 })
-export class TermsAgreementComponent implements OnInit {
-    constructor() {}
-
-    public ngOnInit(): void {}
-}
+export class TermsAgreementComponent {}

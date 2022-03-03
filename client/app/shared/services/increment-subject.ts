@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
  * Expose additional function patch() that prevents to override old value, bug merges new one in old one (for object variables usage)
  */
 export class IncrementSubject<T = Literal> extends BehaviorSubject<T> {
-    constructor(_val: T = {} as T) {
+    public constructor(_val: T = {} as T) {
         super(_val);
     }
 

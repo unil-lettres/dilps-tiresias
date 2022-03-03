@@ -1,9 +1,9 @@
 import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
-import {SwiperModule} from 'ngx-swiper-wrapper';
 import {SITE} from '../../app.config';
 import {Site} from '../../shared/generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';
 import {CarouselComponent} from './carousel.component';
+import {SwiperModule} from 'swiper/angular';
 
 describe('CarouselComponent', () => {
     let component: CarouselComponent;

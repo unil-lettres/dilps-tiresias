@@ -1,8 +1,6 @@
-import {Apollo} from 'apollo-angular';
+import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
-import {AgmCoreModule} from '@agm/core';
-import {AgmSnazzyInfoWindowModule} from '@agm/snazzy-info-window';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -59,7 +57,7 @@ import {
 import {NgProgressModule} from 'ngx-progressbar';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {SwiperModule} from 'ngx-swiper-wrapper';
+import {SwiperModule} from 'swiper/angular';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
@@ -136,6 +134,7 @@ import {FilesComponent} from './files/files/files.component';
 import {ErrorComponent} from './shared/components/error/error.component';
 import {NetworkInterceptorService} from './shared/services/network-interceptor.service';
 import {HttpBatchLink} from 'apollo-angular/http';
+import {GoogleMapsModule} from '@angular/google-maps';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -223,9 +222,11 @@ const icons: NaturalIconsConfig = {
         ErrorComponent,
     ],
     imports: [
+        ApolloModule,
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        HttpClientJsonpModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -260,11 +261,7 @@ const icons: NaturalIconsConfig = {
         MatNativeDateModule,
         MatChipsModule,
         MatCardModule,
-        AgmSnazzyInfoWindowModule,
-        AgmCoreModule.forRoot({
-            apiKey: environment.agmApiKey,
-            libraries: ['places'],
-        }),
+        GoogleMapsModule,
         NaturalDropdownComponentsModule,
         NaturalIconModule.forRoot(icons),
         NaturalRelationsModule,
@@ -282,7 +279,6 @@ const icons: NaturalIconsConfig = {
     ],
     providers: [
         {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
-        /* tslint:disable:no-string-literal */
         {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
@@ -295,7 +291,7 @@ const icons: NaturalIconsConfig = {
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor(
+    public constructor(
         apollo: Apollo,
         networkActivityService: NetworkActivityService,
         alertService: AlertService,

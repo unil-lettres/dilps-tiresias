@@ -92,7 +92,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         },
     };
 
-    constructor(private readonly router: Router) {
+    public constructor(private readonly router: Router) {
         super();
     }
 

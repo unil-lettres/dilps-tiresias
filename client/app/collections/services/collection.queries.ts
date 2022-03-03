@@ -1,4 +1,4 @@
-import {gql} from 'apollo-angular';
+import {gql} from '@apollo/client/core';
 import {institutionDetails} from '../../institutions/services/institution.queries';
 import {userMetaFragment} from '../../shared/queries/fragments';
 

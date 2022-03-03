@@ -48,7 +48,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     public showVisibility = true;
 
-    constructor(
+    public constructor(
         public readonly institutionService: InstitutionService,
         public readonly collectionService: CollectionService,
         public readonly userService: UserService,

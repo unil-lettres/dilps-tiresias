@@ -32,7 +32,7 @@ export class MaterialService extends AbstractContextualizedService<
     DeleteMaterials['deleteMaterials'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials, site);
     }
 

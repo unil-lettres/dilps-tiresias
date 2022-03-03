@@ -72,7 +72,7 @@ export class TypeNumericRangeComponent implements DropdownComponent {
         step: null,
     };
 
-    constructor(
+    public constructor(
         @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData,
         protected readonly dropdownRef: NaturalDropdownRef,
     ) {

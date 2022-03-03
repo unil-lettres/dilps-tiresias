@@ -234,7 +234,7 @@
                 ></app-thesaurus>
 
                 <div
-                    *ngIf="edit || (!!model.expandedName && model.expandedName != model.name)"
+                    *ngIf="edit || (!!model.expandedName && model.expandedName !== model.name)"
                     class="margin-bottom rich-text"
                 >
                     <div class="label">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
@@ -286,8 +286,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -311,9 +311,9 @@
                     <textarea
                         [(ngModel)]="model.addition"
                         [readonly]="!edit"
-                        [matAutosizeMinRows]="1"
+                        [cdkAutosizeMinRows]="1"
                         matInput
-                        [matTextareaAutosize]="true"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                 </mat-form-field>
 
@@ -332,8 +332,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -359,8 +359,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -386,8 +386,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -413,8 +413,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -571,9 +571,9 @@
                     <textarea
                         [(ngModel)]="model.objectReference"
                         [readonly]="!edit"
-                        [matAutosizeMinRows]="1"
+                        [cdkAutosizeMinRows]="1"
                         matInput
-                        [matTextareaAutosize]="true"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                 </mat-form-field>
 
@@ -611,8 +611,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="191"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -630,8 +630,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -733,8 +733,8 @@
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-hint
                         align="end"
@@ -762,8 +762,8 @@
                         maxlength="255"
                         type="url"
                         (change)="urlModel = url; updateFormValidity()"
-                        [matAutosizeMinRows]="1"
-                        [matTextareaAutosize]="true"
+                        [cdkAutosizeMinRows]="1"
+                        [cdkTextareaAutosize]="true"
                     ></textarea>
                     <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
                     <mat-hint

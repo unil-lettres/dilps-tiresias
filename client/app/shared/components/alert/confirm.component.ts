@@ -6,5 +6,5 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
     templateUrl: './confirm.component.html',
 })
 export class ConfirmComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public readonly data: any) {}
+    public constructor(@Inject(MAT_DIALOG_DATA) public readonly data: any) {}
 }

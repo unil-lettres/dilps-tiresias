@@ -23,7 +23,7 @@ export class ChangeComponent implements OnInit {
     public user: Viewer['viewer'];
     public showTools = false;
 
-    constructor(
+    public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly changeService: ChangeService,

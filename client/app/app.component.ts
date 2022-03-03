@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon');
 
-    constructor(
+    public constructor(
         private readonly themeService: ThemeService,
         private readonly overlayContainer: OverlayContainer,
         @Inject(SITE) private readonly site: Site,

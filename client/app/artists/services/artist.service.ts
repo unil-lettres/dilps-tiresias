@@ -32,7 +32,7 @@ export class ArtistService extends AbstractContextualizedService<
     DeleteArtists['deleteArtists'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
     }
 

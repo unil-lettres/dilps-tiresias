@@ -10,7 +10,7 @@ import {ChangeService} from '../services/change.service';
 export class ChangesComponent extends AbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
-    constructor(service: ChangeService, injector: Injector) {
+    public constructor(service: ChangeService, injector: Injector) {
         super(service, null, injector);
     }
 }

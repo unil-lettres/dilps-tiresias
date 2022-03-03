@@ -3,9 +3,9 @@
  * See source doc here https://github.com/angular/material2/tree/master/src/lib/core/theming
  */
 // Import theming files full relative way or karma will display warning
-@use '~@ecodev/natural/theming/natural.theme';
+@use '@ecodev/natural';
 @use 'sass:meta';
-@use '~@ecodev/angular-natural-gallery/theming/natural-gallery.theme';
+@use '@ecodev/angular-natural-gallery';
 @use 'typography';
 @use '../app/app.theme';
 @use '../app/shared/components/boot-loader/boot-loader.theme';
@@ -33,7 +33,7 @@
     @include scroll.scroll($theme);
     @include home.home($theme);
     @include toolbar.toolbar($theme);
-    @include natural-gallery.gallery-theme($theme);
+    @include angular-natural-gallery.gallery-theme($theme);
     @include table.table($theme);
     @include table-button.table-button($theme);
     @include collections.collections($theme);

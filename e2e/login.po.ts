@@ -1,7 +1,7 @@
 import {Page, Response} from '@playwright/test';
 
 export class LoginPage {
-    constructor(private readonly page: Page) {}
+    public constructor(private readonly page: Page) {}
 
     public navigateTo(): Promise<null | Response> {
         return this.page.goto('');

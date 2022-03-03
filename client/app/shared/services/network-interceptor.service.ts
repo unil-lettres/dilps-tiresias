@@ -6,7 +6,7 @@ import {NetworkActivityService} from './network-activity.service';
 
 @Injectable()
 export class NetworkInterceptorService implements HttpInterceptor {
-    constructor(private readonly networkActivityService: NetworkActivityService) {}
+    public constructor(private readonly networkActivityService: NetworkActivityService) {}
 
     /**
      * Intercept HTTP request from Angular to show them as activity

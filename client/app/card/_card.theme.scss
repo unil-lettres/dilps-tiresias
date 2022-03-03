@@ -1,6 +1,5 @@
 @use 'sass:map';
-@use '~@angular/material' as mat;
-@use '~@angular/material/core/theming/theming';
+@use '@angular/material' as mat;
 
 @mixin card($theme) {
     $primary: map.get($theme, primary);
@@ -9,7 +8,7 @@
     $bg: map.get($theme, background);
     $fg: map.get($theme, foreground);
 
-    $config: theming.get-color-config($theme);
+    $config: mat.get-color-config($theme);
     $is-dark-theme: map.get($config, is-dark);
     $label-color: mat.get-color-from-palette($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
 

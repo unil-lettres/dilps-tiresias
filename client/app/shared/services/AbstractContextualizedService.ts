@@ -17,7 +17,7 @@ export class AbstractContextualizedService<
         ids: string[];
     },
 > extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete, Vdelete> {
-    constructor(
+    public constructor(
         apollo: Apollo,
         protected readonly name: string,
         protected oneQuery: DocumentNode | null,

@@ -34,7 +34,7 @@ export class NewsService extends AbstractContextualizedService<
     DeleteNewses['deleteNewses'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
     }
 

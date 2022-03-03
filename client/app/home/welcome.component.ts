@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {SITE} from '../app.config';
 import {Site} from '../shared/generated-types';
 
@@ -6,12 +6,10 @@ import {Site} from '../shared/generated-types';
     selector: 'app-welcome',
     templateUrl: './welcome.component.html',
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent {
     public Site = Site;
 
-    constructor(@Inject(SITE) public readonly site: Site) {}
-
-    public ngOnInit(): void {}
+    public constructor(@Inject(SITE) public readonly site: Site) {}
 
     public getTitle(): string {
         switch (this.site) {

@@ -1,4 +1,4 @@
-import {gql} from 'apollo-angular';
+import {gql} from '@apollo/client/core';
 
 export const statisticDetails = gql`
     fragment StatisticDetails on Statistic {

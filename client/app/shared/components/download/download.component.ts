@@ -41,7 +41,7 @@ export class DownloadComponent {
     public validationMessage: string | null = null;
     public readonly pptxLabel = 'PowerPoint';
 
-    constructor(
+    public constructor(
         private readonly dialogRef: MatDialogRef<ArtistComponent>,
         @Inject(MAT_DIALOG_DATA) data: DownloadComponentData,
         @Inject(SITE) private readonly site: Site,

@@ -1,13 +1,10 @@
-/// <reference types="@types/googlemaps" />
-
-import {MapsAPILoader} from '@agm/core';
-import {Component, EventEmitter, Inject, Input, NgZone, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, NgZone, Output, ViewChild} from '@angular/core';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {Cards_cards_items, Precision, Site} from '../shared/generated-types';
 import {SITE} from '../app.config';
+import {MapApiService} from './map-api.service';
+import {GoogleMap, MapInfoWindow, MapMarker} from '@angular/google-maps';
 import Icon = google.maps.Icon;
-import LatLngBounds = google.maps.LatLngBounds;
-import ControlPosition = google.maps.ControlPosition;
 
 export interface Location {
     longitude: number;
@@ -26,22 +23,36 @@ type Marker = {
     styleUrls: ['./view-map.component.scss'],
 })
 export class ViewMapComponent extends NaturalAbstractController {
-    @Input() set cards(cards: Cards_cards_items[]) {
-        this.mapsAPILoader.load().then(() => {
+    public selectedMarker: Marker | null = null;
+
+    @Input()
+    public set cards(cards: Cards_cards_items[]) {
+        this.mapApiService.loaded.subscribe(() => {
             this.markers = this.convertIntoMarkers(cards);
             this.updateBounds(this.markers);
         });
     }
 
     @Output() public readonly searchByLocation = new EventEmitter<Location>();
-
+    @ViewChild(GoogleMap) private map!: GoogleMap;
+    @ViewChild(MapInfoWindow) private infoWindow!: MapInfoWindow;
+    public readonly infoWindowOption: google.maps.InfoWindowOptions = {
+        maxWidth: 400,
+    };
     public markers: Marker[];
-    public bounds: LatLngBounds;
+    public readonly mapOptions: google.maps.MapOptions = {
+        mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
+        disableDefaultUI: true,
+        zoomControl: true,
+        scrollwheel: true,
+        streetViewControl: true,
+        mapTypeControlOptions: {position: 10.0},
+    };
 
-    constructor(
-        private readonly mapsAPILoader: MapsAPILoader,
+    public constructor(
+        public readonly mapApiService: MapApiService,
         private readonly ngZone: NgZone,
-        @Inject(SITE) public readonly site: Site,
+        @Inject(SITE) private readonly site: Site,
     ) {
         super();
     }
@@ -77,10 +88,26 @@ export class ViewMapComponent extends NaturalAbstractController {
         });
     }
 
-    public updateBounds(markers: Marker[]): void {
-        this.bounds = new google.maps.LatLngBounds();
+    private updateBounds(markers: Marker[]): void {
+        const bounds = new google.maps.LatLngBounds();
         markers.forEach(marker => {
-            this.bounds.extend({lat: marker.latitude, lng: marker.longitude});
+            bounds.extend({lat: marker.latitude, lng: marker.longitude});
         });
+
+        this.mapApiService.loaded.subscribe(() =>
+            setTimeout(() => {
+                this.map.fitBounds(bounds, {
+                    top: 250,
+                    right: 100,
+                    left: 100,
+                    bottom: 10,
+                });
+            }),
+        );
+    }
+
+    public openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
+        this.selectedMarker = marker;
+        this.infoWindow.open(mapMarker);
     }
 }

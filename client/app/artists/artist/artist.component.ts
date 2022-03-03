@@ -10,7 +10,7 @@ import {ArtistService} from '../services/artist.service';
     templateUrl: './artist.component.html',
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService> {
-    constructor(
+    public constructor(
         service: ArtistService,
         alertService: AlertService,
         userService: UserService,

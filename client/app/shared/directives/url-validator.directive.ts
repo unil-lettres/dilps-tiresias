@@ -1,8 +1,8 @@
-/* tslint:disable:directive-selector */
 import {Directive} from '@angular/core';
 import {AbstractControl, Validator, NG_VALIDATORS} from '@angular/forms';
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'input[type="url"]',
     providers: [{provide: NG_VALIDATORS, useExisting: UrlValidatorDirective, multi: true}],
 })

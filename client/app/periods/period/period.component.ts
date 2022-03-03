@@ -19,7 +19,7 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService> {
         return item ? item.name + formatYearRange(item.from, item.to) : '';
     }
 
-    constructor(
+    public constructor(
         service: PeriodService,
         alertService: AlertService,
         userService: UserService,

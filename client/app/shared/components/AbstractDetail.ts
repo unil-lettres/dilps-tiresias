@@ -28,7 +28,7 @@ export class AbstractDetailDirective<
         item: {},
     };
 
-    constructor(
+    public constructor(
         public readonly service: TService,
         private readonly alertService: AlertService,
         public readonly dialogRef: MatDialogRef<unknown>,

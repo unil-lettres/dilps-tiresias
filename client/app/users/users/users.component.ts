@@ -12,7 +12,7 @@ import {UserComponent} from '../user/user.component';
 export class UsersComponent extends AbstractList<UserService> {
     public displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
-    constructor(service: UserService, injector: Injector) {
+    public constructor(service: UserService, injector: Injector) {
         super(service, UserComponent, injector);
     }
 

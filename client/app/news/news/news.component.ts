@@ -14,7 +14,7 @@ import {NewsService} from '../services/news.service';
 export class NewsComponent extends AbstractDetailDirective<NewsService> {
     public imageData: string;
 
-    constructor(
+    public constructor(
         service: NewsService,
         alertService: AlertService,
         userService: UserService,

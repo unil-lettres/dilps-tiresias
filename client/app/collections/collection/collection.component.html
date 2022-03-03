@@ -49,7 +49,7 @@
                     placeholder="Collection parente"
                 ></natural-select-hierarchic>
 
-                <mat-slide-toggle *ngIf="user?.role == 'administrator'" [(ngModel)]="data.item.isSource"
+                <mat-slide-toggle *ngIf="user?.role === 'administrator'" [(ngModel)]="data.item.isSource"
                     >Est un fonds</mat-slide-toggle
                 >
             </div>

@@ -51,7 +51,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
-    constructor(
+    public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly collectionsService: CollectionService,

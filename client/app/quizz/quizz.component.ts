@@ -22,7 +22,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
 
-    constructor(private readonly route: ActivatedRoute, private readonly cardService: CardService) {}
+    public constructor(private readonly route: ActivatedRoute, private readonly cardService: CardService) {}
 
     public ngOnDestroy(): void {
         this.routeParamsSub.unsubscribe();

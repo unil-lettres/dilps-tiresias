@@ -9,7 +9,7 @@ export const periodHierarchicConfig: NaturalHierarchicConfiguration[] = [
         parentsRelationNames: ['parent'],
         childrenRelationNames: ['parent'],
         selectableAtKey: 'period',
-        displayWith: (period: Periods_periods_items) => {
+        displayWith: (period: Periods_periods_items): string => {
             return period.name + formatYearRange(period.from, period.to);
         },
     },

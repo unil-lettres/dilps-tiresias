@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     public progress?: number = null;
     private uploaded = 0;
 
-    constructor(
+    public constructor(
         public readonly themeService: ThemeService,
         public readonly route: ActivatedRoute,
         public readonly router: Router,

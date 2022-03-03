@@ -9,7 +9,7 @@ import {DocumentTypeService} from '../services/document-type.service';
     styleUrls: ['./document-types.component.scss'],
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
-    constructor(service: DocumentTypeService, injector: Injector) {
+    public constructor(service: DocumentTypeService, injector: Injector) {
         super(service, DocumentTypeComponent, injector);
     }
 }

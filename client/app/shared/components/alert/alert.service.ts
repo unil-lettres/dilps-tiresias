@@ -8,7 +8,7 @@ import {ConfirmComponent} from './confirm.component';
     providedIn: 'root',
 })
 export class AlertService {
-    constructor(private readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) {}
+    public constructor(private readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) {}
 
     public info(message: string, duration: number = 1500): MatSnackBarRef<SimpleSnackBar> {
         return this.snackBar.open(message, null, {

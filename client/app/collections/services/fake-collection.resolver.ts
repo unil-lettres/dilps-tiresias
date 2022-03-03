@@ -10,7 +10,7 @@ export interface FakeCollection {
     providedIn: 'root',
 })
 export class FakeCollectionResolver implements Resolve<FakeCollection> {
-    constructor() {}
+    public constructor() {}
 
     /**
      * Converts ID into fake collection

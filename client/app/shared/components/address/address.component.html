@@ -71,28 +71,18 @@
     </mat-form-field>
 
     <!-- Map -->
-    <agm-map
+    <google-map
         *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
-        [latitude]="latitude"
-        [longitude]="longitude"
-        [scrollwheel]="false"
-        [mapTypeId]="$any(site === 'dilps' ? 'roadmap' : 'satellite')"
-        [styles]="mapStyles"
+        [center]="{lat: latitude, lng: longitude}"
         [zoom]="zoom"
-        [disableDefaultUI]="true"
     >
-        <agm-zoom-control></agm-zoom-control>
-        <agm-map-type-control position="BOTTOM_LEFT"></agm-map-type-control>
-        <agm-street-view-control></agm-street-view-control>
-
-        <agm-marker
-            (dragEnd)="onMarkerDrag($event)"
-            [iconUrl]="$any(icon)"
-            [latitude]="model?.latitude"
-            [longitude]="model?.longitude"
-            [markerDraggable]="!readonly"
-        ></agm-marker>
-    </agm-map>
+        <map-marker
+            (mapDragend)="onMarkerDrag($event)"
+            [icon]="icon"
+            [position]="{lat: model?.latitude, lng: model?.longitude}"
+            [draggable]="!readonly"
+        ></map-marker>
+    </google-map>
 </div>
 
 <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">

@@ -31,7 +31,7 @@ export class AbstractList<
 
     protected dialog: MatDialog;
 
-    constructor(service: TService, private readonly component: ComponentType<unknown>, injector: Injector) {
+    public constructor(service: TService, private readonly component: ComponentType<unknown>, injector: Injector) {
         super(service, injector);
         this.dialog = injector.get(MatDialog);
     }

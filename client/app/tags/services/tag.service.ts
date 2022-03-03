@@ -32,7 +32,7 @@ export class TagService extends AbstractContextualizedService<
     DeleteTags['deleteTags'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'tag', tagQuery, tagsQuery, createTag, updateTag, deleteTags, site);
     }
 

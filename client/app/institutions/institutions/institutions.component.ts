@@ -11,7 +11,7 @@ import {InstitutionService} from '../services/institution.service';
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public displayedColumns = ['name', 'locality'];
 
-    constructor(service: InstitutionService, injector: Injector) {
+    public constructor(service: InstitutionService, injector: Injector) {
         super(service, InstitutionComponent, injector);
     }
 }

@@ -102,7 +102,7 @@ export class StatisticsComponent extends NaturalAbstractController {
 
     // public usersFilter: UserFilter;
 
-    constructor(
+    public constructor(
         private readonly apollo: Apollo,
         statisticService: StatisticService,
         public readonly userService: UserService,

@@ -10,7 +10,7 @@ import {AntiqueNameService} from '../services/antique-name.service';
     templateUrl: './antique-name.component.html',
 })
 export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameService> {
-    constructor(
+    public constructor(
         service: AntiqueNameService,
         alertService: AlertService,
         userService: UserService,

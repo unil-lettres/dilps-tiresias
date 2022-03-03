@@ -38,7 +38,7 @@ export class AbstractNavigableList<
      */
     protected dialog: MatDialog;
 
-    constructor(
+    public constructor(
         public readonly service: TService,
         private readonly component: ComponentType<unknown>,
         injector: Injector,

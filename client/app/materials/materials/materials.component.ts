@@ -9,7 +9,7 @@ import {MaterialService} from '../services/material.service';
     styleUrls: ['./materials.component.scss'],
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
-    constructor(service: MaterialService, injector: Injector) {
+    public constructor(service: MaterialService, injector: Injector) {
         super(service, MaterialComponent, injector);
     }
 }

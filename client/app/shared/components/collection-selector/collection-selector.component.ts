@@ -51,7 +51,7 @@ export class CollectionSelectorComponent implements OnInit {
         parent: null,
     };
 
-    constructor(
+    public constructor(
         public readonly collectionService: CollectionService,
         private readonly dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
         private readonly userService: UserService,

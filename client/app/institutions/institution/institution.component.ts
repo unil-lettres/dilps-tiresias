@@ -10,7 +10,7 @@ import {InstitutionService} from '../services/institution.service';
     templateUrl: './institution.component.html',
 })
 export class InstitutionComponent extends AbstractDetailDirective<InstitutionService> {
-    constructor(
+    public constructor(
         service: InstitutionService,
         alertSvc: AlertService,
         userSvc: UserService,

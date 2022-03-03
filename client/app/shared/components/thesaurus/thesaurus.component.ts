@@ -140,7 +140,7 @@ export class ThesaurusComponent<
      */
     private lockOpenDialog: boolean;
 
-    constructor(
+    public constructor(
         private readonly dialog: MatDialog,
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
@@ -150,7 +150,7 @@ export class ThesaurusComponent<
 
     private _model: ThesaurusModel | ThesaurusModel[];
 
-    @Input() set model(val: ThesaurusModel | ThesaurusModel[]) {
+    @Input() public set model(val: ThesaurusModel | ThesaurusModel[]) {
         this._model = val;
         this.convertModel();
     }

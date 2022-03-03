@@ -1,4 +1,3 @@
-import {AgmMap, MapsAPILoader} from '@agm/core';
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
@@ -16,6 +15,7 @@ import {
 } from '../../generated-types';
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
+import {MapApiService} from '../../../view-map/map-api.service';
 
 @Component({
     selector: 'app-address',
@@ -53,178 +53,183 @@ export class AddressComponent implements OnInit, OnChanges {
     public zoom = 2;
 
     public icon: google.maps.Symbol | null;
-
-    @ViewChild(AgmMap) public map: AgmMap;
-
-    public mapStyles: google.maps.MapTypeStyle[] = [
-        {
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#f5f5f5',
-                },
-            ],
-        },
-        {
-            elementType: 'labels.icon',
-            stylers: [
-                {
-                    visibility: 'off',
-                },
-            ],
-        },
-        {
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#3c8bc7',
-                },
-            ],
-        },
-        {
-            elementType: 'labels.text.stroke',
-            stylers: [
-                {
-                    color: '#f5f5f5',
-                },
-            ],
-        },
-        {
-            featureType: 'administrative.land_parcel',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#bdbdbd',
-                },
-            ],
-        },
-        {
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#eeeeee',
-                },
-            ],
-        },
-        {
-            featureType: 'poi',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#3c8bc7',
-                },
-            ],
-        },
-        {
-            featureType: 'poi.park',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#e5e5e5',
-                },
-            ],
-        },
-        {
-            featureType: 'poi.park',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#9e9e9e',
-                },
-            ],
-        },
-        {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#ffffff',
-                },
-            ],
-        },
-        {
-            featureType: 'road.arterial',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#757575',
-                },
-            ],
-        },
-        {
-            featureType: 'road.highway',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#dadada',
-                },
-            ],
-        },
-        {
-            featureType: 'road.highway',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#616161',
-                },
-            ],
-        },
-        {
-            featureType: 'road.local',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#9e9e9e',
-                },
-            ],
-        },
-        {
-            featureType: 'transit.line',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#e5e5e5',
-                },
-            ],
-        },
-        {
-            featureType: 'transit.station',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#eeeeee',
-                },
-            ],
-        },
-        {
-            featureType: 'water',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    color: '#3c8bc7',
-                },
-            ],
-        },
-        {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [
-                {
-                    color: '#9e9e9e',
-                },
-            ],
-        },
-    ];
+    public readonly mapOptions: google.maps.MapOptions = {
+        mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
+        disableDefaultUI: true,
+        zoomControl: true,
+        scrollwheel: false,
+        streetViewControl: true,
+        mapTypeControlOptions: {position: 1.0},
+        styles: [
+            {
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#f5f5f5',
+                    },
+                ],
+            },
+            {
+                elementType: 'labels.icon',
+                stylers: [
+                    {
+                        visibility: 'off',
+                    },
+                ],
+            },
+            {
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#3c8bc7',
+                    },
+                ],
+            },
+            {
+                elementType: 'labels.text.stroke',
+                stylers: [
+                    {
+                        color: '#f5f5f5',
+                    },
+                ],
+            },
+            {
+                featureType: 'administrative.land_parcel',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#bdbdbd',
+                    },
+                ],
+            },
+            {
+                featureType: 'poi',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#eeeeee',
+                    },
+                ],
+            },
+            {
+                featureType: 'poi',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#3c8bc7',
+                    },
+                ],
+            },
+            {
+                featureType: 'poi.park',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#e5e5e5',
+                    },
+                ],
+            },
+            {
+                featureType: 'poi.park',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#9e9e9e',
+                    },
+                ],
+            },
+            {
+                featureType: 'road',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#ffffff',
+                    },
+                ],
+            },
+            {
+                featureType: 'road.arterial',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#757575',
+                    },
+                ],
+            },
+            {
+                featureType: 'road.highway',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#dadada',
+                    },
+                ],
+            },
+            {
+                featureType: 'road.highway',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#616161',
+                    },
+                ],
+            },
+            {
+                featureType: 'road.local',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#9e9e9e',
+                    },
+                ],
+            },
+            {
+                featureType: 'transit.line',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#e5e5e5',
+                    },
+                ],
+            },
+            {
+                featureType: 'transit.station',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#eeeeee',
+                    },
+                ],
+            },
+            {
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [
+                    {
+                        color: '#3c8bc7',
+                    },
+                ],
+            },
+            {
+                featureType: 'water',
+                elementType: 'labels.text.fill',
+                stylers: [
+                    {
+                        color: '#9e9e9e',
+                    },
+                ],
+            },
+        ],
+    };
     public countries: Countries['countries']['items'];
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
-    constructor(
-        private readonly mapsAPILoader: MapsAPILoader,
+    public constructor(
+        public readonly mapApiService: MapApiService,
         private readonly ngZone: NgZone,
         private readonly addressService: AddressService,
         public readonly countryService: CountryService,
-        @Inject(SITE) public readonly site: Site,
+        @Inject(SITE) private readonly site: Site,
     ) {}
 
     public ngOnInit(): void {
@@ -240,7 +245,7 @@ export class AddressComponent implements OnInit, OnChanges {
         }
 
         // load Places Autocomplete
-        this.mapsAPILoader.load().then(() => {
+        this.mapApiService.loaded.subscribe(() => {
             this.icon = this.getIcon();
             this.autocomplete = new google.maps.places.Autocomplete(this.inputRef.nativeElement);
             this.autocomplete.addListener('place_changed', () => {
@@ -284,7 +289,7 @@ export class AddressComponent implements OnInit, OnChanges {
         merge(this.model, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev: google.maps.MouseEvent): void {
+    public onMarkerDrag(ev: google.maps.MapMouseEvent): void {
         this.latitude = ev.latLng.lat();
         this.longitude = ev.latLng.lng();
 

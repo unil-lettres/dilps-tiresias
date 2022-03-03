@@ -13,7 +13,7 @@ import {MaterialService} from '../services/material.service';
 export class MaterialComponent extends AbstractDetailDirective<MaterialService> {
     public hierarchicConfig = materialHierarchicConfig;
 
-    constructor(
+    public constructor(
         service: MaterialService,
         alertService: AlertService,
         userService: UserService,

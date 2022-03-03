@@ -289,7 +289,7 @@ export class CardComponent implements OnInit, OnChanges {
     public isDilps = true;
     public suggestedCode: string | null;
 
-    constructor(
+    public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly changeService: ChangeService,
@@ -309,7 +309,7 @@ export class CardComponent implements OnInit, OnChanges {
     ) {}
 
     @Input()
-    set editable(val: boolean) {
+    public set editable(val: boolean) {
         this.edit = val;
     }
 

@@ -9,7 +9,7 @@ import {AntiqueNameService} from '../services/antique-name.service';
     styleUrls: ['./antique-names.component.scss'],
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
-    constructor(service: AntiqueNameService, injector: Injector) {
+    public constructor(service: AntiqueNameService, injector: Injector) {
         super(service, AntiqueNameComponent, injector);
     }
 }

@@ -11,7 +11,7 @@ import {PeriodService} from '../services/period.service';
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public displayedColumns = ['navigation', 'name', 'from', 'to'];
 
-    constructor(service: PeriodService, injector: Injector) {
+    public constructor(service: PeriodService, injector: Injector) {
         super(service, PeriodComponent, injector);
     }
 }

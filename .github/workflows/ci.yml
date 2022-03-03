@@ -85,8 +85,8 @@ jobs:
             - name: PHPStan
               run: ./vendor/bin/phpstan analyse
 
-            - name: TSLint
-              id: app-tslint
+            - name: Lint
+              id: app-lint
               run: yarn lint
 
             - name: Prettier

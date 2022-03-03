@@ -27,7 +27,7 @@ export class FileService extends NaturalAbstractModelService<
     DeleteFile,
     DeleteFileVariables
 > {
-    constructor(apollo: Apollo) {
+    public constructor(apollo: Apollo) {
         super(apollo, 'file', null, filesQuery, createFileMutation, null, deleteFileMutation);
     }
 

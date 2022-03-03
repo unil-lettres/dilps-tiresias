@@ -32,7 +32,7 @@ export class PeriodService extends AbstractContextualizedService<
     DeletePeriods['deletePeriods'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
     }
 

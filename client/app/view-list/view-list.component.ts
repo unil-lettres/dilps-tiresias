@@ -44,7 +44,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      */
     public Site = Site;
 
-    constructor() {
+    public constructor() {
         super();
     }
 

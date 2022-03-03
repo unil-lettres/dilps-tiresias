@@ -32,7 +32,7 @@ export class DomainService extends AbstractContextualizedService<
     DeleteDomains['deleteDomains'],
     never
 > {
-    constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
         super(apollo, 'domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
     }
 

@@ -21,7 +21,7 @@ export class ThemeService {
 
     private storageKey = '';
 
-    constructor(@Inject(SITE) site: Site) {
+    public constructor(@Inject(SITE) site: Site) {
         this.storageKey = site + '-theme';
 
         const theme = localStorage.getItem(this.storageKey);

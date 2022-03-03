@@ -114,7 +114,7 @@ natural-search,
 }
 
 // Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
-app-view-map agm-map div.gm-style > div:last-child {
+app-view-map google-map div.gm-style > div:last-child {
     top: 75px !important;
 }
 

@@ -13,7 +13,7 @@ import {DomainService} from '../services/domain.service';
 export class DomainComponent extends AbstractDetailDirective<DomainService> {
     public hierarchicConfig = domainHierarchicConfig;
 
-    constructor(
+    public constructor(
         service: DomainService,
         alertService: AlertService,
         userService: UserService,

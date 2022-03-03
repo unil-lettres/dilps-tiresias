@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
-import {SwiperConfigInterface} from 'ngx-swiper-wrapper';
 import {Newses_newses_items, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
+import {SwiperOptions} from 'swiper/types';
+import SwiperCore, {Navigation} from 'swiper';
+
+// install Swiper modules
+SwiperCore.use([Navigation]);
 
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class CarouselComponent implements OnInit {
-    public swiperConfig: SwiperConfigInterface = {
+    public swiperConfig: SwiperOptions = {
         direction: 'horizontal',
         autoplay: true,
         speed: 1000,
@@ -21,7 +26,7 @@ export class CarouselComponent implements OnInit {
 
     public newses: Newses_newses_items[] = [];
 
-    constructor(public readonly newsService: NewsService) {}
+    public constructor(public readonly newsService: NewsService) {}
 
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();

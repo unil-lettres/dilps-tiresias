@@ -1,4 +1,4 @@
-import {gql} from 'apollo-angular';
+import {gql} from '@apollo/client/core';
 
 export const countriesQuery = gql`
     query Countries($filter: CountryFilter, $pagination: PaginationInput) {
