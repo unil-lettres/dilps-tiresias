@@ -316,7 +316,7 @@ export class AddressComponent implements OnInit, OnChanges {
         );
     }
 
-    public getIcon(color = '#ff9800'): google.maps.Symbol {
+    private getIcon(color = '#ff9800'): google.maps.Symbol {
         const iconSize = 48;
         const icon: google.maps.Symbol = {
             path:
