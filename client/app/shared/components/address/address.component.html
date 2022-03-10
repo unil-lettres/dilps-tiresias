@@ -57,7 +57,12 @@
 </div>
 
 <div id="mapZone">
-    <mat-form-field [fxShow]="!readonly" class="mat-elevation-z4" floatLabel="never" id="search">
+    <mat-form-field
+        [fxShow]="(mapApiService.loaded | async) && !readonly"
+        class="mat-elevation-z4"
+        floatLabel="never"
+        id="search"
+    >
         <mat-label>Chercher</mat-label>
         <input
             #input
@@ -72,15 +77,18 @@
 
     <!-- Map -->
     <google-map
-        *ngIf="!readonly || (!!model?.latitude && !!model?.longitude)"
+        *ngIf="(mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))"
+        [options]="mapOptions"
         [center]="{lat: latitude, lng: longitude}"
         [zoom]="zoom"
+        height="450px"
+        width="100%"
     >
         <map-marker
             (mapDragend)="onMarkerDrag($event)"
             [icon]="icon"
-            [position]="{lat: model?.latitude, lng: model?.longitude}"
-            [draggable]="!readonly"
+            [position]="model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null"
+            [options]="{draggable: !readonly}"
         ></map-marker>
     </google-map>
 </div>

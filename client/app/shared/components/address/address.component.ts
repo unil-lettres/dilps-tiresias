@@ -57,9 +57,12 @@ export class AddressComponent implements OnInit, OnChanges {
         mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
-        scrollwheel: false,
+        gestureHandling: 'cooperative',
         streetViewControl: true,
-        mapTypeControlOptions: {position: 1.0},
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            position: 11,
+        },
         styles: [
             {
                 elementType: 'geometry',
