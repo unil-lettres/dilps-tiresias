@@ -123,7 +123,6 @@ import {ViewMapComponent} from './view-map/view-map.component';
 import {QuillModule} from 'ngx-quill';
 import {quillConfig} from './shared/config/quill.options';
 import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
-import {environment} from '../environments/environment';
 import {UrlValidatorDirective} from './shared/directives/url-validator.directive';
 import {UniqueCodeValidatorDirective} from './shared/directives/unique-code-validator.directive';
 import {StripTagsPipe} from './shared/pipes/strip-tags.pipe';
@@ -135,6 +134,7 @@ import {ErrorComponent} from './shared/components/error/error.component';
 import {NetworkInterceptorService} from './shared/services/network-interceptor.service';
 import {HttpBatchLink} from 'apollo-angular/http';
 import {GoogleMapsModule} from '@angular/google-maps';
+import {HideTooltipDirective} from './shared/directives/hide-tooltip.directive';
 
 /** Custom options to configure the form field's look and feel */
 const formFieldDefaults: MatFormFieldDefaultOptions = {
@@ -170,6 +170,7 @@ const icons: NaturalIconsConfig = {
         CollectionsComponent,
         ConfirmComponent,
         UrlValidatorDirective,
+        HideTooltipDirective,
         UniqueCodeValidatorDirective,
         CollectionComponent,
         TermsAgreementComponent,
