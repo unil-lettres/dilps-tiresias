@@ -51,7 +51,6 @@
         "creof/wkb-parser": "dev-master as 2.3.0",
         "ecodev/felix": "^7.0",
         "ecodev/graphql-upload": "^6.1",
-        "imagine/imagine": "dev-develop#60a78ce7973eb6b818f40a2858b85b7b9774a676 as 1.2",
         "laminas/laminas-component-installer": "^2.6",
         "laminas/laminas-config-aggregator": "^1.7",
         "laminas/laminas-diactoros": "^2.8",
