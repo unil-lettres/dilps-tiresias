@@ -1,4 +1,4 @@
-import {waitForAsync, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {SITE} from '../../app.config';
 import {Site} from '../../shared/generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';
@@ -9,17 +9,13 @@ describe('CarouselComponent', () => {
     let component: CarouselComponent;
     let fixture: ComponentFixture<CarouselComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [CarouselComponent],
-                imports: [SwiperModule],
-                providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.tiresias}],
-            }).compileComponents();
-        }),
-    );
-
     beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [CarouselComponent],
+            imports: [SwiperModule],
+            providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.tiresias}],
+        }).compileComponents();
+
         fixture = TestBed.createComponent(CarouselComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
