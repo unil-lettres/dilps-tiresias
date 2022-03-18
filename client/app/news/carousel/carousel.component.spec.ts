@@ -9,8 +9,8 @@ describe('CarouselComponent', () => {
     let component: CarouselComponent;
     let fixture: ComponentFixture<CarouselComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
             declarations: [CarouselComponent],
             imports: [SwiperModule],
             providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.tiresias}],

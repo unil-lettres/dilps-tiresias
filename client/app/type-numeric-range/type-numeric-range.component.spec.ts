@@ -31,11 +31,11 @@ describe('TypeNumericRangeComponent', () => {
         max: 10,
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
         const dialogRef = {close: () => true};
         dialogCloseSpy = spyOn(dialogRef, 'close');
 
-        TestBed.configureTestingModule({
+        await TestBed.configureTestingModule({
             declarations: [TypeNumericRangeComponent],
             imports: [NoopAnimationsModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
             providers: [
