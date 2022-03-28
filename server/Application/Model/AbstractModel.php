@@ -27,7 +27,7 @@ use GraphQL\Doctrine\Annotation as API;
 abstract class AbstractModel implements HasOwner, Model
 {
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
