@@ -230,7 +230,12 @@ const icons: NaturalIconsConfig = {
         HttpClientJsonpModule,
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule.withConfig({
+            // Disable animations if not supported (on iPhone 6 / Safari 13)
+            disableAnimations:
+                !('animate' in document.documentElement) ||
+                (navigator && /iPhone OS (8|9|10|11|12|13)_/.test(navigator.userAgent)),
+        }),
         MatButtonModule,
         MatCheckboxModule,
         MatIconModule,
