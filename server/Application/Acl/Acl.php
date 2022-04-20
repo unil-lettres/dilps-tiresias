@@ -37,6 +37,8 @@ class Acl extends \Ecodev\Felix\Acl\Acl
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this->addRole(User::ROLE_ANONYMOUS);
         $this->addRole(User::ROLE_STUDENT, User::ROLE_ANONYMOUS);
         $this->addRole(User::ROLE_JUNIOR, User::ROLE_STUDENT);

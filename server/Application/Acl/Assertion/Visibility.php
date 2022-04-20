@@ -6,14 +6,19 @@ namespace Application\Acl\Assertion;
 
 use Application\Model\Card;
 use Application\Model\Collection;
+use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
-class Visibility implements AssertionInterface
+class Visibility implements NamedAssertion
 {
+    public function getName(): string
+    {
+        return 'la visibilité est ' . implode(' ou ', $this->allowedVisibilities);
+    }
+
     /**
      * @param string[] $allowedVisibilities
      */

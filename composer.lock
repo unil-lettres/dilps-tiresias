@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f3c5e79d0859014fa5db3f514fd2500",
+    "content-hash": "97aef29aa8b1e1e493963a539b493476",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1532,16 +1532,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "7.0.2",
+            "version": "8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "0afdeec51f692d078930a0b1607ef6dcf9098431"
+                "reference": "bc171cbae7f26f10ba0499ff331901b7e1415823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/0afdeec51f692d078930a0b1607ef6dcf9098431",
-                "reference": "0afdeec51f692d078930a0b1607ef6dcf9098431",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/bc171cbae7f26f10ba0499ff331901b7e1415823",
+                "reference": "bc171cbae7f26f10ba0499ff331901b7e1415823",
                 "shasum": ""
             },
             "require": {
@@ -1560,7 +1560,7 @@
                 "laminas/laminas-permissions-acl": "^2.9",
                 "laminas/laminas-servicemanager": "^3.10",
                 "laminas/laminas-validator": "^2.16",
-                "laminas/laminas-view": "^2.19",
+                "laminas/laminas-view": "^2.20",
                 "mezzio/mezzio-session": "^1.6",
                 "moneyphp/money": "^4.0",
                 "php": "^8.1",
@@ -1568,6 +1568,8 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "@stable",
+                "laminas/laminas-config-aggregator": "^1.7",
+                "laminas/laminas-i18n": "^2.15",
                 "mikey179/vfsstream": "@stable",
                 "phpstan/phpstan": "@stable",
                 "phpstan/phpstan-phpunit": "@stable",
@@ -1594,9 +1596,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/7.0.2"
+                "source": "https://github.com/Ecodev/felix/tree/8.0.0"
             },
-            "time": "2022-04-07T15:45:16+00:00"
+            "time": "2022-04-20T13:30:13+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
@@ -3175,24 +3177,30 @@
         },
         {
             "name": "laminas/laminas-view",
-            "version": "2.19.1",
+            "version": "2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-view.git",
-                "reference": "5f2ed1af896543e986090afb6433e32409c99d4d"
+                "reference": "2cd6973a3e042be3d244260fe93f435668f5c2b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-view/zipball/5f2ed1af896543e986090afb6433e32409c99d4d",
-                "reference": "5f2ed1af896543e986090afb6433e32409c99d4d",
+                "url": "https://api.github.com/repos/laminas/laminas-view/zipball/2cd6973a3e042be3d244260fe93f435668f5c2b4",
+                "reference": "2cd6973a3e042be3d244260fe93f435668f5c2b4",
                 "shasum": ""
             },
             "require": {
+                "container-interop/container-interop": "^1.2",
+                "ext-dom": "*",
+                "ext-filter": "*",
                 "ext-json": "*",
+                "laminas/laminas-escaper": "^2.5",
                 "laminas/laminas-eventmanager": "^3.4",
                 "laminas/laminas-json": "^3.3",
+                "laminas/laminas-servicemanager": "^3.10",
                 "laminas/laminas-stdlib": "^3.6",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0"
+                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "psr/container": "^1 || ^2"
             },
             "conflict": {
                 "container-interop/container-interop": "<1.2",
@@ -3202,11 +3210,9 @@
                 "zendframework/zend-view": "*"
             },
             "require-dev": {
-                "ext-dom": "*",
                 "laminas/laminas-authentication": "^2.5",
                 "laminas/laminas-coding-standard": "~2.3.0",
                 "laminas/laminas-console": "^2.6",
-                "laminas/laminas-escaper": "^2.5",
                 "laminas/laminas-feed": "^2.15",
                 "laminas/laminas-filter": "^2.13.0",
                 "laminas/laminas-http": "^2.15",
@@ -3219,7 +3225,6 @@
                 "laminas/laminas-paginator": "^2.11.0",
                 "laminas/laminas-permissions-acl": "^2.6",
                 "laminas/laminas-router": "^3.0.1",
-                "laminas/laminas-servicemanager": "^3.4",
                 "laminas/laminas-uri": "^2.5",
                 "phpspec/prophecy": "^1.12",
                 "phpspec/prophecy-phpunit": "^2.0",
@@ -3275,7 +3280,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-01-12T16:20:05+00:00"
+            "time": "2022-02-22T13:52:44+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -9568,5 +9573,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

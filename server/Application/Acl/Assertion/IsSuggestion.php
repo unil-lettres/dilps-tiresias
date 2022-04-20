@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Application\Acl\Assertion;
 
 use Application\Model\Card;
+use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
-class IsSuggestion implements AssertionInterface
+class IsSuggestion implements NamedAssertion
 {
+    public function getName(): string
+    {
+        return 'la fiche est une suggestion';
+    }
+
     /**
      * Assert that the card is a suggestion (has a change).
      *

@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Application\Acl\Assertion;
 
 use Application\Model\File;
+use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
-class CanUpdateCard implements AssertionInterface
+class CanUpdateCard implements NamedAssertion
 {
+    public function getName(): string
+    {
+        return 'je peux éditer la fiche';
+    }
+
     /**
      * Assert that the card that the object belongs to can be updated.
      *

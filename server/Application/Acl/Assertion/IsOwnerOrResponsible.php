@@ -9,14 +9,19 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
 use Application\Model\User;
+use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;
 use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Assertion\AssertionInterface;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
-class IsOwnerOrResponsible implements AssertionInterface
+class IsOwnerOrResponsible implements NamedAssertion
 {
+    public function getName(): string
+    {
+        return "l'objet m'appartient ou j'en suis responsable";
+    }
+
     /**
      * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of.
      *
