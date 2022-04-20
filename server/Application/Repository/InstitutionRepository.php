@@ -6,6 +6,9 @@ namespace Application\Repository;
 
 use Application\Model\Institution;
 
+/**
+ * @extends AbstractRepository<Institution>
+ */
 class InstitutionRepository extends AbstractRepository
 {
     /**

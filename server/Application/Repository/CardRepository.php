@@ -12,6 +12,9 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ecodev\Felix\Repository\LimitedAccessSubQuery;
 
+/**
+ * @extends AbstractRepository<Card>
+ */
 class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 {
     public function getFindAllByCollections(array $collections = []): QueryBuilder

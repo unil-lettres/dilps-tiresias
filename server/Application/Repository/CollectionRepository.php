@@ -8,6 +8,9 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
 
+/**
+ * @extends AbstractRepository<Collection>
+ */
 class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**

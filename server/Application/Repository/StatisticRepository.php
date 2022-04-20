@@ -8,6 +8,9 @@ use Application\Model\Statistic;
 use Application\Model\User;
 use Generator;
 
+/**
+ * @extends AbstractRepository<Statistic>
+ */
 class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     public function getOrCreate(string $site): Statistic

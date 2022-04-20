@@ -8,6 +8,9 @@ use Application\Model\Card;
 use Application\Model\Export;
 use Application\Model\User;
 
+/**
+ * @extends AbstractRepository<Export>
+ */
 class ExportRepository extends AbstractRepository
 {
     public function updateCards(Export $export, array $collectionIds, array $cardIds): int

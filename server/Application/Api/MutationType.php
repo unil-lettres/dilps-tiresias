@@ -75,7 +75,7 @@ class MutationType extends ObjectType
             Standard::buildMutation(File::class),
             Standard::buildRelationMutation(Collection::class, User::class),
             Standard::buildRelationMutation(Card::class, Card::class),
-            Standard::buildRelationMutation(Card::class, Collection::class, false, 'linkCard'),
+            Standard::buildRelationMutation(Card::class, Collection::class, 'linkCard'),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
             $specializedFields,

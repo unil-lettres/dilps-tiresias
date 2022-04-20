@@ -6,6 +6,11 @@ namespace Application\Repository;
 
 use Application\Model\Card;
 
+use Application\Model\File;
+
+/**
+ * @extends AbstractRepository<File>
+ */
 class FileRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**

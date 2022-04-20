@@ -8,6 +8,9 @@ use Application\Model\User;
 use Cake\Chronos\Chronos;
 use Ecodev\Felix\Api\Exception;
 
+/**
+ * @extends AbstractRepository<User>
+ */
 class UserRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**

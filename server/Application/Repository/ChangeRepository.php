@@ -8,6 +8,9 @@ use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
 
+/**
+ * @extends AbstractRepository<Change>
+ */
 class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**

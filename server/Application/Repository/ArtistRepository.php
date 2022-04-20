@@ -6,6 +6,9 @@ namespace Application\Repository;
 
 use Application\Model\Artist;
 
+/**
+ * @extends AbstractRepository<Artist>
+ */
 class ArtistRepository extends AbstractRepository
 {
     /**
