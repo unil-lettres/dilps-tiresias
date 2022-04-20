@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Service\Exporter;
 
 use Ecodev\Felix\Service\ImageResizer;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ZipFactory
 {

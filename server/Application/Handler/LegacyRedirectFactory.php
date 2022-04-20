@@ -6,7 +6,7 @@ namespace Application\Handler;
 
 use Application\Model\Card;
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class LegacyRedirectFactory
 {

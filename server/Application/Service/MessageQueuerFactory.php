@@ -6,8 +6,8 @@ namespace Application\Service;
 
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\MessageRenderer;
-use Interop\Container\ContainerInterface;
 use Money\Money;
+use Psr\Container\ContainerInterface;
 
 class MessageQueuerFactory
 {

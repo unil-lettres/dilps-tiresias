@@ -10,7 +10,7 @@ use Application\Model\Domain;
 use Application\Model\Material;
 use Application\Model\Period;
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class TemplateFactory
 {

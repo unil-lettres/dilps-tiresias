@@ -9,7 +9,7 @@ use Application\Model\Export;
 use Application\Service\MessageQueuer;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\Mailer;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ExporterFactory
 {

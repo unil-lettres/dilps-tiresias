@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Handler;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

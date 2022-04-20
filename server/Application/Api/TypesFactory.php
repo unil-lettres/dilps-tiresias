@@ -7,8 +7,8 @@ namespace Application\Api;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceManager;
+use Psr\Container\ContainerInterface;
 
 class TypesFactory
 {

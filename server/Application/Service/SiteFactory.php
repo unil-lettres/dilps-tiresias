@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Application\Service;
 
 use Application\DBAL\Types\SiteType;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SiteFactory

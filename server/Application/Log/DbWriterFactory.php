@@ -8,8 +8,8 @@ use Application\Model\Log;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Log\EventCompleter;
 use Ecodev\Felix\Log\Writer\Db;
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class DbWriterFactory implements FactoryInterface
 {

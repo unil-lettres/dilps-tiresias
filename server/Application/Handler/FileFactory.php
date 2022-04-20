@@ -7,7 +7,7 @@ namespace Application\Handler;
 use Application\Model\File;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Handler\FileHandler;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class FileFactory
 {

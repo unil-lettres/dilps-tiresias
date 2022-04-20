@@ -6,7 +6,7 @@ namespace Application\Service\Exporter;
 
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class PptxFactory
 {
