@@ -40,7 +40,6 @@ export class HideTooltipDirective implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        console.log(this.matToolTip);
         this.tooltipCollector.collection.delete(this.matToolTip);
     }
 }
