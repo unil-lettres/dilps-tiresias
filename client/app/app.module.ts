@@ -33,7 +33,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipModule} from '@angular/material/tooltip';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -154,6 +154,13 @@ const icons: NaturalIconsConfig = {
     'antique-name': {
         svg: 'assets/icons/fire.svg',
     },
+};
+
+export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
+    showDelay: 5,
+    hideDelay: 5,
+    touchendHideDelay: 5,
+    touchGestures: 'off',
 };
 
 @NgModule({
@@ -288,6 +295,7 @@ const icons: NaturalIconsConfig = {
         {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
+        {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
         {
             provide: HTTP_INTERCEPTORS,
             useClass: NetworkInterceptorService,
