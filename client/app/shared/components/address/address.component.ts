@@ -24,7 +24,7 @@ import {MapApiService} from '../../../view-map/map-api.service';
     providers: [AddressService, CountryService],
 })
 export class AddressComponent implements OnInit, OnChanges {
-    @ViewChild('input', {static: true}) public inputRef: ElementRef;
+    @ViewChild('input', {static: true}) public inputRef: ElementRef<HTMLInputElement>;
 
     /**
      * If true, layouts vertically some side by side elements

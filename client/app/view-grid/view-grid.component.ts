@@ -61,7 +61,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to scrollable element
      */
-    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef;
+    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef<HTMLElement>;
 
     /**
      * Vertical scroll position cache
