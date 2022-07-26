@@ -39,7 +39,7 @@
         "@ecodev/natural": "^42.4.1",
         "@graphql-tools/mock": "^8.4.0",
         "@types/swiper": "^6.0.0",
-        "apollo": "^2.33.4",
+        "apollo": "^2.34.0",
         "apollo-angular": "^3.0.0",
         "apollo-upload-client": "^17.0.0",
         "bugsnag-build-reporter": "^2.0.0",
