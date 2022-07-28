@@ -49,7 +49,7 @@
         "beberlei/doctrineextensions": "^1.3",
         "creof/doctrine2-spatial": "^1.2",
         "creof/wkb-parser": "dev-master as 2.3.0",
-        "ecodev/felix": "^8.0",
+        "ecodev/felix": "8.0.0",
         "ecodev/graphql-upload": "^6.1",
         "laminas/laminas-component-installer": "^2.6",
         "laminas/laminas-config-aggregator": "^1.7",
