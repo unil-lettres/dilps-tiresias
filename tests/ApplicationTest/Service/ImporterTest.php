@@ -8,6 +8,7 @@ use Application\Handler\TemplateHandler;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Service\Importer;
+use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\UploadedFile;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -25,7 +26,7 @@ class ImporterTest extends TestCase
 
         $writer->save($filename);
 
-        $excel = new UploadedFile($filename, 999, UPLOAD_ERR_OK, 'foo.xlsx', 'text/plain');
+        $excel = new UploadedFile(new Stream($filename), 999, UPLOAD_ERR_OK, 'foo.xlsx', 'text/plain');
 
         return $excel;
     }
@@ -35,7 +36,7 @@ class ImporterTest extends TestCase
         return array_map(function (string $path) {
             $basename = pathinfo($path, PATHINFO_BASENAME);
 
-            return new UploadedFile($path, 999, UPLOAD_ERR_OK, $basename, 'text/plain');
+            return new UploadedFile(new Stream($path), 999, UPLOAD_ERR_OK, $basename, 'text/plain');
         }, $paths);
     }
 
