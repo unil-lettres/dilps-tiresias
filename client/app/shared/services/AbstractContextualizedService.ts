@@ -2,6 +2,7 @@ import {Apollo} from 'apollo-angular';
 import {Literal, NaturalAbstractModelService, PaginatedData, VariablesWithInput} from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
 import {Site} from '../../shared/generated-types';
+import {Observable, of} from 'rxjs';
 
 export class AbstractContextualizedService<
     Tone,
@@ -35,11 +36,11 @@ export class AbstractContextualizedService<
      *
      * This is typically a site or state ID, but it could be something else to further filter the query
      */
-    public getPartialVariablesForAll(): Partial<Vall> {
+    public getPartialVariablesForAll(): Observable<Partial<Vall>> {
         if (this.site) {
-            return {filter: {groups: [{conditions: [{site: {in: {values: [this.site]}}}]}]}} as any; // todo : why as any ?
+            return of({filter: {groups: [{conditions: [{site: {in: {values: [this.site]}}}]}]}} as any); // todo : why as any ?
         }
 
-        return {};
+        return of({});
     }
 }

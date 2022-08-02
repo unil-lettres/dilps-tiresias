@@ -47,7 +47,7 @@ import {
     validateData,
     validateImage,
 } from './card.queries';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Literal, mergeOverrideArray, WithId} from '@ecodev/natural';
 
 interface CardWithImage {
@@ -220,8 +220,8 @@ export class CardService extends AbstractContextualizedService<
     }
 
     // In Card specific case, don't context lists
-    public getPartialVariablesForAll(): Partial<CardsVariables> {
-        return {};
+    public getPartialVariablesForAll(): Observable<Partial<CardsVariables>> {
+        return of({});
     }
 
     public createWithCollection(

@@ -138,11 +138,15 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public getPartialVariablesForAll(): Partial<ChangesVariables> {
-        const join = {
-            filter: {groups: [{joins: {creator: {type: JoinType.leftJoin}}}]},
-        };
+    public getPartialVariablesForAll(): Observable<Partial<ChangesVariables>> {
+        return super.getPartialVariablesForAll().pipe(
+            map(partialVariables => {
+                const join = {
+                    filter: {groups: [{joins: {creator: {type: JoinType.leftJoin}}}]},
+                };
 
-        return merge(super.getPartialVariablesForAll(), join); // care if parent changes, array may need concat or replacement
+                return merge(partialVariables, join); // care if parent changes, array may need concat or replacement}))
+            }),
+        );
     }
 }
