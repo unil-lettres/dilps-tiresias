@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {Stamped} from '../stamp/stamp.component';
 
 type Model = Stamped & {
@@ -24,7 +24,7 @@ type Model = Stamped & {
 export class DialogFooterComponent {
     @Input() public canCreate = false;
     @Input() public item!: Model;
-    @Input() public formCtrl: FormControl;
+    @Input() public formCtrl: UntypedFormControl;
     @Output() public readonly create = new EventEmitter<Model>();
     @Output() public readonly update = new EventEmitter<Model>();
     @Output() public readonly delete = new EventEmitter<Model>();

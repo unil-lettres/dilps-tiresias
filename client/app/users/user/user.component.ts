@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors} from '@angular/forms';
+import {AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {CollectionService} from '../../collections/services/collection.service';
@@ -37,9 +37,9 @@ export class UserComponent extends AbstractDetailDirective<UserService> {
     public roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 
-    public passwordGroupCtrl: FormGroup;
-    public passwordCtrl: FormControl;
-    public passwordConfirmationCtrl: FormControl;
+    public passwordGroupCtrl: UntypedFormGroup;
+    public passwordCtrl: UntypedFormControl;
+    public passwordConfirmationCtrl: UntypedFormControl;
 
     public institution: UpdateUser_updateUser_institution | User_user_institution | null = null;
 
@@ -57,9 +57,9 @@ export class UserComponent extends AbstractDetailDirective<UserService> {
 
         naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 
-        this.passwordCtrl = new FormControl('');
-        this.passwordConfirmationCtrl = new FormControl('');
-        this.passwordGroupCtrl = new FormGroup(
+        this.passwordCtrl = new UntypedFormControl('');
+        this.passwordConfirmationCtrl = new UntypedFormControl('');
+        this.passwordGroupCtrl = new UntypedFormGroup(
             {
                 password: this.passwordCtrl,
                 passwordConfirmation: this.passwordConfirmationCtrl,

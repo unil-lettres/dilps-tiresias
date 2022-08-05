@@ -119,7 +119,6 @@
             }
         }
     },
-    "defaultProject": "dilps",
     "cli": {
         "packageManager": "yarn"
     },

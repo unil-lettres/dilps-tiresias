@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit, OnChanges {
      */
     @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
 
-    public formCtrl = new FormControl();
+    public formCtrl = new UntypedFormControl();
 
     public latitude = 44.5918711;
     public longitude = 4.7176318;

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
@@ -19,7 +19,7 @@ import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete/autocomplete';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 export interface ThesaurusModel {
     name: string;
@@ -118,7 +118,7 @@ export class ThesaurusComponent<
     /**
      * <input> controller
      */
-    public formControl: FormControl = new FormControl();
+    public formControl: UntypedFormControl = new UntypedFormControl();
 
     /**
      * Cache to init search watching only once

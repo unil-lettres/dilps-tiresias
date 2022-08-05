@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class QuizzComponent implements OnInit, OnDestroy {
     public imageSrc = '';
     public currentIndex = 0;
     public attributes: Result;
-    public formCtrl: FormControl = new FormControl();
+    public formCtrl: UntypedFormControl = new UntypedFormControl();
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
 

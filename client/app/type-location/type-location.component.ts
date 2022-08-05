@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormControl, Validators, FormGroup} from '@angular/forms';
+import {UntypedFormControl, Validators, UntypedFormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
     DropdownComponent,
@@ -16,17 +16,17 @@ import {LocationOperatorString} from '../shared/generated-types';
 })
 export class TypeLocationComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');
-    public form: FormGroup;
+    public form: UntypedFormGroup;
 
-    public longitudeCtrl = new FormControl();
-    public latitudeCtrl = new FormControl();
-    public distanceCtrl = new FormControl();
+    public longitudeCtrl = new UntypedFormControl();
+    public latitudeCtrl = new UntypedFormControl();
+    public distanceCtrl = new UntypedFormControl();
 
     public constructor(
         @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<never>,
         protected readonly dropdownRef: NaturalDropdownRef,
     ) {
-        this.form = new FormGroup({
+        this.form = new UntypedFormGroup({
             longitude: this.longitudeCtrl,
             latitude: this.latitudeCtrl,
             distance: this.distanceCtrl,
