@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48c9a23f1b8d59b53cd43d86eb58d46f",
+    "content-hash": "c378df2066409cffa2aa1496919a05a8",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2075,73 +2075,6 @@
                 }
             ],
             "time": "2022-06-06T11:26:02+00:00"
-        },
-        {
-            "name": "laminas/laminas-component-installer",
-            "version": "2.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-component-installer.git",
-                "reference": "3c998d2b2755985c71cd4d5d9b294228f63d3a65"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-component-installer/zipball/3c998d2b2755985c71cd4d5d9b294228f63d3a65",
-                "reference": "3c998d2b2755985c71cd4d5d9b294228f63d3a65",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0"
-            },
-            "conflict": {
-                "zendframework/zend-component-installer": "*"
-            },
-            "require-dev": {
-                "composer/composer": "^2.1.9@RC",
-                "laminas/laminas-coding-standard": "~2.3.0",
-                "mikey179/vfsstream": "^1.6.10",
-                "phpunit/phpunit": "^9.5.19",
-                "psalm/plugin-phpunit": "^0.16.1",
-                "vimeo/psalm": "^4.22.0",
-                "webmozart/assert": "^1.10.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Laminas\\ComponentInstaller\\ComponentInstaller"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\ComponentInstaller\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Composer plugin for injecting modules and configuration providers into application configuration",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "component installer",
-                "composer",
-                "laminas",
-                "plugin"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-component-installer/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-component-installer/issues",
-                "rss": "https://github.com/laminas/laminas-component-installer/releases.atom",
-                "source": "https://github.com/laminas/laminas-component-installer"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2022-07-03T21:27:51+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
@@ -9646,5 +9579,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

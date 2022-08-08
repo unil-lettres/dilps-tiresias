@@ -7,8 +7,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "laminas/laminas-component-installer": true
+            "composer/package-versions-deprecated": true
         }
     },
     "scripts": {
@@ -51,7 +50,6 @@
         "creof/wkb-parser": "dev-master as 2.3.0",
         "ecodev/felix": "8.0.0",
         "ecodev/graphql-upload": "^6.1",
-        "laminas/laminas-component-installer": "^2.6",
         "laminas/laminas-config-aggregator": "^1.7",
         "laminas/laminas-diactoros": "^2.8",
         "laminas/laminas-permissions-acl": "^2.9",
