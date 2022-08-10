@@ -37,7 +37,7 @@ echo "********************* Updating Node.js packages..."
 yarn install $NO_PROGRESS
 
 echo "********************* Updating all PHP dependencies via composer..."
-composer install --classmap-authoritative --no-interaction $NO_PROGRESS
+composer install --classmap-authoritative --no-interaction --no-plugins $NO_PROGRESS
 
 echo "********************* Clear cache"
 SERVER_NAME=dilps composer clear-config-cache --no-interaction
