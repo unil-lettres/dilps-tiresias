@@ -4,7 +4,7 @@ jobs:
     build:
         strategy:
             matrix:
-                php-versions: [ '8.1' ]
+                php-versions: ['8.1']
 
         runs-on: ubuntu-20.04
 
