@@ -2,6 +2,10 @@ name: ci
 on: [push, pull_request]
 jobs:
     build:
+        strategy:
+            matrix:
+                php-versions: [ '8.1' ]
+
         runs-on: ubuntu-20.04
 
         env:
@@ -18,20 +22,16 @@ jobs:
                     MYSQL_DATABASE: dilps
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
 
-        strategy:
-            matrix:
-                php-versions: ['8.1']
-
         name: PHP${{ matrix.php-versions }}
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   fetch-depth: 2
 
             - name: Node Setup
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '16'
 
@@ -47,14 +47,14 @@ jobs:
               run: php -v
 
             - name: Cache composer
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: ~/.cache/composer
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
             - name: Cache Yarn
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: ~/.cache/yarn
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
