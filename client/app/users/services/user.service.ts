@@ -1,7 +1,7 @@
 import {Inject, Injectable, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Apollo} from 'apollo-angular';
-import {fromEvent, Observable, Subject} from 'rxjs';
+import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
@@ -41,7 +41,7 @@ import {
     usersQuery,
     viewerQuery,
 } from './user.queries';
-import {LOCAL_STORAGE, NaturalStorage} from '@ecodev/natural';
+import {LOCAL_STORAGE, NaturalDebounceService, NaturalStorage} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -70,12 +70,13 @@ export class UserService
 
     public constructor(
         apollo: Apollo,
+        naturalDebounceService: NaturalDebounceService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         @Inject(SITE) site: Site,
         @Inject(LOCAL_STORAGE) private readonly storage: NaturalStorage,
     ) {
-        super(apollo, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
+        super(apollo, naturalDebounceService, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
         this.keepViewerSyncedAcrossBrowserTabs();
     }
 
@@ -227,10 +228,15 @@ export class UserService
     public logout(): Observable<Logout['logout']> {
         const subject = new Subject<Logout['logout']>();
 
-        this.apollo
-            .mutate<Logout>({
-                mutation: logoutMutation,
-            })
+        this.naturalDebounceService
+            .flush()
+            .pipe(
+                switchMap(() =>
+                    this.apollo.mutate<Logout>({
+                        mutation: logoutMutation,
+                    }),
+                ),
+            )
             .subscribe(result => {
                 const v = result.data!.logout;
                 this.apollo.client.clearStore().then(() => {
@@ -239,6 +245,7 @@ export class UserService
 
                     this.router.navigate(['/login'], {queryParams: {logout: true}}).then(() => {
                         subject.next(v);
+                        subject.complete();
                     });
                 });
             });

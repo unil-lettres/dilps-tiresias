@@ -1,3 +1,4 @@
+import {NaturalDebounceService} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
 import {Injectable, Inject} from '@angular/core';
 import {
@@ -32,8 +33,18 @@ export class PeriodService extends AbstractContextualizedService<
     DeletePeriods['deletePeriods'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(
+            apollo,
+            naturalDebounceService,
+            'period',
+            periodQuery,
+            periodsQuery,
+            createPeriod,
+            updatePeriod,
+            deletePeriods,
+            site,
+        );
     }
 
     public getDefaultForClient(): PeriodInput {

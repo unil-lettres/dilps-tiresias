@@ -1,3 +1,4 @@
+import {NaturalDebounceService} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {
@@ -34,8 +35,8 @@ export class ExportService extends AbstractContextualizedService<
     never,
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'export', exportQuery, exportsQuery, createExport, null, null, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(apollo, naturalDebounceService, 'export', exportQuery, exportsQuery, createExport, null, null, site);
     }
 
     public getDefaultForServer(): CreateExportInput {

@@ -17,7 +17,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
-import {Literal} from '@ecodev/natural';
+import {Literal, NaturalDebounceService} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -34,8 +34,18 @@ export class NewsService extends AbstractContextualizedService<
     DeleteNewses['deleteNewses'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(
+            apollo,
+            naturalDebounceService,
+            'news',
+            newsQuery,
+            newsesQuery,
+            createNews,
+            updateNews,
+            deleteNewses,
+            site,
+        );
     }
 
     public getDefaultForClient(): NewsInput {

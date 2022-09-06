@@ -22,6 +22,7 @@ import {
 } from './document-type.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
+import {NaturalDebounceService} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -38,9 +39,10 @@ export class DocumentTypeService extends AbstractContextualizedService<
     DeleteDocumentTypes['deleteDocumentTypes'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
         super(
             apollo,
+            naturalDebounceService,
             'documentType',
             documentTypeQuery,
             documentTypesQuery,

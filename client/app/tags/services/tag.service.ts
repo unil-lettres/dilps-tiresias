@@ -1,3 +1,4 @@
+import {NaturalDebounceService} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {SITE} from '../../app.config';
@@ -32,8 +33,8 @@ export class TagService extends AbstractContextualizedService<
     DeleteTags['deleteTags'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'tag', tagQuery, tagsQuery, createTag, updateTag, deleteTags, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(apollo, naturalDebounceService, 'tag', tagQuery, tagsQuery, createTag, updateTag, deleteTags, site);
     }
 
     public getDefaultForClient(): TagInput {

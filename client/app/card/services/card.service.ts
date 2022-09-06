@@ -48,7 +48,7 @@ import {
     validateImage,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
-import {Literal, mergeOverrideArray, WithId} from '@ecodev/natural';
+import {Literal, mergeOverrideArray, WithId, NaturalDebounceService} from '@ecodev/natural';
 
 interface CardWithImage {
     id?: string;
@@ -74,8 +74,13 @@ export class CardService extends AbstractContextualizedService<
 > {
     private collectionIdForCreation: string | null = null;
 
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site, private readonly routeReuse: RouteReuseStrategy) {
-        super(apollo, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
+    public constructor(
+        apollo: Apollo,
+        naturalDebounceService: NaturalDebounceService,
+        @Inject(SITE) site: Site,
+        private readonly routeReuse: RouteReuseStrategy,
+    ) {
+        super(apollo, naturalDebounceService, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
     public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {

@@ -1,6 +1,6 @@
 import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
-import {NaturalLinkMutationService} from '@ecodev/natural';
+import {NaturalDebounceService, NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../../app.config';
 import {
@@ -50,11 +50,13 @@ export class CollectionService extends AbstractContextualizedService<
 > {
     public constructor(
         apollo: Apollo,
+        naturalDebounceService: NaturalDebounceService,
         private readonly linkService: NaturalLinkMutationService,
         @Inject(SITE) site: Site,
     ) {
         super(
             apollo,
+            naturalDebounceService,
             'collection',
             collectionQuery,
             collectionsQuery,

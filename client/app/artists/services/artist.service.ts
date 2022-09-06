@@ -16,6 +16,7 @@ import {
 import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
+import {NaturalDebounceService} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -32,8 +33,18 @@ export class ArtistService extends AbstractContextualizedService<
     DeleteArtists['deleteArtists'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(
+            apollo,
+            naturalDebounceService,
+            'artist',
+            artistQuery,
+            artistsQuery,
+            createArtist,
+            updateArtist,
+            deleteArtists,
+            site,
+        );
     }
 
     public getDefaultForClient(): ArtistInput {

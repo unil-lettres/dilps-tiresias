@@ -22,6 +22,7 @@ import {
 } from './antique-name.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
+import {NaturalDebounceService} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -38,9 +39,10 @@ export class AntiqueNameService extends AbstractContextualizedService<
     DeleteAntiqueNames['deleteAntiqueNames'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
         super(
             apollo,
+            naturalDebounceService,
             'antiqueName',
             antiqueNameQuery,
             antiqueNamesQuery,

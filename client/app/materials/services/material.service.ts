@@ -1,3 +1,4 @@
+import {NaturalDebounceService} from '@ecodev/natural';
 import {Apollo} from 'apollo-angular';
 import {Injectable, Inject} from '@angular/core';
 import {
@@ -32,8 +33,18 @@ export class MaterialService extends AbstractContextualizedService<
     DeleteMaterials['deleteMaterials'],
     never
 > {
-    public constructor(apollo: Apollo, @Inject(SITE) site: Site) {
-        super(apollo, 'material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials, site);
+    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+        super(
+            apollo,
+            naturalDebounceService,
+            'material',
+            materialQuery,
+            materialsQuery,
+            createMaterial,
+            updateMaterial,
+            deleteMaterials,
+            site,
+        );
     }
 
     public getDefaultForClient(): MaterialInput {
