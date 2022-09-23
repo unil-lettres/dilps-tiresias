@@ -40,8 +40,8 @@ echo "********************* Updating all PHP dependencies via composer..."
 composer install --classmap-authoritative --no-interaction --no-plugins $NO_PROGRESS
 
 echo "********************* Clear cache"
-SERVER_NAME=dilps composer clear-config-cache --no-interaction
-SERVER_NAME=tiresias composer clear-config-cache --no-interaction
+SERVER_NAME=dilps composer clear-config-cache --no-interaction --no-plugins
+SERVER_NAME=tiresias composer clear-config-cache --no-interaction --no-plugins
 
 echo "********************* Updating database..."
 ./vendor/bin/doctrine-migrations migrations:migrate --no-interaction
