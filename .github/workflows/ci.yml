@@ -2,14 +2,13 @@ name: ci
 on: [push, pull_request]
 jobs:
     build:
+        name: PHP${{ matrix.php-versions }}
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
                 php-versions: ['8.1']
 
-        runs-on: ubuntu-20.04
-
         env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
             MYSQL_HOST: '127.0.0.1'
 
         services:
@@ -21,8 +20,6 @@ jobs:
                     MYSQL_ALLOW_EMPTY_PASSWORD: yes
                     MYSQL_DATABASE: dilps
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
-
-        name: PHP${{ matrix.php-versions }}
 
         steps:
             - name: Checkout
@@ -114,26 +111,20 @@ jobs:
                   channel: '#-bot-ci'
               if: always()
 
-            - name: Notify Teams (success)
-              continue-on-error: true
-              uses: mikesprague/teams-incoming-webhook-action@v1
-              with:
-                  github-token: ${{ github.token }}
-                  webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
-                  deploy-card: true
-                  timezone: 'Europe/Zurich'
-                  title: 'Success'
-                  color: 'success'
-              if: ${{ success() }}
+    notification:
+        name: Notify
+        runs-on: ubuntu-latest
+        needs: build
+        if: always()
+        continue-on-error: true
 
-            - name: Notify Teams (failure)
-              continue-on-error: true
-              uses: mikesprague/teams-incoming-webhook-action@v1
+        steps:
+            - uses: technote-space/workflow-conclusion-action@v3
+            - uses: mikesprague/teams-incoming-webhook-action@v1
               with:
                   github-token: ${{ github.token }}
                   webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
                   deploy-card: true
                   timezone: 'Europe/Zurich'
-                  title: 'Failure'
-                  color: 'failure'
-              if: ${{ failure() }}
+                  title: ${{ env.WORKFLOW_CONCLUSION }}
+                  color: ${{ env.WORKFLOW_CONCLUSION }}
