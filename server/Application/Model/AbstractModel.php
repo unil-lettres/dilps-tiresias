@@ -159,8 +159,13 @@ abstract class AbstractModel implements HasOwner, Model
      */
     public function timestampCreation(): void
     {
-        $this->setCreationDate(new Chronos());
-        $this->setCreator(User::getCurrent());
+        $now = new Chronos();
+        $user = User::getCurrent();
+        $this->setCreationDate($now);
+        $this->setUpdateDate($now);
+        $this->setCreator($user);
+        $this->setUpdater($user);
+
         $this->setOwner(User::getCurrent());
     }
 
