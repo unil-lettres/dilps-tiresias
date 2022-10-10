@@ -19,6 +19,10 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(indexes={
+ *     @ORM\Index(name="creation_date", columns={"creation_date"}),
+ *     @ORM\Index(name="update_date", columns={"update_date"}),
+ * })
  * @API\Filters({
  *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\SearchOperatorType", type="string"),
  * })
