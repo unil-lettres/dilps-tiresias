@@ -28,8 +28,8 @@ class ServerTest extends AbstractServer
         return new Schema();
     }
 
-    protected function createServer(bool $debug): \Ecodev\Felix\Api\Server
+    protected function createServer(): \Ecodev\Felix\Api\Server
     {
-        return new Server($debug, SiteType::DILPS);
+        return new Server(true, SiteType::DILPS);
     }
 }
