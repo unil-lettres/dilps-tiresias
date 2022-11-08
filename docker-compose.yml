@@ -4,6 +4,8 @@ networks:
     dilps-tiresias-net:
         driver: bridge
 
+name: dilps-tiresias
+
 services:
     dilps-tiresias-app:
         image: unillett/dilps-tiresias:latest
