@@ -26,7 +26,7 @@ The recommended way to get a working copy is the following:
 
 ### Docker installation
 
-A working [Docker](https://docs.docker.com/engine/installation/) installation is mandatory.
+A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
 ### Environment files
 
