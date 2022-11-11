@@ -30,6 +30,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
 COPY ./vhosts/* /etc/apache2/sites-available/
 RUN a2enmod rewrite && \
     a2enmod expires && \
+    a2enmod headers && \
     a2ensite dilps.conf && \
     a2ensite tiresias.conf && \
     a2dissite 000-default.conf

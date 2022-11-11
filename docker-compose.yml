@@ -9,6 +9,9 @@ name: dilps-tiresias
 services:
     dilps-tiresias-app:
         image: unillett/dilps-tiresias:latest
+        build:
+            context: ./dev/config
+            dockerfile: ./app.dockerfile
         env_file:
             - ./dev/.env
         volumes:
