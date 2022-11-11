@@ -14,6 +14,7 @@ trait HasUrl
 {
     /**
      * @var string
+     *
      * @ORM\Column(type="string", options={"default" = ""})
      */
     private $url = '';

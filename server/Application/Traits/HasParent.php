@@ -15,12 +15,12 @@ use InvalidArgumentException;
 trait HasParent
 {
     /**
-     * @var null|HasParentInterface
+     * @var null|self
      */
     private $parent;
 
     /**
-     * @var Collection
+     * @var Collection<self>
      */
     private $children;
 

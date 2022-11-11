@@ -18,7 +18,6 @@ abstract class Logout implements FieldInterface
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Log out a user',
             'resolve' => function (array $root, array $args, SessionInterface $session): bool {
-
                 // Logout
                 $session->clear();
                 User::setCurrent(null);

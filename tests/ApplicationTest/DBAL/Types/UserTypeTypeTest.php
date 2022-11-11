@@ -18,7 +18,7 @@ class UserTypeTypeTest extends TestCase
     protected function setUp(): void
     {
         $this->type = $this->getMockBuilder(UserTypeType::class)->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
         $this->platform = $this->createMock(AbstractPlatform::class);
     }

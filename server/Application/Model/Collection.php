@@ -79,6 +79,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * @var DoctrineCollection<User>
+     *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
     private DoctrineCollection $users;

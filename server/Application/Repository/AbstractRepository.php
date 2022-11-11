@@ -10,6 +10,7 @@ use Ecodev\Felix\Repository\Traits\Repository;
 
 /**
  * @template T of AbstractModel
+ *
  * @extends EntityRepository<T>
  */
 abstract class AbstractRepository extends EntityRepository

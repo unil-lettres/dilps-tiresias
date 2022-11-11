@@ -14,12 +14,14 @@ trait HasRichTextName
 {
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=191)
      */
     private $name = '';
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=191)
      */
     private $plainName = '';

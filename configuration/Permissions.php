@@ -55,6 +55,10 @@ return [
         'permissions' => '0770',
     ],
     [
+        'path' => 'bin/doctrine',
+        'permissions' => '0750',
+    ],
+    [
         'path' => 'bin/load-data.php',
         'permissions' => '0770',
     ],

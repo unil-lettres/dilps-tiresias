@@ -11,8 +11,6 @@ class Version20191007154049 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE statistic ADD site ENUM(\'dilps\', \'tiresias\') NOT NULL COMMENT \'(DC2Type:Site)\'');
         $this->addSql('ALTER TABLE institution ADD site ENUM(\'dilps\', \'tiresias\') NOT NULL COMMENT \'(DC2Type:Site)\'');
         $this->addSql('ALTER TABLE collection ADD site ENUM(\'dilps\', \'tiresias\') NOT NULL COMMENT \'(DC2Type:Site)\'');

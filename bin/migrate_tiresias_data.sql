@@ -4,7 +4,7 @@
 --
 -- A quick way to ensure all those assumptions and do the migration are the following commands:
 --
---     ./vendor/bin/doctrine-migrations migrations:migrate --no-interaction
+--     ./bin/doctrine migrations:migrate --no-interaction
 --     echo 'RENAME TABLE news TO new_news;' | mysql -u dilps -p dilps
 --     more data/cache/tiresias_dump.sql | mysql -u dilps -p dilps
 --     echo 'RENAME TABLE news TO old_news; RENAME TABLE new_news TO news;' | mysql -u dilps -p dilps

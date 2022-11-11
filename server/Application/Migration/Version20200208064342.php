@@ -11,8 +11,6 @@ class Version20200208064342 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('DROP INDEX institution_longitude_idx ON institution');
         $this->addSql('DROP INDEX institution_latitude_idx ON institution');
         $this->addSql('ALTER TABLE institution ADD location POINT DEFAULT NULL COMMENT \'(DC2Type:point)\'');

@@ -11,8 +11,6 @@ class Version20201215053710 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE antique_name CHANGE creation_date creation_date DATETIME DEFAULT NULL, CHANGE update_date update_date DATETIME DEFAULT NULL');
         $this->addSql('ALTER TABLE artist CHANGE creation_date creation_date DATETIME DEFAULT NULL, CHANGE update_date update_date DATETIME DEFAULT NULL');
         $this->addSql('ALTER TABLE card CHANGE creation_date creation_date DATETIME DEFAULT NULL, CHANGE update_date update_date DATETIME DEFAULT NULL, CHANGE image_validation_date image_validation_date DATETIME DEFAULT NULL, CHANGE data_validation_date data_validation_date DATETIME DEFAULT NULL');

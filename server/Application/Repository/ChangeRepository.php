@@ -36,7 +36,6 @@ class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repos
         $change = $this->findOneBy($criteria);
 
         if (!$change) {
-
             // Create the change
             $change = new Change();
             _em()->persist($change);

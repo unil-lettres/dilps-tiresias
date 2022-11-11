@@ -44,8 +44,8 @@ SERVER_NAME=dilps composer clear-config-cache --no-interaction --no-plugins
 SERVER_NAME=tiresias composer clear-config-cache --no-interaction --no-plugins
 
 echo "********************* Updating database..."
-./vendor/bin/doctrine-migrations migrations:migrate --no-interaction
-./vendor/bin/doctrine orm:generate-proxies
+./bin/doctrine migrations:migrate --no-interaction
+./bin/doctrine orm:generate-proxies
 
 echo "********************* Building Angular application..."
 # Default environment is "prod" but can be overrided with "DEPLOY_ENV" envar

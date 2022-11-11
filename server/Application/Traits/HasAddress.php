@@ -16,6 +16,7 @@ trait HasAddress
 {
     /**
      * @var null|Point
+     *
      * @ORM\Column(type="point", nullable=true)
      * @API\Exclude
      */
@@ -33,36 +34,42 @@ trait HasAddress
 
     /**
      * @var string
+     *
      * @ORM\Column(name="`precision`", type="Precision", nullable=true)
      */
     private $precision;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $street = '';
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=20)
      */
     private $postcode = '';
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=191)
      */
     private $locality = '';
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", length=191)
      */
     private $area = '';
 
     /**
      * @var null|Country
+     *
      * @ORM\ManyToOne(targetEntity="Country")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */

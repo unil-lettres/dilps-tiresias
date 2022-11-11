@@ -20,8 +20,6 @@ interface HasParentInterface
 
     /**
      * Returns the parent, or null if this is a root object.
-     *
-     * @return null|HasParentInterface
      */
     public function getParent(): ?self;
 

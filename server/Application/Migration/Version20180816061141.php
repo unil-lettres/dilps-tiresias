@@ -11,8 +11,6 @@ class Version20180816061141 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE institution CHANGE name name VARCHAR(191) NOT NULL');
         $this->addSql('ALTER TABLE collection CHANGE name name VARCHAR(191) NOT NULL');
         $this->addSql('ALTER TABLE country CHANGE name name VARCHAR(191) NOT NULL');

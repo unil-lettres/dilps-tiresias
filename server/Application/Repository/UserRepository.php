@@ -33,7 +33,6 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
 
         // If we found a user and he has a correct MD5 or correct new hash, then return the user
         if (($isMd5 && md5($password) === $hashFromDb) || password_verify($password, $hashFromDb)) {
-
             // Update the hash in DB, if we are still MD5, or if PHP default options changed
             if ($isMd5 || password_needs_rehash($hashFromDb, PASSWORD_DEFAULT)) {
                 $user->setPassword($password);

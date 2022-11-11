@@ -11,8 +11,6 @@ class Version20190128101951 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE card CHANGE locality locality VARCHAR(191) NOT NULL, CHANGE area area VARCHAR(191) NOT NULL');
         $this->addSql('DROP INDEX idx_161498d35e237e06 ON card');
         $this->addSql('CREATE INDEX card_name_idx ON card (name)');

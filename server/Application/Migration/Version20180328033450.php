@@ -11,8 +11,6 @@ class Version20180328033450 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE institution ADD owner_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE institution ADD CONSTRAINT FK_3A9F98E57E3C61F9 FOREIGN KEY (owner_id) REFERENCES user (id)');
         $this->addSql('CREATE INDEX IDX_3A9F98E57E3C61F9 ON institution (owner_id)');

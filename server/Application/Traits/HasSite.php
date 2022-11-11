@@ -14,6 +14,7 @@ trait HasSite
 {
     /**
      * @var string
+     *
      * @ORM\Column(type="Site")
      */
     private $site;

@@ -14,6 +14,7 @@ trait HasFileSize
 {
     /**
      * @var int
+     *
      * @ORM\Column(type="integer")
      */
     private $fileSize = 0;

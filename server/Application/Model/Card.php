@@ -185,6 +185,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      * enforced by DB unique constraints on the mapping side.
      *
      * @var DoctrineCollection<Change>
+     *
      * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
     private DoctrineCollection $changes;
@@ -484,8 +485,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * The original card if this is a suggestion.
-     *
-     * @return null|Card
      */
     public function getOriginal(): ?self
     {
@@ -494,8 +493,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Defines this card as suggestion for the $original.
-     *
-     * @param null|Card $original
      */
     public function setOriginal(?self $original): void
     {

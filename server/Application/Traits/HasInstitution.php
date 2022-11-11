@@ -15,6 +15,7 @@ trait HasInstitution
 {
     /**
      * @var null|Institution
+     *
      * @ORM\ManyToOne(targetEntity="Institution")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(onDelete="SET NULL")
