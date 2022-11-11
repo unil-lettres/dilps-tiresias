@@ -39,6 +39,10 @@ RUN a2enmod rewrite && \
 ADD ./crontab /etc/crontab
 
 # Copy supervisor configuration file
+#
+# docker exec <container-id> supervisorctl status
+# docker exec <container-id> supervisorctl tail -f <service>
+# docker exec <container-id> supervisorctl restart <service>
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
