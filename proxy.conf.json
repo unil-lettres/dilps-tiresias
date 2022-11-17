@@ -18,5 +18,9 @@
     "/detail": {
         "target": "https://dilps.lan",
         "secure": false
+    },
+    "/export": {
+        "target": "https://dilps.lan",
+        "secure": false
     }
 }
