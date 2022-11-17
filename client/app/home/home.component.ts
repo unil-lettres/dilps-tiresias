@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {EMPTY, Observable, of, Subscription} from 'rxjs';
-import {catchError, concatMap, filter, finalize, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, finalize, takeUntil, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -18,7 +18,7 @@ import {NetworkActivityService} from '../shared/services/network-activity.servic
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
-import {FileSelection} from '@ecodev/natural';
+import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
 import {WelcomeComponent} from './welcome.component';
 
 function isExcel(file: File): boolean {
@@ -30,7 +30,7 @@ function isExcel(file: File): boolean {
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public Site = Site;
 
     public errors: (Error & {debugMessage?: string; category?: string})[] = [];
@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         @Inject(SITE) public readonly site: Site,
         private readonly routeReuse: RouteReuseStrategy,
     ) {
+        super();
         this.network.errors.next([]);
     }
 
@@ -76,9 +77,14 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-            document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
-        });
+        this.router.events
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                filter(event => event instanceof NavigationEnd),
+            )
+            .subscribe(() => {
+                document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
+            });
 
         // Welcome dialog would be shown to visitors once per session
         if (this.userService.hasTempAccess() && sessionStorage.getItem('welcomed') !== 'true') {

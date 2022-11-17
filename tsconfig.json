@@ -17,7 +17,8 @@
         "target": "es2015",
         "module": "es2020",
         "lib": ["es2018", "dom"],
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true
     },
     "angularCompilerOptions": {
         "strictInjectionParameters": true,
