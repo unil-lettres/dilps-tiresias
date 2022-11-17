@@ -208,6 +208,7 @@
                                 ? ''
                                 : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
                         "
+                        matTooltipPosition="after"
                     ></quill-editor>
                     <mat-hint
                         align="end"
@@ -249,6 +250,7 @@
                                 ? ''
                                 : 'Inclure d’éventuelles informations qui complètent le titre (exemple: le titre dans la langue originale)'
                         "
+                        matTooltipPosition="after"
                     ></quill-editor>
                 </div>
 
@@ -271,11 +273,11 @@
                             ? ''
                             : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'
                     "
+                    matTooltipPosition="after"
                     [model]="artists"
                     [previewComponent]="ArtistComponent"
                     [readonly]="!edit"
                     [service]="artistService"
-                    matTooltipPosition="after"
                     placeholder="Artistes"
                 ></app-thesaurus>
 
@@ -456,7 +458,6 @@
                     [previewComponent]="TagComponent"
                     [readonly]="!edit"
                     [service]="tagService"
-                    matTooltipPosition="after"
                     placeholder="Mots clés"
                 ></app-thesaurus>
 
@@ -470,12 +471,12 @@
                             ? ''
                             : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'
                     "
+                    matTooltipPosition="after"
                     [model]="institution"
                     [multiple]="false"
                     [previewComponent]="InstitutionComponent"
                     [readonly]="!edit"
                     [service]="institutionService"
-                    matTooltipPosition="after"
                     placeholder="Institution"
                 ></app-thesaurus>
 
@@ -522,7 +523,6 @@
                     [previewComponent]="PeriodComponent"
                     [readonly]="!edit"
                     [service]="periodService"
-                    matTooltipPosition="after"
                     placeholder="Périodes"
                 ></app-thesaurus>
 
@@ -550,7 +550,6 @@
                     [previewComponent]="InstitutionComponent"
                     [readonly]="!edit"
                     [service]="institutionService"
-                    matTooltipPosition="after"
                     placeholder="Institution"
                 ></app-thesaurus>
 
@@ -667,6 +666,7 @@
                                 ? ''
                                 : 'La source est le lien URL ou la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page correspondant à l\'image.'
                         "
+                        matTooltipPosition="after"
                     ></quill-editor>
                 </div>
 
