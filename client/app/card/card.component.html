@@ -247,7 +247,7 @@
                         [matTooltip]="
                             !edit || !isDilps
                                 ? ''
-                                : 'Titre étendu\n\nPour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
+                                : 'Inclure d’éventuelles informations qui complètent le titre (exemple: le titre dans la langue originale)'
                         "
                     ></quill-editor>
                 </div>
@@ -322,7 +322,7 @@
                     [matTooltip]="
                         !edit
                             ? ''
-                            : 'Les siècles s\'écrivent en chiffres romains.\n&quot;Vers 1912&quot; s\'écrit &quot;c. 1912&quot; (pour circa).'
+                            : 'Les siècles s\'écrivent en chiffres romains\n&quot;Vers 1912&quot; s’écrit &quot;1912 (c.)&quot; (c. pour circa)'
                     "
                     matTooltipPosition="after"
                 >
@@ -346,11 +346,7 @@
 
                 <mat-form-field
                     *ngIf="isDilps && (edit || !!model.technique)"
-                    [matTooltip]="
-                        !edit
-                            ? ''
-                            : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'
-                    "
+                    [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
                     matTooltipPosition="after"
                 >
                     <mat-label>Technique</mat-label>
@@ -376,7 +372,7 @@
                     [matTooltip]="
                         !edit
                             ? ''
-                            : 'Matériel précise ce que technique donne de façon générique (exemple : &quot;Matériel : Huile sur toile&quot;, &quot;Technique : Peinture&quot;).'
+                            : 'Ce champ précise ce que &quot;Domaine&quot; donne de façon générale (exemple: &quot;Domaine: Peinture&quot;, &quot;Technique & Matériel: Huile sur toile&quot;)'
                     "
                     matTooltipPosition="after"
                 >
@@ -669,7 +665,7 @@
                         [matTooltip]="
                             !edit || !isDilps
                                 ? ''
-                                : 'La source est la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page ou de planche correspondant à l\'image.'
+                                : 'La source est le lien URL ou la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page correspondant à l\'image.'
                         "
                     ></quill-editor>
                 </div>
