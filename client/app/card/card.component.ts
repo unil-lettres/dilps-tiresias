@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, omit, sortBy} from 'lodash-es';
+import {findKey, sortBy} from 'lodash-es';
 import {QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -184,7 +184,17 @@ export class CardComponent implements OnInit, OnChanges {
      */
     public user: Viewer['viewer'];
 
-    public singleLine: QuillModules = {
+    /**
+     * Allow to use TAB to go to next field (as is standard)
+     */
+    public readonly tabToNextFields = {
+        tab: {
+            key: 9,
+            handler: (): true => true,
+        },
+    };
+
+    public readonly multiLines: QuillModules = {
         ...quillConfig.modules,
         keyboard: {
             bindings: {
@@ -197,6 +207,25 @@ export class CardComponent implements OnInit, OnChanges {
                     shiftKey: true,
                     handler: () => false,
                 },
+                ...this.tabToNextFields,
+            },
+        },
+    };
+
+    public readonly singleLine: QuillModules = {
+        ...quillConfig.modules,
+        keyboard: {
+            bindings: {
+                enter: {
+                    key: 13,
+                    handler: () => false,
+                },
+                shiftEnter: {
+                    key: 13,
+                    shiftKey: true,
+                    handler: () => false,
+                },
+                ...this.tabToNextFields,
             },
         },
     };

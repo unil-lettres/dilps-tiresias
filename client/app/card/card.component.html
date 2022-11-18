@@ -244,6 +244,7 @@
                         (ngModelChange)="model.expandedName = $event || ''"
                         [disabled]="!edit"
                         bounds="self"
+                        [modules]="multiLines"
                         [matTooltip]="
                             !edit || !isDilps
                                 ? ''
@@ -260,6 +261,7 @@
                         (ngModelChange)="model.corpus = $event || ''"
                         [disabled]="!edit"
                         bounds="self"
+                        [modules]="multiLines"
                     ></quill-editor>
                 </div>
 
@@ -658,6 +660,7 @@
                         (ngModelChange)="model.literature = $event || ''"
                         [disabled]="!edit"
                         bounds="self"
+                        [modules]="multiLines"
                         [matTooltip]="
                             !edit || !isDilps
                                 ? ''
@@ -776,6 +779,7 @@
                         (ngModelChange)="model.urlDescription = $event || ''"
                         [disabled]="!edit"
                         bounds="self"
+                        [modules]="multiLines"
                     ></quill-editor>
                 </div>
 
