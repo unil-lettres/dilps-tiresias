@@ -82,7 +82,7 @@ export class NaturalSearchFacetsService {
             transform: wrapLike,
         },
         {
-            display: 'Matériel',
+            display: 'Technique & Matériel',
             field: 'material',
             component: TypeTextComponent,
             transform: wrapLike,
