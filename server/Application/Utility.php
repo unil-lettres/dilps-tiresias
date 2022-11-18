@@ -25,15 +25,39 @@ abstract class Utility
 
     public static function sanitizeRichText(string $string): string
     {
-        $sanitized = strip_tags($string, '<p><br><strong><em><u>');
+        $sanitized = self::noUnbreakableSpaces(strip_tags($string, '<p><br><strong><em><u>'));
 
         return $sanitized;
     }
 
+    public static function noUnbreakableSpaces(string $string): string
+    {
+        return str_replace(['&nbsp;', html_entity_decode('&nbsp;')], ' ', $string);
+    }
+
     public static function sanitizeSingleLineRichText(string $string): string
     {
-        $sanitized = strip_tags($string, '<strong><em><u>');
+        $sanitized = self::noUnbreakableSpaces(strip_tags($string, '<strong><em><u>'));
 
         return $sanitized;
+    }
+
+    public static function richTextToPlainText(string $string): string
+    {
+        return trim(self::noUnbreakableSpaces(html_entity_decode(strip_tags(preg_replace(
+            [
+                '~<br\s*/?>~i',
+                '~<p\s*>~i',
+                '~</p\s*>~i',
+                '~\n{2,}~i',
+            ],
+            [
+                "\n",
+                "\n\n",
+                "\n\n",
+                "\n\n",
+            ],
+            $string
+        )))));
     }
 }

@@ -7,8 +7,10 @@ namespace Application\Service\Exporter;
 use Application\Model\Card;
 use Application\Model\Export;
 use Application\Model\User;
+use Application\Utility;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Service\ImageResizer;
+use Laminas\Escaper\Escaper;
 use ZipArchive;
 
 /**
@@ -22,8 +24,11 @@ class Zip implements Writer
 
     private Export $export;
 
+    private readonly Escaper $escape;
+
     public function __construct(private readonly ImageResizer $imageResizer)
     {
+        $this->escape = new Escaper();
     }
 
     public function getExtension(): string
@@ -86,13 +91,12 @@ class Zip implements Writer
 
     private function insertLegend(Card $card, string $image): void
     {
-        $html = '';
-        $html .= '<!DOCTYPE html>';
+        $html = '<!DOCTYPE html>';
         $html .= '<html lang="fr">';
         $html .= '<head>';
         $html .= '<title>Base de données ' . $this->export->getSite() . '</title>';
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-        $html .= '<meta name="author" content="' . (User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
+        $html .= '<meta name="author" content="' . $this->escape->escapeHtmlAttr(User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
         $html .= '<style>';
         $html .= '.detail table { margin:auto; padding:5px; background-color:#d8e7f3; }';
         $html .= '.detail th { width:150px; padding-right:5px; text-align:right; }';
@@ -103,7 +107,7 @@ class Zip implements Writer
         $html .= '</head><body>';
         $html .= '<div class="detail">';
         $html .= '<table>';
-        $html .= '<tr><td colspan="2"><a href="' . $image . '"><img src="' . $image . '" alt="' . $card->getName() . '"/></a></td></tr>';
+        $html .= '<tr><td colspan="2"><a href="' . $this->escape->escapeHtmlAttr($image) . '"><img src="' . $this->escape->escapeHtmlAttr($image) . '" alt="' . $this->escape->escapeHtmlAttr(Utility::richTextToPlainText($card->getName())) . '"/></a></td></tr>';
 
         $html .= $this->row('titre', $card->getName());
         $html .= $this->row('titre étendu', $card->getExpandedName());

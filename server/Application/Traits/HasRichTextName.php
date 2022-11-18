@@ -42,7 +42,7 @@ trait HasRichTextName
     public function setName(string $name): void
     {
         $this->name = Utility::sanitizeSingleLineRichText($name);
-        $this->plainName = strip_tags($this->name);
+        $this->plainName = Utility::richTextToPlainText($this->name);
     }
 
     /**

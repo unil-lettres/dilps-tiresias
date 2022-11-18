@@ -10,6 +10,7 @@ use Application\Model\Country;
 use Application\Model\DocumentType;
 use Application\Model\Export;
 use Application\Traits\HasParentInterface;
+use Application\Utility;
 use Doctrine\Common\Collections\Collection;
 use Ecodev\Felix\Api\Exception;
 
@@ -77,8 +78,8 @@ class Csv implements Writer
     {
         $this->writeRow([
             $card->getId(),
-            $card->getName(),
-            $card->getExpandedName(),
+            Utility::richTextToPlainText($card->getName()),
+            Utility::richTextToPlainText($card->getExpandedName()),
             $this->collection($card->getDomains()),
             $this->collection($card->getPeriods()),
             $card->getFrom(),

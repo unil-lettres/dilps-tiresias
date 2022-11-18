@@ -7,6 +7,7 @@ namespace Application\Service\Exporter;
 use Application\Model\Card;
 use Application\Model\Export;
 use Application\Model\User;
+use Application\Utility;
 use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use PhpOffice\PhpPresentation\DocumentLayout;
@@ -157,7 +158,7 @@ class Pptx implements Writer
             return;
         }
 
-        $value = strip_tags($value);
+        $value = Utility::richTextToPlainText($value);
 
         if ($this->needSeparator) {
             $textRun = $shape->createTextRun(', ');
