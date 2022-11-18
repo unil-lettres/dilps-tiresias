@@ -25,7 +25,7 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
             'locality',
             'country',
             'material',
-            'technique',
+            'dilpsDomain',
             'addition',
             'login',
             'email',

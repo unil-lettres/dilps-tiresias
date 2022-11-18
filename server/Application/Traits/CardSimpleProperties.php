@@ -43,7 +43,7 @@ trait CardSimpleProperties
      *
      * @ORM\Column(type="string", options={"default" = ""})
      */
-    private $technique = '';
+    private $dilpsDomain = '';
 
     /**
      * @var string
@@ -187,14 +187,14 @@ trait CardSimpleProperties
         $this->material = $material;
     }
 
-    public function getTechnique(): string
+    public function getDilpsDomain(): string
     {
-        return $this->technique;
+        return $this->dilpsDomain;
     }
 
-    public function setTechnique(string $technique): void
+    public function setDilpsDomain(string $dilpsDomain): void
     {
-        $this->technique = $technique;
+        $this->dilpsDomain = $dilpsDomain;
     }
 
     public function getTechniqueAuthor(): string

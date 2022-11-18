@@ -230,7 +230,6 @@
                     [previewComponent]="DomainComponent"
                     [readonly]="!edit"
                     [service]="domainService"
-                    matTooltipPosition="after"
                     placeholder="Domaines"
                 ></app-thesaurus>
 
@@ -250,7 +249,6 @@
                                 ? ''
                                 : 'Inclure d’éventuelles informations qui complètent le titre (exemple: le titre dans la langue originale)'
                         "
-                        matTooltipPosition="after"
                     ></quill-editor>
                 </div>
 
@@ -347,13 +345,13 @@
                 </mat-form-field>
 
                 <mat-form-field
-                    *ngIf="isDilps && (edit || !!model.technique)"
+                    *ngIf="isDilps && (edit || !!model.dilpsDomain)"
                     [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
                     matTooltipPosition="after"
                 >
-                    <mat-label>Technique</mat-label>
+                    <mat-label>Domaine</mat-label>
                     <textarea
-                        [(ngModel)]="model.technique"
+                        [(ngModel)]="model.dilpsDomain"
                         [readonly]="!edit"
                         matInput
                         maxlength="255"
@@ -362,10 +360,10 @@
                     ></textarea>
                     <mat-hint
                         align="end"
-                        *ngIf="edit && model.technique?.length > 200"
-                        [ngClass]="{strong: model.technique?.length >= 255}"
+                        *ngIf="edit && model.dilpsDomain?.length > 200"
+                        [ngClass]="{strong: model.dilpsDomain?.length >= 255}"
                     >
-                        {{ model.technique.length }} / 255
+                        {{ model.dilpsDomain.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -595,11 +593,10 @@
                     [previewComponent]="DocumentTypeComponent"
                     [readonly]="!edit"
                     [service]="documentTypeService"
-                    matTooltipPosition="after"
                     placeholder="Type"
                 ></app-thesaurus>
 
-                <mat-form-field *ngIf="!isDilps && (edit || !!model.documentSize)" matTooltipPosition="after">
+                <mat-form-field *ngIf="!isDilps && (edit || !!model.documentSize)">
                     <mat-label>Dimensions</mat-label>
                     <textarea
                         [(ngModel)]="model.documentSize"

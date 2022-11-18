@@ -78,13 +78,13 @@
                         <div>{{ item.dating }}</div>
                     </div>
 
-                    <div *ngIf="item.domains.length || item.technique">
-                        <div>Technique (Domaine)</div>
+                    <div *ngIf="item.domains.length || item.dilpsDomain">
+                        <div>Domaine</div>
                         <div>
                             <div *ngFor="let domain of item.domains | onlyLeaves">
                                 {{ domain.hierarchicName }}
                             </div>
-                            <div>{{ item.technique }}</div>
+                            <div>{{ item.dilpsDomain }}</div>
                         </div>
                     </div>
 

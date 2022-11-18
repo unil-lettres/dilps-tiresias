@@ -120,7 +120,7 @@ class Zip implements Writer
 
         $html .= $this->row('supplément', $card->getAddition());
         $html .= $this->row('datation', $card->getDating());
-        $html .= $this->row('technique', $card->getTechnique());
+        $html .= $this->row('domaine', $card->getDilpsDomain());
         $html .= $this->row('matériel', $card->getMaterial());
         $html .= $this->row('format', $card->getFormat());
         $html .= $this->row('adresse', implode(', ', array_filter([$card->getStreet(), $card->getPostcode(), $card->getLocality(), $card->getArea(), $card->getCountry() ? $card->getCountry()->getName() : ''])));

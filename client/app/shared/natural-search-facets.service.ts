@@ -76,8 +76,8 @@ export class NaturalSearchFacetsService {
             transform: replaceOperatorByField,
         },
         {
-            display: 'Technique',
-            field: 'technique',
+            display: 'Domaine',
+            field: 'dilpsDomain',
             component: TypeTextComponent,
             transform: wrapLike,
         },

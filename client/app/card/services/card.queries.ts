@@ -17,7 +17,7 @@ export const cardDetailsFragment = gql`
         dating
         precision
         documentSize
-        technique
+        dilpsDomain
         techniqueAuthor
         techniqueDate
         format
