@@ -12,7 +12,8 @@ REPLACE INTO `collection` (`id`, parent_id, is_source, owner_id, visibility, cop
   (2008, 2001, 0, 1003, 'private', '', '', 'Test collection 2008 child of 2001', 'It is not our abilities that show what we truly are. It is our choices.', 'dilps');
 
 REPLACE INTO `artist` (`id`, `name`, `site`) VALUES
-  (3000, 'Test artist 3000', 'dilps');
+(3000, 'Test artist 3000', 'dilps'),
+(3001, 'Test artist 3001', 'dilps');
 
 REPLACE INTO `tag` (`id`, `parent_id`, `name`, `site`) VALUES
   (4000, NULL, 'Test root tag 4000', 'dilps'),
@@ -43,7 +44,10 @@ REPLACE INTO `card` (`id`, owner_id, creator_id, `original_id`, visibility, site
   (6013, 1006, 1006, NULL, 'member', 'tiresias', 'Test junior card 6013', '5da49355cbcff.jpeg', 1950, 1300, 90188, '', ST_PointFromText('POINT(12.4927557 41.8906832)'), 'site');
 
 REPLACE INTO `card_artist` (`card_id`, `artist_id`) VALUES
-  (6000, 3000);
+(6000, 3000),
+(6000, 3001),
+(6001, 3000),
+(6002, 3001);
 
 REPLACE INTO `card_tag` (`card_id`, `tag_id`) VALUES
   (6000, 4000);
