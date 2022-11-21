@@ -102,6 +102,15 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     private string $dating = '';
 
     /**
+     * This is a form of cache of all artist names whose only purpose is to be able
+     * to search on artists more easily. It is automatically maintained via DB triggers.
+     *
+     * @API\Exclude
+     * @ORM\Column(type="text", options={"default" = ""})
+     */
+    private string $cachedArtistNames = '';
+
+    /**
      * @var DoctrineCollection<Collection>
      *
      * @ORM\ManyToMany(targetEntity="Collection")

@@ -14,7 +14,7 @@ class ArtistOrTechniqueAuthorOperatorType extends \Ecodev\Felix\Api\Input\Operat
     protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
         if ($metadata->getName() === Card::class) {
-            return ['techniqueAuthor'];
+            return ['techniqueAuthor', 'cachedArtistNames'];
         }
 
         if ($metadata->getName() === Artist::class) {
@@ -26,8 +26,6 @@ class ArtistOrTechniqueAuthorOperatorType extends \Ecodev\Felix\Api\Input\Operat
 
     protected function getSearchableJoinedEntities(): array
     {
-        return [
-            Card::class => ['artists'],
-        ];
+        return [];
     }
 }

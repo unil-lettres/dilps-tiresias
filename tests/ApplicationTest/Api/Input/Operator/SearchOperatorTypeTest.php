@@ -30,7 +30,7 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
 
         $joins = $qb->getDQLPart('join');
         if ($class === Card::class) {
-            self::assertCount(3, $joins[$alias], 'Card should have new joins');
+            self::assertCount(2, $joins[$alias], 'Card should have new joins');
         } else {
             self::assertEmpty($joins, 'Non-card should not have any joins');
         }
@@ -41,7 +41,7 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
         return [
             'simple' => [DocumentType::class, 'john', '(a.id LIKE :filter1 OR a.name LIKE :filter1)'],
             'search predefined fields' => [User::class, 'john', '(a.id LIKE :filter1 OR a.login LIKE :filter1 OR a.email LIKE :filter1 OR a.name LIKE :filter1)'],
-            'search predefined joins' => [Card::class, 'foo', '(a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.dilpsDomain LIKE :filter1 OR a.objectReference LIKE :filter1 OR a.corpus LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR institution1.name LIKE :filter1 OR artist1.name LIKE :filter1 OR country1.name LIKE :filter1)'],
+            'search predefined joins' => [Card::class, 'foo', '(a.id LIKE :filter1 OR a.dating LIKE :filter1 OR a.cachedArtistNames LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.dilpsDomain LIKE :filter1 OR a.objectReference LIKE :filter1 OR a.corpus LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR institution1.name LIKE :filter1 OR country1.name LIKE :filter1)'],
         ];
     }
 }

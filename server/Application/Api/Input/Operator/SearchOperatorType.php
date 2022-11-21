@@ -21,6 +21,7 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
         return [
             'name',
             'expandedName',
+            'cachedArtistNames',
             'street',
             'locality',
             'country',
@@ -40,7 +41,7 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
     protected function getSearchableJoinedEntities(): array
     {
         return [
-            Card::class => ['institution', 'artists', 'country'],
+            Card::class => ['institution', 'country'],
         ];
     }
 }

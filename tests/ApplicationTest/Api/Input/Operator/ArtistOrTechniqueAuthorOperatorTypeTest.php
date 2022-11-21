@@ -21,10 +21,10 @@ class ArtistOrTechniqueAuthorOperatorTypeTest extends \PHPUnit\Framework\TestCas
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '(a.techniqueAuthor LIKE :filter1 OR artist1.name LIKE :filter1)';
+        $expected = '(a.cachedArtistNames LIKE :filter1 OR a.techniqueAuthor LIKE :filter1)';
         self::assertSame($expected, $actual);
 
         $joins = $qb->getDQLPart('join');
-        self::assertCount(1, $joins[$alias], 'Card should have new joins');
+        self::assertEmpty($joins, 'Card should have new joins');
     }
 }

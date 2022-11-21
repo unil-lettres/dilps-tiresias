@@ -47,4 +47,30 @@ class CardRepositoryTest extends AbstractRepositoryTest
         self::assertCount(1, $this->repository->getExportCards($export2, 6001));
         self::assertCount(0, $this->repository->getExportCards($export2, 6002));
     }
+
+    public function testCachedArtistNames(): void
+    {
+        $this->assertArtistNames('Test artist 3000
+Test artist 3001');
+
+        $connection = $this->getEntityManager()->getConnection();
+        $connection->executeStatement("UPDATE artist SET name = 'foo' WHERE id = 3000");
+        $this->assertArtistNames('foo
+Test artist 3001');
+
+        $connection->executeStatement('DELETE FROM card_artist WHERE artist_id = 3000');
+        $this->assertArtistNames('Test artist 3001');
+
+        $connection->executeStatement('INSERT INTO card_artist (card_id, artist_id) VALUES (6000, 3000)');
+        $this->assertArtistNames('foo
+Test artist 3001');
+
+        $connection->executeStatement('DELETE FROM artist WHERE id = 3001');
+        $this->assertArtistNames('foo');
+    }
+
+    private function assertArtistNames(string $name): void
+    {
+        self::assertSame($name, $this->getEntityManager()->getConnection()->fetchOne('SELECT cached_artist_names FROM card WHERE id = 6000'));
+    }
 }
