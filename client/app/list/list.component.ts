@@ -150,6 +150,11 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      */
     public viewMode: ViewMode = ViewMode.grid;
 
+    /**
+     * Specifies if labels must be always displayed or only on hover
+     */
+    public showLabels = false;
+
     public Site = Site;
     public UserRole = UserRole;
     public CardSortingField = CardSortingField;
@@ -191,6 +196,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public ngOnInit(): void {
         super.ngOnInit();
+
+        this.showLabels = sessionStorage.getItem('showLabels') !== 'false';
 
         // Init view from last selection Defaults on grid
         const viewMode = sessionStorage.getItem('view-mode');
@@ -253,6 +260,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
             this.collection = data.collection || null;
         });
+    }
+
+    public toggleLabels(): void {
+        this.showLabels = !this.showLabels;
+        this.gridComponent?.gallery.gallery.setLabelHover(!this.showLabels);
+        sessionStorage.setItem('showLabels', this.showLabels + '');
     }
 
     /**

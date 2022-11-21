@@ -141,6 +141,16 @@
             </button>
         </ng-container>
 
+        <button
+            *ngIf="viewMode === ViewMode.grid"
+            (click)="toggleLabels()"
+            mat-icon-button
+            [matTooltip]="showLabels ? 'Masquer les labels' : 'Afficher les labels'"
+        >
+            <natural-icon *ngIf="!showLabels" name="label"></natural-icon>
+            <natural-icon *ngIf="showLabels" name="label_off"></natural-icon>
+        </button>
+
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
             <natural-icon name="select_all"></natural-icon>
         </button>

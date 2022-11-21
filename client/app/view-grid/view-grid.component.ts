@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
-import {filter} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
@@ -95,6 +94,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     public constructor(private readonly router: Router) {
         super();
+        this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
     }
 
     public ngOnInit(): void {

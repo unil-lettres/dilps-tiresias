@@ -154,6 +154,9 @@ const icons: NaturalIconsConfig = {
     'antique-name': {
         svg: 'assets/icons/fire.svg',
     },
+    label_off: {
+        svg: 'assets/icons/label_off_black_24dp.svg',
+    },
 };
 
 export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
