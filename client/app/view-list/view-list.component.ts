@@ -65,12 +65,12 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.pagination.emit(event);
     }
 
-    public selectAll(): Cards_cards_items[] {
+    public selectAll(): Promise<Cards_cards_items[]> {
         if (this.dataSource.data) {
             this.selectionModel.select(...this.dataSource.data.items);
         }
 
-        return this.selectionModel.selected;
+        return new Promise(resolve => resolve(this.selectionModel.selected));
     }
 
     public unselectAll(): void {

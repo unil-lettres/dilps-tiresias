@@ -103,11 +103,13 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
                 return;
             }
 
-            if (!result.offset && this.gallery.gallery.collection.length) {
-                this.gallery.gallery.clear(); // fires new loadMore() call
-            } else {
-                this.gallery.gallery.addItems(this.formatImages(result.items));
-            }
+            this.gallery.gallery.then(gallery => {
+                if (!result.offset && gallery.collection.length) {
+                    gallery.clear(); // fires new loadMore() call
+                } else {
+                    gallery.addItems(this.formatImages(result.items));
+                }
+            });
 
             this.contentChange.emit({total: result.length});
         });
@@ -132,9 +134,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     public ngAfterViewInit(): void {
         setTimeout(() => {
-            this.gallery.gallery.addEventListener('item-added-to-dom', () => {
-                this.contentChange.emit({visible: this.gallery.gallery.domCollection.length});
-            });
+            this.gallery.gallery.then(gallery =>
+                gallery.addEventListener('item-added-to-dom', () => {
+                    this.contentChange.emit({visible: gallery.domCollection.length});
+                }),
+            );
         });
     }
 
@@ -146,12 +150,14 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.router.navigate(['card', event.model.id]);
     }
 
-    public selectAll(): Cards_cards_items[] {
-        return this.gallery.gallery.selectVisibleItems();
+    public selectAll(): Promise<Cards_cards_items[]> {
+        return new Promise(resolve => {
+            return this.gallery.gallery.then(gallery => resolve(gallery.selectVisibleItems()));
+        });
     }
 
     public unselectAll(): void {
-        this.gallery.gallery.unselectAllItems();
+        this.gallery.gallery.then(gallery => gallery.unselectAllItems());
     }
 
     private formatImages(cards: Cards_cards_items[]): GalleryItem[] {

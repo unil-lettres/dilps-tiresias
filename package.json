@@ -35,7 +35,7 @@
         "@bugsnag/core": "^7.10.0",
         "@bugsnag/js": "^7.10.1",
         "@bugsnag/plugin-angular": "^7.10.1",
-        "@ecodev/angular-natural-gallery": "^14.1.1",
+        "@ecodev/angular-natural-gallery": "^15.0.1",
         "@ecodev/natural": "^45.4.1",
         "@graphql-tools/mock": "^8.7.1",
         "@types/swiper": "^6.0.0",

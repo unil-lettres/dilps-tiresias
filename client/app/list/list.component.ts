@@ -67,7 +67,7 @@ function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput
 }
 
 export interface ViewInterface {
-    selectAll: () => Cards_cards_items[];
+    selectAll: () => Promise<Cards_cards_items[]>;
     unselectAll: () => void;
 }
 
@@ -264,7 +264,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public toggleLabels(): void {
         this.showLabels = !this.showLabels;
-        this.gridComponent?.gallery.gallery.setLabelHover(!this.showLabels);
+        this.gridComponent?.gallery.gallery.then(gallery => gallery.setLabelHover(!this.showLabels));
         sessionStorage.setItem('showLabels', this.showLabels + '');
     }
 
@@ -467,7 +467,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     }
 
     public selectAll(): void {
-        this.selected = this.getViewComponent().selectAll();
+        this.getViewComponent()
+            .selectAll()
+            .then(number => (this.selected = number));
     }
 
     public unselectAll(): void {
