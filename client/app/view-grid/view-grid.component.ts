@@ -133,16 +133,15 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.gallery.gallery.then(gallery =>
-                gallery.addEventListener('item-added-to-dom', () => {
-                    this.contentChange.emit({visible: gallery.domCollection.length});
-                }),
-            );
-        });
+        this.gallery.gallery.then(gallery =>
+            gallery.addEventListener('item-added-to-dom', () => {
+                this.contentChange.emit({visible: gallery.domCollection.length});
+            }),
+        );
     }
 
     public loadMore(ev: CustomEventDetailMap<GalleryItem>['pagination']): void {
+        console.warn({offset: ev.offset, pageSize: ev.limit});
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
@@ -192,7 +191,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
             const fields: any = {
                 title: title ? title : 'Voir le détail',
-                selected: selected.indexOf(card.id) > -1,
+                selected: selected.includes(card.id),
             };
 
             return merge({}, card, thumb, big, fields);

@@ -28,7 +28,7 @@ function sanitize(s: string): string {
 function testString(words: string[], attributeValue: string): boolean {
     attributeValue = sanitize(attributeValue);
     for (const word of words) {
-        if (attributeValue.indexOf(word) > -1) {
+        if (attributeValue.includes(word)) {
             return true;
         }
     }

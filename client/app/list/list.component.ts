@@ -307,8 +307,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Show a button to download a collection, considering permissions
      */
     public updateShowDownloadCollection(): void {
-        const roles = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user && this.user.role && (!roles || (roles && roles.indexOf(this.user.role) > -1));
+        const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
+        const roleIsAllowed = this.user && this.user.role && (!roles || (roles && roles.includes(this.user.role)));
         const hasCollection = this.collection && this.collection.id;
         this.showDownloadCollection = hasCollection && roleIsAllowed;
     }

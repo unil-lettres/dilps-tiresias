@@ -21,7 +21,7 @@
         </app-root>
 
         <script>
-            window.APP_SITE = window.location.hostname.indexOf('tiresias') > -1 ? 'tiresias' : 'dilps';
+            window.APP_SITE = window.location.hostname.includes('tiresias') ? 'tiresias' : 'dilps';
             const appRoot = document.getElementsByTagName('app-root')[0];
             const dilpsTheme = localStorage.getItem('dilps-theme');
             const tiresiasTheme = localStorage.getItem('tiresias-theme');

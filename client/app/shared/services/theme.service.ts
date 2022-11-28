@@ -27,19 +27,19 @@ export class ThemeService {
         const theme = localStorage.getItem(this.storageKey);
 
         this.theme.next(theme);
-        if (theme && theme.indexOf('-dark') > -1) {
+        if (theme && theme.includes('-dark')) {
             this.darkActivated = true;
         }
     }
 
     public set(theme: string): void {
         // Set default theme if stored theme don't exist
-        if (!theme || (theme && this.themes.indexOf(theme.replace('-dark', '')) < 0)) {
+        if (!theme || (theme && !this.themes.includes(theme.replace('-dark', '')))) {
             this.set(this.themes[0]);
             return;
         }
 
-        if (this.darkActivated && theme.indexOf('-dark') === -1) {
+        if (this.darkActivated && !theme.includes('-dark')) {
             theme += '-dark';
         } else {
             theme = theme.replace('-dark', '');
