@@ -70,7 +70,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
             this.selectionModel.select(...this.dataSource.data.items);
         }
 
-        return new Promise(resolve => resolve(this.selectionModel.selected));
+        return Promise.resolve(this.selectionModel.selected);
     }
 
     public unselectAll(): void {

@@ -151,9 +151,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public selectAll(): Promise<Cards_cards_items[]> {
-        return new Promise(resolve => {
-            return this.gallery.gallery.then(gallery => resolve(gallery.selectVisibleItems()));
-        });
+        return this.gallery.gallery.then(gallery => gallery.selectVisibleItems());
     }
 
     public unselectAll(): void {
