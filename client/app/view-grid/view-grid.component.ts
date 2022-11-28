@@ -141,7 +141,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public loadMore(ev: CustomEventDetailMap<GalleryItem>['pagination']): void {
-        console.warn({offset: ev.offset, pageSize: ev.limit});
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
