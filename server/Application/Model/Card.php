@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Api\FileException;
-use Application\Repository\ArtistRepository;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
@@ -25,6 +24,7 @@ use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\Image;
+use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Annotation as API;
 use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
@@ -333,12 +333,21 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             return;
         }
 
-        $this->artists->clear();
-
-        /** @var ArtistRepository $artistRepository */
         $artistRepository = _em()->getRepository(Artist::class);
-        $artistNames = $artistRepository->getOrCreateByNames($artistNames, $this->getSite());
-        foreach ($artistNames as $a) {
+        $newArtists = $artistRepository->getOrCreateByNames($artistNames, $this->getSite());
+
+        $oldIds = Utility::modelToId($this->artists->toArray());
+        sort($oldIds);
+
+        $newIds = Utility::modelToId($newArtists);
+        sort($newIds);
+
+        if ($oldIds === $newIds && !in_array(null, $oldIds, true) && !in_array(null, $newIds, true)) {
+            return;
+        }
+
+        $this->artists->clear();
+        foreach ($newArtists as $a) {
             $this->artists->add($a);
         }
     }
@@ -427,9 +436,15 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     private function setEntireCollection(array $entityIds, DoctrineCollection $collection, string $class): void
     {
-        $collection->clear();
+        $oldIds = Utility::modelToId($collection->toArray());
+        sort($oldIds);
 
-        $ids = array_map(fn (EntityID $m) => $m->getId(), $entityIds);
+        $ids = Utility::modelToId($entityIds);
+        sort($ids);
+
+        if ($oldIds === $ids && !in_array(null, $oldIds, true) && !in_array(null, $ids, true)) {
+            return;
+        }
 
         $repository = _em()->getRepository($class);
         $objects = $repository->findBy([
@@ -437,6 +452,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             'site' => $this->getSite(),
         ]);
 
+        $collection->clear();
         foreach ($objects as $object) {
             $collection->add($object);
         }
