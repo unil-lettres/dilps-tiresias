@@ -18,9 +18,7 @@ The recommended way to get a working copy is the following:
 4. Copy & rename the example.env file to .env (`cp example.env .env`). Replace the values if needed.
 5. Finally, build the app:
 
-```sh
-./bin/build.sh
-```
+`./bin/build.sh`
 
 ## Development with Docker
 
@@ -57,9 +55,7 @@ The project is compiled each time the containers are started. You'll get a **Bui
 
 To access the application container (apache-php):
 
-```sh
-docker exec -it dilps-tiresias-app bash
-```
+`docker exec -it dilps-tiresias-app bash`
 
 Data for the mysql service is persisted using docker named volumes. You can see what volumes are currently present with:
 
@@ -100,9 +96,7 @@ Or to get the messages in JSON format.
 
 To switch the API to development (to enable logging), run:
 
-```sh
-composer development-enable
-```
+`composer development-enable`
 
 Logs will be available in `logs/all.log`.
 
@@ -115,9 +109,7 @@ configuration cache.
 You may need to clear the configuration cache in production when deploying if
 you deploy to the same directory. You may do so using the following:
 
-```sh
-composer clear-config-cache
-```
+`composer clear-config-cache`
 
 ## Testing
 
