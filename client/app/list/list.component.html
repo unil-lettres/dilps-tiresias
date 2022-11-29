@@ -147,8 +147,8 @@
             mat-icon-button
             [matTooltip]="showLabels ? 'Masquer les labels' : 'Afficher les labels'"
         >
-            <natural-icon *ngIf="!showLabels" name="label"></natural-icon>
-            <natural-icon *ngIf="showLabels" name="label_off"></natural-icon>
+            <natural-icon *ngIf="!showLabels" name="font_download"></natural-icon>
+            <natural-icon *ngIf="showLabels" name="font_download_off"></natural-icon>
         </button>
 
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">

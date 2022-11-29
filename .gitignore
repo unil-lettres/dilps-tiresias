@@ -37,6 +37,7 @@
 !/client/environments/.gitkeep
 .env
 .DS_Store
+*.sql
 *.sql.gz
 
 /dev/.env
