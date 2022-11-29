@@ -1,5 +1,7 @@
 FROM php:8.1-apache
 
+ENV DOCKER_RUNNING=true
+
 # Add Yarn repository
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends gnupg &&\
@@ -45,4 +47,8 @@ ADD ./crontab /etc/crontab
 # docker exec <container-id> supervisorctl restart <service>
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Add the entrypoint script
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

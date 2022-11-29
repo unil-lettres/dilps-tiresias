@@ -40,7 +40,6 @@
 *.sql.gz
 
 /dev/.env
-/dev/db/*
 supervisord.log
 supervisord.pid
 

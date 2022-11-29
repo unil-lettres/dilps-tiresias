@@ -51,11 +51,9 @@ Run the following docker commands from the project root directory.
 
 Build & run all the containers for this project:
 
-```sh
-docker-compose up
-```
+`docker-compose up` (add -d if you want to run in the background and silence the logs)
 
-The project is compiled each time the containers are started (bin/build.sh). You'll get a **Build finished** message in the logs as soon as everything is ready to be used.
+The project is compiled each time the containers are started. You'll get a **Build at** log message as soon as everything is ready to be used.
 
 To access the application container (apache-php):
 
@@ -63,11 +61,13 @@ To access the application container (apache-php):
 docker exec -it dilps-tiresias-app bash
 ```
 
-To stop all the containers used for this project:
+Data for the mysql service is persisted using docker named volumes. You can see what volumes are currently present with:
 
-```sh
-docker-compose stop
-```
+`docker volume ls`
+
+If you want to remove a volume (e.g. to start with a fresh database), you can use the following command.
+
+`docker volume rm volume_name`
 
 ### Frontends
 

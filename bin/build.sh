@@ -47,9 +47,12 @@ echo "********************* Updating database..."
 ./bin/doctrine migrations:migrate --no-interaction
 ./bin/doctrine orm:generate-proxies
 
-echo "********************* Building Angular application..."
-# Default environment is "prod" but can be overrided with "DEPLOY_ENV" envar
-yarn run ${DEPLOY_ENV:-prod}
+# In a docker environment the Angular build is managed by a supervisor process
+if [ ! -n "$DOCKER_RUNNING" ]; then
+  echo "********************* Building Angular application..."
+  # Default environment is "prod" but can be overrided with "DEPLOY_ENV" envar
+  yarn run ${DEPLOY_ENV:-prod}
+fi
 
 echo "***************************************************************"
 echo "********************* Build finished *************************"

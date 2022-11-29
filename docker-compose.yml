@@ -28,7 +28,7 @@ services:
         env_file:
             - ./dev/.env
         volumes:
-            - ./dev/db:/var/lib/mysql
+            - mysql-data:/var/lib/mysql
             - ./dev/config/my.cnf:/etc/mysql/my.cnf
         ports:
             - '3301:3306'
@@ -53,3 +53,6 @@ services:
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mailhog
+
+volumes:
+    mysql-data:
