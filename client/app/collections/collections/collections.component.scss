@@ -5,6 +5,7 @@
     flex-direction: row;
     @include utils.fixedToolbar();
 }
+
 mat-nav-list {
     &,
     & * {
@@ -14,4 +15,8 @@ mat-nav-list {
     .description {
         margin-top: 4px;
     }
+}
+
+.active * {
+    font-weight: bold !important;
 }
