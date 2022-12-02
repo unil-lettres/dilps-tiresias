@@ -64,7 +64,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.queryVariables.set('variables', this.defaultVariables);
         this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
 
-        this.route.data.subscribe(data => {
+        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
             // data.creator is the logged in user here.
 
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, data.creator);

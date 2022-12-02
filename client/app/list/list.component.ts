@@ -229,7 +229,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
         // Listen to route data and resolved data
         // Required because when /:id change, the route stays the same, and component is not re-initialized
-        this.route.data.subscribe(data => {
+        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
             this.showLogo = data.showLogo;
             this.updateShowDownloadCollection();
 

@@ -54,9 +54,10 @@ import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
-import {FileSelection} from '@ecodev/natural';
+import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
 import {MatSliderChange} from '@angular/material/slider';
 import {ThemePalette} from '@angular/material/core';
+import {takeUntil} from 'rxjs/operators';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -80,7 +81,7 @@ export type Visibilities<V> = Record<number, VisibilityConfig<V>>;
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnInit, OnChanges {
+export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
     /**
      * The card as input used for the form and mutation.
      *
@@ -335,7 +336,9 @@ export class CardComponent implements OnInit, OnChanges {
         private readonly dialog: MatDialog,
         private readonly userService: UserService,
         private readonly statisticService: StatisticService,
-    ) {}
+    ) {
+        super();
+    }
 
     @Input()
     public set editable(val: boolean) {
@@ -351,7 +354,7 @@ export class CardComponent implements OnInit, OnChanges {
             this.user = user;
         });
 
-        this.route.data.subscribe(data => (this.showLogo = data.showLogo));
+        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => (this.showLogo = data.showLogo));
 
         if (this.model && !this.fetchedModel) {
             // When mass editing, show a form with an empty model (without any fetched model)
@@ -368,7 +371,7 @@ export class CardComponent implements OnInit, OnChanges {
             // (An better alternative would be to create a new @Output that emits when model change)
             this.initCard();
         } else {
-            this.route.params.subscribe(params => {
+            this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
                 if (params.cardId) {
                     this.fetchedModel = this.route.snapshot.data.card;
                     this.model = cardToCardInput(this.fetchedModel);

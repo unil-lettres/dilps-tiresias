@@ -2,7 +2,7 @@ import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
-import {EMPTY, Observable, of, Subscription} from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, takeUntil, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
@@ -36,7 +36,6 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     public errors: (Error & {debugMessage?: string; category?: string})[] = [];
     public user: Viewer_viewer | null = null;
     public nav = 1;
-    private routeParamsSub: Subscription | null = null;
     public progress?: number = null;
     private uploaded = 0;
 
@@ -57,13 +56,9 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
         this.network.errors.next([]);
     }
 
-    public ngOnDestroy(): void {
-        this.routeParamsSub.unsubscribe();
-    }
-
     public ngOnInit(): void {
         // Watch errors
-        this.network.errors.subscribe(errors => {
+        this.network.errors.pipe(takeUntil(this.ngUnsubscribe)).subscribe(errors => {
             this.errors = this.errors.concat(errors);
         });
 
@@ -71,7 +66,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
             this.user = user;
         });
 
-        this.routeParamsSub = this.route.firstChild.params.subscribe(params => {
+        this.route.firstChild.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
             if (params.nav && /^[01]$/.test(params.nav)) {
                 this.nav = +params.nav;
             }

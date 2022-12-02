@@ -2,17 +2,18 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {Card, Card_card_artists} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
+import {NaturalAbstractController} from '@ecodev/natural';
 
 @Component({
     selector: 'app-quizz',
     templateUrl: './quizz.component.html',
     styleUrls: ['./quizz.component.scss'],
 })
-export class QuizzComponent implements OnInit, OnDestroy {
+export class QuizzComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public cards: string[] = [];
     public card: Card['card'];
     public imageSrc = '';
@@ -22,7 +23,9 @@ export class QuizzComponent implements OnInit, OnDestroy {
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
 
-    public constructor(private readonly route: ActivatedRoute, private readonly cardService: CardService) {}
+    public constructor(private readonly route: ActivatedRoute, private readonly cardService: CardService) {
+        super();
+    }
 
     public ngOnDestroy(): void {
         this.routeParamsSub.unsubscribe();
@@ -30,16 +33,18 @@ export class QuizzComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.routeParamsSub = this.route.params.subscribe(params => {
+        this.routeParamsSub = this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
             if (params.cards) {
                 this.cards = params.cards.split(',');
                 this.getCard(this.cards[0]);
             }
         });
 
-        this.formChangeSub = this.formCtrl.valueChanges.pipe(debounceTime(500)).subscribe(val => {
-            this.attributes = test(val, this.card);
-        });
+        this.formChangeSub = this.formCtrl.valueChanges
+            .pipe(takeUntil(this.ngUnsubscribe), debounceTime(500))
+            .subscribe(val => {
+                this.attributes = test(val, this.card);
+            });
     }
 
     public goToNext(): void {
