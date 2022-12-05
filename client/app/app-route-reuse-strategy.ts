@@ -2,13 +2,13 @@ import {ComponentRef} from '@angular/core';
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 
 // Sources
-// ://github.com/angular/angular/issues/13869
-// ://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
+// https://github.com/angular/angular/issues/13869#issuecomment-441054267
+// https://https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
 
 interface RouteStates {
-    max: number;
-    handles: {[handleKey: string]: DetachedRouteHandle};
-    handleKeys: string[];
+    readonly max: number;
+    readonly handles: Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>;
+    readonly handleKeys: string[];
 }
 
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
@@ -39,16 +39,16 @@ function getStoreKey(route: ActivatedRouteSnapshot): string {
     return baseUrl + '////' + childrenParts.join('/');
 }
 
-const routes: {[routePath: string]: RouteStates} = {
-    '/home': {max: 1, handles: {}, handleKeys: []},
-    '/collection/:collectionId': {max: 1, handles: {}, handleKeys: []},
-    '/my-collection/unclassified': {max: 1, handles: {}, handleKeys: []},
-    '/my-collection/my-cards': {max: 1, handles: {}, handleKeys: []},
-    '/my-collection/my-collection': {max: 1, handles: {}, handleKeys: []},
-    '/source': {max: 1, handles: {}, handleKeys: []},
+const routes: Readonly<Record<string, RouteStates>> = {
+    '/home': {max: 1, handles: new Map(), handleKeys: []},
+    '/collection/:collectionId': {max: 1, handles: new Map(), handleKeys: []},
+    '/my-collection/unclassified': {max: 1, handles: new Map(), handleKeys: []},
+    '/my-collection/my-cards': {max: 1, handles: new Map(), handleKeys: []},
+    '/my-collection/my-collection': {max: 1, handles: new Map(), handleKeys: []},
+    '/source': {max: 1, handles: new Map(), handleKeys: []},
 
     // Needs to be higher than the maximum different collections navigated during a session
-    '/collection': {max: 100, handles: {}, handleKeys: []},
+    '/collection': {max: 100, handles: new Map(), handleKeys: []},
 };
 
 export class AppRouteReuseStrategy implements RouteReuseStrategy {
@@ -68,27 +68,28 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         }
 
         const config = routes[getConfiguredUrl(route)];
-
-        if (config) {
-            const storeKey = getStoreKey(route);
-
-            if (!config.handles[storeKey]) {
-                // add new handle
-                if (config.handleKeys.length >= config.max) {
-                    const oldestUrl = config.handleKeys[0];
-                    config.handleKeys.splice(0, 1);
-
-                    // this is important to work around memory leaks, as Angular will never destroy the Component
-                    // on its own once it got stored in our router strategy.
-                    const oldHandle = config.handles[oldestUrl] as {componentRef: ComponentRef<any>};
-                    oldHandle.componentRef.destroy();
-
-                    delete config.handles[oldestUrl];
-                }
-                config.handles[storeKey] = handle;
-                config.handleKeys.push(storeKey);
-            }
+        if (!config) {
+            return;
         }
+
+        const storeKey = getStoreKey(route);
+        if (config.handles.has(storeKey)) {
+            return;
+        }
+
+        if (config.handleKeys.length >= config.max) {
+            const oldestUrl = config.handleKeys[0];
+            config.handleKeys.splice(0, 1);
+
+            // this is important to work around memory leaks, as Angular will never destroy the Component
+            // on its own once it got stored in our router strategy.
+            const oldHandle = config.handles.get(oldestUrl);
+            oldHandle.componentRef.destroy();
+
+            config.handles.delete(oldestUrl);
+        }
+        config.handles.set(storeKey, handle);
+        config.handleKeys.push(storeKey);
     }
 
     /** Determines if this route (and its subtree) should be reattached */
@@ -98,7 +99,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
             if (config) {
                 const storeKey = getStoreKey(route);
-                return !!config.handles[storeKey];
+                return config.handles.has(storeKey);
             }
         }
 
@@ -112,7 +113,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
             if (config) {
                 const storeKey = getStoreKey(route);
-                return config.handles[storeKey];
+                return config.handles.get(storeKey);
             }
         }
 
@@ -125,13 +126,13 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         return future.routeConfig === curr.routeConfig;
     }
 
-    public clearHandlers(): void {
+    public clearDetachedRoutes(): void {
         Object.keys(routes).forEach(routeName => {
             routes[routeName].handleKeys.length = 0;
-            Object.keys(routes[routeName].handles).forEach(handleName => {
-                const handle = routes[routeName].handles[handleName] as {componentRef: ComponentRef<any>};
+
+            routes[routeName].handles.forEach((handle, handleName) => {
                 handle.componentRef.destroy();
-                delete routes[routeName].handles[handleName];
+                routes[routeName].handles.delete(handleName);
             });
         });
     }

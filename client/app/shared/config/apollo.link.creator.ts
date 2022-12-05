@@ -59,7 +59,7 @@ export function createApolloLink(
         const resetReuseOperations = ['CreateCard', 'CreateCollection', 'UpdateCollection', 'DeleteCollections'];
 
         if (resetReuseOperations.includes(operation.operationName)) {
-            routeReuseStrategy.clearHandlers();
+            routeReuseStrategy.clearDetachedRoutes();
         }
 
         return forward(operation);

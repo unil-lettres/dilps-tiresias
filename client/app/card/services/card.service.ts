@@ -301,7 +301,7 @@ export class CardService extends AbstractContextualizedService<
         return super.updateNow(object).pipe(
             map(r => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
                 }
                 return r;
             }),
@@ -312,7 +312,7 @@ export class CardService extends AbstractContextualizedService<
         return super.delete(objects).pipe(
             map(r => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
                 }
                 return r;
             }),

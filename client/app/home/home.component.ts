@@ -185,7 +185,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
         const url = collection ? 'my-collection/' + collection.id : 'my-collection/my-cards';
         this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => {
             this.router.navigateByUrl(url).then(() => {
-                (this.routeReuse as AppRouteReuseStrategy).clearHandlers();
+                (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
             });
         });
     }
