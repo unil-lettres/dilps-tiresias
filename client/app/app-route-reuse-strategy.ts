@@ -122,7 +122,16 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
     /** Determines if `curr` route should be reused */
     public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        // If we want to preserve routes with parameters, add AND on instruction : getResolvedUrl(future) === getResolvedUrl(curr)
+        const ours = Object.keys(routes);
+        const c = getConfiguredUrl(curr);
+        const f = getConfiguredUrl(future);
+
+        // The routes managed by this class should never use the implicit reuse mechanism of Angular,
+        // even when going from /collection/1 to /collection/2. But instead they will always use this class mechanism.
+        if (ours.includes(c) || ours.includes(f)) {
+            return false;
+        }
+
         return future.routeConfig === curr.routeConfig;
     }
 
