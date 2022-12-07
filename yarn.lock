@@ -1551,18 +1551,18 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@ecodev/angular-natural-gallery@^15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-15.0.2.tgz#b0c53d36f3e8c71c2ae11026df47601d8fd36b6f"
-  integrity sha512-gNje/bteADRkCkmMfnepeREd8FUe3jRm0vVyXoq5GdF4fhUtBQRepYjuWeAuWD1Sv7uRZpjvUyS+LzaN4jZOIA==
+"@ecodev/angular-natural-gallery@^15.0.5":
+  version "15.0.5"
+  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-15.0.5.tgz#f6790f590cb5f3266ff605a7846c4842bd42686c"
+  integrity sha512-oZ/9PZFw0kvXIfpMACxhKIL4HqLljKmERdaDKJz10VIcbrUTbkaUsxkTLGVSTq64iq9lc6f/dds6sCMPSWWgfw==
   dependencies:
-    "@ecodev/natural-gallery-js" "^9.1.1"
+    "@ecodev/natural-gallery-js" "^9.1.4"
     tslib "^2.0.0"
 
-"@ecodev/natural-gallery-js@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-9.1.1.tgz#03e5ef5c4f564ae66fba659626c945769ea95749"
-  integrity sha512-+nxhJBDvjx/T5haZHGUDH75CGYnPfDWjlYShLKdoFTHYhL3F74xNehTyY4GMK2JjrackAIPfHXVkghsJdbYZHw==
+"@ecodev/natural-gallery-js@^9.1.4":
+  version "9.1.4"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-9.1.4.tgz#637049aa58df66eaba480d031e5f6af3431a3adc"
+  integrity sha512-vWZyZPjtg7/eKsPctsqFd+EAWOPmZ9wCs8EFPaRr+7fbRHhtU4m4pCRi078N2bCxyJRUhsUzO4yuXJYc3GcZOg==
   dependencies:
     lodash-es "^4.17.21"
 
