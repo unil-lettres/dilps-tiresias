@@ -20,14 +20,12 @@ class FileRepositoryTest extends AbstractRepositoryTest
         $this->repository = _em()->getRepository(File::class);
     }
 
-    public function providerGetAccessibleSubQuery(): array
+    public function providerGetAccessibleSubQuery(): iterable
     {
-        return [
-            ['anonymous', []],
-            ['student', [13000]],
-            ['junior', []],
-            ['senior', []],
-            ['administrator', [13000]],
-        ];
+        yield ['anonymous', []];
+        yield ['student', [13000]];
+        yield ['junior', []];
+        yield ['senior', []];
+        yield ['administrator', [13000]];
     }
 }

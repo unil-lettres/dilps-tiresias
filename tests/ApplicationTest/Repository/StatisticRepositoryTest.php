@@ -48,16 +48,14 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         }
     }
 
-    public function providerGetExtraStatistics(): array
+    public function providerGetExtraStatistics(): iterable
     {
-        return [
-            ['dilps', 'month', null],
-            ['dilps', 'all', null],
-            ['dilps', '2019', null],
-            ['tiresias', 'month', 1000],
-            ['tiresias', 'all', 1000],
-            ['tiresias', '2019', 1000],
-            ['tir\'asd"esias', '20asd\'1"9', 1000],
-        ];
+        yield ['dilps', 'month', null];
+        yield ['dilps', 'all', null];
+        yield ['dilps', '2019', null];
+        yield ['tiresias', 'month', 1000];
+        yield ['tiresias', 'all', 1000];
+        yield ['tiresias', '2019', 1000];
+        yield ['tir\'asd"esias', '20asd\'1"9', 1000];
     }
 }

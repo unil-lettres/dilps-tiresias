@@ -21,79 +21,77 @@ use PHPUnit\Framework\TestCase;
 
 class AclFilterTest extends TestCase
 {
-    public function providerFilter(): array
+    public function providerFilter(): iterable
     {
-        return [
-            'country is totally public public class, access everything' => [
-                null,
-                Country::class,
-                '',
-            ],
-            'artist is totally public public class, access everything' => [
-                null,
-                Artist::class,
-                '',
-            ],
-            'institution is totally public public class, access everything' => [
-                null,
-                Institution::class,
-                '',
-            ],
-            'tag is totally public public class, access everything' => [
-                null,
-                Tag::class,
-                '',
-            ],
-            'dating is totally public public class, access everything' => [
-                null,
-                Dating::class,
-                '',
-            ],
-            'users are invisible to anonymous' => [
-                null,
-                User::class,
-                'test.id IN (-1)',
-            ],
-            'users are accessible to any other users' => [
-                'student',
-                User::class,
-                'test.id IN (SELECT',
-            ],
-            'only public cards are accessible to anonymous' => [
-                null,
-                Card::class,
-                'test.id IN (SELECT card.id FROM card WHERE card.visibility IN (\'public\'))',
-            ],
-            'student can access cards that are his own or are public or member' => [
-                'student',
-                Card::class,
-                'test.id IN (SELECT card.id FROM card LEFT JOIN card_collection card_collection ON card_collection.card_id = card.id LEFT JOIN collection_user collection_user ON card_collection.collection_id = collection_user.collection_id WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = \'1003\') OR (card.creator_id = \'1003\') OR (collection_user.user_id = \'1003\'))',
-            ],
-            'collections are invisible to anonymous' => [
-                null,
-                Collection::class,
-                'test.id IN (-1)',
-            ],
-            'student can access collections that are his own or are member' => [
-                'student',
-                Collection::class,
-                'test.id IN (WITH RECURSIVE parent AS',
-            ],
-            'administrator can access collections that are his own or are administrator or member' => [
-                'administrator',
-                Collection::class,
-                'test.id IN (WITH RECURSIVE parent AS',
-            ],
-            'changes are invisible to anonymous' => [
-                null,
-                Change::class,
-                'test.id IN (-1)',
-            ],
-            'student can access changes that are his own' => [
-                'student',
-                Change::class,
-                'test.id IN (SELECT `change`.id FROM `change` WHERE `change`.owner_id = \'1003\' OR `change`.creator_id = \'1003\')',
-            ],
+        yield 'country is totally public public class, access everything' => [
+            null,
+            Country::class,
+            '',
+        ];
+        yield 'artist is totally public public class, access everything' => [
+            null,
+            Artist::class,
+            '',
+        ];
+        yield 'institution is totally public public class, access everything' => [
+            null,
+            Institution::class,
+            '',
+        ];
+        yield 'tag is totally public public class, access everything' => [
+            null,
+            Tag::class,
+            '',
+        ];
+        yield 'dating is totally public public class, access everything' => [
+            null,
+            Dating::class,
+            '',
+        ];
+        yield 'users are invisible to anonymous' => [
+            null,
+            User::class,
+            'test.id IN (-1)',
+        ];
+        yield 'users are accessible to any other users' => [
+            'student',
+            User::class,
+            'test.id IN (SELECT',
+        ];
+        yield 'only public cards are accessible to anonymous' => [
+            null,
+            Card::class,
+            'test.id IN (SELECT card.id FROM card WHERE card.visibility IN (\'public\'))',
+        ];
+        yield 'student can access cards that are his own or are public or member' => [
+            'student',
+            Card::class,
+            'test.id IN (SELECT card.id FROM card LEFT JOIN card_collection card_collection ON card_collection.card_id = card.id LEFT JOIN collection_user collection_user ON card_collection.collection_id = collection_user.collection_id WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = \'1003\') OR (card.creator_id = \'1003\') OR (collection_user.user_id = \'1003\'))',
+        ];
+        yield 'collections are invisible to anonymous' => [
+            null,
+            Collection::class,
+            'test.id IN (-1)',
+        ];
+        yield 'student can access collections that are his own or are member' => [
+            'student',
+            Collection::class,
+            'test.id IN (WITH RECURSIVE parent AS',
+        ];
+        yield 'administrator can access collections that are his own or are administrator or member' => [
+            'administrator',
+            Collection::class,
+            'test.id IN (WITH RECURSIVE parent AS',
+        ];
+        yield 'changes are invisible to anonymous' => [
+            null,
+            Change::class,
+            'test.id IN (-1)',
+        ];
+        yield 'student can access changes that are his own' => [
+            'student',
+            Change::class,
+            'test.id IN (SELECT `change`.id FROM `change` WHERE `change`.owner_id = \'1003\' OR `change`.creator_id = \'1003\')',
         ];
     }
 

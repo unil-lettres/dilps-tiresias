@@ -252,28 +252,26 @@ class CardTest extends TestCase
         self::assertSame($next, $card->getVisibility());
     }
 
-    public function providerSetVisibility(): array
+    public function providerSetVisibility(): iterable
     {
-        return [
-            [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, true],
-            [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, true],
-            [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false],
-            [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false],
-        ];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, true];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, true];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false];
+        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false];
     }
 
     public function testSetInstitution(): void

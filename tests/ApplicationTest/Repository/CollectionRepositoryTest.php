@@ -21,15 +21,13 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         $this->repository = _em()->getRepository(Collection::class);
     }
 
-    public function providerGetAccessibleSubQuery(): array
+    public function providerGetAccessibleSubQuery(): iterable
     {
-        return [
-            ['anonymous', []],
-            ['student', [2000, 2001, 2002, 2004, 2005, 2006, 2007, 2008]],
-            ['junior', [2001, 2002, 2004, 2005, 2007]],
-            ['senior', [2001, 2002, 2004, 2005, 2007]],
-            ['administrator', [2001, 2002, 2004, 2005, 2007]],
-        ];
+        yield ['anonymous', []];
+        yield ['student', [2000, 2001, 2002, 2004, 2005, 2006, 2007, 2008]];
+        yield ['junior', [2001, 2002, 2004, 2005, 2007]];
+        yield ['senior', [2001, 2002, 2004, 2005, 2007]];
+        yield ['administrator', [2001, 2002, 2004, 2005, 2007]];
     }
 
     /**
@@ -44,11 +42,9 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         self::assertSame($expected, $actual);
     }
 
-    public function providerGetCopyrights(): array
+    public function providerGetCopyrights(): iterable
     {
-        return [
-            [6000, '© ACME (Only if you ask nicely)'],
-            [6001, ''],
-        ];
+        yield [6000, '© ACME (Only if you ask nicely)'];
+        yield [6001, ''];
     }
 }

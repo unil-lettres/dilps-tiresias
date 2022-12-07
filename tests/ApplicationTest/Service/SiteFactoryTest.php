@@ -18,16 +18,14 @@ class SiteFactoryTest extends TestCase
         self::assertSame($expected, SiteFactory::getSite($input));
     }
 
-    public function provideGetSite(): array
+    public function provideGetSite(): iterable
     {
-        return [
-            'empty default to dilps' => ['', SiteType::DILPS],
-            'default to dilps' => ['unknown string', SiteType::DILPS],
-            'local dilps' => ['dilps.lan', SiteType::DILPS],
-            'production-like dilps' => ['dilps.com', SiteType::DILPS],
-            'local tiresias' => ['tiresias.lan', SiteType::TIRESIAS],
-            'production-like tiresias' => ['tiresias.com', SiteType::TIRESIAS],
-            'staging-like tiresias' => ['www.tiresias-staging.example.com', SiteType::TIRESIAS],
-        ];
+        yield 'empty default to dilps' => ['', SiteType::DILPS];
+        yield 'default to dilps' => ['unknown string', SiteType::DILPS];
+        yield 'local dilps' => ['dilps.lan', SiteType::DILPS];
+        yield 'production-like dilps' => ['dilps.com', SiteType::DILPS];
+        yield 'local tiresias' => ['tiresias.lan', SiteType::TIRESIAS];
+        yield 'production-like tiresias' => ['tiresias.com', SiteType::TIRESIAS];
+        yield 'staging-like tiresias' => ['www.tiresias-staging.example.com', SiteType::TIRESIAS];
     }
 }

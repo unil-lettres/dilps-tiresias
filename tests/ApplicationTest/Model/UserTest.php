@@ -150,27 +150,21 @@ class UserTest extends TestCase
         self::assertSame($newRole, $user2->getRole());
     }
 
-    public function providerSetRole(): array
+    public function providerSetRole(): iterable
     {
-        return [
-            [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role from student to junior'],
-
-            [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_STUDENT, null],
-            [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'student is not allowed to change role from student to junior'],
-
-            [User::ROLE_JUNIOR, User::ROLE_STUDENT, User::ROLE_JUNIOR, null],
-            [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_JUNIOR, null],
-            'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role from junior to senior'],
-            'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role from senior to junior'],
-
-            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
-            [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
-
-            [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null],
-            [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null],
-            [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_ADMINISTRATOR, null],
-            [User::ROLE_ADMINISTRATOR, User::ROLE_ADMINISTRATOR, User::ROLE_STUDENT, null],
-        ];
+        yield [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role from student to junior'];
+        yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_STUDENT, null];
+        yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'student is not allowed to change role from student to junior'];
+        yield [User::ROLE_JUNIOR, User::ROLE_STUDENT, User::ROLE_JUNIOR, null];
+        yield [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_JUNIOR, null];
+        yield 'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role from junior to senior'];
+        yield 'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role from senior to junior'];
+        yield [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null];
+        yield [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null];
+        yield [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null];
+        yield [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null];
+        yield [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_ADMINISTRATOR, null];
+        yield [User::ROLE_ADMINISTRATOR, User::ROLE_ADMINISTRATOR, User::ROLE_STUDENT, null];
     }
 
     public function testSetPassword(): void
