@@ -41,7 +41,7 @@ function getStoreKey(route: ActivatedRouteSnapshot): string {
 
 const routes: Readonly<Record<string, RouteStates>> = {
     '/home': {max: 1, handles: new Map(), handleKeys: []},
-    '/collection/:collectionId': {max: 100, handles: new Map(), handleKeys: []},
+    '/collection/:collectionId': {max: 1, handles: new Map(), handleKeys: []},
     '/my-collection/unclassified': {max: 1, handles: new Map(), handleKeys: []},
     '/my-collection/my-cards': {max: 1, handles: new Map(), handleKeys: []},
     '/my-collection/my-collection': {max: 1, handles: new Map(), handleKeys: []},
@@ -122,16 +122,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
     /** Determines if `curr` route should be reused */
     public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        const ours = Object.keys(routes);
-        const c = getConfiguredUrl(curr);
-        const f = getConfiguredUrl(future);
-
-        // The routes managed by this class should never use the implicit reuse mechanism of Angular,
-        // even when going from /collection/1 to /collection/2. But instead they will always use this class mechanism.
-        if (ours.includes(c) || ours.includes(f)) {
-            return false;
-        }
-
+        // If we want to preserve routes with parameters, add AND on instruction : getResolvedUrl(future) === getResolvedUrl(curr)
         return future.routeConfig === curr.routeConfig;
     }
 
