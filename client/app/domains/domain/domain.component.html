@@ -12,8 +12,9 @@
                 </mat-form-field>
 
                 <natural-select-hierarchic
-                    (selectionChange)="data.item.parent = $event"
+                    [(ngModel)]="data.item.parent"
                     [config]="hierarchicConfig"
+                    [filters]="ancestorsHierarchicFilters"
                     [showIcon]="false"
                     clearLabel="Dissocier"
                     placeholder="Parent"

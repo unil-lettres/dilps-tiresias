@@ -5,13 +5,14 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {getBase64Url} from '../../shared/services/utility';
 import {UserService} from '../../users/services/user.service';
 import {NewsService} from '../services/news.service';
+import {News_news} from '../../shared/generated-types';
 
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
     styleUrls: ['./news.component.scss'],
 })
-export class NewsComponent extends AbstractDetailDirective<NewsService> {
+export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File}> {
     public imageData: string;
 
     public constructor(
@@ -19,7 +20,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService> {
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<NewsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: any,
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: News_news},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

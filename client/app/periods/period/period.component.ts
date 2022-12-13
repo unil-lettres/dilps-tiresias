@@ -6,7 +6,8 @@ import {periodHierarchicConfig} from '../../shared/hierarchic-configurations/Per
 import {UserService} from '../../users/services/user.service';
 import {PeriodService} from '../services/period.service';
 import {formatYearRange} from '../../shared/services/utility';
-import {Literal} from '@ecodev/natural';
+import {HierarchicFiltersConfiguration, Literal} from '@ecodev/natural';
+import {Period_period, PeriodFilter} from '../../shared/generated-types';
 
 @Component({
     selector: 'app-period',
@@ -14,6 +15,7 @@ import {Literal} from '@ecodev/natural';
 })
 export class PeriodComponent extends AbstractDetailDirective<PeriodService> {
     public hierarchicConfig = periodHierarchicConfig;
+    public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<PeriodFilter> = [];
 
     public displayWith(item: Literal): string {
         return item ? item.name + formatYearRange(item.from, item.to) : '';
@@ -24,8 +26,22 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService> {
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<PeriodComponent>,
-        @Inject(MAT_DIALOG_DATA) data: any,
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Period_period},
     ) {
         super(service, alertService, dialogRef, userService, data);
+    }
+
+    protected override postQuery(): void {
+        // Prevent parent choices that would form cyclic hierarchy
+        if (this.data.item.id) {
+            this.ancestorsHierarchicFilters = [
+                {
+                    service: PeriodService,
+                    filter: {
+                        groups: [{conditions: [{custom: {excludeSelfAndDescendants: {value: this.data.item.id}}}]}],
+                    },
+                },
+            ];
+        }
     }
 }

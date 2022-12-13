@@ -5,7 +5,9 @@ import {InstitutionService} from '../../institutions/services/institution.servic
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {
+    Collection_collection,
     Collection_collection_institution,
+    CollectionFilter,
     CollectionVisibility,
     UpdateCollection_updateCollection,
     UpdateCollection_updateCollection_institution,
@@ -17,6 +19,8 @@ import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
 import {MatSliderChange} from '@angular/material/slider';
 import {Visibilities} from '../../card/card.component';
+import {DomainService} from '../../domains/services/domain.service';
+import {HierarchicFiltersConfiguration} from '@ecodev/natural';
 
 @Component({
     selector: 'app-collection',
@@ -45,6 +49,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     public institution: Collection_collection_institution | UpdateCollection_updateCollection_institution | null = null;
 
     public hierarchicConfig = collectionsHierarchicConfig;
+    public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
 
     public showVisibility = true;
 
@@ -54,7 +59,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         public readonly userService: UserService,
         alertService: AlertService,
         dialogRef: MatDialogRef<CollectionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: any,
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collection_collection},
     ) {
         super(collectionService, alertService, dialogRef, userService, data);
     }
@@ -93,13 +98,25 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         return item && typeof item !== 'string' ? item.login : '';
     }
 
-    protected postQuery(): void {
+    protected override postQuery(): void {
         // Init visibility
         this.visibility = +findKey(this.visibilities, s => s.value === this.data.item.visibility);
 
         this.institution = this.data.item.institution;
 
         this.showVisibility = this.computeShowVisibility();
+
+        // Prevent parent choices that would form cyclic hierarchy
+        if (this.data.item.id) {
+            this.ancestorsHierarchicFilters = [
+                {
+                    service: DomainService,
+                    filter: {
+                        groups: [{conditions: [{custom: {excludeSelfAndDescendants: {value: this.data.item.id}}}]}],
+                    },
+                },
+            ];
+        }
     }
 
     protected postUpdate(model: UpdateCollection_updateCollection): void {

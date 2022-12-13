@@ -47,4 +47,16 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         yield [6000, '© ACME (Only if you ask nicely)'];
         yield [6001, ''];
     }
+
+    public function testGetSelfAndDescendantsSubQuery(): void
+    {
+        $expected = [
+            ['id' => 2000],
+            ['id' => 2006],
+        ];
+
+        $sql = $this->repository->getSelfAndDescendantsSubQuery(2000);
+        $actual = _em()->getConnection()->fetchAllAssociative($sql);
+        self::assertSame($expected, $actual);
+    }
 }

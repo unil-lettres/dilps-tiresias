@@ -7,9 +7,8 @@ namespace Application\Repository;
 use Application\Model\Period;
 
 /**
- * @extends AbstractRepository<Period>
+ * @extends AbstractHasParentRepository<Period>
  */
-class PeriodRepository extends AbstractRepository
+class PeriodRepository extends AbstractHasParentRepository
 {
-    use HasParent;
 }

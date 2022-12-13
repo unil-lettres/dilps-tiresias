@@ -21,6 +21,9 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
  * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
+ * @API\Filters({
+ *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
+ * })
  */
 class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {

@@ -22,6 +22,10 @@ export const tagQuery = gql`
         tag(id: $id) {
             id
             name
+            parent {
+                id
+                name
+            }
             parentHierarchy {
                 id
                 name

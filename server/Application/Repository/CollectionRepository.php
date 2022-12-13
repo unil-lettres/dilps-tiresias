@@ -9,9 +9,9 @@ use Application\Model\Collection;
 use Application\Model\User;
 
 /**
- * @extends AbstractRepository<Collection>
+ * @extends AbstractHasParentRepository<Collection>
  */
-class CollectionRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
+class CollectionRepository extends AbstractHasParentRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
     /**
      * Returns pure SQL to get ID of all collections that are accessible to given user.

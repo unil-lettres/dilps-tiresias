@@ -9,6 +9,7 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {
     UpdateUser_updateUser,
     UpdateUser_updateUser_institution,
+    User_user,
     User_user_institution,
     UserRole,
     UserType,
@@ -32,7 +33,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     selector: 'app-profile',
     templateUrl: './user.component.html',
 })
-export class UserComponent extends AbstractDetailDirective<UserService> {
+export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
     public roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
@@ -50,7 +51,7 @@ export class UserComponent extends AbstractDetailDirective<UserService> {
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
         public readonly collectionService: CollectionService,
-        @Inject(MAT_DIALOG_DATA) data: any,
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: User_user},
         naturalEnumService: NaturalEnumService,
     ) {
         super(service, alertService, dialogRef, userService, data);

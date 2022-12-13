@@ -7,9 +7,8 @@ namespace Application\Repository;
 use Application\Model\Tag;
 
 /**
- * @extends AbstractRepository<Tag>
+ * @extends AbstractHasParentRepository<Tag>
  */
-class TagRepository extends AbstractRepository
+class TagRepository extends AbstractHasParentRepository
 {
-    use HasParent;
 }

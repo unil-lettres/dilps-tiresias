@@ -44,6 +44,7 @@
                 <natural-select-hierarchic
                     [(ngModel)]="data.item.parent"
                     [config]="hierarchicConfig"
+                    [filters]="ancestorsHierarchicFilters"
                     [showIcon]="false"
                     clearLabel="Dissocier de la collection parente"
                     placeholder="Collection parente"

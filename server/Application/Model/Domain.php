@@ -12,11 +12,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
+use GraphQL\Doctrine\Annotation as API;
 
 /**
  * A domain.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\DomainRepository")
+ * @API\Filters({
+ *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
+ * })
  */
 class Domain extends AbstractModel implements HasParentInterface, HasSiteInterface
 {

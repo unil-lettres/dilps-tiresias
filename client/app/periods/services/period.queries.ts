@@ -26,6 +26,10 @@ export const periodQuery = gql`
             from
             to
             hierarchicName
+            parent {
+                id
+                name
+            }
             parentHierarchy {
                 id
                 name

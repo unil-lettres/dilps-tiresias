@@ -27,4 +27,15 @@ class DomainRepositoryTest extends AbstractRepositoryTest
 
         self::assertSame($expected, $actual);
     }
+
+    public function testGetSelfAndDescendantsSubQuery(): void
+    {
+        $expected = [
+            ['id' => 9000],
+        ];
+
+        $sql = $this->repository->getSelfAndDescendantsSubQuery(9000);
+        $actual = _em()->getConnection()->fetchAllAssociative($sql);
+        self::assertSame($expected, $actual);
+    }
 }

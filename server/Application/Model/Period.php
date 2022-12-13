@@ -20,6 +20,9 @@ use GraphQL\Doctrine\Annotation as API;
  * An exact period in time with a name and expressed in years.
  *
  * @ORM\Entity(repositoryClass="Application\Repository\PeriodRepository")
+ * @API\Filters({
+ *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
+ * })
  */
 class Period extends AbstractModel implements HasParentInterface, HasSiteInterface
 {

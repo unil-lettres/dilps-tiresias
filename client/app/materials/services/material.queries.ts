@@ -23,6 +23,10 @@ export const materialQuery = gql`
             id
             name
             hierarchicName
+            parent {
+                id
+                name
+            }
             parentHierarchy {
                 id
                 name

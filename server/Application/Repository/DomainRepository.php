@@ -7,9 +7,8 @@ namespace Application\Repository;
 use Application\Model\Domain;
 
 /**
- * @extends AbstractRepository<Domain>
+ * @extends AbstractHasParentRepository<Domain>
  */
-class DomainRepository extends AbstractRepository
+class DomainRepository extends AbstractHasParentRepository
 {
-    use HasParent;
 }

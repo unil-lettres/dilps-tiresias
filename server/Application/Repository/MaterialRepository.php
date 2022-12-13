@@ -7,9 +7,8 @@ namespace Application\Repository;
 use Application\Model\Material;
 
 /**
- * @extends AbstractRepository<Material>
+ * @extends AbstractHasParentRepository<Material>
  */
-class MaterialRepository extends AbstractRepository
+class MaterialRepository extends AbstractHasParentRepository
 {
-    use HasParent;
 }

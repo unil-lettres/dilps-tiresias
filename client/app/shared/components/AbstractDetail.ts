@@ -3,8 +3,18 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'lodash-es';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
-import {ExtractTupdate, Literal, NaturalAbstractModelService, PaginatedData, QueryVariables} from '@ecodev/natural';
+import {
+    ExtractTone,
+    ExtractTupdate,
+    Literal,
+    NaturalAbstractModelService,
+    PaginatedData,
+    QueryVariables,
+    WithId,
+} from '@ecodev/natural';
 import {Viewer_viewer} from '../generated-types';
+
+type Data<TService, Extra> = {item: WithId<ExtractTone<TService>> & Extra};
 
 @Directive()
 export class AbstractDetailDirective<
@@ -20,20 +30,21 @@ export class AbstractDetailDirective<
         unknown,
         any
     >,
+    Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit
 {
     public user: Viewer_viewer | null = null;
 
-    public data: any = {
+    public data: Data<TService, Extra> = {
         item: {},
-    };
+    } as Data<TService, Extra>;
 
     public constructor(
         public readonly service: TService,
         private readonly alertService: AlertService,
         public readonly dialogRef: MatDialogRef<unknown>,
         public readonly userService: UserService,
-        data: any,
+        data: Data<TService, Extra> | undefined,
     ) {
         this.data = merge({item: this.service.getConsolidatedForClient()}, data);
     }

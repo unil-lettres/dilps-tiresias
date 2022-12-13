@@ -22,6 +22,10 @@ export const domainQuery = gql`
             id
             name
             hierarchicName
+            parent {
+                id
+                name
+            }
             parentHierarchy {
                 id
                 name
