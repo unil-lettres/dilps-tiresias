@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
-use Application\Model\Card;
 use Application\Model\Collection;
 use InvalidArgumentException;
 
@@ -43,6 +42,16 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $grandChild->setParent($child);
 
         self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('Parent object is invalid because it would create a cyclic hierarchy');
         $parent->setParent($grandChild);
+    }
+
+    public function testCannotCreateCyclicHierarchyAsMyOwnParent(): void
+    {
+        $collection = new Collection();
+
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage('An object cannot be his own parent');
+        $collection->setParent($collection);
     }
 }

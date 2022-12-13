@@ -71,6 +71,10 @@ trait HasParent
 
     private function assertNotCyclic(HasParentInterface $parentCandidate): void
     {
+        if ($parentCandidate === $this) {
+            throw new InvalidArgumentException('An object cannot be his own parent');
+        }
+
         $allChildren = $this->getAllChildren();
 
         while ($parentCandidate) {
