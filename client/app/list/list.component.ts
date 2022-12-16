@@ -173,7 +173,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Pagination by default when none is asked
      */
     protected defaultPagination: Required<PaginationInput> = {
-        pageSize: 15,
+        pageSize: 25,
         pageIndex: 0,
         offset: null,
     };

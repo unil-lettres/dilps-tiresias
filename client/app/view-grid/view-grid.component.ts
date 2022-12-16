@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
@@ -92,7 +92,9 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         },
     };
 
-    public constructor(private readonly router: Router) {
+    private lastCollectionId: number = 0;
+
+    public constructor(private readonly router: Router, private readonly route: ActivatedRoute) {
         super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
     }
@@ -125,8 +127,12 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         // Restore scroll when component is retrieved from reuse strategy
         this.router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe(event => {
             if (event instanceof NavigationEnd) {
+                const restoreScroll = this.lastCollectionId === this.route.snapshot?.data?.collection?.id;
+                this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
                 setTimeout(() => {
-                    this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                    if (restoreScroll) {
+                        this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                    }
                 }, 200);
             }
         });
