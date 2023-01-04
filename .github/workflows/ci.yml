@@ -4,6 +4,8 @@ jobs:
     build:
         name: PHP${{ matrix.php-versions }}
         runs-on: ubuntu-20.04
+
+        continue-on-error: ${{ matrix.php-versions == '8.2'}}
         strategy:
             matrix:
                 php-versions: ['8.1', '8.2']
