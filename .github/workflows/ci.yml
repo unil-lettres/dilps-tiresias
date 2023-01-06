@@ -5,13 +5,14 @@ jobs:
         name: PHP${{ matrix.php-versions }}
         runs-on: ubuntu-20.04
 
-        continue-on-error: ${{ matrix.php-versions == '8.2'}}
         strategy:
             matrix:
                 php-versions: ['8.1', '8.2']
 
         env:
             MYSQL_HOST: '127.0.0.1'
+            # Following envar needed until PHP8.2 is fully supported by PHP-CS-Fixer
+            PHP_CS_FIXER_IGNORE_ENV: true
 
         services:
             mariadb:
