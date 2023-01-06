@@ -53,7 +53,7 @@
         "laminas/laminas-config-aggregator": "^1.11",
         "laminas/laminas-diactoros": "^2.21",
         "laminas/laminas-permissions-acl": "^2.12",
-        "laminas/laminas-servicemanager": "^3.19",
+        "laminas/laminas-servicemanager": "3.19",
         "mezzio/mezzio": "^3.13",
         "mezzio/mezzio-fastroute": "^3.7",
         "mezzio/mezzio-helpers": "^5.11",
