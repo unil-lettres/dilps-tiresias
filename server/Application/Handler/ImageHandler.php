@@ -46,7 +46,11 @@ class ImageHandler extends AbstractHandler
         $type = mime_content_type($path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $filename = $id . '.' . $extension;
-        $response = new Response($resource, 200, ['content-type' => $type, 'Content-Disposition' => 'attachment; filename=' . $filename]);
+        $response = new Response($resource, 200, [
+            'content-type' => $type,
+            'content-disposition' => 'attachment; filename=' . $filename,
+            'cache-control' => 'max-age=' . (24 * 60 * 60), // 24 hours cache
+        ]);
 
         return $response;
     }
