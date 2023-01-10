@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Api\Input\Operator;
 
-use Application\ORM\Query\NativeIn;
 use Application\Repository\AbstractHasParentRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
+use Ecodev\Felix\ORM\Query\NativeIn;
 use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Type\Definition\LeafType;
 
