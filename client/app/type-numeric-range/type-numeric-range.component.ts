@@ -25,7 +25,7 @@ export interface TypeNumericRangeConfiguration {
     step?: number | null;
 }
 
-export class InvalidWithValueStateMatcher implements ErrorStateMatcher {
+class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     public isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         return (form && form.invalid && (form.value.to || form.value.from)) || (control && control.invalid);
     }
