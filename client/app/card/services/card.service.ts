@@ -238,7 +238,7 @@ export class CardService extends AbstractContextualizedService<
         return this.createWithoutRefetch(object);
     }
 
-    protected getPartialVariablesForCreation(object: Literal): Partial<CreateCardVariables> {
+    protected getPartialVariablesForCreation(): Partial<CreateCardVariables> {
         const result = this.collectionIdForCreation ? {collection: this.collectionIdForCreation} : {};
         this.collectionIdForCreation = null;
 
@@ -268,7 +268,7 @@ export class CardService extends AbstractContextualizedService<
         const variables = merge(
             {},
             {input: this.getInput(object)},
-            this.getPartialVariablesForCreation(object),
+            this.getPartialVariablesForCreation(),
         ) as CreateCardVariables;
 
         return this.apollo
@@ -294,10 +294,7 @@ export class CardService extends AbstractContextualizedService<
             .pipe(map(result => result.data.collectionCopyrights));
     }
 
-    public updateNow(
-        object: WithId<CardPartialInput>,
-        resetRouteReuse: boolean = true,
-    ): Observable<UpdateCard['updateCard']> {
+    public updateNow(object: WithId<CardPartialInput>, resetRouteReuse = true): Observable<UpdateCard['updateCard']> {
         return super.updateNow(object).pipe(
             map(r => {
                 if (resetRouteReuse) {
@@ -308,7 +305,7 @@ export class CardService extends AbstractContextualizedService<
         );
     }
 
-    public delete(objects: {id: string}[], resetRouteReuse: boolean = true): Observable<DeleteCards['deleteCards']> {
+    public delete(objects: {id: string}[], resetRouteReuse = true): Observable<DeleteCards['deleteCards']> {
         return super.delete(objects).pipe(
             map(r => {
                 if (resetRouteReuse) {

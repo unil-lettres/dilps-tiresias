@@ -10,7 +10,7 @@ import {ConfirmComponent} from './confirm.component';
 export class AlertService {
     public constructor(private readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) {}
 
-    public info(message: string, duration: number = 1500): MatSnackBarRef<SimpleSnackBar> {
+    public info(message: string, duration = 1500): MatSnackBarRef<SimpleSnackBar> {
         return this.snackBar.open(message, null, {
             duration: duration,
             verticalPosition: 'top',
@@ -18,7 +18,7 @@ export class AlertService {
         });
     }
 
-    public error(message: string, duration: number = 1500): MatSnackBarRef<SimpleSnackBar> {
+    public error(message: string, duration = 1500): MatSnackBarRef<SimpleSnackBar> {
         return this.snackBar.open(message, null, {
             duration: duration,
             panelClass: ['snackbar-error'],
@@ -27,12 +27,7 @@ export class AlertService {
         });
     }
 
-    public confirm(
-        title: string,
-        message: string,
-        confirmText: string,
-        cancelText: string = 'Annuler',
-    ): Observable<any> {
+    public confirm(title: string, message: string, confirmText: string, cancelText = 'Annuler'): Observable<any> {
         const dialog = this.dialog.open(ConfirmComponent, {
             data: {
                 title: title,

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -387,7 +387,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         this.statisticService.recordDetail();
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(): void {
         this.initCard();
     }
 
@@ -460,7 +460,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     }
 
     public updateVisibility(ev: MatSliderChange): void {
-        // @ts-ignore
         this.model.visibility = this.visibilities[ev.value].value;
     }
 

@@ -88,7 +88,9 @@ export class AbstractDetailDirective<
             });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected postQuery(): void {}
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
     protected postUpdate(model: ExtractTupdate<TService>): void {}
 }

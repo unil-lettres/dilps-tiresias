@@ -101,9 +101,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                             id: user.id,
                             termsAgreement: formatIsoDateTime(new Date()),
                         })
-                        .subscribe(u => {
-                            this.redirect();
-                        });
+                        .subscribe(() => this.redirect());
                 } else {
                     this.userService.logout();
                 }

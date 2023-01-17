@@ -82,8 +82,6 @@ export class StatisticComponent {
     };
     public chartUpdated = false;
 
-    public constructor() {}
-
     public update(chart: SimpleChart): void {
         this.chartOptions = {
             chart: {

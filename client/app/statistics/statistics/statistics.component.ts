@@ -1,10 +1,9 @@
 import {Apollo} from 'apollo-angular';
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {StatisticService} from '../services/statistic.service';
 import {Literal, NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {
     ExtraStatistics,
-    Site,
     SortingOrder,
     StatisticFilter,
     StatisticSortingField,
@@ -14,7 +13,6 @@ import {
 import {StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
-import {SITE} from '../../app.config';
 import {takeUntil} from 'rxjs/operators';
 
 function formatDate(date: Date): string {
@@ -106,7 +104,6 @@ export class StatisticsComponent extends NaturalAbstractController {
         private readonly apollo: Apollo,
         statisticService: StatisticService,
         public readonly userService: UserService,
-        @Inject(SITE) site: Site,
     ) {
         super();
 

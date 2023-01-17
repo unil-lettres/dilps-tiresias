@@ -4,6 +4,4 @@ import {Component} from '@angular/core';
     selector: 'app-empty',
     template: '',
 })
-export class EmptyComponent {
-    public constructor() {}
-}
+export class EmptyComponent {}

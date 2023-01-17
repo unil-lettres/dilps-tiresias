@@ -65,7 +65,6 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     }
 
     public updateVisibility(ev: MatSliderChange): void {
-        // @ts-ignore
         this.data.item.visibility = this.visibilities[ev.value].value;
     }
 

@@ -10,8 +10,6 @@ export interface FakeCollection {
     providedIn: 'root',
 })
 export class FakeCollectionResolver implements Resolve<FakeCollection> {
-    public constructor() {}
-
     /**
      * Converts ID into fake collection
      * Cause route.data.subscribe to emits to simplify ListComponent

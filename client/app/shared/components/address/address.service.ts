@@ -32,9 +32,7 @@ export class AddressService {
         country: 'short_name',
     };
 
-    public constructor() {}
-
-    public buildAddress(place: PlaceModel, withLatLon: boolean = true): Address {
+    public buildAddress(place: PlaceModel, withLatLon = true): Address {
         const tmpGAddress: Record<string, string> = mapValues(this.config, () => '');
 
         place.address_components.forEach(addressComponent => {

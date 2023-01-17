@@ -417,7 +417,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                 /**
                  * Pick attributes with values that are objects, numbers, non-empty array, non-empty strings
                  */
-                const changeAttributes = pickBy(model, (value, key) => {
+                const changeAttributes = pickBy(model, value => {
                     return (
                         isObject(value) ||
                         isNumber(value) ||

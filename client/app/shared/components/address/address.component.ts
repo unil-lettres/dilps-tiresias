@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
@@ -259,7 +259,7 @@ export class AddressComponent implements OnInit, OnChanges {
         });
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(): void {
         if (this.model) {
             this.latitude = +this.model.latitude;
             this.longitude = +this.model.longitude;
