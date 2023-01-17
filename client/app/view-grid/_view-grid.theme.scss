@@ -10,16 +10,14 @@
         .natural-gallery-js {
             .button {
                 color: white;
-                background: black !important;
+                background-color: rgba(0, 0, 0, 0.5) !important;
                 border-top: 1px solid #4c4747 !important;
-                opacity: 0.8;
             }
 
             .button:hover {
                 color: white;
-                background: black !important;
+                background-color: rgba(0, 0, 0, 1) !important;
                 border-top: 1px solid #4c4747 !important;
-                opacity: 1;
             }
         }
     }
