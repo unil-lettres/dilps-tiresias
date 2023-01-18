@@ -139,7 +139,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public getPartialVariablesForAll(): Observable<Partial<ChangesVariables>> {
+    public override getPartialVariablesForAll(): Observable<Partial<ChangesVariables>> {
         return super.getPartialVariablesForAll().pipe(
             map(partialVariables => {
                 const join = {

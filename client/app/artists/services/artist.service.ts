@@ -47,11 +47,11 @@ export class ArtistService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient(): ArtistInput {
+    public override getDefaultForClient(): ArtistInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): ArtistInput {
+    public override getDefaultForServer(): ArtistInput {
         return {
             name: '',
             site: this.site,

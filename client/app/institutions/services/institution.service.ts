@@ -53,11 +53,11 @@ export class InstitutionService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient(): InstitutionInput {
+    public override getDefaultForClient(): InstitutionInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): InstitutionInput {
+    public override getDefaultForServer(): InstitutionInput {
         return {
             site: this.site,
             name: '',

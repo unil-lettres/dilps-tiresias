@@ -10,7 +10,7 @@ import {UserComponent} from '../user/user.component';
     styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent extends AbstractList<UserService> {
-    public displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
+    public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
     public constructor(service: UserService, injector: Injector) {
         super(service, UserComponent, injector);

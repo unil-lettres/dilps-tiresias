@@ -8,7 +8,7 @@ import {ChangeService} from '../services/change.service';
     styleUrls: ['./changes.component.scss'],
 })
 export class ChangesComponent extends AbstractList<ChangeService> {
-    public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
+    public override displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
     public constructor(service: ChangeService, injector: Injector) {
         super(service, null, injector);

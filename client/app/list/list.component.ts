@@ -162,7 +162,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Sorting applied when none is asked
      */
-    protected defaultSorting: Array<Sorting> = [
+    protected override defaultSorting: Array<Sorting> = [
         {
             field: CardSortingField.creationDate,
             order: SortingOrder.DESC,
@@ -172,7 +172,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Pagination by default when none is asked
      */
-    protected defaultPagination: Required<PaginationInput> = {
+    protected override defaultPagination: Required<PaginationInput> = {
         pageSize: 25,
         pageIndex: 0,
         offset: null,
@@ -194,7 +194,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.naturalSearchFacets = facetService.getFacets();
     }
 
-    public ngOnInit(): void {
+    public override ngOnInit(): void {
         super.ngOnInit();
 
         this.showLabels = sessionStorage.getItem('showLabels') !== 'false';
@@ -271,7 +271,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * On pagination request, dont persist for gallery as it's meaningless
      */
-    public pagination(event: PaginationInput | PageEvent, defer?: Promise<unknown>): void {
+    public override pagination(event: PaginationInput | PageEvent, defer?: Promise<unknown>): void {
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
             super.pagination(event, defer);
@@ -477,7 +477,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.getViewComponent().unselectAll();
     }
 
-    public search(naturalSearchSelections: NaturalSearchSelections): void {
+    public override search(naturalSearchSelections: NaturalSearchSelections): void {
         super.search(naturalSearchSelections);
         this.statisticService.recordSearch();
     }
@@ -512,7 +512,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Override to never use cache
      */
-    protected getDataObservable(): Observable<Cards['cards']> {
+    protected override getDataObservable(): Observable<Cards['cards']> {
         return this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntil(this.ngUnsubscribe));
     }
 

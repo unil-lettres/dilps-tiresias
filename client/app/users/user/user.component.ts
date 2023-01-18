@@ -76,14 +76,14 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         return this.data.item.type === UserType.aai;
     }
 
-    protected postQuery(): void {
+    protected override postQuery(): void {
         this.institution = this.data.item.institution;
         this.userService.getUserRolesAvailable(this.data.item).subscribe(userRoles => {
             this.userRolesAvailable = userRoles;
         });
     }
 
-    protected postUpdate(model: UpdateUser_updateUser): void {
+    protected override postUpdate(model: UpdateUser_updateUser): void {
         this.institution = model.institution;
     }
 

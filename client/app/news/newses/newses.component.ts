@@ -9,7 +9,7 @@ import {NewsService} from '../services/news.service';
     styleUrls: ['./newses.component.scss'],
 })
 export class NewsesComponent extends AbstractList<NewsService> {
-    public displayedColumns = ['isActive', 'image', 'name', 'url'];
+    public override displayedColumns = ['isActive', 'image', 'name', 'url'];
 
     public constructor(service: NewsService, injector: Injector) {
         super(service, NewsComponent, injector);

@@ -9,7 +9,7 @@ import {InstitutionService} from '../services/institution.service';
     styleUrls: ['./institutions.component.scss'],
 })
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
-    public displayedColumns = ['name', 'locality'];
+    public override displayedColumns = ['name', 'locality'];
 
     public constructor(service: InstitutionService, injector: Injector) {
         super(service, InstitutionComponent, injector);

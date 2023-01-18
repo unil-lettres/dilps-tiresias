@@ -86,11 +86,11 @@ export class UserService
         );
     }
 
-    public getDefaultForClient(): UserInput {
+    public override getDefaultForClient(): UserInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): UserInput {
+    public override getDefaultForServer(): UserInput {
         return {
             site: this.site,
             login: '',

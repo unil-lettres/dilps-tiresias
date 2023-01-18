@@ -27,7 +27,7 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         super();
     }
 
-    public ngOnDestroy(): void {
+    public override ngOnDestroy(): void {
         this.routeParamsSub.unsubscribe();
         this.formChangeSub.unsubscribe();
     }

@@ -56,7 +56,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     public constructor(
         public readonly institutionService: InstitutionService,
         public readonly collectionService: CollectionService,
-        public readonly userService: UserService,
+        userService: UserService,
         alertService: AlertService,
         dialogRef: MatDialogRef<CollectionComponent>,
         @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collection_collection},
@@ -118,7 +118,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
     }
 
-    protected postUpdate(model: UpdateCollection_updateCollection): void {
+    protected override postUpdate(model: UpdateCollection_updateCollection): void {
         this.institution = model.institution;
     }
 }

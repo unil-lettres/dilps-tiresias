@@ -47,11 +47,11 @@ export class PeriodService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient(): PeriodInput {
+    public override getDefaultForClient(): PeriodInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): PeriodInput {
+    public override getDefaultForServer(): PeriodInput {
         return {
             name: '',
             parent: null,

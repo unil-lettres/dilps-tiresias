@@ -48,11 +48,11 @@ export class NewsService extends AbstractContextualizedService<
         );
     }
 
-    public getDefaultForClient(): NewsInput {
+    public override getDefaultForClient(): NewsInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): NewsInput {
+    public override getDefaultForServer(): NewsInput {
         return {
             name: '',
             description: '',
@@ -63,7 +63,7 @@ export class NewsService extends AbstractContextualizedService<
         };
     }
 
-    public getInput(object: Literal): NewsInput | NewsPartialInput {
+    public override getInput(object: Literal): NewsInput | NewsPartialInput {
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server

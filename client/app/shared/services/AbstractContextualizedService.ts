@@ -27,12 +27,12 @@ export class AbstractContextualizedService<
     public constructor(
         apollo: Apollo,
         naturalDebounceService: NaturalDebounceService,
-        protected readonly name: string,
-        protected oneQuery: DocumentNode | null,
-        protected readonly allQuery: DocumentNode | null,
-        protected readonly createMutation: DocumentNode | null,
-        protected readonly updateMutation: DocumentNode | null,
-        protected readonly deleteMutation: DocumentNode | null,
+        name: string,
+        oneQuery: DocumentNode | null,
+        allQuery: DocumentNode | null,
+        createMutation: DocumentNode | null,
+        updateMutation: DocumentNode | null,
+        deleteMutation: DocumentNode | null,
         public readonly site: Site,
     ) {
         super(apollo, naturalDebounceService, name, oneQuery, allQuery, createMutation, updateMutation, deleteMutation);
@@ -43,7 +43,7 @@ export class AbstractContextualizedService<
      *
      * This is typically a site or state ID, but it could be something else to further filter the query
      */
-    public getPartialVariablesForAll(): Observable<Partial<Vall>> {
+    public override getPartialVariablesForAll(): Observable<Partial<Vall>> {
         if (this.site) {
             return of({filter: {groups: [{conditions: [{site: {in: {values: [this.site]}}}]}]}} as any); // todo : why as any ?
         }

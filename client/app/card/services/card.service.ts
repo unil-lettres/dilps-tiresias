@@ -121,11 +121,11 @@ export class CardService extends AbstractContextualizedService<
         return merge({}, card, fields);
     }
 
-    public getDefaultForClient(): CardInput {
+    public override getDefaultForClient(): CardInput {
         return this.getDefaultForServer();
     }
 
-    public getDefaultForServer(): CardInput {
+    public override getDefaultForServer(): CardInput {
         return {
             code: '',
             site: this.site,
@@ -213,7 +213,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public getInput(object: Literal): CardInput | CardPartialInput {
+    public override getInput(object: Literal): CardInput | CardPartialInput {
         const input = super.getInput(object);
 
         // If file is undefined or null, prevent to send attribute to server
@@ -225,7 +225,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     // In Card specific case, don't context lists
-    public getPartialVariablesForAll(): Observable<Partial<CardsVariables>> {
+    public override getPartialVariablesForAll(): Observable<Partial<CardsVariables>> {
         return of({});
     }
 
@@ -238,7 +238,7 @@ export class CardService extends AbstractContextualizedService<
         return this.createWithoutRefetch(object);
     }
 
-    protected getPartialVariablesForCreation(): Partial<CreateCardVariables> {
+    protected override getPartialVariablesForCreation(): Partial<CreateCardVariables> {
         const result = this.collectionIdForCreation ? {collection: this.collectionIdForCreation} : {};
         this.collectionIdForCreation = null;
 
@@ -294,7 +294,10 @@ export class CardService extends AbstractContextualizedService<
             .pipe(map(result => result.data.collectionCopyrights));
     }
 
-    public updateNow(object: WithId<CardPartialInput>, resetRouteReuse = true): Observable<UpdateCard['updateCard']> {
+    public override updateNow(
+        object: WithId<CardPartialInput>,
+        resetRouteReuse = true,
+    ): Observable<UpdateCard['updateCard']> {
         return super.updateNow(object).pipe(
             map(r => {
                 if (resetRouteReuse) {
@@ -305,7 +308,7 @@ export class CardService extends AbstractContextualizedService<
         );
     }
 
-    public delete(objects: {id: string}[], resetRouteReuse = true): Observable<DeleteCards['deleteCards']> {
+    public override delete(objects: {id: string}[], resetRouteReuse = true): Observable<DeleteCards['deleteCards']> {
         return super.delete(objects).pipe(
             map(r => {
                 if (resetRouteReuse) {
