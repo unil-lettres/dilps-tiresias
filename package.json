@@ -10,7 +10,7 @@
         "prod": "yarn codegen && yarn set-env --configuration=production && yarn clean-env && ng build --configuration=production",
         "staging": "yarn codegen && yarn set-env --configuration=staging && yarn clean-env && ng build --configuration=staging",
         "test": "yarn codegen && ng test",
-        "lint": "ng lint",
+        "lint": "ng lint --max-warnings 0",
         "e2e": "playwright test",
         "codegen": "./bin/dump-schema && apollo client:codegen --suppressDeprecationWarning -c apollo.config.js --passthroughCustomScalars --customScalarsPrefix=App --outputFlat --target typescript client/app/shared/generated-types.ts",
         "set-env": "ts-node scripts/setenv.ts",
