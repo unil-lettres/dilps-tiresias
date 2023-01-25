@@ -8,9 +8,9 @@ use Application\Traits\HasImage;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Application\Traits\HasSorting;
-use Application\Traits\HasUrl;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
+use Ecodev\Felix\Model\Traits\HasUrl;
 
 /**
  * A news.

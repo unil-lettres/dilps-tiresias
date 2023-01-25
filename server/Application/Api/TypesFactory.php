@@ -37,7 +37,7 @@ class TypesFactory
             \Application\Api\Scalar\LoginType::class,
             \Ecodev\Felix\Api\Scalar\EmailType::class,
             \Ecodev\Felix\Api\Scalar\ColorType::class,
-            \Application\Api\Scalar\UrlType::class,
+            \Ecodev\Felix\Api\Scalar\UrlType::class,
             \GraphQL\Upload\UploadType::class,
             \Ecodev\Felix\Api\Scalar\ChronosType::class,
         ];

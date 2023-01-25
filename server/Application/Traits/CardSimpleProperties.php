@@ -6,6 +6,7 @@ namespace Application\Traits;
 
 use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Model\Traits\HasUrl;
 
 /**
  * Trait for "simple" properties of an card.
