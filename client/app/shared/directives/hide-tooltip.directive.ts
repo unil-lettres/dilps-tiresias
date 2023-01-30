@@ -1,5 +1,5 @@
 import {Directive, Injectable, OnDestroy, OnInit} from '@angular/core';
-import {MatTooltip} from '@angular/material/tooltip';
+import {MatLegacyTooltip as MatTooltip} from '@angular/material/legacy-tooltip';
 import {NavigationStart, Router} from '@angular/router';
 import {filter} from 'rxjs';
 
