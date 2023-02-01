@@ -27,8 +27,8 @@
 @use '../app/shared/components/thesaurus/thesaurus.theme';
 
 // Include material core (only once !)
-@include mat.all-legacy-component-typographies(typography.$custom-typography-gt-sm);
-@include mat.legacy-core();
+@include mat.all-component-typographies(typography.$custom-typography-gt-sm);
+@include mat.core();
 
 // Include components themes
 @mixin components-theme($theme) {

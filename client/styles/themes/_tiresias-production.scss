@@ -53,7 +53,7 @@ $warn: mat.define-palette(mat.$red-palette);
         )
     );
     color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
-    @include mat.all-legacy-component-colors($theme-light);
+    @include mat.all-component-colors($theme-light);
     @include components.components-theme($theme-light);
 }
 
@@ -68,6 +68,6 @@ $warn: mat.define-palette(mat.$red-palette);
         )
     );
     color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
-    @include mat.all-legacy-component-colors($theme-dark);
+    @include mat.all-component-colors($theme-dark);
     @include components.components-theme($theme-dark);
 }

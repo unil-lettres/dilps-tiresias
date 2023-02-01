@@ -60,14 +60,15 @@
         }
 
         natural-select .mat-form-field-appearance-fill.mat-form-field-disabled {
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
             .mat-form-field-flex {
                 background-color: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.1, 0.04));
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
             .mat-form-field-label {
                 color: $label-color;
             }
-
+            /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
             .mat-form-field-underline::before {
                 background-color: mat.get-color-from-palette($fg, divider, if($is-dark-theme, 0.5, 0.42)) !important;
             }

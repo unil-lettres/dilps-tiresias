@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {MatLegacyAutocompleteTrigger as MatAutocompleteTrigger} from '@angular/material/legacy-autocomplete';
-import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from '@angular/material/legacy-dialog';
+import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
     HierarchicDialogResult,
@@ -19,7 +19,7 @@ import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
-import {MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent} from '@angular/material/legacy-autocomplete';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 export interface ThesaurusModel {
     name: string;

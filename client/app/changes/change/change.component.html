@@ -51,7 +51,7 @@
     <div *ngIf="loaded" class="test" fxFlex fxLayout="row">
         <!-- Original -->
         <div *ngIf="!original" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <div class="mat-display-1">Nouvelle fiche</div>
+            <div class="mat-headline-4">Nouvelle fiche</div>
         </div>
         <div *ngIf="original" fxFlex fxLayout="column">
             <app-card [fetchedModel]="original" fxFlex title="Original"></app-card>
@@ -59,7 +59,7 @@
 
         <!-- Suggestion -->
         <div *ngIf="!suggestionInput" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <div class="mat-display-1">Suppression de la fiche</div>
+            <div class="mat-headline-4">Suppression de la fiche</div>
         </div>
         <div *ngIf="suggestionInput" fxFlex fxLayout="column">
             <app-card

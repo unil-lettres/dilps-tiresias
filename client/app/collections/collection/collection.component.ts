@@ -1,8 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {
-    MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-    MatLegacyDialogRef as MatDialogRef,
-} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
@@ -20,7 +17,7 @@ import {
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
-import {MatLegacySliderChange as MatSliderChange} from '@angular/material/legacy-slider';
+import {MatSliderChange} from '@angular/material/slider';
 import {Visibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';

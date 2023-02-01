@@ -47,7 +47,7 @@
 </mat-tab-group>
 
 <div fxLayout="column">
-    <div *ngIf="image?.collections?.length" class="mat-subheading-2">Collections liées à la fiche</div>
+    <div *ngIf="image?.collections?.length" class="mat-subtitle-1">Collections liées à la fiche</div>
     <div *ngFor="let collection of image?.collections" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <natural-icon name="collections"></natural-icon>
         <div fxFlex>{{ collection.name }}</div>

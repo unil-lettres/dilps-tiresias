@@ -12,7 +12,7 @@
 
 <div class="padding padding-fab">
     <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
-        <div [routerLink]="getChildLink(null)" class="mat-headline no-margin">Matériaux</div>
+        <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Matériaux</div>
         <div fxLayout="row wrap">
             <a *ngFor="let item of breadcrumbs" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
                 <natural-icon name="chevron_right"></natural-icon>

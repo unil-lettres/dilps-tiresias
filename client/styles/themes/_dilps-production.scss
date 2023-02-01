@@ -64,7 +64,7 @@ $dilps-theme-dark: mat.define-dark-theme(
 $baseColorLight: mat.get-color-from-palette(map.get($dilps-theme-light, foreground), base);
 $baseColorDark: mat.get-color-from-palette(map.get($dilps-theme-dark, foreground), base);
 
-@include mat.all-legacy-component-themes($dilps-theme-light);
+@include mat.all-component-themes($dilps-theme-light);
 
 $primary: mat.define-palette(mat.$blue-palette);
 $accent: mat.define-palette(mat.$orange-palette);
@@ -81,7 +81,7 @@ $warn: mat.define-palette(mat.$red-palette);
         )
     );
     color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
-    @include mat.all-legacy-component-colors($theme-light);
+    @include mat.all-component-colors($theme-light);
     @include components.components-theme($theme-light);
 }
 
@@ -96,6 +96,6 @@ $warn: mat.define-palette(mat.$red-palette);
         )
     );
     color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
-    @include mat.all-legacy-component-colors($theme-dark);
+    @include mat.all-component-colors($theme-dark);
     @include components.components-theme($theme-dark);
 }

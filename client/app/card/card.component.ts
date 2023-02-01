@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {NgModel} from '@angular/forms';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {findKey, sortBy} from 'lodash-es';
 import {QuillModules} from 'ngx-quill';
@@ -55,7 +55,7 @@ import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
 import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
-import {MatLegacySliderChange as MatSliderChange} from '@angular/material/legacy-slider';
+import {MatSliderChange} from '@angular/material/slider';
 import {ThemePalette} from '@angular/material/core';
 import {takeUntil} from 'rxjs/operators';
 

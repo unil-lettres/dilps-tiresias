@@ -146,16 +146,23 @@
                         }}
                     </div>
                     <mat-slider
-                        (input)="updateVisibility($event); visibility = $event.value"
                         [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
                         [disabled]="!edit"
                         [max]="3"
                         [min]="1"
                         [ngModel]="visibility"
-                    ></mat-slider>
+                        #ngSlider
+                        ><input
+                            matSliderThumb
+                            (input)="
+                                updateVisibility({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value});
+                                visibility = $event.value
+                            "
+                            #ngSliderThumb="matSliderThumb"
+                    /></mat-slider>
                 </div>
 
-                <div class="padding mat-body-2">
+                <div class="padding mat-subtitle-2">
                     <div *ngFor="let collection of sortedCollections">{{ collection.hierarchicName }}</div>
                 </div>
 
@@ -462,7 +469,7 @@
                     placeholder="Mots clés"
                 ></app-thesaurus>
 
-                <div *ngIf="isDilps && (edit || !!institution)" class="mat-title">Lieu</div>
+                <div *ngIf="isDilps && (edit || !!institution)" class="mat-headline-6">Lieu</div>
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!institution)"
@@ -491,7 +498,7 @@
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
-                    <div class="mat-title">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
+                    <div class="mat-headline-6">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
                     <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"></app-address>
                 </div>
 
@@ -509,7 +516,7 @@
 
                 <div
                     *ngIf="!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)"
-                    class="mat-title"
+                    class="mat-headline-6"
                 >
                     Datation
                 </div>
@@ -539,7 +546,7 @@
                     </mat-form-field>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-title">
+                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-headline-6">
                     Lieu de conservation
                 </div>
 
@@ -582,7 +589,7 @@
                             !!model.techniqueAuthor ||
                             !!model.techniqueDate)
                     "
-                    class="mat-title"
+                    class="mat-headline-6"
                 >
                     Référence du document
                 </div>
@@ -649,7 +656,10 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)" class="mat-title">
+                <div
+                    *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)"
+                    class="mat-headline-6"
+                >
                     Référence de l'image
                 </div>
 
@@ -743,11 +753,11 @@
                 </mat-form-field>
 
                 <div *ngIf="!isDilps && collectionCopyrights">
-                    <div class="mat-title">Droits d'auteur</div>
+                    <div class="mat-headline-6">Droits d'auteur</div>
                     <p>{{ collectionCopyrights }}</p>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-title">Référence web</div>
+                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-headline-6">Référence web</div>
 
                 <mat-form-field *ngIf="!isDilps && edit">
                     <mat-label>URL</mat-label>
@@ -791,7 +801,7 @@
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="showCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
                     <br />
-                    <div class="mat-title">Fiches additionnelles</div>
+                    <div class="mat-headline-6">Fiches additionnelles</div>
 
                     <natural-relations
                         [disabled]="!edit"
@@ -815,7 +825,7 @@
                 <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>
 
                 <div *ngIf="isDilps && collectionCopyrights">
-                    <div class="mat-title">Droits d’utilisation</div>
+                    <div class="mat-headline-6">Droits d’utilisation</div>
                     <p>{{ collectionCopyrights }}</p>
                 </div>
             </div>

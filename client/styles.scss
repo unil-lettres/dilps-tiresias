@@ -49,8 +49,12 @@ pre.debug {
     border: 2px solid green;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version.
+ */
+/*TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version.
+ */
 .mat-autocomplete-panel {
-    .mat-option.multiline {
+    .mat-mdc-option.multiline {
         min-height: 48px;
         height: auto;
         line-height: 1.6em;
@@ -79,11 +83,11 @@ perfect-scrollbar {
     }
 }
 
-.mat-form-field textarea.mat-autosize {
+.mat-mdc-form-field textarea.mat-autosize {
     overflow: hidden;
 }
 
-.mat-form-field.width-auto {
+.mat-mdc-form-field.width-auto {
     width: auto !important;
 }
 
@@ -93,7 +97,7 @@ perfect-scrollbar {
     top: 0.3em;
 }
 
-.mat-icon-button[matSuffix] {
+.mat-mdc-icon-button[matSuffix] {
     position: relative;
     top: -0.12em;
 }
@@ -104,11 +108,11 @@ natural-search,
 }
 
 // Allow newline in tooltips
-.mat-tooltip {
+.mat-mdc-tooltip {
     white-space: pre-line;
 }
 
-.mat-table mat-cell {
+.mat-mdc-table mat-cell {
     align-items: flex-start;
     padding: 0 3px;
 }
@@ -120,7 +124,7 @@ app-view-map google-map div.gm-style > div:last-child {
 
 // On /card/6000, keep the "Fiches additionnelles" aligned to the left so it is more
 // readable when name is long and wrapping
-app-card natural-relations natural-table-button .mat-button {
+app-card natural-relations natural-table-button .mat-mdc-button {
     text-align: left;
 }
 

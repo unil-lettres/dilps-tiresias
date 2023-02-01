@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
-import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
 import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, takeUntil, tap} from 'rxjs/operators';

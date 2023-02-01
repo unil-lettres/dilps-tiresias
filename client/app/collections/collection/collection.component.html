@@ -5,12 +5,19 @@
                 <div *ngIf="showVisibility" class="innerSpacing" fxLayout="column" style="max-width: 300px">
                     <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
                     <mat-slider
-                        (input)="updateVisibility($event); visibility = $event.value"
                         [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
                         [max]="3"
                         [min]="1"
                         [ngModel]="visibility"
-                    ></mat-slider>
+                        #ngSlider
+                        ><input
+                            matSliderThumb
+                            (input)="
+                                updateVisibility({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value});
+                                visibility = $event.value
+                            "
+                            #ngSliderThumb="matSliderThumb"
+                    /></mat-slider>
                 </div>
 
                 <mat-form-field>
