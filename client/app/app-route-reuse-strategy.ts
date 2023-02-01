@@ -3,12 +3,28 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 
 // Sources
 // https://github.com/angular/angular/issues/13869#issuecomment-441054267
-// https://https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
+// https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
+
+/**
+ * Flag to preserve if we are going from or going to a detail page. If neither is a detail page, we can clear reuse cache.
+ */
+let clearRoutes = false;
+
+/**
+ * List of routes that cache their state for further reuse
+ */
+const routes: Readonly<Record<string, RouteStates>> = {
+    '/home': {handles: new Map()},
+    '/collection/:collectionId': {handles: new Map()},
+    '/my-collection/unclassified': {handles: new Map()},
+    '/my-collection/my-cards': {handles: new Map()},
+    '/my-collection/my-collection': {handles: new Map()},
+    '/source': {handles: new Map()},
+    '/collection': {handles: new Map()},
+};
 
 interface RouteStates {
-    readonly max: number;
     readonly handles: Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>;
-    readonly handleKeys: string[];
 }
 
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
@@ -25,7 +41,7 @@ function getConfiguredUrl(route: ActivatedRouteSnapshot): string {
 function getStoreKey(route: ActivatedRouteSnapshot): string {
     const baseUrl = getResolvedUrl(route);
 
-    // this works, as ActivatedRouteSnapshot has only every one children ActivatedRouteSnapshot
+    // This works, as ActivatedRouteSnapshot has only every one children ActivatedRouteSnapshot
     // as you can't have more since urls like `/project/1,2` where you'd want to display 1 and 2 project at the
     // same time
     const childrenParts = [];
@@ -35,30 +51,41 @@ function getStoreKey(route: ActivatedRouteSnapshot): string {
         childrenParts.push(deepestChild.url.join('/'));
     }
 
-    // it's important to separate baseUrl with childrenParts so we don't have collisions.
+    // It's important to separate baseUrl with childrenParts, so we don't have collisions.
     return baseUrl + '////' + childrenParts.join('/');
 }
 
-const routes: Readonly<Record<string, RouteStates>> = {
-    '/home': {max: 1, handles: new Map(), handleKeys: []},
-    '/collection/:collectionId': {max: 1, handles: new Map(), handleKeys: []},
-    '/my-collection/unclassified': {max: 1, handles: new Map(), handleKeys: []},
-    '/my-collection/my-cards': {max: 1, handles: new Map(), handleKeys: []},
-    '/my-collection/my-collection': {max: 1, handles: new Map(), handleKeys: []},
-    '/source': {max: 1, handles: new Map(), handleKeys: []},
-
-    // Needs to be higher than the maximum different collections navigated during a session
-    '/collection': {max: 100, handles: new Map(), handleKeys: []},
-};
-
 export class AppRouteReuseStrategy implements RouteReuseStrategy {
-    /** Determines if this route (and its subtree) should be detached to be reused later */
+    /**
+     * Determines if the route should be reused as it is.
+     * For example : when navigation to same route instruction with different parameters (like id).
+     * Should return true if we stay on the same route, and false if we change route.
+     * If returns false, the next functions are called :
+     *  - first : shouldAttach for landing route/component
+     *  - and then : shouldDetach for leaving component/route)
+     */
+    public shouldReuseRoute(future: ActivatedRouteSnapshot, current: ActivatedRouteSnapshot): boolean {
+        // If we want to preserve routes with parameters, test by adding : && getResolvedUrl(future) === getResolvedUrl(curr)
+        return future.routeConfig === current.routeConfig;
+    }
+
+    /**
+     * Determines if this route (and its subtree) should be detached from actual router state and stored by us to be reused later
+     * If return true, next function to be called is store()
+     */
     public shouldDetach(route: ActivatedRouteSnapshot): boolean {
+        // If the leaved page is not detail (/card/:cardId), neither is the landing page (flaged previously),
+        // we are out of scope of reuse, and we can clear all stored components to prevent leak
+        if (clearRoutes && !this.isDetailPage(route)) {
+            this.clearDetachedRoutes();
+            clearRoutes = false;
+        }
+
         return !!routes[getConfiguredUrl(route)];
     }
 
     /**
-     * Stores the detached route.
+     * Persist the detached route following our own needs.
      *
      * Storing a `null` value should erase the previously stored value.
      */
@@ -77,63 +104,59 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return;
         }
 
-        if (config.handleKeys.length >= config.max) {
-            const oldestUrl = config.handleKeys[0];
-            config.handleKeys.splice(0, 1);
-
-            // this is important to work around memory leaks, as Angular will never destroy the Component
-            // on its own once it got stored in our router strategy.
-            const oldHandle = config.handles.get(oldestUrl);
-            oldHandle.componentRef.destroy();
-
-            config.handles.delete(oldestUrl);
-        }
         config.handles.set(storeKey, handle);
-        config.handleKeys.push(storeKey);
     }
 
-    /** Determines if this route (and its subtree) should be reattached */
+    /**
+     * Determines if this route (and its subtree) should be reattached from our custom memory to angular actual router state
+     * If returns true, the next function to be called is retrieve()
+     */
     public shouldAttach(route: ActivatedRouteSnapshot): boolean {
-        if (route.routeConfig) {
-            const config = routes[getConfiguredUrl(route)];
+        if (!route.routeConfig) {
+            return false;
+        }
 
-            if (config) {
-                const storeKey = getStoreKey(route);
-                return config.handles.has(storeKey);
-            }
+        clearRoutes = !this.isDetailPage(route); // flag if landing page is not a detail
+
+        const config = routes[getConfiguredUrl(route)];
+        if (config) {
+            const storeKey = getStoreKey(route);
+            return config.handles.has(storeKey);
         }
 
         return false;
     }
 
-    /** Retrieves the previously stored route */
+    /**
+     * Retrieves the previously stored route
+     */
     public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-        if (route.routeConfig) {
-            const config = routes[getConfiguredUrl(route)];
+        if (!route.routeConfig) {
+            return null;
+        }
 
-            if (config) {
-                const storeKey = getStoreKey(route);
-                return config.handles.get(storeKey);
-            }
+        const config = routes[getConfiguredUrl(route)];
+        if (config) {
+            const storeKey = getStoreKey(route);
+            return config.handles.get(storeKey);
         }
 
         return null;
     }
 
-    /** Determines if `curr` route should be reused */
-    public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        // If we want to preserve routes with parameters, add AND on instruction : getResolvedUrl(future) === getResolvedUrl(curr)
-        return future.routeConfig === curr.routeConfig;
-    }
-
     public clearDetachedRoutes(): void {
         Object.keys(routes).forEach(routeName => {
-            routes[routeName].handleKeys.length = 0;
-
             routes[routeName].handles.forEach((handle, handleName) => {
                 handle.componentRef.destroy();
                 routes[routeName].handles.delete(handleName);
             });
         });
+    }
+
+    /**
+     * Returns true if given route matches with the card detail page
+     */
+    public isDetailPage(route: ActivatedRouteSnapshot): boolean {
+        return route?.routeConfig && getConfiguredUrl(route) === '/card/:cardId';
     }
 }
