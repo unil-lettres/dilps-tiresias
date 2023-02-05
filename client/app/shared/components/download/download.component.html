@@ -38,7 +38,7 @@
                         (click)="downloadPowerPoint()"
                         color="primary"
                         mat-flat-button
-                        [disabled]="!validated || validationMessage"
+                        [disabled]="!validated || !!validationMessage"
                     >
                         Télécharger en PowerPoint
                     </button>
