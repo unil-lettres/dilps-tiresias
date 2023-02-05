@@ -17,7 +17,7 @@
                         mat-list-item
                         routerLinkActive="active"
                     >
-                        <span fxLayout="row" fxLayoutAlign="start center" matLine>Non classé</span>
+                        <span fxLayout="row" fxLayoutAlign="start center">Non classé</span>
                     </a>
                 </mat-nav-list>
 
@@ -28,7 +28,7 @@
                         mat-list-item
                         routerLinkActive="active"
                     >
-                        <span fxLayout="row" fxLayoutAlign="start center" matLine>Mes images</span>
+                        <span fxLayout="row" fxLayoutAlign="start center">Mes images</span>
                     </a>
                 </mat-nav-list>
 
@@ -43,7 +43,7 @@
                             mat-list-item
                             routerLinkActive="active"
                         >
-                            <span fxLayout="row" fxLayoutAlign="start center" matLine>
+                            <span fxLayout="row" fxLayoutAlign="start center">
                                 {{ collection.name }}
                                 <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
@@ -70,8 +70,8 @@
                     ></ng-container>
 
                     <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
-                        <natural-icon mat-list-icon name="keyboard_arrow_down"></natural-icon>
-                        <span matLine>Afficher d'avantage</span>
+                        <natural-icon matListItemIcon name="keyboard_arrow_down"></natural-icon>
+                        <span>Afficher d'avantage</span>
                     </a>
                 </mat-nav-list>
             </div>
