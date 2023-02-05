@@ -49,13 +49,10 @@
     <mat-checkbox [(ngModel)]="createSuggestions" *ngIf="data.changeable.length">Créer les suggestions</mat-checkbox>
     <div fxFlex></div>
     <button mat-button mat-dialog-close>Annuler</button>
-    <button color="primary" mat-button mat-raised-button *ngIf="step === 1" (click)="step = 2">
-        J'ai compris, continuer.
-    </button>
+    <button color="primary" mat-raised-button *ngIf="step === 1" (click)="step = 2">J'ai compris, continuer.</button>
     <button
         [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
         color="primary"
-        mat-button
         mat-raised-button
         *ngIf="step === 2"
     >

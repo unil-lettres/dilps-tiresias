@@ -7,9 +7,8 @@
             <button
                 (click)="accept()"
                 *ngIf="change"
-                color="primary"
                 mat-icon-button
-                mat-raised-button
+                class="icon-button-circle-primary"
                 matTooltip="Accepter suggestion"
             >
                 <natural-icon name="check"></natural-icon>
@@ -17,9 +16,8 @@
             <button
                 (click)="reject()"
                 *ngIf="change"
-                color="warn"
                 mat-icon-button
-                mat-raised-button
+                class="icon-button-circle-warn"
                 matTooltip="Refuser la suggestion"
             >
                 <natural-icon name="close"></natural-icon>
@@ -29,9 +27,8 @@
         <button
             (click)="update()"
             *ngIf="!change && original"
-            color="primary"
             mat-icon-button
-            mat-raised-button
+            class="icon-button-circle-primary"
             matTooltip="Soumettre la suggestion à validation"
         >
             <natural-icon name="save"></natural-icon>
@@ -39,9 +36,8 @@
         <button
             (click)="create()"
             *ngIf="!change && !original"
-            color="primary"
             mat-icon-button
-            mat-raised-button
+            class="icon-button-circle-primary"
             matTooltip="Soumettre l'ajout de cette fiche à validation"
         >
             <natural-icon name="add"></natural-icon>

@@ -52,9 +52,8 @@
                 <button
                     (click)="update()"
                     *ngIf="edit && fetchedModel?.permissions?.update"
-                    color="primary"
                     mat-icon-button
-                    mat-raised-button
+                    class="icon-button-circle-primary"
                     matTooltip="Enregistrer"
                     [disabled]="!formIsValid"
                 >
@@ -65,7 +64,6 @@
                     *ngIf="user && !edit && (canSuggestUpdate() || canSuggestDelete())"
                     [matMenuTriggerFor]="changeMenu"
                     color="primary"
-                    mat-button
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
@@ -76,7 +74,6 @@
                     (click)="suggestCreation()"
                     *ngIf="user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()"
                     color="primary"
-                    mat-button
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
@@ -156,7 +153,7 @@
                             matSliderThumb
                             (input)="
                                 updateVisibility({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value});
-                                visibility = $event.value
+                                visibility = ngSliderThumb.value
                             "
                             #ngSliderThumb="matSliderThumb"
                     /></mat-slider>
@@ -179,7 +176,6 @@
                     />
 
                     <button
-                        mat-button
                         mat-icon-button
                         matSuffix
                         (click)="codeModel = code; useSuggestedCode($event)"

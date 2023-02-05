@@ -14,7 +14,7 @@
                             matSliderThumb
                             (input)="
                                 updateVisibility({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value});
-                                visibility = $event.value
+                                visibility = ngSliderThumb.value
                             "
                             #ngSliderThumb="matSliderThumb"
                     /></mat-slider>
