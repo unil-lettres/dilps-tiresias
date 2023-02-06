@@ -5,10 +5,6 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 // https://github.com/angular/angular/issues/13869#issuecomment-441054267
 // https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
 
-interface RouteStates {
-    readonly handles: Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>;
-}
-
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
     return route.pathFromRoot.map(v => v.url.map(segment => segment.toString()).join('/')).join('/');
 }
@@ -41,14 +37,16 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     /**
      * List of routes that cache their state for further reuse
      */
-    private readonly routes: Readonly<Record<string, RouteStates>> = {
-        '/home': {handles: new Map()},
-        '/collection/:collectionId': {handles: new Map()},
-        '/my-collection/unclassified': {handles: new Map()},
-        '/my-collection/my-cards': {handles: new Map()},
-        '/my-collection/my-collection': {handles: new Map()},
-        '/source': {handles: new Map()},
-        '/collection': {handles: new Map()},
+    private readonly routes: Readonly<
+        Record<string, Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>>
+    > = {
+        '/home': new Map(),
+        '/collection/:collectionId': new Map(),
+        '/my-collection/unclassified': new Map(),
+        '/my-collection/my-cards': new Map(),
+        '/my-collection/my-collection': new Map(),
+        '/source': new Map(),
+        '/collection': new Map(),
     };
 
     /**
@@ -94,17 +92,17 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return;
         }
 
-        const config = this.routes[getConfiguredUrl(route)];
-        if (!config) {
+        const handles = this.routes[getConfiguredUrl(route)];
+        if (!handles) {
             return;
         }
 
         const storeKey = getStoreKey(route);
-        if (config.handles.has(storeKey)) {
+        if (handles.has(storeKey)) {
             return;
         }
 
-        config.handles.set(storeKey, handle);
+        handles.set(storeKey, handle);
     }
 
     /**
@@ -118,10 +116,10 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
         this.clearRoutes = !this.isDetailPage(route); // flag if landing page is not a detail
 
-        const config = this.routes[getConfiguredUrl(route)];
-        if (config) {
+        const handles = this.routes[getConfiguredUrl(route)];
+        if (handles) {
             const storeKey = getStoreKey(route);
-            return config.handles.has(storeKey);
+            return handles.has(storeKey);
         }
 
         return false;
@@ -135,10 +133,10 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return null;
         }
 
-        const config = this.routes[getConfiguredUrl(route)];
-        if (config) {
+        const handles = this.routes[getConfiguredUrl(route)];
+        if (handles) {
             const storeKey = getStoreKey(route);
-            return config.handles.get(storeKey);
+            return handles.get(storeKey);
         }
 
         return null;
@@ -146,9 +144,9 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
 
     public clearDetachedRoutes(): void {
         Object.keys(this.routes).forEach(routeName => {
-            this.routes[routeName].handles.forEach((handle, handleName) => {
+            this.routes[routeName].forEach((handle, handleName) => {
                 handle.componentRef.destroy();
-                this.routes[routeName].handles.delete(handleName);
+                this.routes[routeName].delete(handleName);
             });
         });
     }
@@ -156,7 +154,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     /**
      * Returns true if given route matches with the card detail page
      */
-    public isDetailPage(route: ActivatedRouteSnapshot): boolean {
+    private isDetailPage(route: ActivatedRouteSnapshot): boolean {
         return route?.routeConfig && getConfiguredUrl(route) === '/card/:cardId';
     }
 }
