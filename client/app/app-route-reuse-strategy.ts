@@ -1,10 +1,6 @@
 import {ComponentRef} from '@angular/core';
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 
-// Sources
-// https://github.com/angular/angular/issues/13869#issuecomment-441054267
-// https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
-
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
     return route.pathFromRoot.map(v => v.url.map(segment => segment.toString()).join('/')).join('/');
 }
@@ -33,9 +29,15 @@ function getStoreKey(route: ActivatedRouteSnapshot): string {
     return baseUrl + '////' + childrenParts.join('/');
 }
 
+/**
+ * This class only purpose is to be able to restore the scroll state of `ListComponent` when we come back
+ * from the card detail page. There is no other use-cases.
+ *
+ * It **cannot** and it **must not** be used for any other components.
+ */
 export class AppRouteReuseStrategy implements RouteReuseStrategy {
     /**
-     * List of routes that cache their state for further reuse
+     * List of routes of `ListComponent` that cache their state for further reuse
      */
     private readonly routes: Readonly<
         Record<string, Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>>
@@ -72,9 +74,9 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
      * If return true, next function to be called is store()
      */
     public shouldDetach(route: ActivatedRouteSnapshot): boolean {
-        // If the leaved page is not detail (/card/:cardId), neither is the landing page (flaged previously),
+        // If the leaved page is not detail (/card/:cardId), neither is the landing page (flagged previously),
         // we are out of scope of reuse, and we can clear all stored components to prevent leak
-        if (this.clearRoutes && !this.isDetailPage(route)) {
+        if (this.clearRoutes && !this.isCardDetailPage(route)) {
             this.clearDetachedRoutes();
             this.clearRoutes = false;
         }
@@ -114,7 +116,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return false;
         }
 
-        this.clearRoutes = !this.isDetailPage(route); // flag if landing page is not a detail
+        this.clearRoutes = !this.isCardDetailPage(route); // flag if landing page is not a detail
 
         const handles = this.routes[getConfiguredUrl(route)];
         if (handles) {
@@ -154,7 +156,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     /**
      * Returns true if given route matches with the card detail page
      */
-    private isDetailPage(route: ActivatedRouteSnapshot): boolean {
+    private isCardDetailPage(route: ActivatedRouteSnapshot): boolean {
         return route?.routeConfig && getConfiguredUrl(route) === '/card/:cardId';
     }
 }
