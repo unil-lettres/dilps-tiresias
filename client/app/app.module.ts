@@ -1,7 +1,7 @@
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
-import {NgModule, ErrorHandler} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
@@ -14,11 +14,7 @@ import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {
-    MAT_FORM_FIELD_DEFAULT_OPTIONS,
-    MatFormFieldDefaultOptions,
-    MatFormFieldModule,
-} from '@angular/material/form-field';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
@@ -135,11 +131,6 @@ import {NetworkInterceptorService} from './shared/services/network-interceptor.s
 import {HttpBatchLink} from 'apollo-angular/http';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {HideTooltipDirective} from './shared/directives/hide-tooltip.directive';
-
-/** Custom options to configure the form field's look and feel */
-const formFieldDefaults: MatFormFieldDefaultOptions = {
-    appearance: 'fill',
-};
 
 const icons: NaturalIconsConfig = {
     material: {
@@ -297,7 +288,6 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         NaturalFileModule,
     ],
     providers: [
-        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: formFieldDefaults},
         {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
