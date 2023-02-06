@@ -43,11 +43,12 @@
                             mat-list-item
                             routerLinkActive="active"
                         >
-                            <span fxLayout="row" fxLayoutAlign="start center">
+                            <span matListItemTitle>
                                 {{ collection.name }}
                                 <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
                             <button
+                                matListItemMeta
                                 (click)="edit($event, collection)"
                                 *ngIf="collection.permissions.update || collection.permissions.delete"
                                 mat-icon-button
