@@ -5,24 +5,6 @@ import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@
 // https://github.com/angular/angular/issues/13869#issuecomment-441054267
 // https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular#answer-41515648
 
-/**
- * Flag to preserve if we are going from or going to a detail page. If neither is a detail page, we can clear reuse cache.
- */
-let clearRoutes = false;
-
-/**
- * List of routes that cache their state for further reuse
- */
-const routes: Readonly<Record<string, RouteStates>> = {
-    '/home': {handles: new Map()},
-    '/collection/:collectionId': {handles: new Map()},
-    '/my-collection/unclassified': {handles: new Map()},
-    '/my-collection/my-cards': {handles: new Map()},
-    '/my-collection/my-collection': {handles: new Map()},
-    '/source': {handles: new Map()},
-    '/collection': {handles: new Map()},
-};
-
 interface RouteStates {
     readonly handles: Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>;
 }
@@ -57,6 +39,24 @@ function getStoreKey(route: ActivatedRouteSnapshot): string {
 
 export class AppRouteReuseStrategy implements RouteReuseStrategy {
     /**
+     * List of routes that cache their state for further reuse
+     */
+    private readonly routes: Readonly<Record<string, RouteStates>> = {
+        '/home': {handles: new Map()},
+        '/collection/:collectionId': {handles: new Map()},
+        '/my-collection/unclassified': {handles: new Map()},
+        '/my-collection/my-cards': {handles: new Map()},
+        '/my-collection/my-collection': {handles: new Map()},
+        '/source': {handles: new Map()},
+        '/collection': {handles: new Map()},
+    };
+
+    /**
+     * Flag to preserve if we are going from or going to a detail page. If neither is a detail page, we can clear reuse cache.
+     */
+    private clearRoutes = false;
+
+    /**
      * Determines if the route should be reused as it is.
      * For example : when navigation to same route instruction with different parameters (like id).
      * Should return true if we stay on the same route, and false if we change route.
@@ -76,12 +76,12 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     public shouldDetach(route: ActivatedRouteSnapshot): boolean {
         // If the leaved page is not detail (/card/:cardId), neither is the landing page (flaged previously),
         // we are out of scope of reuse, and we can clear all stored components to prevent leak
-        if (clearRoutes && !this.isDetailPage(route)) {
+        if (this.clearRoutes && !this.isDetailPage(route)) {
             this.clearDetachedRoutes();
-            clearRoutes = false;
+            this.clearRoutes = false;
         }
 
-        return !!routes[getConfiguredUrl(route)];
+        return !!this.routes[getConfiguredUrl(route)];
     }
 
     /**
@@ -94,7 +94,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return;
         }
 
-        const config = routes[getConfiguredUrl(route)];
+        const config = this.routes[getConfiguredUrl(route)];
         if (!config) {
             return;
         }
@@ -116,9 +116,9 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return false;
         }
 
-        clearRoutes = !this.isDetailPage(route); // flag if landing page is not a detail
+        this.clearRoutes = !this.isDetailPage(route); // flag if landing page is not a detail
 
-        const config = routes[getConfiguredUrl(route)];
+        const config = this.routes[getConfiguredUrl(route)];
         if (config) {
             const storeKey = getStoreKey(route);
             return config.handles.has(storeKey);
@@ -135,7 +135,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return null;
         }
 
-        const config = routes[getConfiguredUrl(route)];
+        const config = this.routes[getConfiguredUrl(route)];
         if (config) {
             const storeKey = getStoreKey(route);
             return config.handles.get(storeKey);
@@ -145,10 +145,10 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     }
 
     public clearDetachedRoutes(): void {
-        Object.keys(routes).forEach(routeName => {
-            routes[routeName].handles.forEach((handle, handleName) => {
+        Object.keys(this.routes).forEach(routeName => {
+            this.routes[routeName].handles.forEach((handle, handleName) => {
                 handle.componentRef.destroy();
-                routes[routeName].handles.delete(handleName);
+                this.routes[routeName].handles.delete(handleName);
             });
         });
     }
