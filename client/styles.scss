@@ -49,20 +49,6 @@ pre.debug {
     border: 2px solid green;
 }
 
-/*TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version.
- */
-/*TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version.
- */
-.mat-autocomplete-panel {
-    .mat-mdc-option.multiline {
-        min-height: 48px;
-        height: auto;
-        line-height: 1.6em;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-}
-
 perfect-scrollbar {
     display: flex !important;
     flex-direction: column;
