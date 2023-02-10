@@ -12,7 +12,6 @@
 @use '../app/home/home.theme';
 @use 'scroll';
 @use 'toolbar';
-@use 'table';
 @use 'hint';
 @use 'upload';
 @use '../app/collections/collections/collections.theme';
@@ -33,7 +32,6 @@
     @include home.home($theme);
     @include toolbar.toolbar($theme);
     @include angular-natural-gallery.gallery-theme($theme);
-    @include table.table($theme);
     @include collections.collections($theme);
     @include alert.alert($theme);
     @include address.address($theme);
