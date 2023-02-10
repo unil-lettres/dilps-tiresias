@@ -16,7 +16,6 @@
 @use 'table';
 @use 'hint';
 @use 'upload';
-@use '../app/shared/components/table-button/table-button.theme';
 @use '../app/collections/collections/collections.theme';
 @use '../app/shared/components/alert/alert.theme';
 @use '../app/shared/components/address/address.theme';
@@ -40,7 +39,6 @@
     @include toolbar.toolbar($theme);
     @include angular-natural-gallery.gallery-theme($theme);
     @include table.table($theme);
-    @include table-button.table-button($theme);
     @include collections.collections($theme);
     @include alert.alert($theme);
     @include address.address($theme);
