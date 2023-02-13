@@ -17,8 +17,7 @@ import {
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
-import {MatSliderChange} from '@angular/material/slider';
-import {Visibilities} from '../../card/card.component';
+import {CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
 
@@ -27,8 +26,8 @@ import {HierarchicFiltersConfiguration} from '@ecodev/natural';
     templateUrl: './collection.component.html',
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
-    public visibility = 1;
-    public visibilities: Visibilities<CollectionVisibility> = {
+    public visibility: keyof CollectionVisibilities = 1;
+    public visibilities: CollectionVisibilities = {
         1: {
             value: CollectionVisibility.private,
             text: 'par moi et les abonnés',
@@ -64,8 +63,8 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         super(collectionService, alertService, dialogRef, userService, data);
     }
 
-    public updateVisibility(ev: MatSliderChange): void {
-        this.data.item.visibility = this.visibilities[ev.value].value;
+    public updateVisibility(): void {
+        this.data.item.visibility = this.visibilities[this.visibility].value;
     }
 
     /**
@@ -99,7 +98,10 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     protected override postQuery(): void {
         // Init visibility
-        this.visibility = +findKey(this.visibilities, s => s.value === this.data.item.visibility);
+        this.visibility = +findKey(
+            this.visibilities,
+            s => s.value === this.data.item.visibility,
+        ) as keyof CollectionVisibilities;
 
         this.institution = this.data.item.institution;
 

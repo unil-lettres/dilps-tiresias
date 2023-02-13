@@ -148,15 +148,7 @@
                         [max]="3"
                         [min]="1"
                         [step]="1"
-                        [ngModel]="visibility"
-                        #ngSlider
-                        ><input
-                            matSliderThumb
-                            (input)="
-                                updateVisibility({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value});
-                                visibility = ngSliderThumb.value
-                            "
-                            #ngSliderThumb="matSliderThumb"
+                        ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
                     /></mat-slider>
                 </div>
 

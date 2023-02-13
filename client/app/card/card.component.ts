@@ -55,7 +55,6 @@ import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
 import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
-import {MatSliderChange} from '@angular/material/slider';
 import {ThemePalette} from '@angular/material/core';
 import {takeUntil} from 'rxjs/operators';
 
@@ -74,7 +73,9 @@ export interface VisibilityConfig<V> {
     color: ThemePalette;
 }
 
-export type Visibilities<V> = Record<number, VisibilityConfig<V>>;
+type Visibilities<V> = Record<1 | 2 | 3, VisibilityConfig<V>>;
+type CardVisibilities = Visibilities<CardVisibility>;
+export type CollectionVisibilities = Visibilities<CollectionVisibility>;
 
 @Component({
     selector: 'app-card',
@@ -157,12 +158,12 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Default visibility
      */
-    public visibility = 1;
+    public visibility: keyof CardVisibilities = 1;
 
     /**
      * List of visibilities
      */
-    public visibilities: Visibilities<CardVisibility> = {
+    public visibilities: CardVisibilities = {
         1: {
             value: CardVisibility.private,
             text: 'par moi, les admins et les abonnés',
@@ -409,7 +410,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             // Init visibility
             this.visibility = +findKey(this.visibilities, s => {
                 return s.value === this.model.visibility;
-            });
+            }) as keyof CardVisibilities;
 
             this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
             this.artists = this.fetchedModel?.artists ?? null; // cache, see attribute docs
@@ -459,8 +460,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         return this.edit && this.canUpdateCode() && this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
-    public updateVisibility(ev: MatSliderChange): void {
-        this.model.visibility = this.visibilities[ev.value].value;
+    public updateVisibility(): void {
+        this.model.visibility = this.visibilities[this.visibility].value;
     }
 
     public onSubmit(): void {
