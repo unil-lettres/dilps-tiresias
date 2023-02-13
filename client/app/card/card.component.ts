@@ -130,7 +130,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     @Input() public showTools = true;
 
     /**
-     * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if car is source or surggestion
+     * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if card is source or suggestion
      */
     @Input() public title: string;
 
