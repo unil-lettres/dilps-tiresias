@@ -13,6 +13,7 @@ RUN apt-get update &&\
   apt-get install -y git nano zip unzip cron supervisor imagemagick webp libcurl4-openssl-dev libzip-dev libonig-dev libmagickwand-dev mariadb-client
 
 # Install needed php extensions
+RUN docker-php-ext-configure gd --with-jpeg
 RUN apt-get clean; docker-php-ext-install pdo pdo_mysql mysqli gettext zip gd calendar bcmath
 
 # Imagick
