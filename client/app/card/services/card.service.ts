@@ -55,6 +55,7 @@ interface CardWithImage {
     hasImage?: boolean;
     height?: number;
     width?: number;
+    updateDate?: string;
 }
 
 @Injectable({
@@ -97,13 +98,18 @@ export class CardService extends AbstractContextualizedService<
             return null;
         }
 
-        const imageLink = '/api/image/' + card.id;
-        if (!height) {
-            return imageLink;
+        let imageLink = '/api/image/' + card.id;
+
+        if (height) {
+            const size = this.getImageFormat(card, height);
+            imageLink += '/' + size.height;
         }
 
-        const size = this.getImageFormat(card, height);
-        return imageLink + '/' + size.height;
+        if (card.updateDate) {
+            imageLink += '?t=' + new Date(card.updateDate).getTime();
+        }
+
+        return imageLink;
     }
 
     /**
