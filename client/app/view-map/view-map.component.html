@@ -12,7 +12,7 @@
         <div>
             <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
             <a [routerLink]="['/card', selectedMarker?.id]" fxLayout="column" fxLayoutAlign="center center">
-                <img [attr.src]="'/api/image/' + selectedMarker?.id + '/200'" class="img" />
+                <img [attr.src]="selectedMarker?.imageSrc" class="img" />
             </a>
             <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>
         </div>
