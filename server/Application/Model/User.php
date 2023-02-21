@@ -367,4 +367,12 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     {
         $this->collections->removeElement($collection);
     }
+
+    /**
+     * Whether the user is allowed to log in or stay logged in.
+     */
+    public function canLogin(): bool
+    {
+        return !$this->getActiveUntil() || $this->getActiveUntil() > new Chronos();
+    }
 }

@@ -24,7 +24,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
             return null;
         }
 
-        if (($user->getActiveUntil() && $user->getActiveUntil() < new Chronos())) {
+        if (!$user->canLogin()) {
             throw new Exception("Ce compte n'est plus actif");
         }
 
