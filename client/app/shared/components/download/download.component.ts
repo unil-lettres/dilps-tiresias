@@ -74,7 +74,10 @@ export class DownloadComponent {
         this.exportService.create(this.input).subscribe(newExport => {
             if (newExport.filename) {
                 const url = '/export/' + newExport.filename;
-                window.document.location.href = url;
+                const download_window = window.open(url);
+                setTimeout(function () {
+                    download_window.close();
+                }, 999);
             } else {
                 this.alertService.info(
                     'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
