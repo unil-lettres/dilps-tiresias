@@ -16,7 +16,9 @@
                 </mat-checkbox>
                 <br />
                 <div fxFlexAlign="end" fxLayout="row">
-                    <button (click)="downloadZip()" color="primary" mat-flat-button>Télécharger en ZIP</button>
+                    <button (click)="downloadZip()" color="primary" mat-flat-button [disabled]="loading">
+                        Télécharger en ZIP
+                    </button>
                 </div>
             </div>
         </mat-tab>
@@ -38,7 +40,7 @@
                         (click)="downloadPowerPoint()"
                         color="primary"
                         mat-flat-button
-                        [disabled]="!validated || validationMessage"
+                        [disabled]="!validated || validationMessage || loading"
                     >
                         Télécharger en PowerPoint
                     </button>
@@ -48,7 +50,9 @@
         <mat-tab label="Excel">
             <div class="padding" fxLayout="column">
                 <div fxFlexAlign="end" fxLayout="row">
-                    <button (click)="downloadExcel()" color="primary" mat-flat-button>Télécharger en Excel</button>
+                    <button (click)="downloadExcel()" color="primary" mat-flat-button [disabled]="loading">
+                        Télécharger en Excel
+                    </button>
                 </div>
             </div>
         </mat-tab>

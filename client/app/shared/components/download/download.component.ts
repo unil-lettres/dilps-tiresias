@@ -37,6 +37,7 @@ export class DownloadComponent {
         },
     ];
 
+    public loading = false;
     public validated = false;
     public denyLegendsDownload = false;
     public readonly input: CreateExportInput = this.exportService.getDefaultForServer();
@@ -81,6 +82,7 @@ export class DownloadComponent {
         // of CORS error (although we're on the same domain). So we wait on
         // these requests to be completed before proceeding to change the
         // location of the page.
+        this.loading = true;
         this.exportService
             .create(this.input)
             .pipe(
@@ -101,7 +103,10 @@ export class DownloadComponent {
                         return EMPTY;
                     }
                 }),
-                finalize(() => this.dialogRef.close()),
+                finalize(() => {
+                    this.loading = false;
+                    this.dialogRef.close();
+                }),
             )
             .subscribe(url => {
                 if (url) {
