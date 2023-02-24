@@ -7,6 +7,8 @@ import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
 import {MatTabChangeEvent} from '@angular/material/tabs';
+import {Apollo} from 'apollo-angular';
+import {forkJoin, switchMap, EMPTY, map, defaultIfEmpty, finalize} from 'rxjs';
 
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
@@ -47,6 +49,7 @@ export class DownloadComponent {
         @Inject(SITE) private readonly site: Site,
         private readonly alertService: AlertService,
         private readonly exportService: ExportService,
+        private readonly apollo: Apollo,
     ) {
         this.denyLegendsDownload = data.denyLegendsDownload;
         this.input.includeLegend = !this.denyLegendsDownload;
@@ -71,18 +74,40 @@ export class DownloadComponent {
     }
 
     private download(): void {
-        this.exportService.create(this.input).subscribe(newExport => {
-            if (newExport.filename) {
-                const url = '/export/' + newExport.filename;
-                window.document.location.href = url;
-            } else {
-                this.alertService.info(
-                    'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
-                    8000,
-                );
-            }
-        });
-        this.dialogRef.close();
+        // Creating the export causes Apollo.client.reFetchObservableQueries()
+        // to be executed, leading to some xhr requests being made. Changing the
+        // location of the current page with document.location.href while these
+        // requests are pending causes Safari to block their responses because
+        // of CORS error (although we're on the same domain). So we wait on
+        // these requests to be completed before proceeding to change the
+        // location of the page.
+        this.exportService
+            .create(this.input)
+            .pipe(
+                switchMap(newExport => {
+                    if (newExport.filename) {
+                        const observable_queries = this.apollo.client.getObservableQueries();
+                        const promises = Array.from(observable_queries.values()).map(q => q.result());
+                        const url = '/export/' + newExport.filename;
+                        return forkJoin(promises).pipe(
+                            map(() => url),
+                            defaultIfEmpty(url),
+                        );
+                    } else {
+                        this.alertService.info(
+                            'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
+                            8000,
+                        );
+                        return EMPTY;
+                    }
+                }),
+                finalize(() => this.dialogRef.close()),
+            )
+            .subscribe(url => {
+                if (url) {
+                    window.document.location.href = url;
+                }
+            });
     }
 
     public tabChange($event: MatTabChangeEvent): void {
