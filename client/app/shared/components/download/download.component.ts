@@ -88,8 +88,8 @@ export class DownloadComponent {
             .pipe(
                 switchMap(newExport => {
                     if (newExport.filename) {
-                        const observable_queries = this.apollo.client.getObservableQueries();
-                        const promises = Array.from(observable_queries.values()).map(q => q.result());
+                        const observableQueries = this.apollo.client.getObservableQueries();
+                        const promises = Array.from(observableQueries.values()).map(q => q.result());
                         const url = '/export/' + newExport.filename;
                         return forkJoin(promises).pipe(
                             map(() => url),
