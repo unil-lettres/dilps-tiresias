@@ -6,6 +6,7 @@ import {intersectionBy} from 'lodash-es';
 import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
+import {CardService} from '../card/services/card.service';
 import {Cards_cards, Cards_cards_items, Cards_cards_items_institution, Site} from '../shared/generated-types';
 
 @Component({
@@ -43,6 +44,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      * Template exposed variable
      */
     public Site = Site;
+    public readonly CardService = CardService;
 
     public constructor() {
         super();

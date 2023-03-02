@@ -130,6 +130,20 @@ To run PHPunit test:
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+#### Docker
+
+To run Karma tests inside a Docker container, run the following command from
+the base repository directory.
+
+The image tag used should be the same as the playwright version installed for
+this app.
+
+The docker compose must be up for these tests to be executed.
+
+```bash
+docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tiresias_dilps-tiresias-net mcr.microsoft.com/playwright:v1.24.2-focal yarn ng test --watch false --browsers ChromeHeadlessCustom
+```
+
 ### End to end
 
 Run `yarn e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).

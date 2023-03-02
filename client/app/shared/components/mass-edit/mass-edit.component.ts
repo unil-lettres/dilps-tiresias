@@ -16,6 +16,11 @@ export class MassEditComponent {
 
     public createSuggestions = false;
 
+    /**
+     * Template exposed variable
+     */
+    public readonly CardService = CardService;
+
     public constructor(
         private readonly cardService: CardService,
         @Inject(MAT_DIALOG_DATA) public readonly data: Literal,

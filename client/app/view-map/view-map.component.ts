@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Inject, Input, NgZone, Output, ViewChild} from '@angular/core';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {Cards_cards_items, Precision, Site} from '../shared/generated-types';
+import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
 import {GoogleMap, MapInfoWindow, MapMarker} from '@angular/google-maps';
@@ -15,6 +16,7 @@ type Marker = {
     name: string;
     icon: Icon;
     id: string;
+    imageSrc: string;
 } & Location;
 
 @Component({
@@ -75,6 +77,7 @@ export class ViewMapComponent extends NaturalAbstractController {
                     latitude: c.latitude,
                     longitude: c.longitude,
                     icon: ViewMapComponent.getIcon(c.precision),
+                    imageSrc: CardService.getImageLink(c, 200),
                 };
             });
     }
