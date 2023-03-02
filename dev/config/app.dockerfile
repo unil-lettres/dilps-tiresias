@@ -18,7 +18,13 @@ RUN apt-get clean; docker-php-ext-install pdo pdo_mysql mysqli gettext zip gd ca
 
 # Imagick
 RUN pecl install imagick
-RUN docker-php-ext-enable imagick
+
+# Xdebug
+# https://xdebug.org/docs/compat
+RUN pecl install xdebug-3.2.0
+
+# Activate php extensions
+RUN docker-php-ext-enable imagick xdebug
 
 # Install Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
