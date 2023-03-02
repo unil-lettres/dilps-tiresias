@@ -1,5 +1,5 @@
 import {Component, Inject, Injector, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {
     NaturalAbstractList,
     NaturalQueryVariablesManager,
@@ -44,7 +44,7 @@ import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
-import {PageEvent} from '@angular/material/paginator';
+import {LegacyPageEvent as PageEvent} from '@angular/material/legacy-paginator';
 import {takeUntil} from 'rxjs/operators';
 
 function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): WithId<Partial<CardInput>> {

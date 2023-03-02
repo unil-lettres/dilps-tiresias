@@ -30,13 +30,13 @@
 
                     <div>
                         <div>Titre</div>
-                        <div [innerHTML]="item.name | truncate: ['250', '...']"></div>
+                        <div [innerHTML]="item.name | truncate : ['250', '...']"></div>
                     </div>
 
                     <ng-container *ngIf="item.site === Site.dilps">
                         <div *ngIf="item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)">
                             <div>Titre étendu</div>
-                            <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
+                            <div [innerHTML]="item.expandedName | truncate : ['250', '...']"></div>
                         </div>
 
                         <div *ngIf="item.artists?.length">
@@ -48,7 +48,7 @@
 
                         <div *ngIf="item.addition">
                             <div>Supplément</div>
-                            <div>{{ item.addition | truncate: ['250', '...'] }}</div>
+                            <div>{{ item.addition | truncate : ['250', '...'] }}</div>
                         </div>
                     </ng-container>
 
@@ -117,7 +117,7 @@
 
                     <div *ngIf="item.literature">
                         <div>Source (référence de l'image)</div>
-                        <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
+                        <div [innerHTML]="item.literature | truncate : ['250', '...']"></div>
                     </div>
                 </div>
             </div>

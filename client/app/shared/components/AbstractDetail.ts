@@ -1,5 +1,5 @@
 import {Directive, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatLegacyDialogRef as MatDialogRef} from '@angular/material/legacy-dialog';
 import {merge} from 'lodash-es';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';

@@ -47,6 +47,12 @@
             }
         }
 
+        // Be sure that the toolbar stays one one line
+        // It should not be necessary but it seems that something goes wrong in the computation of the width by QuillJs
+        .ql-flip.ql-tooltip {
+            min-width: 170px;
+        }
+
         a[href] {
             color: mat.get-color-from-palette($accent);
             overflow-wrap: break-word;

@@ -3,6 +3,6 @@
 /**
  * Typo gt-sm
  */
-$custom-typography-gt-sm: mat.define-typography-config(
+$custom-typography-gt-sm: mat.define-legacy-typography-config(
     $font-family: 'Quicksand, Roboto, "Helvetica Neue", sans-serif',
 );

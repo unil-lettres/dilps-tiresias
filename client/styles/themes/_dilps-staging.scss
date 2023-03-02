@@ -7,15 +7,31 @@ $accent: mat.define-palette(mat.$orange-palette);
 $warn: mat.define-palette(mat.$red-palette);
 
 .dilps-staging {
-    $theme-light: mat.define-light-theme($primary, $accent, $warn);
+    $theme-light: mat.define-light-theme(
+        (
+            color: (
+                primary: $primary,
+                accent: $accent,
+                warn: $warn,
+            ),
+        )
+    );
     color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
-    @include mat.all-component-themes($theme-light);
+    @include mat.all-legacy-component-colors($theme-light);
     @include components.components-theme($theme-light);
 }
 
 .dilps-staging-dark {
-    $theme-dark: mat.define-dark-theme($primary, $accent, $warn);
+    $theme-dark: mat.define-dark-theme(
+        (
+            color: (
+                primary: $primary,
+                accent: $accent,
+                warn: $warn,
+            ),
+        )
+    );
     color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
-    @include mat.all-component-themes($theme-dark);
+    @include mat.all-legacy-component-colors($theme-dark);
     @include components.components-theme($theme-dark);
 }
