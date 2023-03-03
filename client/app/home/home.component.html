@@ -42,7 +42,7 @@
                                 routerLink="/"
                                 routerLinkActive="active"
                             >
-                                <natural-icon matListItemIcon name="home"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
                             </a>
 
                             <!-- Collections publiques -->
@@ -53,7 +53,7 @@
                                 routerLink="/collection"
                                 routerLinkActive="active"
                             >
-                                <natural-icon matListItemIcon name="collections"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="collections"></mat-icon>
                             </a>
 
                             <!-- Mes collections privées -->
@@ -64,7 +64,7 @@
                                 routerLink="/my-collection"
                                 routerLinkActive="active"
                             >
-                                <natural-icon matListItemIcon name="collections_bookmark"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="collections_bookmark"></mat-icon>
                             </a>
 
                             <!-- Fonds -->
@@ -75,7 +75,7 @@
                                 routerLink="/source"
                                 routerLinkActive="active"
                             >
-                                <natural-icon matListItemIcon name="folder_special"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="folder_special"></mat-icon>
                             </a>
 
                             <!-- Notifications -->
@@ -86,7 +86,7 @@
                                 routerLink="/notification"
                                 routerLinkActive="active"
                             >
-                                <natural-icon matListItemIcon name="notifications"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="notifications"></mat-icon>
                             </a>
 
                             <!-- Add photos -->
@@ -105,7 +105,7 @@
                                 [multiple]="true"
                                 naturalFileSelect
                             >
-                                <natural-icon matListItemIcon name="file_upload"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="file_upload"></mat-icon>
                             </a>
 
                             <a mat-list-item *ngIf="progress > 0">
@@ -131,7 +131,7 @@
                                     matTooltip="Télécharger le modèle pour import Excel"
                                     matTooltipPosition="after"
                                 >
-                                    <natural-icon matListItemIcon name="file_download"></natural-icon>
+                                    <mat-icon matListItemIcon naturalIcon="file_download"></mat-icon>
                                 </a>
                             </ng-container>
                         </mat-nav-list>
@@ -146,7 +146,7 @@
                                     matTooltipPosition="after"
                                     [matMenuTriggerFor]="thesaurusMenu"
                                 >
-                                    <natural-icon matListItemIcon name="book"></natural-icon>
+                                    <mat-icon matListItemIcon naturalIcon="book"></mat-icon>
                                 </a>
                             </mat-nav-list>
                         </ng-container>
@@ -161,7 +161,7 @@
                                     matTooltipPosition="after"
                                     [matMenuTriggerFor]="adminMenu"
                                 >
-                                    <natural-icon matListItemIcon name="build"></natural-icon>
+                                    <mat-icon matListItemIcon naturalIcon="build"></mat-icon>
                                 </a>
                             </mat-nav-list>
                         </ng-container>
@@ -171,7 +171,7 @@
                         <mat-nav-list fxFlex>
                             <!-- Account -->
                             <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
-                                <natural-icon matListItemIcon name="account_circle"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
                             </a>
 
                             <!-- Logout -->
@@ -181,7 +181,7 @@
                                 matTooltip="Se déconnecter"
                                 matTooltipPosition="after"
                             >
-                                <natural-icon matListItemIcon name="exit_to_app"></natural-icon>
+                                <mat-icon matListItemIcon naturalIcon="exit_to_app"></mat-icon>
                             </a>
                         </mat-nav-list>
                     </ng-container>
@@ -193,7 +193,7 @@
                             routerLink="/"
                             routerLinkActive="active"
                         >
-                            <natural-icon matListItemIcon name="home"></natural-icon>
+                            <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
                         </a>
 
                         <!-- Logout -->
@@ -203,7 +203,7 @@
                             matTooltip="Se connecter"
                             matTooltipPosition="after"
                         >
-                            <natural-icon matListItemIcon name="account_circle"></natural-icon>
+                            <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
                         </a>
 
                         <!-- Contact -->
@@ -214,7 +214,7 @@
                             matTooltip="Contact"
                             matTooltipPosition="after"
                         >
-                            <natural-icon matListItemIcon name="announcement"></natural-icon>
+                            <mat-icon matListItemIcon naturalIcon="announcement"></mat-icon>
                             <span>Contact</span>
                         </a>
                     </mat-nav-list>
@@ -227,13 +227,13 @@
                         class="icon-button-circle-warn"
                         style="margin: 0 11px"
                     >
-                        <natural-icon name="error"></natural-icon>
+                        <mat-icon naturalIcon="error"></mat-icon>
                     </a>
 
                     <mat-nav-list>
                         <!-- Theme -->
                         <a (click)="themeService.toggleNightMode()" mat-list-item>
-                            <natural-icon matListItemIcon name="invert_colors"></natural-icon>
+                            <mat-icon matListItemIcon naturalIcon="invert_colors"></mat-icon>
                             <span>Changer couleurs</span>
                         </a>
                     </mat-nav-list>
@@ -266,7 +266,7 @@
         <span class="mat-caption" *ngIf="error?.debugMessage">{{ error?.debugMessage }}</span>
     </div>
     <button (click)="errors = []" mat-menu-item>
-        <natural-icon matMenuItemIcon name="close"></natural-icon>
+        <mat-icon matMenuItemIcon naturalIcon="close"></mat-icon>
         Effacer et fermer
     </button>
 </mat-menu>

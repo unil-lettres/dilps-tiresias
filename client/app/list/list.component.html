@@ -39,7 +39,7 @@
             mat-icon-button
             matTooltip="Grille"
         >
-            <natural-icon name="view_compact"></natural-icon>
+            <mat-icon naturalIcon="view_compact"></mat-icon>
         </button>
 
         <button
@@ -48,7 +48,7 @@
             mat-icon-button
             matTooltip="Liste"
         >
-            <natural-icon name="view_list"></natural-icon>
+            <mat-icon naturalIcon="view_list"></mat-icon>
         </button>
 
         <button
@@ -57,7 +57,7 @@
             mat-icon-button
             matTooltip="Carte"
         >
-            <natural-icon name="map"></natural-icon>
+            <mat-icon naturalIcon="map"></mat-icon>
         </button>
 
         <div fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -69,7 +69,7 @@
                 fxFlex
             ></natural-search>
             <button [matMenuTriggerFor]="sortingMenu" mat-icon-button matTooltip="Trier">
-                <natural-icon name="sort"></natural-icon>
+                <mat-icon naturalIcon="sort"></mat-icon>
             </button>
         </div>
 
@@ -83,7 +83,7 @@
                 mat-icon-button
                 matTooltip="Ajouter à une collection"
             >
-                <natural-icon name="library_add"></natural-icon>
+                <mat-icon naturalIcon="library_add"></mat-icon>
             </button>
             <button
                 (click)="unlinkFromCollection(selected)"
@@ -91,19 +91,19 @@
                 mat-icon-button
                 matTooltip="Supprimer de la collection"
             >
-                <natural-icon name="close"></natural-icon>
+                <mat-icon naturalIcon="close"></mat-icon>
             </button>
 
             <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Télécharger">
-                <natural-icon name="file_download"></natural-icon>
+                <mat-icon naturalIcon="file_download"></mat-icon>
             </button>
 
             <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <natural-icon name="burst_mode"></natural-icon>
+                <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
 
             <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
-                <natural-icon name="edit"></natural-icon>
+                <mat-icon naturalIcon="edit"></mat-icon>
             </button>
 
             <button
@@ -113,7 +113,7 @@
                 mat-icon-button
                 matTooltip="Supprimer la fiche définitivement"
             >
-                <natural-icon name="delete_forever"></natural-icon>
+                <mat-icon naturalIcon="delete_forever"></mat-icon>
             </button>
         </ng-container>
 
@@ -124,7 +124,7 @@
                 mat-icon-button
                 matTooltip="Ajouter la collection à une autre collection"
             >
-                <natural-icon name="library_add"></natural-icon>
+                <mat-icon naturalIcon="library_add"></mat-icon>
             </button>
 
             <button
@@ -133,11 +133,11 @@
                 mat-icon-button
                 matTooltip="Télécharger la collection"
             >
-                <natural-icon name="file_download"></natural-icon>
+                <mat-icon naturalIcon="file_download"></mat-icon>
             </button>
 
             <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <natural-icon name="burst_mode"></natural-icon>
+                <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
         </ng-container>
 
@@ -147,12 +147,12 @@
             mat-icon-button
             [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
         >
-            <natural-icon *ngIf="!showLabels" name="font_download"></natural-icon>
-            <natural-icon *ngIf="showLabels" name="font_download_off"></natural-icon>
+            <mat-icon *ngIf="!showLabels" naturalIcon="font_download"></mat-icon>
+            <mat-icon *ngIf="showLabels" naturalIcon="font_download_off"></mat-icon>
         </button>
 
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
-            <natural-icon name="select_all"></natural-icon>
+            <mat-icon naturalIcon="select_all"></mat-icon>
         </button>
 
         <button
@@ -161,7 +161,7 @@
             mat-icon-button
             matTooltip="Sélectionner les images visibles"
         >
-            <natural-icon name="select_all"></natural-icon>
+            <mat-icon naturalIcon="select_all"></mat-icon>
         </button>
 
         <div *ngIf="viewMode === ViewMode.grid">

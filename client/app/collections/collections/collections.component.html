@@ -4,7 +4,7 @@
             <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
             <div fxFlex></div>
             <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
-                <natural-icon name="add"></natural-icon>
+                <mat-icon naturalIcon="add"></mat-icon>
             </button>
         </mat-toolbar>
 
@@ -53,7 +53,7 @@
                                 *ngIf="collection.permissions.update || collection.permissions.delete"
                                 mat-icon-button
                             >
-                                <natural-icon name="edit"></natural-icon>
+                                <mat-icon naturalIcon="edit"></mat-icon>
                             </button>
                         </a>
                         <ng-container
@@ -70,7 +70,7 @@
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
                     ></ng-container>
                     <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
-                        <natural-icon matListItemIcon name="keyboard_arrow_down"></natural-icon>
+                        <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down"></mat-icon>
                         <span>Afficher d'avantage</span>
                     </a>
                 </mat-nav-list>
