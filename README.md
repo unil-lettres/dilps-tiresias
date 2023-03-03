@@ -147,3 +147,8 @@ docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tire
 ### End to end
 
 Run `yarn e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).
+
+### Credits
+
+This project is tested with
+[BrowserStack](https://www.browserstack.com/).
