@@ -3,9 +3,12 @@
         <mat-label>{{ placeholder }}</mat-label>
         <mat-chip-row (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly">
             <div fxLayout="row">
-                <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-mdc-chip-remove"
-                    >remove_red_eye</mat-icon
-                >
+                <mat-icon
+                    (click)="openItem(item)"
+                    *ngIf="previewComponent"
+                    class="mat-mdc-chip-remove"
+                    fontIcon="remove_red_eye"
+                ></mat-icon>
                 <div fxFlex>
                     <span>{{ getLabel(item) }}</span>
                     <br *ngIf="item.locality && !readonly" />
@@ -13,7 +16,7 @@
                 </div>
             </div>
 
-            <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
+            <mat-icon *ngIf="!readonly" matChipRemove fontIcon="cancel"></mat-icon>
         </mat-chip-row>
 
         <input
