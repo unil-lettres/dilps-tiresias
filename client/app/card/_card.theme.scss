@@ -37,6 +37,10 @@
                 font-size: inherit !important;
                 font-family: inherit !important;
             }
+
+            quill-editor {
+                display: block;
+            }
         }
 
         .ql-editor {
