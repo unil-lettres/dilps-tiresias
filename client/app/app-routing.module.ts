@@ -161,7 +161,7 @@ export const routes: Routes = [
                                                 ],
                                             },
                                         },
-                                    } as CollectionFilterGroupCondition,
+                                    } satisfies CollectionFilterGroupCondition,
                                 ],
                             },
                         ],
@@ -191,7 +191,13 @@ export const routes: Routes = [
                     showUnclassified: true,
                     showMyCards: true,
                     filter: {
-                        groups: [{conditions: [{isSource: {equal: {value: false}}} as CollectionFilterGroupCondition]}],
+                        groups: [
+                            {
+                                conditions: [
+                                    {isSource: {equal: {value: false}}} satisfies CollectionFilterGroupCondition,
+                                ],
+                            },
+                        ],
                     },
                 },
                 children: [
@@ -206,7 +212,9 @@ export const routes: Routes = [
                         component: ListComponent,
                         resolve: {creator: UserResolver},
                         data: {
-                            filter: {groups: [{conditions: [{collections: {empty: {}}} as CardFilterGroupCondition]}]},
+                            filter: {
+                                groups: [{conditions: [{collections: {empty: {}}} satisfies CardFilterGroupCondition]}],
+                            },
                         },
                     },
                     {
@@ -230,7 +238,9 @@ export const routes: Routes = [
                     creationButtonForRoles: [UserRole.administrator],
                     // editionButtonsForRoles: [UserRole.administrator],
                     filter: {
-                        groups: [{conditions: [{isSource: {equal: {value: true}}} as CollectionFilterGroupCondition]}],
+                        groups: [
+                            {conditions: [{isSource: {equal: {value: true}}} satisfies CollectionFilterGroupCondition]},
+                        ],
                     },
                 },
                 children: [
