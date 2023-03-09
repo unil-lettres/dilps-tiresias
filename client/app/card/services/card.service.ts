@@ -269,7 +269,7 @@ export class CardService extends AbstractContextualizedService<
             {},
             {input: this.getInput(object)},
             this.getPartialVariablesForCreation(),
-        ) as CreateCardVariables;
+        ) satisfies CreateCardVariables;
 
         return this.apollo
             .mutate<CreateCard, CreateCardVariables>({
