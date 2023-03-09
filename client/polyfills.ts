@@ -22,6 +22,22 @@ import '@angular/localize/init';
  * BROWSER POLYFILLS
  */
 
+// @ecodev/natural uses Blob.text() which is not supported by Safari 13.1 (which
+// is used by some of our users).
+// https://github.com/Ecodev/natural/blob/79836ea7b6142c19c4c6e1ed7268f968e94e16d4/projects/natural/src/lib/modules/file/utils.ts#L90
+if (!Blob.prototype.text) {
+    Blob.prototype.text = function () {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve(reader.result as string);
+            };
+            reader.onerror = reject;
+            reader.readAsText(this);
+        });
+    };
+}
+
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags
