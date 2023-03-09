@@ -1,10 +1,10 @@
 import {Component, Inject} from '@angular/core';
 import {
     AbstractControl,
-    UntypedFormControl,
-    UntypedFormGroup,
     FormGroupDirective,
     NgForm,
+    UntypedFormControl,
+    UntypedFormGroup,
     ValidationErrors,
     ValidatorFn,
     Validators,
@@ -73,10 +73,10 @@ export class TypeNumericRangeComponent implements DropdownComponent {
     };
 
     public constructor(
-        @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData,
+        @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<TypeNumericRangeConfiguration>,
         protected readonly dropdownRef: NaturalDropdownRef,
     ) {
-        this.configuration = {...this.defaults, ...(data.configuration as TypeNumericRangeConfiguration)};
+        this.configuration = {...this.defaults, ...data.configuration};
 
         this.form = new UntypedFormGroup({
             from: this.fromCtrl,
