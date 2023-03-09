@@ -234,7 +234,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     /**
      * Cache institution data from server
-     * this.model is here considered as CardInput and should receive string, not object
+     * `this.model` is here considered as CardInput and should receive string, not object
      */
     public institution: Card_card_institution | UpdateCard_updateCard_institution | null;
 
