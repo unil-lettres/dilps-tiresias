@@ -19,6 +19,10 @@
             .mat-mdc-list-item {
                 color: mat.get-color-from-palette($primary, default-contrast);
                 height: 64px;
+
+                * {
+                    color: inherit;
+                }
             }
 
             .mat-mdc-list-item.active {
