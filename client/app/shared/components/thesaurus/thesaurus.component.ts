@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -56,6 +56,11 @@ export class ThesaurusComponent<
      * Reference to autocomplete
      */
     @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete!: MatAutocompleteTrigger;
+
+    /**
+     * Reference to input field for add a thesaurus.
+     */
+    @ViewChild('thesaurusInput', {static: true}) public thesaurusInput!: ElementRef<HTMLInputElement>;
 
     /**
      * If true, manipulations are forbidden
@@ -294,19 +299,15 @@ export class ThesaurusComponent<
      * On enter key, find if there is an active (focused) option in the mat-select).
      * If not add the term as is. If it does, add the selected option.
      */
-    public onEnter(event: Event): void {
-        const target: HTMLInputElement = event.target as HTMLInputElement;
-        if (!this.autocomplete.activeOption && this.allowFreeText) {
-            this.addTerm({name: target.value});
-            target.value = '';
-        } else if (this.autocomplete.activeOption) {
-            this.addTerm(this.autocomplete.activeOption.value);
-            target.value = '';
+    public onEnter(): void {
+        const inputValue = this.thesaurusInput.nativeElement.value;
+        if (inputValue && this.allowFreeText) {
+            this.addTerm({name: inputValue});
         }
     }
 
     /**
-     * When click on a suggestion
+     * When click or keypress enter on a suggestion
      */
     public selectSuggestion(event: MatAutocompleteSelectedEvent): void {
         this.addTerm(event.option.value);
@@ -331,6 +332,7 @@ export class ThesaurusComponent<
             this.items.push(clone(term)); // clone to get rid of readonly
             this.notifyModel();
         }
+        this.thesaurusInput.nativeElement.value = '';
     }
 
     private notifyModel(): void {

@@ -21,12 +21,13 @@
 
         <input
             (focus)="focus()"
-            (keydown.enter)="onEnter($event)"
+            (keydown.enter)="onEnter()"
             [formControl]="formControl"
             [fxShow]="!readonly || items.length === 0"
             [matAutocomplete]="autocomplete"
             [matChipInputFor]="chipList"
             [readonly]="readonly"
+            #thesaurusInput
         />
     </mat-chip-grid>
 
