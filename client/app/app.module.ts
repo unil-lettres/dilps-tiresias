@@ -1,7 +1,7 @@
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {NgModule, ErrorHandler} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
@@ -19,7 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -288,6 +288,13 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         NaturalFileModule,
     ],
     providers: [
+        {
+            // See https://github.com/angular/components/issues/26580
+            provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
+            useValue: {
+                formFieldAppearance: 'fill',
+            },
+        },
         {provide: SITE, useValue: (window as Literal)['APP_SITE']}, // As defined in client/index.html
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
