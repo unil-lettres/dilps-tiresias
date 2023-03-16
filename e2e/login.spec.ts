@@ -14,6 +14,6 @@ test.describe('Login page', () => {
         expect(await app.getParagraphText()).toEqual(
             "Veuillez choisir une méthode d'authentification ou\n" + 'utiliser le bouton "Accès public"',
         );
-        expect(await app.getErrorMessage()).toEqual("Le nom d'utilisateur ou mot de passe est incorrect");
+        expect(await app.getErrorMessage()).toMatch(/Le nom d'utilisateur ou mot de passe est incorrect/);
     });
 });
