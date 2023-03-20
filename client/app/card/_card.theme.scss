@@ -37,6 +37,10 @@
                 font-size: inherit !important;
                 font-family: inherit !important;
             }
+
+            quill-editor {
+                display: block;
+            }
         }
 
         .ql-editor {
@@ -45,6 +49,12 @@
             p {
                 margin-bottom: 0;
             }
+        }
+
+        // Be sure that the toolbar stays one one line
+        // It should not be necessary but it seems that something goes wrong in the computation of the width by QuillJs
+        .ql-flip.ql-tooltip {
+            min-width: 170px;
         }
 
         a[href] {

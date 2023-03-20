@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge} from 'lodash-es';
+import {merge, assign} from 'lodash-es';
 import {cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
@@ -40,8 +40,11 @@ export class ChangeComponent implements OnInit {
                 this.change = merge({}, change);
                 this.original = this.change.original;
                 this.fetchedSuggestion = change.suggestion;
-                this.suggestionInput = this.fetchedSuggestion ? cardToCardInput(this.fetchedSuggestion) : null;
-                this.suggestionInput.code = '';
+                if (this.fetchedSuggestion) {
+                    this.suggestionInput = assign(cardToCardInput(this.fetchedSuggestion), {code: ''});
+                } else {
+                    this.suggestionInput = null;
+                }
                 this.showTools = true;
                 this.loaded = true;
             });

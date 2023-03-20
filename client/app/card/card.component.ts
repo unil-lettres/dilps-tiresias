@@ -200,15 +200,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         ...quillConfig.modules,
         keyboard: {
             bindings: {
-                enter: {
-                    key: 13,
-                    handler: () => false,
-                },
-                shiftEnter: {
-                    key: 13,
-                    shiftKey: true,
-                    handler: () => false,
-                },
                 ...this.tabToNextFields,
             },
         },

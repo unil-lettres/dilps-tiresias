@@ -35,7 +35,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if ($session->has('user')) {
             $user = $this->userRepository->getOneById($session->get('user'));
 
-            if ($user && (!$user->getActiveUntil() || $user->getActiveUntil() > new Chronos())) {
+            if ($user && $user->canLogin()) {
                 User::setCurrent($user);
             }
 
