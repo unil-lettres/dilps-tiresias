@@ -14,6 +14,7 @@ app-carousel {
 }
 
 .shib-link {
+    height: auto !important; // allow button grow in height
     flex: auto;
 
     img {
