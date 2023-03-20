@@ -42,6 +42,7 @@
                             [style.padding-left.px]="padding"
                             mat-list-item
                             routerLinkActive="active"
+                            class="mat-mdc-list-item-interactive"
                         >
                             <span matListItemTitle>
                                 {{ collection.name }}
@@ -69,7 +70,14 @@
                     <ng-container
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
                     ></ng-container>
-                    <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
+                    <a
+                        (click)="more()"
+                        *ngIf="hasMore"
+                        fxLayout="column"
+                        fxLayoutAlign="center"
+                        mat-list-item
+                        class="mat-mdc-list-item-interactive"
+                    >
                         <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down"></mat-icon>
                         <span>Afficher d'avantage</span>
                     </a>
