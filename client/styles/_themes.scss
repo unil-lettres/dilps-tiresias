@@ -4,57 +4,165 @@
  */
 // Import theming files full relative way or karma will display warning
 @use '@angular/material' as mat;
-@use '@ecodev/natural';
 @use 'sass:meta';
-@use '@ecodev/angular-natural-gallery';
+@use 'sass:map';
 @use 'typography';
-@use '../app/app.theme';
-@use '../app/shared/components/boot-loader/boot-loader.theme';
-@use '../app/home/home.theme';
-@use 'scroll';
-@use 'toolbar';
-@use 'hint';
-@use 'upload';
-@use '../app/collections/collections/collections.theme';
-@use '../app/shared/components/alert/alert.theme';
-@use '../app/shared/components/address/address.theme';
-@use '../app/shared/components/download/download.theme';
-@use '../app/card/card.theme';
-@use '../app/quizz/quizz.theme';
-@use '../app/view-grid/view-grid.theme';
-@use '../app/shared/components/thesaurus/thesaurus.theme';
+@use 'components';
+@use 'themes/dilps-production';
+@use 'themes/dilps-development';
+@use 'themes/dilps-staging';
+@use 'themes/tiresias-production';
+@use 'themes/tiresias-development';
+@use 'themes/tiresias-staging';
 
-// Include material core (only once !)
-@include mat.all-component-typographies(typography.$custom-typography-gt-sm);
-@include mat.core();
+@mixin applyTheme($theme) {
+    color: mat.get-color-from-palette(map.get($theme, foreground), base);
 
-// Include components themes
-@mixin components-theme($theme) {
-    @include natural.natural($theme);
-    @include app.app($theme);
-    @include boot-loader.boot-loader($theme);
-    @include scroll.scroll($theme);
-    @include home.home($theme);
-    @include toolbar.toolbar($theme);
-    @include angular-natural-gallery.gallery-theme($theme);
-    @include collections.collections($theme);
-    @include alert.alert($theme);
-    @include address.address($theme);
-    @include upload.upload($theme);
-    @include card.card($theme);
-    @include quizz.quizz($theme);
-    @include hint.hint($theme);
-    @include view-grid.view-grid($theme);
-    @include thesaurus.thesaurus($theme);
-    @include download.download-modal($theme);
+    @include mat.autocomplete-color($theme);
+    @include mat.button-color($theme);
+    @include mat.card-color($theme);
+    @include mat.checkbox-color($theme);
+    @include mat.chips-color($theme);
+    @include mat.core-color($theme);
+    @include mat.datepicker-color($theme);
+    @include mat.dialog-color($theme);
+    @include mat.expansion-color($theme);
+    @include mat.fab-color($theme);
+    @include mat.form-field-color($theme);
+    @include mat.grid-list-color($theme);
+    @include mat.icon-color($theme);
+    @include mat.icon-button-color($theme);
+    @include mat.input-color($theme);
+    @include mat.list-color($theme);
+    @include mat.menu-color($theme);
+    @include mat.paginator-color($theme);
+    @include mat.progress-spinner-color($theme);
+    @include mat.select-color($theme);
+    @include mat.sidenav-color($theme);
+    @include mat.slide-toggle-color($theme);
+    @include mat.slider-color($theme);
+    @include mat.snack-bar-color($theme);
+    @include mat.sort-color($theme);
+    @include mat.table-color($theme);
+    @include mat.tabs-color($theme);
+    @include mat.toolbar-color($theme);
+    @include mat.tooltip-color($theme);
+    @include mat.tree-color($theme);
+
+    @include components.components-theme($theme);
 }
 
-// Dilps
-@include meta.load-css('themes/dilps-production');
-@include meta.load-css('themes/dilps-development');
-@include meta.load-css('themes/dilps-staging');
+// Include Material densities, typographies and  core (only once !)
+// Only 30 modules used on a total of 37 modules
+@include mat.autocomplete-density(0);
+@include mat.button-density(0);
+@include mat.card-density(0);
+@include mat.checkbox-density(0);
+@include mat.chips-density(0);
+@include mat.core-density(0);
+@include mat.datepicker-density(0);
+@include mat.dialog-density(0);
+@include mat.expansion-density(0);
+@include mat.fab-density(0);
+@include mat.form-field-density(0);
+@include mat.grid-list-density(0);
+@include mat.icon-density(0);
+@include mat.icon-button-density(0);
+@include mat.input-density(0);
+@include mat.list-density(0);
+@include mat.menu-density(0);
+@include mat.paginator-density(0);
+@include mat.progress-spinner-density(0);
+@include mat.select-density(0);
+@include mat.sidenav-density(0);
+@include mat.slide-toggle-density(0);
+@include mat.slider-density(0);
+@include mat.snack-bar-density(0);
+@include mat.sort-density(0);
+@include mat.table-density(0);
+@include mat.tabs-density(0);
+@include mat.toolbar-density(0);
+@include mat.tooltip-density(0);
+@include mat.tree-density(0);
 
-// Tiresias
-@include meta.load-css('themes/tiresias-production');
-@include meta.load-css('themes/tiresias-development');
-@include meta.load-css('themes/tiresias-staging');
+@include mat.typography-hierarchy(typography.$custom-typography-gt-sm);
+@include mat.autocomplete-typography(typography.$custom-typography-gt-sm);
+@include mat.button-typography(typography.$custom-typography-gt-sm);
+@include mat.card-typography(typography.$custom-typography-gt-sm);
+@include mat.checkbox-typography(typography.$custom-typography-gt-sm);
+@include mat.chips-typography(typography.$custom-typography-gt-sm);
+@include mat.core-typography(typography.$custom-typography-gt-sm);
+@include mat.datepicker-typography(typography.$custom-typography-gt-sm);
+@include mat.dialog-typography(typography.$custom-typography-gt-sm);
+@include mat.expansion-typography(typography.$custom-typography-gt-sm);
+@include mat.fab-typography(typography.$custom-typography-gt-sm);
+@include mat.form-field-typography(typography.$custom-typography-gt-sm);
+@include mat.grid-list-typography(typography.$custom-typography-gt-sm);
+@include mat.icon-typography(typography.$custom-typography-gt-sm);
+@include mat.icon-button-typography(typography.$custom-typography-gt-sm);
+@include mat.input-typography(typography.$custom-typography-gt-sm);
+@include mat.list-typography(typography.$custom-typography-gt-sm);
+@include mat.menu-typography(typography.$custom-typography-gt-sm);
+@include mat.paginator-typography(typography.$custom-typography-gt-sm);
+@include mat.progress-spinner-typography(typography.$custom-typography-gt-sm);
+@include mat.select-typography(typography.$custom-typography-gt-sm);
+@include mat.sidenav-typography(typography.$custom-typography-gt-sm);
+@include mat.slide-toggle-typography(typography.$custom-typography-gt-sm);
+@include mat.slider-typography(typography.$custom-typography-gt-sm);
+@include mat.snack-bar-typography(typography.$custom-typography-gt-sm);
+@include mat.sort-typography(typography.$custom-typography-gt-sm);
+@include mat.table-typography(typography.$custom-typography-gt-sm);
+@include mat.tabs-typography(typography.$custom-typography-gt-sm);
+@include mat.toolbar-typography(typography.$custom-typography-gt-sm);
+@include mat.tooltip-typography(typography.$custom-typography-gt-sm);
+@include mat.tree-typography(typography.$custom-typography-gt-sm);
+
+@include mat.core();
+
+.dilps-production {
+    @include applyTheme(dilps-production.$theme-light);
+}
+
+.dilps-production-dark {
+    @include applyTheme(dilps-production.$theme-dark);
+}
+
+.dilps-development {
+    @include applyTheme(dilps-development.$theme-light);
+}
+
+.dilps-development-dark {
+    @include applyTheme(dilps-development.$theme-dark);
+}
+
+.dilps-staging {
+    @include applyTheme(dilps-staging.$theme-light);
+}
+
+.dilps-staging-dark {
+    @include applyTheme(dilps-staging.$theme-dark);
+}
+
+.tiresias-production {
+    @include applyTheme(tiresias-production.$theme-light);
+}
+
+.tiresias-production-dark {
+    @include applyTheme(tiresias-production.$theme-dark);
+}
+
+.tiresias-development {
+    @include applyTheme(tiresias-development.$theme-light);
+}
+
+.tiresias-development-dark {
+    @include applyTheme(tiresias-development.$theme-dark);
+}
+
+.tiresias-staging {
+    @include applyTheme(tiresias-staging.$theme-light);
+}
+
+.tiresias-staging-dark {
+    @include applyTheme(tiresias-staging.$theme-dark);
+}

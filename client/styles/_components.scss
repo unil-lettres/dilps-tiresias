@@ -1,27 +1,22 @@
-/**
- * !!! NEVER INCLUDE THIS FILE IN A SCSS FILE
- * See source doc here https://github.com/angular/material2/tree/master/src/lib/core/theming
- */
-// Import theming files full relative way or karma will display warning
-@use '@ecodev/natural';
-@use 'sass:meta';
-@use '@ecodev/angular-natural-gallery';
-@use 'typography';
 @use '../app/app.theme';
-@use '../app/shared/components/boot-loader/boot-loader.theme';
+@use '../app/card/card.theme';
+@use '../app/collections/collections/collections.theme';
 @use '../app/home/home.theme';
+@use '../app/quizz/quizz.theme';
+@use '../app/shared/components/address/address.theme';
+@use '../app/shared/components/alert/alert.theme';
+@use '../app/shared/components/boot-loader/boot-loader.theme';
+@use '../app/shared/components/download/download.theme';
+@use '../app/shared/components/thesaurus/thesaurus.theme';
+@use '../app/view-grid/view-grid.theme';
+@use '@angular/material' as mat;
+@use '@ecodev/angular-natural-gallery';
+@use '@ecodev/natural';
+@use 'hint';
+@use 'sass:meta';
 @use 'scroll';
 @use 'toolbar';
-@use 'hint';
 @use 'upload';
-@use '../app/collections/collections/collections.theme';
-@use '../app/shared/components/alert/alert.theme';
-@use '../app/shared/components/address/address.theme';
-@use '../app/shared/components/download/download.theme';
-@use '../app/card/card.theme';
-@use '../app/quizz/quizz.theme';
-@use '../app/view-grid/view-grid.theme';
-@use '../app/shared/components/thesaurus/thesaurus.theme';
 
 // Include components themes
 @mixin components-theme($theme) {
