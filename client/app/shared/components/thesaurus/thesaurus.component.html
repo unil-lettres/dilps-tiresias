@@ -1,6 +1,6 @@
 <mat-form-field>
+    <mat-label>{{ placeholder }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
-        <mat-label>{{ placeholder }}</mat-label>
         <mat-chip-row (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly">
             <div fxLayout="row">
                 <mat-icon
