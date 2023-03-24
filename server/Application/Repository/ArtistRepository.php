@@ -34,7 +34,13 @@ class ArtistRepository extends AbstractRepository
 
         $found = [];
         foreach ($artists as $artist) {
-            $found[] = $artist->getName();
+            // Names are not trimmed when saved from thesaurus interface, so we
+            // have names with trailing whitespace in the database.
+            // With the collation we use, MariaDB trims whitespaces when doing
+            // comparison (affecting UNIQUE constraint and SELECT queries).
+            // So we must be sure to handle whitespaces in the same way as
+            // MariaDB when doing comparisons.
+            $found[] = trim($artist->getName());
         }
 
         $notFound = array_diff($names, $found);
