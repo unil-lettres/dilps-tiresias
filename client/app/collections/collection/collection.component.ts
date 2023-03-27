@@ -31,7 +31,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         1: {
             value: CollectionVisibility.private,
             text: 'par moi et les abonnés',
-            color: undefined,
+            color: 'warn',
         },
         2: {
             value: CollectionVisibility.administrator,

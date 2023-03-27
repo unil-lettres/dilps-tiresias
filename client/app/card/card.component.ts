@@ -70,7 +70,7 @@ export function cardToCardInput(fetchedModel: Card_card): CardInputWithId {
 export interface VisibilityConfig<V> {
     value: V;
     text: string;
-    color: ThemePalette;
+    color: NonNullable<ThemePalette>;
 }
 
 type Visibilities<V> = Record<1 | 2 | 3, VisibilityConfig<V>>;
@@ -167,7 +167,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         1: {
             value: CardVisibility.private,
             text: 'par moi, les admins et les abonnés',
-            color: undefined,
+            color: 'warn',
         },
         2: {
             value: CardVisibility.member,

@@ -5,7 +5,7 @@
                 <div *ngIf="showVisibility" class="innerSpacing" fxLayout="column" style="max-width: 400px">
                     <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
                     <mat-slider
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
                         [max]="3"
                         [min]="1"
                         [step]="1"
