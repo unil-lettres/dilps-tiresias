@@ -67,7 +67,7 @@
 @include mat.form-field-density(0);
 @include mat.grid-list-density(0);
 @include mat.icon-density(0);
-@include mat.icon-button-density(0);
+@include mat.icon-button-density(-2); // More dense to keep original layout of card toolbar
 @include mat.input-density(0);
 @include mat.list-density(0);
 @include mat.menu-density(0);
