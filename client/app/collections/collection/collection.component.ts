@@ -24,6 +24,7 @@ import {HierarchicFiltersConfiguration} from '@ecodev/natural';
 @Component({
     selector: 'app-collection',
     templateUrl: './collection.component.html',
+    styleUrls: ['./collection.component.scss'],
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public visibility: keyof CollectionVisibilities = 1;
