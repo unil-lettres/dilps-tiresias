@@ -11,4 +11,10 @@
     $config: mat.get-color-config($theme);
     $is-dark-theme: map.get($config, is-dark);
     $label-color: mat.get-color-from-palette($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
+
+    app-thesaurus {
+        .mat-mdc-chip-remove {
+            padding-left: 5px;
+        }
+    }
 }
