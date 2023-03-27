@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use '../../styles/typography';
 
 @mixin card($theme) {
     $primary: map.get($theme, primary);
@@ -15,6 +16,11 @@
     app-card {
         mat-toolbar.edition {
             background: mat.get-color-from-palette($accent, 0.4);
+        }
+
+        mat-chip-row {
+            font-size: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
+            font-family: inherit !important;
         }
 
         .rich-text {
@@ -34,7 +40,7 @@
             }
 
             .ql-container {
-                font-size: inherit !important;
+                font-size: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
                 font-family: inherit !important;
             }
 
