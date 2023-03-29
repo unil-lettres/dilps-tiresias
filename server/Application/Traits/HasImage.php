@@ -136,6 +136,7 @@ trait HasImage
             'image/vnd.adobe.photoshop',
             'image/webp',
             'image/heif',
+            'image/heic',
         ];
 
         if (!in_array($mime, $acceptedMimeTypes, true)) {
