@@ -23,6 +23,7 @@ type Model = Stamped & {
 })
 export class DialogFooterComponent {
     @Input() public canCreate = false;
+    @Input() public canDelete = false;
     @Input() public item!: Model;
     @Input() public formCtrl: UntypedFormControl;
     @Output() public readonly create = new EventEmitter<Model>();

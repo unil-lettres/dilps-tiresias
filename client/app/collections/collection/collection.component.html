@@ -74,6 +74,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.collection?.create"
+        [canDelete]="true"
         [item]="data.item"
         fxFlex
     ></app-dialog-footer>

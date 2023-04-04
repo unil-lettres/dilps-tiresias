@@ -3,7 +3,12 @@
 
     <button mat-button mat-dialog-close>Annuler</button>
 
-    <button (click)="delete.emit(item)" *ngIf="item.id && item?.permissions?.delete" color="warn" mat-raised-button>
+    <button
+        (click)="delete.emit(item)"
+        *ngIf="canDelete && item.id && item?.permissions?.delete"
+        color="warn"
+        mat-raised-button
+    >
         <natural-icon name="delete_forever"></natural-icon>
         Supprimer
     </button>

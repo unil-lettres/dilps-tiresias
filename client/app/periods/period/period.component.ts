@@ -11,12 +11,13 @@ import {PeriodService} from '../services/period.service';
 import {formatYearRange} from '../../shared/services/utility';
 import {HierarchicFiltersConfiguration, Literal} from '@ecodev/natural';
 import {Period_period, PeriodFilter} from '../../shared/generated-types';
+import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
     selector: 'app-period',
     templateUrl: './period.component.html',
 })
-export class PeriodComponent extends AbstractDetailDirective<PeriodService> {
+export class PeriodComponent extends AbstractDetailDirective<PeriodService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = periodHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<PeriodFilter> = [];
 
@@ -29,7 +30,7 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService> {
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<PeriodComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Period_period},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Period_period & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }
