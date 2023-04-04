@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 jobs:
-    build:
+    test:
         name: PHP${{ matrix.php-versions }}
         runs-on: ubuntu-22.04
 
@@ -105,21 +105,3 @@ jobs:
               run: |
                   composer global require scrutinizer/ocular
                   ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage-clover.xml
-
-    notification:
-        name: Notify
-        runs-on: ubuntu-latest
-        needs: build
-        if: always()
-        continue-on-error: true
-
-        steps:
-            - uses: technote-space/workflow-conclusion-action@v3
-            - uses: mikesprague/teams-incoming-webhook-action@v1
-              with:
-                  github-token: ${{ github.token }}
-                  webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
-                  deploy-card: true
-                  timezone: 'Europe/Zurich'
-                  title: ${{ env.WORKFLOW_CONCLUSION }}
-                  color: ${{ env.WORKFLOW_CONCLUSION }}
