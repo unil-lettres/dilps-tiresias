@@ -21,6 +21,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.artist?.create"
+        [canDelete]="data?.item?.canDelete"
         [item]="data.item"
         fxFlex
     ></app-dialog-footer>
