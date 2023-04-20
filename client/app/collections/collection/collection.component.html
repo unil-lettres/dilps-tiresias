@@ -1,16 +1,16 @@
 <mat-dialog-content>
-    <mat-tab-group>
+    <mat-tab-group mat-stretch-tabs="false">
         <mat-tab label="Collection">
-            <div class="padding" class="padding-v" fxLayout="column" fxLayoutGap="10px">
-                <div *ngIf="showVisibility" class="innerSpacing" fxLayout="column" style="max-width: 300px">
+            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+                <div *ngIf="showVisibility" class="innerSpacing" fxLayout="column" style="max-width: 400px">
                     <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
                     <mat-slider
-                        (input)="updateVisibility($event); visibility = $event.value"
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
                         [max]="3"
                         [min]="1"
-                        [ngModel]="visibility"
-                    ></mat-slider>
+                        [step]="1"
+                        ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
+                    /></mat-slider>
                 </div>
 
                 <mat-form-field>

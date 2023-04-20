@@ -1,6 +1,5 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-@use '../components.theme';
 
 $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: rgba(white, 0.87);
@@ -42,32 +41,22 @@ $primary: mat.define-palette($mat-tiresias);
 $accent: mat.define-palette(mat.$blue-palette);
 $warn: mat.define-palette(mat.$red-palette);
 
-.tiresias-production {
-    $theme-light: mat.define-light-theme(
-        (
-            color: (
-                primary: $primary,
-                accent: $accent,
-                warn: $warn,
-            ),
-        )
-    );
-    color: mat.get-color-from-palette(map.get($theme-light, foreground), base);
-    @include mat.all-legacy-component-colors($theme-light);
-    @include components.components-theme($theme-light);
-}
+$theme-light: mat.define-light-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        ),
+    )
+);
 
-.tiresias-production-dark {
-    $theme-dark: mat.define-dark-theme(
-        (
-            color: (
-                primary: $primary,
-                accent: $accent,
-                warn: $warn,
-            ),
-        )
-    );
-    color: mat.get-color-from-palette(map.get($theme-dark, foreground), base);
-    @include mat.all-legacy-component-colors($theme-dark);
-    @include components.components-theme($theme-dark);
-}
+$theme-dark: mat.define-dark-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        ),
+    )
+);

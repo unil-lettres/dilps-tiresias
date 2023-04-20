@@ -5,7 +5,7 @@ app-table-button {
     justify-content: inherit;
     flex-direction: inherit;
 
-    a.mat-button {
+    a.mat-mdc-button {
         flex: 1;
         display: flex;
         align-items: center;
@@ -14,8 +14,7 @@ app-table-button {
         white-space: normal;
         line-height: 27px;
         border-radius: 0;
-
-        .mat-button-wrapper {
+        .mdc-button__label {
             display: flex;
             flex-direction: row;
             align-items: center;

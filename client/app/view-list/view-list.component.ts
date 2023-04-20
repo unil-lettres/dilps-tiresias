@@ -1,6 +1,6 @@
 import {SelectionModel} from '@angular/cdk/collections';
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {LegacyPageEvent as PageEvent} from '@angular/material/legacy-paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
 import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';

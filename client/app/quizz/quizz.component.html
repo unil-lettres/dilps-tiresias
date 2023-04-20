@@ -1,14 +1,14 @@
 <div fxFlex fxLayout="column">
     <div class="padding" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px">
-        <div class="mat-headline">Lecture d'oeuvres</div>
-        <div class="mat-body-1">Image {{ currentIndex + 1 }} / {{ cards.length }}</div>
+        <div class="mat-headline-5">Lecture d'oeuvres</div>
+        <div class="mat-body-2">Image {{ currentIndex + 1 }} / {{ cards.length }}</div>
 
         <div class="padding" fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
             <mat-form-field fxFlex>
                 <mat-label>Saisissez votre réponse</mat-label>
                 <input [formControl]="formCtrl" matInput />
             </mat-form-field>
-            <button (click)="goToNext()" color="primary" mat-button mat-raised-button>Suivant</button>
+            <button (click)="goToNext()" color="primary" mat-raised-button>Suivant</button>
         </div>
     </div>
 

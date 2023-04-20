@@ -57,12 +57,7 @@
 </div>
 
 <div id="mapZone">
-    <mat-form-field
-        [fxShow]="(mapApiService.loaded | async) && !readonly"
-        class="mat-elevation-z4"
-        floatLabel="never"
-        id="search"
-    >
+    <mat-form-field [fxShow]="(mapApiService.loaded | async) && !readonly" class="mat-elevation-z4" id="search">
         <mat-label>Chercher</mat-label>
         <input
             #input

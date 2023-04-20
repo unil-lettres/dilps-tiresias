@@ -1,5 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {
+    DropdownFacet,
     FlagFacet,
     NaturalSearchFacets,
     replaceOperatorByField,
@@ -7,8 +8,11 @@ import {
     TypeHierarchicSelectorComponent,
     TypeNaturalSelectComponent,
     TypeSelectComponent,
+    TypeSelectConfiguration,
     TypeTextComponent,
     wrapLike,
+    TypeHierarchicSelectorConfiguration,
+    TypeSelectNaturalConfiguration,
 } from '@ecodev/natural';
 import {SITE} from '../app.config';
 import {DocumentTypeService} from '../document-types/services/document-type.service';
@@ -17,8 +21,11 @@ import {MaterialService} from '../materials/services/material.service';
 import {PeriodService} from '../periods/services/period.service';
 import {TagService} from '../tags/services/tag.service';
 import {TypeLocationComponent} from '../type-location/type-location.component';
-import {TypeNumericRangeComponent} from '../type-numeric-range/type-numeric-range.component';
-import {CardFilterGroupCondition, CardVisibility, Site} from './generated-types';
+import {
+    TypeNumericRangeComponent,
+    TypeNumericRangeConfiguration,
+} from '../type-numeric-range/type-numeric-range.component';
+import {CardFilterGroupConditionSite, CardVisibility, Site} from './generated-types';
 import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
 import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
@@ -33,7 +40,7 @@ export const adminConfig: NaturalSearchFacets = [
             items: [CardVisibility.public, CardVisibility.member, CardVisibility.private],
             multiple: true,
         },
-    },
+    } satisfies DropdownFacet<TypeSelectConfiguration>,
 ];
 
 /**
@@ -48,63 +55,63 @@ export class NaturalSearchFacetsService {
             display: '[Inclure Tiresias]',
             field: 'site',
             name: 'includeTiresias',
-            condition: {equal: {value: Site.dilps}} as CardFilterGroupCondition,
+            condition: {equal: {value: Site.dilps}},
             inversed: true,
-        } as FlagFacet,
+        } satisfies FlagFacet<CardFilterGroupConditionSite>,
         {
             display: 'Titre',
             field: 'nameOrExpandedName',
             component: TypeTextComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Artistes',
             field: 'artistOrTechniqueAuthor',
             component: TypeTextComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Supplément',
             field: 'addition',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Datation',
             field: 'datingYearRange',
             component: TypeNumericRangeComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<TypeNumericRangeConfiguration>,
         {
             display: 'Domaine',
             field: 'dilpsDomain',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Technique & Matériel',
             field: 'material',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Localité',
             field: 'localityOrInstitutionLocality',
             component: TypeTextComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Institution',
             field: 'institution.name',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Source',
             field: 'literature',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
     ];
 
     private tiresiasFacets: NaturalSearchFacets = [
@@ -112,15 +119,15 @@ export class NaturalSearchFacetsService {
             display: '[Inclure Dilps]',
             field: 'site',
             name: 'includeDilps',
-            condition: {equal: {value: Site.tiresias}} as CardFilterGroupCondition,
+            condition: {equal: {value: Site.tiresias}},
             inversed: true,
-        } as FlagFacet,
+        } satisfies FlagFacet<CardFilterGroupConditionSite>,
         {
             display: 'Fonds',
             field: 'code',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Domaine',
             field: 'domains',
@@ -131,19 +138,19 @@ export class NaturalSearchFacetsService {
                 service: this.domainService,
                 config: domainHierarchicConfig,
             },
-        },
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Description',
             field: 'nameOrExpandedName',
             component: TypeTextComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Corpus',
             field: 'corpus',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Matériaux',
             field: 'materials',
@@ -154,7 +161,7 @@ export class NaturalSearchFacetsService {
                 service: this.materialService,
                 config: materialHierarchicConfig,
             },
-        },
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Mots-clés',
             field: 'tags',
@@ -165,13 +172,13 @@ export class NaturalSearchFacetsService {
                 service: this.tagService,
                 config: tagHierarchicConfig,
             },
-        },
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Localité',
             field: 'locality',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Géolocalisation',
             field: 'custom',
@@ -179,7 +186,7 @@ export class NaturalSearchFacetsService {
             component: TypeLocationComponent,
             showValidateButton: true,
             transform: replaceOperatorByName,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Période',
             field: 'periods',
@@ -190,25 +197,25 @@ export class NaturalSearchFacetsService {
                 service: this.periodService,
                 config: periodHierarchicConfig,
             },
-        },
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Datation',
             field: 'cardYearRange',
             component: TypeNumericRangeComponent,
             transform: replaceOperatorByField,
-        },
+        } satisfies DropdownFacet<TypeNumericRangeConfiguration>,
         {
             display: 'Musée',
             field: 'institution.name',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: "Numéro d'inventaire",
             field: 'objectReference',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Type de document',
             field: 'documentType',
@@ -219,19 +226,19 @@ export class NaturalSearchFacetsService {
                 placeholder: 'Type de document',
                 filter: {},
             },
-        },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<DocumentTypeService>>,
         {
             display: 'Année du document',
             field: 'techniqueDate',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
         {
             display: 'Source',
             field: 'literature',
             component: TypeTextComponent,
             transform: wrapLike,
-        },
+        } satisfies DropdownFacet<never>,
     ];
 
     public constructor(

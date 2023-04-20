@@ -11,7 +11,7 @@
 </mat-toolbar>
 
 <div class="padding padding-fab">
-    <div class="mat-headline">Actualités</div>
+    <div class="mat-headline-5">Actualités</div>
 
     <div [fxShow]="showTable()" class="responsive-table">
         <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
@@ -22,7 +22,7 @@
             <ng-container matColumnDef="isActive">
                 <th *matHeaderCellDef mat-header-cell natural-3em-column>Actif</th>
                 <td *matCellDef="let element" mat-cell>
-                    <mat-icon *ngIf="element.isActive">check</mat-icon>
+                    <mat-icon *ngIf="element.isActive" fontIcon="check"></mat-icon>
                 </td>
             </ng-container>
 

@@ -2,8 +2,8 @@
     <ng-template swiperSlide *ngFor="let news of newses">
         <a [attr.href]="news.url" [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}" class="carousel-news">
             <div class="carousel-label">
-                <div class="name mat-title">{{ news.name }}</div>
-                <div class="description mat-body-2">{{ news.description }}</div>
+                <div class="name mat-headline-6">{{ news.name }}</div>
+                <div class="description mat-subtitle-2">{{ news.description }}</div>
             </div>
         </a>
     </ng-template>

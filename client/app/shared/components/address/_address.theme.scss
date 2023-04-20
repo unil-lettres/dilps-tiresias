@@ -14,16 +14,8 @@
             }
 
             mat-form-field {
-                .mat-form-field-wrapper {
-                    margin-bottom: -1.25em;
-                }
-
-                .mat-form-field-infix {
-                    margin-left: 10px;
-                    margin-right: 10px;
-                    padding: 0.4375em 0;
-                    border-top: 0.6em solid transparent;
-                    border-bottom: 0.6em solid transparent;
+                .mat-mdc-form-field-bottom-align {
+                    display: none;
                 }
             }
         }

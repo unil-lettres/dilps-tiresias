@@ -1,5 +1,5 @@
 <mat-dialog-content>
-    <mat-tab-group>
+    <mat-tab-group mat-stretch-tabs="false">
         <mat-tab label="Utilisateur">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field class="width-auto">
@@ -50,7 +50,7 @@
                 <mat-form-field>
                     <mat-label>Active jusqu'au</mat-label>
                     <input [(ngModel)]="data.item.activeUntil" [matDatepicker]="picker" matInput name="activeUntil" />
-                    <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
@@ -63,7 +63,7 @@
                         matInput
                         name="termsAgreement"
                     />
-                    <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
 

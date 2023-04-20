@@ -4,7 +4,7 @@
             <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
             <div fxFlex></div>
             <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
-                <natural-icon name="add"></natural-icon>
+                <mat-icon naturalIcon="add"></mat-icon>
             </button>
         </mat-toolbar>
 
@@ -17,7 +17,7 @@
                         mat-list-item
                         routerLinkActive="active"
                     >
-                        <span fxLayout="row" fxLayoutAlign="start center" matLine>Non classé</span>
+                        <span>Non classé</span>
                     </a>
                 </mat-nav-list>
 
@@ -28,7 +28,7 @@
                         mat-list-item
                         routerLinkActive="active"
                     >
-                        <span fxLayout="row" fxLayoutAlign="start center" matLine>Mes images</span>
+                        <span>Mes images</span>
                     </a>
                 </mat-nav-list>
 
@@ -42,17 +42,19 @@
                             [style.padding-left.px]="padding"
                             mat-list-item
                             routerLinkActive="active"
+                            class="mat-mdc-list-item-interactive"
                         >
-                            <span fxLayout="row" fxLayoutAlign="start center" matLine>
+                            <span matListItemTitle>
                                 {{ collection.name }}
                                 <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
                             </span>
                             <button
+                                matListItemMeta
                                 (click)="edit($event, collection)"
                                 *ngIf="collection.permissions.update || collection.permissions.delete"
                                 mat-icon-button
                             >
-                                <natural-icon name="edit"></natural-icon>
+                                <mat-icon naturalIcon="edit"></mat-icon>
                             </button>
                         </a>
                         <ng-container
@@ -66,12 +68,18 @@
 
                 <mat-nav-list>
                     <ng-container
-                        *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 0}"
+                        *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
                     ></ng-container>
-
-                    <a (click)="more()" *ngIf="hasMore" fxLayout="column" fxLayoutAlign="center" mat-list-item>
-                        <natural-icon mat-list-icon name="keyboard_arrow_down"></natural-icon>
-                        <span matLine>Afficher d'avantage</span>
+                    <a
+                        (click)="more()"
+                        *ngIf="hasMore"
+                        fxLayout="column"
+                        fxLayoutAlign="center"
+                        mat-list-item
+                        class="mat-mdc-list-item-interactive"
+                    >
+                        <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down"></mat-icon>
+                        <span>Afficher d'avantage</span>
                     </a>
                 </mat-nav-list>
             </div>

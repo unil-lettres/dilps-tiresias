@@ -1,18 +1,23 @@
 <mat-form-field>
-    <mat-chip-list #chipList aria-orientation="vertical" class="mat-chip-list-stacked">
-        <mat-label>{{ placeholder }}</mat-label>
-        <mat-chip (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly" fxLayout="row">
-            <mat-icon (click)="openItem(item)" *ngIf="previewComponent" class="mat-chip-remove"
-                >remove_red_eye</mat-icon
-            >
-            <div fxFlex>
-                <span>{{ getLabel(item) }}</span>
-                <br *ngIf="item.locality && !readonly" />
-                <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
+    <mat-label>{{ placeholder }}</mat-label>
+    <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
+        <mat-chip-row (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly">
+            <div fxLayout="row">
+                <mat-icon
+                    (click)="openItem(item)"
+                    *ngIf="previewComponent"
+                    class="mat-mdc-chip-remove"
+                    fontIcon="remove_red_eye"
+                ></mat-icon>
+                <div fxFlex>
+                    <span>{{ getLabel(item) }}</span>
+                    <br *ngIf="item.locality && !readonly" />
+                    <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
+                </div>
             </div>
 
-            <mat-icon *ngIf="!readonly" matChipRemove>cancel</mat-icon>
-        </mat-chip>
+            <mat-icon *ngIf="!readonly" matChipRemove fontIcon="cancel">cancel</mat-icon>
+        </mat-chip-row>
 
         <input
             (focus)="focus()"
@@ -23,7 +28,7 @@
             [matChipInputFor]="chipList"
             [readonly]="readonly"
         />
-    </mat-chip-list>
+    </mat-chip-grid>
 
     <!-- Autocomplete menu -->
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">

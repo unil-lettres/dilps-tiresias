@@ -18,7 +18,7 @@
         >
             <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
 
-            <div *ngIf="title" class="mat-diplay-1">{{ title }}</div>
+            <div *ngIf="title">{{ title }}</div>
 
             <div fxFlex></div>
 
@@ -46,41 +46,38 @@
                     [matTooltip]="'Passer en mode édition'"
                     mat-icon-button
                 >
-                    <natural-icon name="edit"></natural-icon>
+                    <mat-icon naturalIcon="edit"></mat-icon>
                 </button>
 
                 <button
                     (click)="update()"
                     *ngIf="edit && fetchedModel?.permissions?.update"
-                    color="primary"
                     mat-icon-button
-                    mat-raised-button
+                    class="icon-button-circle-primary"
                     matTooltip="Enregistrer"
                     [disabled]="!formIsValid"
                 >
-                    <natural-icon name="save"></natural-icon>
+                    <mat-icon naturalIcon="save"></mat-icon>
                 </button>
 
                 <button
                     *ngIf="user && !edit && (canSuggestUpdate() || canSuggestDelete())"
                     [matMenuTriggerFor]="changeMenu"
                     color="primary"
-                    mat-button
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
-                    <natural-icon name="add_alert"></natural-icon>
+                    <mat-icon naturalIcon="add_alert"></mat-icon>
                 </button>
 
                 <button
                     (click)="suggestCreation()"
                     *ngIf="user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()"
                     color="primary"
-                    mat-button
                     mat-icon-button
                     matTooltip="Soumettre"
                 >
-                    <natural-icon name="add_alert"></natural-icon>
+                    <mat-icon naturalIcon="add_alert"></mat-icon>
                 </button>
 
                 <button
@@ -89,7 +86,7 @@
                     mat-icon-button
                     matTooltip="Créer"
                 >
-                    <natural-icon name="add"></natural-icon>
+                    <mat-icon naturalIcon="add"></mat-icon>
                 </button>
 
                 <button
@@ -98,7 +95,7 @@
                     mat-icon-button
                     matTooltip="Valider"
                 >
-                    <natural-icon name="spellcheck"></natural-icon>
+                    <mat-icon naturalIcon="spellcheck"></mat-icon>
                 </button>
 
                 <button
@@ -107,11 +104,11 @@
                     mat-icon-button
                     matTooltip="Importer les données d'une autre fiche"
                 >
-                    <natural-icon name="content_copy"></natural-icon>
+                    <mat-icon naturalIcon="content_copy"></mat-icon>
                 </button>
 
                 <button (click)="download(fetchedModel)" mat-icon-button matTooltip="Télécharger">
-                    <natural-icon name="file_download"></natural-icon>
+                    <mat-icon naturalIcon="file_download"></mat-icon>
                 </button>
 
                 <button
@@ -120,7 +117,7 @@
                     mat-icon-button
                     matTooltip="Ajouter à une collection"
                 >
-                    <natural-icon name="library_add"></natural-icon>
+                    <mat-icon naturalIcon="library_add"></mat-icon>
                 </button>
 
                 <button
@@ -130,7 +127,7 @@
                     mat-icon-button
                     matTooltip="Supprimer"
                 >
-                    <natural-icon name="delete_forever"></natural-icon>
+                    <mat-icon naturalIcon="delete_forever"></mat-icon>
                 </button>
             </ng-container>
         </mat-toolbar>
@@ -146,16 +143,16 @@
                         }}
                     </div>
                     <mat-slider
-                        (input)="updateVisibility($event); visibility = $event.value"
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : undefined"
+                        [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
                         [disabled]="!edit"
                         [max]="3"
                         [min]="1"
-                        [ngModel]="visibility"
-                    ></mat-slider>
+                        [step]="1"
+                        ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
+                    /></mat-slider>
                 </div>
 
-                <div class="padding mat-body-2">
+                <div class="padding mat-subtitle-2">
                     <div *ngFor="let collection of sortedCollections">{{ collection.hierarchicName }}</div>
                 </div>
 
@@ -172,14 +169,13 @@
                     />
 
                     <button
-                        mat-button
                         mat-icon-button
-                        matSuffix
+                        matIconSuffix
                         (click)="codeModel = code; useSuggestedCode($event)"
                         *ngIf="showSuggestedCode()"
                         [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
                     >
-                        <natural-icon name="refresh"></natural-icon>
+                        <mat-icon naturalIcon="refresh"></mat-icon>
                     </button>
 
                     <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors.maxlength"
@@ -462,7 +458,7 @@
                     placeholder="Mots clés"
                 ></app-thesaurus>
 
-                <div *ngIf="isDilps && (edit || !!institution)" class="mat-title">Lieu</div>
+                <div *ngIf="isDilps && (edit || !!institution)" class="mat-headline-6">Lieu</div>
 
                 <app-thesaurus
                     *ngIf="isDilps && (edit || !!institution)"
@@ -491,7 +487,7 @@
 
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
-                    <div class="mat-title">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
+                    <div class="mat-headline-6">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
                     <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"></app-address>
                 </div>
 
@@ -509,7 +505,7 @@
 
                 <div
                     *ngIf="!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)"
-                    class="mat-title"
+                    class="mat-headline-6"
                 >
                     Datation
                 </div>
@@ -539,7 +535,7 @@
                     </mat-form-field>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-title">
+                <div *ngIf="!isDilps && (edit || !!institution || !!model.objectReference)" class="mat-headline-6">
                     Lieu de conservation
                 </div>
 
@@ -582,7 +578,7 @@
                             !!model.techniqueAuthor ||
                             !!model.techniqueDate)
                     "
-                    class="mat-title"
+                    class="mat-headline-6"
                 >
                     Référence du document
                 </div>
@@ -649,7 +645,10 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)" class="mat-title">
+                <div
+                    *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)"
+                    class="mat-headline-6"
+                >
                     Référence de l'image
                 </div>
 
@@ -743,11 +742,11 @@
                 </mat-form-field>
 
                 <div *ngIf="!isDilps && collectionCopyrights">
-                    <div class="mat-title">Droits d'auteur</div>
+                    <div class="mat-headline-6">Droits d'auteur</div>
                     <p>{{ collectionCopyrights }}</p>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-title">Référence web</div>
+                <div *ngIf="!isDilps && (edit || !!model.url)" class="mat-headline-6">Référence web</div>
 
                 <mat-form-field *ngIf="!isDilps && edit">
                     <mat-label>URL</mat-label>
@@ -791,7 +790,7 @@
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="showCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
                     <br />
-                    <div class="mat-title">Fiches additionnelles</div>
+                    <div class="mat-headline-6">Fiches additionnelles</div>
 
                     <natural-relations
                         [disabled]="!edit"
@@ -815,7 +814,7 @@
                 <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>
 
                 <div *ngIf="isDilps && collectionCopyrights">
-                    <div class="mat-title">Droits d’utilisation</div>
+                    <div class="mat-headline-6">Droits d’utilisation</div>
                     <p>{{ collectionCopyrights }}</p>
                 </div>
             </div>
@@ -842,7 +841,7 @@
                 mat-icon-button
                 matTooltip="Télécharger l'image"
             >
-                <natural-icon name="file_download"></natural-icon>
+                <mat-icon naturalIcon="file_download"></mat-icon>
             </a>
         </mat-toolbar>
         <div

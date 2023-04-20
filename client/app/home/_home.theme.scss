@@ -16,16 +16,20 @@
                 width: 64px;
             }
 
-            .mat-list-item {
+            .mat-mdc-list-item {
                 color: mat.get-color-from-palette($primary, default-contrast);
                 height: 64px;
+
+                * {
+                    color: inherit;
+                }
             }
 
-            .mat-list-item.active {
+            .mat-mdc-list-item.active {
                 background: rgba(255, 255, 255, 0.2);
             }
 
-            .mat-list-item:not(.active):hover {
+            .mat-mdc-list-item:not(.active):hover {
                 background: rgba(0, 0, 0, 0.2);
             }
 
@@ -39,7 +43,7 @@
         }
     }
 
-    .mat-menu-panel.error-menu {
+    .mat-mdc-menu-panel.error-menu {
         max-width: none !important;
         width: auto !important;
 
@@ -51,7 +55,7 @@
             padding-bottom: 20px;
         }
 
-        .mat-menu-item {
+        .mat-mdc-menu-item {
             height: auto;
         }
     }

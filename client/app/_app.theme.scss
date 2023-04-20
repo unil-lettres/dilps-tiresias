@@ -26,4 +26,33 @@
             box-shadow: mat.get-color-from-palette($accent) 0 0 20px !important;
         }
     }
+
+    // Provides a way to have flat circled button icon,
+    // since it is not longer supported by Angular Component MDC.
+    //
+    // Typical usage:
+    //
+    // <a mat-icon-button class="icon-button-circle-primary">
+    //    <mat-icon fontIcon="search"></mat-icon>
+    // </a>
+    .icon-button-circle-primary,
+    .icon-button-circle-warn,
+    .icon-button-circle-accent {
+        border-radius: 100%;
+    }
+
+    .icon-button-circle-primary {
+        color: mat.get-color-from-palette($primary, default-contrast);
+        background-color: mat.get-color-from-palette($primary);
+    }
+
+    .icon-button-circle-accent {
+        color: mat.get-color-from-palette($accent, default-contrast);
+        background-color: mat.get-color-from-palette($accent);
+    }
+
+    .icon-button-circle-warn {
+        color: mat.get-color-from-palette($warn, default-contrast);
+        background-color: mat.get-color-from-palette($warn);
+    }
 }

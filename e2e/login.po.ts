@@ -9,6 +9,7 @@ export class LoginPage {
 
     public async fillCredentials(username: string, password: string): Promise<unknown> {
         await this.page.click('.mat-expansion-panel');
+        await this.page.waitForTimeout(500);
 
         await this.page.type('[name="login"]', username);
         await this.page.type('[name="password"]', password);
@@ -25,6 +26,6 @@ export class LoginPage {
     }
 
     public getErrorMessage(): Promise<string> {
-        return this.page.innerText('.mat-simple-snackbar');
+        return this.page.innerText('simple-snack-bar');
     }
 }

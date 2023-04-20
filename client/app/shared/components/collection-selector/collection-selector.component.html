@@ -1,58 +1,65 @@
-<mat-tab-group>
-    <!-- Collection existante -->
-    <mat-tab label="Collection existante">
-        <div class="padding-v" fxLayout="column">
-            <natural-select
-                [(ngModel)]="collection"
-                [filter]="listFilter"
-                [service]="collectionService"
-                placeholder="Sélectionnez la collection"
-            ></natural-select>
-            <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>
-                    Ajouter à la collection
-                </button>
+<mat-dialog-content>
+    <mat-tab-group mat-stretch-tabs="false">
+        <!-- Collection existante -->
+        <mat-tab label="Collection existante">
+            <div class="padding-v" fxLayout="column">
+                <natural-select
+                    [(ngModel)]="collection"
+                    [filter]="listFilter"
+                    [service]="collectionService"
+                    placeholder="Sélectionnez la collection"
+                ></natural-select>
+                <div fxFlexAlign="end" fxLayout="row">
+                    <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>
+                        Ajouter à la collection
+                    </button>
+                </div>
             </div>
-        </div>
-    </mat-tab>
+        </mat-tab>
 
-    <!-- Nouvelle collection -->
-    <mat-tab label="Nouvelle collection">
-        <div class="padding-v" fxLayout="column">
-            <mat-form-field>
-                <mat-label>Nom</mat-label>
-                <input [(ngModel)]="newCollection.name" matInput />
-            </mat-form-field>
+        <!-- Nouvelle collection -->
+        <mat-tab label="Nouvelle collection">
+            <div class="padding-v" fxLayout="column">
+                <mat-form-field>
+                    <mat-label>Nom</mat-label>
+                    <input [(ngModel)]="newCollection.name" matInput />
+                </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Description</mat-label>
-                <textarea [(ngModel)]="newCollection.description" matInput></textarea>
-            </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <textarea [(ngModel)]="newCollection.description" matInput></textarea>
+                </mat-form-field>
 
-            <natural-select
-                *ngIf="listFilter"
-                [(ngModel)]="newCollection.parent"
-                [filter]="listFilter"
-                [service]="collectionService"
-                placeholder="Collection parente"
-            ></natural-select>
+                <natural-select
+                    *ngIf="listFilter"
+                    [(ngModel)]="newCollection.parent"
+                    [filter]="listFilter"
+                    [service]="collectionService"
+                    placeholder="Collection parente"
+                ></natural-select>
 
-            <div fxFlexAlign="end" fxLayout="row">
-                <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
-                    Ajouter à une nouvelle collection privée
-                </button>
+                <div fxFlexAlign="end" fxLayout="row">
+                    <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
+                        Ajouter à une nouvelle collection privée
+                    </button>
+                </div>
             </div>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+        </mat-tab>
+    </mat-tab-group>
 
-<div fxLayout="column">
-    <div *ngIf="image?.collections?.length" class="mat-subheading-2">Collections liées à la fiche</div>
-    <div *ngFor="let collection of image?.collections" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <natural-icon name="collections"></natural-icon>
-        <div fxFlex>{{ collection.name }}</div>
-        <button (click)="unlink(image, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
-            <natural-icon name="remove"></natural-icon>
-        </button>
+    <div fxLayout="column">
+        <div *ngIf="image?.collections?.length" class="mat-subtitle-1">Collections liées à la fiche</div>
+        <div
+            *ngFor="let collection of image?.collections"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="10px"
+        >
+            <mat-icon naturalIcon="collections"></mat-icon>
+            <div fxFlex>{{ collection.name }}</div>
+            <button (click)="unlink(image, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
+                <mat-icon naturalIcon="remove"></mat-icon>
+            </button>
+        </div>
     </div>
-</div>
+</mat-dialog-content>

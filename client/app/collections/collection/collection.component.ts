@@ -1,8 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {
-    MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
-    MatLegacyDialogRef as MatDialogRef,
-} from '@angular/material/legacy-dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
@@ -20,22 +17,22 @@ import {
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
-import {MatLegacySliderChange as MatSliderChange} from '@angular/material/legacy-slider';
-import {Visibilities} from '../../card/card.component';
+import {CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
 
 @Component({
     selector: 'app-collection',
     templateUrl: './collection.component.html',
+    styleUrls: ['./collection.component.scss'],
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
-    public visibility = 1;
-    public visibilities: Visibilities<CollectionVisibility> = {
+    public visibility: keyof CollectionVisibilities = 1;
+    public visibilities: CollectionVisibilities = {
         1: {
             value: CollectionVisibility.private,
             text: 'par moi et les abonnés',
-            color: undefined,
+            color: 'warn',
         },
         2: {
             value: CollectionVisibility.administrator,
@@ -67,8 +64,8 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         super(collectionService, alertService, dialogRef, userService, data);
     }
 
-    public updateVisibility(ev: MatSliderChange): void {
-        this.data.item.visibility = this.visibilities[ev.value].value;
+    public updateVisibility(): void {
+        this.data.item.visibility = this.visibilities[this.visibility].value;
     }
 
     /**
@@ -102,7 +99,10 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     protected override postQuery(): void {
         // Init visibility
-        this.visibility = +findKey(this.visibilities, s => s.value === this.data.item.visibility);
+        this.visibility = +findKey(
+            this.visibilities,
+            s => s.value === this.data.item.visibility,
+        ) as keyof CollectionVisibilities;
 
         this.institution = this.data.item.institution;
 

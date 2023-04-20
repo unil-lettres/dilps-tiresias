@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use '../../styles/typography';
 
 @mixin card($theme) {
     $primary: map.get($theme, primary);
@@ -15,6 +16,11 @@
     app-card {
         mat-toolbar.edition {
             background: mat.get-color-from-palette($accent, 0.4);
+        }
+
+        mat-chip-row {
+            font-size: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
+            font-family: inherit !important;
         }
 
         .rich-text {
@@ -34,7 +40,7 @@
             }
 
             .ql-container {
-                font-size: inherit !important;
+                font-size: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
                 font-family: inherit !important;
             }
 
@@ -69,17 +75,18 @@
             }
         }
 
+        // Make disabled select box looks same as disabled text input, eg: the country field
         natural-select .mat-form-field-appearance-fill.mat-form-field-disabled {
-            .mat-form-field-flex {
+            .mat-mdc-form-field {
                 background-color: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.1, 0.04));
             }
 
-            .mat-form-field-label {
+            mat-label {
                 color: $label-color;
             }
 
-            .mat-form-field-underline::before {
-                background-color: mat.get-color-from-palette($fg, divider, if($is-dark-theme, 0.5, 0.42)) !important;
+            .mdc-line-ripple::before {
+                border-bottom-color: mat.get-color-from-palette($fg, divider, if($is-dark-theme, 0.5, 0.42)) !important;
             }
 
             input {

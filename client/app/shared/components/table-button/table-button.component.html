@@ -2,7 +2,7 @@
 
 <!-- App without navigation -->
 <a *ngIf="!navigate && label && !disable" mat-button>
-    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
     <span>{{ label }}</span>
 </a>
 
@@ -13,7 +13,7 @@
 
 <!-- App routed link with label... -->
 <a *ngIf="navigate && label" [queryParams]="queryParams" [routerLink]="navigate" mat-button>
-    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
     <span>{{ label }}</span>
 </a>
 
@@ -25,16 +25,16 @@
     [routerLink]="navigate"
     mat-icon-button
 >
-    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
 </a>
 
 <!-- External link with label... -->
 <a *ngIf="href && label" [attr.href]="href" mat-button>
-    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
     <span>{{ label }}</span>
 </a>
 
 <!-- ... and without label -->
 <a *ngIf="href && !label" [attr.href]="href" mat-icon-button>
-    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
 </a>
