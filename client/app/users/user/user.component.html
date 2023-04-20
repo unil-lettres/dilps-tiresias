@@ -112,6 +112,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.user?.create"
+        [canDelete]="true"
         [formCtrl]="passwordConfirmationCtrl"
         [item]="data.item"
         fxFlex

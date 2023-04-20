@@ -7,12 +7,13 @@ import {UserService} from '../../users/services/user.service';
 import {TagService} from '../services/tag.service';
 import {Tag_tag, TagFilter} from '../../shared/generated-types';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
+import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
     selector: 'app-tag',
     templateUrl: './tag.component.html',
 })
-export class TagComponent extends AbstractDetailDirective<TagService> {
+export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = tagHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<TagFilter> = [];
 
@@ -21,7 +22,7 @@ export class TagComponent extends AbstractDetailDirective<TagService> {
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<TagComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tag_tag},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tag_tag & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

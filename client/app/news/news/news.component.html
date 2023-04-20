@@ -63,6 +63,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.news?.create"
+        [canDelete]="true"
         [item]="data.item"
         [formCtrl]="$any(url)"
         fxFlex
