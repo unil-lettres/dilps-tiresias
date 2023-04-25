@@ -1,7 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 @use '../../styles/typography';
-
 @mixin card($theme) {
     $primary: map.get($theme, primary);
     $accent: map.get($theme, accent);
@@ -12,6 +11,13 @@
     $config: mat.get-color-config($theme);
     $is-dark-theme: map.get($config, is-dark);
     $label-color: mat.get-color-from-palette($fg, secondary-text, if($is-dark-theme, 0.7, 0.6)) !important;
+    $primary-color: mat.get-color-from-palette($primary);
+
+    $transition-animation: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    $hint-height: 22.5px;
+    $rich-text-padding-left: 16px;
+    $border-bottom-width: 1px;
+    $font-size-body-1: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
 
     app-card {
         mat-toolbar.edition {
@@ -22,37 +28,91 @@
             font-family: inherit !important;
         }
 
+        // Try to match official mat-form-field input component style.
         .rich-text {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.12, 0.02));
+            border-bottom: $border-bottom-width solid mat.get-color-from-palette($fg, base, 0.5);
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
-            background: mat.get-color-from-palette(
-                $fg,
-                base,
-                if(map.get($theme, is-dark), 0.1, 0.04)
-            ); // match official mat-form-field component style
-            padding: 10px 10px 0 10px;
-            border-bottom: 1px solid mat.get-color-from-palette($fg, base, 0.5);
+            margin-bottom: $hint-height;
+            outline: none;
+            padding: 24px 10px 0 $rich-text-padding-left;
+            position: relative;
+            transition: color $transition-animation;
+
+            &::after {
+                content: '';
+                background-color: $primary-color;
+                bottom: -$border-bottom-width;
+                height: 2px;
+                left: 50%;
+                position: absolute;
+                width: 0;
+            }
+
+            &:hover {
+                background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.15, 0.06));
+            }
+
+            &:focus-within {
+                background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.25, 0.1));
+
+                &::after {
+                    width: 100%;
+                    transform: translateX(-50%);
+                    transition: width $transition-animation, transform $transition-animation;
+                }
+
+                .label {
+                    color: $primary-color !important;
+                }
+            }
+
+            &.filled,
+            &:focus-within {
+                .label {
+                    left: auto;
+                    transform: translateY(-106%) scale(0.75);
+                }
+            }
 
             .label {
                 color: $label-color;
-                font-size: 10.5px;
+                font-size: $font-size-body-1;
+                left: $rich-text-padding-left;
+                position: absolute;
+                top: 28px;
+                transform: translateY(-50%);
+                transform-origin: top left;
+                transition: transform $transition-animation;
             }
 
             .ql-container {
-                font-size: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
+                font-size: $font-size-body-1;
                 font-family: inherit !important;
+                letter-spacing: mat.letter-spacing(typography.$custom-typography-gt-sm, 'body-1');
             }
 
             quill-editor {
                 display: block;
+                caret-color: $primary-color;
             }
-        }
 
-        .ql-editor {
-            padding: 0.25em 0 0.75em 0;
+            .ql-editor {
+                padding: 0 0 8px 0;
 
-            p {
-                margin-bottom: 0;
+                p {
+                    margin-bottom: 0;
+                }
+            }
+
+            mat-hint {
+                position: absolute;
+                right: 16px;
+                bottom: -$hint-height;
+                font-size: mat.font-size(typography.$custom-typography-gt-sm, 'caption');
             }
         }
 
