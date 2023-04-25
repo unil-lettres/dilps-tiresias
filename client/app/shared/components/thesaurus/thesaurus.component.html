@@ -2,7 +2,7 @@
     <mat-label>{{ placeholder }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         <mat-chip-row (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly">
-            <div fxLayout="row">
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
                 <mat-icon
                     (click)="openItem(item)"
                     *ngIf="previewComponent"
