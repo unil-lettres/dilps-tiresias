@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
+use Application\Repository\DomainRepository;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
 use Application\Traits\HasSite;
@@ -12,16 +14,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * A domain.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\DomainRepository")
- * @API\Filters({
- *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
- * })
  */
+#[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
+#[ORM\Entity(DomainRepository::class)]
 class Domain extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
@@ -30,20 +29,16 @@ class Domain extends AbstractModel implements HasParentInterface, HasSiteInterfa
 
     /**
      * @var null|Domain
-     *
-     * @ORM\ManyToOne(targetEntity="Domain", inversedBy="children")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
-     * })
      */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     private $parent;
 
     /**
      * @var Collection<Domain>
-     *
-     * @ORM\OneToMany(targetEntity="Domain", mappedBy="parent")
-     * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
     private $children;
 
     public function __construct()

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Acl\Assertion;
 
 use Application\Model\User;
-use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;

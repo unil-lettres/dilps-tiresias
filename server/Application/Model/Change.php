@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Input\Sorting\Owner;
+use Application\Repository\ChangeRepository;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * A change suggested by a user to be accepted or rejected by administrators.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\ChangeRepository")
- * @ORM\Table(name="`change`")
- * @API\Sorting({"Application\Api\Input\Sorting\Owner"})
  */
+#[ORM\Table('`change`')]
+#[API\Sorting(Owner::class)]
+#[ORM\Entity(ChangeRepository::class)]
 class Change extends AbstractModel implements HasSiteInterface
 {
     final public const TYPE_CREATE = 'create';
@@ -24,37 +25,24 @@ class Change extends AbstractModel implements HasSiteInterface
 
     use HasSite;
 
-    /**
-     * @ORM\Column(type="ChangeType", options={"default" = Change::TYPE_UPDATE})
-     */
+    #[ORM\Column(type: 'ChangeType', options: ['default' => self::TYPE_UPDATE])]
     private string $type = self::TYPE_UPDATE;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Card")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
-     * })
-     */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Card::class)]
     private ?Card $original = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Card", inversedBy="changes")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(unique=true, onDelete="CASCADE")
-     * })
-     */
+    #[ORM\JoinColumn(unique: true, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Card::class, inversedBy: 'changes')]
     private ?Card $suggestion = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private string $request = '';
 
     /**
      * Get the type of change.
-     *
-     * @API\Field(type="Application\Api\Enum\ChangeTypeType")
      */
+    #[API\Field(type: 'Application\Api\Enum\ChangeTypeType')]
     public function getType(): string
     {
         return $this->type;
@@ -62,9 +50,8 @@ class Change extends AbstractModel implements HasSiteInterface
 
     /**
      * Set the type of change.
-     *
-     * @API\Field(type="Application\Api\Enum\ChangeTypeType")
      */
+    #[API\Field(type: 'Application\Api\Enum\ChangeTypeType')]
     public function setType(string $type): void
     {
         $this->type = $type;

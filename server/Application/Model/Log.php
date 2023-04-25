@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\LogRepository;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
 
 /**
  * Log.
- *
- * @ORM\Table(indexes={
- *     @ORM\Index(name="priority", columns={"priority"}),
- *     @ORM\Index(name="message", columns={"message"}, options={"lengths" = {191}})
- * })
- * @ORM\Entity(repositoryClass="Application\Repository\LogRepository")
  */
+#[ORM\Index(name: 'priority', columns: ['priority'])]
+#[ORM\Index(name: 'message', columns: ['message'], options: ['lengths' => [191]])]
+#[ORM\Entity(LogRepository::class)]
 class Log extends AbstractModel
 {
     use \Ecodev\Felix\Model\Traits\Log;

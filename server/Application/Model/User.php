@@ -18,17 +18,14 @@ use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\CurrentUser;
 use Ecodev\Felix\Model\Traits\HasName;
 use Ecodev\Felix\Utility;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * User.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\UserRepository")
- * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_login", columns={"login", "site"}),
- *     @ORM\UniqueConstraint(name="unique_email", columns={"email", "site"}),
- * })
  */
+#[ORM\UniqueConstraint(name: 'unique_login', columns: ['login', 'site'])]
+#[ORM\UniqueConstraint(name: 'unique_email', columns: ['email', 'site'])]
+#[ORM\Entity(UserRepository::class)]
 class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInterface
 {
     use HasInstitution;
@@ -61,9 +58,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * @var DoctrineCollection<Collection>
-     *
-     * @ORM\ManyToMany(targetEntity="Collection", mappedBy="users")
      */
+    #[ORM\ManyToMany(targetEntity: Collection::class, mappedBy: 'users')]
     private DoctrineCollection $collections;
 
     /**
@@ -106,40 +102,26 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
         }
     }
 
-    /**
-     * @ORM\Column(type="string", length=191)
-     */
+    #[ORM\Column(type: 'string', length: 191)]
     private string $login = '';
 
-    /**
-     * @API\Exclude
-     * @ORM\Column(type="string", length=255)
-     */
+    #[API\Exclude]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $password = '';
 
-    /**
-     * @ORM\Column(type="string", length=191, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 191, nullable: true)]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="UserRole", options={"default" = User::ROLE_STUDENT})
-     */
+    #[ORM\Column(type: 'UserRole', options: ['default' => self::ROLE_STUDENT])]
     private string $role = self::ROLE_STUDENT;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $activeUntil = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $termsAgreement = null;
 
-    /**
-     * @ORM\Column(type="UserType", options={"default" = User::TYPE_DEFAULT})
-     */
+    #[ORM\Column(type: 'UserType', options: ['default' => self::TYPE_DEFAULT])]
     private string $type = self::TYPE_DEFAULT;
 
     /**
@@ -155,9 +137,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Set login (eg: johndoe).
-     *
-     * @API\Input(type="Application\Api\Scalar\LoginType")
      */
+    #[API\Input(type: 'Application\Api\Scalar\LoginType')]
     public function setLogin(string $login): void
     {
         $this->login = $login;
@@ -165,9 +146,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Get login (eg: johndoe).
-     *
-     * @API\Field(type="Application\Api\Scalar\LoginType")
      */
+    #[API\Field(type: 'Application\Api\Scalar\LoginType')]
     public function getLogin(): string
     {
         return $this->login;
@@ -189,9 +169,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Returns the hashed password.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function getPassword(): string
     {
         return $this->password;
@@ -199,9 +178,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Set email.
-     *
-     * @API\Input(type="?Email")
      */
+    #[API\Input(type: '?Email')]
     public function setEmail(?string $email): void
     {
         $this->email = $email;
@@ -209,9 +187,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Get email.
-     *
-     * @API\Field(type="?Email")
      */
+    #[API\Field(type: '?Email')]
     public function getEmail(): ?string
     {
         return $this->email;
@@ -219,9 +196,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Get the user role.
-     *
-     * @API\Field(type="UserRole")
      */
+    #[API\Field(type: 'UserRole')]
     public function getRole(): string
     {
         return $this->role;
@@ -229,9 +205,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Sets the user role.
-     *
-     * @API\Input(type="UserRole")
      */
+    #[API\Input(type: 'UserRole')]
     public function setRole(string $role): void
     {
         if (!Role::canUpdate(self::getCurrent(), $this->role, $role)) {
@@ -279,9 +254,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Set user type.
-     *
-     * @API\Input(type="Application\Api\Enum\UserTypeType")
      */
+    #[API\Input(type: 'Application\Api\Enum\UserTypeType')]
     public function setType(string $type): void
     {
         $this->type = $type;
@@ -289,9 +263,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Get user type.
-     *
-     * @API\Field(type="Application\Api\Enum\UserTypeType")
      */
+    #[API\Field(type: 'Application\Api\Enum\UserTypeType')]
     public function getType(): string
     {
         return $this->type;
@@ -299,9 +272,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Get a list of global permissions for this user.
-     *
-     * @API\Field(type="GlobalPermissionsList")
      */
+    #[API\Field(type: 'GlobalPermissionsList')]
     public function getGlobalPermissions(): array
     {
         $acl = new Acl();

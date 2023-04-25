@@ -5,29 +5,23 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Api\FileException;
+use Application\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
 /**
  * An uploaded file that is related to a card (pdf/docx/xlsx/etc.).
- *
- * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="Application\Repository\FileRepository")
- * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_name", columns={"filename"})
- * })
  */
+#[ORM\UniqueConstraint(name: 'unique_name', columns: ['filename'])]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(FileRepository::class)]
 class File extends AbstractModel implements \Ecodev\Felix\Model\File
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="Card")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * })
-     */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Card::class)]
     private Card $card;
 
     use \Ecodev\Felix\Model\Traits\File {
@@ -47,9 +41,8 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
 
     /**
      * Set the file.
-     *
-     * @API\Input(type="?GraphQL\Upload\UploadType")
      */
+    #[API\Input(type: '?GraphQL\Upload\UploadType')]
     public function setFile(UploadedFileInterface $file): void
     {
         try {

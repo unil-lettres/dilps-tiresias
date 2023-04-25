@@ -6,7 +6,6 @@ namespace Application\Middleware;
 
 use Application\Model\User;
 use Application\Repository\UserRepository;
-use Cake\Chronos\Chronos;
 use Mezzio\Session\SessionInterface;
 use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;

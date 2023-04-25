@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
-use Cake\Chronos\Chronos;
 use Doctrine\ORM\EntityManager;
 use GraphQL\Doctrine\Types;
 use Laminas\ServiceManager\ServiceManager;

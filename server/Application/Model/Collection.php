@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
+use Application\Repository\CollectionRepository;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
@@ -14,17 +16,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * A collection of cards.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\CollectionRepository")
- * @ORM\Table(indexes={@ORM\Index(name="collection_name_idx", columns={"name"})})
- * @API\Filters({
- *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
- * })
  */
+#[ORM\Index(name: 'collection_name_idx', columns: ['name'])]
+#[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
+#[ORM\Entity(CollectionRepository::class)]
 class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasInstitution;
@@ -37,54 +36,39 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     final public const VISIBILITY_ADMINISTRATOR = 'administrator';
     final public const VISIBILITY_MEMBER = 'member';
 
-    /**
-     * @ORM\Column(type="CollectionVisibility", options={"default" = Collection::VISIBILITY_PRIVATE})
-     */
+    #[ORM\Column(type: 'CollectionVisibility', options: ['default' => self::VISIBILITY_PRIVATE])]
     private string $visibility = self::VISIBILITY_PRIVATE;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private string $description = '';
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = false})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isSource = false;
 
-    /**
-     * @ORM\Column(type="string", length=191)
-     */
+    #[ORM\Column(type: 'string', length: 191)]
     private string $copyrights = '';
 
-    /**
-     * @ORM\Column(type="string", length=191)
-     */
+    #[ORM\Column(type: 'string', length: 191)]
     private string $usageRights = '';
 
     /**
      * @var null|Collection
-     *
-     * @ORM\ManyToOne(targetEntity="Collection", inversedBy="children")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
-     * })
      */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     private $parent;
 
     /**
      * @var DoctrineCollection<Collection>
-     *
-     * @ORM\OneToMany(targetEntity="Collection", mappedBy="parent")
-     * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
     private $children;
 
     /**
      * @var DoctrineCollection<User>
-     *
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="collections")
      */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'collections')]
     private DoctrineCollection $users;
 
     /**
@@ -98,9 +82,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Return whether this is publicly available to only to member, or only administrators, or only owner.
-     *
-     * @API\Field(type="Application\Api\Enum\CollectionVisibilityType")
      */
+    #[API\Field(type: 'Application\Api\Enum\CollectionVisibilityType')]
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -108,9 +91,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Set whether this is publicly available to only to member, or only administrators, or only owner.
-     *
-     * @API\Input(type="Application\Api\Enum\CollectionVisibilityType")
      */
+    #[API\Input(type: 'Application\Api\Enum\CollectionVisibilityType')]
     public function setVisibility(string $visibility): void
     {
         $this->visibility = $visibility;
@@ -184,9 +166,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Get users.
-     *
-     * @API\Field(type="User[]")
      */
+    #[API\Field(type: 'User[]')]
     public function getUsers(): DoctrineCollection
     {
         return $this->users;

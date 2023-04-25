@@ -6,6 +6,7 @@ namespace Application\Model;
 
 use Application\DBAL\Types\ExportFormatType;
 use Application\DBAL\Types\ExportStatusType;
+use Application\Repository\ExportRepository;
 use Application\Traits\HasFileSize;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -13,14 +14,13 @@ use Cake\Chronos\Chronos;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 use Throwable;
 
 /**
  * An export of cards in various format.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\ExportRepository")
  */
+#[ORM\Entity(ExportRepository::class)]
 class Export extends AbstractModel implements HasSiteInterface
 {
     private const EXPORT_PATH = 'htdocs/export/';
@@ -33,72 +33,53 @@ class Export extends AbstractModel implements HasSiteInterface
      *
      * This is kept separated from cards and collection, because those could
      * be deleted and we want to keep the count of card forever.
-     *
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $cardCount = 0;
 
-    /**
-     * @ORM\Column(type="string", length=2000, options={"default" = ""})
-     */
+    #[ORM\Column(type: 'string', length: 2000, options: ['default' => ''])]
     private string $filename = '';
 
-    /**
-     * @ORM\Column(type="ExportStatus", options={"default" = ExportStatusType::TODO})
-     */
+    #[ORM\Column(type: 'ExportStatus', options: ['default' => ExportStatusType::TODO])]
     private string $status = ExportStatusType::TODO;
 
-    /**
-     * @ORM\Column(type="ExportFormat", options={"default" = ExportFormatType::ZIP})
-     */
+    #[ORM\Column(type: 'ExportFormat', options: ['default' => ExportFormatType::ZIP])]
     private string $format = ExportFormatType::ZIP;
 
     /**
      * Max height of image. Zero means no max.
-     *
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
      */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $maxHeight = 0;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = true})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => true])]
     private bool $includeLegend = true;
 
-    /**
-     * @ORM\Column(type="string", options={"default" = "#FFFFFF"})
-     */
+    #[ORM\Column(type: 'string', options: ['default' => '#FFFFFF'])]
     private string $textColor = '#FFFFFF';
 
-    /**
-     * @ORM\Column(type="string", options={"default" = "#000000"})
-     */
+    #[ORM\Column(type: 'string', options: ['default' => '#000000'])]
     private string $backgroundColor = '#000000';
 
     /**
      * Start time of export process.
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $start = null;
 
     /**
      * Duration of export process in seconds.
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
      */
+    #[ORM\Column(type: 'integer', nullable: true, options: ['unsigned' => true])]
     private ?int $duration = null;
 
     /**
      * Peak memory usage in MiB.
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned" = true})
      */
+    #[ORM\Column(type: 'integer', nullable: true, options: ['unsigned' => true])]
     private ?int $memory = null;
 
-    /**
-     * @ORM\Column(type="string", length=2000, options={"default" = ""})
-     */
+    #[ORM\Column(type: 'string', length: 2000, options: ['default' => ''])]
     private string $errorMessage = '';
 
     /**
@@ -106,18 +87,16 @@ class Export extends AbstractModel implements HasSiteInterface
      * contains the real cards that will be exported.
      *
      * @var DoctrineCollection<Collection>
-     *
-     * @ORM\ManyToMany(targetEntity="Collection")
      */
+    #[ORM\ManyToMany(targetEntity: Collection::class)]
     private DoctrineCollection $collections;
 
     /**
      * All cards to export, either picked one-by-one, or selected via a collection.
      *
      * @var DoctrineCollection<Card>
-     *
-     * @ORM\ManyToMany(targetEntity="Card")
      */
+    #[ORM\ManyToMany(targetEntity: Card::class)]
     private DoctrineCollection $cards;
 
     public function __construct()
@@ -133,9 +112,8 @@ class Export extends AbstractModel implements HasSiteInterface
 
     /**
      * Get absolute path to export on disk.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function getPath(): string
     {
         return realpath('.') . '/' . self::EXPORT_PATH . $this->getFilename();
@@ -146,9 +124,7 @@ class Export extends AbstractModel implements HasSiteInterface
         return $this->filename;
     }
 
-    /**
-     * @API\Field(type="ExportStatus")
-     */
+    #[API\Field(type: 'ExportStatus')]
     public function getStatus(): string
     {
         return $this->status;
@@ -186,17 +162,13 @@ class Export extends AbstractModel implements HasSiteInterface
         }
     }
 
-    /**
-     * @API\Field(type="ExportFormat")
-     */
+    #[API\Field(type: 'ExportFormat')]
     public function getFormat(): string
     {
         return $this->format;
     }
 
-    /**
-     * @API\Input(type="ExportFormat")
-     */
+    #[API\Input(type: 'ExportFormat')]
     public function setFormat(string $format): void
     {
         $this->format = $format;
@@ -222,33 +194,25 @@ class Export extends AbstractModel implements HasSiteInterface
         $this->includeLegend = $includeLegend;
     }
 
-    /**
-     * @API\Field(type="Color")
-     */
+    #[API\Field(type: 'Color')]
     public function getTextColor(): string
     {
         return $this->textColor;
     }
 
-    /**
-     * @API\Input(type="Color")
-     */
+    #[API\Input(type: 'Color')]
     public function setTextColor(string $textColor): void
     {
         $this->textColor = $textColor;
     }
 
-    /**
-     * @API\Field(type="Color")
-     */
+    #[API\Field(type: 'Color')]
     public function getBackgroundColor(): string
     {
         return $this->backgroundColor;
     }
 
-    /**
-     * @API\Input(type="Color")
-     */
+    #[API\Input(type: 'Color')]
     public function setBackgroundColor(string $backgroundColor): void
     {
         $this->backgroundColor = $backgroundColor;

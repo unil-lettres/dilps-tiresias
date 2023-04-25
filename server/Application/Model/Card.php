@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Api\FileException;
+use Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType;
+use Application\Api\Input\Operator\CardYearRangeOperatorType;
+use Application\Api\Input\Operator\DatingYearRangeOperatorType;
+use Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType;
+use Application\Api\Input\Operator\LocationOperatorType;
+use Application\Api\Input\Operator\NameOrExpandedNameOperatorType;
+use Application\Api\Input\Sorting\Artists;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
@@ -25,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\Image;
 use Ecodev\Felix\Utility;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\ImagineInterface;
@@ -35,31 +42,22 @@ use Throwable;
 
 /**
  * A card containing an image and some information about it.
- *
- * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="Application\Repository\CardRepository")
- * @ORM\Table(indexes={
- *     @ORM\Index(name="card_name_idx", columns={"name"}),
- *     @ORM\Index(name="card_plain_name_idx", columns={"plain_name"}),
- *     @ORM\Index(name="card_locality_idx", columns={"locality"}),
- *     @ORM\Index(name="card_area_idx", columns={"area"}),
- * },
- * uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_code", columns={"code", "site"})
- * })
- * @API\Filters({
- *     @API\Filter(field="nameOrExpandedName", operator="Application\Api\Input\Operator\NameOrExpandedNameOperatorType", type="string"),
- *     @API\Filter(field="artistOrTechniqueAuthor", operator="Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType", type="string"),
- *     @API\Filter(field="localityOrInstitutionLocality", operator="Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType", type="string"),
- *     @API\Filter(field="datingYearRange", operator="Application\Api\Input\Operator\DatingYearRangeOperatorType", type="int"),
- *     @API\Filter(field="cardYearRange", operator="Application\Api\Input\Operator\CardYearRangeOperatorType", type="int"),
- *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\LocationOperatorType", type="string"),
- * })
- * @API\Sorting({
- *     "Application\Api\Input\Sorting\Artists",
- *     "Application\Api\Input\Sorting\DocumentType"
- * })
  */
+#[ORM\Index(name: 'card_name_idx', columns: ['name'])]
+#[ORM\Index(name: 'card_plain_name_idx', columns: ['plain_name'])]
+#[ORM\Index(name: 'card_locality_idx', columns: ['locality'])]
+#[ORM\Index(name: 'card_area_idx', columns: ['area'])]
+#[ORM\UniqueConstraint(name: 'unique_code', columns: ['code', 'site'])]
+#[API\Filter(field: 'nameOrExpandedName', operator: NameOrExpandedNameOperatorType::class, type: 'string')]
+#[API\Filter(field: 'artistOrTechniqueAuthor', operator: ArtistOrTechniqueAuthorOperatorType::class, type: 'string')]
+#[API\Filter(field: 'localityOrInstitutionLocality', operator: LocalityOrInstitutionLocalityOperatorType::class, type: 'string')]
+#[API\Filter(field: 'datingYearRange', operator: DatingYearRangeOperatorType::class, type: 'int')]
+#[API\Filter(field: 'cardYearRange', operator: CardYearRangeOperatorType::class, type: 'int')]
+#[API\Filter(field: 'custom', operator: LocationOperatorType::class, type: 'string')]
+#[API\Sorting(Artists::class)]
+#[API\Sorting(\Application\Api\Input\Sorting\DocumentType::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(CardRepository::class)]
 class Card extends AbstractModel implements HasSiteInterface, Image
 {
     use CardSimpleProperties;
@@ -81,112 +79,86 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     final public const VISIBILITY_MEMBER = 'member';
     final public const VISIBILITY_PUBLIC = 'public';
 
-    /**
-     * @ORM\Column(type="CardVisibility", options={"default" = Card::VISIBILITY_PRIVATE})
-     */
+    #[ORM\Column(type: 'CardVisibility', options: ['default' => self::VISIBILITY_PRIVATE])]
     private string $visibility = self::VISIBILITY_PRIVATE;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $width = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $height = 0;
 
-    /**
-     * @ORM\Column(type="string", options={"default" = ""})
-     */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private string $dating = '';
 
     /**
      * This is a form of cache of all artist names whose only purpose is to be able
      * to search on artists more easily. It is automatically maintained via DB triggers.
-     *
-     * @API\Exclude
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[API\Exclude]
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private string $cachedArtistNames = '';
 
     /**
      * @var DoctrineCollection<Collection>
-     *
-     * @ORM\ManyToMany(targetEntity="Collection")
      */
+    #[ORM\ManyToMany(targetEntity: Collection::class)]
     private DoctrineCollection $collections;
 
     /**
      * @var DoctrineCollection<Artist>
-     *
-     * @ORM\ManyToMany(targetEntity="Artist")
      */
+    #[ORM\ManyToMany(targetEntity: Artist::class)]
     private DoctrineCollection $artists;
 
     /**
      * @var DoctrineCollection<AntiqueName>
-     *
-     * @ORM\ManyToMany(targetEntity="AntiqueName")
      */
+    #[ORM\ManyToMany(targetEntity: AntiqueName::class)]
     private DoctrineCollection $antiqueNames;
 
     /**
      * @var DoctrineCollection<Tag>
-     *
-     * @ORM\ManyToMany(targetEntity="Tag")
      */
+    #[ORM\ManyToMany(targetEntity: Tag::class)]
     private DoctrineCollection $tags;
 
     /**
      * @var DoctrineCollection<Dating>
-     *
-     * @ORM\OneToMany(targetEntity="Dating", mappedBy="card")
      */
+    #[ORM\OneToMany(targetEntity: Dating::class, mappedBy: 'card')]
     private DoctrineCollection $datings;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Card")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
-     */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: self::class)]
     private ?Card $original = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="DocumentType")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
-     */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: DocumentType::class)]
     private ?DocumentType $documentType = null;
 
     /**
      * @var DoctrineCollection<Domain>
-     *
-     * @ORM\ManyToMany(targetEntity="Domain")
      */
+    #[ORM\ManyToMany(targetEntity: Domain::class)]
     private DoctrineCollection $domains;
 
     /**
      * @var DoctrineCollection<Period>
-     *
-     * @ORM\ManyToMany(targetEntity="Period")
      */
+    #[ORM\ManyToMany(targetEntity: Period::class)]
     private DoctrineCollection $periods;
 
     /**
      * @var DoctrineCollection<Material>
-     *
-     * @ORM\ManyToMany(targetEntity="Material")
      */
+    #[ORM\ManyToMany(targetEntity: Material::class)]
     private DoctrineCollection $materials;
 
     /**
      * @var DoctrineCollection<Card>
-     *
-     * @ORM\ManyToMany(targetEntity="Card")
      */
+    #[ORM\ManyToMany(targetEntity: self::class)]
     private DoctrineCollection $cards;
 
     /**
@@ -194,19 +166,14 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      * enforced by DB unique constraints on the mapping side.
      *
      * @var DoctrineCollection<Change>
-     *
-     * @ORM\OneToMany(targetEntity="Change", mappedBy="suggestion")
      */
+    #[ORM\OneToMany(targetEntity: Change::class, mappedBy: 'suggestion')]
     private DoctrineCollection $changes;
 
-    /**
-     * @ORM\Column(type="string", length=191)
-     */
+    #[ORM\Column(type: 'string', length: 191)]
     private string $documentSize = '';
 
-    /**
-     * @ORM\Column(name="legacy_id", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: 'legacy_id', type: 'integer', nullable: true)]
     private ?int $legacyId = null;
 
     /**
@@ -230,9 +197,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Return whether this is publicly available to everybody, or only member, or only owner.
-     *
-     * @API\Field(type="Application\Api\Enum\CardVisibilityType")
      */
+    #[API\Field(type: 'Application\Api\Enum\CardVisibilityType')]
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -240,9 +206,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set whether this is publicly available to everybody, or only member, or only owner.
-     *
-     * @API\Input(type="Application\Api\Enum\CardVisibilityType")
      */
+    #[API\Input(type: 'Application\Api\Enum\CardVisibilityType')]
     public function setVisibility(string $visibility): void
     {
         if ($this->visibility === $visibility) {
@@ -259,9 +224,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get collections this card belongs to.
-     *
-     * @API\Field(type="Collection[]")
      */
+    #[API\Field(type: 'Collection[]')]
     public function getCollections(): DoctrineCollection
     {
         return $this->collections;
@@ -312,9 +276,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Return the automatically computed dating periods.
-     *
-     * @API\Field(type="Dating[]")
      */
+    #[API\Field(type: 'Dating[]')]
     public function getDatings(): DoctrineCollection
     {
         return $this->datings;
@@ -355,10 +318,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all materials at once.
      *
-     * @API\Input(type="?MaterialID[]")
-     *
      * @param null|EntityID[] $materials
      */
+    #[API\Input(type: '?MaterialID[]')]
     public function setMaterials(?array $materials): void
     {
         if (null === $materials) {
@@ -372,10 +334,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all antiqueNames at once.
      *
-     * @API\Input(type="?AntiqueNameID[]")
-     *
      * @param null|EntityID[] $antiqueNames
      */
+    #[API\Input(type: '?AntiqueNameID[]')]
     public function setAntiqueNames(?array $antiqueNames): void
     {
         if (null === $antiqueNames) {
@@ -388,10 +349,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all domains at once.
      *
-     * @API\Input(type="?DomainID[]")
-     *
      * @param null|EntityID[] $domains
      */
+    #[API\Input(type: '?DomainID[]')]
     public function setDomains(?array $domains): void
     {
         if (null === $domains) {
@@ -404,10 +364,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all periods at once.
      *
-     * @API\Input(type="?PeriodID[]")
-     *
      * @param null|EntityID[] $periods
      */
+    #[API\Input(type: '?PeriodID[]')]
     public function setPeriods(?array $periods): void
     {
         if (null === $periods) {
@@ -420,10 +379,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all tags at once.
      *
-     * @API\Input(type="?TagID[]")
-     *
      * @param null|EntityID[] $tags
      */
+    #[API\Input(type: '?TagID[]')]
     public function setTags(?array $tags): void
     {
         if (null === $tags) {
@@ -460,9 +418,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get artists.
-     *
-     * @API\Field(type="Artist[]")
      */
+    #[API\Field(type: 'Artist[]')]
     public function getArtists(): DoctrineCollection
     {
         return $this->artists;
@@ -470,9 +427,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get antiqueNames.
-     *
-     * @API\Field(type="AntiqueName[]")
      */
+    #[API\Field(type: 'AntiqueName[]')]
     public function getAntiqueNames(): DoctrineCollection
     {
         return $this->antiqueNames;
@@ -500,9 +456,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get tags.
-     *
-     * @API\Field(type="Tag[]")
      */
+    #[API\Field(type: 'Tag[]')]
     public function getTags(): DoctrineCollection
     {
         return $this->tags;
@@ -536,9 +491,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get domains.
-     *
-     * @API\Field(type="Domain[]")
      */
+    #[API\Field(type: 'Domain[]')]
     public function getDomains(): DoctrineCollection
     {
         return $this->domains;
@@ -556,9 +510,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get periods.
-     *
-     * @API\Field(type="Period[]")
      */
+    #[API\Field(type: 'Period[]')]
     public function getPeriods(): DoctrineCollection
     {
         return $this->periods;
@@ -584,9 +537,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get materials.
-     *
-     * @API\Field(type="Material[]")
      */
+    #[API\Field(type: 'Material[]')]
     public function getMaterials(): DoctrineCollection
     {
         return $this->materials;
@@ -667,9 +619,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set image width.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function setWidth(int $width): void
     {
         $this->width = $width;
@@ -685,9 +636,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set image height.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function setHeight(int $height): void
     {
         $this->height = $height;
@@ -695,9 +645,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set the image file.
-     *
-     * @API\Input(type="?GraphQL\Upload\UploadType")
      */
+    #[API\Input(type: '?GraphQL\Upload\UploadType')]
     public function setFile(UploadedFileInterface $file): void
     {
         $this->traitSetFile($file);
@@ -719,9 +668,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set legacy id.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function setLegacyId(int $legacyId): void
     {
         $this->legacyId = $legacyId;
@@ -824,9 +772,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Get related cards.
-     *
-     * @API\Field(type="Card[]")
      */
+    #[API\Field(type: 'Card[]')]
     public function getCards(): DoctrineCollection
     {
         return $this->cards;

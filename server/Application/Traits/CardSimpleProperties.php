@@ -20,142 +20,122 @@ trait CardSimpleProperties
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private $addition = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private $expandedName = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $material = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $dilpsDomain = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $techniqueAuthor = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=60, options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', length: 60, options: ['default' => ''])]
     private $techniqueDate = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $format = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private $literature = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private $objectReference = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=10, options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', length: 10, options: ['default' => ''])]
     private $page = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=10, options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', length: 10, options: ['default' => ''])]
     private $figure = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="`table`", type="string", length=10, options={"default" = ""})
      */
+    #[ORM\Column(name: '`table`', type: 'string', length: 10, options: ['default' => ''])]
     private $table = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=30, options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', length: 30, options: ['default' => ''])]
     private $isbn = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     private $comment = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     private $corpus = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $rights = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $muserisUrl = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private $muserisCote = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=60, options={"default" = ""})
      */
+    #[ORM\Column(type: 'string', length: 60, options: ['default' => ''])]
     private $productionPlace = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", options={"default" = ""})
      */
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private $urlDescription = '';
 
     public function getAddition(): string

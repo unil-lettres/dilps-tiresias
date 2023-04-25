@@ -15,12 +15,9 @@ trait HasInstitution
 {
     /**
      * @var null|Institution
-     *
-     * @ORM\ManyToOne(targetEntity="Institution")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="SET NULL")
-     * })
      */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Institution::class)]
     private $institution;
 
     abstract public function getSite(): string;

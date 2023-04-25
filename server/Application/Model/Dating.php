@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\DatingRepository;
 use Application\Utility;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * An exact dating period expressed in Julian Days and automatically computed
@@ -15,27 +16,18 @@ use GraphQL\Doctrine\Annotation as API;
  *
  * Julian days are used instead of standard date format because MariaDB does not
  * support older year than 1000 and we are often much older than that (before Christ)
- *
- * @ORM\Entity(repositoryClass="Application\Repository\DatingRepository")
  */
+#[ORM\Entity(DatingRepository::class)]
 class Dating extends AbstractModel
 {
-    /**
-     * @ORM\Column(name="`from`", type="integer")
-     */
+    #[ORM\Column(name: '`from`', type: 'integer')]
     private int $from;
 
-    /**
-     * @ORM\Column(name="`to`", type="integer")
-     */
+    #[ORM\Column(name: '`to`', type: 'integer')]
     private int $to;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Card", inversedBy="datings")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE", nullable=false)
-     * })
-     */
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Card::class, inversedBy: 'datings')]
     private ?Card $card = null;
 
     /**
@@ -46,9 +38,7 @@ class Dating extends AbstractModel
         return Utility::julianToDate($this->from);
     }
 
-    /**
-     * @API\Exclude
-     */
+    #[API\Exclude]
     public function setFrom(Chronos $from): void
     {
         $this->from = Utility::dateToJulian($from);
@@ -62,9 +52,7 @@ class Dating extends AbstractModel
         return Utility::julianToDate($this->to);
     }
 
-    /**
-     * @API\Exclude
-     */
+    #[API\Exclude]
     public function setTo(Chronos $to): void
     {
         $this->to = Utility::dateToJulian($to);

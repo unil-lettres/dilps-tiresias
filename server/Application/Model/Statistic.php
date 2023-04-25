@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\StatisticRepository;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,86 +18,56 @@ use InvalidArgumentException;
  * - "Search" is a search submission for cards
  * - "Login" is when a user logs in, possibly multiple times
  * - "UniqueLogin" is a when a unique user logs in (so only one time per user)
- *
- * @ORM\Entity(repositoryClass="Application\Repository\StatisticRepository")
- * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(name="unique_date", columns={"date", "site"})
- * })
  */
+#[ORM\UniqueConstraint(name: 'unique_date', columns: ['date', 'site'])]
+#[ORM\Entity(StatisticRepository::class)]
 class Statistic extends AbstractModel implements HasSiteInterface
 {
     use HasSite;
 
     /**
      * A year and month, eg: '2019-02'.
-     *
-     * @ORM\Column(type="string", length=7)
      */
+    #[ORM\Column(type: 'string', length: 7)]
     private string $date;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $anonymousPageCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $defaultPageCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $aaiPageCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $anonymousDetailCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $defaultDetailCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $aaiDetailCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $anonymousSearchCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $defaultSearchCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $aaiSearchCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $defaultLoginCount = 0;
 
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0, "unsigned" = true})
-     */
+    #[ORM\Column(type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $aaiLoginCount = 0;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private array $defaultLogins = [];
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private array $aaiLogins = [];
 
     public function getDate(): string

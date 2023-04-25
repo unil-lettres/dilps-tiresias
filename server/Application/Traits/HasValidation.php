@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Application\Traits;
 
 use Application\Model\User;
-use Application\Utility;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,30 +15,26 @@ trait HasValidation
 {
     /**
      * @var Chronos
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $imageValidationDate;
 
     /**
      * @var Chronos
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $dataValidationDate;
 
     /**
      * @var null|User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
      */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $imageValidator;
 
     /**
      * @var null|User
-     *
-     * @ORM\ManyToOne(targetEntity="User")
      */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $dataValidator;
 
     /**

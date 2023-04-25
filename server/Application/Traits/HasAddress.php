@@ -7,7 +7,7 @@ namespace Application\Traits;
 use Application\Model\Country;
 use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * Common fields to represent an address.
@@ -16,10 +16,9 @@ trait HasAddress
 {
     /**
      * @var null|Point
-     *
-     * @ORM\Column(type="point", nullable=true)
-     * @API\Exclude
      */
+    #[ORM\Column(type: 'point', nullable: true)]
+    #[API\Exclude]
     private $location;
 
     /**
@@ -34,45 +33,39 @@ trait HasAddress
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="`precision`", type="Precision", nullable=true)
      */
+    #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
     private $precision;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private $street = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=20)
      */
+    #[ORM\Column(type: 'string', length: 20)]
     private $postcode = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=191)
      */
+    #[ORM\Column(type: 'string', length: 191)]
     private $locality = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=191)
      */
+    #[ORM\Column(type: 'string', length: 191)]
     private $area = '';
 
     /**
      * @var null|Country
-     *
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
+    #[ORM\ManyToOne(targetEntity: Country::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private $country;
 
     /**
@@ -118,17 +111,13 @@ trait HasAddress
         $this->toLocation();
     }
 
-    /**
-     * @API\Field(type="?Precision")
-     */
+    #[API\Field(type: '?Precision')]
     public function getPrecision(): ?string
     {
         return $this->precision;
     }
 
-    /**
-     * @API\Input(type="?Precision")
-     */
+    #[API\Input(type: '?Precision')]
     public function setPrecision(?string $precision): void
     {
         $this->precision = $precision;

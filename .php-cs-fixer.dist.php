@@ -142,7 +142,7 @@ return (new PhpCsFixer\Config())
         'no_unreachable_default_argument_value' => true,
         'no_unset_cast' => true,
         'no_unset_on_property' => true,
-        'no_unused_imports' => false, // Cannot use this because of we need imports for used traits, see https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/3941
+        'no_unused_imports' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'no_useless_sprintf' => true,

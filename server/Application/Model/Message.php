@@ -4,24 +4,19 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Annotation as API;
 
 /**
  * A message sent to a user.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\MessageRepository")
  */
+#[ORM\Entity(MessageRepository::class)]
 class Message extends AbstractModel implements \Ecodev\Felix\Model\Message
 {
     use \Ecodev\Felix\Model\Traits\Message;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
-     * })
-     */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $recipient = null;
 
     /**

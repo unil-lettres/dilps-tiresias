@@ -12,9 +12,8 @@ trait HasCode
 {
     /**
      * @var null|string
-     *
-     * @ORM\Column(type="string", length=30, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
     private $code;
 
     /**

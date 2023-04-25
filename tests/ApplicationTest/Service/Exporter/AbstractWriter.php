@@ -12,7 +12,6 @@ use Application\Model\DocumentType;
 use Application\Model\Export;
 use Application\Model\Material;
 use Application\Model\Period;
-use Application\Service\Exporter\Pptx;
 use Application\Service\Exporter\Writer;
 use PHPUnit\Framework\TestCase;
 

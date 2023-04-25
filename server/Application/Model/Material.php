@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
+use Application\Repository\MaterialRepository;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
 use Application\Traits\HasSite;
@@ -12,16 +14,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * A material.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\MaterialRepository")
- * @API\Filters({
- *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType", type="id"),
- * })
  */
+#[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
+#[ORM\Entity(MaterialRepository::class)]
 class Material extends AbstractModel implements HasParentInterface, HasSiteInterface
 {
     use HasName;
@@ -30,20 +29,16 @@ class Material extends AbstractModel implements HasParentInterface, HasSiteInter
 
     /**
      * @var null|Material
-     *
-     * @ORM\ManyToOne(targetEntity="Material", inversedBy="children")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(onDelete="CASCADE")
-     * })
      */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     private $parent;
 
     /**
      * @var Collection<Material>
-     *
-     * @ORM\OneToMany(targetEntity="Material", mappedBy="parent")
-     * @ORM\OrderBy({"name" = "ASC", "id" = "ASC"})
      */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
     private $children;
 
     public function __construct()

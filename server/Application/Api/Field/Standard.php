@@ -7,7 +7,6 @@ namespace Application\Api\Field;
 use Application\Api\Helper;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
-use Application\Repository\AbstractRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\Api\Input\PaginationInputType;
 use GraphQL\Type\Definition\Type;

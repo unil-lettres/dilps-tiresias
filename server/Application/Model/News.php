@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Repository\NewsRepository;
 use Application\Traits\HasImage;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -14,9 +15,8 @@ use Ecodev\Felix\Model\Traits\HasUrl;
 
 /**
  * A news.
- *
- * @ORM\Entity(repositoryClass="Application\Repository\NewsRepository")
  */
+#[ORM\Entity(NewsRepository::class)]
 class News extends AbstractModel implements HasSiteInterface
 {
     private const IMAGE_PATH = 'htdocs/news-images/';
@@ -27,14 +27,10 @@ class News extends AbstractModel implements HasSiteInterface
     use HasSorting;
     use HasUrl;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: 'text')]
     private string $description = '';
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = false})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isActive = false;
 
     /**

@@ -5,61 +5,46 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Acl\Acl;
+use Application\Api\Input\Operator\SearchOperatorType;
+use Application\Api\Input\Sorting\Random;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\HasOwner;
 use Ecodev\Felix\Model\Model;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 
 /**
  * Base class for all objects stored in database.
  *
  * It includes an automatic mechanism to timestamp objects with date and user.
- *
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks
- * @ORM\Table(indexes={
- *     @ORM\Index(name="creation_date", columns={"creation_date"}),
- *     @ORM\Index(name="update_date", columns={"update_date"}),
- * })
- * @API\Filters({
- *     @API\Filter(field="custom", operator="Application\Api\Input\Operator\SearchOperatorType", type="string"),
- * })
- * @API\Sorting({"Application\Api\Input\Sorting\Random"})
  */
+#[ORM\Index(name: 'creation_date', columns: ['creation_date'])]
+#[ORM\Index(name: 'update_date', columns: ['update_date'])]
+#[API\Filter(field: 'custom', operator: SearchOperatorType::class, type: 'string')]
+#[API\Sorting(Random::class)]
+#[ORM\MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 abstract class AbstractModel implements HasOwner, Model
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $creationDate = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $updateDate = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $creator = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $owner = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $updater = null;
 
     /**
@@ -123,10 +108,9 @@ abstract class AbstractModel implements HasOwner, Model
     /**
      * Set owner.
      *
-     * @API\Exclude
-     *
      * @param User $owner
      */
+    #[API\Exclude]
     public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
@@ -158,9 +142,8 @@ abstract class AbstractModel implements HasOwner, Model
 
     /**
      * Automatically called by Doctrine when the object is saved for the first time.
-     *
-     * @ORM\PrePersist
      */
+    #[ORM\PrePersist]
     public function timestampCreation(): void
     {
         $now = new Chronos();
@@ -175,9 +158,8 @@ abstract class AbstractModel implements HasOwner, Model
 
     /**
      * Automatically called by Doctrine when the object is updated.
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PreUpdate]
     public function timestampUpdate(PreUpdateEventArgs $event): void
     {
         if (!$event->getEntityChangeSet()) {
@@ -190,9 +172,8 @@ abstract class AbstractModel implements HasOwner, Model
 
     /**
      * Get permissions on this object for the current user.
-     *
-     * @API\Field(type="Permissions")
      */
+    #[API\Field(type: 'Permissions')]
     public function getPermissions(): array
     {
         $acl = new Acl();

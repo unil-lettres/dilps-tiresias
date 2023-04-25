@@ -7,7 +7,7 @@ namespace Application\Traits;
 use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use GraphQL\Doctrine\Annotation as API;
+use GraphQL\Doctrine\Attribute as API;
 use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
 
@@ -18,16 +18,14 @@ trait HasImage
 {
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=2000)
      */
+    #[ORM\Column(type: 'string', length: 2000)]
     private $filename = '';
 
     /**
      * Set the image file.
-     *
-     * @API\Input(type="?GraphQL\Upload\UploadType")
      */
+    #[API\Input(type: '?GraphQL\Upload\UploadType')]
     public function setFile(UploadedFileInterface $file): void
     {
         try {
@@ -47,9 +45,8 @@ trait HasImage
 
     /**
      * Set filename (without path).
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function setFilename(string $filename): void
     {
         $this->filename = $filename;
@@ -57,9 +54,8 @@ trait HasImage
 
     /**
      * Get filename (without path).
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function getFilename(): string
     {
         return $this->filename;
@@ -72,9 +68,8 @@ trait HasImage
 
     /**
      * Get absolute path to image on disk.
-     *
-     * @API\Exclude
      */
+    #[API\Exclude]
     public function getPath(): string
     {
         return realpath('.') . '/' . self::IMAGE_PATH . $this->getFilename();
@@ -84,9 +79,8 @@ trait HasImage
      * Automatically called by Doctrine when the object is deleted
      * Is called after database update because we can have issues on remove operation (like integrity test)
      * and it's preferable to keep a related file on drive before removing it definitely.
-     *
-     * @ORM\PostRemove
      */
+    #[ORM\PostRemove]
     public function deleteFile(): void
     {
         $path = $this->getPath();
