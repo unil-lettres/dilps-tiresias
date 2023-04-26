@@ -74,7 +74,8 @@
                     </ng-container>
 
                     <div *ngIf="item.dating">
-                        <div>Date (Datation)</div>
+                        <div *ngIf="item.site === Site.dilps">Datation</div>
+                        <div *ngIf="item.site === Site.tiresias">Date (Datation)</div>
                         <div>{{ item.dating }}</div>
                     </div>
 
@@ -89,7 +90,8 @@
                     </div>
 
                     <div *ngIf="item.materials?.length || item.material">
-                        <div>Matériel (Matériaux)</div>
+                        <div *ngIf="item.site === Site.dilps">Technique & matériel</div>
+                        <div *ngIf="item.site === Site.tiresias">Matériel (Matériaux)</div>
                         <div>
                             <div *ngFor="let material of item.materials | onlyLeaves">
                                 {{ material.hierarchicName }}
@@ -104,7 +106,8 @@
                     </div>
 
                     <div *ngIf="item.institution?.name">
-                        <div>Lieu (Musée)</div>
+                        <div *ngIf="item.site === Site.dilps">Lieu</div>
+                        <div *ngIf="item.site === Site.tiresias">Lieu (Musée)</div>
                         <div>{{ item.institution?.name }}<br /></div>
                     </div>
 
@@ -116,7 +119,8 @@
                     </div>
 
                     <div *ngIf="item.literature">
-                        <div>Source (référence de l'image)</div>
+                        <div *ngIf="item.site === Site.dilps">Référence de l'image</div>
+                        <div *ngIf="item.site === Site.tiresias">Source (référence de l'image)</div>
                         <div [innerHTML]="item.literature | truncate : ['250', '...']"></div>
                     </div>
                 </div>
