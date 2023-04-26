@@ -479,14 +479,6 @@
                     placeholder="Institution"
                 ></app-thesaurus>
 
-                <!-- Institution address -->
-                <app-address
-                    *ngIf="isDilps && !(model.locality || edit)"
-                    [model]="institution"
-                    [readonly]="!edit"
-                    [vertical]="true"
-                ></app-address>
-
                 <!-- Card address, if given -->
                 <div *ngIf="model.locality || edit">
                     <div class="mat-headline-6">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
