@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
-import {MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
-    HierarchicDialogResult,
     Literal,
     NaturalAbstractController,
     NaturalAbstractModelService,
@@ -13,13 +12,14 @@ import {
     NaturalQueryVariablesManager,
     PaginatedData,
     QueryVariables,
+    SortingOrder,
 } from '@ecodev/natural';
 import {clone, isArray, isObject, isString, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MaterialSortingField} from '../../generated-types';
 
 export interface ThesaurusModel {
     name: string;
@@ -133,7 +133,7 @@ export class ThesaurusComponent<
     /**
      * Query variables manger
      */
-    private variablesManager: NaturalQueryVariablesManager = new NaturalQueryVariablesManager();
+    private readonly variablesManager = new NaturalQueryVariablesManager();
 
     /**
      * Prevent bug opening twice hierarchic dialog on ff
@@ -146,6 +146,14 @@ export class ThesaurusComponent<
     ) {
         super();
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
+        this.variablesManager.set('sorting', {
+            sorting: [
+                {
+                    field: MaterialSortingField.usageCount,
+                    order: SortingOrder.DESC,
+                },
+            ],
+        });
     }
 
     private _model: ThesaurusModel | ThesaurusModel[];
@@ -253,7 +261,7 @@ export class ThesaurusComponent<
         this.hierarchicSelectorDialogService
             .open(hierarchicConfig, dialogFocus)
             .afterClosed()
-            .subscribe((result: HierarchicDialogResult) => {
+            .subscribe(result => {
                 this.lockOpenDialog = false;
                 if (result && result.hierarchicSelection) {
                     // Find the only selection amongst all possible keys
