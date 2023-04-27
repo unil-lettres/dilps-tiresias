@@ -11,17 +11,17 @@ REPLACE INTO `collection` (`id`, parent_id, is_source, owner_id, visibility, cop
   (2007, 2001, 0, 1003, 'member', '', '', 'Test collection 2007 child of 2001', 'My mama always said life was like a box of chocolates.', 'dilps'),
   (2008, 2001, 0, 1003, 'private', '', '', 'Test collection 2008 child of 2001', 'It is not our abilities that show what we truly are. It is our choices.', 'dilps');
 
-REPLACE INTO `artist` (`id`, `name`, `site`) VALUES
-(3000, 'Test artist 3000', 'dilps'),
-(3001, 'Test artist 3001', 'dilps');
+REPLACE INTO `artist` (`id`, `name`, `site`, usage_count) VALUES
+(3000, 'Test artist 3000', 'dilps', 2),
+(3001, 'Test artist 3001', 'dilps', 2);
 
-REPLACE INTO `tag` (`id`, `parent_id`, `name`, `site`) VALUES
-  (4000, NULL, 'Test root tag 4000', 'dilps'),
-  (4001, 4000, 'Test child tag 40001', 'dilps'),
-  (4002, NULL, 'Test root tag 4002', 'tiresias'),
-  (4003, 4002, 'Test child tag 4003', 'tiresias'),
-  (4004, NULL, 'Test root tag 4004', 'dilps'),
-  (4005, 4004, 'Test child tag 4005', 'dilps');
+REPLACE INTO `tag` (`id`, `parent_id`, `name`, `site`, usage_count) VALUES
+  (4000, NULL, 'Test root tag 4000', 'dilps', 1),
+  (4001, 4000, 'Test child tag 40001', 'dilps', 0),
+  (4002, NULL, 'Test root tag 4002', 'tiresias', 0),
+  (4003, 4002, 'Test child tag 4003', 'tiresias', 0),
+  (4004, NULL, 'Test root tag 4004', 'dilps', 0),
+  (4005, 4004, 'Test child tag 4005', 'dilps', 0);
 
 REPLACE INTO `institution` (`id`, `country_id`, `name`, `site`) VALUES
   (5000, 1, 'Test institution 5000', 'dilps'),

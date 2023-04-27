@@ -8,12 +8,9 @@ use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
 use Application\Repository\TagRepository;
 use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
-use Application\Traits\HasSite;
-use Application\Traits\HasSiteInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Attribute as API;
 
 /**
@@ -21,11 +18,9 @@ use GraphQL\Doctrine\Attribute as API;
  */
 #[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
 #[ORM\Entity(TagRepository::class)]
-class Tag extends AbstractModel implements HasParentInterface, HasSiteInterface
+class Tag extends Thesaurus implements HasParentInterface
 {
-    use HasName;
     use HasParent;
-    use HasSite;
 
     /**
      * @var null|Tag
@@ -43,6 +38,7 @@ class Tag extends AbstractModel implements HasParentInterface, HasSiteInterface
 
     public function __construct()
     {
+        parent::__construct();
         $this->children = new ArrayCollection();
     }
 }
