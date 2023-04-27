@@ -1,6 +1,6 @@
 <div fxFlex fxLayout="row">
     <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
-        <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
+        <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
             <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
             <div fxFlex></div>
             <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
