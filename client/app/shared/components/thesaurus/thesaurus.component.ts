@@ -128,7 +128,7 @@ export class ThesaurusComponent<
     /**
      * Default page size
      */
-    private pageSize = 10;
+    private pageSize = 30;
 
     /**
      * Query variables manger
@@ -145,7 +145,7 @@ export class ThesaurusComponent<
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
-        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: 10}});
+        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
     }
 
     private _model: ThesaurusModel | ThesaurusModel[];
