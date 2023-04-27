@@ -62,6 +62,11 @@
                 <th *matHeaderCellDef mat-header-cell>Jusqu'à</th>
                 <td *matCellDef="let element" mat-cell>{{ element.item.to }}</td>
             </ng-container>
+
+            <ng-container matColumnDef="usageCount">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
+                <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
+            </ng-container>
         </table>
     </div>
 

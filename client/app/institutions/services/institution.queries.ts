@@ -5,6 +5,7 @@ export const institutionDetails = gql`
     fragment InstitutionDetails on Institution {
         id
         name
+        usageCount
         locality
         street
         postcode
@@ -26,6 +27,7 @@ export const institutionsQuery = gql`
             items {
                 id
                 name
+                usageCount
                 locality
             }
             pageSize

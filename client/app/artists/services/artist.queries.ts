@@ -7,6 +7,7 @@ export const artistsQuery = gql`
             items {
                 id
                 name
+                usageCount
             }
             pageSize
             pageIndex
@@ -20,6 +21,7 @@ export const artistQuery = gql`
         artist(id: $id) {
             id
             name
+            usageCount
             creationDate
             creator {
                 ...UserMeta

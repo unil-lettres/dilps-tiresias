@@ -31,7 +31,7 @@ export class AbstractNavigableList<
     extends NaturalAbstractNavigableList<TService>
     implements OnInit
 {
-    public displayedColumns = ['navigation', 'name'];
+    public displayedColumns = ['navigation', 'name', 'usageCount'];
 
     /**
      * Dialog to open detail view

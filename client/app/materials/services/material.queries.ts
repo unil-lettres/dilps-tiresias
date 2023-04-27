@@ -7,6 +7,7 @@ export const materialsQuery = gql`
             items {
                 id
                 name
+                usageCount
                 hierarchicName
                 hasChildren
             }
@@ -22,6 +23,7 @@ export const materialQuery = gql`
         material(id: $id) {
             id
             name
+            usageCount
             hierarchicName
             parent {
                 id

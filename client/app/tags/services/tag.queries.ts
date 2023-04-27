@@ -7,6 +7,7 @@ export const tagsQuery = gql`
             items {
                 id
                 name
+                usageCount
                 hierarchicName
                 hasChildren
             }
@@ -22,6 +23,7 @@ export const tagQuery = gql`
         tag(id: $id) {
             id
             name
+            usageCount
             parent {
                 id
                 name

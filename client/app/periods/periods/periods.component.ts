@@ -9,7 +9,7 @@ import {PeriodService} from '../services/period.service';
     styleUrls: ['./periods.component.scss'],
 })
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
-    public override displayedColumns = ['navigation', 'name', 'from', 'to'];
+    public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];
 
     public constructor(service: PeriodService, injector: Injector) {
         super(service, PeriodComponent, injector);

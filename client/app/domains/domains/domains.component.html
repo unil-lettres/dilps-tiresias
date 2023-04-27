@@ -50,6 +50,11 @@
                     ></app-table-button>
                 </td>
             </ng-container>
+
+            <ng-container matColumnDef="usageCount">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
+                <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
+            </ng-container>
         </table>
     </div>
 

@@ -7,6 +7,7 @@ export const documentTypesQuery = gql`
             items {
                 id
                 name
+                usageCount
             }
             pageSize
             pageIndex
@@ -20,6 +21,7 @@ export const documentTypeQuery = gql`
         documentType(id: $id) {
             id
             name
+            usageCount
             creationDate
             creator {
                 ...UserMeta

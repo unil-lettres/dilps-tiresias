@@ -27,7 +27,7 @@ export class AbstractList<
     extends NaturalAbstractList<TService>
     implements OnInit
 {
-    public displayedColumns = ['name'];
+    public displayedColumns = ['name', 'usageCount'];
 
     protected dialog: MatDialog;
 

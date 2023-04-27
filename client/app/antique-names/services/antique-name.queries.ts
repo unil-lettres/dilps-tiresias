@@ -7,6 +7,7 @@ export const antiqueNamesQuery = gql`
             items {
                 id
                 name
+                usageCount
             }
             pageSize
             pageIndex
@@ -20,6 +21,7 @@ export const antiqueNameQuery = gql`
         antiqueName(id: $id) {
             id
             name
+            usageCount
             creationDate
             creator {
                 ...UserMeta

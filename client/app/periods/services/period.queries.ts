@@ -7,6 +7,7 @@ export const periodsQuery = gql`
             items {
                 id
                 name
+                usageCount
                 from
                 to
                 hierarchicName
@@ -23,6 +24,7 @@ export const periodQuery = gql`
         period(id: $id) {
             id
             name
+            usageCount
             from
             to
             hierarchicName

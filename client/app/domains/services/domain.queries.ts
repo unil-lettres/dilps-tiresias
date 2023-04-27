@@ -7,6 +7,7 @@ export const domainsQuery = gql`
             items {
                 id
                 name
+                usageCount
                 hierarchicName
             }
             pageSize
@@ -21,6 +22,7 @@ export const domainQuery = gql`
         domain(id: $id) {
             id
             name
+            usageCount
             hierarchicName
             parent {
                 id
