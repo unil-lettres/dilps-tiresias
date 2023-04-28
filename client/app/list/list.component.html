@@ -31,7 +31,7 @@
 
 <div class="containerWithToolbar" fxFlex fxLayout="column">
     <mat-toolbar color="app" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
+        <app-logo *ngIf="showLogo" [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 
         <button
             (click)="setViewMode(ViewMode.grid)"

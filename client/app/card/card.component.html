@@ -16,7 +16,7 @@
             fxLayout="row"
             fxLayoutAlign="start center"
         >
-            <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
+            <app-logo *ngIf="showLogo" [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 
             <div *ngIf="title">{{ title }}</div>
 
