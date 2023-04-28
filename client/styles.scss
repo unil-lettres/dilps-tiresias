@@ -76,6 +76,14 @@ perfect-scrollbar {
     width: auto !important;
 }
 
+natural-search {
+    margin: 0 20px;
+
+    natural-input:last-of-type {
+        margin-right: 5px !important;
+    }
+}
+
 natural-search,
 .searchField {
     font-size: 16px;
@@ -106,4 +114,9 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 // so we try to preserve that formatting, while still wrapping if necessary
 .mat-mdc-snack-bar-label {
     white-space: pre-wrap;
+}
+
+.mat-mdc-icon-button,
+.mdc-button {
+    margin: initial;
 }
