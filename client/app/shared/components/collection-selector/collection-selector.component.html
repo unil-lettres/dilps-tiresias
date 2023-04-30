@@ -57,7 +57,7 @@
         >
             <mat-icon naturalIcon="collections"></mat-icon>
             <div fxFlex>{{ collection.name }}</div>
-            <button (click)="unlink(image, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
+            <button (click)="unlink(image!, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
                 <mat-icon naturalIcon="remove"></mat-icon>
             </button>
         </div>

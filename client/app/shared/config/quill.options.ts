@@ -4,7 +4,7 @@ import {Delta} from 'quill';
 
 export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta {
     const ops: any[] = [];
-    delta.ops.forEach((op: any) => {
+    delta.ops?.forEach((op: any) => {
         if (op.insert && typeof op.insert === 'string') {
             ops.push({
                 insert: op.insert,

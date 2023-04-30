@@ -9,9 +9,9 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 export class TableButtonComponent {
     @Input() public queryParams: any;
     @Input() public queryParamsHandling: any;
-    @Input() public label: string;
-    @Input() public icon: string;
-    @Input() public href: string;
-    @Input() public navigate: string;
-    @Input() public disable: boolean;
+    @Input() public label!: string;
+    @Input() public icon!: string;
+    @Input() public href!: string;
+    @Input() public navigate!: string;
+    @Input() public disable!: boolean;
 }

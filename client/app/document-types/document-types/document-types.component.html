@@ -10,7 +10,7 @@
     />
 </mat-toolbar>
 
-<div class="padding padding-fab">
+<div *ngIf="dataSource" class="padding padding-fab">
     <div class="mat-headline-5">Type de documents</div>
 
     <div [fxShow]="showTable()" class="responsive-table">

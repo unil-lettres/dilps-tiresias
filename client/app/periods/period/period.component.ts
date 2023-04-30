@@ -18,7 +18,7 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService, Thes
     public hierarchicConfig = periodHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<PeriodFilter> = [];
 
-    public displayWith(item: Literal): string {
+    public displayWith(item: Literal | null): string {
         return item ? item.name + formatYearRange(item.from, item.to) : '';
     }
 

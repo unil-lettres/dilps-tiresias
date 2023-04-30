@@ -35,7 +35,7 @@ export class AddressService {
     public buildAddress(place: PlaceModel, withLatLon = true): Address {
         const tmpGAddress: Record<string, string> = mapValues(this.config, () => '');
 
-        place.address_components.forEach(addressComponent => {
+        place.address_components?.forEach(addressComponent => {
             const addressType = addressComponent.types[0];
             if (!isUndefined(this.config[addressType])) {
                 tmpGAddress[addressType] = addressComponent[this.config[addressType]];
@@ -50,8 +50,8 @@ export class AddressService {
         };
 
         if (withLatLon) {
-            address.latitude = place.geometry.location.lat();
-            address.longitude = place.geometry.location.lng();
+            address.latitude = place.geometry!.location!.lat();
+            address.longitude = place.geometry!.location!.lng();
         }
 
         return address;

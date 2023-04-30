@@ -36,7 +36,7 @@ function testString(words: string[], attributeValue: string): boolean {
     return false;
 }
 
-function testSingleThesaurus(words: string[], attributeValue: ThesaurusModel): boolean {
+function testSingleThesaurus(words: string[], attributeValue: ThesaurusModel | null): boolean {
     if (!attributeValue) {
         return false;
     }

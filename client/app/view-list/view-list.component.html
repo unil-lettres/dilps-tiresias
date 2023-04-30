@@ -1,5 +1,5 @@
 <div #scrollable class="scrollable">
-    <div class="scrolled">
+    <div *ngIf="dataSource" class="scrolled">
         <mat-paginator
             (page)="loadMore($event)"
             *ngIf="dataSource.data?.length"

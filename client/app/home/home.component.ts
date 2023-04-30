@@ -36,7 +36,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     public errors: (Error & {debugMessage?: string; category?: string})[] = [];
     public user: Viewer_viewer | null = null;
     public nav = 1;
-    public progress?: number = null;
+    public progress: number | null = null;
     private uploaded = 0;
 
     public constructor(
@@ -66,7 +66,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
             this.user = user;
         });
 
-        this.route.firstChild.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+        this.route.firstChild?.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
             if (params.nav && /^[01]$/.test(params.nav)) {
                 this.nav = +params.nav;
             }
@@ -175,7 +175,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
 
     public uploadImagesAndExcel(excel: File, images: File[]): void {
         this.selectCollection().subscribe(collection => {
-            this.cardService.createWithExcel(excel, images, collection).subscribe(() => {
+            this.cardService.createWithExcel(excel, images, collection!).subscribe(() => {
                 this.redirectAfterCreation(collection);
             });
         });
@@ -220,7 +220,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
         const tiresiasRoles = [UserRole.administrator];
         const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
 
-        return applicableRoles.includes(this.user.role);
+        return applicableRoles.includes(this.user!.role);
     }
 
     private showWelcome(): void {

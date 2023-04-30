@@ -177,7 +177,7 @@
                         <mat-icon naturalIcon="refresh"></mat-icon>
                     </button>
 
-                    <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors.maxlength"
+                    <mat-error *ngIf="code.invalid && (code?.dirty || code?.touched) && !code.errors?.maxlength"
                         >Cette référence est déjà attribuée à une fiche
                     </mat-error>
                     <mat-hint
@@ -185,7 +185,7 @@
                         *ngIf="edit && model.code?.length > 23"
                         [ngClass]="{strong: model.code?.length >= 30}"
                     >
-                        {{ model.code.length }} / 30
+                        {{ model.code!.length }} / 30
                     </mat-hint>
                 </mat-form-field>
 
@@ -292,7 +292,7 @@
                         *ngIf="edit && model.techniqueAuthor?.length > 200"
                         [ngClass]="{strong: model.techniqueAuthor?.length >= 255}"
                     >
-                        {{ model.techniqueAuthor.length }} / 255
+                        {{ model.techniqueAuthor!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -338,7 +338,7 @@
                         *ngIf="edit && model.dating?.length > 200"
                         [ngClass]="{strong: model.dating?.length >= 255}"
                     >
-                        {{ model.dating.length }} / 255
+                        {{ model.dating!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -361,7 +361,7 @@
                         *ngIf="edit && model.dilpsDomain?.length > 200"
                         [ngClass]="{strong: model.dilpsDomain?.length >= 255}"
                     >
-                        {{ model.dilpsDomain.length }} / 255
+                        {{ model.dilpsDomain!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -388,7 +388,7 @@
                         *ngIf="edit && model.material?.length > 200"
                         [ngClass]="{strong: model.material?.length >= 255}"
                     >
-                        {{ model.material.length }} / 255
+                        {{ model.material!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -415,7 +415,7 @@
                         *ngIf="edit && model.format?.length > 200"
                         [ngClass]="{strong: model.format?.length >= 255}"
                     >
-                        {{ model.format.length }} / 255
+                        {{ model.format!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -440,7 +440,7 @@
                         *ngIf="edit && model.productionPlace?.length > 47"
                         [ngClass]="{strong: model.productionPlace?.length >= 60}"
                     >
-                        {{ model.productionPlace.length }} / 60
+                        {{ model.productionPlace!.length }} / 60
                     </mat-hint>
                 </mat-form-field>
 
@@ -609,7 +609,7 @@
                         *ngIf="edit && model.documentSize?.length > 150"
                         [ngClass]="{strong: model.documentSize?.length >= 191}"
                     >
-                        {{ model.documentSize.length }} / 191
+                        {{ model.documentSize!.length }} / 191
                     </mat-hint>
                 </mat-form-field>
 
@@ -628,7 +628,7 @@
                         *ngIf="edit && model.techniqueAuthor?.length > 200"
                         [ngClass]="{strong: model.techniqueAuthor?.length >= 255}"
                     >
-                        {{ model.techniqueAuthor.length }} / 255
+                        {{ model.techniqueAuthor!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -640,7 +640,7 @@
                         *ngIf="edit && model.techniqueDate?.length > 47"
                         [ngClass]="{strong: model.techniqueDate?.length >= 60}"
                     >
-                        {{ model.techniqueDate.length }} / 60
+                        {{ model.techniqueDate!.length }} / 60
                     </mat-hint>
                 </mat-form-field>
 
@@ -677,7 +677,7 @@
                         *ngIf="edit && model.page?.length > 7"
                         [ngClass]="{strong: model.page?.length >= 10}"
                     >
-                        {{ model.page.length }} / 10
+                        {{ model.page!.length }} / 10
                     </mat-hint>
                 </mat-form-field>
 
@@ -689,7 +689,7 @@
                         *ngIf="edit && model.figure?.length > 7"
                         [ngClass]="{strong: model.figure?.length >= 10}"
                     >
-                        {{ model.figure.length }} / 10
+                        {{ model.figure!.length }} / 10
                     </mat-hint>
                 </mat-form-field>
 
@@ -701,7 +701,7 @@
                         *ngIf="edit && model.table?.length > 7"
                         [ngClass]="{strong: model.table?.length >= 10}"
                     >
-                        {{ model.table.length }} / 10
+                        {{ model.table!.length }} / 10
                     </mat-hint>
                 </mat-form-field>
 
@@ -717,7 +717,7 @@
                         *ngIf="edit && model.isbn?.length > 23"
                         [ngClass]="{strong: model.isbn?.length >= 30}"
                     >
-                        {{ model.isbn.length }} / 30
+                        {{ model.isbn!.length }} / 30
                     </mat-hint>
                 </mat-form-field>
 
@@ -736,7 +736,7 @@
                         *ngIf="edit && model.rights?.length > 200"
                         [ngClass]="{strong: model.rights?.length >= 255}"
                     >
-                        {{ model.rights.length }} / 255
+                        {{ model.rights!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 
@@ -766,7 +766,7 @@
                         *ngIf="edit && model.url?.length > 200"
                         [ngClass]="{strong: model.url?.length >= 255}"
                     >
-                        {{ model.url.length }} / 255
+                        {{ model.url!.length }} / 255
                     </mat-hint>
                 </mat-form-field>
 

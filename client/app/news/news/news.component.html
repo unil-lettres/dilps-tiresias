@@ -8,7 +8,7 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        [readonly]="data.item.permissions && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -17,7 +17,7 @@
                     <mat-label>Description</mat-label>
                     <input
                         [(ngModel)]="data.item.description"
-                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        [readonly]="data.item.permissions && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -27,7 +27,7 @@
                     <input
                         [(ngModel)]="data.item.url"
                         #url="ngModel"
-                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        [readonly]="data.item.permissions && !data.item.permissions.update"
                         matInput
                         maxlength="255"
                         type="url"
@@ -36,7 +36,7 @@
                     <mat-hint
                         align="end"
                         *ngIf="data.item.url?.length > 200"
-                        [ngClass]="{strong: data.item.url?.length >= 255}"
+                        [ngClass]="{strong: data.item.url.length >= 255}"
                     >
                         {{ data.item.url.length }} / 255
                     </mat-hint>
@@ -44,13 +44,13 @@
 
                 <input
                     (change)="upload($event)"
-                    [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                    [readonly]="data.item.permissions && !data.item.permissions.update"
                     name="Image"
                     placeholder="Lien"
                     type="file"
                 />
 
-                <img *ngIf="!imageData && data?.item?.imageUrl" [attr.src]="data?.item?.imageUrl" />
+                <img *ngIf="!imageData && data.item.imageUrl" [attr.src]="data.item.imageUrl" />
                 <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image"></div>
             </div>
         </mat-tab>

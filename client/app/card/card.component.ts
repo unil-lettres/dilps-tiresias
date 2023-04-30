@@ -91,7 +91,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
      *
      * If only `[fetchedModel]` is given, then `model` will be automatically deduced.
      */
-    @Input() public model: CardInputWithId;
+    @Input() public model!: CardInputWithId;
 
     /**
      * The card as fetched from DB, if applicable.
@@ -133,7 +133,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if card is source or suggestion
      */
-    @Input() public title: string;
+    @Input() public title!: string;
 
     /**
      * Show logo on top of the page if true
@@ -143,17 +143,17 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Base 64 image data for display usage before effective upload
      */
-    @Input() public imageData: string;
+    @Input() public imageData!: string;
 
     /**
      * Url of resized images (2000px) to be displayed
      */
-    public imageSrc: string;
+    public imageSrc!: string;
 
     /**
      * Url of full sized image (for download purpose)
      */
-    public imageSrcFull: string;
+    public imageSrcFull!: string;
 
     /**
      * Default visibility
@@ -184,7 +184,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Currently logged user
      */
-    public user: Viewer['viewer'];
+    public user!: Viewer['viewer'];
 
     /**
      * Allow to use TAB to go to next field (as is standard)
@@ -227,7 +227,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    public institution: Card_card_institution | UpdateCard_updateCard_institution | null;
+    public institution!: Card_card_institution | UpdateCard_updateCard_institution | null;
 
     /**
      * Cache artists data from server
@@ -305,11 +305,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     public sortedCollections: Card_card_collections[] = [];
 
     public formIsValid = true;
-    public codeModel: NgModel | null;
-    public urlModel: NgModel | null;
+    public codeModel: NgModel | null = null;
+    public urlModel: NgModel | null = null;
     public collectionCopyrights = '';
     public isDilps = true;
-    public suggestedCode: string | null;
+    public suggestedCode: string | null = null;
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -338,7 +338,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     }
 
     public updateFormValidity(): void {
-        this.formIsValid = (!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid);
+        this.formIsValid =
+            ((!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid)) ?? false;
     }
 
     public ngOnInit(): void {
@@ -366,7 +367,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
                 if (params.cardId) {
                     this.fetchedModel = this.route.snapshot.data.card;
-                    this.model = cardToCardInput(this.fetchedModel);
+                    this.model = cardToCardInput(this.fetchedModel!);
                     this.initCard();
                 } else {
                     throw new Error(
@@ -401,10 +402,10 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             // Init visibility
             this.visibility = +findKey(this.visibilities, s => {
                 return s.value === this.model.visibility;
-            }) as keyof CardVisibilities;
+            })! as keyof CardVisibilities;
 
             this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
-            this.artists = this.fetchedModel?.artists ?? null; // cache, see attribute docs
+            this.artists = this.fetchedModel?.artists ?? []; // cache, see attribute docs
 
             const src = CardService.getImageLink(this.model, 2000);
             if (src) {
@@ -418,8 +419,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
             this.updateCollections();
 
-            this.model.tags = onlyLeaves(this.model.tags);
-            this.model.materials = onlyLeaves(this.model.materials);
+            this.model.tags = onlyLeaves(this.model.tags!);
+            this.model.materials = onlyLeaves(this.model.materials!);
         }
     }
 
@@ -444,11 +445,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     }
 
     public canUpdateCode(): boolean {
-        return this.user && [UserRole.major, UserRole.administrator].includes(this.user.role);
+        return !!this.user && [UserRole.major, UserRole.administrator].includes(this.user.role);
     }
 
     public showSuggestedCode(): boolean {
-        return this.edit && this.canUpdateCode() && this.suggestedCode && this.suggestedCode !== this.model.code;
+        return this.edit && this.canUpdateCode() && !!this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
     public updateVisibility(): void {
@@ -541,7 +542,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                 this.cardService.getOne(this.fetchedModel.id).subscribe(result => {
                     this.assertFetchedCard(this.fetchedModel);
 
-                    this.fetchedModel.collections = result.collections;
+                    this.fetchedModel.collections = result!.collections;
                     this.updateCollections();
                 });
             });
@@ -611,11 +612,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     public canSuggestCreate(): boolean {
         return (
-            this.user &&
-            this.fetchedModel &&
-            this.fetchedModel.owner &&
+            !!this.user &&
+            !!this.fetchedModel &&
+            !!this.fetchedModel.owner &&
             this.fetchedModel.owner.id === this.user.id &&
-            this.fetchedModel.creator &&
+            !!this.fetchedModel.creator &&
             this.fetchedModel.creator.id === this.user.id &&
             this.fetchedModel.visibility === CardVisibility.private
         );
@@ -631,7 +632,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     private getBase64(file: File | null): void {
         getBase64Url(file).then(result => {
-            this.imageData = result;
+            this.imageData = result!;
         });
     }
 

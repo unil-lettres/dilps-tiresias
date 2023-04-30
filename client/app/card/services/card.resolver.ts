@@ -8,13 +8,13 @@ import {ErrorService} from '../../shared/components/error/error.service';
 @Injectable({
     providedIn: 'root',
 })
-export class CardResolver implements Resolve<Card_card> {
+export class CardResolver implements Resolve<Card_card | null> {
     public constructor(private readonly cardService: CardService, private readonly errorService: ErrorService) {}
 
     /**
      * Resolve sites for routing service only at the moment
      */
-    public resolve(route: ActivatedRouteSnapshot): Observable<Card_card> {
+    public resolve(route: ActivatedRouteSnapshot): Observable<Card_card | null> {
         if (route.params.cardId) {
             const observable = this.cardService.getOne(route.params.cardId).pipe(last());
 

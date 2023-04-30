@@ -4,6 +4,7 @@ import {
     NaturalAbstractModelService,
     NaturalDebounceService,
     PaginatedData,
+    QueryVariables,
     VariablesWithInput,
 } from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
@@ -14,7 +15,7 @@ export class AbstractContextualizedService<
     Tone,
     Vone extends {id: string},
     Tall extends PaginatedData<Literal>,
-    Vall,
+    Vall extends QueryVariables,
     Tcreate,
     Vcreate extends VariablesWithInput,
     Tupdate,

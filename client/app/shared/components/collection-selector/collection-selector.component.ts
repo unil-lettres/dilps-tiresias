@@ -42,8 +42,8 @@ export type CollectionSelectorResult = Collections_collections_items | CreateCol
     styleUrls: ['./collection-selector.component.scss'],
 })
 export class CollectionSelectorComponent implements OnInit {
-    public listFilter: CollectionFilter;
-    public collection: Collections_collections_items;
+    public listFilter!: CollectionFilter;
+    public collection: Collections_collections_items | null = null;
     public image: Cards_cards_items | undefined;
     public newCollection: any = {
         name: '',
@@ -61,13 +61,13 @@ export class CollectionSelectorComponent implements OnInit {
 
     public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => {
-            if (![UserRole.administrator, UserRole.major].includes(user.role)) {
+            if (![UserRole.administrator, UserRole.major].includes(user!.role)) {
                 this.listFilter = {
                     groups: [
-                        {conditions: [{owner: {equal: {value: user.id}}}]},
+                        {conditions: [{owner: {equal: {value: user!.id}}}]},
                         {
                             groupLogic: LogicalOperator.OR,
-                            conditions: [{users: {have: {values: [user.id]}}}],
+                            conditions: [{users: {have: {values: [user!.id]}}}],
                         },
                     ],
                 };
@@ -80,7 +80,7 @@ export class CollectionSelectorComponent implements OnInit {
     }
 
     public link(): void {
-        this.linkInternal(this.collection);
+        this.linkInternal(this.collection!);
     }
 
     public unlink(image: Cards_cards_items, collection: Cards_cards_items_collections): void {

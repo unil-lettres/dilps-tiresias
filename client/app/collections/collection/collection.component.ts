@@ -78,7 +78,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
 
         const hasCreator = !!this.data.item.creator;
-        const isCreator = hasCreator && this.user.id === this.data.item.creator.id;
+        const isCreator = hasCreator && this.user.id === this.data.item!.creator!.id;
         const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
         if (isOwner) {
@@ -93,7 +93,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    public displayFn(item: Users_users_items | string): string {
+    public displayFn(item: Users_users_items | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 
@@ -102,7 +102,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         this.visibility = +findKey(
             this.visibilities,
             s => s.value === this.data.item.visibility,
-        ) as keyof CollectionVisibilities;
+        )! as keyof CollectionVisibilities;
 
         this.institution = this.data.item.institution;
 

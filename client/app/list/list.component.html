@@ -29,7 +29,7 @@
     </div>
 </mat-menu>
 
-<div class="containerWithToolbar" fxFlex fxLayout="column">
+<div *ngIf="dataSource" class="containerWithToolbar" fxFlex fxLayout="column">
     <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
 
@@ -119,7 +119,7 @@
 
         <ng-container *ngIf="!selected?.length && user">
             <button
-                (click)="linkCollectionToCollection(collection)"
+                (click)="linkCollectionToCollection(collection!)"
                 *ngIf="collection?.id"
                 mat-icon-button
                 matTooltip="Ajouter la collection à une autre collection"
@@ -128,7 +128,7 @@
             </button>
 
             <button
-                (click)="downloadCollection(collection)"
+                (click)="downloadCollection(collection!)"
                 *ngIf="showDownloadCollection"
                 mat-icon-button
                 matTooltip="Télécharger la collection"

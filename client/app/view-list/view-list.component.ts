@@ -18,7 +18,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource: NaturalDataSource<Cards_cards>;
+    @Input() public dataSource!: NaturalDataSource<Cards_cards>;
 
     /**
      * Emits when data is required
@@ -38,7 +38,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to scrollable element
      */
-    @ViewChild('scrollable', {static: true}) private scrollable: PerfectScrollbarComponent;
+    @ViewChild('scrollable', {static: true}) private scrollable!: PerfectScrollbarComponent;
 
     /**
      * Template exposed variable

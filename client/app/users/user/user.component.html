@@ -69,7 +69,7 @@
 
                 <mat-form-field>
                     <mat-label>Rôle</mat-label>
-                    <mat-select [(value)]="data.item.role" [disabled]="user?.id === data?.item?.id">
+                    <mat-select [(value)]="data.item.role" [disabled]="user?.id === data.item.id">
                         <mat-option
                             *ngFor="let role of roles"
                             [value]="role.value"

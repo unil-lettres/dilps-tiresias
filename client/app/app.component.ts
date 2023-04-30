@@ -21,11 +21,11 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
     /**
      * When first route is loaded, hide the app-bootloader component
      */
-    public initialized: boolean;
+    public initialized = false;
 
     private lastTheme = '';
 
-    private favIcon: HTMLLinkElement = document.querySelector('#favIcon');
+    private favIcon: HTMLLinkElement = document.querySelector('#favIcon')!;
 
     public constructor(
         private readonly themeService: ThemeService,

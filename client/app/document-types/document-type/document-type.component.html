@@ -6,7 +6,7 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        [readonly]="data.item.permissions && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -21,7 +21,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.documentType?.create"
-        [canDelete]="data?.item?.canDelete"
+        [canDelete]="data.item.canDelete"
         [item]="data.item"
         fxFlex
     ></app-dialog-footer>

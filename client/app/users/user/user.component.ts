@@ -19,11 +19,11 @@ import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService} from '@ecodev/natural';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
-    const password = ac.get('password').value; // to get value in input tag
-    const passwordConfirmation = ac.get('passwordConfirmation').value; // to get value in input tag
+    const password = ac.get('password')!.value; // to get value in input tag
+    const passwordConfirmation = ac.get('passwordConfirmation')!.value; // to get value in input tag
 
     if (password !== passwordConfirmation) {
-        ac.get('passwordConfirmation').setErrors({password: true});
+        ac.get('passwordConfirmation')!.setErrors({password: true});
     }
 
     return null;

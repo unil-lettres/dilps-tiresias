@@ -6,7 +6,7 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                        [readonly]="data.item.permissions && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -16,7 +16,7 @@
                         <mat-label>A partir de</mat-label>
                         <input
                             [(ngModel)]="data.item.from"
-                            [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                            [readonly]="data.item.permissions && !data.item.permissions.update"
                             matInput
                         />
                     </mat-form-field>
@@ -25,7 +25,7 @@
                         <mat-label>Jusqu'à</mat-label>
                         <input
                             [(ngModel)]="data.item.to"
-                            [readonly]="data?.item?.permissions && !data.item.permissions.update"
+                            [readonly]="data.item.permissions && !data.item.permissions.update"
                             matInput
                         />
                     </mat-form-field>
@@ -52,7 +52,7 @@
         (delete)="delete()"
         (update)="update()"
         [canCreate]="user?.globalPermissions?.period?.create"
-        [canDelete]="data?.item?.canDelete"
+        [canDelete]="data.item.canDelete"
         [item]="data.item"
         fxFlex
     ></app-dialog-footer>

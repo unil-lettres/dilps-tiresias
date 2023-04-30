@@ -86,17 +86,17 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Reference to grid component
      */
-    @ViewChild(ViewGridComponent) public gridComponent: ViewGridComponent;
+    @ViewChild(ViewGridComponent) public gridComponent: ViewGridComponent | null = null;
 
     /**
      * Reference to list component
      */
-    @ViewChild(ViewListComponent) public listComponent: ViewListComponent;
+    @ViewChild(ViewListComponent) public listComponent: ViewListComponent | null = null;
 
     /**
      * Reference to map component
      */
-    @ViewChild(ViewMapComponent) public mapComponent: ViewMapComponent;
+    @ViewChild(ViewMapComponent) public mapComponent: ViewMapComponent | null = null;
 
     /**
      * Expose enum for template
@@ -128,7 +128,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Current user
      */
-    public user: Viewer['viewer'];
+    public user!: Viewer['viewer'];
 
     /**
      * True if button for archive download has permissions to be displayed
@@ -138,12 +138,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Number of items added to dom from the gallery (grid view)
      */
-    public gridNumberVisibleItems: number;
+    public gridNumberVisibleItems = 0;
 
     /**
      * Total number of items matching with search
      */
-    public gridNumberTotalItems: number;
+    public gridNumberTotalItems = 0;
 
     /**
      * Enum that specified the displayed list
@@ -248,7 +248,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
             // Setup own page, with self created cards
             if (data.creator && !this.collection) {
-                filter.groups[filter.groups.length - 1].conditions[0].creator = {equal: {value: data.creator.id}};
+                filter.groups![filter.groups!.length - 1].conditions![0].creator = {equal: {value: data.creator.id}};
             }
 
             this.variablesManager.set('controller-variables', {filter: filter});
@@ -264,7 +264,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public toggleLabels(): void {
         this.showLabels = !this.showLabels;
-        this.gridComponent?.gallery.gallery.then(gallery => gallery.setLabelHover(!this.showLabels));
+        this.gridComponent?.gallery?.gallery.then(gallery => gallery.setLabelHover(!this.showLabels));
         sessionStorage.setItem('showLabels', this.showLabels + '');
     }
 
@@ -310,7 +310,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
         const roleIsAllowed = this.user && this.user.role && (!roles || (roles && roles.includes(this.user.role)));
         const hasCollection = this.collection && this.collection.id;
-        this.showDownloadCollection = hasCollection && roleIsAllowed;
+        this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
 
     public select(cards: Cards_cards_items[]): void {
@@ -504,7 +504,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public canMassEdit(): boolean {
         return (
-            this.user?.role &&
+            !!this.user?.role &&
             [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)
         );
     }
@@ -520,7 +520,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Return the only activated View Component
      */
     private getViewComponent(): ViewInterface {
-        return this.gridComponent || this.listComponent;
+        return (this.gridComponent || this.listComponent)!;
     }
 
     private linkToCollection(data: CollectionSelectorData): void {

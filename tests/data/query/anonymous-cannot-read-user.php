@@ -11,9 +11,6 @@ return [
         }',
     ],
     [
-        'data' => [
-            'user' => null,
-        ],
         'errors' => [
             [
                 'message' => 'Entity not found for class `Application\Model\User` and ID `1000`.',

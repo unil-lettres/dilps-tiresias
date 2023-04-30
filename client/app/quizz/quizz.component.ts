@@ -15,10 +15,15 @@ import {NaturalAbstractController} from '@ecodev/natural';
 })
 export class QuizzComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public cards: string[] = [];
-    public card: Card['card'];
-    public imageSrc = '';
+    public card: Card['card'] | null = null;
+    public imageSrc: string | null = null;
     public currentIndex = 0;
-    public attributes: Result;
+    public attributes: Result = {
+        name: false,
+        artists: false,
+        institution: false,
+        dating: false,
+    };
     public formCtrl: UntypedFormControl = new UntypedFormControl();
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
@@ -28,8 +33,8 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
     }
 
     public override ngOnDestroy(): void {
-        this.routeParamsSub.unsubscribe();
-        this.formChangeSub.unsubscribe();
+        this.routeParamsSub?.unsubscribe();
+        this.formChangeSub?.unsubscribe();
     }
 
     public ngOnInit(): void {
@@ -43,13 +48,15 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         this.formChangeSub = this.formCtrl.valueChanges
             .pipe(takeUntil(this.ngUnsubscribe), debounceTime(500))
             .subscribe(val => {
-                this.attributes = test(val, this.card);
+                if (this.card) {
+                    this.attributes = test(val, this.card);
+                }
             });
     }
 
     public goToNext(): void {
         this.formCtrl.setValue('');
-        const index = this.cards.findIndex(c => c === this.card.id);
+        const index = this.cards.findIndex(c => c === this.card?.id);
         this.getCard(this.cards[index + 1]);
     }
 

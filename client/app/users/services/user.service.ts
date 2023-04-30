@@ -82,7 +82,9 @@ export class UserService
 
     public static canSuggestUpdate(user: Viewer_viewer | null, card: Cards_cards_items | null): boolean {
         return (
-            user && card && ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
+            !!user &&
+            !!card &&
+            ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
         );
     }
 
@@ -129,7 +131,7 @@ export class UserService
             );
     }
 
-    public getType(type: UserType): {name: UserType; text: string} {
+    public getType(type: UserType): {name: UserType; text: string} | undefined {
         return this.getTypes().find(t => t.name === type);
     }
 

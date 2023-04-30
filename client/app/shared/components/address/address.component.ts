@@ -8,7 +8,7 @@ import {
     Card_card,
     Card_card_institution,
     CardInput,
-    Countries,
+    Countries_countries_items,
     CountriesVariables,
     Institution_institution,
     Site,
@@ -24,7 +24,7 @@ import {MapApiService} from '../../../view-map/map-api.service';
     providers: [AddressService, CountryService],
 })
 export class AddressComponent implements OnInit, OnChanges {
-    @ViewChild('input', {static: true}) public inputRef: ElementRef<HTMLInputElement>;
+    @ViewChild('input', {static: true}) public inputRef!: ElementRef<HTMLInputElement>;
 
     /**
      * If true, layouts vertically some side by side elements
@@ -44,7 +44,7 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * Object reference is directly modified
      */
-    @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null;
+    @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null = null;
 
     public formCtrl = new UntypedFormControl();
 
@@ -52,7 +52,7 @@ export class AddressComponent implements OnInit, OnChanges {
     public longitude = 4.7176318;
     public zoom = 2;
 
-    public icon: google.maps.Symbol | null;
+    public icon: google.maps.Symbol | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
         mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
@@ -224,7 +224,7 @@ export class AddressComponent implements OnInit, OnChanges {
             },
         ],
     };
-    public countries: Countries['countries']['items'];
+    public countries: Countries_countries_items[] = [];
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public constructor(
@@ -239,7 +239,7 @@ export class AddressComponent implements OnInit, OnChanges {
         const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
         qvm.set('pagination', {pagination: {pageSize: 9999}});
 
-        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
+        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries!.items));
 
         if (this.model && this.model.latitude && this.model.longitude) {
             this.latitude = +this.model.latitude;
@@ -261,8 +261,8 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public ngOnChanges(): void {
         if (this.model) {
-            this.latitude = +this.model.latitude;
-            this.longitude = +this.model.longitude;
+            this.latitude = +this.model.latitude!;
+            this.longitude = +this.model.longitude!;
         }
     }
 
@@ -277,7 +277,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
 
     public onPlaceChange(): void {
-        const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
+        const place: google.maps.places.PlaceResult = this.autocomplete!.getPlace();
 
         // verify result
         if (place.geometry === undefined || place.geometry === null) {
@@ -285,19 +285,19 @@ export class AddressComponent implements OnInit, OnChanges {
         }
 
         // set latitude, longitude and zoom
-        this.latitude = place.geometry.location.lat();
-        this.longitude = place.geometry.location.lng();
+        this.latitude = place.geometry.location!.lat();
+        this.longitude = place.geometry.location!.lng();
         this.zoom = 15;
 
         merge(this.model, this.addressService.buildAddress(place));
     }
 
     public onMarkerDrag(ev: google.maps.MapMouseEvent): void {
-        this.latitude = ev.latLng.lat();
-        this.longitude = ev.latLng.lng();
+        this.latitude = ev.latLng!.lat();
+        this.longitude = ev.latLng!.lng();
 
-        this.model.latitude = this.latitude;
-        this.model.longitude = this.longitude;
+        this.model!.latitude = this.latitude;
+        this.model!.longitude = this.longitude;
 
         const geocoder = new google.maps.Geocoder();
         geocoder.geocode(
@@ -308,9 +308,9 @@ export class AddressComponent implements OnInit, OnChanges {
                 },
             },
             places => {
-                const address = this.addressService.buildAddress(places[0], false);
+                const address = this.addressService.buildAddress(places![0], false);
                 merge(this.model, address);
-                this.model.country = this.countries.find(c => c.code === address.countryIso2); // change reference
+                this.model!.country = this.countries.find(c => c.code === address.countryIso2); // change reference
                 this.updateSearch();
             },
         );
@@ -335,16 +335,16 @@ export class AddressComponent implements OnInit, OnChanges {
 
     private getAddressAsString(): string {
         const address = [
-            this.model.street,
-            this.model.postcode,
-            this.model.locality,
-            this.model.country ? this.model.country.name : this.model.country,
+            this.model!.street,
+            this.model!.postcode,
+            this.model!.locality,
+            this.model!.country ? this.model!.country.name : this.model!.country,
         ];
         return address.filter(v => !!v).join(', ');
     }
 
     public recenter(): void {
-        this.latitude = +this.model.latitude;
-        this.longitude = +this.model.longitude;
+        this.latitude = +this.model!.latitude!;
+        this.longitude = +this.model!.longitude!;
     }
 }

@@ -1,9 +1,9 @@
 <div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
         <mat-label>Rue</mat-label>
-        <input (keyup.enter)="search()" [(ngModel)]="model.street" [readonly]="readonly" matInput maxlength="255" />
-        <mat-hint align="end" *ngIf="model.street?.length > 200" [ngClass]="{strong: model.street?.length >= 255}">
-            {{ model.street.length }} / 255
+        <input (keyup.enter)="search()" [(ngModel)]="model!.street" [readonly]="readonly" matInput maxlength="255" />
+        <mat-hint align="end" *ngIf="model?.street?.length > 200" [ngClass]="{strong: model!.street!.length >= 255}">
+            {{ model!.street!.length }} / 255
         </mat-hint>
     </mat-form-field>
 
@@ -12,17 +12,17 @@
             <mat-label>NPA</mat-label>
             <input
                 (keyup.enter)="search()"
-                [(ngModel)]="model.postcode"
+                [(ngModel)]="model!.postcode"
                 [readonly]="readonly"
                 matInput
                 maxlength="20"
             />
             <mat-hint
                 align="end"
-                *ngIf="model.postcode?.length > 15"
-                [ngClass]="{strong: model.postcode?.length >= 20}"
+                *ngIf="model?.postcode?.length > 15"
+                [ngClass]="{strong: model!.postcode!.length >= 20}"
             >
-                {{ model.postcode.length }} / 20
+                {{ model!.postcode!.length }} / 20
             </mat-hint>
         </mat-form-field>
 
@@ -30,24 +30,24 @@
             <mat-label>Localité</mat-label>
             <input
                 (keyup.enter)="search()"
-                [(ngModel)]="model.locality"
+                [(ngModel)]="model!.locality"
                 [readonly]="readonly"
                 matInput
                 maxlength="191"
             />
             <mat-hint
                 align="end"
-                *ngIf="model.locality?.length > 150"
-                [ngClass]="{strong: model.locality?.length >= 191}"
+                *ngIf="model?.locality?.length > 150"
+                [ngClass]="{strong: model!.locality!.length >= 191}"
             >
-                {{ model.locality.length }} / 191
+                {{ model!.locality!.length }} / 191
             </mat-hint>
         </mat-form-field>
 
         <natural-select
             (keyup.enter)="search()"
             *ngIf="countries && (!readonly || !!model?.country)"
-            [(ngModel)]="model.country"
+            [(ngModel)]="model!.country"
             [disabled]="readonly"
             [service]="countryService"
             [showIcon]="false"
@@ -81,8 +81,8 @@
     >
         <map-marker
             (mapDragend)="onMarkerDrag($event)"
-            [icon]="icon"
-            [position]="model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null"
+            [icon]="icon!"
+            [position]="(model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null)!"
             [options]="{draggable: !readonly}"
         ></map-marker>
     </google-map>
@@ -91,7 +91,13 @@
 <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">
     <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
         <mat-label>Latitude</mat-label>
-        <input type="number" (ngModelChange)="recenter()" [(ngModel)]="model.latitude" [readonly]="readonly" matInput />
+        <input
+            type="number"
+            (ngModelChange)="recenter()"
+            [(ngModel)]="model!.latitude"
+            [readonly]="readonly"
+            matInput
+        />
     </mat-form-field>
 
     <mat-form-field *ngIf="!readonly || !!model?.longitude" class="lonlat">
@@ -99,7 +105,7 @@
         <input
             type="number"
             (ngModelChange)="recenter()"
-            [(ngModel)]="model.longitude"
+            [(ngModel)]="model!.longitude"
             [readonly]="readonly"
             matInput
         />
@@ -109,7 +115,7 @@
 <!-- Todo : allow to nullify --><!-- Todo : test this component suggestion system, that is new in project -->
 <natural-select-enum
     *ngIf="!isDilps && (!readonly || !!model?.precision)"
-    [(ngModel)]="model.precision"
+    [(ngModel)]="model!.precision"
     enumName="Precision"
     placeholder="Précision"
     [disabled]="readonly"

@@ -138,7 +138,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         const handles = this.routes[getConfiguredUrl(route)];
         if (handles) {
             const storeKey = getStoreKey(route);
-            return handles.get(storeKey);
+            return handles.get(storeKey) ?? null;
         }
 
         return null;
@@ -147,7 +147,7 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     public clearDetachedRoutes(): void {
         Object.keys(this.routes).forEach(routeName => {
             this.routes[routeName].forEach((handle, handleName) => {
-                handle.componentRef.destroy();
+                handle.componentRef?.destroy();
                 this.routes[routeName].delete(handleName);
             });
         });
@@ -157,6 +157,6 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
      * Returns true if given route matches with the card detail page
      */
     private isCardDetailPage(route: ActivatedRouteSnapshot): boolean {
-        return route?.routeConfig && getConfiguredUrl(route) === '/card/:cardId';
+        return !!route?.routeConfig && getConfiguredUrl(route) === '/card/:cardId';
     }
 }

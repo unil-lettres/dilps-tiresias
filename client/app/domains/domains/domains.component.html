@@ -10,7 +10,7 @@
     />
 </mat-toolbar>
 
-<div class="padding padding-fab">
+<div *ngIf="dataSource" class="padding padding-fab">
     <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
         <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Domaines</div>
         <div fxLayout="row wrap">

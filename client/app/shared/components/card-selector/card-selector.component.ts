@@ -8,11 +8,11 @@ import {Cards_cards_items} from '../../generated-types';
     styleUrls: ['./card-selector.component.scss'],
 })
 export class CardSelectorComponent {
-    public card: Cards_cards_items | null;
+    public card: Cards_cards_items | null = null;
 
     public constructor(public readonly cardService: CardService) {}
 
-    public displayWith(item: Cards_cards_items | string): string {
+    public displayWith(item: Cards_cards_items | string | null): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';
     }
 }

@@ -26,9 +26,11 @@ export class ThemeService {
 
         const theme = localStorage.getItem(this.storageKey);
 
-        this.theme.next(theme);
-        if (theme && theme.includes('-dark')) {
-            this.darkActivated = true;
+        if (theme) {
+            this.theme.next(theme);
+            if (theme.includes('-dark')) {
+                this.darkActivated = true;
+            }
         }
     }
 

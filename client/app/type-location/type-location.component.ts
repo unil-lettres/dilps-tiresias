@@ -68,9 +68,9 @@ export class TypeLocationComponent implements DropdownComponent {
 
     private reloadCondition(condition: FilterGroupConditionField | null): void {
         const value: LocationOperatorString = {
-            longitude: null,
-            latitude: null,
-            distance: null,
+            longitude: null!,
+            latitude: null!,
+            distance: null!,
         };
 
         if (condition && condition.distance) {

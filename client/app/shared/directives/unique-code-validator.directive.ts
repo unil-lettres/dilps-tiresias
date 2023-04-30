@@ -16,7 +16,7 @@ import {CardInputWithId} from '../../card/card.component';
     ],
 })
 export class UniqueCodeValidatorDirective implements AsyncValidator {
-    @Input('appUniqueCode') public model: CardInputWithId;
+    @Input('appUniqueCode') public model!: CardInputWithId;
 
     public constructor(private readonly cardService: CardService) {}
 

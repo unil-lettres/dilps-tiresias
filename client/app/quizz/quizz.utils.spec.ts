@@ -40,7 +40,7 @@ describe('Quizz tester', () => {
         },
         dating: 'Dès 1603',
         datings: [],
-    } as Card['card'];
+    } as unknown as Card['card'];
 
     it('simple match', () => {
         expect(test('', card)).withContext('empty string should match nothing').toEqual({

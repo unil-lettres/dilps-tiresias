@@ -30,12 +30,12 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to gallery
      */
-    @ViewChild('gallery') public gallery: NaturalGalleryComponent<GalleryItem>;
+    @ViewChild('gallery') public gallery: NaturalGalleryComponent<GalleryItem> | null = null;
 
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource: NaturalDataSource<Cards_cards>;
+    @Input() public dataSource!: NaturalDataSource<Cards_cards>;
     /**
      *
      */
@@ -61,7 +61,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Reference to scrollable element
      */
-    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef<HTMLElement>;
+    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef<HTMLElement> | null = null;
 
     /**
      * Vertical scroll position cache
@@ -101,7 +101,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     public ngOnInit(): void {
         this.dataSource.internalDataObservable.pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
-            if (!this.gallery) {
+            if (!this.gallery || !result) {
                 return;
             }
 
@@ -117,9 +117,9 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
 
         // Cache scroll when user... scrolls
-        this.scrollable.nativeElement.addEventListener('scroll', () => {
-            const scroll = this.scrollable.nativeElement.scrollTop;
-            if (scroll > 0) {
+        this.scrollable?.nativeElement.addEventListener('scroll', () => {
+            const scroll = this.scrollable?.nativeElement.scrollTop;
+            if (scroll && scroll > 0) {
                 this.scrollTop = scroll;
             }
         });
@@ -130,7 +130,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
                 const restoreScroll = this.lastCollectionId === this.route.snapshot?.data?.collection?.id;
                 this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
                 setTimeout(() => {
-                    if (restoreScroll) {
+                    if (restoreScroll && this.scrollable) {
                         this.scrollable.nativeElement.scrollTop = this.scrollTop;
                     }
                 }, 200);
@@ -139,7 +139,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public ngAfterViewInit(): void {
-        this.gallery.gallery.then(gallery =>
+        this.gallery?.gallery.then(gallery =>
             gallery.addEventListener('item-added-to-dom', () => {
                 this.contentChange.emit({visible: gallery.domCollection.length});
             }),
@@ -155,11 +155,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     }
 
     public selectAll(): Promise<Cards_cards_items[]> {
-        return this.gallery.gallery.then(gallery => gallery.selectVisibleItems());
+        return this.gallery!.gallery.then(gallery => gallery.selectVisibleItems());
     }
 
     public unselectAll(): void {
-        this.gallery.gallery.then(gallery => gallery.unselectAllItems());
+        this.gallery!.gallery.then(gallery => gallery.unselectAllItems());
     }
 
     private formatImages(cards: Cards_cards_items[]): GalleryItem[] {

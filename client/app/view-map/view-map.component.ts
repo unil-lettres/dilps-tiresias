@@ -41,7 +41,7 @@ export class ViewMapComponent extends NaturalAbstractController {
     public readonly infoWindowOption: google.maps.InfoWindowOptions = {
         maxWidth: 400,
     };
-    public markers: Marker[];
+    public markers: Marker[] | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
         mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
@@ -74,15 +74,19 @@ export class ViewMapComponent extends NaturalAbstractController {
                 return {
                     id: c.id,
                     name: c.name,
-                    latitude: c.latitude,
-                    longitude: c.longitude,
-                    icon: ViewMapComponent.getIcon(c.precision),
-                    imageSrc: CardService.getImageLink(c, 200),
+                    latitude: c.latitude!,
+                    longitude: c.longitude!,
+                    icon: ViewMapComponent.getIcon(c.precision!),
+                    imageSrc: CardService.getImageLink(c, 200)!,
                 };
             });
     }
 
-    public forwardSearch(marker: Marker): void {
+    public forwardSearch(marker: Marker | null): void {
+        if (!marker) {
+            return;
+        }
+
         this.ngZone.run(() => {
             this.searchByLocation.emit({
                 longitude: marker.longitude,

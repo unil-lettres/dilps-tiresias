@@ -11,7 +11,7 @@ export class AlertService {
     public constructor(private readonly dialog: MatDialog, private readonly snackBar: MatSnackBar) {}
 
     public info(message: string, duration = 1500): MatSnackBarRef<SimpleSnackBar> {
-        return this.snackBar.open(message, null, {
+        return this.snackBar.open(message, undefined, {
             duration: duration,
             verticalPosition: 'top',
             horizontalPosition: 'end',
@@ -19,7 +19,7 @@ export class AlertService {
     }
 
     public error(message: string, duration = 1500): MatSnackBarRef<SimpleSnackBar> {
-        return this.snackBar.open(message, null, {
+        return this.snackBar.open(message, undefined, {
             duration: duration,
             panelClass: ['snackbar-error'],
             verticalPosition: 'top',

@@ -10,7 +10,7 @@
     />
 </mat-toolbar>
 
-<div class="padding padding-fab">
+<div *ngIf="dataSource" class="padding padding-fab">
     <div class="mat-headline-5">Institutions</div>
 
     <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>

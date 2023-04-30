@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Subscription to the logged in user observable
      */
-    private currentUser: Subscription;
+    private currentUser: Subscription | null = null;
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -66,9 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if (this.currentUser) {
-            this.currentUser.unsubscribe();
-        }
+        this.currentUser?.unsubscribe();
     }
 
     /**

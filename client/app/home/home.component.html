@@ -108,7 +108,7 @@
                                 <mat-icon matListItemIcon naturalIcon="file_upload"></mat-icon>
                             </a>
 
-                            <a mat-list-item *ngIf="progress > 0">
+                            <a mat-list-item *ngIf="progress !== null && progress > 0">
                                 <mat-progress-spinner
                                     [value]="progress"
                                     color="accent"

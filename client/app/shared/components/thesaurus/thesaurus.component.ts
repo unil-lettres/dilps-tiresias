@@ -26,8 +26,8 @@ export interface ThesaurusModel {
     locality?: string;
     hierarchicName?: string;
     __typename?: string;
-    from?: number;
-    to?: number;
+    from?: number | null;
+    to?: number | null;
 }
 
 @Component({
@@ -55,7 +55,7 @@ export class ThesaurusComponent<
     /**
      * Reference to autocomplete
      */
-    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete: MatAutocompleteTrigger;
+    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete!: MatAutocompleteTrigger;
 
     /**
      * If true, manipulations are forbidden
@@ -65,12 +65,12 @@ export class ThesaurusComponent<
     /**
      * Service used as data source
      */
-    @Input() public service: TService;
+    @Input() public service!: TService;
 
     /**
      * Input label name
      */
-    @Input() public placeholder: string;
+    @Input() public placeholder!: string;
 
     /**
      * If multi selection is allowed
@@ -85,7 +85,7 @@ export class ThesaurusComponent<
     /**
      * Component that renders the detail view of an entry
      */
-    @Input() public previewComponent: ComponentType<unknown>;
+    @Input() public previewComponent!: ComponentType<unknown>;
 
     /**
      * Emits when a selection is done
@@ -97,7 +97,7 @@ export class ThesaurusComponent<
     /**
      * Configuration for hierarchic relations
      */
-    @Input() public hierarchicSelectorConfig: NaturalHierarchicConfiguration[];
+    @Input() public hierarchicSelectorConfig!: NaturalHierarchicConfiguration[];
 
     /**
      * Number of items not shown in result list
@@ -108,7 +108,7 @@ export class ThesaurusComponent<
     /**
      * List of suggestions for autocomplete dropdown
      */
-    public suggestions: ThesaurusModel[];
+    public suggestions!: ThesaurusModel[];
 
     /**
      * List of selected items
@@ -123,7 +123,7 @@ export class ThesaurusComponent<
     /**
      * Cache to init search watching only once
      */
-    private resultsCache: Observable<any>;
+    private resultsCache!: Observable<any>;
 
     /**
      * Default page size
@@ -138,7 +138,7 @@ export class ThesaurusComponent<
     /**
      * Prevent bug opening twice hierarchic dialog on ff
      */
-    private lockOpenDialog: boolean;
+    private lockOpenDialog!: boolean;
 
     public constructor(
         private readonly dialog: MatDialog,
@@ -156,9 +156,10 @@ export class ThesaurusComponent<
         });
     }
 
-    private _model: ThesaurusModel | ThesaurusModel[];
+    private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
 
-    @Input() public set model(val: ThesaurusModel | ThesaurusModel[]) {
+    @Input()
+    public set model(val: ThesaurusModel | ThesaurusModel[] | null | undefined) {
         this._model = val;
         this.convertModel();
     }
@@ -266,9 +267,9 @@ export class ThesaurusComponent<
                 if (result && result.hierarchicSelection) {
                     // Find the only selection amongst all possible keys
                     const keyWithSelection = Object.keys(result.hierarchicSelection).find(
-                        key => result.hierarchicSelection[key][0],
+                        key => result.hierarchicSelection?.[key][0],
                     );
-                    const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : null;
+                    const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : [];
 
                     if (this.multiple) {
                         this.items = selection;
@@ -312,7 +313,7 @@ export class ThesaurusComponent<
     }
 
     private getSelectKey(): string {
-        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey;
+        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey!;
     }
 
     /**
@@ -362,7 +363,7 @@ export class ThesaurusComponent<
         let result = item.hierarchicName || item.name;
 
         if (!this.readonly && item.__typename === 'Period') {
-            result += formatYearRange(item.from, item.to);
+            result += formatYearRange(item.from!, item.to!);
         }
 
         return result;

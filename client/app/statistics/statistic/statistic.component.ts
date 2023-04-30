@@ -75,7 +75,7 @@ export class StatisticComponent {
     }
 
     public displayedColumns = ['name', 'absolute', 'percent'];
-    public tables: TableSource[];
+    public tables: TableSource[] = [];
     public Highcharts: typeof Highcharts = Highcharts;
     public chartOptions: Highcharts.Options = {
         series: [],

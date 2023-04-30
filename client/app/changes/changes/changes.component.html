@@ -2,7 +2,7 @@
     <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 </mat-toolbar>
 
-<div class="padding">
+<div *ngIf="dataSource" class="padding">
     <div class="mat-headline-5">Notifications</div>
 
     <div class="responsive-table" [fxShow]="showTable()">

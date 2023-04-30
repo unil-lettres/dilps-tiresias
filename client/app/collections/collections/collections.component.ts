@@ -127,7 +127,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
     }
 
     public more(): void {
-        const nextPage = this.queryVariables.variables.value.pagination.pageIndex + 1;
+        const nextPage = this.queryVariables.variables.value!.pagination!.pageIndex! + 1;
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 

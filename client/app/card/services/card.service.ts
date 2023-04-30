@@ -48,14 +48,14 @@ import {
     validateImage,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
-import {Literal, mergeOverrideArray, WithId, NaturalDebounceService} from '@ecodev/natural';
+import {Literal, mergeOverrideArray, NaturalDebounceService, WithId} from '@ecodev/natural';
 
 interface CardWithImage {
     id?: string;
     hasImage?: boolean;
     height?: number;
     width?: number;
-    updateDate?: string;
+    updateDate?: string | null;
 }
 
 @Injectable({
@@ -86,14 +86,14 @@ export class CardService extends AbstractContextualizedService<
 
     public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {
         height = card.height ? Math.min(card.height, height) : height;
-        const ratio = card.width / card.height;
+        const ratio = card.width! / card.height!;
         return {
             height: height,
             width: height * ratio,
         };
     }
 
-    public static getImageLink(card: CardWithImage | null, height: number): string {
+    public static getImageLink(card: CardWithImage | null, height: number | null): null | string {
         if (!card || !card.id || !card.hasImage) {
             return null;
         }
@@ -115,10 +115,11 @@ export class CardService extends AbstractContextualizedService<
     /**
      * Merge image src on src attribute of given gard
      */
+    public static formatImage(card: Cards_cards_items, height: number): Cards_cards_items & {src: string | null};
     public static formatImage(
         card: Cards_cards_items | null,
         height: number,
-    ): (Cards_cards_items & {src: string}) | null {
+    ): (Cards_cards_items & {src: string | null}) | null {
         if (!card) {
             return null;
         }
@@ -279,7 +280,7 @@ export class CardService extends AbstractContextualizedService<
 
         return this.apollo
             .mutate<CreateCard, CreateCardVariables>({
-                mutation: this.createMutation,
+                mutation: this.createMutation!,
                 variables: variables,
             })
             .pipe(

@@ -34,7 +34,7 @@ abstract class Standard
         return [
             [
                 'name' => $plural,
-                'type' => _types()->get($shortName . 'Pagination'),
+                'type' => Type::nonNull(_types()->get($shortName . 'Pagination')),
                 'args' => $listArgs,
                 'resolve' => function (array $root, array $args) use ($class, $metadata): array {
                     // If null or empty list is provided by client, fallback on default sorting
@@ -58,9 +58,9 @@ abstract class Standard
             ],
             [
                 'name' => $name,
-                'type' => _types()->getOutput($class),
+                'type' => Type::nonNull(_types()->getOutput($class)),
                 'args' => $singleArgs,
-                'resolve' => function (array $root, array $args): ?AbstractModel {
+                'resolve' => function (array $root, array $args): AbstractModel {
                     $object = $args['id']->getEntity();
 
                     Helper::throwIfDenied($object, 'read');

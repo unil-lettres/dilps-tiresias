@@ -7,7 +7,6 @@ import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
     AcceptChange,
-    AcceptChange_acceptChange,
     Card_card,
     Change,
     Changes,
@@ -54,7 +53,7 @@ export class ChangeService extends AbstractContextualizedService<
         super(apollo, naturalDebounceService, 'change', changeQuery, changesQuery, null, null, null, site);
     }
 
-    public acceptChange(change: {id: string}): Observable<AcceptChange_acceptChange> {
+    public acceptChange(change: {id: string}): Observable<AcceptChange['acceptChange']> {
         return this.apollo
             .mutate<AcceptChange>({
                 mutation: acceptChange,

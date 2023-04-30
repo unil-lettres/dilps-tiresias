@@ -66,7 +66,7 @@ interface SerieData {
 })
 export class StatisticsComponent extends NaturalAbstractController {
     public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
-    public data: Data;
+    public data!: Data;
     public statType: keyof Values = 'pageCount';
     public cardType = 'cardCreation';
     public userType = 'userCreation';
@@ -92,11 +92,11 @@ export class StatisticsComponent extends NaturalAbstractController {
     public availablePeriods: Period[] = [];
     public period: string;
     private categories: string[] = [];
-    public frequentation: StatisticInput;
-    public cards: StatisticInput;
-    public users: StatisticInput;
-    private raw: Literal;
-    public user: Users_users_items | null;
+    public frequentation!: StatisticInput;
+    public cards!: StatisticInput;
+    public users!: StatisticInput;
+    private raw!: Literal;
+    public user: Users_users_items | null = null;
 
     // public usersFilter: UserFilter;
 
@@ -302,7 +302,7 @@ export class StatisticsComponent extends NaturalAbstractController {
 
     public update(): void {
         const period = this.availablePeriods.find(p => p.key === this.period);
-        this.frequentationQvm.set('filter', {filter: period.filter});
+        this.frequentationQvm.set('filter', {filter: period!.filter});
         this.applyFrequentationTypeSelection();
         this.fetchCardAndUser();
     }
@@ -347,7 +347,7 @@ export class StatisticsComponent extends NaturalAbstractController {
             });
     }
 
-    public displayFn(item: Users_users_items | string): string {
+    public displayFn(item: Users_users_items | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 }

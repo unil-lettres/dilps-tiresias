@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge, assign} from 'lodash-es';
+import {assign, merge} from 'lodash-es';
 import {cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
@@ -13,14 +13,12 @@ import {ChangeService} from '../services/change.service';
     styleUrls: ['./change.component.scss'],
 })
 export class ChangeComponent implements OnInit {
-    public change: Change_change;
-    public original?: Card_card;
-    public fetchedSuggestion?: Card_card;
-    public suggestionInput: CardInput | null;
-    public suggestionImageSrc: string;
-    public suggestionImageSrcFull: string;
+    public change!: Change_change;
+    public original: Card_card | null = null;
+    public fetchedSuggestion: Card_card | null = null;
+    public suggestionInput: CardInput | null = null;
     public loaded = false;
-    public user: Viewer['viewer'];
+    public user!: Viewer['viewer'];
     public showTools = false;
 
     public constructor(
@@ -83,7 +81,7 @@ export class ChangeComponent implements OnInit {
     }
 
     public update(): void {
-        this.cardService.create(this.suggestionInput).subscribe(card => {
+        this.cardService.create(this.suggestionInput!).subscribe(card => {
             this.changeService.suggestUpdate(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });
@@ -91,7 +89,7 @@ export class ChangeComponent implements OnInit {
     }
 
     public create(): void {
-        this.cardService.create(this.suggestionInput).subscribe(card => {
+        this.cardService.create(this.suggestionInput!).subscribe(card => {
             this.changeService.suggestCreation(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
             });

@@ -34,7 +34,7 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
     }
 
     public columns: string[] = [];
-    private _card: Card_card;
+    private _card!: Card_card;
 
     private _disabled = false;
 
@@ -109,7 +109,7 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
             .confirm(`Suppression`, `Voulez-vous supprimer définitivement le fichier ?`, `Supprimer définitivement`)
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.fileService.delete([tuple.file]).subscribe(() => this.dataSource.remove(tuple));
+                    this.fileService.delete([tuple.file!]).subscribe(() => this.dataSource.remove(tuple));
                 }
             });
     }

@@ -10,6 +10,7 @@ export function getBase64Url(file: File | null): Promise<null | string> {
     return new Promise((resolve, reject) => {
         if (!file) {
             reject(null);
+            return;
         }
 
         const reader = new FileReader();

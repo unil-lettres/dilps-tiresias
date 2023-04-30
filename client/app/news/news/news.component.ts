@@ -13,7 +13,7 @@ import {News_news} from '../../shared/generated-types';
     styleUrls: ['./news.component.scss'],
 })
 export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File}> {
-    public imageData: string;
+    public imageData: string | null = null;
 
     public constructor(
         service: NewsService,
@@ -27,7 +27,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
 
     public upload(event: Event): void {
         const target: HTMLInputElement = event.target as HTMLInputElement;
-        const file = target.files[0];
+        const file = target.files![0];
         this.data.item.file = file;
         getBase64Url(file).then(result => {
             this.imageData = result;
