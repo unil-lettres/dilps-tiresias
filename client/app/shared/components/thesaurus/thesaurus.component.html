@@ -2,14 +2,14 @@
     <mat-label>{{ placeholder }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         <mat-chip-row (removed)="removeTerm(item)" *ngFor="let item of items" [removable]="!readonly">
-            <div fxLayout="row">
+            <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
                 <mat-icon
                     (click)="openItem(item)"
                     *ngIf="previewComponent"
                     class="mat-mdc-chip-remove"
                     fontIcon="remove_red_eye"
                 ></mat-icon>
-                <div fxFlex>
+                <div fxFlex class="thesaurus-chip-label">
                     <span>{{ getLabel(item) }}</span>
                     <br *ngIf="item.locality && !readonly" />
                     <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>

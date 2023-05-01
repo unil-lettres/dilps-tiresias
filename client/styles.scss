@@ -81,6 +81,14 @@ perfect-scrollbar {
     padding-bottom: 120px !important;
 }
 
+natural-search {
+    margin: 0 20px;
+
+    natural-input:last-of-type {
+        margin-right: 5px !important;
+    }
+}
+
 natural-search,
 .searchField {
     font-size: 16px;
@@ -122,4 +130,9 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 // Try to keep number roughly under the column header
 td.mat-column-usageCount {
     padding-right: 3em !important;
+}
+
+.mat-mdc-icon-button,
+.mdc-button {
+    margin: initial;
 }

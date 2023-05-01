@@ -15,7 +15,7 @@
             fxLayout="row"
             fxLayoutAlign="start center"
         >
-            <span *ngIf="showLogo"><app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo></span>
+            <app-logo *ngIf="showLogo" [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 
             <div *ngIf="title">{{ title }}</div>
 
@@ -189,7 +189,7 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="edit || !!model.name" class="margin-bottom rich-text">
+                <div *ngIf="edit || !!model.name" [ngClass]="{filled: !!model.name, 'rich-text': true}" tabindex="-1">
                     <div class="label">Titre</div>
                     <quill-editor
                         *ngIf="edit || !!model.name"
@@ -206,8 +206,6 @@
                         matTooltipPosition="after"
                     ></quill-editor>
                     <mat-hint
-                        align="end"
-                        style="float: right"
                         *ngIf="edit && (model.name | stripTags)?.length > 187"
                         [ngClass]="{strong: (model.name | stripTags)?.length >= 191}"
                     >
@@ -230,7 +228,8 @@
 
                 <div
                     *ngIf="edit || (!!model.expandedName && model.expandedName !== model.name)"
-                    class="margin-bottom rich-text"
+                    [ngClass]="{filled: !!model.expandedName, 'rich-text': true}"
+                    tabindex="-1"
                 >
                     <div class="label">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
                     <quill-editor
@@ -249,7 +248,11 @@
                     ></quill-editor>
                 </div>
 
-                <div *ngIf="!isDilps && (edit || !!model.corpus)" class="margin-bottom rich-text">
+                <div
+                    *ngIf="!isDilps && (edit || !!model.corpus)"
+                    [ngClass]="{filled: !!model.corpus, 'rich-text': true}"
+                    tabindex="-1"
+                >
                     <div class="label">Corpus</div>
                     <quill-editor
                         *ngIf="edit || !!model.corpus"
@@ -651,7 +654,11 @@
                     Référence de l'image
                 </div>
 
-                <div *ngIf="edit || !!model.literature" class="margin-v rich-text">
+                <div
+                    *ngIf="edit || !!model.literature"
+                    [ngClass]="{filled: !!model.literature, 'rich-text': true}"
+                    tabindex="-1"
+                >
                     <div class="label">Source</div>
                     <quill-editor
                         *ngIf="edit || !!model.literature"
@@ -770,7 +777,11 @@
                     </mat-hint>
                 </mat-form-field>
 
-                <div *ngIf="!isDilps && edit" class="margin-bottom rich-text">
+                <div
+                    *ngIf="!isDilps && edit"
+                    [ngClass]="{filled: !!model.urlDescription, 'rich-text': true}"
+                    tabindex="-1"
+                >
                     <div class="label">Description</div>
                     <quill-editor
                         *ngIf="edit || !!model.urlDescription"

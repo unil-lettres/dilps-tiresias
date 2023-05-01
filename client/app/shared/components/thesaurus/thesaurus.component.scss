@@ -2,6 +2,11 @@
     width: 100%;
 }
 
+.thesaurus-chip-label {
+    white-space: normal;
+}
+
 .mat-mdc-standard-chip {
     height: auto;
+    padding: 5px 0;
 }
