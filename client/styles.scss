@@ -104,6 +104,18 @@ natural-search,
     padding: 0 3px;
 }
 
+natural-gallery {
+    .zoomable:hover .image,
+    .image.zoomable:hover {
+        transform: none !important;
+    }
+
+    .selectBtn {
+        transition: none !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
 // Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
 app-view-map google-map div.gm-style > div:last-child {
     top: 75px !important;
