@@ -517,6 +517,7 @@
                     </cdk-accordion-item>
                 </cdk-accordion>
 
+                <br />
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
                     [model]="model.antiqueNames"
@@ -700,44 +701,53 @@
                     ></quill-editor>
                 </div>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.page)">
-                    <mat-label>Page</mat-label>
-                    <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10" />
-                    <mat-hint
-                        align="end"
-                        *ngIf="edit && model.page?.length > 7"
-                        [ngClass]="{strong: model.page?.length >= 10}"
-                    >
-                        {{ model.page!.length }} / 10
-                    </mat-hint>
-                </mat-form-field>
+                <!-- Readonly fields in non-edit mode. Removed in edit mode. -->
+                <ng-container *ngIf="isDilps">
+                    <mat-form-field *ngIf="!edit && !!model.page">
+                        <mat-label>Page</mat-label>
+                        <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10" />
+                        <mat-hint
+                            align="end"
+                            *ngIf="edit && model.page?.length > 7"
+                            [ngClass]="{strong: model.page?.length >= 10}"
+                        >
+                            {{ model.page.length }} / 10
+                        </mat-hint>
+                    </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.figure)">
-                    <mat-label>Figure</mat-label>
-                    <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10" />
-                    <mat-hint
-                        align="end"
-                        *ngIf="edit && model.figure?.length > 7"
-                        [ngClass]="{strong: model.figure?.length >= 10}"
-                    >
-                        {{ model.figure!.length }} / 10
-                    </mat-hint>
-                </mat-form-field>
+                    <mat-form-field *ngIf="!edit && !!model.figure">
+                        <mat-label>Figure</mat-label>
+                        <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10" />
+                        <mat-hint
+                            align="end"
+                            *ngIf="edit && model.figure?.length > 7"
+                            [ngClass]="{strong: model.figure?.length >= 10}"
+                        >
+                            {{ model.figure.length }} / 10
+                        </mat-hint>
+                    </mat-form-field>
 
-                <mat-form-field *ngIf="isDilps && (edit || !!model.table)">
-                    <mat-label>Planche</mat-label>
-                    <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10" />
-                    <mat-hint
-                        align="end"
-                        *ngIf="edit && model.table?.length > 7"
-                        [ngClass]="{strong: model.table?.length >= 10}"
-                    >
-                        {{ model.table!.length }} / 10
-                    </mat-hint>
-                </mat-form-field>
+                    <mat-form-field *ngIf="!edit && !!model.table">
+                        <mat-label>Planche</mat-label>
+                        <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10" />
+                        <mat-hint
+                            align="end"
+                            *ngIf="edit && model.table?.length > 7"
+                            [ngClass]="{strong: model.table?.length >= 10}"
+                        >
+                            {{ model.table.length }} / 10
+                        </mat-hint>
+                    </mat-form-field>
+                </ng-container>
 
+
+                <!--
+                    Different behavior :
+                    Dilps : readonly in non-edit mode is a value is already set. Removed in edit mode
+                    Tiresias : works as usual, visible if edit mode or if there is a value set
+                -->
                 <mat-form-field
-                    *ngIf="edit || !!model.isbn"
+                    *ngIf="(isDilps && !edit && !!model.isbn) || (!isDilps && (edit || !!model.isbn))"
                     [matTooltip]="!edit || !isDilps ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
                     matTooltipPosition="after"
                 >
