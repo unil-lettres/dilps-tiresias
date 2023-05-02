@@ -480,10 +480,42 @@
                 ></app-thesaurus>
 
                 <!-- Card address, if given -->
-                <div *ngIf="model.locality || edit">
-                    <div class="mat-headline-6">{{ isDilps ? 'Adresse' : 'Lieux de découverte' }}</div>
+                <div *ngIf="(model.locality || edit) && !isDilps">
+                    <div class="mat-headline-6">Lieux de découverte</div>
                     <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"></app-address>
                 </div>
+
+                <cdk-accordion *ngIf="isDilps" class="address-accordion">
+                    <cdk-accordion-item
+                        #accordionItem="cdkAccordionItem"
+                        [expanded]="true"
+                        role="button"
+                        tabindex="0"
+                        [attr.id]="'address'"
+                        [attr.aria-expanded]="accordionItem.expanded"
+                    >
+                        <div
+                            class="address-title mat-headline-6"
+                            (click)="accordionItem.toggle()"
+                            fxLayout="row"
+                            fxLayoutAlign="start baseline"
+                        >
+                            <span>Adresse</span>
+                            <mat-icon
+                                class="address-toggle-arrow"
+                                [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
+                            ></mat-icon>
+                        </div>
+                        <div [style.display]="accordionItem.expanded ? '' : 'none'">
+                            <app-address
+                                [model]="model"
+                                [readonly]="!edit"
+                                [vertical]="true"
+                                [isDilps]="isDilps"
+                            ></app-address>
+                        </div>
+                    </cdk-accordion-item>
+                </cdk-accordion>
 
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"

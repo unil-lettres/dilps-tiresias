@@ -1,4 +1,5 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {CdkAccordionItem} from '@angular/cdk/accordion';
+import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -311,6 +312,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     public isDilps = true;
     public suggestedCode: string | null = null;
 
+    @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
+
     public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
@@ -386,6 +389,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     public toggleEdit(): void {
         this.edit = !this.edit;
+        if (this.edit) {
+            this.accordionItem.close();
+        } else {
+            this.accordionItem.open();
+        }
     }
 
     public dropImage(selection: FileSelection): void {

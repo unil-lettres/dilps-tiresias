@@ -1,3 +1,4 @@
+import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
@@ -271,6 +272,7 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         MatNativeDateModule,
         MatChipsModule,
         MatCardModule,
+        CdkAccordionModule,
         GoogleMapsModule,
         NaturalDropdownComponentsModule,
         NaturalIconModule.forRoot(icons),
