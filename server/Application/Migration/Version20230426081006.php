@@ -47,7 +47,7 @@ class Version20230426081006 extends AbstractMigration
                 UPDATE document_type INNER JOIN (
                     SELECT card.document_type_id AS id, COUNT(*) AS count
                     FROM card
-                    GROUP BY id
+                    GROUP BY document_type_id
                 ) AS tmp ON tmp.id = document_type.id
                 SET usage_count = tmp.count;
                 SQL
@@ -69,7 +69,7 @@ class Version20230426081006 extends AbstractMigration
                 UPDATE institution INNER JOIN (
                     SELECT card.institution_id AS id, COUNT(*) AS count
                     FROM card
-                    GROUP BY id
+                    GROUP BY institution_id
                 ) AS tmp ON tmp.id = institution.id
                 SET usage_count = tmp.count;
                 SQL
