@@ -6,17 +6,19 @@ import {
     replaceOperatorByField,
     replaceOperatorByName,
     TypeHierarchicSelectorComponent,
+    TypeHierarchicSelectorConfiguration,
     TypeNaturalSelectComponent,
     TypeSelectComponent,
     TypeSelectConfiguration,
+    TypeSelectNaturalConfiguration,
     TypeTextComponent,
     wrapLike,
-    TypeHierarchicSelectorConfiguration,
-    TypeSelectNaturalConfiguration,
 } from '@ecodev/natural';
 import {SITE} from '../app.config';
+import {ArtistService} from '../artists/services/artist.service';
 import {DocumentTypeService} from '../document-types/services/document-type.service';
 import {DomainService} from '../domains/services/domain.service';
+import {InstitutionService} from '../institutions/services/institution.service';
 import {MaterialService} from '../materials/services/material.service';
 import {PeriodService} from '../periods/services/period.service';
 import {TagService} from '../tags/services/tag.service';
@@ -28,8 +30,6 @@ import {
 import {CardFilterGroupConditionSite, CardVisibility, Site} from './generated-types';
 import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
-import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
-import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -42,6 +42,108 @@ export const adminConfig: NaturalSearchFacets = [
         },
     } satisfies DropdownFacet<TypeSelectConfiguration>,
 ];
+
+//
+//
+//
+// {
+//     "operationName": "Cards",
+//     "variables": {
+//     "filter": {
+//         "groups": [
+//             {
+//                 "conditions": [
+//                     {
+//                         "artistOrTechniqueAuthor": {
+//                             "artistOrTechniqueAuthor": {
+//                                 "value": "test"
+//                             }
+//                         }
+//                     },
+//                     {
+//                         "site": {
+//                             "equal": {
+//                                 "value": "dilps"
+//                             }
+//                         }
+//                     },
+//                     {
+//                         "filename": {
+//                             "equal": {
+//                                 "value": "",
+//                                 "not": true
+//                             }
+//                         }
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     "pagination": {
+//         "pageSize": 3,
+//             "offset": 3,
+//             "pageIndex": 0
+//     },
+//     "sorting": [
+//         {
+//             "field": "creationDate",
+//             "order": "DESC"
+//         }
+//     ]
+// },
+//     "query": "query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {\n  cards(filter: $filter, pagination: $pagination, sorting: $sorting) {\n    items {\n      ...CardDetails\n      __typename\n    }\n    pageSize\n    pageIndex\n    offset\n    length\n    __typename\n  }\n}\n\nfragment CardDetails on Card {\n  id\n  legacyId\n  site\n  code\n  name\n  expandedName\n  hasImage\n  height\n  width\n  visibility\n  dating\n  precision\n  documentSize\n  dilpsDomain\n  techniqueAuthor\n  techniqueDate\n  format\n  url\n  urlDescription\n  literature\n  page\n  figure\n  table\n  isbn\n  comment\n  corpus\n  rights\n  muserisUrl\n  muserisCote\n  locality\n  street\n  postcode\n  latitude\n  longitude\n  objectReference\n  productionPlace\n  from\n  to\n  cards {\n    id\n    name\n    __typename\n  }\n  antiqueNames {\n    id\n    name\n    __typename\n  }\n  datings {\n    from\n    to\n    __typename\n  }\n  artists {\n    id\n    name\n    __typename\n  }\n  original {\n    id\n    width\n    height\n    __typename\n  }\n  addition\n  material\n  materials {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  periods {\n    id\n    name\n    hierarchicName\n    from\n    to\n    __typename\n  }\n  documentType {\n    id\n    name\n    __typename\n  }\n  tags {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  domains {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  collections {\n    id\n    name\n    isSource\n    copyrights\n    usageRights\n    hierarchicName\n    visibility\n    __typename\n  }\n  country {\n    id\n    code\n    name\n    __typename\n  }\n  institution {\n    ...InstitutionDetails\n    __typename\n  }\n  owner {\n    ...UserMeta\n    __typename\n  }\n  creationDate\n  creator {\n    ...UserMeta\n    __typename\n  }\n  updateDate\n  updater {\n    ...UserMeta\n    __typename\n  }\n  dataValidationDate\n  dataValidator {\n    ...UserMeta\n    __typename\n  }\n  imageValidationDate\n  imageValidator {\n    ...UserMeta\n    __typename\n  }\n  permissions {\n    update\n    delete\n    __typename\n  }\n  __typename\n}\n\nfragment UserMeta on User {\n  id\n  login\n  email\n  __typename\n}\n\nfragment InstitutionDetails on Institution {\n  id\n  name\n  usageCount\n  locality\n  street\n  postcode\n  latitude\n  longitude\n  precision\n  creationDate\n  country {\n    id\n    code\n    name\n    __typename\n  }\n  __typename\n}\n"
+// }
+
+//
+// {
+//     "operationName": "Cards",
+//     "variables": {
+//     "filter": {
+//         "groups": [
+//             {
+//                 "conditions": [
+//                     {
+//                         "artistOrTechniqueAuthor": {
+//                             "artistOrTechniqueAuthor": {
+//                                 "values": [
+//                                     "3001"
+//                                 ]
+//                             }
+//                         }
+//                     },
+//                     {
+//                         "site": {
+//                             "equal": {
+//                                 "value": "dilps"
+//                             }
+//                         }
+//                     },
+//                     {
+//                         "filename": {
+//                             "equal": {
+//                                 "value": "",
+//                                 "not": true
+//                             }
+//                         }
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     "pagination": {
+//         "pageSize": 7,
+//             "pageIndex": 0,
+//             "offset": null
+//     },
+//     "sorting": [
+//         {
+//             "field": "creationDate",
+//             "order": "DESC"
+//         }
+//     ]
+// },
+//     "query": "query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {\n  cards(filter: $filter, pagination: $pagination, sorting: $sorting) {\n    items {\n      ...CardDetails\n      __typename\n    }\n    pageSize\n    pageIndex\n    offset\n    length\n    __typename\n  }\n}\n\nfragment CardDetails on Card {\n  id\n  legacyId\n  site\n  code\n  name\n  expandedName\n  hasImage\n  height\n  width\n  visibility\n  dating\n  precision\n  documentSize\n  dilpsDomain\n  techniqueAuthor\n  techniqueDate\n  format\n  url\n  urlDescription\n  literature\n  page\n  figure\n  table\n  isbn\n  comment\n  corpus\n  rights\n  muserisUrl\n  muserisCote\n  locality\n  street\n  postcode\n  latitude\n  longitude\n  objectReference\n  productionPlace\n  from\n  to\n  cards {\n    id\n    name\n    __typename\n  }\n  antiqueNames {\n    id\n    name\n    __typename\n  }\n  datings {\n    from\n    to\n    __typename\n  }\n  artists {\n    id\n    name\n    __typename\n  }\n  original {\n    id\n    width\n    height\n    __typename\n  }\n  addition\n  material\n  materials {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  periods {\n    id\n    name\n    hierarchicName\n    from\n    to\n    __typename\n  }\n  documentType {\n    id\n    name\n    __typename\n  }\n  tags {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  domains {\n    id\n    name\n    hierarchicName\n    hasChildren\n    __typename\n  }\n  collections {\n    id\n    name\n    isSource\n    copyrights\n    usageRights\n    hierarchicName\n    visibility\n    __typename\n  }\n  country {\n    id\n    code\n    name\n    __typename\n  }\n  institution {\n    ...InstitutionDetails\n    __typename\n  }\n  owner {\n    ...UserMeta\n    __typename\n  }\n  creationDate\n  creator {\n    ...UserMeta\n    __typename\n  }\n  updateDate\n  updater {\n    ...UserMeta\n    __typename\n  }\n  dataValidationDate\n  dataValidator {\n    ...UserMeta\n    __typename\n  }\n  imageValidationDate\n  imageValidator {\n    ...UserMeta\n    __typename\n  }\n  permissions {\n    update\n    delete\n    __typename\n  }\n  __typename\n}\n\nfragment UserMeta on User {\n  id\n  login\n  email\n  __typename\n}\n\nfragment InstitutionDetails on Institution {\n  id\n  name\n  usageCount\n  locality\n  street\n  postcode\n  latitude\n  longitude\n  precision\n  creationDate\n  country {\n    id\n    code\n    name\n    __typename\n  }\n  __typename\n}\n"
+// }
 
 /**
  * Collection of configuration for natural-search accessible by the object name
@@ -66,6 +168,16 @@ export class NaturalSearchFacetsService {
         } satisfies DropdownFacet<never>,
         {
             display: 'Artistes',
+            field: 'artists',
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: this.artistService,
+                placeholder: 'Artistes',
+                filter: {},
+            },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<ArtistService>>,
+        {
+            display: 'Artistes ou auteur technique',
             field: 'artistOrTechniqueAuthor',
             component: TypeTextComponent,
             transform: replaceOperatorByField,
@@ -106,6 +218,16 @@ export class NaturalSearchFacetsService {
             component: TypeTextComponent,
             transform: wrapLike,
         } satisfies DropdownFacet<never>,
+        {
+            display: 'Institution',
+            field: 'institution',
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: this.institutionService,
+                placeholder: 'Institution',
+                filter: {},
+            },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<InstitutionService>>,
         {
             display: 'Source',
             field: 'literature',
@@ -165,14 +287,13 @@ export class NaturalSearchFacetsService {
         {
             display: 'Mots-clés',
             field: 'tags',
-            component: TypeHierarchicSelectorComponent,
-            showValidateButton: true,
+            component: TypeNaturalSelectComponent,
             configuration: {
-                key: 'tag',
                 service: this.tagService,
-                config: tagHierarchicConfig,
+                placeholder: $localize`Responsable`,
+                filter: {},
             },
-        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<TagService>>,
         {
             display: 'Localité',
             field: 'locality',
@@ -190,14 +311,13 @@ export class NaturalSearchFacetsService {
         {
             display: 'Période',
             field: 'periods',
-            component: TypeHierarchicSelectorComponent,
-            showValidateButton: true,
+            component: TypeNaturalSelectComponent,
             configuration: {
-                key: 'period',
                 service: this.periodService,
-                config: periodHierarchicConfig,
+                placeholder: 'Période',
+                filter: {},
             },
-        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<PeriodService>>,
         {
             display: 'Datation',
             field: 'cardYearRange',
@@ -206,10 +326,14 @@ export class NaturalSearchFacetsService {
         } satisfies DropdownFacet<TypeNumericRangeConfiguration>,
         {
             display: 'Musée',
-            field: 'institution.name',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        } satisfies DropdownFacet<never>,
+            field: 'institution',
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: this.institutionService,
+                placeholder: 'Musée',
+                filter: {},
+            },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<InstitutionService>>,
         {
             display: "Numéro d'inventaire",
             field: 'objectReference',
@@ -247,7 +371,9 @@ export class NaturalSearchFacetsService {
         private readonly materialService: MaterialService,
         private readonly domainService: DomainService,
         private readonly tagService: TagService,
+        private readonly artistService: ArtistService,
         private readonly documentTypeService: DocumentTypeService,
+        private readonly institutionService: InstitutionService,
     ) {}
 
     public getFacets(): NaturalSearchFacets {
