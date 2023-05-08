@@ -1478,10 +1478,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^50.1.0":
-  version "50.1.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.1.0.tgz#4fdbc5d5b227bfb450f85f9dd13e8f426a009970"
-  integrity sha512-z9hQs+98URdh79VGoDihEchtx/GR0GJh3u5ApVd4KMDoWTWPXisI2R5CvGE4SYMAJBjn+GmA6C12kiKZaIrJ+A==
+"@ecodev/natural@^50.1.1":
+  version "50.1.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.1.1.tgz#8455a215fc2cc92b06ec2e723e9977dec582cde0"
+  integrity sha512-XhWH5ZIaSbVWSBnqUYSMAHp9ih66VDwapCc/+L9/qu3/eJIK/F2HbBs7qNhaAKxIbgTwPHw33QzWAXqWvWhY9A==
   dependencies:
     tslib "^2.3.1"
 
@@ -9830,9 +9830,6 @@ unicode-match-property-ecmascript@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/unicode-match-property-ecmascript/-/unicode-match-property-ecmascript-2.0.0.tgz#54fd16e0ecb167cf04cf1f756bdcc92eba7976c3"
   integrity sha512-5kaZCrbp5mmbz5ulBkDkbY0SsPOjKqVS35VpL9ulMPfSl0J0Xsm+9Evphv9CoIZFwre7aJoa94AY6seMKGVN5Q==
-  dependencies:
-    unicode-canonical-property-names-ecmascript "^2.0.0"
-    unicode-property-aliases-ecmascript "^2.0.0"
 
 unicode-match-property-value-ecmascript@^2.1.0:
   version "2.1.0"
