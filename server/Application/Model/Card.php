@@ -12,6 +12,7 @@ use Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType;
 use Application\Api\Input\Operator\LocationOperatorType;
 use Application\Api\Input\Operator\NameOrExpandedNameOperatorType;
 use Application\Api\Input\Sorting\Artists;
+use Application\Api\Input\Sorting\InstitutionLocality;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
@@ -55,6 +56,7 @@ use Throwable;
 #[API\Filter(field: 'cardYearRange', operator: CardYearRangeOperatorType::class, type: 'int')]
 #[API\Filter(field: 'custom', operator: LocationOperatorType::class, type: 'string')]
 #[API\Sorting(Artists::class)]
+#[API\Sorting(InstitutionLocality::class)]
 #[API\Sorting(\Application\Api\Input\Sorting\DocumentType::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(CardRepository::class)]

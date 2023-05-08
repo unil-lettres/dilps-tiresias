@@ -9,8 +9,13 @@
         Date de dernière édition <span *ngIf="site === Site.dilps">en tête</span>
     </div>
     <div (click)="sorting([{active: CardSortingField.dating, direction: 'asc'}])" mat-menu-item>Datation</div>
-    <div (click)="sorting([{active: CardSortingField.locality, direction: 'asc'}])" mat-menu-item>Lieu</div>
-    <div (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])" mat-menu-item>
+    <div (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])" mat-menu-item>Lieu</div>
+    <div (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc'}])" mat-menu-item>Domaine</div>
+    <div
+        *ngIf="site === Site.tiresias"
+        (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])"
+        mat-menu-item
+    >
         Type de document
     </div>
     <div
