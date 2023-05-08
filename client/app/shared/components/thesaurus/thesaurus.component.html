@@ -33,7 +33,7 @@
     <!-- Autocomplete menu -->
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">
         <mat-option *ngFor="let item of suggestions" [value]="item" class="multiline">
-            <div fxLayout="column">
+            <div fxLayout="column" class="padding-v">
                 <div>{{ item.name }}</div>
                 <div *ngIf="item?.locality" class="mat-caption">{{ item.locality }}</div>
             </div>
