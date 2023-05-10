@@ -709,7 +709,7 @@
                         <mat-hint
                             align="end"
                             *ngIf="edit && model.page?.length > 7"
-                            [ngClass]="{strong: model.page?.length >= 10}"
+                            [ngClass]="{strong: model.page.length >= 10}"
                         >
                             {{ model.page.length }} / 10
                         </mat-hint>
@@ -721,7 +721,7 @@
                         <mat-hint
                             align="end"
                             *ngIf="edit && model.figure?.length > 7"
-                            [ngClass]="{strong: model.figure?.length >= 10}"
+                            [ngClass]="{strong: model.figure.length >= 10}"
                         >
                             {{ model.figure.length }} / 10
                         </mat-hint>
@@ -733,7 +733,7 @@
                         <mat-hint
                             align="end"
                             *ngIf="edit && model.table?.length > 7"
-                            [ngClass]="{strong: model.table?.length >= 10}"
+                            [ngClass]="{strong: model.table.length >= 10}"
                         >
                             {{ model.table.length }} / 10
                         </mat-hint>
