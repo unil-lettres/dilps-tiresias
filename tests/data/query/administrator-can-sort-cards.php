@@ -20,6 +20,33 @@ return [
             'cards' => [
                 'items' => [
                     [
+                        'id' => '6000',
+                        'artists' => [
+                            [
+                                'name' => 'Test artist 3000',
+                            ],
+                            [
+                                'name' => 'Test artist 3001',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => '6001',
+                        'artists' => [
+                            [
+                                'name' => 'Test artist 3000',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => '6002',
+                        'artists' => [
+                            [
+                                'name' => 'Test artist 3001',
+                            ],
+                        ],
+                    ],
+                    [
                         'id' => '6003',
                         'artists' => [],
                     ],
@@ -62,33 +89,6 @@ return [
                     [
                         'id' => '6013',
                         'artists' => [],
-                    ],
-                    [
-                        'id' => '6000',
-                        'artists' => [
-                            [
-                                'name' => 'Test artist 3000',
-                            ],
-                            [
-                                'name' => 'Test artist 3001',
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => '6001',
-                        'artists' => [
-                            [
-                                'name' => 'Test artist 3000',
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => '6002',
-                        'artists' => [
-                            [
-                                'name' => 'Test artist 3001',
-                            ],
-                        ],
                     ],
                 ],
             ],

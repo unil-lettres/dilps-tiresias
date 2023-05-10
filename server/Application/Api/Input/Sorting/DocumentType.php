@@ -17,7 +17,6 @@ class DocumentType implements SortingInterface
 
     public function __invoke(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $order): void
     {
-        $alias = $queryBuilder->getDQLPart('from')[0]->getAlias();
         $queryBuilder->leftJoin($alias . '.documentType', 'sortingDocumentType');
         $queryBuilder->addOrderBy('sortingDocumentType.name', $order);
     }

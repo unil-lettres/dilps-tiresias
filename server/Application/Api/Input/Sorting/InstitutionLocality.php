@@ -17,8 +17,14 @@ class InstitutionLocality implements SortingInterface
 
     public function __invoke(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $order): void
     {
-        $alias = $queryBuilder->getDQLPart('from')[0]->getAlias();
         $queryBuilder->leftJoin($alias . '.institution', 'sortingInstitution');
+
+        // First keep card without any institution at the bottom of the list
+        $sortingFieldNullAsHighest = $uniqueNameFactory->createAliasName('sorting');
+        $queryBuilder->addSelect('CASE WHEN sortingInstitution.locality IS NULL THEN 1 ELSE 0 END AS HIDDEN ' . $sortingFieldNullAsHighest);
+        $queryBuilder->addOrderBy($sortingFieldNullAsHighest, $order);
+
+        // Then sort cards with institutions
         $queryBuilder->addOrderBy('sortingInstitution.locality', $order);
     }
 }

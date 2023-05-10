@@ -17,8 +17,14 @@ class Artists implements SortingInterface
 
     public function __invoke(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $order): void
     {
-        $alias = $queryBuilder->getDQLPart('from')[0]->getAlias();
         $queryBuilder->leftJoin($alias . '.artists', 'sortingArtist');
+
+        // First keep card without any artist at the bottom of the list
+        $sortingFieldNullAsHighest = $uniqueNameFactory->createAliasName('sorting');
+        $queryBuilder->addSelect('CASE WHEN sortingArtist.name IS NULL THEN 1 ELSE 0 END AS HIDDEN ' . $sortingFieldNullAsHighest);
+        $queryBuilder->addOrderBy($sortingFieldNullAsHighest, $order);
+
+        // Then sort cards with artists
         $queryBuilder->addOrderBy('sortingArtist.name', $order);
     }
 }
