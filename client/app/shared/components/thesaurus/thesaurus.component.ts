@@ -93,6 +93,12 @@ export class ThesaurusComponent<
     @Input() public previewComponent!: ComponentType<unknown>;
 
     /**
+     * Sort autocomplete list by usage count DESC, otherwise, sort by
+     * name ASC.
+     */
+    @Input() public sortAutocompleteByUsageCount = false;
+
+    /**
      * Emits when a selection is done
      */
     @Output() public readonly modelChange = new EventEmitter<
@@ -150,15 +156,6 @@ export class ThesaurusComponent<
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
-        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
-        this.variablesManager.set('sorting', {
-            sorting: [
-                {
-                    field: MaterialSortingField.usageCount,
-                    order: SortingOrder.DESC,
-                },
-            ],
-        });
     }
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
@@ -171,6 +168,17 @@ export class ThesaurusComponent<
 
     public ngOnInit(): void {
         this.convertModel();
+
+        this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
+
+        const sorting = {field: MaterialSortingField.name, order: SortingOrder.ASC};
+
+        if (this.sortAutocompleteByUsageCount) {
+            sorting.field = MaterialSortingField.usageCount;
+            sorting.order = SortingOrder.DESC;
+        }
+
+        this.variablesManager.set('sorting', {sorting: [sorting]});
 
         this.formControl.valueChanges
             .pipe(
