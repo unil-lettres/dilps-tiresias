@@ -577,14 +577,6 @@
                     placeholder="Institution"
                 ></app-thesaurus>
 
-                <!-- Institution address -->
-                <app-address
-                    *ngIf="!isDilps && !(model.locality || edit)"
-                    [model]="institution"
-                    [readonly]="!edit"
-                    [vertical]="true"
-                ></app-address>
-
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.objectReference)">
                     <mat-label>Numéro d’inventaire</mat-label>
                     <textarea
