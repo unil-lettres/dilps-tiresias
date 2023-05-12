@@ -11,8 +11,6 @@ jobs:
 
         env:
             MYSQL_HOST: '127.0.0.1'
-            # Following envar needed until PHP8.2 is fully supported by PHP-CS-Fixer
-            PHP_CS_FIXER_IGNORE_ENV: true
 
         services:
             mariadb:
