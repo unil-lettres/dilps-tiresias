@@ -486,7 +486,7 @@
                     <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps"></app-address>
                 </div>
 
-                <cdk-accordion *ngIf="isDilps" class="address-accordion">
+                <cdk-accordion *ngIf="(model.locality || edit) && isDilps" class="address-accordion">
                     <cdk-accordion-item
                         #accordionItem="cdkAccordionItem"
                         [expanded]="true"
