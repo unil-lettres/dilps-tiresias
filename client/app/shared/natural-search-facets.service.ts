@@ -112,12 +112,6 @@ export class NaturalSearchFacetsService {
         } satisfies DropdownFacet<never>,
         {
             display: 'Institution',
-            field: 'institution.name',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        } satisfies DropdownFacet<never>,
-        {
-            display: 'Institution',
             field: 'institution',
             component: TypeNaturalSelectComponent,
             configuration: {
