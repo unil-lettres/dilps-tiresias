@@ -171,7 +171,7 @@ export class NaturalSearchFacetsService {
             component: TypeHierarchicSelectorComponent,
             showValidateButton: true,
             configuration: {
-                key: 'materials',
+                key: 'material',
                 service: this.materialService,
                 config: materialHierarchicConfig,
             },
