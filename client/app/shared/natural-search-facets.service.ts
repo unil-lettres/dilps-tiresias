@@ -30,6 +30,8 @@ import {
 import {CardFilterGroupConditionSite, CardVisibility, Site} from './generated-types';
 import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
+import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
+import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -179,13 +181,14 @@ export class NaturalSearchFacetsService {
         {
             display: 'Mots-clés',
             field: 'tags',
-            component: TypeNaturalSelectComponent,
+            component: TypeHierarchicSelectorComponent,
+            showValidateButton: true,
             configuration: {
+                key: 'tag',
                 service: this.tagService,
-                placeholder: $localize`Responsable`,
-                filter: {},
+                config: tagHierarchicConfig,
             },
-        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<TagService>>,
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Localité',
             field: 'locality',
@@ -203,13 +206,14 @@ export class NaturalSearchFacetsService {
         {
             display: 'Période',
             field: 'periods',
-            component: TypeNaturalSelectComponent,
+            component: TypeHierarchicSelectorComponent,
+            showValidateButton: true,
             configuration: {
+                key: 'period',
                 service: this.periodService,
-                placeholder: 'Période',
-                filter: {},
+                config: periodHierarchicConfig,
             },
-        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<PeriodService>>,
+        } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
         {
             display: 'Datation',
             field: 'cardYearRange',
