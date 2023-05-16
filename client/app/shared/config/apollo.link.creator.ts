@@ -4,7 +4,7 @@ import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {NetworkActivityService} from '../services/network-activity.service';
 import {createUploadLink} from 'apollo-upload-client';
 import {AlertService} from '../components/alert/alert.service';
-import {hasFilesAndProcessDate} from '@ecodev/natural';
+import {hasFilesAndProcessDate, isMutation} from '@ecodev/natural';
 import {HttpBatchLink} from 'apollo-angular/http';
 
 export const apolloDefaultOptions: DefaultOptions = {
@@ -76,7 +76,7 @@ export function createApolloLink(
 
     // If query has no file, batch it, otherwise upload only that query
     const httpLink = ApolloLink.split(
-        operation => hasFilesAndProcessDate(operation.variables),
+        operation => hasFilesAndProcessDate(operation.variables) || isMutation(operation.query),
         uploadInterceptor.concat(createUploadLink(options)),
         httpBatchLink.create(options),
     );

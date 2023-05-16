@@ -1508,10 +1508,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^50.2.1":
-  version "50.2.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.2.1.tgz#91f0c0a0d514557ddd166b8829eea917f55ed549"
-  integrity sha512-jDHmlepOzYsFJEQy3TRs8F5FA/6A4uKOoHAoW1BSM9wzj8WlMBlDKqbQqe32M0LK4FpYYdArgR3HqhfVhmUBDg==
+"@ecodev/natural@^50.3.0":
+  version "50.3.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.3.0.tgz#3ef10476c2505c64bed76630cc809f15dca414e5"
+  integrity sha512-+UCwCayORG3ADQG6FAB6/S+EJ/xgUunCXl5blY2wBhoPDul/hxUPRXtve8onIgalS7JXCdCR2m4mEmU59avgQQ==
   dependencies:
     tslib "^2.3.1"
 
