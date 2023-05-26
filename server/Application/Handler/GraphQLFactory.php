@@ -12,8 +12,9 @@ class GraphQLFactory
 {
     public function __invoke(ContainerInterface $container)
     {
+        $config = $container->get('config');
         $site = $container->get('site');
-        $server = new Server(true, $site);
+        $server = new Server($config['debug'], $site);
 
         return new GraphQLHandler($server);
     }
