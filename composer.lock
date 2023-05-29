@@ -1592,7 +1592,7 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "11.2.2",
+            "version": "11.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
@@ -1657,7 +1657,7 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/11.2.2"
+                "source": "https://github.com/Ecodev/felix/tree/11.2.3"
             },
             "time": "2023-05-26T07:36:27+00:00"
         },
