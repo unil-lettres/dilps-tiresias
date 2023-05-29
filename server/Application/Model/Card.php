@@ -794,8 +794,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             $this->cards[] = $card;
         }
 
-        if (!$card->cards->contains($this)) {
-            $card->cards[] = $this;
+        if (!$card->getCards()->contains($this)) {
+            $card->getCards()->add($this);
         }
     }
 
@@ -805,7 +805,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     public function removeCard(self $card): void
     {
         $this->cards->removeElement($card);
-        $card->cards->removeElement($this);
+        $card->getCards()->removeElement($this);
     }
 
     /**
