@@ -21,7 +21,7 @@ class InstitutionLocality implements SortingInterface
 
         // First keep card without any institution at the bottom of the list
         $sortingFieldNullAsHighest = $uniqueNameFactory->createAliasName('sorting');
-        $queryBuilder->addSelect('CASE WHEN sortingInstitution.locality IS NULL THEN 1 ELSE 0 END AS HIDDEN ' . $sortingFieldNullAsHighest);
+        $queryBuilder->addSelect("CASE WHEN sortingInstitution.locality IS NULL OR sortingInstitution.locality = '' THEN 1 ELSE 0 END AS HIDDEN " . $sortingFieldNullAsHighest);
         $queryBuilder->addOrderBy($sortingFieldNullAsHighest, $order);
 
         // Then sort cards with institutions
