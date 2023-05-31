@@ -71,24 +71,30 @@
     </mat-form-field>
 
     <!-- Map -->
-    <google-map
+    <div
+        class="wrapper-google-map"
         *ngIf="(mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))"
-        [options]="mapOptions"
-        [center]="{lat: latitude, lng: longitude}"
-        [zoom]="zoom"
-        height="450px"
-        width="100%"
     >
-        <map-marker
-            (mapDragend)="onMarkerDrag($event)"
-            [icon]="icon!"
-            [position]="(model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null)!"
-            [options]="{draggable: !readonly}"
-        ></map-marker>
-    </google-map>
+        <google-map
+            [options]="mapOptions"
+            [center]="{lat: latitude, lng: longitude}"
+            [zoom]="zoom"
+            height="450px"
+            width="100%"
+        >
+            <map-marker
+                (mapDragend)="onMarkerDrag($event)"
+                [icon]="icon!"
+                [position]="
+                    (model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null)!
+                "
+                [options]="{draggable: !readonly}"
+            ></map-marker>
+        </google-map>
+    </div>
 </div>
 
-<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" [style.margin-top.px]="10">
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps">
     <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
         <mat-label>Latitude</mat-label>
         <input

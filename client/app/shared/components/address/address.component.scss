@@ -6,6 +6,10 @@
 #mapZone {
     position: relative;
 
+    .wrapper-google-map {
+        margin-bottom: 22.5px;
+    }
+
     #search {
         position: absolute;
         z-index: 5;
@@ -16,9 +20,4 @@
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
     }
-}
-
-natural-select-enum {
-    display: block;
-    margin-top: 20px;
 }

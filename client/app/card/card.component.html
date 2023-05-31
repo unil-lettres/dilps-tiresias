@@ -551,13 +551,13 @@
                     placeholder="Périodes"
                 ></app-thesaurus>
 
-                <div *ngIf="!isDilps" fxLayout="row" fxLayoutGap="20px">
-                    <mat-form-field *ngIf="edit || !!model.from" [style.width]="'45%'">
+                <div *ngIf="!isDilps" fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field *ngIf="edit || !!model.from">
                         <mat-label>A partir de</mat-label>
                         <input [(ngModel)]="model.from" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="edit || !!model.to" [style.width]="'45%'">
+                    <mat-form-field *ngIf="edit || !!model.to">
                         <mat-label>Jusqu'à</mat-label>
                         <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
