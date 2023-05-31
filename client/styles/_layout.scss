@@ -159,6 +159,10 @@ $margin-spacing: 10px;
     padding: $margin-spacing !important;
 }
 
+.padding-scrollbar {
+    padding: $margin-spacing 12px !important;
+}
+
 .padding-h {
     padding-left: $margin-spacing !important;
     padding-right: $margin-spacing !important;
