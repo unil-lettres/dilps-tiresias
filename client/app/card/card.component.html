@@ -518,7 +518,6 @@
                     </cdk-accordion-item>
                 </cdk-accordion>
 
-                <br />
                 <app-thesaurus
                     *ngIf="!isDilps && (edit || !!model.antiqueNames?.length)"
                     [model]="model.antiqueNames"
@@ -668,6 +667,22 @@
 
                 <div
                     *ngIf="!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)"
+                    class="mat-headline-6"
+                >
+                    Référence de l'image
+                </div>
+
+                <div
+                    *ngIf="
+                        isDilps &&
+                        (edit ||
+                            !!model.literature ||
+                            !!model.page ||
+                            !!model.figure ||
+                            !!model.table ||
+                            !!model.rights ||
+                            !!model.isbn)
+                    "
                     class="mat-headline-6"
                 >
                     Référence de l'image
