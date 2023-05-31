@@ -389,11 +389,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     public toggleEdit(): void {
         this.edit = !this.edit;
-        if (this.edit) {
-            this.accordionItem?.close();
-        } else {
-            this.accordionItem?.open();
-        }
     }
 
     public dropImage(selection: FileSelection): void {

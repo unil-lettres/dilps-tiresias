@@ -489,7 +489,7 @@
                 <cdk-accordion *ngIf="(model.locality || edit) && isDilps" class="address-accordion">
                     <cdk-accordion-item
                         #accordionItem="cdkAccordionItem"
-                        [expanded]="true"
+                        [expanded]="!this.edit"
                         role="button"
                         tabindex="0"
                         [attr.id]="'address'"
