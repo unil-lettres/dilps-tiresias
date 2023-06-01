@@ -42,6 +42,11 @@ export class AddressComponent implements OnInit, OnChanges {
     @Input() public isDilps = true;
 
     /**
+     * Only display map and not adresse informations.
+     */
+    @Input() public onlyMap = false;
+
+    /**
      * Object reference is directly modified
      */
     @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null = null;

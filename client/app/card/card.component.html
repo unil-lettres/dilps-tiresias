@@ -480,6 +480,15 @@
                     placeholder="Institution"
                 ></app-thesaurus>
 
+                <!-- Institution address -->
+                <app-address
+                    *ngIf="isDilps && !(model.locality || edit)"
+                    [model]="institution"
+                    [readonly]="!edit"
+                    [vertical]="true"
+                    [onlyMap]="true"
+                ></app-address>
+
                 <!-- Card address, if given -->
                 <div *ngIf="(model.locality || edit) && !isDilps">
                     <div class="mat-headline-6">Lieux de découverte</div>
@@ -577,6 +586,15 @@
                     [sortAutocompleteByUsageCount]="true"
                     placeholder="Institution"
                 ></app-thesaurus>
+
+                <!-- Institution address -->
+                <app-address
+                    *ngIf="!isDilps && !(model.locality || edit)"
+                    [model]="institution"
+                    [readonly]="!edit"
+                    [vertical]="true"
+                    [onlyMap]="true"
+                ></app-address>
 
                 <mat-form-field *ngIf="!isDilps && (edit || !!model.objectReference)">
                     <mat-label>Numéro d’inventaire</mat-label>

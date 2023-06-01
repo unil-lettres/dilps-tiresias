@@ -1,4 +1,4 @@
-<div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
+<div *ngIf="!onlyMap" [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
     <mat-form-field *ngIf="!readonly || !!model?.street">
         <mat-label>Rue</mat-label>
         <input (keyup.enter)="search()" [(ngModel)]="model!.street" [readonly]="readonly" matInput maxlength="255" />
