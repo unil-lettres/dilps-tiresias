@@ -847,6 +847,16 @@
                     <natural-relations
                         [disabled]="!edit"
                         [filter]="{groups: [{conditions: [{cards: {have: {values: [fetchedModel.id]}}}]}]}"
+                        [autocompleteSelectorFilter]="{
+                            groups: [
+                                {
+                                    conditions: [
+                                        {id: {equal: {value: fetchedModel.id, not: true}}},
+                                        {cards: {have: {values: [fetchedModel.id], not: true}}}
+                                    ]
+                                }
+                            ]
+                        }"
                         [main]="fetchedModel"
                         [service]="cardService"
                         placeholder="Chercher une fiche"
