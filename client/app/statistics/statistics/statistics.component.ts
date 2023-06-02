@@ -1,5 +1,6 @@
 import {Apollo} from 'apollo-angular';
 import {Component} from '@angular/core';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
 import {Literal, NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {
@@ -63,6 +64,15 @@ interface SerieData {
     selector: 'app-statistics',
     templateUrl: './statistics.component.html',
     styleUrls: ['./statistic.component.scss'],
+    providers: [
+        {
+            // Remove "hint" section below mat-form-field if empty.
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: {
+                subscriptSizing: 'dynamic',
+            },
+        },
+    ],
 })
 export class StatisticsComponent extends NaturalAbstractController {
     public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
