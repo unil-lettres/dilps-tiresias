@@ -1,100 +1,98 @@
 <div class="padding padding-fab">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
     <div class="mat-headline-5">Statistiques</div>
-    <mat-dialog-content>
-        <mat-tab-group mat-stretch-tabs="false" naturalLinkableTab>
-            <mat-tab id="frequentation" label="Fréquentation">
-                <ng-template matTabContent>
-                    <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
-                        <div fxLayout="row" fxLayoutGap="10px">
-                            <mat-form-field>
-                                <mat-label>Période</mat-label>
-                                <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                        item.name
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+    <mat-tab-group mat-stretch-tabs="false" naturalLinkableTab>
+        <mat-tab id="frequentation" label="Fréquentation">
+            <ng-template matTabContent>
+                <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <mat-form-field>
+                            <mat-label>Période</mat-label>
+                            <mat-select [(value)]="period" (selectionChange)="update()">
+                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                    item.name
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Type</mat-label>
-                                <mat-select [(value)]="statType" (selectionChange)="applyFrequentationTypeSelection()">
-                                    <mat-option *ngFor="let item of availableTypes | keyvalue" [value]="item.key">{{
-                                        item.value
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                        <app-statistic [input]="frequentation"></app-statistic>
+                        <mat-form-field>
+                            <mat-label>Type</mat-label>
+                            <mat-select [(value)]="statType" (selectionChange)="applyFrequentationTypeSelection()">
+                                <mat-option *ngFor="let item of availableTypes | keyvalue" [value]="item.key">{{
+                                    item.value
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
-                </ng-template>
-            </mat-tab>
 
-            <mat-tab id="card" label="Fiches">
-                <ng-template matTabContent>
-                    <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
-                        <div fxLayout="row" fxLayoutGap="10px">
-                            <mat-form-field>
-                                <mat-label>Période</mat-label>
-                                <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                        item.name
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                    <app-statistic [input]="frequentation"></app-statistic>
+                </div>
+            </ng-template>
+        </mat-tab>
 
-                            <mat-form-field>
-                                <mat-label>Type</mat-label>
-                                <mat-select [(value)]="cardType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                    <mat-option *ngFor="let item of availableCardTypes | keyvalue" [value]="item.key">{{
-                                        item.value
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+        <mat-tab id="card" label="Fiches">
+            <ng-template matTabContent>
+                <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <mat-form-field>
+                            <mat-label>Période</mat-label>
+                            <mat-select [(value)]="period" (selectionChange)="update()">
+                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                    item.name
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                            <natural-select
-                                [(ngModel)]="user"
-                                [service]="userService"
-                                [showIcon]="false"
-                                [displayWith]="displayFn"
-                                (selectionChange)="update()"
-                                placeholder="Utilisateur"
-                            ></natural-select>
-                        </div>
+                        <mat-form-field>
+                            <mat-label>Type</mat-label>
+                            <mat-select [(value)]="cardType" (selectionChange)="applyCardAndUserTypeSelection()">
+                                <mat-option *ngFor="let item of availableCardTypes | keyvalue" [value]="item.key">{{
+                                    item.value
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                        <app-statistic [input]="cards"></app-statistic>
+                        <natural-select
+                            [(ngModel)]="user"
+                            [service]="userService"
+                            [showIcon]="false"
+                            [displayWith]="displayFn"
+                            (selectionChange)="update()"
+                            placeholder="Utilisateur"
+                        ></natural-select>
                     </div>
-                </ng-template>
-            </mat-tab>
 
-            <mat-tab id="user" label="Utilisateurs">
-                <ng-template matTabContent>
-                    <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
-                        <div fxLayout="row" fxLayoutGap="10px">
-                            <mat-form-field>
-                                <mat-label>Période</mat-label>
-                                <mat-select [(value)]="period" (selectionChange)="update()">
-                                    <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                        item.name
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                    <app-statistic [input]="cards"></app-statistic>
+                </div>
+            </ng-template>
+        </mat-tab>
 
-                            <mat-form-field>
-                                <mat-label>Type</mat-label>
-                                <mat-select [(value)]="userType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                    <mat-option *ngFor="let item of availableUserTypes | keyvalue" [value]="item.key">{{
-                                        item.value
-                                    }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
+        <mat-tab id="user" label="Utilisateurs">
+            <ng-template matTabContent>
+                <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayoutGap="10px">
+                        <mat-form-field>
+                            <mat-label>Période</mat-label>
+                            <mat-select [(value)]="period" (selectionChange)="update()">
+                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
+                                    item.name
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                        <app-statistic [input]="users"></app-statistic>
+                        <mat-form-field>
+                            <mat-label>Type</mat-label>
+                            <mat-select [(value)]="userType" (selectionChange)="applyCardAndUserTypeSelection()">
+                                <mat-option *ngFor="let item of availableUserTypes | keyvalue" [value]="item.key">{{
+                                    item.value
+                                }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
-                </ng-template>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-dialog-content>
+
+                    <app-statistic [input]="users"></app-statistic>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
 </div>
