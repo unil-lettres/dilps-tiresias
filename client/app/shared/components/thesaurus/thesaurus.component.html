@@ -11,8 +11,6 @@
                 ></mat-icon>
                 <div fxFlex class="thesaurus-chip-label">
                     <span>{{ getLabel(item) }}</span>
-                    <br *ngIf="item.locality && !readonly" />
-                    <span *ngIf="item.locality && !readonly">{{ item.locality }}</span>
                 </div>
             </div>
 
