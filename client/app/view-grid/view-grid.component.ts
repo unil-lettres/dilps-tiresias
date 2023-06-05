@@ -195,7 +195,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
             }
 
             const fields: any = {
-                title: title ? title : 'Voir le détail',
+                title: title ? title : 'Éditer la fiche',
                 selected: selected.includes(card.id),
             };
 
