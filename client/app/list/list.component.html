@@ -55,7 +55,7 @@
             (click)="setViewMode(ViewMode.grid)"
             *ngIf="viewMode !== ViewMode.grid"
             mat-icon-button
-            matTooltip="Grille"
+            matTooltip="Affichage Mosaïque"
         >
             <mat-icon naturalIcon="view_compact"></mat-icon>
         </button>
@@ -64,7 +64,7 @@
             (click)="setViewMode(ViewMode.list)"
             *ngIf="viewMode !== ViewMode.list"
             mat-icon-button
-            matTooltip="Liste"
+            matTooltip="Affichage Liste"
         >
             <mat-icon naturalIcon="view_list"></mat-icon>
         </button>
@@ -73,7 +73,7 @@
             (click)="setViewMode(ViewMode.map)"
             *ngIf="selected?.length && viewMode !== ViewMode.map"
             mat-icon-button
-            matTooltip="Carte"
+            matTooltip="Affichage Carte"
         >
             <mat-icon naturalIcon="map"></mat-icon>
         </button>
