@@ -190,32 +190,47 @@
         </div>
     </mat-toolbar>
 
-    <app-view-grid
-        #view
-        (pagination)="pagination($event)"
-        (selectionChange)="select($event)"
-        (contentChange)="gridContentChange($event)"
-        *ngIf="viewMode === ViewMode.grid"
-        [dataSource]="dataSource"
-        [selected]="selected"
-        [style.height]="'100%'"
-    ></app-view-grid>
+    <div *ngIf="!dataSource.data?.length; else viewResults" class="empty-result">
+        <div>
+            <p>Aucun élément ne correspond aux termes recherchés.</p>
+            <p>Essayez de :</p>
+            <ul>
+                <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
+                <li>Simplifier la recherche.</li>
+                <li>Enlever virgules, déterminants, prépositions, ...</li>
+                <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
+            </ul>
+        </div>
+    </div>
 
-    <app-view-list
-        #view
-        (pagination)="pagination($event)"
-        (selectionChange)="select($event)"
-        *ngIf="viewMode === ViewMode.list"
-        [dataSource]="dataSource"
-        [selected]="selected"
-        [style.height]="'100%'"
-    ></app-view-list>
+    <ng-template #viewResults>
+        <app-view-grid
+            #view
+            (pagination)="pagination($event)"
+            (selectionChange)="select($event)"
+            (contentChange)="gridContentChange($event)"
+            *ngIf="viewMode === ViewMode.grid"
+            [dataSource]="dataSource"
+            [selected]="selected"
+            [style.height]="'100%'"
+        ></app-view-grid>
 
-    <app-view-map
-        #view
-        *ngIf="viewMode === ViewMode.map"
-        [cards]="selected"
-        [style.height]="'100%'"
-        (searchByLocation)="searchByLocation($event)"
-    ></app-view-map>
+        <app-view-list
+            #view
+            (pagination)="pagination($event)"
+            (selectionChange)="select($event)"
+            *ngIf="viewMode === ViewMode.list"
+            [dataSource]="dataSource"
+            [selected]="selected"
+            [style.height]="'100%'"
+        ></app-view-list>
+
+        <app-view-map
+            #view
+            *ngIf="viewMode === ViewMode.map"
+            [cards]="selected"
+            [style.height]="'100%'"
+            (searchByLocation)="searchByLocation($event)"
+        ></app-view-map>
+    </ng-template>
 </div>
