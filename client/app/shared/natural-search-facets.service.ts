@@ -11,7 +11,6 @@ import {
     TypeSelectComponent,
     TypeSelectConfiguration,
     TypeSelectNaturalConfiguration,
-    TypeTextComponent,
     wrapLike,
 } from '@ecodev/natural';
 import {SITE} from '../app.config';
@@ -32,6 +31,7 @@ import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfigur
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
 import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
 import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
+import {TypeTextComponent} from '../extended/type-text/type-text.component';
 
 export const adminConfig: NaturalSearchFacets = [
     {

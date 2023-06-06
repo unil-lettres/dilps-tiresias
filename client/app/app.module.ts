@@ -126,6 +126,7 @@ import {StripTagsPipe} from './shared/pipes/strip-tags.pipe';
 import {OnlyLeavesPipe} from './shared/pipes/only-leaves.pipe';
 import {TypeLocationComponent} from './type-location/type-location.component';
 import {TypeNumericRangeComponent} from './type-numeric-range/type-numeric-range.component';
+import {TypeTextComponent} from './extended/type-text/type-text.component';
 import {FilesComponent} from './files/files/files.component';
 import {ErrorComponent} from './shared/components/error/error.component';
 import {NetworkInterceptorService} from './shared/services/network-interceptor.service';
@@ -223,6 +224,7 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         AntiqueNameComponent,
         TypeLocationComponent,
         TypeNumericRangeComponent,
+        TypeTextComponent,
         TruncatePipe,
         FilesComponent,
         ErrorComponent,
