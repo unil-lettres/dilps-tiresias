@@ -189,8 +189,7 @@
             </mat-chip-set>
         </div>
     </mat-toolbar>
-
-    <div *ngIf="!dataSource.data?.length; else viewResults" class="empty-result">
+    <div *ngIf="this.dataSource.data?.length === 0; else viewResults" class="empty-result">
         <div>
             <p>Aucun élément ne correspond aux termes recherchés.</p>
             <p>Essayez de :</p>
@@ -202,7 +201,6 @@
             </ul>
         </div>
     </div>
-
     <ng-template #viewResults>
         <app-view-grid
             #view
