@@ -143,3 +143,9 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 td.mat-column-usageCount {
     padding-right: 3em !important;
 }
+
+// Style PhotoSwipe link to card button. Cannot be put in corresponding
+// component because of how PhotoSwipe works.
+.pswp__button--card-button {
+    color: #fff;
+}

@@ -87,6 +87,23 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         lightbox: true,
         photoSwipePluginsInitFn: lightbox => {
             lightbox.on('uiRegister', function () {
+                // Link to card button
+                // https://photoswipe.com/adding-ui-elements/#adding-a-button-to-the-toolbar
+                lightbox.pswp.ui.registerElement({
+                    name: 'card-button',
+                    ariaLabel: 'Voir la fiche',
+                    order: 5,
+                    isButton: true,
+                    html: 'Voir la fiche',
+
+                    onClick: () => {
+                        // Since we have no way to access the card id from PhotoSwipe,
+                        // we simulate a click on the thumbnail's button.
+                        lightbox.pswp.currSlide.data.element.querySelector('.button.activable').click();
+                        lightbox.pswp.destroy();
+                    },
+                });
+
                 // Download button
                 // https://photoswipe.com/adding-ui-elements/#adding-download-button
                 lightbox.pswp.ui.registerElement({
