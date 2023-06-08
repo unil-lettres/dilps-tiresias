@@ -56,43 +56,74 @@
     </div>
 </div>
 
-<div id="mapZone">
-    <mat-form-field [fxShow]="(mapApiService.loaded | async) && !readonly" class="mat-elevation-z4" id="search">
-        <mat-label>Chercher</mat-label>
-        <input
-            #input
-            [formControl]="formCtrl"
-            autocapitalize="off"
-            autocorrect="off"
-            class="form-control"
-            matInput
-            spellcheck="off"
-        />
-    </mat-form-field>
-
-    <!-- Map -->
-    <div
-        class="wrapper-google-map"
-        *ngIf="(mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))"
+<cdk-accordion>
+    <cdk-accordion-item
+        #accordionItem="cdkAccordionItem"
+        [expanded]="!allowExpandableMap || !readonly"
+        role="button"
+        tabindex="0"
+        [attr.aria-expanded]="accordionItem.expanded"
     >
-        <google-map
-            [options]="mapOptions"
-            [center]="{lat: latitude, lng: longitude}"
-            [zoom]="zoom"
-            height="450px"
-            width="100%"
+        <div
+            *ngIf="allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude"
+            class="map-accordion-header"
+            (click)="accordionItem.toggle()"
+            fxLayout="row"
+            fxLayoutAlign="end center"
         >
-            <map-marker
-                (mapDragend)="onMarkerDrag($event)"
-                [icon]="icon!"
-                [position]="
-                    (model?.latitude && model?.longitude ? {lat: model?.latitude, lng: model?.longitude} : null)!
-                "
-                [options]="{draggable: !readonly}"
-            ></map-marker>
-        </google-map>
-    </div>
-</div>
+            <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte </span>
+            <mat-icon
+                class="address-toggle-arrow"
+                [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
+            ></mat-icon>
+        </div>
+        <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
+            <div id="mapZone">
+                <mat-form-field
+                    [fxShow]="(mapApiService.loaded | async) && !readonly"
+                    class="mat-elevation-z4"
+                    id="search"
+                >
+                    <mat-label>Chercher</mat-label>
+                    <input
+                        #input
+                        [formControl]="formCtrl"
+                        autocapitalize="off"
+                        autocorrect="off"
+                        class="form-control"
+                        matInput
+                        spellcheck="off"
+                    />
+                </mat-form-field>
+
+                <!-- Map -->
+                <div
+                    class="wrapper-google-map"
+                    *ngIf="(mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))"
+                >
+                    <google-map
+                        [options]="mapOptions"
+                        [center]="{lat: latitude, lng: longitude}"
+                        [zoom]="zoom"
+                        height="450px"
+                        width="100%"
+                    >
+                        <map-marker
+                            (mapDragend)="onMarkerDrag($event)"
+                            [icon]="icon!"
+                            [position]="
+                                (model?.latitude && model?.longitude
+                                    ? {lat: model?.latitude, lng: model?.longitude}
+                                    : null)!
+                            "
+                            [options]="{draggable: !readonly}"
+                        ></map-marker>
+                    </google-map>
+                </div>
+            </div>
+        </div>
+    </cdk-accordion-item>
+</cdk-accordion>
 
 <div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps">
     <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">

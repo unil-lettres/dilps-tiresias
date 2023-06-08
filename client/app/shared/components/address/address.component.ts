@@ -47,6 +47,11 @@ export class AddressComponent implements OnInit, OnChanges {
     @Input() public onlyMap = false;
 
     /**
+     * Use an accordion to allow to expand or close the map.
+     */
+    @Input() public allowExpandableMap = false;
+
+    /**
      * Object reference is directly modified
      */
     @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null = null;
