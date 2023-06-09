@@ -54,13 +54,6 @@ export const adminConfig: NaturalSearchFacets = [
 export class NaturalSearchFacetsService {
     private dilpsFacets: NaturalSearchFacets = [
         {
-            display: '[Inclure Tiresias]',
-            field: 'site',
-            name: 'includeTiresias',
-            condition: {equal: {value: Site.dilps}},
-            inversed: true,
-        } satisfies FlagFacet<CardFilterGroupConditionSite>,
-        {
             display: 'Titre',
             field: 'nameOrExpandedName',
             component: TypeTextComponent,
@@ -128,6 +121,13 @@ export class NaturalSearchFacetsService {
             component: TypeTextComponent,
             transform: wrapLike,
         } satisfies DropdownFacet<never>,
+        {
+            display: '[Inclure Tiresias]',
+            field: 'site',
+            name: 'includeTiresias',
+            condition: {equal: {value: Site.dilps}},
+            inversed: true,
+        } satisfies FlagFacet<CardFilterGroupConditionSite>,
     ];
 
     private tiresiasFacets: NaturalSearchFacets = [
@@ -277,6 +277,17 @@ export class NaturalSearchFacetsService {
             return [...this.dilpsFacets];
         } else {
             return [...this.tiresiasFacets];
+        }
+    }
+
+    /**
+     * @returns the index to push the admin facets at.
+     */
+    public getAdminFacetsIndex(): number {
+        if (this.site === Site.dilps) {
+            return this.dilpsFacets.length - 1;
+        } else {
+            return this.tiresiasFacets.length;
         }
     }
 }

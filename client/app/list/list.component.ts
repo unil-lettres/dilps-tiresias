@@ -555,8 +555,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Push admin config, but only if it does not already exist
      */
     private pushAdminConfig(): void {
-        if (!this.naturalSearchFacets.some(conf => conf === adminConfig[0])) {
-            this.naturalSearchFacets = this.naturalSearchFacets.concat(adminConfig);
+        if (!this.naturalSearchFacets.includes(adminConfig[0])) {
+            const index = this.facetService.getAdminFacetsIndex();
+            this.naturalSearchFacets.splice(index, 0, ...adminConfig);
         }
     }
 }
