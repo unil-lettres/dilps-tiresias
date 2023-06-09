@@ -1,5 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use '../styles/typography';
+
 @mixin app($theme) {
     $primary: map.get($theme, primary);
     $accent: map.get($theme, accent);
@@ -54,5 +56,17 @@
     .icon-button-circle-warn {
         color: mat.get-color-from-palette($warn, default-contrast);
         background-color: mat.get-color-from-palette($warn);
+    }
+
+    .natural-dropdown-container .dropdown-title {
+        font-size: mat.font-size(typography.$custom-typography-gt-sm, 'headline-5');
+        padding: 3px 20px 13px;
+        opacity: 1;
+        text-align: center;
+        border-bottom: 1px solid mat.get-color-from-palette($foreground, base, 0.5);
+    }
+
+    natural-gallery .natural-gallery-js .figure.selected .selectBtn {
+        background: mat.get-color-from-palette($accent, $opacity: 0.3);
     }
 }

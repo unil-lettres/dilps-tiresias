@@ -110,9 +110,33 @@ natural-gallery {
         transform: none !important;
     }
 
-    .selectBtn {
-        transition: none !important;
-        background-color: rgba(0, 0, 0, 0.3) !important;
+    .natural-gallery-js .figure {
+        --marge: 5px;
+
+        &.selected .selectBtn {
+            top: var(--marge);
+            left: var(--marge);
+
+            .marker {
+                border-color: transparent;
+            }
+        }
+
+        .selectBtn {
+            top: var(--marge);
+            left: var(--marge);
+            transition: none;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+
+            .marker {
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+        }
     }
 }
 
