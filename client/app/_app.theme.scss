@@ -66,7 +66,12 @@
         border-bottom: 1px solid mat.get-color-from-palette($foreground, base, 0.5);
     }
 
-    natural-gallery .natural-gallery-js .figure.selected .selectBtn {
-        background: mat.get-color-from-palette($accent, $opacity: 0.3);
+    natural-gallery .natural-gallery-js .figure.selected {
+        border: 3px solid mat.get-color-from-palette($accent);
+        border-radius: 3px;
+
+        .selectBtn {
+            background: mat.get-color-from-palette($accent, $opacity: 0.3);
+        }
     }
 }
