@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
-@import '~material-design-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1');
 @import '~quill/dist/quill.bubble.css';
 
 @include meta.load-css('styles/themes');

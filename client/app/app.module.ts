@@ -134,26 +134,7 @@ import {HttpBatchLink} from 'apollo-angular/http';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {HideTooltipDirective} from './shared/directives/hide-tooltip.directive';
 
-const icons: NaturalIconsConfig = {
-    material: {
-        svg: 'assets/icons/diamond.svg',
-    },
-    period: {
-        font: 'date_range',
-    },
-    tag: {
-        font: 'label',
-    },
-    'antique-name': {
-        svg: 'assets/icons/fire.svg',
-    },
-    font_download: {
-        svg: 'assets/icons/font_download.svg',
-    },
-    font_download_off: {
-        svg: 'assets/icons/font_download_off.svg',
-    },
-};
+const icons: NaturalIconsConfig = {};
 
 export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
     showDelay: 5,

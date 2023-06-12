@@ -1508,10 +1508,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^50.4.0":
-  version "50.4.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.4.0.tgz#4baa8fb1e76007391a66cfeca19eefd084cbd093"
-  integrity sha512-Qf0ibXNQzlWAV0vBdq6zLPOWHXe+uEgfD8YjiDVIT5RVWSyo/nj9/h6Cg0B0xKayPKa7c3rx6gzLeO9ug8UDDA==
+"@ecodev/natural@^50.4.1":
+  version "50.4.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-50.4.1.tgz#7afd2ef1cd14a7c5b494bf33b95e96889dfacd46"
+  integrity sha512-iOdWZlBtGZkGkvynhBVH6BEiYvNTacjPSdunrIiflWYhpMVlEAbRX7OqmSKodTHAD2PiKcCouwpRcFkH0gRIXQ==
   dependencies:
     tslib "^2.3.1"
 
@@ -7543,11 +7543,6 @@ matcher@^3.0.0:
   integrity sha512-OkeDaAZ/bQCxeFAozM55PKcKU0yJMPGifLwV4Qgjitu+5MoAfSQN4lsLJeXZ1b8w0x+/Emda6MZgXS1jvsapng==
   dependencies:
     escape-string-regexp "^4.0.0"
-
-material-design-icons@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/material-design-icons/-/material-design-icons-3.0.1.tgz#9a71c48747218ebca51e51a66da682038cdcb7bf"
-  integrity sha512-t19Z+QZBwSZulxptEu05kIm+UyfIdJY1JDwI+nx02j269m6W414whiQz9qfvQIiLrdx71RQv+T48nHhuQXOCIQ==
 
 media-typer@0.3.0:
   version "0.3.0"
