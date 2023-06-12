@@ -35,6 +35,7 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
             'code',
             'objectReference',
             'corpus',
+            'techniqueAuthor',
         ];
     }
 

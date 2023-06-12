@@ -70,10 +70,10 @@ export class NaturalSearchFacetsService {
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<ArtistService>>,
         {
-            display: 'Artistes ou auteur technique',
-            field: 'artistOrTechniqueAuthor',
+            display: 'Auteur technique',
+            field: 'techniqueAuthor',
             component: TypeTextComponent,
-            transform: replaceOperatorByField,
+            transform: wrapLike,
         } satisfies DropdownFacet<never>,
         {
             display: 'Supplément',
