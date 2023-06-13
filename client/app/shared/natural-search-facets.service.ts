@@ -7,7 +7,6 @@ import {
     replaceOperatorByName,
     TypeHierarchicSelectorComponent,
     TypeHierarchicSelectorConfiguration,
-    TypeNaturalSelectComponent,
     TypeSelectComponent,
     TypeSelectConfiguration,
     TypeSelectNaturalConfiguration,
@@ -32,6 +31,7 @@ import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConf
 import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';
 import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
 import {TypeTextComponent} from '../extended/type-text/type-text.component';
+import {TypeNaturalSelectComponent} from '../extended/type-natural-select/type-natural-select.component';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -41,6 +41,7 @@ export const adminConfig: NaturalSearchFacets = [
         configuration: {
             items: [CardVisibility.public, CardVisibility.member, CardVisibility.private],
             multiple: true,
+            operators: false,
         },
     } satisfies DropdownFacet<TypeSelectConfiguration>,
 ];
