@@ -101,23 +101,22 @@
             <mat-icon naturalIcon="map"></mat-icon>
         </button>
 
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-            <natural-search
-                (selectionChange)="search($event)"
-                [facets]="naturalSearchFacets"
-                [selections]="naturalSearchSelections"
-                dropdownTitle="Recherche approfondie"
-                class="searchField"
-                fxFlex
-            />
-            <button
-                [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
-                mat-icon-button
-                matTooltip="Trier"
-            >
-                <mat-icon naturalIcon="sort"></mat-icon>
-            </button>
-        </div>
+        <natural-search
+            (selectionChange)="search($event)"
+            [facets]="naturalSearchFacets"
+            [selections]="naturalSearchSelections"
+            dropdownTitle="Recherche approfondie"
+            class="searchField"
+            fxFlex
+            fxFlexAlign="start"
+        />
+        <button
+            [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
+            mat-icon-button
+            matTooltip="Trier"
+        >
+            <mat-icon naturalIcon="sort"></mat-icon>
+        </button>
 
         <ng-container *ngIf="selected?.length">
             <!--<div *ngIf="selected.length === 1" class="mat-body-1">{{ selected.length }} élément sélectionné</div>-->
