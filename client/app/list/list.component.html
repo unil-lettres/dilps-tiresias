@@ -192,8 +192,8 @@
             mat-icon-button
             [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
         >
-            <mat-icon *ngIf="!showLabels" naturalIcon="subtitles"></mat-icon>
-            <mat-icon *ngIf="showLabels" naturalIcon="subtitles_off"></mat-icon>
+            <mat-icon *ngIf="!showLabels" naturalIcon="font_download"></mat-icon>
+            <mat-icon *ngIf="showLabels" naturalIcon="font_download_off"></mat-icon>
         </button>
 
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
