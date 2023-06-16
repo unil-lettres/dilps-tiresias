@@ -72,6 +72,8 @@ jobs:
 
             - name: Build app
               id: app-build
+              env:
+                  GENERATE_MAP: true
               run: ./bin/build.sh
 
             - name: Load test data
@@ -103,3 +105,11 @@ jobs:
               run: |
                   composer global require scrutinizer/ocular
                   ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage-clover.xml
+
+            - name: Upload sources map artifact
+              id: upload-artifact
+              uses: actions/upload-artifact@v3
+              if: ${{ matrix.php-versions == '8.1' }}
+              with:
+                  name: js-sources-map
+                  path: ${{ github.workspace }}/htdocs

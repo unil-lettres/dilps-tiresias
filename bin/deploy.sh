@@ -2,6 +2,32 @@
 
 # To update & rebuild Dilps, launch this script from the project root directory
 
+# To upload sources map files to Bugsnag, you must set the following environment variables:
+# - BUGSNAG_API_KEY
+# - HOSTS: Comma separated list of hosts for the minifiedUrl field of Bugsnag API.
+# - REPO_OWNER
+# - REPO_NAME
+
+
+BUGSNAG_API_URL="https://upload.bugsnag.com/"
+
+upload_file() {
+    local file="$1"
+
+    # Split hosts string into an array of hosts.
+    IFS=',' read -ra array_hosts <<< "$HOSTS"
+
+    for host in "${array_hosts[@]}"; do
+        echo "Uploading source map for $file.js to $host..."
+        curl --http1.1 "$BUGSNAG_API_URL" \
+            -F apiKey="$BUGSNAG_API_KEY" \
+            -F minifiedUrl="https://$host/$file.*.js" \
+            -F sourceMap="@$PWD/js-sources-map/$file.js.map" \
+            -F minifiedFile="@$PWD/js-sources-map/$file.js" \
+            -F overwrite=true
+    done
+}
+
 # Make a dump of the database
 if [ ${DEPLOY_ENV:-prod} = "prod" ]; then
     echo "********************* Dumping database..."
@@ -15,6 +41,28 @@ git pull origin ${GIT_BRANCH:-master}
 
 # Rebuild project
 sh $PWD/bin/build.sh
+
+# Export map files to Bugsnag
+echo "********************* Export map files to Bugsnag..."
+if [[ -n "$BUGSNAG_API_KEY" && -n "$REPO_OWNER" && -n "$REPO_NAME" ]]; then
+    echo "********************* Download latest available sources map artifact..."
+
+    # Clean previous downloaded artifact
+    rm $PWD/js-sources-map.zip
+    rm -r $PWD/js-sources-map
+
+    URL=https://nightly.link/$REPO_OWNER/$REPO_NAME/workflows/ci/${GIT_BRANCH:-master}/js-sources-map.zip
+    echo "********************* Download url : $URL..."
+    curl -L $URL -o $PWD/js-sources-map.zip
+    unzip $PWD/js-sources-map.zip -d $PWD/js-sources-map/
+
+    files=(main polyfills runtime node_modules_quill_dist_quill_js)
+    for file in "${files[@]}"; do
+        upload_file $file
+    done
+else
+    echo "********************* Bugsnag environment variables not set, skipping map export..."
+fi
 
 # Report new build
 if [ ${DEPLOY_ENV:-prod} = "prod" ]; then

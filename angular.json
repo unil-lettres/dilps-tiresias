@@ -33,6 +33,7 @@
                     },
                     "configurations": {
                         "production": {
+                            "namedChunks": true,
                             "budgets": [
                                 {
                                     "type": "anyComponentStyle",
@@ -48,6 +49,7 @@
                             ]
                         },
                         "staging": {
+                            "namedChunks": true,
                             "budgets": [
                                 {
                                     "type": "anyComponentStyle",
@@ -69,6 +71,15 @@
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": true
+                        },
+                        "map": {
+                            "namedChunks": true,
+                            "sourceMap": {
+                                "scripts": true,
+                                "styles": false,
+                                "hidden": false,
+                                "vendor": false
+                            }
                         }
                     },
                     "defaultConfiguration": "production"
