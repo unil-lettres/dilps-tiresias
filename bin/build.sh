@@ -51,7 +51,14 @@ echo "********************* Updating database..."
 if [ ! -n "$DOCKER_RUNNING" ]; then
   echo "********************* Building Angular application..."
   # Default environment is "prod" but can be overrided with "DEPLOY_ENV" envar
-  yarn run ${DEPLOY_ENV:-prod}
+  RUN_CONFIG=${DEPLOY_ENV:-prod}
+
+  # Generate sources map by setting GENERATE_MAP env.
+  if [ -n "$GENERATE_MAP" ]; then
+    RUN_CONFIG="${RUN_CONFIG}-map" 
+  fi
+
+  yarn run ${RUN_CONFIG}
 fi
 
 echo "***************************************************************"
