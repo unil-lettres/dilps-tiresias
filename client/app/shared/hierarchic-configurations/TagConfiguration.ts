@@ -1,6 +1,6 @@
 import {NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {TagService} from '../../tags/services/tag.service';
-import {Tags_tags_items} from '../generated-types';
+import {Tags} from '../generated-types';
 
 export const tagHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
@@ -17,6 +17,6 @@ export const onlyLeafTagHierarchicConfig: NaturalHierarchicConfiguration[] = [
         parentsRelationNames: ['parent'],
         childrenRelationNames: ['parent'],
         selectableAtKey: 'tag',
-        isSelectableCallback: (item: Tags_tags_items) => !item.hasChildren,
+        isSelectableCallback: (item: Tags['tags']['items'][0]) => !item.hasChildren,
     },
 ];

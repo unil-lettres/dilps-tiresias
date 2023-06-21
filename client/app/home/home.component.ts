@@ -13,7 +13,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {CardInput, Site, UserRole, Viewer_viewer} from '../shared/generated-types';
+import {CardInput, Site, UserRole, Viewer} from '../shared/generated-types';
 import {NetworkActivityService} from '../shared/services/network-activity.service';
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
@@ -34,7 +34,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     public Site = Site;
 
     public errors: (Error & {debugMessage?: string; category?: string})[] = [];
-    public user: Viewer_viewer | null = null;
+    public user: Viewer['viewer'] | null = null;
     public nav = 1;
     public progress: number | null = null;
     private uploaded = 0;

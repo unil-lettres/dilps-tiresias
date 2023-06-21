@@ -7,7 +7,7 @@ import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
-import {Cards_cards, Cards_cards_items, Cards_cards_items_institution, Site} from '../shared/generated-types';
+import {Cards, Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-view-list',
@@ -18,7 +18,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource!: NaturalDataSource<Cards_cards>;
+    @Input() public dataSource!: NaturalDataSource<Cards['cards']>;
 
     /**
      * Emits when data is required
@@ -28,12 +28,12 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when some cards are selected
      */
-    @Output() public readonly selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<
-        Cards_cards_items[]
+    @Output() public readonly selectionChange: EventEmitter<Cards['cards']['items'][0][]> = new EventEmitter<
+        Cards['cards']['items'][0][]
     >();
-    @Input() public selected: Cards_cards_items[] = [];
-    public selectionModel = new SelectionModel<Cards_cards_items>(true);
-    public cards: Cards_cards_items[] = [];
+    @Input() public selected: Cards['cards']['items'][0][] = [];
+    public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
+    public cards: Cards['cards']['items'][0][] = [];
 
     /**
      * Reference to scrollable element
@@ -67,7 +67,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.pagination.emit(event);
     }
 
-    public selectAll(): Promise<Cards_cards_items[]> {
+    public selectAll(): Promise<Cards['cards']['items'][0][]> {
         if (this.dataSource.data) {
             this.selectionModel.select(...this.dataSource.data.items);
         }
@@ -79,11 +79,11 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.selectionModel.clear();
     }
 
-    public getInstitutionAddress(institution: Cards_cards_items_institution): string {
+    public getInstitutionAddress(institution: NonNullable<Cards['cards']['items'][0]['institution']>): string {
         return [institution.street, institution.locality, institution.country?.name].filter(v => !!v).join(', ');
     }
 
-    public getCardAddress(card: Cards_cards_items): string {
+    public getCardAddress(card: Cards['cards']['items'][0]): string {
         return [card.street, card.postcode, card.locality, card.country?.name].filter(v => !!v).join(', ');
     }
 }

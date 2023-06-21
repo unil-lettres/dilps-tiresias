@@ -6,14 +6,7 @@ import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {
-    UpdateUser_updateUser,
-    UpdateUser_updateUser_institution,
-    User_user,
-    User_user_institution,
-    UserRole,
-    UserType,
-} from '../../shared/generated-types';
+import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService} from '@ecodev/natural';
@@ -42,7 +35,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     public passwordCtrl: UntypedFormControl;
     public passwordConfirmationCtrl: UntypedFormControl;
 
-    public institution: UpdateUser_updateUser_institution | User_user_institution | null = null;
+    public institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
 
     public constructor(
         public readonly institutionService: InstitutionService,
@@ -51,7 +44,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
         public readonly collectionService: CollectionService,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: User_user},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: User['user']},
         naturalEnumService: NaturalEnumService,
     ) {
         super(service, alertService, dialogRef, userService, data);
@@ -83,7 +76,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         });
     }
 
-    protected override postUpdate(model: UpdateUser_updateUser): void {
+    protected override postUpdate(model: UpdateUser['updateUser']): void {
         this.institution = model.institution;
     }
 

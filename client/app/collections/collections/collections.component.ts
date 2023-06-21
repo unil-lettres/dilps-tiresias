@@ -4,12 +4,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
 import {
-    Collections_collections_items,
+    Collections,
     CollectionsVariables,
     LogicalOperator,
     SearchOperatorString,
     UserRole,
-    Viewer_viewer,
+    Viewer,
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
@@ -21,12 +21,12 @@ import {takeUntil} from 'rxjs/operators';
     styleUrls: ['./collections.component.scss'],
 })
 export class CollectionsComponent extends NaturalAbstractController implements OnInit {
-    public rootCollections: Collections_collections_items[] = [];
+    public rootCollections: Collections['collections']['items'][0][] = [];
 
     /**
      * Children by parent ID
      */
-    public readonly children = new Map<string, Collections_collections_items[]>();
+    public readonly children = new Map<string, Collections['collections']['items'][0][]>();
 
     /**
      * Show "unclassified" category on the top of the page
@@ -42,7 +42,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
      * Can create permissions
      */
     public canCreate = false;
-    public user: Viewer_viewer | null = null;
+    public user: Viewer['viewer'] | null = null;
     public hasMore = false;
     private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
     private pageSize = 50;
@@ -102,7 +102,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             });
     }
 
-    public toggle(collection: Collections_collections_items): void {
+    public toggle(collection: Collections['collections']['items'][0]): void {
         if (this.children.has(collection.id)) {
             this.children.delete(collection.id);
         } else {
@@ -110,7 +110,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         }
     }
 
-    private getChildren(collection: Collections_collections_items): void {
+    private getChildren(collection: Collections['collections']['items'][0]): void {
         const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
 
@@ -131,7 +131,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    public edit(event: MouseEvent, collection: Collections_collections_items): void {
+    public edit(event: MouseEvent, collection: Collections['collections']['items'][0]): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -152,7 +152,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user: Viewer_viewer | null): boolean {
+    private showCreateButton(allowedRoles: boolean | UserRole[], user: Viewer['viewer'] | null): boolean {
         if (!allowedRoles || !user) {
             return false;
         }

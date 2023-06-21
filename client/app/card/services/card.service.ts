@@ -7,33 +7,27 @@ import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {SITE} from '../../app.config';
 import {
     Card,
-    Card_card,
     CardInput,
     CardPartialInput,
     Cards,
-    Cards_cards_items,
     CardsVariables,
     CardVariables,
     CardVisibility,
     CollectionCopyrights,
     CollectionCopyrightsVariables,
-    Collections_collections_items,
+    Collections,
     CreateCard,
-    CreateCard_createCard,
     CreateCards,
-    CreateCards_createCards,
     CreateCardsVariables,
     CreateCardVariables,
-    CreateCollection_createCollection,
+    CreateCollection,
     DeleteCards,
     Precision,
     Site,
     UpdateCard,
     UpdateCardVariables,
     ValidateData,
-    ValidateData_validateData,
     ValidateImage,
-    ValidateImage_validateImage,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -115,11 +109,14 @@ export class CardService extends AbstractContextualizedService<
     /**
      * Merge image src on src attribute of given gard
      */
-    public static formatImage(card: Cards_cards_items, height: number): Cards_cards_items & {src: string | null};
     public static formatImage(
-        card: Cards_cards_items | null,
+        card: Cards['cards']['items'][0],
         height: number,
-    ): (Cards_cards_items & {src: string | null}) | null {
+    ): Cards['cards']['items'][0] & {src: string | null};
+    public static formatImage(
+        card: Cards['cards']['items'][0] | null,
+        height: number,
+    ): (Cards['cards']['items'][0] & {src: string | null}) | null {
         if (!card) {
             return null;
         }
@@ -184,7 +181,7 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public validateData(card: Card_card): Observable<ValidateData_validateData> {
+    public validateData(card: Card['card']): Observable<ValidateData['validateData']> {
         return this.apollo
             .mutate<ValidateData>({
                 mutation: validateData,
@@ -202,7 +199,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public validateImage(card: Card_card): Observable<ValidateImage_validateImage> {
+    public validateImage(card: Card['card']): Observable<ValidateImage['validateImage']> {
         return this.apollo
             .mutate<ValidateImage>({
                 mutation: validateImage,
@@ -255,8 +252,8 @@ export class CardService extends AbstractContextualizedService<
     public createWithExcel(
         excel: File,
         images: File[],
-        collection: Collections_collections_items | CreateCollection_createCollection,
-    ): Observable<CreateCards_createCards[]> {
+        collection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
+    ): Observable<CreateCards['createCards']> {
         return this.apollo
             .mutate<CreateCards, CreateCardsVariables>({
                 mutation: createCards,
@@ -269,7 +266,7 @@ export class CardService extends AbstractContextualizedService<
             .pipe(map(result => result.data!.createCards));
     }
 
-    public createWithoutRefetch(object: CardInput): Observable<CreateCard_createCard> {
+    public createWithoutRefetch(object: CardInput): Observable<CreateCard['createCard']> {
         this.throwIfObservable(object);
 
         const variables = merge(
@@ -292,7 +289,7 @@ export class CardService extends AbstractContextualizedService<
             );
     }
 
-    public getCollectionCopyrights(card: Card_card): Observable<string> {
+    public getCollectionCopyrights(card: Card['card']): Observable<string> {
         return this.apollo
             .query<CollectionCopyrights, CollectionCopyrightsVariables>({
                 query: collectionCopyrightsQuery,

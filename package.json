@@ -14,13 +14,10 @@
         "test": "yarn codegen && ng test",
         "lint": "ng lint --max-warnings 0",
         "e2e": "playwright test",
-        "codegen": "./bin/dump-schema && apollo client:codegen --suppressDeprecationWarning -c apollo.config.js --passthroughCustomScalars --customScalarsPrefix=App --outputFlat --target typescript client/app/shared/generated-types.ts",
+        "codegen": "./bin/dump-schema && graphql-codegen --config codegen.ts",
         "set-env": "ts-node scripts/setenv.ts",
         "clean-env": "prettier --write client/environments/*",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
-    },
-    "resolutions": {
-        "graphql": "^15"
     },
     "dependencies": {
         "@angular/animations": "^15.1.2",
@@ -42,9 +39,11 @@
         "@bugsnag/plugin-angular": "^7.19.0",
         "@ecodev/angular-natural-gallery": "^16.1.4",
         "@ecodev/natural": "^50.4.1",
+        "@graphql-codegen/cli": "^4.0.1",
+        "@graphql-codegen/typescript-apollo-angular": "^3.5.6",
+        "@graphql-codegen/typescript-operations": "^4.0.1",
         "@graphql-tools/mock": "^8.7.16",
         "@types/swiper": "^6.0.0",
-        "apollo": "^2.34.0",
         "apollo-angular": "^4.2.0",
         "apollo-upload-client": "^17.0.0",
         "bugsnag-build-reporter": "^2.0.0",

@@ -12,7 +12,7 @@ import {
     QueryVariables,
     WithId,
 } from '@ecodev/natural';
-import {Viewer_viewer} from '../generated-types';
+import {Viewer} from '../generated-types';
 
 type Data<TService, Extra> = {item: WithId<ExtractTone<TService>> & Extra};
 
@@ -33,7 +33,7 @@ export class AbstractDetailDirective<
     Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit
 {
-    public user: Viewer_viewer | null = null;
+    public user: Viewer['viewer'] | null = null;
 
     public data: Data<TService, Extra> = {
         item: {},

@@ -5,7 +5,7 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {getBase64Url} from '../../shared/services/utility';
 import {UserService} from '../../users/services/user.service';
 import {NewsService} from '../services/news.service';
-import {News_news} from '../../shared/generated-types';
+import {News} from '../../shared/generated-types';
 
 @Component({
     selector: 'app-news',
@@ -20,7 +20,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<NewsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: News_news},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: News['news']},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

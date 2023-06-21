@@ -7,21 +7,18 @@ import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
     AcceptChange,
-    Card_card,
+    Card,
     Change,
     Changes,
     ChangesVariables,
     ChangeVariables,
-    CreateCard_createCard,
+    CreateCard,
     JoinType,
     RejectChange,
     Site,
     SuggestCreation,
-    SuggestCreation_suggestCreation,
     SuggestDeletion,
-    SuggestDeletion_suggestDeletion,
     SuggestUpdate,
-    SuggestUpdate_suggestUpdate,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -87,7 +84,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestDeletion(card: Card_card): Observable<SuggestDeletion_suggestDeletion> {
+    public suggestDeletion(card: Card['card']): Observable<SuggestDeletion['suggestDeletion']> {
         return this.apollo
             .mutate<SuggestDeletion>({
                 mutation: suggestDeletion,
@@ -104,7 +101,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestCreation(card: CreateCard_createCard): Observable<SuggestCreation_suggestCreation> {
+    public suggestCreation(card: CreateCard['createCard']): Observable<SuggestCreation['suggestCreation']> {
         return this.apollo
             .mutate<SuggestCreation>({
                 mutation: suggestCreation,
@@ -121,7 +118,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestUpdate(card: CreateCard_createCard): Observable<SuggestUpdate_suggestUpdate> {
+    public suggestUpdate(card: CreateCard['createCard']): Observable<SuggestUpdate['suggestUpdate']> {
         return this.apollo
             .mutate<SuggestUpdate>({
                 mutation: suggestUpdate,

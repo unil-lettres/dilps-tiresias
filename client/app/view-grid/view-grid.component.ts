@@ -7,14 +7,14 @@ import {merge} from 'lodash-es';
 import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
-import {Cards_cards, Cards_cards_items} from '../shared/generated-types';
+import {Cards} from '../shared/generated-types';
 
 export interface ContentChange {
     visible?: number;
     total?: number;
 }
 
-type GalleryItem = Cards_cards_items & ModelAttributes;
+type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
@@ -35,11 +35,11 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource!: NaturalDataSource<Cards_cards>;
+    @Input() public dataSource!: NaturalDataSource<Cards['cards']>;
     /**
      *
      */
-    @Input() public selected: Cards_cards_items[] = [];
+    @Input() public selected: Cards['cards']['items'][0][] = [];
 
     /**
      * Emits when data is required
@@ -54,8 +54,8 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * Emits when some cards are selected
      */
-    @Output() public readonly selectionChange: EventEmitter<Cards_cards_items[]> = new EventEmitter<
-        Cards_cards_items[]
+    @Output() public readonly selectionChange: EventEmitter<Cards['cards']['items'][0][]> = new EventEmitter<
+        Cards['cards']['items'][0][]
     >();
 
     /**
@@ -200,7 +200,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.router.navigate(['card', event.model.id]);
     }
 
-    public selectAll(): Promise<Cards_cards_items[]> {
+    public selectAll(): Promise<Cards['cards']['items'][0][]> {
         return this.gallery!.gallery.then(gallery => gallery.selectVisibleItems());
     }
 
@@ -208,7 +208,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         this.gallery!.gallery.then(gallery => gallery.unselectAllItems());
     }
 
-    private formatImages(cards: Cards_cards_items[]): GalleryItem[] {
+    private formatImages(cards: Cards['cards']['items'][0][]): GalleryItem[] {
         const selected = this.selected.map(c => c.id);
 
         return cards.map(card => {

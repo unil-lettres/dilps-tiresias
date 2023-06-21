@@ -1,19 +1,19 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
-import {Card_card, Cards_cards_items, CreateExportInput, ExportFormat, Site} from '../../generated-types';
+import {Card, Cards, CreateExportInput, ExportFormat, Site} from '../../generated-types';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {Apollo} from 'apollo-angular';
-import {forkJoin, switchMap, EMPTY, map, defaultIfEmpty, finalize} from 'rxjs';
+import {defaultIfEmpty, EMPTY, finalize, forkJoin, map, switchMap} from 'rxjs';
 
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
     collections: FakeCollection[];
-    cards: (Cards_cards_items | Card_card)[];
+    cards: (Cards['cards']['items'][0] | Card['card'])[];
 };
 
 @Component({
@@ -40,7 +40,7 @@ export class DownloadComponent {
     public loading = false;
     public validated = false;
     public denyLegendsDownload = false;
-    public readonly input: CreateExportInput = this.exportService.getDefaultForServer();
+    public readonly input: Required<CreateExportInput> = this.exportService.getDefaultForServer();
     public validationMessage: string | null = null;
     public readonly pptxLabel = 'PowerPoint';
 

@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
-import {Card, Card_card_artists} from '../shared/generated-types';
+import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
 import {NaturalAbstractController} from '@ecodev/natural';
 
@@ -60,7 +60,7 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         this.getCard(this.cards[index + 1]);
     }
 
-    public getArtistsNames(artists: Card_card_artists[]): string {
+    public getArtistsNames(artists: Card['card']['artists']): string {
         return artists.map(a => a.name).join(', ');
     }
 

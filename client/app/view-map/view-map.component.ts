@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, Input, NgZone, Output, ViewChild} from '@angular/core';
 import {NaturalAbstractController} from '@ecodev/natural';
-import {Cards_cards_items, Precision, Site} from '../shared/generated-types';
+import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
@@ -28,7 +28,7 @@ export class ViewMapComponent extends NaturalAbstractController {
     public selectedMarker: Marker | null = null;
 
     @Input()
-    public set cards(cards: Cards_cards_items[]) {
+    public set cards(cards: Cards['cards']['items'][0][]) {
         this.mapApiService.loaded.subscribe(() => {
             this.markers = this.convertIntoMarkers(cards);
             this.updateBounds(this.markers);
@@ -67,7 +67,7 @@ export class ViewMapComponent extends NaturalAbstractController {
         };
     }
 
-    public convertIntoMarkers(cards: Cards_cards_items[]): Marker[] {
+    public convertIntoMarkers(cards: Cards['cards']['items'][0][]): Marker[] {
         return cards
             .filter(c => c.latitude && c.longitude)
             .map(c => {

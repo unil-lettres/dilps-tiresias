@@ -2,15 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
-import {
-    Cards_cards_items,
-    Cards_cards_items_collections,
-    CollectionFilter,
-    Collections_collections_items,
-    CreateCollection_createCollection,
-    LogicalOperator,
-    UserRole,
-} from '../../generated-types';
+import {Cards, CollectionFilter, Collections, CreateCollection, LogicalOperator, UserRole} from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 
@@ -22,7 +14,7 @@ import {FakeCollection} from '../../../collections/services/fake-collection.reso
  */
 export type CollectionSelectorData =
     | {
-          images: Cards_cards_items[];
+          images: Cards['cards']['items'][0][];
           collection?: never;
       }
     | {
@@ -34,7 +26,7 @@ export type CollectionSelectorData =
           collection?: never;
       };
 
-export type CollectionSelectorResult = Collections_collections_items | CreateCollection_createCollection;
+export type CollectionSelectorResult = Collections['collections']['items'][0] | CreateCollection['createCollection'];
 
 @Component({
     selector: 'app-collection-selector',
@@ -43,8 +35,8 @@ export type CollectionSelectorResult = Collections_collections_items | CreateCol
 })
 export class CollectionSelectorComponent implements OnInit {
     public listFilter!: CollectionFilter;
-    public collection: Collections_collections_items | null = null;
-    public image: Cards_cards_items | undefined;
+    public collection: Collections['collections']['items'][0] | null = null;
+    public image: Cards['cards']['items'][0] | undefined;
     public newCollection: any = {
         name: '',
         description: '',
@@ -83,7 +75,7 @@ export class CollectionSelectorComponent implements OnInit {
         this.linkInternal(this.collection!);
     }
 
-    public unlink(image: Cards_cards_items, collection: Cards_cards_items_collections): void {
+    public unlink(image: Cards['cards']['items'][0], collection: Cards['cards']['items'][0]['collections'][0]): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
             image.collections.splice(index, 1);
@@ -97,7 +89,9 @@ export class CollectionSelectorComponent implements OnInit {
         });
     }
 
-    private linkInternal(collection: Collections_collections_items | CreateCollection_createCollection): void {
+    private linkInternal(
+        collection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
+    ): void {
         let observable;
         if (this.data.images) {
             observable = this.collectionService.link(collection, this.data.images);

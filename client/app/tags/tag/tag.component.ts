@@ -5,7 +5,7 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {tagHierarchicConfig} from '../../shared/hierarchic-configurations/TagConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {TagService} from '../services/tag.service';
-import {Tag_tag, TagFilter} from '../../shared/generated-types';
+import {Tag, TagFilter} from '../../shared/generated-types';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
@@ -22,7 +22,7 @@ export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusD
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<TagComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tag_tag & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tag['tag'] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

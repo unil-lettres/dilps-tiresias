@@ -1,6 +1,6 @@
 import {NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {MaterialService} from '../../materials/services/material.service';
-import {Materials_materials_items} from '../generated-types';
+import {Materials} from '../generated-types';
 
 export const materialHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
@@ -17,6 +17,6 @@ export const onlyLeafMaterialHierarchicConfig: NaturalHierarchicConfiguration[] 
         parentsRelationNames: ['parent'],
         childrenRelationNames: ['parent'],
         selectableAtKey: 'material',
-        isSelectableCallback: (item: Materials_materials_items) => !item.hasChildren,
+        isSelectableCallback: (item: Materials['materials']['items'][0]) => !item.hasChildren,
     },
 ];

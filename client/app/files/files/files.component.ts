@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Card_card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
+import {Card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
 import {
     FileSelection,
     NaturalAbstractController,
@@ -34,7 +34,7 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
     }
 
     public columns: string[] = [];
-    private _card!: Card_card;
+    private _card!: Card['card'];
 
     private _disabled = false;
 
@@ -43,12 +43,12 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
      */
     public readonly accept = '.pdf, .doc, .docx, .xls, .xlsx, .odt, .ods';
 
-    public get card(): Card_card {
+    public get card(): Card['card'] {
         return this._card;
     }
 
     @Input()
-    public set card(card: Card_card) {
+    public set card(card: Card['card']) {
         this._card = card;
 
         if (this._card && this._card.id) {

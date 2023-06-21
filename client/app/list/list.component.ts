@@ -27,10 +27,9 @@ import {
     CardFilter,
     CardInput,
     Cards,
-    Cards_cards_items,
     CardSortingField,
     CardVisibility,
-    CreateCard_createCard,
+    CreateCard,
     Site,
     SortingOrder,
     UserRole,
@@ -47,7 +46,10 @@ import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component
 import {PageEvent} from '@angular/material/paginator';
 import {takeUntil} from 'rxjs/operators';
 
-function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput>): WithId<Partial<CardInput>> {
+function applyChanges(
+    destination: Cards['cards']['items'][0],
+    changes: Partial<CardInput>,
+): WithId<Partial<CardInput>> {
     const result = {
         id: destination.id,
         ...clone(changes),
@@ -67,7 +69,7 @@ function applyChanges(destination: Cards_cards_items, changes: Partial<CardInput
 }
 
 export interface ViewInterface {
-    selectAll: () => Promise<Cards_cards_items[]>;
+    selectAll: () => Promise<Cards['cards']['items'][0][]>;
     unselectAll: () => void;
 }
 
@@ -111,7 +113,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Checked content for selection
      */
-    public selected: Cards_cards_items[] = [];
+    public selected: Cards['cards']['items'][0][] = [];
 
     /**
      * Show logo on top left corner
@@ -313,7 +315,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
 
-    public select(cards: Cards_cards_items[]): void {
+    public select(cards: Cards['cards']['items'][0][]): void {
         this.selected = cards;
     }
 
@@ -322,7 +324,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.pagination(this.defaultPagination as Required<PaginationInput>); // reset pagination, will clean url
     }
 
-    public linkSelectionToCollection(selection: Cards_cards_items[]): void {
+    public linkSelectionToCollection(selection: Cards['cards']['items'][0][]): void {
         this.linkToCollection({images: selection});
     }
 
@@ -330,7 +332,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.linkToCollection({collection});
     }
 
-    public downloadSelection(selection: Cards_cards_items[]): void {
+    public downloadSelection(selection: Cards['cards']['items'][0][]): void {
         this.download({cards: selection});
     }
 
@@ -338,7 +340,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.download({collections: [collection]});
     }
 
-    public unlinkFromCollection(selection: Cards_cards_items[]): void {
+    public unlinkFromCollection(selection: Cards['cards']['items'][0][]): void {
         if (!this.collection) {
             return;
         }
@@ -349,7 +351,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         });
     }
 
-    public delete(selection: Cards_cards_items[]): void {
+    public delete(selection: Cards['cards']['items'][0][]): void {
         this.alertService
             .confirm(
                 'Suppression',
@@ -366,7 +368,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
             });
     }
 
-    public goToQuizz(selected: Cards_cards_items[] | null = null): void {
+    public goToQuizz(selected: Cards['cards']['items'][0][] | null = null): void {
         if (selected) {
             const selectedIds = shuffleArray(selected.map(e => e.id)).join(',');
             this.router.navigateByUrl('/quizz;cards=' + selectedIds);
@@ -394,7 +396,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         }
     }
 
-    public edit(selected: Cards_cards_items[]): void {
+    public edit(selected: Cards['cards']['items'][0][]): void {
         const forbidden = selected.filter(card => !card.permissions.update);
         const changeable = forbidden.filter(card => UserService.canSuggestUpdate(this.user, card));
         const unchangeable = forbidden.filter(card => !UserService.canSuggestUpdate(this.user, card));
@@ -432,7 +434,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                     observables.push(this.cardService.updateNow(changes, false));
                 }
 
-                const suggestionsObservables: Observable<CreateCard_createCard>[] = [];
+                const suggestionsObservables: Observable<CreateCard['createCard']>[] = [];
                 if (createSuggestions) {
                     changeable.forEach(changeableCard => {
                         const destination = applyChanges(changeableCard, changeAttributes);

@@ -5,7 +5,7 @@ import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
-    Cards_cards_items,
+    Cards,
     CardVisibility,
     CreateUser,
     CreateUserVariables,
@@ -17,7 +17,6 @@ import {
     UpdateUser,
     UpdateUserVariables,
     User,
-    User_user,
     UserInput,
     UserRole,
     UserRolesAvailables,
@@ -27,7 +26,6 @@ import {
     UserType,
     UserVariables,
     Viewer,
-    Viewer_viewer,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -80,7 +78,7 @@ export class UserService
         this.keepViewerSyncedAcrossBrowserTabs();
     }
 
-    public static canSuggestUpdate(user: Viewer_viewer | null, card: Cards_cards_items | null): boolean {
+    public static canSuggestUpdate(user: Viewer['viewer'] | null, card: Cards['cards']['items'][0] | null): boolean {
         return (
             !!user &&
             !!card &&
@@ -116,7 +114,7 @@ export class UserService
             .pipe(map(result => result.data.viewer));
     }
 
-    public getUserRolesAvailable(user: User_user | null): Observable<UserRole[]> {
+    public getUserRolesAvailable(user: User['user'] | null): Observable<UserRole[]> {
         return this.apollo
             .query<UserRolesAvailables, UserRolesAvailablesVariables>({
                 query: userRolesAvailableQuery,
@@ -215,7 +213,7 @@ export class UserService
         return subject;
     }
 
-    private postLogin(viewer: Viewer_viewer): void {
+    private postLogin(viewer: NonNullable<Viewer['viewer']>): void {
         // Inject the freshly logged in user as the current user into Apollo data store
         const data = {viewer: viewer};
         this.apollo.client.writeQuery<Viewer, never>({

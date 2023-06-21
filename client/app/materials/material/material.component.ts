@@ -6,7 +6,7 @@ import {materialHierarchicConfig} from '../../shared/hierarchic-configurations/M
 import {UserService} from '../../users/services/user.service';
 import {MaterialService} from '../services/material.service';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
-import {Material_material, MaterialFilter} from '../../shared/generated-types';
+import {Material, MaterialFilter} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
@@ -22,7 +22,7 @@ export class MaterialComponent extends AbstractDetailDirective<MaterialService, 
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<MaterialComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Material_material & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Material['material'] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

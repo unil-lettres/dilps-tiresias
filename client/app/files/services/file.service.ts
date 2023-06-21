@@ -8,7 +8,7 @@ import {
     DeleteFile,
     DeleteFileVariables,
     FileInput,
-    Files_files,
+    Files,
     FilesVariables,
 } from '../../shared/generated-types';
 
@@ -18,7 +18,7 @@ import {
 export class FileService extends NaturalAbstractModelService<
     any,
     any,
-    Files_files,
+    Files['files'],
     FilesVariables,
     CreateFile['createFile'],
     CreateFileVariables,

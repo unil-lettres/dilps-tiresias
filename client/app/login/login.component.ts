@@ -7,7 +7,7 @@ import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
-import {Site, Viewer_viewer} from '../shared/generated-types';
+import {Site, Viewer} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 
 @Component({
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
     }
 
-    private showTerms(user: Viewer_viewer): void {
+    private showTerms(user: NonNullable<Viewer['viewer']>): void {
         this.dialog
             .open(TermsAgreementComponent, {maxWidth: 700})
             .afterClosed()

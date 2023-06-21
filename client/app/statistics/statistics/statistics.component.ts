@@ -9,7 +9,7 @@ import {
     StatisticFilter,
     StatisticSortingField,
     StatisticsVariables,
-    Users_users_items,
+    Users,
 } from '../../shared/generated-types';
 import {StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
@@ -106,7 +106,7 @@ export class StatisticsComponent extends NaturalAbstractController {
     public cards!: StatisticInput;
     public users!: StatisticInput;
     private raw!: Literal;
-    public user: Users_users_items | null = null;
+    public user: Users['users']['items'][0] | null = null;
 
     // public usersFilter: UserFilter;
 
@@ -357,7 +357,7 @@ export class StatisticsComponent extends NaturalAbstractController {
             });
     }
 
-    public displayFn(item: Users_users_items | string | null): string {
+    public displayFn(item: Users['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 }

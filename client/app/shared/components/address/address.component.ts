@@ -4,15 +4,7 @@ import {NaturalQueryVariablesManager} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
-import {
-    Card_card,
-    Card_card_institution,
-    CardInput,
-    Countries_countries_items,
-    CountriesVariables,
-    Institution_institution,
-    Site,
-} from '../../generated-types';
+import {Card, CardInput, Countries, CountriesVariables, Institution, Site} from '../../generated-types';
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
 import {MapApiService} from '../../../view-map/map-api.service';
@@ -54,7 +46,8 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * Object reference is directly modified
      */
-    @Input() public model: Card_card | Institution_institution | Card_card_institution | CardInput | null = null;
+    @Input() public model: Card['card'] | Institution['institution'] | Card['card']['institution'] | CardInput | null =
+        null;
 
     public formCtrl = new UntypedFormControl();
 
@@ -234,7 +227,7 @@ export class AddressComponent implements OnInit, OnChanges {
             },
         ],
     };
-    public countries: Countries_countries_items[] = [];
+    public countries: Countries['countries']['items'][0][] = [];
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public constructor(

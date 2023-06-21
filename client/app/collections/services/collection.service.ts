@@ -4,16 +4,14 @@ import {NaturalDebounceService, NaturalLinkMutationService} from '@ecodev/natura
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../../app.config';
 import {
-    Cards_cards_items,
+    Cards,
     Collection,
     CollectionInput,
     Collections,
-    Collections_collections_items,
     CollectionsVariables,
     CollectionVariables,
     CollectionVisibility,
     CreateCollection,
-    CreateCollection_createCollection,
     CreateCollectionVariables,
     DeleteCollections,
     LinkCollectionToCollection,
@@ -87,8 +85,8 @@ export class CollectionService extends AbstractContextualizedService<
     }
 
     public link(
-        collection: CreateCollection_createCollection | Collections_collections_items,
-        cards: Cards_cards_items[],
+        collection: CreateCollection['createCollection'] | Collections['collections']['items'][0],
+        cards: Cards['cards']['items'][0][],
     ): Observable<unknown> {
         const observables: Observable<unknown>[] = [];
         cards.forEach(image => {
@@ -98,7 +96,7 @@ export class CollectionService extends AbstractContextualizedService<
         return forkJoin(observables);
     }
 
-    public unlink(collection: FakeCollection, images: Cards_cards_items[]): Observable<unknown> {
+    public unlink(collection: FakeCollection, images: Cards['cards']['items'][0][]): Observable<unknown> {
         const observables: Observable<unknown>[] = [];
         images.forEach(image => {
             observables.push(this.linkService.unlink(collection, image));
@@ -109,7 +107,7 @@ export class CollectionService extends AbstractContextualizedService<
 
     public linkCollectionToCollection(
         sourceCollection: FakeCollection,
-        targetCollection: Collections_collections_items | CreateCollection_createCollection,
+        targetCollection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
     ): Observable<unknown> {
         return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
             mutation: linkCollectionToCollection,

@@ -39,7 +39,7 @@ export class ExportService extends AbstractContextualizedService<
         super(apollo, naturalDebounceService, 'export', exportQuery, exportsQuery, createExport, null, null, site);
     }
 
-    public override getDefaultForServer(): CreateExportInput {
+    public override getDefaultForServer(): Required<CreateExportInput> {
         return {
             format: ExportFormat.zip,
             maxHeight: 0,

@@ -30,17 +30,13 @@ import {
 import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {
-    Card_card,
-    Card_card_artists,
-    Card_card_collections,
-    Card_card_institution,
+    Card,
     CardInput,
-    Cards_cards_items,
+    Cards,
     CardVisibility,
     CollectionVisibility,
     Site,
-    UpdateCard_updateCard_artists,
-    UpdateCard_updateCard_institution,
+    UpdateCard,
     UserRole,
     Viewer,
 } from '../shared/generated-types';
@@ -61,7 +57,7 @@ import {takeUntil} from 'rxjs/operators';
 
 export type CardInputWithId = CardInput & {id?: string};
 
-export function cardToCardInput(fetchedModel: Card_card): CardInputWithId {
+export function cardToCardInput(fetchedModel: Card['card']): CardInputWithId {
     return Object.assign({}, fetchedModel, {
         artists: fetchedModel.artists.map(a => a.name),
         institution: fetchedModel.institution?.name ?? null,
@@ -104,7 +100,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
      *
      * eg: it will be null if we are mass editing
      */
-    @Input() public fetchedModel: Card_card | null = null;
+    @Input() public fetchedModel: Card['card'] | null = null;
 
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
@@ -228,13 +224,13 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    public institution!: Card_card_institution | UpdateCard_updateCard_institution | null;
+    public institution!: Card['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    public artists: Card_card_artists[] | UpdateCard_updateCard_artists[] = [];
+    public artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
 
     /**
      * Template exposed variable
@@ -303,7 +299,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Sorted list collections by their hierarchicNames
      */
-    public sortedCollections: Card_card_collections[] = [];
+    public sortedCollections: Card['card']['collections'] = [];
 
     public formIsValid = true;
     public codeModel: NgModel | null = null;
@@ -553,7 +549,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     public complete(): void {
         this.dialog
-            .open<CardSelectorComponent, never, Cards_cards_items>(CardSelectorComponent, {
+            .open<CardSelectorComponent, never, Cards['cards']['items'][0]>(CardSelectorComponent, {
                 width: '400px',
                 position: {
                     top: '74px',
@@ -592,7 +588,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         });
     }
 
-    public download(card: Card_card | null): void {
+    public download(card: Card['card'] | null): void {
         this.assertFetchedCard(card);
 
         this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
@@ -639,7 +635,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         });
     }
 
-    public displayWith(item: Cards_cards_items | null): string {
+    public displayWith(item: Cards['cards']['items'][0] | null): string {
         if (!item) {
             return '';
         }
@@ -662,11 +658,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         }, 1);
     }
 
-    private isFetchedCard(card: Card_card | CardInput): card is Card_card {
+    private isFetchedCard(card: Card['card'] | CardInput): card is Card['card'] {
         return '__typename' in card;
     }
 
-    private assertFetchedCard(card: Card_card | null): asserts card is Card_card {
+    private assertFetchedCard(card: Card['card'] | null): asserts card is Card['card'] {
         if (!card) {
             throw new Error(
                 'This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?',

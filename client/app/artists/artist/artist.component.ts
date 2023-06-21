@@ -4,7 +4,7 @@ import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {ArtistService} from '../services/artist.service';
-import {Artist_artist} from '../../shared/generated-types';
+import {Artist} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
@@ -17,7 +17,7 @@ export class ArtistComponent extends AbstractDetailDirective<ArtistService, Thes
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Artist_artist & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Artist['artist'] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

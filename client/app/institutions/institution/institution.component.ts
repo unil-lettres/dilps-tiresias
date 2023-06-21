@@ -4,7 +4,7 @@ import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {InstitutionService} from '../services/institution.service';
-import {Institution_institution} from '../../shared/generated-types';
+import {Institution} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
@@ -17,7 +17,7 @@ export class InstitutionComponent extends AbstractDetailDirective<InstitutionSer
         alertSvc: AlertService,
         userSvc: UserService,
         dialogRef: MatDialogRef<InstitutionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Institution_institution & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Institution['institution'] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertSvc, dialogRef, userSvc, data);
     }

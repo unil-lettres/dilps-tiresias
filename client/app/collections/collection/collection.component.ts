@@ -5,14 +5,12 @@ import {InstitutionService} from '../../institutions/services/institution.servic
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {
-    Collection_collection,
-    Collection_collection_institution,
+    Collection,
     CollectionFilter,
     CollectionVisibility,
-    UpdateCollection_updateCollection,
-    UpdateCollection_updateCollection_institution,
+    UpdateCollection,
     UserRole,
-    Users_users_items,
+    Users,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../../users/services/user.service';
@@ -46,7 +44,10 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         },
     };
 
-    public institution: Collection_collection_institution | UpdateCollection_updateCollection_institution | null = null;
+    public institution:
+        | Collection['collection']['institution']
+        | UpdateCollection['updateCollection']['institution']
+        | null = null;
 
     public hierarchicConfig = collectionsHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
@@ -59,7 +60,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         userService: UserService,
         alertService: AlertService,
         dialogRef: MatDialogRef<CollectionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collection_collection},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collection['collection']},
     ) {
         super(collectionService, alertService, dialogRef, userService, data);
     }
@@ -93,7 +94,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    public displayFn(item: Users_users_items | string | null): string {
+    public displayFn(item: Users['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 
@@ -121,7 +122,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
     }
 
-    protected override postUpdate(model: UpdateCollection_updateCollection): void {
+    protected override postUpdate(model: UpdateCollection['updateCollection']): void {
         this.institution = model.institution;
     }
 }

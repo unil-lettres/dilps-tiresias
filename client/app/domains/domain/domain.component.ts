@@ -6,7 +6,7 @@ import {domainHierarchicConfig} from '../../shared/hierarchic-configurations/Dom
 import {UserService} from '../../users/services/user.service';
 import {DomainService} from '../services/domain.service';
 import {HierarchicFiltersConfiguration} from '@ecodev/natural';
-import {Domain_domain, DomainFilter} from '../../shared/generated-types';
+import {Domain, DomainFilter} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 
 @Component({
@@ -22,7 +22,7 @@ export class DomainComponent extends AbstractDetailDirective<DomainService, Thes
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<DomainComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Domain_domain & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Domain['domain'] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

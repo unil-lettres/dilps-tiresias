@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {assign, merge} from 'lodash-es';
 import {cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
-import {Card_card, CardInput, CardVisibility, Change_change, Viewer} from '../../shared/generated-types';
+import {Card, CardInput, CardVisibility, Change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
 
@@ -13,9 +13,9 @@ import {ChangeService} from '../services/change.service';
     styleUrls: ['./change.component.scss'],
 })
 export class ChangeComponent implements OnInit {
-    public change!: Change_change;
-    public original: Card_card | null = null;
-    public fetchedSuggestion: Card_card | null = null;
+    public change!: Change['change'];
+    public original: Card['card'] | null = null;
+    public fetchedSuggestion: Card['card'] | null = null;
     public suggestionInput: CardInput | null = null;
     public loaded = false;
     public user!: Viewer['viewer'];

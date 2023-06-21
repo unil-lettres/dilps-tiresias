@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
-import {Newses_newses_items, NewsesVariables} from '../../shared/generated-types';
+import {Newses, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
 import {SwiperOptions} from 'swiper/types';
 import SwiperCore, {Navigation} from 'swiper';
@@ -24,7 +24,7 @@ export class CarouselComponent implements OnInit {
         navigation: true,
     };
 
-    public newses: Newses_newses_items[] = [];
+    public newses: Newses['newses']['items'][0][] = [];
 
     public constructor(public readonly newsService: NewsService) {}
 

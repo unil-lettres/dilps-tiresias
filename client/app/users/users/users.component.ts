@@ -1,6 +1,6 @@
 import {Component, Injector} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
-import {Users_users_items, UserType} from '../../shared/generated-types';
+import {Users, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {UserComponent} from '../user/user.component';
 
@@ -16,7 +16,7 @@ export class UsersComponent extends AbstractList<UserService> {
         super(service, UserComponent, injector);
     }
 
-    public isLegacyUser(user: Users_users_items): boolean {
+    public isLegacyUser(user: Users['users']['items'][0]): boolean {
         return user.type === UserType.legacy;
     }
 }
