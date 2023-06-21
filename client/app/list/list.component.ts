@@ -55,7 +55,6 @@ function applyChanges(
         ...clone(changes),
     };
     defaults(result, destination);
-
     if (result.artists) {
         result.artists = result.artists.map((a: string | ThesaurusModel) => (typeof a === 'string' ? a : a.name));
     }
@@ -421,7 +420,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                  */
                 const changeAttributes = pickBy(model, value => {
                     return (
-                        isObject(value) ||
+                        (isObject(value) && !isArray(value) && !isString(value)) ||
                         isNumber(value) ||
                         (isString(value) && value !== '') ||
                         (isArray(value) && value.length > 0)
