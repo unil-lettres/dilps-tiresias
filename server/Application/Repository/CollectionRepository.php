@@ -7,6 +7,7 @@ namespace Application\Repository;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
+use Ecodev\Felix\Utility;
 
 /**
  * @extends AbstractHasParentRepository<Collection>
@@ -36,7 +37,7 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
         }
 
         $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
-        $visibility = $this->quoteArray($visibility);
+        $visibility = Utility::quoteArray($visibility);
 
         $isAccessible = <<<STRING
                         collection.visibility IN ($visibility)

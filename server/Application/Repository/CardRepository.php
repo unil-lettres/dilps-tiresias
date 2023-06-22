@@ -11,6 +11,7 @@ use Application\Model\User;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ecodev\Felix\Repository\LimitedAccessSubQuery;
+use Ecodev\Felix\Utility;
 
 /**
  * @extends AbstractRepository<Card>
@@ -56,7 +57,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->createQueryBuilder()
             ->select('card.id')
             ->from('card')
-            ->where('card.visibility IN (' . $this->quoteArray($visibility) . ')');
+            ->where('card.visibility IN (' . Utility::quoteArray($visibility) . ')');
 
         if ($user) {
             $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
