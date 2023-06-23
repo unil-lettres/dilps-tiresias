@@ -2,11 +2,10 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 import {Newses, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
-import {SwiperOptions} from 'swiper/types';
-import SwiperCore, {Navigation} from 'swiper';
+import {register} from 'swiper/element/bundle';
 
-// install Swiper modules
-SwiperCore.use([Navigation]);
+// register Swiper custom elements
+register();
 
 @Component({
     selector: 'app-carousel',
@@ -15,15 +14,6 @@ SwiperCore.use([Navigation]);
     encapsulation: ViewEncapsulation.None,
 })
 export class CarouselComponent implements OnInit {
-    public swiperConfig: SwiperOptions = {
-        direction: 'horizontal',
-        autoplay: true,
-        speed: 1000,
-        a11y: {enabled: true},
-        slidesPerView: 1,
-        navigation: true,
-    };
-
     public newses: Newses['newses']['items'][0][] = [];
 
     public constructor(public readonly newsService: NewsService) {}

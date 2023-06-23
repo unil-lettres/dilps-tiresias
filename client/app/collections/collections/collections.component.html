@@ -8,7 +8,7 @@
             </button>
         </mat-toolbar>
 
-        <perfect-scrollbar fxFlex>
+        <ng-scrollbar fxFlex>
             <div class="scrolled" fxLayout="column">
                 <mat-nav-list *ngIf="showUnclassified">
                     <a
@@ -83,7 +83,7 @@
                     </a>
                 </mat-nav-list>
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
     </div>
 
     <router-outlet></router-outlet>

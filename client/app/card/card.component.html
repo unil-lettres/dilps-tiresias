@@ -131,7 +131,7 @@
             </ng-container>
         </mat-toolbar>
 
-        <perfect-scrollbar fxFlex>
+        <ng-scrollbar fxFlex>
             <div class="padding-scrollbar scrolled" fxLayout="column" fxLayoutAlign="start stretch">
                 <div *ngIf="user?.role === 'administrator'" fxLayout="column">
                     <div fxLayout="row">
@@ -561,13 +561,13 @@
                     placeholder="Périodes"
                 ></app-thesaurus>
 
-                <div *ngIf="!isDilps" fxLayout="row" fxLayoutGap="10px">
-                    <mat-form-field *ngIf="edit || !!model.from">
+                <div *ngIf="!isDilps" fxLayout="row" fxLayoutGap="10px" class="double-fields">
+                    <mat-form-field *ngIf="edit || !!model.from" fxFlex="183px">
                         <mat-label>A partir de</mat-label>
                         <input [(ngModel)]="model.from" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="edit || !!model.to">
+                    <mat-form-field *ngIf="edit || !!model.to" fxFlex="183px">
                         <mat-label>Jusqu'à</mat-label>
                         <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1" />
                     </mat-form-field>
@@ -900,7 +900,7 @@
                     <p>{{ collectionCopyrights }}</p>
                 </div>
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
 
         <div class="padding" *ngIf="fetchedModel">
             <app-stamp [item]="fetchedModel"></app-stamp>

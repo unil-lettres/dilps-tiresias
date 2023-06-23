@@ -11,7 +11,7 @@
 
     &.menuMinimized {
         &,
-        perfect-scrollbar {
+        ng-scrollbar {
             width: 0;
             min-width: 64px;
         }

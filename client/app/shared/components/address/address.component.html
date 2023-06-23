@@ -125,8 +125,8 @@
     </cdk-accordion-item>
 </cdk-accordion>
 
-<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps">
-    <mat-form-field *ngIf="!readonly || !!model?.latitude" class="lonlat">
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" class="double-fields">
+    <mat-form-field *ngIf="!readonly || !!model?.latitude">
         <mat-label>Latitude</mat-label>
         <input
             type="number"
@@ -137,7 +137,7 @@
         />
     </mat-form-field>
 
-    <mat-form-field *ngIf="!readonly || !!model?.longitude" class="lonlat">
+    <mat-form-field fxFlex="183px" *ngIf="!readonly || !!model?.longitude">
         <mat-label>Longitude</mat-label>
         <input
             type="number"

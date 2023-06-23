@@ -2,8 +2,8 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {InMemoryCache} from '@apollo/client/core';
 import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
-import {NgModule, ErrorHandler} from '@angular/core';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule} from '@angular/core';
+import {FlexLayoutModule} from '@ngbracket/ngx-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatSortModule} from '@angular/material/sort';
@@ -53,8 +53,6 @@ import {
 } from '@ecodev/natural';
 import {NgProgressModule} from 'ngx-progressbar';
 import {HighchartsChartModule} from 'highcharts-angular';
-import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {SwiperModule} from 'swiper/angular';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from './antique-names/antique-name/antique-name.component';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
@@ -134,6 +132,7 @@ import {NetworkInterceptorService} from './shared/services/network-interceptor.s
 import {HttpBatchLink} from 'apollo-angular/http';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {HideTooltipDirective} from './shared/directives/hide-tooltip.directive';
+import {IScrollbarOptions, NG_SCROLLBAR_OPTIONS, NgScrollbarModule} from 'ngx-scrollbar';
 
 const icons: NaturalIconsConfig = {};
 
@@ -230,7 +229,7 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         MatCheckboxModule,
         MatIconModule,
         NgProgressModule,
-        PerfectScrollbarModule,
+        NgScrollbarModule,
         MatInputModule,
         MatSnackBarModule,
         MatSelectModule,
@@ -266,7 +265,6 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         NaturalTableButtonModule,
         NaturalAlertModule,
         NaturalFixedButtonModule,
-        SwiperModule,
         NaturalHierarchicSelectorModule,
         HighchartsChartModule,
         MatSortModule,
@@ -275,6 +273,12 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         NaturalFileModule,
     ],
     providers: [
+        {
+            provide: NG_SCROLLBAR_OPTIONS,
+            useValue: {
+                visibility: 'hover',
+            } satisfies Partial<IScrollbarOptions>,
+        },
         {
             // See https://github.com/angular/components/issues/26580
             provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
@@ -293,6 +297,7 @@ export const matTooltipCustomConfig: MatTooltipDefaultOptions = {
         },
     ],
     bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
     public constructor(
