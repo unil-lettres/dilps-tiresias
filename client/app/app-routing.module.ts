@@ -3,11 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
 import {ArtistsComponent} from './artists/artists/artists.component';
 import {CardComponent} from './card/card.component';
-import {CardResolver} from './card/services/card.resolver';
+import {resolveCard} from './card/services/card.resolver';
 import {ChangeComponent} from './changes/change/change.component';
 import {ChangesComponent} from './changes/changes/changes.component';
 import {CollectionsComponent} from './collections/collections/collections.component';
-import {FakeCollectionResolver} from './collections/services/fake-collection.resolver';
+import {resolveFakeCollection} from './collections/services/fake-collection.resolver';
 import {DocumentTypesComponent} from './document-types/document-types/document-types.component';
 import {DomainsComponent} from './domains/domains/domains.component';
 import {HomeComponent} from './home/home.component';
@@ -25,11 +25,11 @@ import {
     CollectionVisibility,
     UserRole,
 } from './shared/generated-types';
-import {AuthAdminGuard} from './shared/services/auth.admin.guard';
-import {AuthGuard} from './shared/services/auth.guard';
+import {canActivateAuthAdmin} from './shared/services/auth.admin.guard';
+import {canActivateAuth} from './shared/services/auth.guard';
 import {StatisticsComponent} from './statistics/statistics/statistics.component';
 import {TagsComponent} from './tags/tags/tags.component';
-import {UserResolver} from './users/services/user.resolver';
+import {resolveUser} from './users/services/user.resolver';
 import {UserComponent} from './users/user/user.component';
 import {UsersComponent} from './users/users/users.component';
 import {ErrorComponent} from './shared/components/error/error.component';
@@ -44,8 +44,8 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        canActivate: [AuthGuard],
-        resolve: {user: UserResolver},
+        canActivate: [canActivateAuth],
+        resolve: {user: resolveUser},
         children: [
             {
                 path: '',
@@ -63,7 +63,7 @@ export const routes: Routes = [
             {
                 path: 'card/:cardId',
                 component: CardComponent,
-                resolve: {card: CardResolver},
+                resolve: {card: resolveCard},
                 data: {showLogo: true},
             },
             {
@@ -73,57 +73,57 @@ export const routes: Routes = [
             {
                 path: 'user',
                 component: UsersComponent,
-                canActivate: [AuthAdminGuard],
+                canActivate: [canActivateAuthAdmin],
             },
             {
                 path: 'institution',
                 component: InstitutionsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'artist',
                 component: ArtistsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'antique-name',
                 component: AntiqueNamesComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'tag',
                 component: TagsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'material',
                 component: MaterialsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'domain',
                 component: DomainsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'period',
                 component: PeriodsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'document-type',
                 component: DocumentTypesComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'news',
                 component: NewsesComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'statistic',
                 component: StatisticsComponent,
-                canActivate: [AuthGuard],
+                canActivate: [canActivateAuth],
             },
             {
                 path: 'notification',
@@ -176,7 +176,7 @@ export const routes: Routes = [
                             showDownloadCollectionForRoles: [UserRole.administrator],
                         },
                         resolve: {
-                            collection: FakeCollectionResolver,
+                            collection: resolveFakeCollection,
                         },
                     },
                 ],
@@ -184,7 +184,7 @@ export const routes: Routes = [
             {
                 path: 'my-collection',
                 component: CollectionsComponent,
-                resolve: {creator: UserResolver},
+                resolve: {creator: resolveUser},
                 data: {
                     creationButtonForRoles: true,
                     showLogo: false,
@@ -210,7 +210,7 @@ export const routes: Routes = [
                     {
                         path: 'unclassified',
                         component: ListComponent,
-                        resolve: {creator: UserResolver},
+                        resolve: {creator: resolveUser},
                         data: {
                             filter: {
                                 groups: [{conditions: [{collections: {empty: {}}} satisfies CardFilterGroupCondition]}],
@@ -220,13 +220,13 @@ export const routes: Routes = [
                     {
                         path: 'my-cards',
                         component: ListComponent,
-                        resolve: {creator: UserResolver},
+                        resolve: {creator: resolveUser},
                     },
                     {
                         path: ':collectionId',
                         component: ListComponent,
                         resolve: {
-                            collection: FakeCollectionResolver,
+                            collection: resolveFakeCollection,
                         },
                     },
                 ],
@@ -253,7 +253,7 @@ export const routes: Routes = [
                             filter: {}, // overrides parent
                         },
                         resolve: {
-                            collection: FakeCollectionResolver,
+                            collection: resolveFakeCollection,
                         },
                     },
                 ],
