@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {ArtistComponent} from '../artist/artist.component';
 import {ArtistService} from '../services/artist.service';
@@ -9,7 +9,7 @@ import {ArtistService} from '../services/artist.service';
     styleUrls: ['./artists.component.scss'],
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
-    public constructor(service: ArtistService, injector: Injector) {
-        super(service, ArtistComponent, injector);
+    public constructor(service: ArtistService) {
+        super(service, ArtistComponent);
     }
 }

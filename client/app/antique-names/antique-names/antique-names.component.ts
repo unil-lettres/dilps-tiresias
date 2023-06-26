@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {AntiqueNameComponent} from '../antique-name/antique-name.component';
 import {AntiqueNameService} from '../services/antique-name.service';
@@ -9,7 +9,7 @@ import {AntiqueNameService} from '../services/antique-name.service';
     styleUrls: ['./antique-names.component.scss'],
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
-    public constructor(service: AntiqueNameService, injector: Injector) {
-        super(service, AntiqueNameComponent, injector);
+    public constructor(service: AntiqueNameService) {
+        super(service, AntiqueNameComponent);
     }
 }

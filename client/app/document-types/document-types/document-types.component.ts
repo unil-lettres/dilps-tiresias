@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {DocumentTypeComponent} from '../document-type/document-type.component';
 import {DocumentTypeService} from '../services/document-type.service';
@@ -9,7 +9,7 @@ import {DocumentTypeService} from '../services/document-type.service';
     styleUrls: ['./document-types.component.scss'],
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
-    public constructor(service: DocumentTypeService, injector: Injector) {
-        super(service, DocumentTypeComponent, injector);
+    public constructor(service: DocumentTypeService) {
+        super(service, DocumentTypeComponent);
     }
 }

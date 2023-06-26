@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -184,13 +184,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         private readonly collectionService: CollectionService,
         private readonly userService: UserService,
         private readonly dialog: MatDialog,
-        injector: Injector,
         private readonly statisticService: StatisticService,
         public readonly facetService: NaturalSearchFacetsService,
         private readonly changeService: ChangeService,
         @Inject(SITE) public readonly site: Site,
     ) {
-        super(cardService, injector);
+        super(cardService);
 
         this.naturalSearchFacets = facetService.getFacets();
     }

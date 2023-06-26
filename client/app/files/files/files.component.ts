@@ -47,7 +47,7 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
         return this._card;
     }
 
-    @Input()
+    @Input({required: true})
     public set card(card: Card['card']) {
         this._card = card;
 

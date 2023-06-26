@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {MaterialComponent} from '../material/material.component';
 import {MaterialService} from '../services/material.service';
@@ -9,7 +9,7 @@ import {MaterialService} from '../services/material.service';
     styleUrls: ['./materials.component.scss'],
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
-    public constructor(service: MaterialService, injector: Injector) {
-        super(service, MaterialComponent, injector);
+    public constructor(service: MaterialService) {
+        super(service, MaterialComponent);
     }
 }

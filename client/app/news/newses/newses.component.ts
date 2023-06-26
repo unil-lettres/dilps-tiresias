@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {NewsComponent} from '../news/news.component';
 import {NewsService} from '../services/news.service';
@@ -11,7 +11,7 @@ import {NewsService} from '../services/news.service';
 export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];
 
-    public constructor(service: NewsService, injector: Injector) {
-        super(service, NewsComponent, injector);
+    public constructor(service: NewsService) {
+        super(service, NewsComponent);
     }
 }

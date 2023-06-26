@@ -1,4 +1,5 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Params, QueryParamsHandling} from '@angular/router';
 
 @Component({
     selector: 'app-table-button',
@@ -7,11 +8,11 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
     encapsulation: ViewEncapsulation.None,
 })
 export class TableButtonComponent {
-    @Input() public queryParams: any;
-    @Input() public queryParamsHandling: any;
-    @Input() public label!: string;
-    @Input() public icon!: string;
-    @Input() public href!: string;
-    @Input() public navigate!: string;
-    @Input() public disable!: boolean;
+    @Input() public queryParams: Params = {};
+    @Input() public queryParamsHandling: QueryParamsHandling = '';
+    @Input() public label?: string | null;
+    @Input() public icon?: string | null;
+    @Input() public href?: string | null;
+    @Input() public navigate?: string | null;
+    @Input() public disable = false;
 }

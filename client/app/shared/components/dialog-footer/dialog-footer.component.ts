@@ -24,7 +24,7 @@ type Model = Stamped & {
 export class DialogFooterComponent {
     @Input() public canCreate = false;
     @Input() public canDelete: boolean | undefined = false;
-    @Input() public item!: Model;
+    @Input({required: true}) public item!: Model;
     @Input() public formCtrl: UntypedFormControl | null = null;
     @Output() public readonly create = new EventEmitter<Model>();
     @Output() public readonly update = new EventEmitter<Model>();

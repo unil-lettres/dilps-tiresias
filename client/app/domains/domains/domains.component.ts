@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {DomainComponent} from '../domain/domain.component';
 import {DomainService} from '../services/domain.service';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
@@ -9,7 +9,7 @@ import {AbstractNavigableList} from '../../shared/components/AbstractNavigableLi
     styleUrls: ['./domains.component.scss'],
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
-    public constructor(service: DomainService, injector: Injector) {
-        super(service, DomainComponent, injector);
+    public constructor(service: DomainService) {
+        super(service, DomainComponent);
     }
 }

@@ -27,7 +27,7 @@ type Marker = {
 export class ViewMapComponent extends NaturalAbstractController {
     public selectedMarker: Marker | null = null;
 
-    @Input()
+    @Input({required: true})
     public set cards(cards: Cards['cards']['items'][0][]) {
         this.mapApiService.loaded.subscribe(() => {
             this.markers = this.convertIntoMarkers(cards);

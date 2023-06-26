@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {TagService} from '../services/tag.service';
 import {TagComponent} from '../tag/tag.component';
@@ -9,7 +9,7 @@ import {TagComponent} from '../tag/tag.component';
     styleUrls: ['./tags.component.scss'],
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
-    public constructor(service: TagService, injector: Injector) {
-        super(service, TagComponent, injector);
+    public constructor(service: TagService) {
+        super(service, TagComponent);
     }
 }

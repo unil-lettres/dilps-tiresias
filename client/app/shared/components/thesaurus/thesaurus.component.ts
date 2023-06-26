@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -70,12 +70,12 @@ export class ThesaurusComponent<
     /**
      * Service used as data source
      */
-    @Input() public service!: TService;
+    @Input({required: true}) public service!: TService;
 
     /**
      * Input label name
      */
-    @Input() public placeholder!: string;
+    @Input({required: true}) public placeholder!: string;
 
     /**
      * If multi selection is allowed
@@ -90,7 +90,7 @@ export class ThesaurusComponent<
     /**
      * Component that renders the detail view of an entry
      */
-    @Input() public previewComponent!: ComponentType<unknown>;
+    @Input() public previewComponent: ComponentType<unknown> | undefined;
 
     /**
      * Sort autocomplete list by usage count DESC, otherwise, sort by
@@ -108,7 +108,7 @@ export class ThesaurusComponent<
     /**
      * Configuration for hierarchic relations
      */
-    @Input() public hierarchicSelectorConfig!: NaturalHierarchicConfiguration[];
+    @Input() public hierarchicSelectorConfig: NaturalHierarchicConfiguration[] | undefined;
 
     /**
      * Number of items not shown in result list
@@ -160,7 +160,7 @@ export class ThesaurusComponent<
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
 
-    @Input()
+    @Input({required: true})
     public set model(val: ThesaurusModel | ThesaurusModel[] | null | undefined) {
         this._model = val;
         this.convertModel();
@@ -195,6 +195,10 @@ export class ThesaurusComponent<
     }
 
     public openItem(item: ThesaurusModel): void {
+        if (!this.previewComponent) {
+            return;
+        }
+
         this.dialog
             .open(this.previewComponent, {
                 width: '800px',
@@ -322,6 +326,10 @@ export class ThesaurusComponent<
     }
 
     private getSelectKey(): string {
+        if (!this.hierarchicSelectorConfig) {
+            return '';
+        }
+
         return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey!;
     }
 

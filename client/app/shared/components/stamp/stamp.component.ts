@@ -19,5 +19,5 @@ export type Stamped = {
     styleUrls: ['./stamp.component.scss'],
 })
 export class StampComponent {
-    @Input() public item!: Stamped;
+    @Input({required: true}) public item!: Stamped;
 }

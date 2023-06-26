@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {Users, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
@@ -12,8 +12,8 @@ import {UserComponent} from '../user/user.component';
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
-    public constructor(service: UserService, injector: Injector) {
-        super(service, UserComponent, injector);
+    public constructor(service: UserService) {
+        super(service, UserComponent);
     }
 
     public isLegacyUser(user: Users['users']['items'][0]): boolean {

@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {InstitutionComponent} from '../institution/institution.component';
 import {InstitutionService} from '../services/institution.service';
@@ -11,7 +11,7 @@ import {InstitutionService} from '../services/institution.service';
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];
 
-    public constructor(service: InstitutionService, injector: Injector) {
-        super(service, InstitutionComponent, injector);
+    public constructor(service: InstitutionService) {
+        super(service, InstitutionComponent);
     }
 }

@@ -130,7 +130,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if card is source or suggestion
      */
-    @Input() public title!: string;
+    @Input() public title = '';
 
     /**
      * Show logo on top of the page if true
@@ -140,7 +140,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     /**
      * Base 64 image data for display usage before effective upload
      */
-    @Input() public imageData!: string;
+    @Input() public imageData = '';
 
     /**
      * Url of resized images (2000px) to be displayed

@@ -46,7 +46,7 @@ function percent(count: number, total: number): number {
     styleUrls: ['./statistic.component.scss'],
 })
 export class StatisticComponent {
-    @Input()
+    @Input({required: true})
     public set input(val: StatisticInput) {
         if (!val) {
             return;

@@ -35,7 +35,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource!: NaturalDataSource<Cards['cards']>;
+    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
     /**
      *
      */

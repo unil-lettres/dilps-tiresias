@@ -1,4 +1,4 @@
-import {Component, Injector} from '@angular/core';
+import {Component} from '@angular/core';
 import {ChangeService} from '../services/change.service';
 import {NaturalAbstractList} from '@ecodev/natural';
 
@@ -10,7 +10,7 @@ import {NaturalAbstractList} from '@ecodev/natural';
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
-    public constructor(service: ChangeService, injector: Injector) {
-        super(service, injector);
+    public constructor(service: ChangeService) {
+        super(service);
     }
 }
