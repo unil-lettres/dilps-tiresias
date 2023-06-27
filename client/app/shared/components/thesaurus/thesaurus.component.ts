@@ -1,6 +1,10 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
-import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+    MatAutocompleteSelectedEvent,
+    MatAutocompleteTrigger,
+    MatAutocompleteModule,
+} from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
@@ -20,6 +24,13 @@ import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operat
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
 import {MaterialSortingField} from '../../generated-types';
+import {MatOptionModule} from '@angular/material/core';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {MatIconModule} from '@angular/material/icon';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgFor, NgIf} from '@angular/common';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 export interface ThesaurusModel {
     name: string;
@@ -34,6 +45,20 @@ export interface ThesaurusModel {
     selector: 'app-thesaurus',
     templateUrl: './thesaurus.component.html',
     styleUrls: ['./thesaurus.component.scss'],
+    standalone: true,
+    imports: [
+        MatFormFieldModule,
+        MatChipsModule,
+        NgFor,
+        FlexModule,
+        NgIf,
+        MatIconModule,
+        FormsModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        ExtendedModule,
+        MatOptionModule,
+    ],
 })
 export class ThesaurusComponent<
         TService extends NaturalAbstractModelService<

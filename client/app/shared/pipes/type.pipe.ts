@@ -4,6 +4,7 @@ import {UserType} from '../generated-types';
 
 @Pipe({
     name: 'type',
+    standalone: true,
 })
 export class TypePipe implements PipeTransform {
     public constructor(private readonly userService: UserService) {}

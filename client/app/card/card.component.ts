@@ -1,10 +1,10 @@
-import {CdkAccordionItem} from '@angular/cdk/accordion';
+import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {NgModel} from '@angular/forms';
+import {NgModel, FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {findKey, sortBy} from 'lodash-es';
-import {QuillModules} from 'ngx-quill';
+import {QuillModules, QuillEditorComponent} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 import {ArtistComponent} from '../artists/artist/artist.component';
@@ -51,9 +51,37 @@ import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
-import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
+import {
+    FileSelection,
+    NaturalAbstractController,
+    NaturalFileDropDirective,
+    NaturalIconDirective,
+    NaturalRelationsComponent,
+    NaturalTableButtonComponent,
+} from '@ecodev/natural';
 import {ThemePalette} from '@angular/material/core';
 import {takeUntil} from 'rxjs/operators';
+import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
+import {StampComponent} from '../shared/components/stamp/stamp.component';
+import {FilesComponent} from '../files/files/files.component';
+import {AddressComponent} from '../shared/components/address/address.component';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import {ThesaurusComponent} from '../shared/components/thesaurus/thesaurus.component';
+import {UniqueCodeValidatorDirective} from '../shared/directives/unique-code-validator.directive';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSliderModule} from '@angular/material/slider';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {MatIconModule} from '@angular/material/icon';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+import {LogoComponent} from '../shared/components/logo/logo.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgIf, NgClass, NgFor, NgStyle} from '@angular/common';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -78,6 +106,40 @@ export type CollectionVisibilities = Visibilities<CollectionVisibility>;
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        NaturalFileDropDirective,
+        FlexModule,
+        NgClass,
+        ExtendedModule,
+        MatToolbarModule,
+        LogoComponent,
+        MatMenuModule,
+        MatButtonModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        MatIconModule,
+        NgScrollbar,
+        MatSliderModule,
+        FormsModule,
+        NgFor,
+        MatFormFieldModule,
+        MatInputModule,
+        UniqueCodeValidatorDirective,
+        QuillEditorComponent,
+        ThesaurusComponent,
+        TextFieldModule,
+        AddressComponent,
+        CdkAccordionModule,
+        NaturalRelationsComponent,
+        NaturalTableButtonComponent,
+        FilesComponent,
+        StampComponent,
+        NgStyle,
+        StripTagsPipe,
+        NaturalIconDirective,
+    ],
 })
 export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
     /**

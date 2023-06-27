@@ -1524,10 +1524,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@ecodev/angular-natural-gallery@^17.0.0":
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-17.0.0.tgz#9fc71166f6010b5678855c85a8876e0ff7e8ade2"
-  integrity sha512-LylCsFzg+Kaxjp3Srz+rFUQrkptBqAi5sQbqEN8ZYorboqQG6Wu7u9pIzrQ4etfvXH7akJ0CTYxCPLUUxg9tUA==
+"@ecodev/angular-natural-gallery@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-18.0.0.tgz#f391521f4f24289b7e10c3ef2344de4e2af6346a"
+  integrity sha512-ZzUlyMEz0ufji6NSrnYQkR8Enc1Iyuz50y6UYjczu45X4mNvqNpFJhmaNmvZsGsDA2oDVCxqsrC9Y4qE8s1clQ==
   dependencies:
     "@ecodev/natural-gallery-js" "^9.2.0"
     tslib "^2.5.3"
@@ -1539,10 +1539,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^52.0.0":
-  version "52.0.0"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-52.0.0.tgz#c8a63f32950ae9b9c5e49d12a00958e514d18a1b"
-  integrity sha512-Inm+0nrFQESscE+tS2RoLWCYSHpEU3c3BT3v1wn6M/LJNlnGn1IcS8rcAr1gvQJXSmi2zHaE8Za5SpK8zZD7cQ==
+"@ecodev/natural@^53.0.0":
+  version "53.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-53.0.0.tgz#f518c368fbe89ca0451a9ee02bc38c0bb72c5e45"
+  integrity sha512-k+s1Whb26l8GdEmiObKJzh5xeo8jStdhsMu3GECTG4GHCsKQ/9f2AKiEm820Y6bKyS2hEtF9XVNcnuLE4oXygA==
   dependencies:
     tslib "^2.5.3"
 

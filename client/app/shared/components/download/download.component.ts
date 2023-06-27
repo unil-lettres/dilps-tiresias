@@ -1,14 +1,23 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {ArtistComponent} from '../../../artists/artist/artist.component';
 import {Card, Cards, CreateExportInput, ExportFormat, Site} from '../../generated-types';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {ExportService} from '../../../exports/services/export.service';
 import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
-import {MatTabChangeEvent} from '@angular/material/tabs';
+import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
 import {Apollo} from 'apollo-angular';
 import {defaultIfEmpty, EMPTY, finalize, forkJoin, map, switchMap} from 'rxjs';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatOptionModule} from '@angular/material/core';
+import {NgFor, NgIf} from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
@@ -20,6 +29,21 @@ export type DownloadComponentData = {
     selector: 'app-download',
     templateUrl: './download.component.html',
     styleUrls: ['./download.component.scss'],
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatTabsModule,
+        FlexModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        NgFor,
+        MatOptionModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatButtonModule,
+        MatInputModule,
+        NgIf,
+    ],
 })
 export class DownloadComponent {
     public readonly sizes = [

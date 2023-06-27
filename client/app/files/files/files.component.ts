@@ -6,10 +6,19 @@ import {
     NaturalDataSource,
     NaturalQueryVariablesManager,
     PaginatedData,
+    NaturalFileSelectDirective,
 } from '@ecodev/natural';
 import {FileService} from '../services/file.service';
 import {map} from 'rxjs/operators';
 import {AlertService} from '../../shared/components/alert/alert.service';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
+import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {NgIf} from '@angular/common';
 
 interface Tuple {
     file?: FileMinimal;
@@ -20,6 +29,18 @@ interface Tuple {
     selector: 'app-files',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatTableModule,
+        MatButtonModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        MatIconModule,
+        MatProgressSpinnerModule,
+        FlexModule,
+        NaturalFileSelectDirective,
+    ],
 })
 export class FilesComponent extends NaturalAbstractController implements OnInit {
     public get disabled(): boolean {

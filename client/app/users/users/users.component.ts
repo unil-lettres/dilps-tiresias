@@ -3,11 +3,42 @@ import {AbstractList} from '../../shared/components/AbstractList';
 import {Users, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {UserComponent} from '../user/user.component';
+import {TypePipe} from '../../shared/pipes/type.pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {NgIf, AsyncPipe, DatePipe} from '@angular/common';
+import {NaturalSearchComponent, NaturalFixedButtonComponent, NaturalEnumPipe} from '@ecodev/natural';
+import {LogoComponent} from '../../shared/components/logo/logo.component';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        FlexModule,
+        LogoComponent,
+        NaturalSearchComponent,
+        NgIf,
+        ExtendedModule,
+        MatTableModule,
+        MatSortModule,
+        TableButtonComponent,
+        MatProgressSpinnerModule,
+        MatPaginatorModule,
+        NaturalFixedButtonComponent,
+        AsyncPipe,
+        DatePipe,
+        NaturalEnumPipe,
+        TypePipe,
+    ],
 })
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];

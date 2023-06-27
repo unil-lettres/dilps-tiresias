@@ -1,11 +1,18 @@
 import {Component} from '@angular/core';
 import {ErrorService} from './error.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {NgIf} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-error',
     templateUrl: './error.component.html',
     styleUrls: ['./error.component.scss'],
+    standalone: true,
+    imports: [FlexModule, MatIconModule, NgIf, MatButtonModule, RouterLink, NaturalIconDirective],
 })
 export class ErrorComponent {
     public readonly error: Error | null = null;

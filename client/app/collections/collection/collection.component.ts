@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
@@ -17,12 +17,42 @@ import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
 import {CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
-import {HierarchicFiltersConfiguration} from '@ecodev/natural';
+import {
+    HierarchicFiltersConfiguration,
+    NaturalRelationsComponent,
+    NaturalSelectHierarchicComponent,
+} from '@ecodev/natural';
+import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatSliderModule} from '@angular/material/slider';
+import {NgIf} from '@angular/common';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-collection',
     templateUrl: './collection.component.html',
     styleUrls: ['./collection.component.scss'],
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatTabsModule,
+        FlexModule,
+        NgIf,
+        MatSliderModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ThesaurusComponent,
+        MatSlideToggleModule,
+        NaturalRelationsComponent,
+        DialogFooterComponent,
+        NaturalSelectHierarchicComponent,
+    ],
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public visibility: keyof CollectionVisibilities = 1;

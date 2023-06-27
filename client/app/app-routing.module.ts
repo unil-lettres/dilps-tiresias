@@ -1,5 +1,4 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
 import {ArtistsComponent} from './artists/artists/artists.component';
 import {CardComponent} from './card/card.component';
@@ -274,13 +273,3 @@ export const routes: Routes = [
         ],
     },
 ];
-
-@NgModule({
-    imports: [
-        RouterModule.forRoot(routes, {
-            paramsInheritanceStrategy: 'emptyOnly',
-        }),
-    ],
-    exports: [RouterModule],
-})
-export class AppRoutingModule {}

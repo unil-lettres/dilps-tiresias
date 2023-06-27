@@ -1,6 +1,6 @@
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
-import {NaturalQueryVariablesManager} from '@ecodev/natural';
+import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NaturalIconDirective, NaturalQueryVariablesManager, NaturalSelectComponent} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
@@ -8,12 +8,37 @@ import {Card, CardInput, Countries, CountriesVariables, Institution, Site} from 
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
 import {MapApiService} from '../../../view-map/map-api.service';
+import {GoogleMapsModule} from '@angular/google-maps';
+import {MatIconModule} from '@angular/material/icon';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgIf, NgClass, AsyncPipe} from '@angular/common';
 
 @Component({
     selector: 'app-address',
     templateUrl: './address.component.html',
     styleUrls: ['./address.component.scss'],
     providers: [AddressService, CountryService],
+    standalone: true,
+    imports: [
+        NgIf,
+        FlexModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        NgClass,
+        ExtendedModule,
+        NaturalSelectComponent,
+        CdkAccordionModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        GoogleMapsModule,
+        AsyncPipe,
+        NaturalIconDirective,
+    ],
 })
 export class AddressComponent implements OnInit, OnChanges {
     @ViewChild('input', {static: true}) public inputRef!: ElementRef<HTMLInputElement>;

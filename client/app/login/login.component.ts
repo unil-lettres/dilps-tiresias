@@ -9,11 +9,36 @@ import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {Site, Viewer} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
+import {CarouselComponent} from '../news/carousel/carousel.component';
+import {NgIf} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonModule} from '@angular/material/button';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDividerModule} from '@angular/material/divider';
+import {LogoComponent} from '../shared/components/logo/logo.component';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [
+        FlexModule,
+        LogoComponent,
+        MatDividerModule,
+        MatGridListModule,
+        MatButtonModule,
+        MatExpansionModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        CarouselComponent,
+    ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
     public Site = Site;

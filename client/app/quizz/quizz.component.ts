@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
+import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
@@ -7,11 +7,36 @@ import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
 import {NaturalAbstractController} from '@ecodev/natural';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {NgIf, NgStyle, NgClass} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     selector: 'app-quizz',
     templateUrl: './quizz.component.html',
     styleUrls: ['./quizz.component.scss'],
+    standalone: true,
+    imports: [
+        FlexModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        NgIf,
+        NgStyle,
+        ExtendedModule,
+        MatExpansionModule,
+        NgClass,
+        MatTooltipModule,
+        HideTooltipDirective,
+    ],
 })
 export class QuizzComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public cards: string[] = [];

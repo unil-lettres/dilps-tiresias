@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
+import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
 import {
     Collections,
@@ -14,11 +14,42 @@ import {
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 import {takeUntil} from 'rxjs/operators';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {MatIconModule} from '@angular/material/icon';
+import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {NgIf, NgFor, NgTemplateOutlet} from '@angular/common';
+import {LogoComponent} from '../../shared/components/logo/logo.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     selector: 'app-collections',
     templateUrl: './collections.component.html',
     styleUrls: ['./collections.component.scss'],
+    standalone: true,
+    imports: [
+        FlexModule,
+        MatToolbarModule,
+        LogoComponent,
+        NgIf,
+        MatButtonModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        MatIconModule,
+        NgScrollbar,
+        MatListModule,
+        RouterLinkActive,
+        RouterLink,
+        MatDividerModule,
+        NgFor,
+        NgTemplateOutlet,
+        RouterOutlet,
+        NaturalIconDirective,
+    ],
 })
 export class CollectionsComponent extends NaturalAbstractController implements OnInit {
     public rootCollections: Collections['collections']['items'][0][] = [];

@@ -1,17 +1,37 @@
 import {SelectionModel} from '@angular/cdk/collections';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {Cards, Site} from '../shared/generated-types';
+import {TruncatePipe} from '../shared/pipes/truncate.pipe';
+import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
+import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {RouterLink} from '@angular/router';
+import {NgIf, NgFor, NgStyle} from '@angular/common';
 
 @Component({
     selector: 'app-view-list',
     templateUrl: './view-list.component.html',
     styleUrls: ['./view-list.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatPaginatorModule,
+        NgFor,
+        RouterLink,
+        NgStyle,
+        ExtendedModule,
+        MatCheckboxModule,
+        StripTagsPipe,
+        OnlyLeavesPipe,
+        TruncatePipe,
+    ],
 })
 export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
     /**
