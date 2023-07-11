@@ -1,6 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import * as Highcharts from 'highcharts';
+import {NgFor, PercentPipe} from '@angular/common';
+import {HighchartsChartModule} from 'highcharts-angular';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 interface Row {
     name: string;
@@ -44,9 +47,11 @@ function percent(count: number, total: number): number {
     selector: 'app-statistic',
     templateUrl: './statistic.component.html',
     styleUrls: ['./statistic.component.scss'],
+    standalone: true,
+    imports: [FlexModule, HighchartsChartModule, NgFor, MatTableModule, PercentPipe],
 })
 export class StatisticComponent {
-    @Input()
+    @Input({required: true})
     public set input(val: StatisticInput) {
         if (!val) {
             return;

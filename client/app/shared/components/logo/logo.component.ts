@@ -6,6 +6,7 @@ import {Site} from '../../generated-types';
     selector: 'app-logo',
     templateUrl: './logo.component.html',
     styleUrls: ['./logo.component.scss'],
+    standalone: true,
 })
 export class LogoComponent {
     @Input() public data = {type: 'main', class: 'logo-main'};

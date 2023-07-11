@@ -8,6 +8,8 @@ import {
     ValidationErrors,
     ValidatorFn,
     Validators,
+    FormsModule,
+    ReactiveFormsModule,
 } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {BehaviorSubject} from 'rxjs';
@@ -18,6 +20,9 @@ import {
     NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
+import {NgIf} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 export interface TypeNumericRangeConfiguration {
     min?: number | null;
@@ -57,6 +62,8 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
 @Component({
     templateUrl: './type-numeric-range.component.html',
     styleUrls: ['./type-numeric-range.component.scss'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');

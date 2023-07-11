@@ -49,16 +49,6 @@ pre.debug {
     border: 2px solid green;
 }
 
-perfect-scrollbar {
-    display: flex !important;
-    flex-direction: column;
-
-    .ps {
-        height: auto;
-        flex: 1;
-    }
-}
-
 #appContent {
     height: 100vh;
 

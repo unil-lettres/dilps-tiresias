@@ -1,17 +1,34 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {tagHierarchicConfig} from '../../shared/hierarchic-configurations/TagConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {TagService} from '../services/tag.service';
 import {Tag, TagFilter} from '../../shared/generated-types';
-import {HierarchicFiltersConfiguration} from '@ecodev/natural';
+import {HierarchicFiltersConfiguration, NaturalSelectHierarchicComponent} from '@ecodev/natural';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {FormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-tag',
     templateUrl: './tag.component.html',
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatTabsModule,
+        FlexModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        DialogFooterComponent,
+        NaturalSelectHierarchicComponent,
+    ],
 })
 export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = tagHierarchicConfig;

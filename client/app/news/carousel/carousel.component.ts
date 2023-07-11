@@ -1,29 +1,24 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 import {Newses, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
-import {SwiperOptions} from 'swiper/types';
-import SwiperCore, {Navigation} from 'swiper';
+import {register} from 'swiper/element/bundle';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {NgFor, NgIf, NgStyle} from '@angular/common';
 
-// install Swiper modules
-SwiperCore.use([Navigation]);
+// register Swiper custom elements
+register();
 
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
     styleUrls: ['./carousel.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [NgIf, NgFor, NgStyle, ExtendedModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CarouselComponent implements OnInit {
-    public swiperConfig: SwiperOptions = {
-        direction: 'horizontal',
-        autoplay: true,
-        speed: 1000,
-        a11y: {enabled: true},
-        slidesPerView: 1,
-        navigation: true,
-    };
-
     public newses: Newses['newses']['items'][0][] = [];
 
     public constructor(public readonly newsService: NewsService) {}

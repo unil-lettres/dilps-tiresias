@@ -1,6 +1,13 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractControl, UntypedFormControl, UntypedFormGroup, ValidationErrors} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {
+    AbstractControl,
+    UntypedFormControl,
+    UntypedFormGroup,
+    ValidationErrors,
+    FormsModule,
+    ReactiveFormsModule,
+} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
@@ -9,7 +16,18 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
-import {IEnum, NaturalEnumService} from '@ecodev/natural';
+import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
+import {TypePipe} from '../../shared/pipes/type.pipe';
+import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
+import {NgIf, NgFor} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatTabsModule} from '@angular/material/tabs';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password')!.value; // to get value in input tag
@@ -25,6 +43,25 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 @Component({
     selector: 'app-profile',
     templateUrl: './user.component.html',
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatTabsModule,
+        FlexModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        NgIf,
+        ReactiveFormsModule,
+        ThesaurusComponent,
+        MatDatepickerModule,
+        MatSelectModule,
+        NgFor,
+        MatOptionModule,
+        NaturalRelationsComponent,
+        DialogFooterComponent,
+        TypePipe,
+    ],
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
     public collectionsHierarchicConfig = collectionsHierarchicConfig;

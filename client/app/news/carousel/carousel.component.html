@@ -1,10 +1,18 @@
-<swiper *ngIf="newses?.length" [config]="swiperConfig">
-    <ng-template swiperSlide *ngFor="let news of newses">
+<swiper-container
+    *ngIf="newses?.length"
+    direction="horizontal"
+    autoplay="true"
+    speed="1000"
+    a11y-enabled="true"
+    slidesPerView="1"
+    navigation="true"
+>
+    <swiper-slide *ngFor="let news of newses">
         <a [attr.href]="news.url" [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}" class="carousel-news">
             <div class="carousel-label">
                 <div class="name mat-headline-6">{{ news.name }}</div>
                 <div class="description mat-subtitle-2">{{ news.description }}</div>
             </div>
         </a>
-    </ng-template>
-</swiper>
+    </swiper-slide>
+</swiper-container>

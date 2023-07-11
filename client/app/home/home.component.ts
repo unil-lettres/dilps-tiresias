@@ -1,7 +1,15 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ActivatedRoute, NavigationEnd, Router, RouteReuseStrategy} from '@angular/router';
+import {
+    ActivatedRoute,
+    NavigationEnd,
+    Router,
+    RouteReuseStrategy,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+} from '@angular/router';
 import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, takeUntil, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
@@ -18,8 +26,25 @@ import {NetworkActivityService} from '../shared/services/network-activity.servic
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
-import {FileSelection, NaturalAbstractController} from '@ecodev/natural';
+import {
+    FileSelection,
+    NaturalAbstractController,
+    NaturalFileSelectDirective,
+    NaturalIconDirective,
+} from '@ecodev/natural';
 import {WelcomeComponent} from './welcome.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgIf, NgFor} from '@angular/common';
+import {MatMenuModule} from '@angular/material/menu';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -29,6 +54,27 @@ function isExcel(file: File): boolean {
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
+    standalone: true,
+    imports: [
+        MatMenuModule,
+        NgIf,
+        RouterLink,
+        RouterLinkActive,
+        FlexModule,
+        MatSidenavModule,
+        NgScrollbar,
+        MatListModule,
+        MatIconModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        NaturalFileSelectDirective,
+        MatProgressSpinnerModule,
+        MatDividerModule,
+        MatButtonModule,
+        RouterOutlet,
+        NgFor,
+        NaturalIconDirective,
+    ],
 })
 export class HomeComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public Site = Site;

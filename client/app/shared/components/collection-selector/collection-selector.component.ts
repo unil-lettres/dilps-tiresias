@@ -1,10 +1,21 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
 import {Cards, CollectionFilter, Collections, CreateCollection, LogicalOperator, UserRole} from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
+import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {NgIf, NgFor} from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatTabsModule} from '@angular/material/tabs';
 
 /**
  * Exclusive fields:
@@ -32,6 +43,23 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     selector: 'app-collection-selector',
     templateUrl: './collection-selector.component.html',
     styleUrls: ['./collection-selector.component.scss'],
+    standalone: true,
+    imports: [
+        MatDialogModule,
+        MatTabsModule,
+        FlexModule,
+        NaturalSelectComponent,
+        FormsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NgIf,
+        NgFor,
+        MatIconModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        NaturalIconDirective,
+    ],
 })
 export class CollectionSelectorComponent implements OnInit {
     public listFilter!: CollectionFilter;

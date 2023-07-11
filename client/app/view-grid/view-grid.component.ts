@@ -8,6 +8,7 @@ import {takeUntil} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 export interface ContentChange {
     visible?: number;
@@ -20,6 +21,8 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
     styleUrls: ['./view-grid.component.scss'],
+    standalone: true,
+    imports: [NaturalGalleryComponent, FlexModule],
 })
 export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
     /**
@@ -35,7 +38,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource!: NaturalDataSource<Cards['cards']>;
+    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
     /**
      *
      */

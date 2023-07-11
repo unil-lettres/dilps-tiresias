@@ -1,4 +1,4 @@
-import {Injector, OnInit} from '@angular/core';
+import {inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     ExtractTallOne,
@@ -29,11 +29,10 @@ export class AbstractList<
 {
     public displayedColumns = ['name', 'usageCount'];
 
-    protected dialog: MatDialog;
+    protected readonly dialog: MatDialog = inject(MatDialog);
 
-    public constructor(service: TService, private readonly component: ComponentType<unknown>, injector: Injector) {
-        super(service, injector);
-        this.dialog = injector.get(MatDialog);
+    public constructor(service: TService, private readonly component: ComponentType<unknown>) {
+        super(service);
     }
 
     public edit(item: ExtractTallOne<TService>): void {

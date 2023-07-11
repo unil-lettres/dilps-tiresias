@@ -1,10 +1,14 @@
 import {Component, Inject} from '@angular/core';
 import {SITE} from '../app.config';
 import {Site} from '../shared/generated-types';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-welcome',
     templateUrl: './welcome.component.html',
+    standalone: true,
+    imports: [MatDialogModule, MatButtonModule],
 })
 export class WelcomeComponent {
     public Site = Site;

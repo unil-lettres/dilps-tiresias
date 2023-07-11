@@ -1,16 +1,38 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {assign, merge} from 'lodash-es';
-import {cardToCardInput} from '../../card/card.component';
+import {cardToCardInput, CardComponent} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card, CardInput, CardVisibility, Change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
+import {MatIconModule} from '@angular/material/icon';
+import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {NgIf} from '@angular/common';
+import {LogoComponent} from '../../shared/components/logo/logo.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-change',
     templateUrl: './change.component.html',
     styleUrls: ['./change.component.scss'],
+    standalone: true,
+    imports: [
+        FlexModule,
+        MatToolbarModule,
+        LogoComponent,
+        NgIf,
+        MatButtonModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        MatIconModule,
+        CardComponent,
+        NaturalIconDirective,
+    ],
 })
 export class ChangeComponent implements OnInit {
     public change!: Change['change'];

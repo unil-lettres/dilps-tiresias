@@ -4,7 +4,11 @@ import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
-import {GoogleMap, MapInfoWindow, MapMarker} from '@angular/google-maps';
+import {GoogleMap, MapInfoWindow, MapMarker, GoogleMapsModule} from '@angular/google-maps';
+import {MatButtonModule} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgIf, NgFor} from '@angular/common';
 import Icon = google.maps.Icon;
 
 export interface Location {
@@ -23,11 +27,13 @@ type Marker = {
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
     styleUrls: ['./view-map.component.scss'],
+    standalone: true,
+    imports: [NgIf, GoogleMapsModule, NgFor, FlexModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent extends NaturalAbstractController {
     public selectedMarker: Marker | null = null;
 
-    @Input()
+    @Input({required: true})
     public set cards(cards: Cards['cards']['items'][0][]) {
         this.mapApiService.loaded.subscribe(() => {
             this.markers = this.convertIntoMarkers(cards);

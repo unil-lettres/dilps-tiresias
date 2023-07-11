@@ -36,8 +36,14 @@ describe('TypeNumericRangeComponent', () => {
         dialogCloseSpy = spyOn(dialogRef, 'close');
 
         await TestBed.configureTestingModule({
-            declarations: [TypeNumericRangeComponent],
-            imports: [NoopAnimationsModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+            imports: [
+                NoopAnimationsModule,
+                FormsModule,
+                ReactiveFormsModule,
+                MatFormFieldModule,
+                MatInputModule,
+                TypeNumericRangeComponent,
+            ],
             providers: [
                 {
                     provide: NATURAL_DROPDOWN_DATA,

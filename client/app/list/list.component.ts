@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -7,6 +7,8 @@ import {
     PaginationInput,
     Sorting,
     WithId,
+    NaturalSearchComponent,
+    NaturalIconDirective,
 } from '@ecodev/natural';
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
@@ -45,6 +47,16 @@ import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 import {PageEvent} from '@angular/material/paginator';
 import {takeUntil} from 'rxjs/operators';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import {LogoComponent} from '../shared/components/logo/logo.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {NgIf} from '@angular/common';
+import {MatMenuModule} from '@angular/material/menu';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -82,6 +94,24 @@ enum ViewMode {
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    standalone: true,
+    imports: [
+        MatMenuModule,
+        NgIf,
+        FlexModule,
+        MatToolbarModule,
+        LogoComponent,
+        MatButtonModule,
+        MatTooltipModule,
+        HideTooltipDirective,
+        MatIconModule,
+        NaturalSearchComponent,
+        MatChipsModule,
+        ViewGridComponent,
+        ViewListComponent,
+        ViewMapComponent,
+        NaturalIconDirective,
+    ],
 })
 export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
     /**
@@ -184,13 +214,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         private readonly collectionService: CollectionService,
         private readonly userService: UserService,
         private readonly dialog: MatDialog,
-        injector: Injector,
         private readonly statisticService: StatisticService,
         public readonly facetService: NaturalSearchFacetsService,
         private readonly changeService: ChangeService,
         @Inject(SITE) public readonly site: Site,
     ) {
-        super(cardService, injector);
+        super(cardService);
 
         this.naturalSearchFacets = facetService.getFacets();
     }

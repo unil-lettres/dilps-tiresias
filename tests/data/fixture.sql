@@ -88,11 +88,11 @@ REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
   (11000, 'Test document type 11000', 'tiresias'),
   (11001, 'Test document type 11001', 'tiresias');
 
-REPLACE INTO `news` (`id`, `site`, `name`, `description`, url, filename) VALUES
-  (10000, 'tiresias', 'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
-  (10001, 'tiresias', 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg'),
-  (10002, 'dilps', 'Test news 10002', 'This human feeds me, i should be a god lick plastic bags instantly break out into full speed gallop across the house for no reason attack the dog then pretend like nothing happened yet so you''re just gonna scroll by without saying meowdy?', 'https://example.com', 'test1.jpg'),
-  (10003, 'dilps', 'Test news 10003', 'That box? i can fit in that box. If human is on laptop sit on the keyboard eat too much then proceed to regurgitate all over living room carpet while humans eat dinner.', 'https://google.com', 'test2.jpg');
+REPLACE INTO `news` (`id`, `site`, is_active, `name`, `description`, url, filename) VALUES
+  (10000, 'tiresias', 1,  'Test news 10000', 'Donec ullamcorper nulla non metus auctor fringilla. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.', 'https://example.com', 'test1.jpg'),
+  (10001, 'tiresias', 1, 'Test news 10001', 'Curabitur blandit tempus porttitor. Donec sed odio dui.', 'https://google.com', 'test2.jpg'),
+  (10002, 'dilps', 1, 'Test news 10002', 'This human feeds me, i should be a god lick plastic bags instantly break out into full speed gallop across the house for no reason attack the dog then pretend like nothing happened yet so you''re just gonna scroll by without saying meowdy?', 'https://example.com', 'test1.jpg'),
+  (10003, 'dilps', 1, 'Test news 10003', 'That box? i can fit in that box. If human is on laptop sit on the keyboard eat too much then proceed to regurgitate all over living room carpet while humans eat dinner.', 'https://google.com', 'test2.jpg');
 
 REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
   (12000, 'Test antique name 12000', 'tiresias'),

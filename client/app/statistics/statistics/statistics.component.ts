@@ -1,8 +1,8 @@
 import {Apollo} from 'apollo-angular';
 import {Component} from '@angular/core';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
-import {Literal, NaturalAbstractController, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {Literal, NaturalQueryVariablesManager, NaturalSelectComponent} from '@ecodev/natural';
 import {
     ExtraStatistics,
     SortingOrder,
@@ -11,10 +11,17 @@ import {
     StatisticsVariables,
     Users,
 } from '../../shared/generated-types';
-import {StatisticInput} from '../statistic/statistic.component';
+import {StatisticInput, StatisticComponent} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
-import {takeUntil} from 'rxjs/operators';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {FormsModule} from '@angular/forms';
+import {MatOptionModule} from '@angular/material/core';
+import {NgFor, KeyValuePipe} from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
+import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {MatTabsModule} from '@angular/material/tabs';
+import {LogoComponent} from '../../shared/components/logo/logo.component';
 
 function formatDate(date: Date): string {
     const month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
@@ -73,8 +80,22 @@ interface SerieData {
             },
         },
     ],
+    standalone: true,
+    imports: [
+        LogoComponent,
+        MatTabsModule,
+        FlexModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        NgFor,
+        MatOptionModule,
+        StatisticComponent,
+        NaturalSelectComponent,
+        FormsModule,
+        KeyValuePipe,
+    ],
 })
-export class StatisticsComponent extends NaturalAbstractController {
+export class StatisticsComponent {
     public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
     public data!: Data;
     public statType: keyof Values = 'pageCount';
@@ -115,8 +136,6 @@ export class StatisticsComponent extends NaturalAbstractController {
         statisticService: StatisticService,
         public readonly userService: UserService,
     ) {
-        super();
-
         this.frequentationQvm.set('pagination', {
             pagination: {
                 pageSize: 999,
@@ -136,7 +155,7 @@ export class StatisticsComponent extends NaturalAbstractController {
 
         statisticService
             .watchAll(this.frequentationQvm)
-            .pipe(takeUntil(this.ngUnsubscribe))
+            .pipe(takeUntilDestroyed())
             .subscribe(result => {
                 this.reset();
 

@@ -1,24 +1,43 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
-import {PerfectScrollbarComponent} from 'ngx-perfect-scrollbar';
 import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {Cards, Site} from '../shared/generated-types';
+import {TruncatePipe} from '../shared/pipes/truncate.pipe';
+import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
+import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+import {RouterLink} from '@angular/router';
+import {NgIf, NgFor, NgStyle} from '@angular/common';
 
 @Component({
     selector: 'app-view-list',
     templateUrl: './view-list.component.html',
     styleUrls: ['./view-list.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatPaginatorModule,
+        NgFor,
+        RouterLink,
+        NgStyle,
+        ExtendedModule,
+        MatCheckboxModule,
+        StripTagsPipe,
+        OnlyLeavesPipe,
+        TruncatePipe,
+    ],
 })
 export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
     /**
      * DataSource containing cards
      */
-    @Input() public dataSource!: NaturalDataSource<Cards['cards']>;
+    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
 
     /**
      * Emits when data is required
@@ -34,11 +53,6 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     @Input() public selected: Cards['cards']['items'][0][] = [];
     public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
     public cards: Cards['cards']['items'][0][] = [];
-
-    /**
-     * Reference to scrollable element
-     */
-    @ViewChild('scrollable', {static: true}) private scrollable!: PerfectScrollbarComponent;
 
     /**
      * Template exposed variable

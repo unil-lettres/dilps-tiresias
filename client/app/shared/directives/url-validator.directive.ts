@@ -5,6 +5,7 @@ import {AbstractControl, Validator, NG_VALIDATORS} from '@angular/forms';
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'input[type="url"]',
     providers: [{provide: NG_VALIDATORS, useExisting: UrlValidatorDirective, multi: true}],
+    standalone: true,
 })
 export class UrlValidatorDirective implements Validator {
     public validate(control: AbstractControl): {[key: string]: any} | null {

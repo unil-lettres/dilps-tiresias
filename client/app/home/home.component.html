@@ -30,8 +30,8 @@
             opened="true"
             position="start"
         >
-            <div fxFlex fxFlexAlign="start center" fxLayout="row">
-                <perfect-scrollbar fxLayout="column">
+            <ng-scrollbar>
+                <div fxLayout="column" fxFill>
                     <ng-container *ngIf="user">
                         <mat-nav-list>
                             <!-- Dashboard -->
@@ -237,8 +237,8 @@
                             <span>Changer couleurs</span>
                         </a>
                     </mat-nav-list>
-                </perfect-scrollbar>
-            </div>
+                </div>
+            </ng-scrollbar>
         </mat-sidenav>
 
         <div fxFlex fxLayout="row" id="appContent">
