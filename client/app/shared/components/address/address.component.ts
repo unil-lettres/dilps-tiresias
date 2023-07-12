@@ -1,6 +1,11 @@
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NaturalIconDirective, NaturalQueryVariablesManager, NaturalSelectComponent} from '@ecodev/natural';
+import {
+    NaturalIconDirective,
+    NaturalQueryVariablesManager,
+    NaturalSelectComponent,
+    NaturalSelectEnumComponent,
+} from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'lodash-es';
 import {CountryService} from '../../../countries/services/country.service';
@@ -32,6 +37,7 @@ import {NgIf, NgClass, AsyncPipe} from '@angular/common';
         NgClass,
         ExtendedModule,
         NaturalSelectComponent,
+        NaturalSelectEnumComponent,
         CdkAccordionModule,
         MatIconModule,
         ReactiveFormsModule,
