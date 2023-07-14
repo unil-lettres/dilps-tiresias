@@ -20,7 +20,7 @@
         "allowSyntheticDefaultImports": true,
         "noImplicitOverride": true,
         "useDefineForClassFields": false,
-        "skipLibCheck": true // TODO in december 2023, remove this and see if `yarn dev` still errors with `Error: node_modules/type-fest/ts41/get.d.ts:94:19 - error TS2344: Type 'BaseType' does not satisfy the constraint 'Record<string | number, any>'.`
+        "skipLibCheck": true // required for photoswipe
     },
     "angularCompilerOptions": {
         "strictInjectionParameters": true,
