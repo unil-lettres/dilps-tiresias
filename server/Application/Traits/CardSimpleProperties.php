@@ -235,6 +235,11 @@ trait CardSimpleProperties
 
     public function setPage(string $page): void
     {
+        // Field is readonly and can only be emptied.
+        if ($page !== '') {
+            return;
+        }
+
         $this->page = $page;
     }
 
@@ -245,6 +250,11 @@ trait CardSimpleProperties
 
     public function setFigure(string $figure): void
     {
+        // Field is readonly and can only be emptied.
+        if ($figure !== '') {
+            return;
+        }
+
         $this->figure = $figure;
     }
 
@@ -255,6 +265,11 @@ trait CardSimpleProperties
 
     public function setTable(string $table): void
     {
+        // Field is readonly and can only be emptied.
+        if ($table !== '') {
+            return;
+        }
+
         $this->table = $table;
     }
 

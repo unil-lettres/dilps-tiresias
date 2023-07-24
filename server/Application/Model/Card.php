@@ -13,6 +13,7 @@ use Application\Api\Input\Operator\LocationOperatorType;
 use Application\Api\Input\Operator\NameOrExpandedNameOperatorType;
 use Application\Api\Input\Sorting\Artists;
 use Application\Api\Input\Sorting\InstitutionLocality;
+use Application\DBAL\Types\SiteType;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Traits\CardSimpleProperties;
@@ -842,6 +843,16 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     public function getDocumentSize(): string
     {
         return $this->documentSize;
+    }
+
+    public function setIsbn(string $isbn): void
+    {
+        // Field is readonly and can only be emptied (Dilps only).
+        if ($this->getSite() === SiteType::DILPS && $isbn !== '') {
+            return;
+        }
+
+        $this->isbn = $isbn;
     }
 
     /**

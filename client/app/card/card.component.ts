@@ -39,6 +39,7 @@ import {
     UpdateCard,
     UserRole,
     Viewer,
+    InputMaybe,
 } from '../shared/generated-types';
 import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
 import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -101,6 +102,13 @@ export interface VisibilityConfig<V> {
 type Visibilities<V> = Record<1 | 2 | 3, VisibilityConfig<V>>;
 type CardVisibilities = Visibilities<CardVisibility>;
 export type CollectionVisibilities = Visibilities<CollectionVisibility>;
+
+interface InitialCardValues {
+    page?: InputMaybe<string>;
+    figure?: InputMaybe<string>;
+    table?: InputMaybe<string>;
+    isbn?: InputMaybe<string>;
+}
 
 @Component({
     selector: 'app-card',
@@ -370,6 +378,17 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     public isDilps = true;
     public suggestedCode: string | null = null;
 
+    /**
+     * Contains some initial values of the card model. These values are
+     * refreshed when the model is persisted.
+     */
+    public initialCardValues: InitialCardValues = {
+        page: '',
+        figure: '',
+        table: '',
+        isbn: '',
+    };
+
     @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
     public constructor(
@@ -482,6 +501,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
             this.model.tags = onlyLeaves(this.model.tags!);
             this.model.materials = onlyLeaves(this.model.materials!);
+
+            this.refreshInitialCardValues();
         }
     }
 
@@ -534,6 +555,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
+            this.refreshInitialCardValues();
             this.edit = false;
         });
     }
@@ -730,5 +752,10 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                 'This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?',
             );
         }
+    }
+
+    public refreshInitialCardValues(): void {
+        const {page, figure, table, isbn} = this.model;
+        this.initialCardValues = {page, figure, table, isbn};
     }
 }

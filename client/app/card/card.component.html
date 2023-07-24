@@ -730,56 +730,110 @@
                     ></quill-editor>
                 </div>
 
-                <!-- Readonly fields in non-edit mode. Removed in edit mode. -->
                 <ng-container *ngIf="isDilps">
-                    <mat-form-field *ngIf="!edit && !!model.page">
+                    <mat-form-field *ngIf="!!initialCardValues.page">
                         <mat-label>Page</mat-label>
-                        <input [(ngModel)]="model.page" [readonly]="!edit" matInput maxlength="10" />
-                        <mat-hint
-                            align="end"
-                            *ngIf="edit && model.page?.length > 7"
-                            [ngClass]="{strong: model.page.length >= 10}"
+                        <input [(ngModel)]="model.page" [readonly]="true" matInput />
+                        <button
+                            *ngIf="!!model.page && edit"
+                            matSuffix
+                            matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.page = ''"
                         >
-                            {{ model.page.length }} / 10
-                        </mat-hint>
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button
+                            *ngIf="!model.page && edit"
+                            matTooltip="Annuler"
+                            matSuffix
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.page = initialCardValues.page"
+                        >
+                            <mat-icon>undo</mat-icon>
+                        </button>
                     </mat-form-field>
-
-                    <mat-form-field *ngIf="!edit && !!model.figure">
+                    <mat-form-field *ngIf="!!initialCardValues.figure">
                         <mat-label>Figure</mat-label>
-                        <input [(ngModel)]="model.figure" [readonly]="!edit" matInput maxlength="10" />
-                        <mat-hint
-                            align="end"
-                            *ngIf="edit && model.figure?.length > 7"
-                            [ngClass]="{strong: model.figure.length >= 10}"
+                        <input [(ngModel)]="model.figure" [readonly]="true" matInput />
+                        <button
+                            *ngIf="!!model.figure && edit"
+                            matSuffix
+                            matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.figure = ''"
                         >
-                            {{ model.figure.length }} / 10
-                        </mat-hint>
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button
+                            *ngIf="!model.figure && edit"
+                            matTooltip="Annuler"
+                            matSuffix
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.figure = initialCardValues.figure"
+                        >
+                            <mat-icon>undo</mat-icon>
+                        </button>
                     </mat-form-field>
-
-                    <mat-form-field *ngIf="!edit && !!model.table">
+                    <mat-form-field *ngIf="!!initialCardValues.table">
                         <mat-label>Planche</mat-label>
-                        <input [(ngModel)]="model.table" [readonly]="!edit" matInput maxlength="10" />
-                        <mat-hint
-                            align="end"
-                            *ngIf="edit && model.table?.length > 7"
-                            [ngClass]="{strong: model.table.length >= 10}"
+                        <input [(ngModel)]="model.table" [readonly]="true" matInput />
+                        <button
+                            *ngIf="!!model.table && edit"
+                            matSuffix
+                            matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.table = ''"
                         >
-                            {{ model.table.length }} / 10
-                        </mat-hint>
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button
+                            *ngIf="!model.table && edit"
+                            matTooltip="Annuler"
+                            matSuffix
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.table = initialCardValues.table"
+                        >
+                            <mat-icon>undo</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field
+                        *ngIf="!!initialCardValues.isbn"
+                        [matTooltip]="edit ? 'Numéro ISBN de l\'ouvrage source, sans les tirets.' : ''"
+                        matTooltipPosition="after"
+                    >
+                        <mat-label>ISBN</mat-label>
+                        <input [(ngModel)]="model.isbn" [readonly]="true" matInput />
+                        <button
+                            *ngIf="!!model.isbn && edit"
+                            matSuffix
+                            matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.isbn = ''"
+                        >
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <button
+                            *ngIf="!model.isbn && edit"
+                            matTooltip="Annuler"
+                            matSuffix
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="model.isbn = initialCardValues.isbn"
+                        >
+                            <mat-icon>undo</mat-icon>
+                        </button>
                     </mat-form-field>
                 </ng-container>
-
-                <!--
-                    Different behavior :
-                    Dilps : readonly in non-edit mode is a value is already set. Removed in edit mode
-                    Tiresias : works as usual, visible if edit mode or if there is a value set
-                -->
-                <mat-form-field
-                    *ngIf="(isDilps && !edit && !!model.isbn) || (!isDilps && (edit || !!model.isbn))"
-                    [matTooltip]="!edit || !isDilps ? '' : 'Numéro ISBN de l\'ouvrage source, sans les tirets.'"
-                    matTooltipPosition="after"
-                >
-                    <mat-label>{{ isDilps ? 'ISBN' : 'ISBN / ISSN' }}</mat-label>
+                <mat-form-field *ngIf="!isDilps && (edit || !!model.isbn)">
+                    <mat-label>ISBN / ISSN</mat-label>
                     <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30" />
                     <mat-hint
                         align="end"
@@ -929,3 +983,4 @@
         <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
     </div>
 </div>
+<button (click)="refreshInitialCardValues()"></button>
