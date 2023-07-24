@@ -18,13 +18,9 @@ import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS} from '@angular/material/paginator';
 import {IScrollbarOptions, NG_SCROLLBAR_OPTIONS} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
-import {apolloDefaultOptions, createApolloLink} from './app/shared/config/apollo.link.creator';
+import {apolloOptionsProvider} from './app/shared/config/apollo.link.creator';
 import {filter} from 'rxjs/operators';
-import {InMemoryCache} from '@apollo/client/core';
-import {NetworkActivityService} from './app/shared/services/network-activity.service';
-import {AlertService} from './app/shared/components/alert/alert.service';
 import {StatisticService} from './app/statistics/services/statistic.service';
-import {HttpBatchLink} from 'apollo-angular/http';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
     enableProdMode();
@@ -69,6 +65,7 @@ bootstrapApplication(AppComponent, {
         {provide: SITE, useValue: (window as Literal)['APP_SITE']},
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
+        apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
         {
             provide: HTTP_INTERCEPTORS,
@@ -87,14 +84,9 @@ bootstrapApplication(AppComponent, {
             provide: APP_INITIALIZER,
             multi: true,
             useFactory: (): (() => void) => {
-                const apollo = inject(Apollo);
-                const networkActivityService = inject(NetworkActivityService);
-                const alertService = inject(AlertService);
                 const dateAdapter = inject(DateAdapter<Date>);
                 const statisticService = inject(StatisticService);
                 const router = inject(Router);
-                const routeReuse = inject(RouteReuseStrategy);
-                const httpBatchLink = inject(HttpBatchLink);
 
                 return () => {
                     // On each page change, record in stats
@@ -103,19 +95,6 @@ bootstrapApplication(AppComponent, {
                     });
 
                     dateAdapter.setLocale('fr-ch');
-
-                    const link = createApolloLink(
-                        networkActivityService,
-                        alertService,
-                        httpBatchLink,
-                        routeReuse as AppRouteReuseStrategy,
-                    );
-
-                    apollo.create({
-                        link: link,
-                        cache: new InMemoryCache(),
-                        defaultOptions: apolloDefaultOptions,
-                    });
                 };
             },
         },

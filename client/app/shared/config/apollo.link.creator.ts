@@ -1,11 +1,19 @@
-import {ApolloLink, DefaultOptions} from '@apollo/client/core';
+import {
+    ApolloClientOptions,
+    ApolloLink,
+    DefaultOptions,
+    InMemoryCache,
+    NormalizedCacheObject,
+} from '@apollo/client/core';
 import {onError} from '@apollo/client/link/error';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {NetworkActivityService} from '../services/network-activity.service';
-import {createUploadLink} from 'apollo-upload-client';
 import {AlertService} from '../components/alert/alert.service';
-import {hasFilesAndProcessDate, isMutation} from '@ecodev/natural';
-import {HttpBatchLink} from 'apollo-angular/http';
+import {createHttpLink} from '@ecodev/natural';
+import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
+import {inject, Provider} from '@angular/core';
+import {RouteReuseStrategy} from '@angular/router';
+import {APOLLO_OPTIONS} from 'apollo-angular';
 
 export const apolloDefaultOptions: DefaultOptions = {
     query: {
@@ -44,17 +52,13 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
     });
 }
 
-export function createApolloLink(
+function createApolloLink(
     networkActivityService: NetworkActivityService,
     alertService: AlertService,
+    httpLink: HttpLink,
     httpBatchLink: HttpBatchLink,
     routeReuseStrategy: AppRouteReuseStrategy,
 ): ApolloLink {
-    const options = {
-        uri: '/graphql',
-        credentials: 'include',
-    };
-
     const routeReuseClearer = new ApolloLink((operation, forward) => {
         const resetReuseOperations = ['CreateCard', 'CreateCollection', 'UpdateCollection', 'DeleteCollections'];
 
@@ -65,23 +69,34 @@ export function createApolloLink(
         return forward(operation);
     });
 
-    const uploadInterceptor = new ApolloLink((operation, forward) => {
-        networkActivityService.increase();
-
-        return forward(operation).map(response => {
-            networkActivityService.decrease();
-            return response;
-        });
-    });
-
-    // If query has no file, batch it, otherwise upload only that query
-    const httpLink = ApolloLink.split(
-        operation => hasFilesAndProcessDate(operation.variables) || isMutation(operation.query),
-        uploadInterceptor.concat(createUploadLink(options)),
-        httpBatchLink.create(options),
-    );
-
     const errorLink = createErrorLink(networkActivityService, alertService);
 
-    return routeReuseClearer.concat(errorLink.concat(httpLink));
+    return routeReuseClearer.concat(
+        errorLink.concat(
+            createHttpLink(httpLink, httpBatchLink, {
+                uri: '/graphql',
+            }),
+        ),
+    );
 }
+
+function apolloOptionsFactory(): ApolloClientOptions<NormalizedCacheObject> {
+    const networkActivityService = inject(NetworkActivityService);
+    const alertService = inject(AlertService);
+    const httpLink = inject(HttpLink);
+    const httpBatchLink = inject(HttpBatchLink);
+    const routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
+
+    const link = createApolloLink(networkActivityService, alertService, httpLink, httpBatchLink, routeReuse);
+
+    return {
+        link: link,
+        cache: new InMemoryCache(),
+        defaultOptions: apolloDefaultOptions,
+    };
+}
+
+export const apolloOptionsProvider: Provider = {
+    provide: APOLLO_OPTIONS,
+    useFactory: apolloOptionsFactory,
+};
