@@ -8,8 +8,8 @@ import {provideAnimations, provideNoopAnimations} from '@angular/platform-browse
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
-import {NetworkInterceptorService} from './app/shared/services/network-interceptor.service';
-import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withJsonpSupport} from '@angular/common/http';
+import {activityInterceptor} from './app/shared/services/activity-interceptor';
+import {provideHttpClient, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material/tooltip';
 import {AppRouteReuseStrategy} from './app/app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
@@ -67,12 +67,7 @@ bootstrapApplication(AppComponent, {
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: NetworkInterceptorService,
-            multi: true,
-        },
-        provideHttpClient(withInterceptorsFromDi(), withJsonpSupport()),
+        provideHttpClient(withInterceptors([activityInterceptor]), withJsonpSupport()),
         provideRouter(
             routes,
             withRouterConfig({
