@@ -1592,16 +1592,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "11.6.0",
+            "version": "11.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "27e9dba47a36ae9aa6ec2ea32f847758fd6ba3a9"
+                "reference": "433ac3e26dcb77dead49e9e4539f30ffa9feb40f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/27e9dba47a36ae9aa6ec2ea32f847758fd6ba3a9",
-                "reference": "27e9dba47a36ae9aa6ec2ea32f847758fd6ba3a9",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/433ac3e26dcb77dead49e9e4539f30ffa9feb40f",
+                "reference": "433ac3e26dcb77dead49e9e4539f30ffa9feb40f",
                 "shasum": ""
             },
             "require": {
@@ -1657,9 +1657,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/11.6.0"
+                "source": "https://github.com/Ecodev/felix/tree/11.6.1"
             },
-            "time": "2023-07-24T15:43:12+00:00"
+            "time": "2023-07-25T09:22:18+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
