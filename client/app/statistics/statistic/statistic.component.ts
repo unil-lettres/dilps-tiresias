@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import * as Highcharts from 'highcharts';
+import Highcharts from 'highcharts/es-modules/masters/highcharts.src.js';
 import {NgFor, PercentPipe} from '@angular/common';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
