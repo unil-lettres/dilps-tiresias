@@ -3,8 +3,8 @@
 /**
  * This script will dump the GraphQL schema to a module
  */
-const {execFileSync} = require('child_process');
-const fs = require('fs');
+const {execFileSync} = require('node:child_process');
+const fs = require('node:fs');
 const utilities = require('graphql/utilities');
 const {buildClientSchema, printSchema} = require('graphql');
 

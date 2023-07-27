@@ -1,4 +1,4 @@
-const {writeFile} = require('fs');
+const {writeFile} = require('node:fs');
 const {argv} = require('yargs');
 
 // Read environment variables from .env file
