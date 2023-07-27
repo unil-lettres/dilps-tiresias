@@ -31,7 +31,7 @@ jobs:
             - name: Node Setup
               uses: actions/setup-node@v3
               with:
-                  node-version: '16'
+                  node-version: '18'
 
             - name: PHP Setup
               uses: shivammathur/setup-php@v2

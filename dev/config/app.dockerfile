@@ -30,7 +30,7 @@ RUN docker-php-ext-enable imagick xdebug
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Node & Yarn
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends nodejs &&\
     npm install --global gulp-cli yarn
