@@ -15,7 +15,7 @@ import {AppRouteReuseStrategy} from './app/app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
-import {MAT_PAGINATOR_DEFAULT_OPTIONS} from '@angular/material/paginator';
+import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
 import {IScrollbarOptions, NG_SCROLLBAR_OPTIONS} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo.link.creator';
@@ -60,7 +60,7 @@ bootstrapApplication(AppComponent, {
             provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
             useValue: {
                 formFieldAppearance: 'fill',
-            },
+            } satisfies MatPaginatorDefaultOptions,
         },
         {provide: SITE, useValue: (window as Literal)['APP_SITE']},
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
