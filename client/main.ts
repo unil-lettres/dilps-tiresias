@@ -21,6 +21,7 @@ import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo.link.creator';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './app/statistics/services/statistic.service';
+import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
     enableProdMode();
@@ -61,6 +62,12 @@ bootstrapApplication(AppComponent, {
             useValue: {
                 formFieldAppearance: 'fill',
             } satisfies MatPaginatorDefaultOptions,
+        },
+        {
+            provide: MAT_TABS_CONFIG,
+            useValue: {
+                stretchTabs: false,
+            } satisfies MatTabsConfig,
         },
         {provide: SITE, useValue: (window as Literal)['APP_SITE']},
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
