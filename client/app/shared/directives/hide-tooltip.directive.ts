@@ -34,7 +34,10 @@ class TooltipCollector {
     standalone: true,
 })
 export class HideTooltipDirective implements OnInit, OnDestroy {
-    public constructor(private readonly matToolTip: MatTooltip, private readonly tooltipCollector: TooltipCollector) {}
+    public constructor(
+        private readonly matToolTip: MatTooltip,
+        private readonly tooltipCollector: TooltipCollector,
+    ) {}
 
     public ngOnInit(): void {
         this.tooltipCollector.collection.add(this.matToolTip);

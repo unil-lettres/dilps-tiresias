@@ -53,7 +53,10 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
 
-    public constructor(private readonly route: ActivatedRoute, private readonly cardService: CardService) {
+    public constructor(
+        private readonly route: ActivatedRoute,
+        private readonly cardService: CardService,
+    ) {
         super();
     }
 
