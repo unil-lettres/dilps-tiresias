@@ -16,14 +16,14 @@ import {
     providedIn: 'root',
 })
 export class FileService extends NaturalAbstractModelService<
-    any,
-    any,
+    never,
+    never,
     Files['files'],
     FilesVariables,
     CreateFile['createFile'],
     CreateFileVariables,
-    any,
-    any,
+    never,
+    never,
     DeleteFile,
     DeleteFileVariables
 > {
