@@ -1560,10 +1560,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^54.0.2":
-  version "54.0.2"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-54.0.2.tgz#9ca042ba69f1569881af20957003d0ff270021b9"
-  integrity sha512-x5CNjW4OGE/+yLLM1cuqm0qJTnMdMnqbS7l/1xaX9rnNNr11kL98CFfp+emW5ELUJaI6YIoOZkmQJcPfejvzIQ==
+"@ecodev/natural@^54.0.3":
+  version "54.0.3"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-54.0.3.tgz#d2dcb60060bbea42d2b5d447e169c70577425f78"
+  integrity sha512-LvgvHUk0OvRW3iqLCv+WUfvDMTUhWMGjxkuMbhKVi/CjIiEfFBsJ31kw059kkjE8FcTt+JZlK3Xrey/AoR/CoA==
   dependencies:
     crypto-es "^2.0.3"
     extract-files "^13.0.0"
