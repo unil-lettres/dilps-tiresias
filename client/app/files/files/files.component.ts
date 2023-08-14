@@ -84,7 +84,10 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
     public dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
     private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
 
-    public constructor(private readonly fileService: FileService, private readonly alertService: AlertService) {
+    public constructor(
+        private readonly fileService: FileService,
+        private readonly alertService: AlertService,
+    ) {
         super();
 
         // Trigger column selection

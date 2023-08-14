@@ -143,7 +143,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
 
     private lastCollectionId = 0;
 
-    public constructor(private readonly router: Router, private readonly route: ActivatedRoute) {
+    public constructor(
+        private readonly router: Router,
+        private readonly route: ActivatedRoute,
+    ) {
         super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
     }

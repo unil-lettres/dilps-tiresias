@@ -31,7 +31,10 @@ export class AbstractList<
 
     protected readonly dialog: MatDialog = inject(MatDialog);
 
-    public constructor(service: TService, private readonly component: ComponentType<unknown>) {
+    public constructor(
+        service: TService,
+        private readonly component: ComponentType<unknown>,
+    ) {
         super(service);
     }
 

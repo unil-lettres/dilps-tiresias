@@ -44,7 +44,7 @@
             <!-- Role Column -->
             <ng-container matColumnDef="role">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
-                <td *matCellDef="let element" mat-cell>{{ element.role | enum : 'UserRole' | async }}</td>
+                <td *matCellDef="let element" mat-cell>{{ element.role | enum: 'UserRole' | async }}</td>
             </ng-container>
 
             <!-- Type Column -->
@@ -56,7 +56,7 @@
             <!-- activeUntil Column -->
             <ng-container matColumnDef="activeUntil">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Validité</th>
-                <td *matCellDef="let element" mat-cell>{{ element.activeUntil | date : 'dd.MM.yyyy' }}</td>
+                <td *matCellDef="let element" mat-cell>{{ element.activeUntil | date: 'dd.MM.yyyy' }}</td>
             </ng-container>
 
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

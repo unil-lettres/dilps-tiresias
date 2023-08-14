@@ -3,7 +3,7 @@
         Créé
         <span *ngIf="item.creator"> par {{ item.creator.login }}</span>
         <span *ngIf="item.creationDate">
-            le {{ item.creationDate | date : 'dd.MM.yyyy' }} à {{ item.creationDate | date : 'HH:mm' }}
+            le {{ item.creationDate | date: 'dd.MM.yyyy' }} à {{ item.creationDate | date: 'HH:mm' }}
         </span>
     </div>
 
@@ -11,7 +11,7 @@
         Edité
         <span *ngIf="item.updater">par {{ item.updater.login }}</span>
         <span *ngIf="item.updateDate">
-            le {{ item.updateDate | date : 'dd.MM.yyyy' }} à {{ item.updateDate | date : 'HH:mm' }}
+            le {{ item.updateDate | date: 'dd.MM.yyyy' }} à {{ item.updateDate | date: 'HH:mm' }}
         </span>
     </div>
 
@@ -19,7 +19,7 @@
         Données validées
         <span *ngIf="item.dataValidator"> par {{ item.dataValidator.login }}</span>
         <span *ngIf="item.dataValidationDate">
-            le {{ item.dataValidationDate | date : 'dd.MM.yyyy' }} à {{ item.dataValidationDate | date : 'HH:mm' }}
+            le {{ item.dataValidationDate | date: 'dd.MM.yyyy' }} à {{ item.dataValidationDate | date: 'HH:mm' }}
         </span>
     </div>
 
@@ -27,7 +27,7 @@
         Image validée
         <span *ngIf="item.imageValidator">par {{ item.imageValidator.login }}</span>
         <span *ngIf="item.imageValidationDate">
-            le {{ item.imageValidationDate | date : 'dd.MM.yyyy' }} à {{ item.imageValidationDate | date : 'HH:mm' }}
+            le {{ item.imageValidationDate | date: 'dd.MM.yyyy' }} à {{ item.imageValidationDate | date: 'HH:mm' }}
         </span>
     </div>
 </div>

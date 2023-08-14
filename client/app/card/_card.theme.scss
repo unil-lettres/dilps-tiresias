@@ -63,7 +63,9 @@
                 &::after {
                     width: 100%;
                     transform: translateX(-50%);
-                    transition: width $transition-animation, transform $transition-animation;
+                    transition:
+                        width $transition-animation,
+                        transform $transition-animation;
                 }
 
                 .label {

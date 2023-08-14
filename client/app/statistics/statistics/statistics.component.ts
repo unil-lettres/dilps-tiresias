@@ -1,8 +1,17 @@
 import {Apollo} from 'apollo-angular';
 import {Component} from '@angular/core';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
+import {
+    MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MatFormFieldDefaultOptions,
+    MatFormFieldModule,
+} from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
-import {Literal, NaturalQueryVariablesManager, NaturalSelectComponent} from '@ecodev/natural';
+import {
+    Literal,
+    NaturalLinkableTabDirective,
+    NaturalQueryVariablesManager,
+    NaturalSelectComponent,
+} from '@ecodev/natural';
 import {
     ExtraStatistics,
     SortingOrder,
@@ -77,7 +86,7 @@ interface SerieData {
             provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
             useValue: {
                 subscriptSizing: 'dynamic',
-            },
+            } satisfies MatFormFieldDefaultOptions,
         },
     ],
     standalone: true,
@@ -93,6 +102,7 @@ interface SerieData {
         NaturalSelectComponent,
         FormsModule,
         KeyValuePipe,
+        NaturalLinkableTabDirective,
     ],
 })
 export class StatisticsComponent {
