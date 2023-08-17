@@ -26,7 +26,7 @@ import {UserService} from '../../users/services/user.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule} from '@angular/forms';
 import {MatOptionModule} from '@angular/material/core';
-import {NgFor, KeyValuePipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -96,12 +96,11 @@ interface SerieData {
         FlexModule,
         MatFormFieldModule,
         MatSelectModule,
-        NgFor,
+        CommonModule,
         MatOptionModule,
         StatisticComponent,
         NaturalSelectComponent,
         FormsModule,
-        KeyValuePipe,
         NaturalLinkableTabDirective,
     ],
 })

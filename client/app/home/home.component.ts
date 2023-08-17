@@ -43,7 +43,7 @@ import {MatListModule} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgIf, NgFor} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 
 function isExcel(file: File): boolean {
@@ -57,7 +57,7 @@ function isExcel(file: File): boolean {
     standalone: true,
     imports: [
         MatMenuModule,
-        NgIf,
+        CommonModule,
         RouterLink,
         RouterLinkActive,
         FlexModule,
@@ -72,7 +72,6 @@ function isExcel(file: File): boolean {
         MatDividerModule,
         MatButtonModule,
         RouterOutlet,
-        NgFor,
         NaturalIconDirective,
     ],
 })

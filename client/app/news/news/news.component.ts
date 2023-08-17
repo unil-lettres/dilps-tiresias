@@ -8,7 +8,7 @@ import {NewsService} from '../services/news.service';
 import {News} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
-import {NgIf, NgClass} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {UrlValidatorDirective} from '../../shared/directives/url-validator.directive';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -31,8 +31,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         MatFormFieldModule,
         MatInputModule,
         UrlValidatorDirective,
-        NgIf,
-        NgClass,
+        CommonModule,
         ExtendedModule,
         DialogFooterComponent,
     ],

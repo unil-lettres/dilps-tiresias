@@ -7,7 +7,7 @@ import {RouterLink} from '@angular/router';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
-import {NgIf, DatePipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -21,14 +21,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatToolbarModule,
         FlexModule,
         LogoComponent,
-        NgIf,
+        CommonModule,
         ExtendedModule,
         MatTableModule,
         MatSortModule,
         RouterLink,
         MatProgressSpinnerModule,
         MatPaginatorModule,
-        DatePipe,
     ],
 })
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {

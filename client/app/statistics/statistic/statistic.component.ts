@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import Highcharts from 'highcharts/es-modules/masters/highcharts.src.js';
-import {NgFor, PercentPipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
@@ -48,7 +48,7 @@ function percent(count: number, total: number): number {
     templateUrl: './statistic.component.html',
     styleUrls: ['./statistic.component.scss'],
     standalone: true,
-    imports: [FlexModule, HighchartsChartModule, NgFor, MatTableModule, PercentPipe],
+    imports: [FlexModule, HighchartsChartModule, CommonModule, MatTableModule, CommonModule],
 })
 export class StatisticComponent {
     @Input({required: true})

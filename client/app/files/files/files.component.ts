@@ -18,7 +18,7 @@ import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directi
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 interface Tuple {
     file?: FileMinimal;
@@ -31,7 +31,7 @@ interface Tuple {
     styleUrls: ['./files.component.scss'],
     standalone: true,
     imports: [
-        NgIf,
+        CommonModule,
         MatTableModule,
         MatButtonModule,
         MatTooltipModule,

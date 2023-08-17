@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UntypedFormControl} from '@angular/forms';
 import {Stamped, StampComponent} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
@@ -27,7 +27,15 @@ type Model = Stamped & {
     templateUrl: './dialog-footer.component.html',
     styleUrls: ['./dialog-footer.component.scss'],
     standalone: true,
-    imports: [FlexModule, StampComponent, MatButtonModule, MatDialogModule, NgIf, MatIconModule, NaturalIconDirective],
+    imports: [
+        FlexModule,
+        StampComponent,
+        MatButtonModule,
+        MatDialogModule,
+        CommonModule,
+        MatIconModule,
+        NaturalIconDirective,
+    ],
 })
 export class DialogFooterComponent {
     @Input() public canCreate = false;

@@ -7,7 +7,7 @@ import {ThemeService} from './shared/services/theme.service';
 import {takeUntil} from 'rxjs/operators';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
 
@@ -16,7 +16,7 @@ import {NgProgressComponent} from 'ngx-progressbar';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     standalone: true,
-    imports: [NgProgressComponent, RouterOutlet, NgIf, BootLoaderComponent],
+    imports: [NgProgressComponent, RouterOutlet, CommonModule, BootLoaderComponent],
 })
 export class AppComponent extends NaturalAbstractController implements OnInit {
     /**

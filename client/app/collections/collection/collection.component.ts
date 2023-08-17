@@ -29,7 +29,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
 
@@ -42,7 +42,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         MatDialogModule,
         MatTabsModule,
         FlexModule,
-        NgIf,
+        CommonModule,
         MatSliderModule,
         FormsModule,
         MatFormFieldModule,

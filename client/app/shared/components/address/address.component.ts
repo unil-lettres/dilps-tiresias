@@ -20,7 +20,7 @@ import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgIf, NgClass, AsyncPipe} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'app-address',
@@ -29,12 +29,11 @@ import {NgIf, NgClass, AsyncPipe} from '@angular/common';
     providers: [AddressService, CountryService],
     standalone: true,
     imports: [
-        NgIf,
+        CommonModule,
         FlexModule,
         MatFormFieldModule,
         MatInputModule,
         FormsModule,
-        NgClass,
         ExtendedModule,
         NaturalSelectComponent,
         NaturalSelectEnumComponent,
@@ -42,7 +41,6 @@ import {NgIf, NgClass, AsyncPipe} from '@angular/common';
         MatIconModule,
         ReactiveFormsModule,
         GoogleMapsModule,
-        AsyncPipe,
         NaturalIconDirective,
     ],
 })

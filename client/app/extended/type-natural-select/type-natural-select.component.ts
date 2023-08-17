@@ -10,13 +10,13 @@ import {
     NaturalAbstractModelService,
     NaturalSelectComponent,
 } from '@ecodev/natural';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
     templateUrl: './type-natural-select.component.html',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, NgIf, NaturalSelectComponent],
+    imports: [FormsModule, ReactiveFormsModule, CommonModule, NaturalSelectComponent],
 })
 export class TypeNaturalSelectComponent<
     TService extends NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>,

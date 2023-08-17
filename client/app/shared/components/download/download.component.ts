@@ -14,7 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatOptionModule} from '@angular/material/core';
-import {NgFor, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
@@ -36,13 +36,12 @@ export type DownloadComponentData = {
         FlexModule,
         MatFormFieldModule,
         MatSelectModule,
-        NgFor,
+        CommonModule,
         MatOptionModule,
         MatCheckboxModule,
         FormsModule,
         MatButtonModule,
         MatInputModule,
-        NgIf,
     ],
 })
 export class DownloadComponent {

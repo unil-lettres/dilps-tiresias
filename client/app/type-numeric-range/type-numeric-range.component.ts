@@ -20,7 +20,7 @@ import {
     NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
@@ -63,7 +63,7 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
     templateUrl: './type-numeric-range.component.html',
     styleUrls: ['./type-numeric-range.component.scss'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule],
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');

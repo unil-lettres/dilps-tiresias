@@ -28,7 +28,7 @@ import {MatOptionModule} from '@angular/material/core';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgFor, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
@@ -49,9 +49,8 @@ export interface ThesaurusModel {
     imports: [
         MatFormFieldModule,
         MatChipsModule,
-        NgFor,
+        CommonModule,
         FlexModule,
-        NgIf,
         MatIconModule,
         FormsModule,
         MatAutocompleteModule,

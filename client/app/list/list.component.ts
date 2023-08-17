@@ -55,7 +55,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 
 function applyChanges(
@@ -97,7 +97,7 @@ enum ViewMode {
     standalone: true,
     imports: [
         MatMenuModule,
-        NgIf,
+        CommonModule,
         FlexModule,
         MatToolbarModule,
         LogoComponent,

@@ -13,7 +13,7 @@ import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {RouterLink} from '@angular/router';
-import {NgIf, NgFor, NgStyle} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'app-view-list',
@@ -21,11 +21,9 @@ import {NgIf, NgFor, NgStyle} from '@angular/common';
     styleUrls: ['./view-list.component.scss'],
     standalone: true,
     imports: [
-        NgIf,
+        CommonModule,
         MatPaginatorModule,
-        NgFor,
         RouterLink,
-        NgStyle,
         ExtendedModule,
         MatCheckboxModule,
         StripTagsPipe,

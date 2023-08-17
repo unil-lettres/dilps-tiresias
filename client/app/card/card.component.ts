@@ -82,7 +82,7 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgIf, NgClass, NgFor, NgStyle} from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -116,10 +116,9 @@ interface InitialCardValues {
     styleUrls: ['./card.component.scss'],
     standalone: true,
     imports: [
-        NgIf,
+        CommonModule,
         NaturalFileDropDirective,
         FlexModule,
-        NgClass,
         ExtendedModule,
         MatToolbarModule,
         LogoComponent,
@@ -131,7 +130,6 @@ interface InitialCardValues {
         NgScrollbar,
         MatSliderModule,
         FormsModule,
-        NgFor,
         MatFormFieldModule,
         MatInputModule,
         UniqueCodeValidatorDirective,
@@ -144,7 +142,6 @@ interface InitialCardValues {
         NaturalTableButtonComponent,
         FilesComponent,
         StampComponent,
-        NgStyle,
         StripTagsPipe,
         NaturalIconDirective,
     ],

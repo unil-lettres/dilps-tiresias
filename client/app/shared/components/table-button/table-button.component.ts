@@ -2,7 +2,7 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Params, QueryParamsHandling, RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
@@ -11,7 +11,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     styleUrls: ['./table-button.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [NgIf, MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
+    imports: [CommonModule, MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
 })
 export class TableButtonComponent {
     @Input() public queryParams: Params = {};

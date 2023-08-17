@@ -8,7 +8,7 @@ import {GoogleMap, MapInfoWindow, MapMarker, GoogleMapsModule} from '@angular/go
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {NgIf, NgFor} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import Icon = google.maps.Icon;
 
 export interface Location {
@@ -28,7 +28,7 @@ type Marker = {
     templateUrl: './view-map.component.html',
     styleUrls: ['./view-map.component.scss'],
     standalone: true,
-    imports: [NgIf, GoogleMapsModule, NgFor, FlexModule, RouterLink, MatButtonModule],
+    imports: [CommonModule, GoogleMapsModule, FlexModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent extends NaturalAbstractController {
     public selectedMarker: Marker | null = null;

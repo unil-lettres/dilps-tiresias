@@ -9,7 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {CardComponent} from '../../../card/card.component';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
-import {NgFor, NgStyle, NgIf, NgTemplateOutlet} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
@@ -19,12 +19,9 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
     standalone: true,
     imports: [
         FlexModule,
-        NgFor,
-        NgStyle,
+        CommonModule,
         ExtendedModule,
-        NgIf,
         MatDialogModule,
-        NgTemplateOutlet,
         CardComponent,
         MatCheckboxModule,
         FormsModule,
