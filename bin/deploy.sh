@@ -56,7 +56,7 @@ if [[ -n "$BUGSNAG_API_KEY" && -n "$REPO_OWNER" && -n "$REPO_NAME" ]]; then
     curl -L $URL -o $PWD/js-sources-map.zip
     unzip $PWD/js-sources-map.zip -d $PWD/js-sources-map/
 
-    files=(main polyfills runtime node_modules_quill_dist_quill_js)
+    files=(main polyfills runtime quill)
     for file in "${files[@]}"; do
         upload_file $file
     done
