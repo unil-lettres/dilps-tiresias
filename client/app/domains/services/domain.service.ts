@@ -47,11 +47,11 @@ export class DomainService extends AbstractContextualizedService<
         );
     }
 
-    public override getDefaultForClient(): DomainInput {
+    protected override getDefaultForClient(): DomainInput {
         return this.getDefaultForServer();
     }
 
-    public override getDefaultForServer(): DomainInput {
+    protected override getDefaultForServer(): DomainInput {
         return {
             name: '',
             parent: null,

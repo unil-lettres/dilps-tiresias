@@ -53,11 +53,11 @@ export class DocumentTypeService extends AbstractContextualizedService<
         );
     }
 
-    public override getDefaultForClient(): DocumentTypeInput {
+    protected override getDefaultForClient(): DocumentTypeInput {
         return this.getDefaultForServer();
     }
 
-    public override getDefaultForServer(): DocumentTypeInput {
+    protected override getDefaultForServer(): DocumentTypeInput {
         return {
             name: '',
             site: this.site,
