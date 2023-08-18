@@ -125,10 +125,6 @@ export class CardService extends AbstractContextualizedService<
         return merge({}, card, fields);
     }
 
-    protected override getDefaultForClient(): CardInput {
-        return this.getDefaultForServer();
-    }
-
     public override getDefaultForServer(): CardInput {
         return {
             code: '',

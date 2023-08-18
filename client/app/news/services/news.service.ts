@@ -48,10 +48,6 @@ export class NewsService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForClient(): NewsInput {
-        return this.getDefaultForServer();
-    }
-
     protected override getDefaultForServer(): NewsInput {
         return {
             name: '',

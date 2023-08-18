@@ -65,10 +65,6 @@ export class CollectionService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForClient(): CollectionInput {
-        return this.getDefaultForServer();
-    }
-
     protected override getDefaultForServer(): CollectionInput {
         return {
             site: this.site,

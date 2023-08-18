@@ -47,10 +47,6 @@ export class MaterialService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForClient(): MaterialInput {
-        return this.getDefaultForServer();
-    }
-
     protected override getDefaultForServer(): MaterialInput {
         return {
             name: '',
