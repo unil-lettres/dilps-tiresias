@@ -47,7 +47,7 @@ export class DomainService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForServer(): DomainInput {
+    public override getDefaultForServer(): DomainInput {
         return {
             name: '',
             parent: null,

@@ -53,7 +53,7 @@ export class AntiqueNameService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForServer(): AntiqueNameInput {
+    public override getDefaultForServer(): AntiqueNameInput {
         return {
             name: '',
             site: this.site,

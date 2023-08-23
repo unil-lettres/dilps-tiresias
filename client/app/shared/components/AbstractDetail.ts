@@ -46,7 +46,7 @@ export class AbstractDetailDirective<
         public readonly userService: UserService,
         data: Data<TService, Extra> | undefined,
     ) {
-        this.data = merge({item: this.service.getConsolidatedForClient()}, data);
+        this.data = merge({item: this.service.getDefaultForServer()}, data);
     }
 
     public ngOnInit(): void {

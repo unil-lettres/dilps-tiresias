@@ -31,7 +31,7 @@ export class FileService extends NaturalAbstractModelService<
         super(apollo, naturalDebounceService, 'file', null, filesQuery, createFileMutation, null, deleteFileMutation);
     }
 
-    protected override getDefaultForServer(): FileInput {
+    public override getDefaultForServer(): FileInput {
         return {
             card: null,
             name: '',

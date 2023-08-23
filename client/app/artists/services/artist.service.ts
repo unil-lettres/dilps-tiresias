@@ -47,7 +47,7 @@ export class ArtistService extends AbstractContextualizedService<
         );
     }
 
-    protected override getDefaultForServer(): ArtistInput {
+    public override getDefaultForServer(): ArtistInput {
         return {
             name: '',
             site: this.site,

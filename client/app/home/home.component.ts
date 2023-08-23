@@ -21,7 +21,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {CardInput, Site, UserRole, Viewer} from '../shared/generated-types';
+import {Site, UserRole, Viewer} from '../shared/generated-types';
 import {NetworkActivityService} from '../shared/services/network-activity.service';
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
@@ -147,7 +147,7 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
 
     public uploadImagesOnly(files: File[]): void {
         const inputs = files.map(file => {
-            const card = this.cardService.getConsolidatedForClient() as CardInput;
+            const card = this.cardService.getDefaultForServer();
             card.file = file;
 
             return card;

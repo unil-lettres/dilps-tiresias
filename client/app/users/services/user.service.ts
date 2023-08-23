@@ -86,7 +86,7 @@ export class UserService
         );
     }
 
-    protected override getDefaultForServer(): UserInput {
+    public override getDefaultForServer(): UserInput {
         return {
             site: this.site,
             login: '',
