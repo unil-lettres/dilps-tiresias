@@ -91,10 +91,6 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
         this.selectionModel.clear();
     }
 
-    public getInstitutionAddress(institution: NonNullable<Cards['cards']['items'][0]['institution']>): string {
-        return [institution.street, institution.locality, institution.country?.name].filter(v => !!v).join(', ');
-    }
-
     public getCardAddress(card: Cards['cards']['items'][0]): string {
         return [card.street, card.postcode, card.locality, card.country?.name].filter(v => !!v).join(', ');
     }

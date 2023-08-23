@@ -229,7 +229,6 @@
     </div>
     <ng-template #viewResults>
         <app-view-grid
-            #view
             (pagination)="pagination($event)"
             (selectionChange)="select($event)"
             (contentChange)="gridContentChange($event)"
@@ -240,7 +239,6 @@
         ></app-view-grid>
 
         <app-view-list
-            #view
             (pagination)="pagination($event)"
             (selectionChange)="select($event)"
             *ngIf="viewMode === ViewMode.list"
@@ -250,7 +248,6 @@
         ></app-view-list>
 
         <app-view-map
-            #view
             *ngIf="viewMode === ViewMode.map"
             [cards]="selected"
             [style.height]="'100%'"

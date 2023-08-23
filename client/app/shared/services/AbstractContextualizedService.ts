@@ -8,7 +8,7 @@ import {
     VariablesWithInput,
 } from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
-import {Site} from '../../shared/generated-types';
+import {Site} from '../generated-types';
 import {Observable, of} from 'rxjs';
 
 export class AbstractContextualizedService<

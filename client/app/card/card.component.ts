@@ -535,14 +535,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         this.model.visibility = this.visibilities[this.visibility].value;
     }
 
-    public onSubmit(): void {
-        if (this.isFetchedCard(this.model)) {
-            this.update();
-        } else {
-            this.create();
-        }
-    }
-
     public update(): void {
         if (!this.isFetchedCard(this.model)) {
             return;
