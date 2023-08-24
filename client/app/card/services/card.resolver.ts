@@ -5,9 +5,6 @@ import {CardService} from './card.service';
 import {Card} from '../../shared/generated-types';
 import {ErrorService} from '../../shared/components/error/error.service';
 
-/**
- * Resolve sites for routing service only at the moment
- */
 export function resolveCard(route: ActivatedRouteSnapshot): Observable<Card['card'] | null> {
     const cardService = inject(CardService);
     const errorService = inject(ErrorService);
