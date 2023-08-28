@@ -41,6 +41,8 @@ class TypesFactory
             \Ecodev\Felix\Api\Scalar\ChronosType::class,
         ];
 
+        $invokables = array_combine($invokables, $invokables);
+
         $aliases = [
             \Cake\Chronos\Chronos::class => \Ecodev\Felix\Api\Scalar\ChronosType::class,
             'datetime' => \Ecodev\Felix\Api\Scalar\ChronosType::class,

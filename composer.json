@@ -50,24 +50,24 @@
         "creof/wkb-parser": "^2.4",
         "ecodev/felix": "^11.6",
         "ecodev/graphql-upload": "^6.1",
-        "laminas/laminas-config-aggregator": "^1.11",
-        "laminas/laminas-diactoros": "^2.21",
-        "laminas/laminas-permissions-acl": "^2.12",
-        "laminas/laminas-servicemanager": "3.19",
-        "mezzio/mezzio": "^3.13",
-        "mezzio/mezzio-fastroute": "^3.7",
-        "mezzio/mezzio-helpers": "^5.11",
-        "mezzio/mezzio-laminasviewrenderer": "^2.9",
-        "mezzio/mezzio-session": "^1.11",
-        "mezzio/mezzio-session-ext": "^1.14",
+        "laminas/laminas-config-aggregator": "^1.13",
+        "laminas/laminas-diactoros": "^2.25",
+        "laminas/laminas-permissions-acl": "^2.15",
+        "laminas/laminas-servicemanager": "^3.21",
+        "mezzio/mezzio": "^3.17",
+        "mezzio/mezzio-fastroute": "^3.10",
+        "mezzio/mezzio-helpers": "^5.15",
+        "mezzio/mezzio-laminasviewrenderer": "^2.14",
+        "mezzio/mezzio-session": "^1.13",
+        "mezzio/mezzio-session-ext": "^1.18",
         "phpoffice/phppresentation": "^1.0",
-        "phpoffice/phpspreadsheet": "^1.25",
-        "roave/psr-container-doctrine": "^3.6"
+        "phpoffice/phpspreadsheet": "^1.29",
+        "roave/psr-container-doctrine": "^3.9"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
-        "laminas/laminas-development-mode": "^3.10",
+        "laminas/laminas-development-mode": "^3.11",
         "phpstan/phpstan-doctrine": "@stable",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6"
     }
 }
