@@ -120,7 +120,7 @@ class TemplateHandler implements RequestHandlerInterface
             ++$this->row;
         }
 
-        $style = $sheet->getStyleByColumnAndRow(1, 1, $this->col, $this->row);
+        $style = $sheet->getStyle([1, 1, $this->col, $this->row]);
         $style->getAlignment()->setWrapText(true);
 
         return $spreadsheet;
@@ -129,10 +129,10 @@ class TemplateHandler implements RequestHandlerInterface
     private function headers(Worksheet $sheet): void
     {
         foreach (self::HEADERS as $header) {
-            $sheet->setCellValueByColumnAndRow($this->col++, $this->row, $header);
+            $sheet->setCellValue([$this->col++, $this->row], $header);
         }
 
-        $style = $sheet->getStyleByColumnAndRow(1, $this->row, $this->col, $this->row);
+        $style = $sheet->getStyle([1, $this->row, $this->col, $this->row]);
         $style->getFont()->setBold(true);
 
         // Adjust column width
@@ -144,7 +144,7 @@ class TemplateHandler implements RequestHandlerInterface
             }
         }
 
-        $sheet->freezePaneByColumnAndRow(1, $this->row + 1);
+        $sheet->freezePane([1, $this->row + 1]);
 
         ++$this->row;
     }
@@ -155,7 +155,7 @@ class TemplateHandler implements RequestHandlerInterface
         $sheet->setTitle($name);
         $row = 1;
         foreach ($data as $d) {
-            $sheet->setCellValueByColumnAndRow(1, $row++, $d);
+            $sheet->setCellValue([1, $row++], $d);
         }
 
         $spreadsheet->addNamedRange(
@@ -172,7 +172,7 @@ class TemplateHandler implements RequestHandlerInterface
     private function writeSelect(Worksheet $sheet, string $name): void
     {
         $validation = $sheet
-            ->getCellByColumnAndRow($this->col++, $this->row)
+            ->getCell([$this->col++, $this->row])
             ->getDataValidation();
 
         $validation->setType(DataValidation::TYPE_LIST)

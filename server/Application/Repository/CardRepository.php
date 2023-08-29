@@ -92,7 +92,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
                 ->where('site = "' . $site . '"');
         }
 
-        return $filenames->execute()->fetchAllAssociative();
+        return $filenames->fetchAllAssociative();
     }
 
     /**

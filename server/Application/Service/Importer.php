@@ -101,7 +101,7 @@ class Importer
         $col = 1;
         $row = 1;
         foreach (TemplateHandler::HEADERS as $header) {
-            $actual = $sheet->getCellByColumnAndRow($col, $row)->getValue();
+            $actual = $sheet->getCell([$col, $row])->getValue();
             if ($actual !== $header) {
                 $this->throwException($col, $row, 'S\'attend à "' . $header . '", mais a vu "' . $actual . '"');
             }
@@ -117,7 +117,7 @@ class Importer
         $row = 2;
 
         $cards = [];
-        while ($imageName = (string) $sheet->getCellByColumnAndRow($col, $row)->getValue()) {
+        while ($imageName = (string) $sheet->getCell([$col, $row])->getValue()) {
             $imageNameWithoutExtension = pathinfo($imageName, PATHINFO_FILENAME);
             if (!array_key_exists($imageNameWithoutExtension, $imagesToImport)) {
                 $this->throwException($col, $row, 'Image présente dans le fichier Excel, mais pas retrouvée dans les images uploadées: ' . $imageName);
@@ -210,7 +210,7 @@ class Importer
 
     private function readString(Worksheet $sheet, int $col, int $row): string
     {
-        return trim((string) $sheet->getCellByColumnAndRow($col, $row)->getValue());
+        return trim((string) $sheet->getCell([$col, $row])->getValue());
     }
 
     private function readDomain(Worksheet $sheet, int $col, int $row): ?Domain
@@ -255,7 +255,7 @@ class Importer
 
     private function readPrecision(Worksheet $sheet, int $col, int $row): ?string
     {
-        $value = $sheet->getCellByColumnAndRow($col, $row)->getValue();
+        $value = $sheet->getCell([$col, $row])->getValue();
         if (!$value) {
             return null;
         }
@@ -275,7 +275,7 @@ class Importer
 
     private function read(Worksheet $sheet, int $col, int $row, string $class, array $values, string $name): ?AbstractModel
     {
-        $value = $sheet->getCellByColumnAndRow($col, $row)->getValue();
+        $value = $sheet->getCell([$col, $row])->getValue();
         if (!$value) {
             return null;
         }
@@ -289,7 +289,7 @@ class Importer
 
     private function readInt(Worksheet $sheet, int $col, int $row): ?int
     {
-        $value = $sheet->getCellByColumnAndRow($col, $row)->getValue();
+        $value = $sheet->getCell([$col, $row])->getValue();
         if (!$value) {
             return null;
         }
@@ -303,7 +303,7 @@ class Importer
 
     private function readFloat(Worksheet $sheet, int $col, int $row): ?float
     {
-        $value = $sheet->getCellByColumnAndRow($col, $row)->getValue();
+        $value = $sheet->getCell([$col, $row])->getValue();
         if (!$value) {
             return null;
         }
