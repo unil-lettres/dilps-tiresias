@@ -12,7 +12,7 @@ coding_style:
 build:
     nodes:
         analysis:
-            image: default-bionic
+            image: default-jammy
             environment:
                 php: 8.1.2
                 node: 18
