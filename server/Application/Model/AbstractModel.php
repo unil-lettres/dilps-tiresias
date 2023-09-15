@@ -89,8 +89,6 @@ abstract class AbstractModel implements HasOwner, Model
 
     /**
      * Set creator.
-     *
-     * @param User $creator
      */
     private function setCreator(?User $creator): void
     {
@@ -107,8 +105,6 @@ abstract class AbstractModel implements HasOwner, Model
 
     /**
      * Set owner.
-     *
-     * @param User $owner
      */
     #[API\Exclude]
     public function setOwner(?User $owner): void

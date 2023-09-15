@@ -23,7 +23,6 @@ class SameSite implements NamedAssertion
      * Assert that the object has been created by the current user.
      *
      * @param \Application\Acl\Acl $acl
-     * @param RoleInterface $role
      * @param ModelResource $resource
      * @param string $privilege
      *
