@@ -56,7 +56,7 @@ class AclFilterTest extends TestCase
         yield 'users are accessible to any other users' => [
             'student',
             User::class,
-            'test.id IN (SELECT',
+            '',
         ];
         yield 'only public cards are accessible to anonymous' => [
             null,
