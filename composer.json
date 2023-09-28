@@ -49,6 +49,7 @@
         "creof/doctrine2-spatial": "^1.2",
         "creof/wkb-parser": "^2.4",
         "ecodev/felix": "^11.7",
+        "ecodev/graphql-doctrine": "^8.1",
         "ecodev/graphql-upload": "^6.1",
         "laminas/laminas-config-aggregator": "^1.13",
         "laminas/laminas-servicemanager": "^3.21",
