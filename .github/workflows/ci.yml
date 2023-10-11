@@ -23,6 +23,11 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
 
         steps:
+            - name: Install mariadb-client
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install mariadb-client
+
             - name: Checkout
               uses: actions/checkout@v4
               with:
