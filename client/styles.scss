@@ -167,3 +167,14 @@ td.mat-column-usageCount {
 .ng-scroll-content {
     width: 100%;
 }
+
+.ng-scrollbar-wrapper,
+.ng-scroll-viewport-wrapper,
+.ng-scroll-layer,
+.ng-scroll-viewport {
+    /* Replace inset property not supported by Safari 13. */
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
