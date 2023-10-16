@@ -15,7 +15,7 @@ return [
             [
                 'message' => 'Entity not found for class `Application\Model\User` and ID `1000`.',
                 'extensions' => [
-                    'category' => 'graphql',
+                    'category' => 'user',
                 ],
                 'locations' => [
                     [

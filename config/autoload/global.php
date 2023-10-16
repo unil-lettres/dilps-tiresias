@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 return [
     'hostname' => 'dilps.lan',
-    'phpPath' => '/usr/bin/php8.1',
+    'phpPath' => '/usr/bin/php8.2',
     'files' => [
         'unlink' => true,
     ],

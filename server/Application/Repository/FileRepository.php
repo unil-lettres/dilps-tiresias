@@ -25,7 +25,6 @@ class FileRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
         $cartSubQuery = $cardRepository->getAccessibleSubQuery($user);
 
         if ($cartSubQuery) {
-//            w($cartSubQuery);
             return 'SELECT id FROM file WHERE card_id IN (' . $cartSubQuery . ')';
         }
 

@@ -22,7 +22,6 @@ class IsNotSuggestion implements NamedAssertion
      * Assert that the card is NOT a suggestion (has a change).
      *
      * @param \Application\Acl\Acl $acl
-     * @param RoleInterface $role
      * @param ModelResource $resource
      * @param string $privilege
      *

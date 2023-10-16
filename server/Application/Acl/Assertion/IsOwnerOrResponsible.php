@@ -26,7 +26,6 @@ class IsOwnerOrResponsible implements NamedAssertion
      * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of.
      *
      * @param \Application\Acl\Acl $acl
-     * @param RoleInterface $role
      * @param ModelResource $resource
      * @param string $privilege
      *

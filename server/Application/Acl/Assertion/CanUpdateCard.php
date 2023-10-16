@@ -22,7 +22,6 @@ class CanUpdateCard implements NamedAssertion
      * Assert that the card that the object belongs to can be updated.
      *
      * @param \Application\Acl\Acl $acl
-     * @param RoleInterface $role
      * @param ModelResource $resource
      * @param string $privilege
      *

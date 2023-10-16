@@ -26,14 +26,8 @@ trait LimitedAccessSubQuery
         $user = $userRepository->getOneByLogin($login, SiteType::DILPS);
         $subQuery = $this->repository->getAccessibleSubQuery($user);
 
-        if ($subQuery === '') {
-            $connection = $this->getEntityManager()->getConnection();
-            $tableName = $this->getEntityManager()->getClassMetadata($this->repository->getClassName())->getTableName();
-            $qb = $connection->createQueryBuilder()
-                ->select('id')
-                ->from($connection->quoteIdentifier($tableName));
-
-            $subQuery = $qb->getSQL();
+        if (!$subQuery) {
+            $subQuery = $this->repository->getAllIdsQuery();
         }
 
         if ($subQuery === '-1') {

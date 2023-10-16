@@ -65,8 +65,6 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Set currently logged in user
      * WARNING: this method should only be called from \Application\Authentication\AuthenticationListener.
-     *
-     * @param User $user
      */
     public static function setCurrent(?self $user): void
     {

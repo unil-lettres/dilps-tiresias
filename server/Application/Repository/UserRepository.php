@@ -111,7 +111,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
         if ($user) {
-            return $this->getAllIdsQuery();
+            return '';
         }
 
         return '-1';
