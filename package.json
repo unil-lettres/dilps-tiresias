@@ -47,7 +47,7 @@
         "apollo-angular": "^5.0.0",
         "bugsnag-build-reporter": "^2.0.0",
         "dotenv": "^16.3.1",
-        "graphql": "^16.7.1",
+        "graphql": "^16.8.1",
         "highcharts": "^11.1.0",
         "highcharts-angular": "^3.0.0",
         "lodash-es": "^4.17.21",
