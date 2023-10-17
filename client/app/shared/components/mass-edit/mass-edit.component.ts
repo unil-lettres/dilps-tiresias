@@ -51,6 +51,7 @@ export class MassEditComponent {
 
         const card = cardService.getDefaultForServer();
         card.visibility = null;
+        card.precision = null;
         this.card = card;
     }
 }
