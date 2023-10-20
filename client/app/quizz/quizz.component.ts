@@ -10,7 +10,6 @@ import {NaturalAbstractController} from '@ecodev/natural';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -30,7 +29,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
         ReactiveFormsModule,
         MatButtonModule,
         CommonModule,
-        ExtendedModule,
         MatExpansionModule,
         MatTooltipModule,
         HideTooltipDirective,

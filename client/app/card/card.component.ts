@@ -80,7 +80,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 
@@ -119,7 +118,6 @@ interface InitialCardValues {
         CommonModule,
         NaturalFileDropDirective,
         FlexModule,
-        ExtendedModule,
         MatToolbarModule,
         LogoComponent,
         MatMenuModule,

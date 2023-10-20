@@ -8,7 +8,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {CardComponent} from '../../../card/card.component';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
@@ -20,7 +19,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
     imports: [
         FlexModule,
         CommonModule,
-        ExtendedModule,
         MatDialogModule,
         CardComponent,
         MatCheckboxModule,

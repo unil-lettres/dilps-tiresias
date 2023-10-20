@@ -11,7 +11,6 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
@@ -24,7 +23,6 @@ import {CommonModule} from '@angular/common';
         CommonModule,
         MatPaginatorModule,
         RouterLink,
-        ExtendedModule,
         MatCheckboxModule,
         StripTagsPipe,
         OnlyLeavesPipe,
