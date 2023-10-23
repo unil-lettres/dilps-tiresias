@@ -9,7 +9,6 @@ use Application\Model\Collection;
 use Application\Model\Export;
 use Application\Model\User;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\QueryBuilder;
 use Ecodev\Felix\Repository\LimitedAccessSubQuery;
 use Ecodev\Felix\Utility;
 
@@ -18,21 +17,6 @@ use Ecodev\Felix\Utility;
  */
 class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 {
-    public function getFindAllByCollections(array $collections = []): QueryBuilder
-    {
-        $qb = $this->createQueryBuilder('card');
-
-        if (count($collections) > 0) {
-            $qb->join('card.collections', 'collection');
-            $qb->andWhere('collection.id IN (:collections)');
-            $qb->setParameter('collections', $collections);
-        } else {
-            $qb->andWhere('card.collections IS EMPTY');
-        }
-
-        return $qb;
-    }
-
     /**
      * Returns pure SQL to get ID of all cards that are accessible to given user.
      * A card is accessible if:
