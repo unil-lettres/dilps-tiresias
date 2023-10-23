@@ -1,8 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {
     AbstractControl,
-    UntypedFormControl,
-    UntypedFormGroup,
+    FormControl,
+    FormGroup,
     ValidationErrors,
     FormsModule,
     ReactiveFormsModule,
@@ -67,9 +67,9 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     public roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 
-    public passwordGroupCtrl: UntypedFormGroup;
-    public passwordCtrl: UntypedFormControl;
-    public passwordConfirmationCtrl: UntypedFormControl;
+    public passwordGroupCtrl: FormGroup;
+    public passwordCtrl: FormControl;
+    public passwordConfirmationCtrl: FormControl;
 
     public institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
 
@@ -87,9 +87,9 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
         naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 
-        this.passwordCtrl = new UntypedFormControl('');
-        this.passwordConfirmationCtrl = new UntypedFormControl('');
-        this.passwordGroupCtrl = new UntypedFormGroup(
+        this.passwordCtrl = new FormControl('');
+        this.passwordConfirmationCtrl = new FormControl('');
+        this.passwordGroupCtrl = new FormGroup(
             {
                 password: this.passwordCtrl,
                 passwordConfirmation: this.passwordConfirmationCtrl,

@@ -3,8 +3,8 @@ import {
     AbstractControl,
     FormGroupDirective,
     NgForm,
-    UntypedFormControl,
-    UntypedFormGroup,
+    FormControl,
+    FormGroup,
     ValidationErrors,
     ValidatorFn,
     Validators,
@@ -31,7 +31,7 @@ export interface TypeNumericRangeConfiguration {
 }
 
 class InvalidWithValueStateMatcher implements ErrorStateMatcher {
-    public isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
         return (form && form.invalid && (form.value.to || form.value.from)) || (control && control.invalid);
     }
 }
@@ -69,9 +69,9 @@ export class TypeNumericRangeComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');
     public configuration: TypeNumericRangeConfiguration;
     public matcher = new InvalidWithValueStateMatcher();
-    public fromCtrl = new UntypedFormControl();
-    public toCtrl = new UntypedFormControl();
-    public form: UntypedFormGroup;
+    public fromCtrl = new FormControl();
+    public toCtrl = new FormControl();
+    public form: FormGroup;
 
     private readonly defaults: TypeNumericRangeConfiguration = {
         min: null,
@@ -85,7 +85,7 @@ export class TypeNumericRangeComponent implements DropdownComponent {
     ) {
         this.configuration = {...this.defaults, ...data.configuration};
 
-        this.form = new UntypedFormGroup({
+        this.form = new FormGroup({
             from: this.fromCtrl,
             to: this.toCtrl,
         });

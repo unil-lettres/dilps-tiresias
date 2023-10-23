@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         institution: false,
         dating: false,
     };
-    public formCtrl: UntypedFormControl = new UntypedFormControl();
+    public formCtrl: FormControl = new FormControl();
     private routeParamsSub: Subscription | null = null;
     private formChangeSub: Subscription | null = null;
 

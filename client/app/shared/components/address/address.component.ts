@@ -1,5 +1,5 @@
 import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
     NaturalQueryVariablesManager,
@@ -78,7 +78,7 @@ export class AddressComponent implements OnInit, OnChanges {
     @Input() public model: Card['card'] | Institution['institution'] | Card['card']['institution'] | CardInput | null =
         null;
 
-    public formCtrl = new UntypedFormControl();
+    public formCtrl = new FormControl();
 
     public latitude = 44.5918711;
     public longitude = 4.7176318;

@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {UntypedFormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
@@ -153,7 +153,7 @@ export class ThesaurusComponent<
     /**
      * <input> controller
      */
-    public formControl: UntypedFormControl = new UntypedFormControl();
+    public formControl: FormControl = new FormControl();
 
     /**
      * Cache to init search watching only once

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UntypedFormControl} from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import {Stamped, StampComponent} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
@@ -41,7 +41,7 @@ export class DialogFooterComponent {
     @Input() public canCreate = false;
     @Input() public canDelete: boolean | undefined = false;
     @Input({required: true}) public item!: Model;
-    @Input() public formCtrl: UntypedFormControl | null = null;
+    @Input() public formCtrl: FormControl | null = null;
     @Output() public readonly create = new EventEmitter<Model>();
     @Output() public readonly update = new EventEmitter<Model>();
     @Output() public readonly delete = new EventEmitter<Model>();

@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {UntypedFormControl, Validators, UntypedFormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, Validators, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
     DropdownComponent,
@@ -22,17 +22,17 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 })
 export class TypeLocationComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');
-    public form: UntypedFormGroup;
+    public form: FormGroup;
 
-    public longitudeCtrl = new UntypedFormControl();
-    public latitudeCtrl = new UntypedFormControl();
-    public distanceCtrl = new UntypedFormControl();
+    public longitudeCtrl = new FormControl();
+    public latitudeCtrl = new FormControl();
+    public distanceCtrl = new FormControl();
 
     public constructor(
         @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<never>,
         protected readonly dropdownRef: NaturalDropdownRef,
     ) {
-        this.form = new UntypedFormGroup({
+        this.form = new FormGroup({
             longitude: this.longitudeCtrl,
             latitude: this.latitudeCtrl,
             distance: this.distanceCtrl,
