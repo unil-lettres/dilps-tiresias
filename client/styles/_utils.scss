@@ -13,19 +13,6 @@
     }
 }
 
-@mixin mat-icon-size($size: 24px) {
-    line-height: $size * 1.3;
-    height: $size * 1.3;
-    width: $size * 1.3;
-
-    .mat-icon {
-        font-size: $size;
-        line-height: $size;
-        height: $size;
-        width: $size;
-    }
-}
-
 @mixin fixedToolbar() {
     .containerWithToolbar {
         min-height: 0;
