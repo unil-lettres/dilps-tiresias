@@ -261,9 +261,8 @@
         fxLayout="column"
         style="user-select: text"
     >
-        <span class="mat-caption" style="font-weight: bold" *ngIf="error.category">{{ error.category }}</span>
         <span class="mat-caption" *ngIf="error.message">{{ error.message }}</span>
-        <span class="mat-caption" *ngIf="error?.debugMessage">{{ error?.debugMessage }}</span>
+        <span class="mat-caption" *ngIf="error.extensions?.debugMessage">{{ error.extensions?.debugMessage }}</span>
     </div>
     <button (click)="errors = []" mat-menu-item>
         <mat-icon matMenuItemIcon naturalIcon="close"></mat-icon>

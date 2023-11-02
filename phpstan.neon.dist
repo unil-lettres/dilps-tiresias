@@ -23,5 +23,6 @@ parameters:
         - '~^Property Application\\Model\\.*\:\:\$.* type mapping mismatch\: property can contain Application\\Model\\.*\|null but database expects Application\\Model\\.*\.$~'
 
 includes:
+    - phpstan-baseline.neon
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-doctrine/rules.neon

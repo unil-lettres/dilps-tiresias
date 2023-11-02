@@ -8,10 +8,7 @@ use Ecodev\Felix\Api\Scalar\AbstractStringBasedType;
 
 class LoginType extends AbstractStringBasedType
 {
-    /**
-     * @var string
-     */
-    public $description = 'A user login is a non-empty string containing only letters, digits, `.` and `-`.';
+    public ?string $description = 'A user login is a non-empty string containing only letters, digits, `.` and `-`.';
 
     /**
      * Validate a login.

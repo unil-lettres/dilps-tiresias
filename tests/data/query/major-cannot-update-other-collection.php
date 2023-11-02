@@ -21,7 +21,7 @@ return [
             [
                 'message' => 'User "major" with role major is not allowed on resource "Collection#2001" with privilege "update" because it is not the owner, nor one of the responsible',
                 'extensions' => [
-                    'category' => 'Permissions',
+                    'showSnack' => true,
                 ],
                 'locations' => [
                     [

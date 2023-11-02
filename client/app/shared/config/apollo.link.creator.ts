@@ -38,12 +38,12 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
         // Show Graphql responses with errors to end-users (but do not decrease pending queries because it is done by uploadInterceptor)
         if (errorResponse.graphQLErrors) {
             errorResponse.graphQLErrors.forEach(error => {
-                // Use generic message for internal error not to frighten end-user too much
-                if (error.extensions && error.extensions.category === 'internal') {
-                    alertService.error('Une erreur est survenue du côté du serveur');
-                } else {
-                    // Show whatever server prepared for end-user, with a little bit more time to read
+                if (error.extensions.showSnack) {
+                    // Show whatever server prepared for end-user, with a bit more time to read
                     alertService.error(error.message, 5000);
+                } else {
+                    // Use a generic message for internal error not to frighten end-user too much
+                    alertService.error('Une erreur est survenue du côté du serveur');
                 }
             });
 

@@ -78,7 +78,7 @@ function isExcel(file: File): boolean {
 export class HomeComponent extends NaturalAbstractController implements OnInit, OnDestroy {
     public Site = Site;
 
-    public errors: (Error & {debugMessage?: string; category?: string})[] = [];
+    public errors: (Error & {extensions?: {debugMessage?: string}})[] = [];
     public user: Viewer['viewer'] | null = null;
     public nav = 1;
     public progress: number | null = null;
