@@ -12,8 +12,8 @@ class Schema extends \GraphQL\Type\Schema
     public function __construct()
     {
         $config = [
-            'query' => _types()->get(QueryType::class),
-            'mutation' => _types()->get(MutationType::class),
+            'query' => fn () => _types()->get(QueryType::class),
+            'mutation' => fn () => _types()->get(MutationType::class),
             'typeLoader' => fn (string $name) => _types()->get($name),
         ];
 
