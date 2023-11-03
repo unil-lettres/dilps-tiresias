@@ -53,6 +53,10 @@ Build & run all the containers for this project:
 
 The project is compiled each time the containers are started. You'll get a **Build at** log message as soon as everything is ready to be used.
 
+To load some dummy data & users, please run the following command:
+
+`docker exec dilps-tiresias-app ./bin/load-test-data.php`
+
 To access the application container (apache-php):
 
 `docker exec -it dilps-tiresias-app bash`
@@ -69,8 +73,8 @@ If you want to remove a volume (e.g. to start with a fresh database), you can us
 
 To access the main application please use the following links.
 
-- [http://dilps.docker:8181](http://dilps.docker:8181)
-- [http://tiresias.docker:8181](http://tiresias.docker:8181)
+- [http://dilps.docker:8181](http://dilps.docker:8181) (administrator / administrator)
+- [http://tiresias.docker:8181](http://tiresias.docker:8181) (administrator / administrator)
 
 #### phpMyAdmin
 

@@ -2,6 +2,10 @@ FROM php:8.2-apache-bullseye
 
 ENV DOCKER_RUNNING=true
 
+ENV NODE_VERSION=18
+ENV YARN_VERSION=1.22
+ENV COMPOSER_VERSION=2.6
+
 # Add Yarn repository
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends gnupg &&\
@@ -26,14 +30,19 @@ RUN pecl install xdebug-3.2.0
 # Activate php extensions
 RUN docker-php-ext-enable imagick xdebug
 
-# Install Composer
-RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install specific version of Composer
+RUN curl --silent --show-error https://getcomposer.org/installer | php -- \
+    --$COMPOSER_VERSION \
+    --install-dir=/usr/local/bin --filename=composer
 
-# Install Node & Yarn
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
+# Install specific version of Node
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - &&\
     apt-get update &&\
-    apt-get install -y --no-install-recommends nodejs &&\
-    npm install --global gulp-cli yarn
+    apt-get install -y --no-install-recommends nodejs
+
+# Install specific version of Yarn
+RUN npm install --global gulp-cli yarn &&\
+    yarn set version $YARN_VERSION
 
 # Enable apache configurations & modules
 COPY ./vhosts/* /etc/apache2/sites-available/

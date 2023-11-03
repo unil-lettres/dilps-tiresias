@@ -8,13 +8,16 @@ jobs:
         strategy:
             matrix:
                 php-versions: ['8.2']
+                composer-version: [ '2.6' ]
+                mariadb-version: [ '10.6' ]
+                node-version: [ '18' ]
 
         env:
             MYSQL_HOST: '127.0.0.1'
 
         services:
             mariadb:
-                image: mariadb:10.4
+                image: mariadb:${{ matrix.mariadb-version }}
                 ports:
                     - 3306:3306
                 env:
@@ -36,14 +39,14 @@ jobs:
             - name: Node Setup
               uses: actions/setup-node@v3
               with:
-                  node-version: '18'
+                node-version: ${{ matrix.node-version }}
 
             - name: PHP Setup
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
                   coverage: pcov
-                  tools: cs2pr
+                  tools: cs2pr, composer:${{ matrix.composer-version }}
                   extensions: imagick
 
             - name: Show PHP version
