@@ -8,9 +8,9 @@ jobs:
         strategy:
             matrix:
                 php-versions: ['8.2']
-                composer-version: [ '2.6' ]
-                mariadb-version: [ '10.6' ]
-                node-version: [ '18' ]
+                composer-version: ['2.6']
+                mariadb-version: ['10.6']
+                node-version: ['18']
 
         env:
             MYSQL_HOST: '127.0.0.1'
@@ -39,7 +39,7 @@ jobs:
             - name: Node Setup
               uses: actions/setup-node@v3
               with:
-                node-version: ${{ matrix.node-version }}
+                  node-version: ${{ matrix.node-version }}
 
             - name: PHP Setup
               uses: shivammathur/setup-php@v2
