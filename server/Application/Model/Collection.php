@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Enum\CollectionVisibilityType;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
 use Application\Repository\CollectionRepository;
 use Application\Traits\HasInstitution;
@@ -83,7 +84,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Return whether this is publicly available to only to member, or only administrators, or only owner.
      */
-    #[API\Field(type: 'Application\Api\Enum\CollectionVisibilityType')]
+    #[API\Field(type: CollectionVisibilityType::class)]
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -92,7 +93,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Set whether this is publicly available to only to member, or only administrators, or only owner.
      */
-    #[API\Input(type: 'Application\Api\Enum\CollectionVisibilityType')]
+    #[API\Input(type: CollectionVisibilityType::class)]
     public function setVisibility(string $visibility): void
     {
         $this->visibility = $visibility;
@@ -167,7 +168,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Get users.
      */
-    #[API\Field(type: 'User[]')]
     public function getUsers(): DoctrineCollection
     {
         return $this->users;

@@ -49,7 +49,6 @@ class Period extends Thesaurus implements HasParentInterface
     /**
      * Get children periods.
      */
-    #[API\Field(type: 'Period[]')]
     public function getChildren(): Collection
     {
         return $this->children;

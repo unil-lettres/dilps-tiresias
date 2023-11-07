@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Acl\Acl;
+use Application\Api\Enum\UserRoleType;
+use Application\Api\Enum\UserTypeType;
+use Application\Api\Output\GlobalPermissionsListType;
+use Application\Api\Scalar\LoginType;
 use Application\Repository\UserRepository;
 use Application\Service\Role;
 use Application\Traits\HasInstitution;
@@ -136,7 +140,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Set login (eg: johndoe).
      */
-    #[API\Input(type: 'Application\Api\Scalar\LoginType')]
+    #[API\Input(type: LoginType::class)]
     public function setLogin(string $login): void
     {
         $this->login = $login;
@@ -145,7 +149,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Get login (eg: johndoe).
      */
-    #[API\Field(type: 'Application\Api\Scalar\LoginType')]
+    #[API\Field(type: LoginType::class)]
     public function getLogin(): string
     {
         return $this->login;
@@ -195,7 +199,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Get the user role.
      */
-    #[API\Field(type: 'UserRole')]
+    #[API\Field(type: UserRoleType::class)]
     public function getRole(): string
     {
         return $this->role;
@@ -204,7 +208,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Sets the user role.
      */
-    #[API\Input(type: 'UserRole')]
+    #[API\Input(type: UserRoleType::class)]
     public function setRole(string $role): void
     {
         if (!Role::canUpdate(self::getCurrent(), $this->role, $role)) {
@@ -253,7 +257,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Set user type.
      */
-    #[API\Input(type: 'Application\Api\Enum\UserTypeType')]
+    #[API\Input(type: UserTypeType::class)]
     public function setType(string $type): void
     {
         $this->type = $type;
@@ -262,7 +266,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Get user type.
      */
-    #[API\Field(type: 'Application\Api\Enum\UserTypeType')]
+    #[API\Field(type: UserTypeType::class)]
     public function getType(): string
     {
         return $this->type;
@@ -271,7 +275,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Get a list of global permissions for this user.
      */
-    #[API\Field(type: 'GlobalPermissionsList')]
+    #[API\Field(type: GlobalPermissionsListType::class)]
     public function getGlobalPermissions(): array
     {
         $acl = new Acl();

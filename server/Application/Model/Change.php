@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Enum\ChangeTypeType;
 use Application\Api\Input\Sorting\Owner;
 use Application\Repository\ChangeRepository;
 use Application\Traits\HasSite;
@@ -42,7 +43,7 @@ class Change extends AbstractModel implements HasSiteInterface
     /**
      * Get the type of change.
      */
-    #[API\Field(type: 'Application\Api\Enum\ChangeTypeType')]
+    #[API\Field(type: ChangeTypeType::class)]
     public function getType(): string
     {
         return $this->type;
@@ -51,7 +52,7 @@ class Change extends AbstractModel implements HasSiteInterface
     /**
      * Set the type of change.
      */
-    #[API\Field(type: 'Application\Api\Enum\ChangeTypeType')]
+    #[API\Field(type: ChangeTypeType::class)]
     public function setType(string $type): void
     {
         $this->type = $type;

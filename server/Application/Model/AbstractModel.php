@@ -10,6 +10,7 @@ use Application\Api\Input\Sorting\Random;
 use Cake\Chronos\Chronos;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Output\PermissionsType;
 use Ecodev\Felix\Model\HasOwner;
 use Ecodev\Felix\Model\Model;
 use GraphQL\Doctrine\Attribute as API;
@@ -169,7 +170,7 @@ abstract class AbstractModel implements HasOwner, Model
     /**
      * Get permissions on this object for the current user.
      */
-    #[API\Field(type: 'Permissions')]
+    #[API\Field(type: PermissionsType::class)]
     public function getPermissions(): array
     {
         $acl = new Acl();

@@ -14,6 +14,7 @@ use Cake\Chronos\Chronos;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Scalar\ColorType;
 use GraphQL\Doctrine\Attribute as API;
 use Throwable;
 
@@ -124,7 +125,7 @@ class Export extends AbstractModel implements HasSiteInterface
         return $this->filename;
     }
 
-    #[API\Field(type: 'ExportStatus')]
+    #[API\Field(type: \Application\Api\Enum\ExportStatusType::class)]
     public function getStatus(): string
     {
         return $this->status;
@@ -162,13 +163,13 @@ class Export extends AbstractModel implements HasSiteInterface
         }
     }
 
-    #[API\Field(type: 'ExportFormat')]
+    #[API\Field(type: \Application\Api\Enum\ExportFormatType::class)]
     public function getFormat(): string
     {
         return $this->format;
     }
 
-    #[API\Input(type: 'ExportFormat')]
+    #[API\Input(type: \Application\Api\Enum\ExportFormatType::class)]
     public function setFormat(string $format): void
     {
         $this->format = $format;
@@ -194,25 +195,25 @@ class Export extends AbstractModel implements HasSiteInterface
         $this->includeLegend = $includeLegend;
     }
 
-    #[API\Field(type: 'Color')]
+    #[API\Field(type: ColorType::class)]
     public function getTextColor(): string
     {
         return $this->textColor;
     }
 
-    #[API\Input(type: 'Color')]
+    #[API\Input(type: ColorType::class)]
     public function setTextColor(string $textColor): void
     {
         $this->textColor = $textColor;
     }
 
-    #[API\Field(type: 'Color')]
+    #[API\Field(type: ColorType::class)]
     public function getBackgroundColor(): string
     {
         return $this->backgroundColor;
     }
 
-    #[API\Input(type: 'Color')]
+    #[API\Input(type: ColorType::class)]
     public function setBackgroundColor(string $backgroundColor): void
     {
         $this->backgroundColor = $backgroundColor;

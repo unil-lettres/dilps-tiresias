@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Api\Enum\CardVisibilityType;
 use Application\Api\FileException;
 use Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType;
 use Application\Api\Input\Operator\CardYearRangeOperatorType;
@@ -201,7 +202,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Return whether this is publicly available to everybody, or only member, or only owner.
      */
-    #[API\Field(type: 'Application\Api\Enum\CardVisibilityType')]
+    #[API\Field(type: CardVisibilityType::class)]
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -210,7 +211,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set whether this is publicly available to everybody, or only member, or only owner.
      */
-    #[API\Input(type: 'Application\Api\Enum\CardVisibilityType')]
+    #[API\Input(type: CardVisibilityType::class)]
     public function setVisibility(string $visibility): void
     {
         if ($this->visibility === $visibility) {
@@ -228,7 +229,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get collections this card belongs to.
      */
-    #[API\Field(type: 'Collection[]')]
     public function getCollections(): DoctrineCollection
     {
         return $this->collections;
@@ -280,7 +280,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Return the automatically computed dating periods.
      */
-    #[API\Field(type: 'Dating[]')]
     public function getDatings(): DoctrineCollection
     {
         return $this->datings;
@@ -422,7 +421,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get artists.
      */
-    #[API\Field(type: 'Artist[]')]
     public function getArtists(): DoctrineCollection
     {
         return $this->artists;
@@ -431,7 +429,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get antiqueNames.
      */
-    #[API\Field(type: 'AntiqueName[]')]
     public function getAntiqueNames(): DoctrineCollection
     {
         return $this->antiqueNames;
@@ -460,7 +457,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get tags.
      */
-    #[API\Field(type: 'Tag[]')]
     public function getTags(): DoctrineCollection
     {
         return $this->tags;
@@ -495,7 +491,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get domains.
      */
-    #[API\Field(type: 'Domain[]')]
     public function getDomains(): DoctrineCollection
     {
         return $this->domains;
@@ -514,7 +509,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get periods.
      */
-    #[API\Field(type: 'Period[]')]
     public function getPeriods(): DoctrineCollection
     {
         return $this->periods;
@@ -541,7 +535,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get materials.
      */
-    #[API\Field(type: 'Material[]')]
     public function getMaterials(): DoctrineCollection
     {
         return $this->materials;
@@ -776,7 +769,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Get related cards.
      */
-    #[API\Field(type: 'Card[]')]
     public function getCards(): DoctrineCollection
     {
         return $this->cards;
