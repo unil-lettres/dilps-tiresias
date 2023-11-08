@@ -5,6 +5,9 @@ on:
             - 'develop'
             - 'master'
 
+env:
+    DOCKERHUB_REPOSITORY: unillett/dilps-tiresias
+
 jobs:
     docker:
         name: Build & Push
@@ -33,8 +36,8 @@ jobs:
                   file: ./dev/config/app.dockerfile
                   platforms: linux/amd64,linux/arm64
                   push: true
-                  tags: unillett/dilps-tiresias:latest
-                  cache-from: type=registry,ref=unillett/dilps-tiresias:latest
+                  tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest
+                  cache-from: type=registry,ref=${{ env.DOCKERHUB_REPOSITORY }}:latest
                   cache-to: type=inline
 
             - name: Update description
@@ -42,4 +45,4 @@ jobs:
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-                  repository: unillett/dilps-tiresias
+                  repository: ${{ env.DOCKERHUB_REPOSITORY }}
