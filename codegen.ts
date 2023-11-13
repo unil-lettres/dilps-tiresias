@@ -10,6 +10,9 @@ const config: CodegenConfig = {
             plugins: ['typescript', 'typescript-operations'],
         },
     },
+    hooks: {
+        afterAllFileWrite: ["prettier --ignore-path '' --write"],
+    },
     config: {
         // immutableTypes:true, // TODO enable this when we have time
         onlyOperationTypes: true, // Simplifies the generated types
