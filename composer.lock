@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfdb36b5be985659f83b6dd20780c064",
+    "content-hash": "db7abc1cc9ff3e5989066a1d0fc31fe2",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -114,30 +114,27 @@
         },
         {
             "name": "cakephp/chronos",
-            "version": "2.4.1",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/chronos.git",
-                "reference": "dd583900b26971e84d56c482d6c5fc16961bd103"
+                "reference": "9cb035acd10152a6b74df936986f15c4e6015bd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/chronos/zipball/dd583900b26971e84d56c482d6c5fc16961bd103",
-                "reference": "dd583900b26971e84d56c482d6c5fc16961bd103",
+                "url": "https://api.github.com/repos/cakephp/chronos/zipball/9cb035acd10152a6b74df936986f15c4e6015bd3",
+                "reference": "9cb035acd10152a6b74df936986f15c4e6015bd3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "cakephp/cakephp-codesniffer": "^4.5",
-                "phpunit/phpunit": "^8.0 || ^9.0"
+                "cakephp/cakephp-codesniffer": "^5.0",
+                "phpunit/phpunit": "^10.1.0"
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "src/carbon_compat.php"
-                ],
                 "psr-4": {
                     "Cake\\Chronos\\": "src/"
                 }
@@ -168,7 +165,7 @@
                 "issues": "https://github.com/cakephp/chronos/issues",
                 "source": "https://github.com/cakephp/chronos"
             },
-            "time": "2023-09-12T03:12:29+00:00"
+            "time": "2023-10-17T07:41:48+00:00"
         },
         {
             "name": "creof/doctrine2-spatial",
@@ -1608,20 +1605,20 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "12.1.1",
+            "version": "13.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "e75200b1ab105242f188cf39323bb3d9b64f1cbf"
+                "reference": "ee72ee7bb4858318f32110c7b331d7afe3847c18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/e75200b1ab105242f188cf39323bb3d9b64f1cbf",
-                "reference": "e75200b1ab105242f188cf39323bb3d9b64f1cbf",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/ee72ee7bb4858318f32110c7b331d7afe3847c18",
+                "reference": "ee72ee7bb4858318f32110c7b331d7afe3847c18",
                 "shasum": ""
             },
             "require": {
-                "cakephp/chronos": "^2.4",
+                "cakephp/chronos": "^3.0.3",
                 "doctrine/dbal": "^3.6",
                 "doctrine/migrations": "^3.6",
                 "ecodev/graphql-doctrine": "^9.0",
@@ -1673,9 +1670,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/12.1.1"
+                "source": "https://github.com/Ecodev/felix/tree/13.0.0"
             },
-            "time": "2023-11-11T12:28:24+00:00"
+            "time": "2023-11-15T02:27:52+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
@@ -9165,5 +9162,5 @@
         "ext-zip": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
