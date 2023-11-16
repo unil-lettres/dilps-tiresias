@@ -87,7 +87,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
         static $nextId = null;
 
         if (!$nextId) {
-            $connection = _em()->getConnection();
+            $connection = $this->getEntityManager()->getConnection();
             $database = $connection->quote($connection->getDatabase());
 
             $sql = "SELECT `AUTO_INCREMENT`

@@ -38,7 +38,7 @@ class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repos
         if (!$change) {
             // Create the change
             $change = new Change();
-            _em()->persist($change);
+            $this->getEntityManager()->persist($change);
             $change->setSite($site);
             $change->setSuggestion($suggestion);
             $change->setOriginal($original);

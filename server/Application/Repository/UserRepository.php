@@ -35,7 +35,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
             // Update the hash in DB, if we are still MD5, or if PHP default options changed
             if ($isMd5 || password_needs_rehash($hashFromDb, PASSWORD_DEFAULT)) {
                 $user->setPassword($password);
-                _em()->flush();
+                $this->getEntityManager()->flush();
             }
 
             return $user;
@@ -99,8 +99,8 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
         $user->setSite($site);
         $user->setName('');
 
-        _em()->persist($user);
-        _em()->flush();
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
 
         return $user;
     }

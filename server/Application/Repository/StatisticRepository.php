@@ -26,7 +26,7 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
             $statistic->setSite($site);
             $statistic->setDate($date);
 
-            _em()->persist($statistic);
+            $this->getEntityManager()->persist($statistic);
         }
 
         return $statistic;
