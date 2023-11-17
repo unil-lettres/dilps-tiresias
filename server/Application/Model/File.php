@@ -22,7 +22,7 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
 {
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Card::class)]
-    private Card $card;
+    private ?Card $card = null;
 
     use \Ecodev\Felix\Model\Traits\File {
         setFile as traitSetFile;

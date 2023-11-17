@@ -13,29 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasValidation
 {
-    /**
-     * @var Chronos
-     */
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $imageValidationDate;
+    private ?Chronos $imageValidationDate = null;
 
-    /**
-     * @var Chronos
-     */
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $dataValidationDate;
+    private ?Chronos $dataValidationDate = null;
 
-    /**
-     * @var null|User
-     */
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $imageValidator;
+    private ?User $imageValidator = null;
 
-    /**
-     * @var null|User
-     */
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private $dataValidator;
+    private ?User $dataValidator = null;
 
     /**
      * Get image validation date.

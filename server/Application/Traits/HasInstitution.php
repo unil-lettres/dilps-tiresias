@@ -13,12 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasInstitution
 {
-    /**
-     * @var null|Institution
-     */
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Institution::class)]
-    private $institution;
+    private ?Institution $institution = null;
 
     abstract public function getSite(): string;
 

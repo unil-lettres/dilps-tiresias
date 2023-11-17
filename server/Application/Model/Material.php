@@ -10,6 +10,7 @@ use Application\Traits\HasParent;
 use Application\Traits\HasParentInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Attribute as API;
 
@@ -22,19 +23,16 @@ class Material extends Thesaurus implements HasParentInterface
 {
     use HasParent;
 
-    /**
-     * @var null|Material
-     */
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    private $parent;
+    private ?self $parent = null;
 
     /**
      * @var Collection<Material>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
-    private $children;
+    private DoctrineCollection $children;
 
     public function __construct()
     {

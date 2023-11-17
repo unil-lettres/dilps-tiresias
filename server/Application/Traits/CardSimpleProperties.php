@@ -18,125 +18,65 @@ trait CardSimpleProperties
 {
     use HasUrl;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text', options: ['default' => ''])]
-    private $addition = '';
+    private string $addition = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text', options: ['default' => ''])]
-    private $expandedName = '';
+    private string $expandedName = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $material = '';
+    private string $material = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $dilpsDomain = '';
+    private string $dilpsDomain = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $techniqueAuthor = '';
+    private string $techniqueAuthor = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 60, options: ['default' => ''])]
-    private $techniqueDate = '';
+    private string $techniqueDate = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $format = '';
+    private string $format = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text', options: ['default' => ''])]
-    private $literature = '';
+    private string $literature = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text', options: ['default' => ''])]
-    private $objectReference = '';
+    private string $objectReference = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 10, options: ['default' => ''])]
-    private $page = '';
+    private string $page = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 10, options: ['default' => ''])]
-    private $figure = '';
+    private string $figure = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(name: '`table`', type: 'string', length: 10, options: ['default' => ''])]
-    private $table = '';
+    private string $table = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 30, options: ['default' => ''])]
-    private $isbn = '';
+    private string $isbn = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text')]
-    private $comment = '';
+    private string $comment = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text')]
-    private $corpus = '';
+    private string $corpus = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $rights = '';
+    private string $rights = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $muserisUrl = '';
+    private string $muserisUrl = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private $muserisCote = '';
+    private string $muserisCote = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 60, options: ['default' => ''])]
-    private $productionPlace = '';
+    private string $productionPlace = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'text', options: ['default' => ''])]
-    private $urlDescription = '';
+    private string $urlDescription = '';
 
     public function getAddition(): string
     {

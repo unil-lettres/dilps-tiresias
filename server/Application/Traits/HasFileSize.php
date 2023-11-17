@@ -12,11 +12,8 @@ use GraphQL\Doctrine\Attribute as API;
  */
 trait HasFileSize
 {
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer')]
-    private $fileSize = 0;
+    private int $fileSize = 0;
 
     /**
      * Get file size in bytes.

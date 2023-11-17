@@ -13,11 +13,8 @@ use GraphQL\Doctrine\Attribute as API;
  */
 trait HasSite
 {
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'Site')]
-    private $site;
+    private string $site;
 
     #[API\Field(type: SiteType::class)]
     public function getSite(): string

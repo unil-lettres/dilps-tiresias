@@ -16,11 +16,8 @@ use Throwable;
  */
 trait HasImage
 {
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 2000)]
-    private $filename = '';
+    private string $filename = '';
 
     /**
      * Set the image file.

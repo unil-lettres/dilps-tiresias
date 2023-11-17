@@ -11,11 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasSorting
 {
-    /**
-     * @var int
-     */
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
-    private $sorting = 0;
+    private int $sorting = 0;
 
     /**
      * Set sorting.

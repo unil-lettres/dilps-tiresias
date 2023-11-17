@@ -52,19 +52,16 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     #[ORM\Column(type: 'string', length: 191)]
     private string $usageRights = '';
 
-    /**
-     * @var null|Collection
-     */
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    private $parent;
+    private ?self $parent = null;
 
     /**
      * @var DoctrineCollection<Collection>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
-    private $children;
+    private DoctrineCollection $children;
 
     /**
      * @var DoctrineCollection<User>

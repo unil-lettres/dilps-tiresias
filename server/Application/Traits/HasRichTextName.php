@@ -12,17 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasRichTextName
 {
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 191)]
-    private $name = '';
+    private string $name = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 191)]
-    private $plainName = '';
+    private string $plainName = '';
 
     /**
      * Constructor.

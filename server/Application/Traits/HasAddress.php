@@ -14,59 +14,32 @@ use GraphQL\Doctrine\Attribute as API;
  */
 trait HasAddress
 {
-    /**
-     * @var null|Point
-     */
     #[ORM\Column(type: 'point', nullable: true)]
     #[API\Exclude]
-    private $location;
+    private ?Point $location = null;
 
-    /**
-     * @var null|float
-     */
-    private $latitude;
+    private ?float $latitude = null;
 
-    /**
-     * @var null|float
-     */
-    private $longitude;
+    private ?float $longitude = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
-    private $precision;
+    private ?string $precision = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string')]
-    private $street = '';
+    private string $street = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 20)]
-    private $postcode = '';
+    private string $postcode = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 191)]
-    private $locality = '';
+    private string $locality = '';
 
-    /**
-     * @var string
-     */
     #[ORM\Column(type: 'string', length: 191)]
-    private $area = '';
+    private string $area = '';
 
-    /**
-     * @var null|Country
-     */
     #[ORM\ManyToOne(targetEntity: Country::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    private $country;
+    private ?Country $country = null;
 
     /**
      * Get latitude.

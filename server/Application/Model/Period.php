@@ -12,6 +12,7 @@ use Application\Traits\HasSorting;
 use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Attribute as API;
 
@@ -26,19 +27,16 @@ class Period extends Thesaurus implements HasParentInterface
     use HasSorting;
     use HasYearRange;
 
-    /**
-     * @var null|Period
-     */
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    private $parent;
+    private ?self $parent = null;
 
     /**
      * @var Collection<Period>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
-    private $children;
+    private DoctrineCollection $children;
 
     public function __construct()
     {

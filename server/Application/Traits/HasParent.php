@@ -14,15 +14,12 @@ use InvalidArgumentException;
  */
 trait HasParent
 {
-    /**
-     * @var null|self
-     */
-    private $parent;
+    private ?self $parent = null;
 
     /**
      * @var Collection<self>
      */
-    private $children;
+    private Collection $children;
 
     /**
      * Get the parent containing this object.

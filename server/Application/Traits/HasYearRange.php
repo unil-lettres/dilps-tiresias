@@ -11,17 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasYearRange
 {
-    /**
-     * @var null|int
-     */
     #[ORM\Column(name: '`from`', type: 'integer', nullable: true)]
-    private $from;
+    private ?int $from = null;
 
-    /**
-     * @var null|int
-     */
     #[ORM\Column(name: '`to`', type: 'integer', nullable: true)]
-    private $to;
+    private ?int $to = null;
 
     /**
      * Return the from year.
