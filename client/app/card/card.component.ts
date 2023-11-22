@@ -611,8 +611,10 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
                 this.cardService.getOne(this.fetchedModel.id).subscribe(result => {
                     this.assertFetchedCard(this.fetchedModel);
-
-                    this.fetchedModel.collections = result!.collections;
+                    this.fetchedModel = {
+                        ...this.fetchedModel,
+                        collections: [...result!.collections],
+                    };
                     this.updateCollections();
                 });
             });

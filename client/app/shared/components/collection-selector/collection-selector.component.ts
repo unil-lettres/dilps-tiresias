@@ -105,7 +105,12 @@ export class CollectionSelectorComponent implements OnInit {
     public unlink(image: Cards['cards']['items'][0], collection: Cards['cards']['items'][0]['collections'][0]): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
-            image.collections.splice(index, 1);
+            const splicedCollection = [...image.collections];
+            splicedCollection.splice(index, 1);
+            this.image = {
+                ...image,
+                collections: splicedCollection,
+            };
             this.alertService.info('Fiche retirée de la collection');
         });
     }
@@ -132,7 +137,10 @@ export class CollectionSelectorComponent implements OnInit {
 
         observable.subscribe(() => {
             if (this.data.images && this.data.images.length === 1 && this.data.images[0].collections) {
-                this.data.images[0].collections.push(collection as any);
+                this.data.images[0] = {
+                    ...this.data.images[0],
+                    collections: [...this.data.images[0].collections, collection as any],
+                };
             }
             this.dialogRef.close(collection);
             this.alertService.info('Fiches ajoutées');
