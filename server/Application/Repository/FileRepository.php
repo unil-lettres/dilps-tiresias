@@ -22,10 +22,10 @@ class FileRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     {
         /** @var CardRepository $cardRepository */
         $cardRepository = $this->getEntityManager()->getRepository(Card::class);
-        $cartSubQuery = $cardRepository->getAccessibleSubQuery($user);
+        $cardSubQuery = $cardRepository->getAccessibleSubQuery($user);
 
-        if ($cartSubQuery) {
-            return 'SELECT id FROM file WHERE card_id IN (' . $cartSubQuery . ')';
+        if ($cardSubQuery) {
+            return 'SELECT id FROM file WHERE card_id IN (' . $cardSubQuery . ')';
         }
 
         return '';
