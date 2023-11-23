@@ -84,7 +84,7 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
             FROM card_collection
             WHERE
             collection_id = ' . $connection->quote($sourceCollection->getId()) . '
-            AND card_id IN (' . $cardSubQuery . ')');
+            ' . (empty($cardSubQuery) ? '' : 'AND card_id IN (' . $cardSubQuery . ')'));
     }
 
     public function getCopyrights(Card $card): string
