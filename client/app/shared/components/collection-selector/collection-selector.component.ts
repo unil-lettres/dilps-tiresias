@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
 import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
+import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-hierarchy.component';
 
 /**
  * Exclusive fields:
@@ -58,6 +59,7 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
         MatTooltipModule,
         HideTooltipDirective,
         NaturalIconDirective,
+        CollectionHierarchyComponent,
     ],
 })
 export class CollectionSelectorComponent implements OnInit {

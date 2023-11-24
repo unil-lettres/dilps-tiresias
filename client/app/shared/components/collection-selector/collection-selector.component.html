@@ -8,7 +8,12 @@
                     [filter]="listFilter"
                     [service]="collectionService"
                     placeholder="Sélectionnez la collection"
-                ></natural-select>
+                >
+                    <ng-template let-item="item">
+                        <div>{{ item.name }}</div>
+                        <app-collection-hierarchy [collection]="item"></app-collection-hierarchy>
+                    </ng-template>
+                </natural-select>
                 <div fxFlexAlign="end" fxLayout="row">
                     <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>
                         Ajouter à la collection

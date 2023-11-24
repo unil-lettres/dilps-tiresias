@@ -1,0 +1,8 @@
+<div *ngIf="collection.hierarchicName !== collection.name" class="mat-caption">
+    <span *ngIf="immedateAncestor !== lastAcestor">
+        {{ lastAcestor }}
+        <span *ngIf="!tooltipContent"> > </span>
+    </span>
+    <span *ngIf="tooltipContent" matTooltip="{{ tooltipContent }}"> > ... > </span>
+    <span>{{ immedateAncestor }}</span>
+</div>
