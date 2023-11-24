@@ -3,6 +3,7 @@ import {
     ApolloLink,
     DefaultOptions,
     InMemoryCache,
+    InMemoryCacheConfig,
     NormalizedCacheObject,
 } from '@apollo/client/core';
 import {onError} from '@apollo/client/link/error';
@@ -21,6 +22,25 @@ export const apolloDefaultOptions: DefaultOptions = {
     },
     watchQuery: {
         fetchPolicy: 'cache-and-network',
+    },
+};
+
+export const cacheConfig: InMemoryCacheConfig = {
+    typePolicies: {
+        Card: {
+            fields: {
+                collections: {
+                    // Because we always receive **all** collections at once, we
+                    // can always replace everything that exists, even if the incoming
+                    // has less collection than existing (because collections were deleted)
+                    merge: (existing, incoming) => incoming,
+                },
+            },
+        },
+        Permissions: {
+            // Incoming permissions always overwrite whatever permission might already exist
+            merge: true,
+        },
     },
 };
 
@@ -91,7 +111,7 @@ function apolloOptionsFactory(): ApolloClientOptions<NormalizedCacheObject> {
 
     return {
         link: link,
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache(cacheConfig),
         defaultOptions: apolloDefaultOptions,
     };
 }
