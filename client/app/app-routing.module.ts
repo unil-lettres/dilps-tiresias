@@ -38,7 +38,10 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
     },
-
+    {
+        path: 'error',
+        component: ErrorComponent,
+    },
     // Auth required routes
     {
         path: '',
@@ -260,10 +263,6 @@ export const routes: Routes = [
             {
                 path: 'empty',
                 component: EmptyComponent,
-            },
-            {
-                path: 'error',
-                component: ErrorComponent,
             },
             {
                 path: '**',
