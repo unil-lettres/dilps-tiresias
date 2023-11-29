@@ -23,6 +23,7 @@ import {
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
 
 @Component({
     selector: 'app-tags',
@@ -49,6 +50,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
         NaturalIconDirective,
+        CollectionHierarchyComponent,
     ],
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {

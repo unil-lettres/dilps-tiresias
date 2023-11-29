@@ -43,12 +43,18 @@
             <ng-container matColumnDef="name">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
-                    <app-table-button
-                        (click)="edit(element.item)"
-                        [label]="element.item.name"
-                        icon="edit"
-                        matTooltip="Éditer"
-                    ></app-table-button>
+                    <div class="cell-content">
+                        <app-table-button
+                            (click)="edit(element.item)"
+                            [label]="element.item.name"
+                            icon="edit"
+                            matTooltip="Éditer"
+                        ></app-table-button>
+                        <app-collection-hierarchy
+                            *ngIf="searched"
+                            [collection]="element.item"
+                        ></app-collection-hierarchy>
+                    </div>
                 </td>
             </ng-container>
 
