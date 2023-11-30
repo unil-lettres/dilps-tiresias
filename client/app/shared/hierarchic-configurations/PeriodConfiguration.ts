@@ -1,7 +1,7 @@
 import {NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {PeriodService} from '../../periods/services/period.service';
 import {Periods} from '../generated-types';
-import {formatYearRange} from '../services/utility';
+import {formatYearRange, formatItemNameWithRoot} from '../services/utility';
 
 export const periodHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
@@ -10,7 +10,7 @@ export const periodHierarchicConfig: NaturalHierarchicConfiguration[] = [
         childrenRelationNames: ['parent'],
         selectableAtKey: 'period',
         displayWith: (period: Periods['periods']['items'][0]): string => {
-            return period.name + formatYearRange(period.from, period.to);
+            return formatItemNameWithRoot(period) + formatYearRange(period.from, period.to);
         },
     },
 ];

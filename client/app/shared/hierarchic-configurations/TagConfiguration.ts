@@ -1,6 +1,7 @@
 import {NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {TagService} from '../../tags/services/tag.service';
 import {Tags} from '../generated-types';
+import {formatItemNameWithRoot} from '../services/utility';
 
 export const tagHierarchicConfig: NaturalHierarchicConfiguration[] = [
     {
@@ -8,6 +9,7 @@ export const tagHierarchicConfig: NaturalHierarchicConfiguration[] = [
         parentsRelationNames: ['parent'],
         childrenRelationNames: ['parent'],
         selectableAtKey: 'tag',
+        displayWith: formatItemNameWithRoot,
     },
 ];
 
@@ -18,12 +20,6 @@ export const onlyLeafTagHierarchicConfig: NaturalHierarchicConfiguration[] = [
         childrenRelationNames: ['parent'],
         selectableAtKey: 'tag',
         isSelectableCallback: (item: Tags['tags']['items'][0]) => !item.hasChildren,
-        displayWith: (item: Tags['tags']['items'][0]): string => {
-            if (item.hierarchicName == item.name) {
-                return item.name;
-            }
-            const parents = item.hierarchicName.split('>').map(parent => parent.trim());
-            return `${parents[parents.length - 1]} (${parents[0]})`;
-        },
+        displayWith: formatItemNameWithRoot,
     },
 ];

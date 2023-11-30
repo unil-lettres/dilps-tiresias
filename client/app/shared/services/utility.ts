@@ -38,3 +38,16 @@ export function formatYearRange(from: number | null, to: number | null): string 
 
     return '';
 }
+
+/**
+ * Return the name of the item followed by its root parent name in parenthesis.
+ *
+ * If the item is a root item, then only its name is returned.
+ */
+export function formatItemNameWithRoot(item: {name: string; hierarchicName: string}): string {
+    if (item.hierarchicName == item.name) {
+        return item.name;
+    }
+    const parents = item.hierarchicName.split('>').map((parent: string) => parent.trim());
+    return `${parents[parents.length - 1]} (${parents[0]})`;
+}
