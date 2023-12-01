@@ -981,6 +981,10 @@
             fxFlex
         ></div>
         <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
+        <app-related-cards
+            [card]="fetchedModel"
+            *ngIf="showCards && fetchedModel && fetchedModel.cards.length > 0"
+        ></app-related-cards>
     </div>
 </div>
 <button (click)="refreshInitialCardValues()"></button>

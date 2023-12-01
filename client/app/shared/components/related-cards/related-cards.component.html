@@ -1,0 +1,8 @@
+<div class="slideshow">
+    <a
+        *ngFor="let card of cards$ | async"
+        [routerLink]="['/card', card.id]"
+        [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
+        class="image"
+    ></a>
+</div>

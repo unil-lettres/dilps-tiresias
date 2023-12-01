@@ -82,6 +82,7 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
+import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -142,6 +143,7 @@ interface InitialCardValues {
         StampComponent,
         StripTagsPipe,
         NaturalIconDirective,
+        RelatedCardsComponent,
     ],
 })
 export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
