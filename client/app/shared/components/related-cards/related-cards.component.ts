@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
@@ -13,7 +13,7 @@ import {Observable, map} from 'rxjs';
     standalone: true,
     imports: [CommonModule, RouterLink],
 })
-export class RelatedCardsComponent implements OnInit {
+export class RelatedCardsComponent implements OnInit, OnChanges {
     @Input({required: true})
     public card!: Card['card'];
 
@@ -21,12 +21,24 @@ export class RelatedCardsComponent implements OnInit {
 
     public cards$: Observable<Cards['cards']['items'][0][]> | null = null;
 
+    private cardsQueryVariables = new NaturalQueryVariablesManager<CardsVariables>();
+
     public constructor(public readonly cardService: CardService) {}
 
-    public ngOnInit(): void {
-        const qvm = new NaturalQueryVariablesManager<CardsVariables>();
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.card) {
+            this.updateCardsQueryVariables();
+        }
+    }
 
-        qvm.set('search', {
+    public ngOnInit(): void {
+        this.updateCardsQueryVariables();
+
+        this.cards$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(map(result => result.items));
+    }
+
+    private updateCardsQueryVariables(): void {
+        this.cardsQueryVariables.set('search', {
             filter: {
                 groups: [
                     {
@@ -35,7 +47,5 @@ export class RelatedCardsComponent implements OnInit {
                 ],
             },
         });
-
-        this.cards$ = this.cardService.watchAll(qvm).pipe(map(result => result.items));
     }
 }
