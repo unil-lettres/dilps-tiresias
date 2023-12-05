@@ -1,8 +1,12 @@
-<div class="slideshow">
-    <a
-        *ngFor="let card of cards$ | async"
-        [routerLink]="['/card', card.id]"
-        [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
-        class="image"
-    ></a>
+<div class="slideshow" #slideshow>
+    <div *ngFor="let card of cards$ | async">
+        <a
+            [routerLink]="['/card', card.id]"
+            [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
+            class="image"
+            matTooltip="{{ card.name }}"
+        ></a>
+    </div>
 </div>
+<button class="left" (click)="scrollLeft()"></button>
+<button class="right" (click)="scrollRight()"></button>
