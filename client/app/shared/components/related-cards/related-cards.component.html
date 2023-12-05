@@ -1,4 +1,4 @@
-<div class="slideshow" #slideshow>
+<div class="slideshow" #slideshow (scroll)="updateButtonsState()">
     <div *ngFor="let card of cards$ | async">
         <a
             [routerLink]="['/card', card.id]"
@@ -8,5 +8,5 @@
         ></a>
     </div>
 </div>
-<button class="left" (click)="scrollLeft()"></button>
-<button class="right" (click)="scrollRight()"></button>
+<button class="left" (click)="scrollLeft()" [disabled]="disabledLeftButton" [hidden]="hiddenButtons"></button>
+<button class="right" (click)="scrollRight()" [disabled]="disabledRightButton" [hidden]="hiddenButtons"></button>
