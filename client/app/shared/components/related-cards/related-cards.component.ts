@@ -51,7 +51,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     /**
      * Whether the scroll buttons should be hidden (if there is no scrollbar).
      */
-    public hiddenButtons = false;
+    public hiddenButtons = true;
 
     /**
      * Query variables for retrieve related cards.
