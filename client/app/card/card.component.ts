@@ -210,6 +210,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     @Input() public imageData = '';
 
     /**
+     * Display or not the slideshow of related cards.
+     */
+    @Input() public showSlideshowRelatedCards = false;
+
+    /**
      * Url of resized images (2000px) to be displayed
      */
     public imageSrc!: string;
@@ -424,7 +429,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.user = user;
         });
 
-        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => (this.showLogo = data.showLogo));
+        this.route.data
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(
+                data => ({showLogo: this.showLogo, showSlideshowRelatedCards: this.showSlideshowRelatedCards} = data),
+            );
 
         if (this.model && !this.fetchedModel) {
             // When mass editing, show a form with an empty model (without any fetched model)

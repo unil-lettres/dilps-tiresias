@@ -1,12 +1,98 @@
-.slideshow {
+:host {
+    --animation-duration: 200ms;
+    --slideshow-height: 120px;
+    --slideshow-height-hidden: 42px;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: calc(var(--slideshow-height) * -1 + var(--slideshow-height-hidden));
     display: flex;
-    height: 100px;
+    left: 0;
+    height: var(--slideshow-height);
+    justify-content: center;
+    position: absolute;
+    transition: bottom var(--animation-duration);
+    width: 100%;
+
+    &:hover {
+        bottom: 0;
+
+        button {
+            opacity: 1 !important;
+        }
+
+        .ghost {
+            visibility: hidden !important;
+        }
+    }
+
+    button {
+        opacity: 0;
+        position: absolute;
+        transform: translateY(50%);
+
+        &.right {
+            right: 10px;
+        }
+
+        &.left {
+            left: 10px;
+        }
+    }
 }
 
-.image {
-    flex: 1 0 100px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.33);
+.slideshow {
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    justify-content: left;
+    padding: 10px;
+
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    > div {
+        transition: transform 0.1s;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: rgba(0, 0, 0, 0.226) 5px 5px 5px;
+
+            .label {
+                top: 0;
+            }
+        }
+
+        .image {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: block;
+            height: 100%;
+            width: 100px;
+        }
+    }
+
+    // We use this element to prevent interactivity with the slideshow while
+    // it's animation is running. So we display it over the slideshow while
+    // the animation is running and hide it after the animation is done.
+    // This is done to prevent the tooltip to be displayed while the animation
+    // is running and thus be at an incorrect position (because it will calculate
+    // its position from the position of the card at the time it is through the
+    // animation).
+    .ghost {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: visibility var(--animation-duration);
+        visibility: visible;
+    }
 }

@@ -916,7 +916,7 @@
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                 <div *ngIf="showCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
                     <br />
-                    <div class="mat-headline-6">Fiches additionnelles</div>
+                    <div class="mat-headline-6">Fiches associées</div>
 
                     <natural-relations
                         [disabled]="!edit"
@@ -961,7 +961,7 @@
         </div>
     </div>
 
-    <div *ngIf="showImage" class="containerWithToolbar" fxFlex fxLayout="column">
+    <div *ngIf="showImage" class="image-container" fxFlex fxLayout="column">
         <mat-toolbar [ngClass]="edit ? 'edition' : ''" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
             <div fxFlex></div>
             <a
@@ -983,7 +983,7 @@
         <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
         <app-related-cards
             [card]="fetchedModel"
-            *ngIf="showCards && fetchedModel && fetchedModel.cards.length > 0"
+            *ngIf="showCards && showSlideshowRelatedCards && fetchedModel && fetchedModel.cards.length > 0"
         ></app-related-cards>
     </div>
 </div>
