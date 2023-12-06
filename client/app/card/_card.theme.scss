@@ -131,9 +131,19 @@
         }
 
         #fiches-additionnelles {
+            table {
+                table-layout: fixed !important;
+
+                .mat-column-unlink {
+                    width: 53px !important;
+                }
+            }
+
             natural-table-button span {
-                white-space: normal;
                 line-height: 1.5em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
             }
         }
 
