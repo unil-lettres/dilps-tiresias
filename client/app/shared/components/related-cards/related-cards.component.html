@@ -4,9 +4,10 @@
             [routerLink]="['/card', card.id]"
             [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
             class="image"
-            matTooltip="{{ card.name }}"
+            [matTooltip]="card.name"
         ></a>
     </div>
+    <div class="ghost"></div>
 </div>
 <button class="left" (click)="scrollLeft()" [disabled]="disabledLeftButton" [hidden]="hiddenButtons"></button>
 <button class="right" (click)="scrollRight()" [disabled]="disabledRightButton" [hidden]="hiddenButtons"></button>

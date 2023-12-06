@@ -30,3 +30,8 @@ mat-slider {
     min-width: 0;
     width: calc(((400px - 2 * 12px) - 10px) / 2);
 }
+
+.image-container {
+    @extend .containerWithToolbar;
+    overflow: hidden;
+}

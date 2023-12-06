@@ -1,12 +1,25 @@
 :host {
+    --animation-duration: 200ms;
+    --slideshow-height: 120px;
+    --slideshow-height-hidden: 42px;
+
     background-color: rgba(0, 0, 0, 0.5);
-    bottom: 0;
+    bottom: calc(var(--slideshow-height) * -1 + var(--slideshow-height-hidden));
     display: flex;
     left: 0;
-    height: 120px;
+    height: var(--slideshow-height);
     justify-content: center;
     position: absolute;
+    transition: bottom var(--animation-duration);
     width: 100%;
+
+    &:hover {
+        bottom: 0;
+
+        .ghost {
+            visibility: hidden !important;
+        }
+    }
 
     button {
         position: absolute;
@@ -24,15 +37,11 @@
 }
 
 .slideshow {
-    // bottom: -80px;
-    bottom: 0;
     box-sizing: border-box;
     display: flex;
     gap: 10px;
-    height: 120px;
     justify-content: left;
     padding: 10px;
-    transition: all 0.2s ease-out;
 
     overflow-x: scroll;
     scroll-behavior: smooth;
@@ -44,12 +53,8 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 
-    // &:hover {
-    //     bottom: 0;
-    // }
-
     > div {
-        transition: transform 0.1s ease-in-out;
+        transition: transform 0.1s;
 
         &:hover {
             transform: translateY(-5px);
@@ -68,5 +73,22 @@
             height: 100%;
             width: 100px;
         }
+    }
+
+    // We use this element to prevent interactivity with the slideshow while
+    // it's animation is running. So we display it over the slideshow while
+    // the animation is running and hide it after the animation is done.
+    // This is done to prevent the tooltip to be displayed while the animation
+    // is running and thus be at an incorrect position (because it will calculate
+    // its position from the position of the card at the time it is through the
+    // animation).
+    .ghost {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: visibility var(--animation-duration);
+        visibility: visible;
     }
 }
