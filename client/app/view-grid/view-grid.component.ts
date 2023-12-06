@@ -134,7 +134,7 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
                 });
             });
         },
-        infiniteScrollOffset: -200,
+        infiniteScrollOffset: -1000,
         ratioLimit: {
             min: 0.5,
             max: 2,
