@@ -66,7 +66,7 @@ export const routes: Routes = [
                 path: 'card/:cardId',
                 component: CardComponent,
                 resolve: {card: resolveCard},
-                data: {showLogo: true},
+                data: {showLogo: true, showSlideshowRelatedCards: true},
             },
             {
                 path: 'profile',

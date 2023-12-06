@@ -983,7 +983,7 @@
         <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
         <app-related-cards
             [card]="fetchedModel"
-            *ngIf="showCards && fetchedModel && fetchedModel.cards.length > 0"
+            *ngIf="showCards && showSlideshowRelatedCards && fetchedModel && fetchedModel.cards.length > 0"
         ></app-related-cards>
     </div>
 </div>
