@@ -13,18 +13,25 @@ import {CommonModule} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
 import {Card, Cards, CardsVariables} from '../../generated-types';
-import {NaturalQueryVariablesManager} from '@ecodev/natural';
+import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {Observable, map} from 'rxjs';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
     selector: 'app-related-cards',
     templateUrl: './related-cards.component.html',
     styleUrls: ['./related-cards.component.scss'],
     standalone: true,
-    imports: [CommonModule, RouterLink, MatTooltipModule],
+    imports: [CommonModule, RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+    /**
+     * Offset to scroll when clicking on the scroll buttons.
+     */
+    private static readonly SCROLL_OFFSET = 200;
+
     @Input({required: true})
     public card!: Card['card'];
 
@@ -86,11 +93,11 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     public scrollLeft(): void {
-        this.slideshow.nativeElement.scrollLeft -= 100;
+        this.slideshow.nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
     }
 
     public scrollRight(): void {
-        this.slideshow.nativeElement.scrollLeft += 100;
+        this.slideshow.nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
     }
 
     /**

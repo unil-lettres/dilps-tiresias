@@ -9,5 +9,23 @@
     </div>
     <div class="ghost"></div>
 </div>
-<button class="left" (click)="scrollLeft()" [disabled]="disabledLeftButton" [hidden]="hiddenButtons"></button>
-<button class="right" (click)="scrollRight()" [disabled]="disabledRightButton" [hidden]="hiddenButtons"></button>
+<button
+    class="left"
+    mat-fab
+    color="primary"
+    (click)="scrollLeft()"
+    [disabled]="disabledLeftButton"
+    [hidden]="hiddenButtons"
+>
+    <mat-icon naturalIcon="navigate_before"></mat-icon>
+</button>
+<button
+    class="right"
+    mat-fab
+    color="primary"
+    (click)="scrollRight()"
+    [disabled]="disabledRightButton"
+    [hidden]="hiddenButtons"
+>
+    <mat-icon naturalIcon="navigate_next"></mat-icon>
+</button>
