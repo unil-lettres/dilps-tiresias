@@ -57,6 +57,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -111,6 +112,7 @@ enum ViewMode {
         ViewListComponent,
         ViewMapComponent,
         NaturalIconDirective,
+        ExportMenuComponent,
     ],
 })
 export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {

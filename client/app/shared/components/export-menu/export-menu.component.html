@@ -1,0 +1,10 @@
+<button [matMenuTriggerFor]="menu" mat-icon-button matTooltip="Exporter">
+    <mat-icon naturalIcon="share_windows"></mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="export(ExportFormat.zip)">
+        {{ selectedCards.length > 1 ? 'Exporter les fiches' : 'Exporter la fiche' }}
+    </button>
+    <button (click)="export(ExportFormat.csv)" *ngIf="showExcelExportation" mat-menu-item>Exporter en Excel</button>
+    <button mat-menu-item (click)="export(ExportFormat.pptx)">Exporter en PowerPoint</button>
+</mat-menu>
