@@ -20,6 +20,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-related-cards',
@@ -45,14 +46,19 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public readonly CardService = CardService;
 
     /**
-     * Whether the scroll left button should be disabled.
+     * Whether the scrollbar could not scroll left anymore.
      */
-    public disabledLeftButton = true;
+    public scrollBarAtLeft = true;
 
     /**
-     * Whether the scroll right button should be disabled.
+     * Whether the scrollbar could not scroll right anymore.
      */
-    public disabledRightButton = false;
+    public scrollBarAtRight = false;
+
+    /**
+     * If the breakpoint is smaller or equal to XSmall.
+     */
+    public breakpointXSmall = false;
 
     /**
      * Related cards of the given card input.
@@ -60,9 +66,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public cards: Cards['cards']['items'][0][] = [];
 
     /**
-     * Whether the scroll buttons should be hidden (if there is no scrollbar).
+     * Whether the slideshow has a scrollbar (too much images for the viewport)
+     * or not.
      */
-    public hiddenButtons = true;
+    public hasScrollbar = false;
 
     /**
      * Query variables for retrieve related cards.
@@ -75,7 +82,17 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private readonly resizeObserver = new ResizeObserver(() => this.updateButtonsState());
 
-    public constructor(public readonly cardService: CardService) {}
+    public constructor(
+        public readonly cardService: CardService,
+        breakpointObserver: BreakpointObserver,
+    ) {
+        breakpointObserver
+            .observe(Breakpoints.XSmall)
+            .pipe(takeUntilDestroyed())
+            .subscribe(result => {
+                this.breakpointXSmall = result.matches;
+            });
+    }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.card) {
@@ -114,9 +131,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public updateButtonsState(): void {
         const slideshow = this.slideshow.nativeElement;
 
-        this.disabledLeftButton = slideshow.scrollLeft == 0;
-        this.disabledRightButton = slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth;
-        this.hiddenButtons = slideshow.scrollWidth <= slideshow.clientWidth;
+        this.scrollBarAtLeft = slideshow.scrollLeft == 0;
+        this.scrollBarAtRight = slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth;
+        this.hasScrollbar = slideshow.scrollWidth > slideshow.clientWidth;
     }
 
     /**

@@ -1,4 +1,4 @@
-<div [hidden]="cards.length === 0">
+<div [hidden]="breakpointXSmall || cards.length === 0">
     <div class="wrapper">
         <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
             <div *ngFor="let card of cards">
@@ -16,8 +16,8 @@
             mat-fab
             color="primary"
             (click)="scrollLeft()"
-            [disabled]="disabledLeftButton"
-            [hidden]="hiddenButtons"
+            [disabled]="scrollBarAtLeft"
+            [hidden]="!hasScrollbar"
         >
             <mat-icon naturalIcon="navigate_before"></mat-icon>
         </button>
@@ -26,8 +26,8 @@
             mat-fab
             color="primary"
             (click)="scrollRight()"
-            [disabled]="disabledRightButton"
-            [hidden]="hiddenButtons"
+            [disabled]="scrollBarAtRight"
+            [hidden]="!hasScrollbar"
         >
             <mat-icon naturalIcon="navigate_next"></mat-icon>
         </button>
