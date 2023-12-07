@@ -1,31 +1,35 @@
-<div class="slideshow" #slideshow (scroll)="updateButtonsState()">
-    <div *ngFor="let card of cards$ | async">
-        <a
-            [routerLink]="['/card', card.id]"
-            [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
-            class="image"
-            [matTooltip]="card.name"
-        ></a>
+<div [hidden]="cards.length === 0">
+    <div class="wrapper">
+        <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
+            <div *ngFor="let card of cards">
+                <a
+                    [routerLink]="['/card', card.id]"
+                    [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
+                    class="image"
+                    [matTooltip]="card.name"
+                ></a>
+            </div>
+            <div class="ghost"></div>
+        </div>
+        <button
+            class="left"
+            mat-fab
+            color="primary"
+            (click)="scrollLeft()"
+            [disabled]="disabledLeftButton"
+            [hidden]="hiddenButtons"
+        >
+            <mat-icon naturalIcon="navigate_before"></mat-icon>
+        </button>
+        <button
+            class="right"
+            mat-fab
+            color="primary"
+            (click)="scrollRight()"
+            [disabled]="disabledRightButton"
+            [hidden]="hiddenButtons"
+        >
+            <mat-icon naturalIcon="navigate_next"></mat-icon>
+        </button>
     </div>
-    <div class="ghost"></div>
 </div>
-<button
-    class="left"
-    mat-fab
-    color="primary"
-    (click)="scrollLeft()"
-    [disabled]="disabledLeftButton"
-    [hidden]="hiddenButtons"
->
-    <mat-icon naturalIcon="navigate_before"></mat-icon>
-</button>
-<button
-    class="right"
-    mat-fab
-    color="primary"
-    (click)="scrollRight()"
-    [disabled]="disabledRightButton"
-    [hidden]="hiddenButtons"
->
-    <mat-icon naturalIcon="navigate_next"></mat-icon>
-</button>

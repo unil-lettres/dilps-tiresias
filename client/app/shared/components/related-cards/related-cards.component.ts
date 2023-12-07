@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     Component,
+    DestroyRef,
     ElementRef,
     Input,
     OnChanges,
@@ -8,6 +9,7 @@ import {
     OnInit,
     SimpleChanges,
     ViewChild,
+    inject,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -18,6 +20,7 @@ import {Observable, map} from 'rxjs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-related-cards',
@@ -32,6 +35,8 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private static readonly SCROLL_OFFSET = 200;
 
+    private readonly destroyRef = inject(DestroyRef);
+
     @Input({required: true})
     public card!: Card['card'];
 
@@ -39,11 +44,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public slideshow!: ElementRef;
 
     public readonly CardService = CardService;
-
-    /**
-     * Observable of cards related to the current card.
-     */
-    public cards$: Observable<Cards['cards']['items'][0][]> | null = null;
 
     /**
      * Whether the scroll left button should be disabled.
@@ -54,6 +54,11 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      * Whether the scroll right button should be disabled.
      */
     public disabledRightButton = false;
+
+    /**
+     * Related cards of the given card input.
+     */
+    public cards: Cards['cards']['items'][0][] = [];
 
     /**
      * Whether the scroll buttons should be hidden (if there is no scrollbar).
@@ -81,7 +86,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     public ngOnInit(): void {
         this.updateCardsQueryVariables();
-        this.cards$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(map(result => result.items));
+        this.cardService
+            .watchAll(this.cardsQueryVariables)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(result => (this.cards = result.items));
     }
 
     public ngAfterViewInit(): void {
