@@ -120,7 +120,7 @@ export class DownloadComponent {
                         );
                     } else {
                         this.alertService.info(
-                            'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
+                            "L'exportation est en cours de préparation. Un email vous sera envoyé quand il sera prêt.",
                             8000,
                         );
                         return EMPTY;

@@ -139,8 +139,8 @@
                 <mat-icon naturalIcon="close"></mat-icon>
             </button>
 
-            <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Télécharger">
-                <mat-icon naturalIcon="file_download"></mat-icon>
+            <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Exporter">
+                <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
 
             <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
@@ -176,9 +176,9 @@
                 (click)="downloadCollection(collection!)"
                 *ngIf="showDownloadCollection"
                 mat-icon-button
-                matTooltip="Télécharger la collection"
+                matTooltip="Exporter la collection"
             >
-                <mat-icon naturalIcon="file_download"></mat-icon>
+                <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
 
             <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
