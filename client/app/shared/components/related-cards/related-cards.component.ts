@@ -16,7 +16,6 @@ import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
 import {Card, Cards, CardsVariables} from '../../generated-types';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {Observable, map} from 'rxjs';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
