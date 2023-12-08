@@ -4,7 +4,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
-import {Card, Cards, CreateExportInput, ExportFormat} from '../../generated-types';
+import {Card, Cards, ExportFormat} from '../../generated-types';
 import {ExportService} from 'client/app/exports/services/export.service';
 import {EMPTY, finalize, switchMap} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
