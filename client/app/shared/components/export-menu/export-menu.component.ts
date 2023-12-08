@@ -6,17 +6,18 @@ import {MatIconModule} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
 import {Cards, ExportFormat} from '../../generated-types';
 import {ExportService} from 'client/app/exports/services/export.service';
-import {EMPTY, switchMap} from 'rxjs';
+import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
 import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-export-menu',
     templateUrl: './export-menu.component.html',
     styleUrls: ['./export-menu.component.scss'],
     standalone: true,
-    imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective],
+    imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
 })
 export class ExportMenuComponent {
     @Input()
@@ -27,11 +28,35 @@ export class ExportMenuComponent {
 
     public ExportFormat = ExportFormat;
 
+    public pptValidationMessage: string | null = null;
+
+    private menuClosed$ = new Subject<void>();
+
     public constructor(
         private readonly exportService: ExportService,
         private readonly alertService: AlertService,
         private readonly apollo: Apollo,
     ) {}
+
+    public menuOpened(): void {
+        this.pptValidationMessage = 'Validation...';
+
+        const input = this.exportService.getDefaultForServer();
+        input.cards = [...this.selectedCards.map(card => card.id)];
+        input.format = ExportFormat.pptx;
+
+        this.exportService
+            .validate(input)
+            .pipe(takeUntil(this.menuClosed$))
+            .subscribe(validationMessage => {
+                this.pptValidationMessage = validationMessage;
+            });
+    }
+
+    public menuClosed(): void {
+        this.menuClosed$.next();
+        this.menuClosed$.complete();
+    }
 
     public export(format: ExportFormat): void {
         const input = this.exportService.getDefaultForServer();
