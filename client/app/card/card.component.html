@@ -106,9 +106,12 @@
                     <mat-icon naturalIcon="content_copy"></mat-icon>
                 </button>
 
-                <button (click)="download(fetchedModel)" mat-icon-button matTooltip="Exporter">
-                    <mat-icon naturalIcon="share_windows"></mat-icon>
-                </button>
+                <app-export-menu
+                    *ngIf="fetchedModel"
+                    matTooltip="Exporter"
+                    [selectedCards]="[fetchedModel]"
+                    [showExcelExportation]="!this.isDilps"
+                ></app-export-menu>
 
                 <button
                     (click)="linkToCollection()"

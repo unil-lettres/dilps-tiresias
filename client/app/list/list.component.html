@@ -143,12 +143,6 @@
                 <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
 
-            <app-export-menu
-                matTooltip="Exporter"
-                [selectedCards]="selected"
-                [showExcelExportation]="site !== Site.dilps"
-            ></app-export-menu>
-
             <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
                 <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
