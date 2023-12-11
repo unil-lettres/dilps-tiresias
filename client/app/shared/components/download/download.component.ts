@@ -8,7 +8,7 @@ import {SITE} from '../../../app.config';
 import {AlertService} from '../alert/alert.service';
 import {MatTabChangeEvent, MatTabsModule} from '@angular/material/tabs';
 import {Apollo} from 'apollo-angular';
-import {defaultIfEmpty, EMPTY, finalize, forkJoin, map, switchMap} from 'rxjs';
+import {EMPTY, finalize, switchMap} from 'rxjs';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
@@ -18,6 +18,7 @@ import {CommonModule} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {waitOnApolloQueries} from '../../services/utility';
 
 export type DownloadComponentData = {
     denyLegendsDownload: boolean;
@@ -98,29 +99,20 @@ export class DownloadComponent {
     }
 
     private download(): void {
-        // Creating the export causes Apollo.client.reFetchObservableQueries()
-        // to be executed, leading to some xhr requests being made. Changing the
-        // location of the current page with document.location.href while these
-        // requests are pending causes Safari to block their responses because
-        // of CORS error (although we're on the same domain). So we wait on
-        // these requests to be completed before proceeding to change the
-        // location of the page.
         this.loading = true;
         this.exportService
             .create(this.input)
             .pipe(
                 switchMap(newExport => {
                     if (newExport.filename) {
-                        const observableQueries = this.apollo.client.getObservableQueries();
-                        const promises = Array.from(observableQueries.values()).map(q => q.result());
                         const url = '/export/' + newExport.filename;
-                        return forkJoin(promises).pipe(
-                            map(() => url),
-                            defaultIfEmpty(url),
-                        );
+
+                        // Safari blocks the download of the file if the location of the
+                        // page is changed while xhr requests are pending.
+                        return waitOnApolloQueries<string>(this.apollo, url);
                     } else {
                         this.alertService.info(
-                            'Le download est en cours de préparation. Un email vous sera envoyé quand il sera prêt.',
+                            "L'exportation est en cours de préparation. Un email vous sera envoyé quand il sera prêt.",
                             8000,
                         );
                         return EMPTY;

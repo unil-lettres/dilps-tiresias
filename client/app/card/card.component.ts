@@ -27,7 +27,6 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {
     Card,
@@ -83,6 +82,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
+import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -144,6 +144,7 @@ interface InitialCardValues {
         StripTagsPipe,
         NaturalIconDirective,
         RelatedCardsComponent,
+        ExportMenuComponent,
     ],
 })
 export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
@@ -669,19 +670,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         this.assertFetchedCard(this.fetchedModel);
         this.cardService.validateImage(this.fetchedModel).subscribe(() => {
             this.alertService.info('Image validée');
-        });
-    }
-
-    public download(card: Card['card'] | null): void {
-        this.assertFetchedCard(card);
-
-        this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
-            width: '600px',
-            data: {
-                cards: [card],
-                collections: [],
-                denyLegendsDownload: !this.user,
-            },
         });
     }
 

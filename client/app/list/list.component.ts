@@ -24,6 +24,10 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
+import {
+    DownloadComponentData as DialogDownloadComponentData,
+    ExportDialogComponent,
+} from '../shared/components/export-dialog/export-dialog.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
@@ -57,6 +61,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -111,6 +116,7 @@ enum ViewMode {
         ViewListComponent,
         ViewMapComponent,
         NaturalIconDirective,
+        ExportMenuComponent,
     ],
 })
 export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
@@ -361,7 +367,15 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     }
 
     public downloadSelection(selection: Cards['cards']['items'][0][]): void {
-        this.download({cards: selection});
+        const data: DialogDownloadComponentData = {
+            cards: selection,
+            showExcelExportation: this.site !== Site.dilps,
+        };
+
+        this.dialog.open<ExportDialogComponent, DialogDownloadComponentData, never>(ExportDialogComponent, {
+            width: '300px',
+            data,
+        });
     }
 
     public downloadCollection(collection: FakeCollection): void {
