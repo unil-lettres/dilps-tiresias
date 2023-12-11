@@ -27,7 +27,6 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {
     Card,
