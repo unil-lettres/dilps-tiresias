@@ -33,11 +33,6 @@
                 </button>
             </mat-menu>
 
-            <mat-menu #validationMenu="matMenu" [overlapTrigger]="false">
-                <button (click)="validateData()" mat-menu-item>Valider les données</button>
-                <button (click)="validateImage()" mat-menu-item>Valider l'image</button>
-            </mat-menu>
-
             <ng-container *ngIf="showTools">
                 <button
                     (click)="toggleEdit()"
@@ -86,15 +81,6 @@
                     matTooltip="Créer"
                 >
                     <mat-icon naturalIcon="add"></mat-icon>
-                </button>
-
-                <button
-                    *ngIf="fetchedModel && user?.role === 'administrator'"
-                    [matMenuTriggerFor]="validationMenu"
-                    mat-icon-button
-                    matTooltip="Valider"
-                >
-                    <mat-icon naturalIcon="spellcheck"></mat-icon>
                 </button>
 
                 <button

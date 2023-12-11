@@ -162,33 +162,6 @@ class CardTest extends TestCase
         $card->addCard($card);
     }
 
-    public function testValidation(): void
-    {
-        $user = new User();
-        User::setCurrent($user);
-        $card = new Card();
-
-        self::assertNull($card->getDataValidationDate());
-        self::assertNull($card->getDataValidator());
-        self::assertNull($card->getImageValidationDate());
-        self::assertNull($card->getImageValidator());
-
-        $mockNow = '1999-09-02';
-        Chronos::setTestNow($mockNow);
-
-        $card->validateData();
-        self::assertSame($mockNow, $card->getDataValidationDate()->toDateString());
-        self::assertSame($user, $card->getDataValidator());
-        self::assertNull($card->getImageValidationDate());
-        self::assertNull($card->getImageValidator());
-
-        $card->validateImage();
-        self::assertSame($mockNow, $card->getDataValidationDate()->toDateString());
-        self::assertSame($user, $card->getDataValidator());
-        self::assertSame($mockNow, $card->getImageValidationDate()->toDateString());
-        self::assertSame($user, $card->getImageValidator());
-    }
-
     public function testGetPermissions(): void
     {
         $card = new Card();

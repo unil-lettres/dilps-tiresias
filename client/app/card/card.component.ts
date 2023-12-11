@@ -659,20 +659,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             });
     }
 
-    public validateData(): void {
-        this.assertFetchedCard(this.fetchedModel);
-        this.cardService.validateData(this.fetchedModel).subscribe(() => {
-            this.alertService.info('Donnée validée');
-        });
-    }
-
-    public validateImage(): void {
-        this.assertFetchedCard(this.fetchedModel);
-        this.cardService.validateImage(this.fetchedModel).subscribe(() => {
-            this.alertService.info('Image validée');
-        });
-    }
-
     public getSuggestAddLabel(): string {
         if (this.user?.role === UserRole.junior || this.user?.role === UserRole.senior) {
             return 'Soumettre';

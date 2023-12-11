@@ -122,14 +122,6 @@ export const cardDetailsFragment = gql`
         updater {
             ...UserMeta
         }
-        dataValidationDate
-        dataValidator {
-            ...UserMeta
-        }
-        imageValidationDate
-        imageValidator {
-            ...UserMeta
-        }
         permissions {
             update
             delete
@@ -208,24 +200,6 @@ export const deleteCards = gql`
     mutation DeleteCards($ids: [CardID!]!) {
         deleteCards(ids: $ids)
     }
-`;
-
-export const validateData = gql`
-    mutation ValidateData($id: CardID!) {
-        validateData(id: $id) {
-            ...CardDetails
-        }
-    }
-    ${cardDetailsFragment}
-`;
-
-export const validateImage = gql`
-    mutation ValidateImage($id: CardID!) {
-        validateImage(id: $id) {
-            ...CardDetails
-        }
-    }
-    ${cardDetailsFragment}
 `;
 
 export const collectionCopyrightsQuery = gql`

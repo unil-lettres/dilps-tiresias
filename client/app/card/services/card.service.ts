@@ -26,8 +26,6 @@ import {
     Site,
     UpdateCard,
     UpdateCardVariables,
-    ValidateData,
-    ValidateImage,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -38,8 +36,6 @@ import {
     createCards,
     deleteCards,
     updateCard,
-    validateData,
-    validateImage,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
 import {Literal, mergeOverrideArray, NaturalDebounceService, WithId} from '@ecodev/natural';
@@ -175,42 +171,6 @@ export class CardService extends AbstractContextualizedService<
             url: '',
             urlDescription: '',
         };
-    }
-
-    public validateData(card: Card['card']): Observable<ValidateData['validateData']> {
-        return this.apollo
-            .mutate<ValidateData>({
-                mutation: validateData,
-                variables: {
-                    id: card.id,
-                },
-            })
-            .pipe(
-                map(result => {
-                    const c = result.data!.validateData;
-                    merge(card, c);
-
-                    return c;
-                }),
-            );
-    }
-
-    public validateImage(card: Card['card']): Observable<ValidateImage['validateImage']> {
-        return this.apollo
-            .mutate<ValidateImage>({
-                mutation: validateImage,
-                variables: {
-                    id: card.id,
-                },
-            })
-            .pipe(
-                map(result => {
-                    const c = result.data!.validateImage;
-                    merge(card, c);
-
-                    return c;
-                }),
-            );
     }
 
     public override getInput(object: Literal): CardInput | CardPartialInput {

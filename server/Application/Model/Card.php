@@ -27,7 +27,6 @@ use Application\Traits\HasParentInterface;
 use Application\Traits\HasRichTextName;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
-use Application\Traits\HasValidation;
 use Application\Traits\HasYearRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
@@ -74,7 +73,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     use HasInstitution;
     use HasRichTextName;
     use HasSite;
-    use HasValidation;
     use HasYearRange;
 
     private const IMAGE_PATH = 'data/images/';
