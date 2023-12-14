@@ -29,6 +29,10 @@
             font-family: inherit !important;
         }
 
+        .margin-bottom-hint {
+            margin-bottom: $hint-height;
+        }
+
         // Try to match official mat-form-field input component style.
         .rich-text {
             -webkit-font-smoothing: antialiased;
