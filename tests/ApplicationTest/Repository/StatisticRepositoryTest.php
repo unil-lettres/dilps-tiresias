@@ -7,6 +7,7 @@ namespace ApplicationTest\Repository;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
+use InvalidArgumentException;
 
 class StatisticRepositoryTest extends AbstractRepositoryTest
 {
@@ -56,6 +57,23 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         yield ['tiresias', 'month', 1000];
         yield ['tiresias', 'all', 1000];
         yield ['tiresias', '2019', 1000];
-        yield ['tir\'asd"esias', '20asd\'1"9', 1000];
+        yield ['tir\'asd"esias', '2019', 1000];
+    }
+
+    /**
+     * @dataProvider providerGetExtraStatisticsException
+     */
+    public function testGetExtraStatisticsException(string $site, string $period, ?int $userId): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $user = $userId ? $this->getEntityManager()->getRepository(User::class)->getOneById($userId) : null;
+        $this->repository->getExtraStatistics($site, $period, $user);
+    }
+
+    public function providerGetExtraStatisticsException(): iterable
+    {
+        yield ['tiresias', '20asd\'1"9', 1000];
+        yield ['tiresias', 'bbb', 1000];
     }
 }
