@@ -7,6 +7,7 @@ namespace Application\Repository;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Generator;
+use InvalidArgumentException;
 
 /**
  * @extends AbstractRepository<Statistic>
@@ -110,17 +111,17 @@ $userClause
         if ($period === 'all') {
             return ' AND 1=1';
         }
-        if ($period === 'month') {
-            $first = date('Y-m-01');
-            $last = date('Y-') . $this->formatMonth(date('m') + 1) . '-01';
-        } else {
-            $first = $period . date('-01-01');
-            $last = ((int) $period + 1) . date('-01-01');
-        }
-        $connection = $this->getEntityManager()->getConnection();
+
         $field = $this->getDateField($isCreation);
 
-        return ' AND ' . $field . ' BETWEEN ' . $connection->quote($first) . ' AND ' . $connection->quote($last);
+        if ($period === 'month') {
+            return " AND $field BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-01') AND LAST_DAY(CURDATE())";
+        }
+        if (is_numeric($period)) {
+            return " AND YEAR($field) = $period";
+        }
+
+        throw new InvalidArgumentException("Invalid period: $period");
     }
 
     private function formatMonth(int $month): string
