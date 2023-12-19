@@ -56,6 +56,7 @@ import {
     NaturalAbstractController,
     NaturalFileDropDirective,
     NaturalIconDirective,
+    NaturalLinkMutationService,
     NaturalRelationsComponent,
     NaturalTableButtonComponent,
 } from '@ecodev/natural';
@@ -83,6 +84,12 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
+import {
+    LinkRelatedCardsDialogComponent,
+    LinkRelatedCardsDialogData,
+    LinkRelatedCardsDialogResult,
+} from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
+import {forkJoin} from 'rxjs';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -411,6 +418,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly dialog: MatDialog,
         private readonly userService: UserService,
         private readonly statisticService: StatisticService,
+        private readonly linkService: NaturalLinkMutationService,
     ) {
         super();
     }
@@ -510,6 +518,58 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.model.materials = onlyLeaves(this.model.materials!);
 
             this.refreshInitialCardValues();
+        }
+    }
+
+    public openLinkRelatedCardsDialog(): void {
+        if (this.fetchedModel) {
+            let cardsData: Card['card']['cards'] = [];
+
+            // Getting related cards from database since fetchModel is not
+            // updated when we link cards.
+            // getOne retrieve cached data first and then fetch them from the
+            // database before completing the observable. So we wait on the
+            // completed event before opening the dialog.
+            this.cardService.getOne(this.fetchedModel.id).subscribe({
+                next: card => {
+                    cardsData = card.cards;
+                },
+                complete: () => {
+                    if (cardsData.length < 2) {
+                        this.alertService.info(
+                            'Au moins deux cartes doivent être associées pour utiliser cette fonctionnalité.',
+                        );
+                        return;
+                    }
+                    this.dialog
+                        .open<
+                            LinkRelatedCardsDialogComponent,
+                            LinkRelatedCardsDialogData,
+                            LinkRelatedCardsDialogResult
+                        >(LinkRelatedCardsDialogComponent, {
+                            width: '600px',
+                            data: {
+                                cards: cardsData,
+                            },
+                        })
+                        .afterClosed()
+                        .subscribe(selectedCards => {
+                            // Link all cards to each others (cards already link will not be affected).
+                            if (selectedCards) {
+                                const observables = selectedCards.map(card =>
+                                    this.linkService.linkMany(
+                                        card,
+                                        selectedCards.filter(_card => _card.id != card.id),
+                                    ),
+                                );
+
+                                forkJoin(observables).subscribe(() => {
+                                    this.alertService.info('Liens créés');
+                                });
+                            }
+                        });
+                },
+            });
         }
     }
 

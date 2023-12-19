@@ -934,6 +934,11 @@
                             ></natural-table-button>
                         </ng-template>
                     </natural-relations>
+                    <div *ngIf="edit" class="margin-bottom-hint btn-link-related-cards">
+                        <button mat-raised-button (click)="openLinkRelatedCardsDialog()">
+                            Associer les fiches entre-elles
+                        </button>
+                    </div>
                 </div>
 
                 <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>

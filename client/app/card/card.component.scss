@@ -35,3 +35,8 @@ mat-slider {
     @extend .containerWithToolbar;
     overflow: hidden;
 }
+
+.btn-link-related-cards {
+    display: flex;
+    justify-content: end;
+}
