@@ -143,11 +143,14 @@
                 }
             }
 
-            natural-table-button span {
-                line-height: 1.5em;
+            natural-table-button {
                 overflow: hidden;
-                text-overflow: ellipsis;
-                width: 100%;
+                span {
+                    line-height: 1.5em;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 100%;
+                }
             }
         }
 

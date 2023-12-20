@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>Associer plusieurs fiches entre-elles</h2>
+<h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content class="wrapper">
     <div>
-        <p>Chaque fiche sélectionnée sera associée à toutes les autres également sélectionnées.</p>
+        <p>{{ help }}</p>
         <div *ngFor="let card of cards">
             <mat-checkbox [(ngModel)]="card.checked"> {{ card.name }} ({{ card.id }}) </mat-checkbox>
         </div>

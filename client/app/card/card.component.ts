@@ -3,7 +3,7 @@ import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgModel, FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, sortBy} from 'lodash-es';
+import {findKey, sortBy, identity} from 'lodash-es';
 import {QuillModules, QuillEditorComponent} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -521,7 +521,89 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         }
     }
 
+    public openCopyRelatedCardsDialog(card: Card['card']): void {
+        this.assertFetchedCard(this.fetchedModel);
+        this.openRelatedCardsDialog(
+            cards => {
+                if (cards) {
+                    this.assertFetchedCard(this.fetchedModel);
+
+                    this.linkService
+                        .linkMany(
+                            this.fetchedModel,
+                            cards.filter(_card => _card.id != card.id),
+                        )
+                        .subscribe(() => {
+                            this.alertService.info('Liens créés');
+                        });
+                }
+            },
+            'Copier les associations',
+            `Copie les associations de "${card.name}" vers cette fiche.`,
+            cards => {
+                const cardIds = cards.map(_card => _card.id);
+                // Return all related cards of the specified card filtered by
+                // cards already linked.
+                return card.cards.filter(_card => !cardIds.includes(_card.id) && _card.id != this.fetchedModel!.id);
+            },
+            cards => {
+                if (cards.length === 0) {
+                    this.alertService.info('Toutes les fiches sont déjà associées.');
+                    return false;
+                }
+                return true;
+            },
+        );
+    }
+
     public openLinkRelatedCardsDialog(): void {
+        this.openRelatedCardsDialog(
+            cards => {
+                // Link all cards to each others (cards already link will not be affected).
+                const observables = cards.map(card =>
+                    this.linkService.linkMany(
+                        card,
+                        cards.filter(_card => _card.id != card.id),
+                    ),
+                );
+
+                forkJoin(observables).subscribe(() => {
+                    this.alertService.info('Liens créés dans les autres fiches');
+                });
+            },
+            'Associer plusieurs fiches entre elles',
+            'Chaque fiche sélectionnée sera associée à toutes les autres également sélectionnées.',
+            identity,
+            cards => {
+                if (cards.length < 2) {
+                    this.alertService.info(
+                        'Au moins deux fiches doivent être associées pour utiliser cette fonctionnalité.',
+                    );
+                    return false;
+                }
+                return true;
+            },
+        );
+    }
+
+    /**
+     * Open the link-related-cards-dialog component.
+     *
+     * @param process Callback function to process the result of the dialog.
+     * @param title Title of the dialog.
+     * @param help Help text of the dialog.
+     * @param cardsInput Receive the cards (refreshed from db) linked to the
+     * current card and return the list of cards to be displayed in the dialog.
+     * @param checkCards Cancel the dialog if the returned value is false.
+     * Receive the cards returned by cardsInput.
+     */
+    public openRelatedCardsDialog(
+        process: (cards: Card['card']['cards']) => void,
+        title: string,
+        help: string,
+        cardsInput: (cards: Card['card']['cards']) => Card['card']['cards'] = identity,
+        checkCards: (cards: Card['card']['cards']) => boolean = identity,
+    ): void {
         if (this.fetchedModel) {
             let cardsData: Card['card']['cards'] = [];
 
@@ -535,10 +617,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                     cardsData = card.cards;
                 },
                 complete: () => {
-                    if (cardsData.length < 2) {
-                        this.alertService.info(
-                            'Au moins deux cartes doivent être associées pour utiliser cette fonctionnalité.',
-                        );
+                    const _cardsInput = cardsInput(cardsData);
+                    if (checkCards && !checkCards(_cardsInput)) {
                         return;
                     }
                     this.dialog
@@ -549,25 +629,13 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                         >(LinkRelatedCardsDialogComponent, {
                             width: '600px',
                             data: {
-                                cards: cardsData,
+                                cards: _cardsInput,
+                                title,
+                                help,
                             },
                         })
                         .afterClosed()
-                        .subscribe(selectedCards => {
-                            // Link all cards to each others (cards already link will not be affected).
-                            if (selectedCards) {
-                                const observables = selectedCards.map(card =>
-                                    this.linkService.linkMany(
-                                        card,
-                                        selectedCards.filter(_card => _card.id != card.id),
-                                    ),
-                                );
-
-                                forkJoin(observables).subscribe(() => {
-                                    this.alertService.info('Liens créés');
-                                });
-                            }
-                        });
+                        .subscribe(result => result && process(result));
                 },
             });
         }

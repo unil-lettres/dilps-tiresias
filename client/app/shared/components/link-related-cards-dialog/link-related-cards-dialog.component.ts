@@ -14,6 +14,8 @@ type CheckablCards = CheckablCard[];
 
 export type LinkRelatedCardsDialogData = {
     cards: Card['card']['cards'];
+    title: string;
+    help: string;
 };
 
 export type LinkRelatedCardsDialogResult = Card['card']['cards'];
@@ -35,12 +37,16 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 })
 export class LinkRelatedCardsDialogComponent {
     public readonly cards: CheckablCards;
+    public readonly title: string;
+    public readonly help: string;
 
     public constructor(
         private readonly dialogRef: MatDialogRef<LinkRelatedCardsDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public readonly data: LinkRelatedCardsDialogData,
     ) {
         this.cards = data.cards.map(card => ({checked: true, ...card}));
+        this.title = data.title;
+        this.help = data.help;
     }
 
     public filterCheckedCards(): CheckablCards {

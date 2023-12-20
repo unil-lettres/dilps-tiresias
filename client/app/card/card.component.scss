@@ -40,3 +40,11 @@ mat-slider {
     display: flex;
     justify-content: flex-end;
 }
+
+.related-card-template {
+    display: flex;
+
+    > div:first-child {
+        flex-grow: 1;
+    }
+}
