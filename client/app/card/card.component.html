@@ -921,19 +921,37 @@
                         }"
                         [main]="fetchedModel"
                         [service]="cardService"
-                        placeholder="Chercher une fiche"
+                        placeholder="Associer une fiche"
                         [displayWith]="displayWith"
                         id="fiches-additionnelles"
                         [ngClass]="{'margin-bottom-hint': !edit}"
                     >
                         <ng-template let-item="item">
-                            <natural-table-button
-                                [label]="displayWith(item)"
-                                [navigate]="['/card/', item.id]"
-                                icon="image"
-                            ></natural-table-button>
+                            <div [ngClass]="{'related-card-template': true}">
+                                <natural-table-button
+                                    toolT
+                                    [label]="displayWith(item)"
+                                    [navigate]="['/card/', item.id]"
+                                    icon="image"
+                                    [matTooltip]="displayWith(item)"
+                                    [matTooltipShowDelay]="500"
+                                ></natural-table-button>
+                                <button
+                                    *ngIf="edit"
+                                    (click)="openCopyRelatedCardsDialog(item)"
+                                    mat-icon-button
+                                    matTooltip="Copier les associations"
+                                >
+                                    <mat-icon naturalIcon="add_link"></mat-icon>
+                                </button>
+                            </div>
                         </ng-template>
                     </natural-relations>
+                    <div *ngIf="edit" class="margin-bottom-hint btn-link-related-cards">
+                        <button mat-raised-button (click)="openLinkRelatedCardsDialog()">
+                            Associer les fiches entre elles
+                        </button>
+                    </div>
                 </div>
 
                 <app-files *ngIf="fetchedModel" [card]="fetchedModel" [disabled]="!edit"></app-files>

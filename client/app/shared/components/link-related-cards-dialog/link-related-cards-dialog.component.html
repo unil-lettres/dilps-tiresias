@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content class="wrapper">
+    <div>
+        <p>{{ help }}</p>
+        <div *ngFor="let card of cards">
+            <mat-checkbox [(ngModel)]="card.checked"> {{ card.name }} ({{ card.id }}) </mat-checkbox>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Annuler</button>
+    <button mat-button [mat-dialog-close]="filterCheckedCards()">Créer les associations</button>
+</mat-dialog-actions>
