@@ -143,7 +143,12 @@
                 <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
 
-            <button (click)="goToQuizz(selected)" *ngIf="!!user" mat-icon-button matTooltip="Lecture d'oeuvre">
+            <button
+                (click)="goToQuizz(selected)"
+                *ngIf="!!user && site === Site.dilps"
+                mat-icon-button
+                matTooltip="Lecture d'oeuvre"
+            >
                 <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
 
@@ -181,7 +186,7 @@
                 <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
 
-            <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
+            <button *ngIf="site === Site.dilps" (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
                 <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
         </ng-container>
