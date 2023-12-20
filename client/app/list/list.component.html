@@ -94,7 +94,7 @@
 
         <button
             (click)="setViewMode(ViewMode.map)"
-            *ngIf="selected?.length && viewMode !== ViewMode.map"
+            *ngIf="site === Site.tiresias && selected?.length && viewMode !== ViewMode.map"
             mat-icon-button
             matTooltip="Affichage Carte"
         >
