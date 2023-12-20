@@ -10,6 +10,8 @@ import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.c
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
     selector: 'app-root',
@@ -36,11 +38,19 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
     public constructor(
         private readonly themeService: ThemeService,
         private readonly overlayContainer: OverlayContainer,
+        private readonly matIconRegistry: MatIconRegistry,
+        private readonly domSanitizer: DomSanitizer,
         @Inject(SITE) private readonly site: Site,
     ) {
         super();
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
+
+        // Register custom icons.
+        matIconRegistry.addSvgIcon(
+            'library_remove',
+            domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/library_remove.svg'),
+        );
     }
 
     public ngOnInit(): void {
