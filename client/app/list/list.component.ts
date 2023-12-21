@@ -446,7 +446,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
         this.dialog
             .open(MassEditComponent, {
-                width: '500px',
+                maxWidth: '500px',
                 data: {changeable, unchangeable},
             })
             .afterClosed()
