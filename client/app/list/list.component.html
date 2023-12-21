@@ -74,54 +74,7 @@
     <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
         <app-logo *ngIf="showLogo" [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
 
-        <button
-            (click)="setViewMode(ViewMode.grid)"
-            *ngIf="viewMode !== ViewMode.grid"
-            mat-icon-button
-            matTooltip="Affichage Mosaïque"
-        >
-            <mat-icon naturalIcon="view_compact"></mat-icon>
-        </button>
-
-        <button
-            (click)="setViewMode(ViewMode.list)"
-            *ngIf="viewMode !== ViewMode.list"
-            mat-icon-button
-            matTooltip="Affichage Liste"
-        >
-            <mat-icon naturalIcon="view_list"></mat-icon>
-        </button>
-
-        <button
-            (click)="setViewMode(ViewMode.map)"
-            *ngIf="site === Site.tiresias && selected?.length && viewMode !== ViewMode.map"
-            mat-icon-button
-            matTooltip="Affichage Carte"
-        >
-            <mat-icon naturalIcon="map"></mat-icon>
-        </button>
-
-        <natural-search
-            (selectionChange)="search($event)"
-            [facets]="naturalSearchFacets"
-            [selections]="naturalSearchSelections"
-            dropdownTitle="Recherche approfondie"
-            class="searchField"
-            fxFlex
-            fxFlexAlign="start"
-        />
-        <button
-            [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
-            mat-icon-button
-            matTooltip="Trier"
-        >
-            <mat-icon naturalIcon="sort"></mat-icon>
-        </button>
-
         <ng-container *ngIf="selected?.length">
-            <!--<div *ngIf="selected.length === 1" class="mat-body-1">{{ selected.length }} élément sélectionné</div>-->
-            <!--<div *ngIf="selected.length > 1" class="mat-body-1">{{ selected.length }} éléments sélectionnés</div>-->
-
             <button
                 (click)="linkSelectionToCollection(selected)"
                 *ngIf="!!user"
@@ -141,15 +94,6 @@
 
             <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Exporter">
                 <mat-icon naturalIcon="share_windows"></mat-icon>
-            </button>
-
-            <button
-                (click)="goToQuizz(selected)"
-                *ngIf="!!user && site === Site.dilps"
-                mat-icon-button
-                matTooltip="Lecture d'oeuvre"
-            >
-                <mat-icon naturalIcon="burst_mode"></mat-icon>
             </button>
 
             <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
@@ -185,11 +129,52 @@
             >
                 <mat-icon naturalIcon="share_windows"></mat-icon>
             </button>
-
-            <button *ngIf="site === Site.dilps" (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <mat-icon naturalIcon="burst_mode"></mat-icon>
-            </button>
         </ng-container>
+
+        <natural-search
+            (selectionChange)="search($event)"
+            [facets]="naturalSearchFacets"
+            [selections]="naturalSearchSelections"
+            dropdownTitle="Recherche approfondie"
+            class="searchField"
+            fxFlex
+            fxFlexAlign="start"
+        />
+
+        <button
+            (click)="setViewMode(ViewMode.grid)"
+            *ngIf="viewMode !== ViewMode.grid"
+            mat-icon-button
+            matTooltip="Affichage Mosaïque"
+        >
+            <mat-icon naturalIcon="view_compact"></mat-icon>
+        </button>
+
+        <button
+            (click)="setViewMode(ViewMode.list)"
+            *ngIf="viewMode !== ViewMode.list"
+            mat-icon-button
+            matTooltip="Affichage Liste"
+        >
+            <mat-icon naturalIcon="view_list"></mat-icon>
+        </button>
+
+        <button
+            (click)="setViewMode(ViewMode.map)"
+            *ngIf="site === Site.tiresias && selected?.length && viewMode !== ViewMode.map"
+            mat-icon-button
+            matTooltip="Affichage Carte"
+        >
+            <mat-icon naturalIcon="map"></mat-icon>
+        </button>
+
+        <button
+            [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
+            mat-icon-button
+            matTooltip="Trier"
+        >
+            <mat-icon naturalIcon="sort"></mat-icon>
+        </button>
 
         <button
             *ngIf="viewMode === ViewMode.grid"
@@ -213,6 +198,23 @@
         >
             <mat-icon naturalIcon="select_all"></mat-icon>
         </button>
+
+        <ng-container *ngIf="selected?.length">
+            <button
+                (click)="goToQuizz(selected)"
+                *ngIf="!!user && site === Site.dilps"
+                mat-icon-button
+                matTooltip="Lecture d'oeuvre"
+            >
+                <mat-icon naturalIcon="burst_mode"></mat-icon>
+            </button>
+        </ng-container>
+
+        <ng-container *ngIf="!selected?.length && user">
+            <button *ngIf="site === Site.dilps" (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
+                <mat-icon naturalIcon="burst_mode"></mat-icon>
+            </button>
+        </ng-container>
 
         <div *ngIf="viewMode === ViewMode.grid">
             <mat-chip-set>
