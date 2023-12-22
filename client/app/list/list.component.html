@@ -187,7 +187,7 @@
         </button>
 
         <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
-            <mat-icon naturalIcon="select_all"></mat-icon>
+            <mat-icon naturalIcon="deselect"></mat-icon>
         </button>
 
         <button
@@ -196,7 +196,7 @@
             mat-icon-button
             matTooltip="Sélectionner les images visibles"
         >
-            <mat-icon naturalIcon="select_all"></mat-icon>
+            <mat-icon svgIcon="select_all_mark"></mat-icon>
         </button>
 
         <ng-container *ngIf="selected?.length">

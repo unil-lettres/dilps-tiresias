@@ -50,6 +50,7 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         [
             ['sort_asc', 'sort_asc.svg'],
             ['library_remove', 'library_remove.svg'],
+            ['select_all_mark', 'select_all_mark.svg'],
         ].forEach(([name, path]) => {
             matIconRegistry.addSvgIcon(name, domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/' + path));
         });
