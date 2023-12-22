@@ -206,13 +206,13 @@
                 mat-icon-button
                 matTooltip="Lecture d'oeuvre"
             >
-                <mat-icon naturalIcon="burst_mode"></mat-icon>
+                <mat-icon svgIcon="cards_game"></mat-icon>
             </button>
         </ng-container>
 
         <ng-container *ngIf="!selected?.length && user">
             <button *ngIf="site === Site.dilps" (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <mat-icon naturalIcon="burst_mode"></mat-icon>
+                <mat-icon svgIcon="cards_game"></mat-icon>
             </button>
         </ng-container>
 
