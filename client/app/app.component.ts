@@ -47,10 +47,12 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
 
         // Register custom icons.
-        matIconRegistry.addSvgIcon(
-            'library_remove',
-            domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/library_remove.svg'),
-        );
+        [
+            ['sort_asc', 'sort_asc.svg'],
+            ['library_remove', 'library_remove.svg'],
+        ].forEach(([name, path]) => {
+            matIconRegistry.addSvgIcon(name, domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/' + path));
+        });
     }
 
     public ngOnInit(): void {
