@@ -9,6 +9,7 @@ use Application\Model\AbstractModel;
 use Application\Model\Card;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\Api\Input\PaginationInputType;
+use Ecodev\Felix\Api\Plural;
 use GraphQL\Type\Definition\Type;
 use ReflectionClass;
 
@@ -26,7 +27,7 @@ abstract class Standard
         $reflect = $metadata->getReflectionClass();
         $name = lcfirst($reflect->getShortName());
         $shortName = $reflect->getShortName();
-        $plural = self::makePlural($name);
+        $plural = Plural::make($name);
 
         $listArgs = self::getListArguments($metadata, $class, $name);
         $singleArgs = self::getSingleArguments($class);
@@ -78,7 +79,7 @@ abstract class Standard
     {
         $reflect = new ReflectionClass($class);
         $name = $reflect->getShortName();
-        $plural = self::makePlural($name);
+        $plural = Plural::make($name);
 
         return [
             [
@@ -240,18 +241,6 @@ abstract class Standard
                 },
             ],
         ];
-    }
-
-    /**
-     * Returns the plural form of the given name.
-     */
-    private static function makePlural(string $name): string
-    {
-        $plural = $name . 's';
-        $plural = preg_replace('/ys$/', 'ies', $plural);
-        $plural = preg_replace('/ss$/', 'ses', $plural);
-
-        return $plural;
     }
 
     /**

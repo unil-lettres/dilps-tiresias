@@ -1628,10 +1628,10 @@
   dependencies:
     lodash-es "^4.17.21"
 
-"@ecodev/natural@^55.6.1":
-  version "55.6.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-55.6.1.tgz#a0807bb4a879ecd0d236c1801087c701377987ac"
-  integrity sha512-7v01Wd5ZSvp/qShg059TDyPdUYT36c5/aTbsx74O+McPm2iUCKGJS4Ed3cl/ktI+3UdeUR0De0HUGoLJCFvL6w==
+"@ecodev/natural@^55.8.1":
+  version "55.8.1"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-55.8.1.tgz#0a9a63508b6f53d3bf7fcafc14a3138b8d04919d"
+  integrity sha512-z8MeeBGWWdUC3+bIq37wj1/HcUf1BDTAtkGpNDup4KrJRo41OZkeab126YcEOGOo8l18mWjVBmMRTZPVHdnMAw==
   dependencies:
     crypto-es "^2.0.3"
     extract-files "^13.0.0"
