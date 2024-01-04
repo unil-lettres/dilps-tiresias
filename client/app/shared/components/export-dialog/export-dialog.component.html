@@ -6,14 +6,20 @@
         <button mat-raised-button color="primary" (click)="export(ExportFormat.csv)" *ngIf="data.showExcelExportation">
             Exporter en Excel
         </button>
-        <button
-            mat-raised-button
-            color="primary"
-            (click)="export(ExportFormat.pptx)"
-            [disabled]="!!pptValidationMessage"
+        <!-- Tooltip is not triggered on disabled buttons. We wrap it around a div as a workaround. -->
+        <div
+            class="tooltip-wrapper"
             matTooltip="{{ pptValidationMessage }}"
+            [matTooltipDisabled]="!pptValidationMessage"
         >
-            Exporter en PowerPoint
-        </button>
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="export(ExportFormat.pptx)"
+                [disabled]="!!pptValidationMessage"
+            >
+                Exporter en PowerPoint
+            </button>
+        </div>
     </div>
 </mat-dialog-content>
