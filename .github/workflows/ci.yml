@@ -116,7 +116,7 @@ jobs:
 
             - name: Upload sources map artifact
               id: upload-artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               if: ${{ matrix.php-versions == '8.2' }}
               with:
                   name: js-sources-map
