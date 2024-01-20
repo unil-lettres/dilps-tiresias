@@ -26,12 +26,7 @@
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
                         "polyfills": "client/polyfills.ts",
-                        "assets": [
-                            "client/assets",
-                            "client/favicon-dilps.ico",
-                            "client/favicon-tiresias.ico",
-                            "client/robots.txt"
-                        ],
+                        "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
                         "scripts": [],
                         "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags"]
