@@ -37,7 +37,7 @@ jobs:
                   fetch-depth: 2
 
             - name: Node Setup
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
 
@@ -53,14 +53,14 @@ jobs:
               run: php -v
 
             - name: Cache composer
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                   path: ~/.cache/composer
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
             - name: Cache Yarn
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                   path: ~/.cache/yarn
                   key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
