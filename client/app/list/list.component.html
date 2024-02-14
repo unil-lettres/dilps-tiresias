@@ -92,9 +92,11 @@
                 <mat-icon svgIcon="library_remove"></mat-icon>
             </button>
 
-            <button (click)="downloadSelection(selected)" mat-icon-button matTooltip="Exporter">
-                <mat-icon naturalIcon="share_windows"></mat-icon>
-            </button>
+            <app-export-menu
+                matTooltip="Exporter"
+                [selectedCards]="selected"
+                [showExcelExportation]="this.site !== Site.dilps"
+            ></app-export-menu>
 
             <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
                 <mat-icon naturalIcon="edit"></mat-icon>

@@ -24,10 +24,6 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
-import {
-    DownloadComponentData as DialogDownloadComponentData,
-    ExportDialogComponent,
-} from '../shared/components/export-dialog/export-dialog.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
@@ -364,18 +360,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public linkCollectionToCollection(collection: FakeCollection): void {
         this.linkToCollection({collection});
-    }
-
-    public downloadSelection(selection: Cards['cards']['items'][0][]): void {
-        const data: DialogDownloadComponentData = {
-            cards: selection,
-            showExcelExportation: this.site !== Site.dilps,
-        };
-
-        this.dialog.open<ExportDialogComponent, DialogDownloadComponentData, never>(ExportDialogComponent, {
-            width: '300px',
-            data,
-        });
     }
 
     public downloadCollection(collection: FakeCollection): void {
