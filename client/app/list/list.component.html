@@ -128,15 +128,6 @@
                 [collection]="collection"
                 [showExcelExportation]="this.site !== Site.dilps"
             ></app-export-menu>
-
-            <button
-                (click)="downloadCollection(collection!)"
-                *ngIf="showDownloadCollection"
-                mat-icon-button
-                matTooltip="Exporter la collection"
-            >
-                <mat-icon naturalIcon="share_windows"></mat-icon>
-            </button>
         </ng-container>
 
         <natural-search

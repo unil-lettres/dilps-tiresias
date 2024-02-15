@@ -23,7 +23,6 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {DownloadComponent, DownloadComponentData} from '../shared/components/download/download.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {
     CardFilter,
@@ -362,10 +361,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.linkToCollection({collection});
     }
 
-    public downloadCollection(collection: FakeCollection): void {
-        this.download({collections: [collection]});
-    }
-
     public unlinkFromCollection(selection: Cards['cards']['items'][0][]): void {
         if (!this.collection) {
             return;
@@ -563,20 +558,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                 data: data,
             },
         );
-    }
-
-    private download(selection: Partial<Pick<DownloadComponentData, 'cards' | 'collections'>>): void {
-        const defaultValue: DownloadComponentData = {
-            denyLegendsDownload: !this.user,
-            cards: [],
-            collections: [],
-        };
-        const data = merge(defaultValue, selection);
-
-        this.dialog.open<DownloadComponent, DownloadComponentData, never>(DownloadComponent, {
-            width: '600px',
-            data,
-        });
     }
 
     /**
