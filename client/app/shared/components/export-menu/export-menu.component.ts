@@ -11,6 +11,7 @@ import {waitOnApolloQueries} from '../../services/utility';
 import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
 
 @Component({
     selector: 'app-export-menu',
@@ -23,8 +24,11 @@ export class ExportMenuComponent {
     @Input()
     public showExcelExportation = true;
 
-    @Input({required: true})
+    @Input()
     public selectedCards: Cards['cards']['items'][0][] = [];
+
+    @Input()
+    public collection: FakeCollection | null | undefined = null;
 
     public ExportFormat = ExportFormat;
 
@@ -38,11 +42,44 @@ export class ExportMenuComponent {
         private readonly apollo: Apollo,
     ) {}
 
+    public get hasCards(): boolean {
+        return this.selectedCards.length > 0;
+    }
+
+    public get hasCollection(): boolean {
+        return !!this.collection;
+    }
+
+    public get tooltip(): string {
+        if (this.hasCollection && !this.hasCards) {
+            return 'Exporter la collection';
+        } else {
+            return 'Exporter';
+        }
+    }
+
+    public get optionZipLabel(): string {
+        if (this.hasCards && !this.hasCollection) {
+            if (this.selectedCards.length > 1) {
+                return 'Exporter les fiches';
+            } else {
+                return 'Exporter la fiche';
+            }
+        } else if (!this.hasCards && this.hasCollection) {
+            return 'Exporter la collection';
+        } else {
+            return 'Exporter les éléments';
+        }
+    }
+
     public menuOpened(): void {
         this.pptValidationMessage = 'Validation...';
 
         const input = this.exportService.getDefaultForServer();
         input.cards = [...this.selectedCards.map(card => card.id)];
+        if (this.collection?.id) {
+            input.collections = [this.collection.id];
+        }
         input.format = ExportFormat.pptx;
 
         this.exportService
@@ -61,6 +98,9 @@ export class ExportMenuComponent {
     public export(format: ExportFormat): void {
         const input = this.exportService.getDefaultForServer();
         input.cards.push(...this.selectedCards.map(card => card.id));
+        if (this.collection?.id) {
+            input.collections = [this.collection.id];
+        }
         input.format = format;
         this.exportService
             .create(input)

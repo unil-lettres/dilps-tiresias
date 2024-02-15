@@ -123,6 +123,12 @@
                 <mat-icon naturalIcon="library_add"></mat-icon>
             </button>
 
+            <app-export-menu
+                *ngIf="showDownloadCollection"
+                [collection]="collection"
+                [showExcelExportation]="this.site !== Site.dilps"
+            ></app-export-menu>
+
             <button
                 (click)="downloadCollection(collection!)"
                 *ngIf="showDownloadCollection"
