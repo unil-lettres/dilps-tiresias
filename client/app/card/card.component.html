@@ -903,7 +903,7 @@
                 </div>
 
                 <!-- Don't show related cards if current card has no id : it's required to create a relation-->
-                <div *ngIf="showCards && fetchedModel && (edit || fetchedModel.cards.length > 0)">
+                <div *ngIf="showCards && fetchedModel && edit">
                     <div class="mat-headline-6">Fiches associées</div>
 
                     <natural-relations
