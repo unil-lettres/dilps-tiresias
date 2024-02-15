@@ -32,8 +32,14 @@ mat-slider {
 }
 
 .image-container {
-    @extend .containerWithToolbar;
     overflow: hidden;
+    position: relative;
+
+    .download-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
 }
 
 .btn-link-related-cards {

@@ -969,18 +969,17 @@
     </div>
 
     <div *ngIf="showImage" class="image-container" fxFlex fxLayout="column">
-        <mat-toolbar [ngClass]="edit ? 'edition' : ''" fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex></div>
-            <a
-                *ngIf="imageSrcFull && !imageData"
-                [attr.href]="imageSrcFull"
-                download
-                mat-icon-button
-                matTooltip="Télécharger l'image"
-            >
-                <mat-icon naturalIcon="file_download"></mat-icon>
-            </a>
-        </mat-toolbar>
+        <a
+            *ngIf="imageSrcFull && !imageData"
+            [attr.href]="imageSrcFull"
+            download
+            mat-mini-fab
+            class="download-button"
+            matTooltip="Télécharger l'image"
+            matTooltipPosition="left"
+        >
+            <mat-icon naturalIcon="file_download"></mat-icon>
+        </a>
         <div
             *ngIf="imageSrc && !imageData"
             [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"
