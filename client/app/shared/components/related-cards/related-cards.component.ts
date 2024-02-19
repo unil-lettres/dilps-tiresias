@@ -3,15 +3,17 @@ import {
     Component,
     DestroyRef,
     ElementRef,
+    EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
+    Output,
     SimpleChanges,
     ViewChild,
     inject,
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
 import {Card, Cards, CardsVariables} from '../../generated-types';
@@ -27,7 +29,23 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
     templateUrl: './related-cards.component.html',
     styleUrls: ['./related-cards.component.scss'],
     standalone: true,
-    imports: [CommonModule, RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule],
+    providers: [
+        {
+            provide: IMAGE_LOADER,
+            useValue: (config: ImageLoaderConfig) => {
+                return CardService.getImageLink(config.loaderParams?.card, Math.min(config?.width ?? 200, 200));
+            },
+        },
+    ],
+    imports: [
+        CommonModule,
+        RouterLink,
+        MatTooltipModule,
+        MatIconModule,
+        NaturalIconDirective,
+        MatButtonModule,
+        NgOptimizedImage,
+    ],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     /**
@@ -40,8 +58,17 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     @Input({required: true})
     public card!: Card['card'];
 
+    /**
+     * Whether the slideshow is reduced or not.
+     */
+    @Input()
+    public isReduced = false;
+
     @ViewChild('slideshow')
     public slideshow!: ElementRef;
+
+    @Output()
+    public reduced = new EventEmitter<boolean>();
 
     public readonly CardService = CardService;
 
@@ -134,6 +161,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
         this.scrollBarAtLeft = slideshow.scrollLeft == 0;
         this.scrollBarAtRight = slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth;
         this.hasScrollbar = slideshow.scrollWidth > slideshow.clientWidth;
+    }
+
+    public reduce(isReduced: boolean): void {
+        this.reduced.emit(isReduced);
     }
 
     /**

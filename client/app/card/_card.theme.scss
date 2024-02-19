@@ -19,6 +19,8 @@
     $border-bottom-width: 1px;
     $font-size-body-1: mat.font-size(typography.$custom-typography-gt-sm, 'body-1');
 
+    $border: 1px solid if($is-dark-theme, rgb(84, 84, 84), rgb(210 210 210));
+
     app-card {
         mat-toolbar.edition {
             background: mat.get-color-from-palette($accent, 0.4);
@@ -170,6 +172,20 @@
             input {
                 color: mat.get-color-from-palette($fg, text) !important;
             }
+        }
+
+        .left-pane {
+            border-right: $border;
+        }
+
+        .image {
+            background-color: if($is-dark-theme, rgb(26, 26, 26), rgb(235, 235, 235));
+        }
+    }
+
+    app-related-cards {
+        .wrapper {
+            border-top: $border;
         }
     }
 }

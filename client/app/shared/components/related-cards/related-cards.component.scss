@@ -1,16 +1,14 @@
 .wrapper {
     --animation-duration: 200ms;
     --slideshow-height: 120px;
-    --slideshow-height-hidden: 42px;
 
-    background-color: rgba(0, 0, 0, 0.5);
-    bottom: calc(var(--slideshow-height) * -1 + var(--slideshow-height-hidden));
+    bottom: 0;
     display: flex;
     left: 0;
     height: var(--slideshow-height);
     justify-content: center;
     position: absolute;
-    transition: bottom var(--animation-duration);
+    transition: bottom 400ms ease-in-out;
     width: 100%;
 
     &:hover {
@@ -25,10 +23,14 @@
         }
     }
 
+    &.reduced {
+        bottom: calc((var(--slideshow-height) * -1) - 10px);
+    }
+
     button {
         opacity: 0;
         position: absolute;
-        transform: translateY(50%);
+        top: 10px;
 
         &.right {
             right: 10px;
@@ -36,6 +38,24 @@
 
         &.left {
             left: 10px;
+        }
+    }
+}
+
+.btn-reduce {
+    bottom: 70px;
+    position: absolute;
+    right: 10px;
+    z-index: 1000;
+    transition:
+        bottom 400ms ease-in-out,
+        transform 300ms linear;
+
+    &.reduced {
+        bottom: 10px;
+
+        mat-icon {
+            transform: rotate(180deg) translateY(2px);
         }
     }
 }
@@ -70,29 +90,14 @@
         }
 
         .image {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
             display: block;
             height: 100%;
+            position: relative;
             width: 100px;
-        }
-    }
 
-    // We use this element to prevent interactivity with the slideshow while
-    // it's animation is running. So we display it over the slideshow while
-    // the animation is running and hide it after the animation is done.
-    // This is done to prevent the tooltip to be displayed while the animation
-    // is running and thus be at an incorrect position (because it will calculate
-    // its position from the position of the card at the time it is through the
-    // animation).
-    .ghost {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transition: visibility var(--animation-duration);
-        visibility: visible;
+            img {
+                object-fit: cover;
+            }
+        }
     }
 }

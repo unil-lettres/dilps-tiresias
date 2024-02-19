@@ -1,19 +1,15 @@
 <div [hidden]="breakpointXSmall || cards.length === 0">
-    <div class="wrapper">
+    <div class="wrapper" [class.reduced]="isReduced">
         <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
             <div *ngFor="let card of cards">
-                <a
-                    [routerLink]="['/card', card.id]"
-                    [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(card, 200) + ')'}"
-                    class="image"
-                    [matTooltip]="card.name"
-                ></a>
+                <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.name">
+                    <img ngSrc="card-{{ card.id }}.jpg" [loaderParams]="{card: card}" priority fill placeholder />
+                </a>
             </div>
-            <div class="ghost"></div>
         </div>
         <button
             class="left"
-            mat-fab
+            mat-mini-fab
             color="primary"
             (click)="scrollLeft()"
             [disabled]="scrollBarAtLeft"
@@ -23,7 +19,7 @@
         </button>
         <button
             class="right"
-            mat-fab
+            mat-mini-fab
             color="primary"
             (click)="scrollRight()"
             [disabled]="scrollBarAtRight"
@@ -32,4 +28,14 @@
             <mat-icon naturalIcon="navigate_next"></mat-icon>
         </button>
     </div>
+    <button
+        class="btn-reduce"
+        [class.reduced]="isReduced"
+        mat-mini-fab
+        matTooltip="{{ isReduced ? 'Ouvrir' : 'Fermer' }} les images associées"
+        matTooltipPosition="left"
+        (click)="reduced.emit(!isReduced)"
+    >
+        <mat-icon naturalIcon="expand_more"></mat-icon>
+    </button>
 </div>

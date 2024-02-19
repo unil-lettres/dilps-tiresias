@@ -7,7 +7,7 @@
     fxLayout="row"
 >
     <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-    <div [ngClass]="{containerWithToolbar: showToolbar}" fxFlex="400px" fxLayout="column">
+    <div [ngClass]="{containerWithToolbar: showToolbar}" class="left-pane" fxFlex="400px" fxLayout="column">
         <mat-toolbar
             *ngIf="showToolbar"
             [ngClass]="edit ? 'edition' : ''"
@@ -968,7 +968,14 @@
         </div>
     </div>
 
-    <div *ngIf="showImage" class="image-container" fxFlex fxLayout="column">
+    <div
+        *ngIf="showImage"
+        class="image-container"
+        fxFlex
+        fxLayout="column"
+        [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
+        [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
+    >
         <a
             *ngIf="imageSrcFull && !imageData"
             [attr.href]="imageSrcFull"
@@ -988,8 +995,10 @@
         ></div>
         <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image" fxFlex></div>
         <app-related-cards
-            [card]="fetchedModel"
             *ngIf="showCards && showSlideshowRelatedCards && fetchedModel"
+            [card]="fetchedModel"
+            [isReduced]="isRelatedCardsReduce"
+            (reduced)="isRelatedCardsReduce = $event"
         ></app-related-cards>
     </div>
 </div>

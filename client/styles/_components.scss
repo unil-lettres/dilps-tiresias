@@ -3,6 +3,7 @@
 @use '../app/collections/collections/collections.theme';
 @use '../app/home/home.theme';
 @use '../app/quizz/quizz.theme';
+@use '../app/changes/change/change.theme';
 @use '../app/shared/components/address/address.theme';
 @use '../app/shared/components/alert/alert.theme';
 @use '../app/shared/components/boot-loader/boot-loader.theme';
@@ -35,4 +36,5 @@
     @include hint.hint($theme);
     @include view-grid.view-grid($theme);
     @include thesaurus.thesaurus($theme);
+    @include change.change($theme);
 }

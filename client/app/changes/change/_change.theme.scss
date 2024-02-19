@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin change($theme) {
+    $config: mat.get-color-config($theme);
+    $is-dark-theme: map.get($config, is-dark);
+
+    $border: 1px solid if($is-dark-theme, rgb(84, 84, 84), rgb(210 210 210));
+
+    app-change {
+        .main-toolbar {
+            border-bottom: $border;
+        }
+
+        .card-suggestion {
+            border-left: $border;
+        }
+
+        .card-original {
+            border-right: $border;
+        }
+    }
+}

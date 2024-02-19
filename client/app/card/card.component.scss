@@ -10,7 +10,6 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.33);
 }
 
 mat-slider {
@@ -37,8 +36,8 @@ mat-slider {
 
     .download-button {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 10px;
+        right: 10px;
     }
 }
 

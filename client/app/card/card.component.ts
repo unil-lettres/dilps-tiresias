@@ -90,6 +90,7 @@ import {
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
 import {forkJoin} from 'rxjs';
+import {state, style, transition, trigger, animate} from '@angular/animations';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -152,6 +153,23 @@ interface InitialCardValues {
         NaturalIconDirective,
         RelatedCardsComponent,
         ExportMenuComponent,
+    ],
+    animations: [
+        trigger('showHideRelatedCards', [
+            state(
+                'show',
+                style({
+                    paddingBottom: '120px',
+                }),
+            ),
+            state(
+                'hide',
+                style({
+                    paddingBottom: '0',
+                }),
+            ),
+            transition('* => *', [animate('400ms ease-in-out')]),
+        ]),
     ],
 })
 export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
@@ -477,6 +495,24 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     public ngOnChanges(): void {
         this.initCard();
+    }
+
+    public get isRelatedCardsReduce(): boolean {
+        return localStorage.getItem('isRelatedCardsReduce') === 'true';
+    }
+
+    public set isRelatedCardsReduce(value: boolean) {
+        localStorage.setItem('isRelatedCardsReduce', value.toString());
+    }
+
+    public shouldDisplaySlideShowRelatedCards(): boolean {
+        return (
+            !this.isRelatedCardsReduce &&
+            this.showCards &&
+            this.showSlideshowRelatedCards &&
+            !!this.fetchedModel &&
+            !!this.fetchedModel.cards.length
+        );
     }
 
     public toggleEdit(): void {
