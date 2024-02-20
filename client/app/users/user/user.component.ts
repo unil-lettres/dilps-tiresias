@@ -28,6 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password')!.value; // to get value in input tag
@@ -88,6 +89,10 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 
         this.passwordCtrl = new FormControl('');
+        this.passwordCtrl.valueChanges
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => (this.data.item.password = this.passwordCtrl.value));
+
         this.passwordConfirmationCtrl = new FormControl('');
         this.passwordGroupCtrl = new FormGroup(
             {
