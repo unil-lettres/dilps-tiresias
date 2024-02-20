@@ -1,7 +1,6 @@
 import {
     AfterViewInit,
     Component,
-    DestroyRef,
     ElementRef,
     EventEmitter,
     Input,
@@ -11,7 +10,6 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    inject,
 } from '@angular/core';
 import {CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -23,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-related-cards',
@@ -52,8 +51,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      * Offset to scroll when clicking on the scroll buttons.
      */
     private static readonly SCROLL_OFFSET = 200;
-
-    private readonly destroyRef = inject(DestroyRef);
 
     @Input({required: true})
     public card!: Card['card'];
@@ -109,6 +106,8 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private readonly resizeObserver = new ResizeObserver(() => this.updateButtonsState());
 
+    private readonly cardService$: Observable<Cards['cards']>;
+
     public constructor(
         public readonly cardService: CardService,
         breakpointObserver: BreakpointObserver,
@@ -119,23 +118,31 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
             .subscribe(result => {
                 this.breakpointXSmall = result.matches;
             });
+
+        this.cardService$ = cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.card) {
-            this.updateCardsQueryVariables();
+            // Update the query variables to retrieve related cards of the new
+            // card.
+            this.cardsQueryVariables.set('search', {
+                filter: {
+                    groups: [
+                        {
+                            conditions: [{cards: {have: {values: [this.card.id]}}}],
+                        },
+                    ],
+                },
+            });
         }
     }
 
     public ngOnInit(): void {
-        this.updateCardsQueryVariables();
-        this.cardService
-            .watchAll(this.cardsQueryVariables)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(result => {
-                this.cards = result.items;
-                this.reduced.emit(this.cards.length === 0);
-            });
+        this.cardService$.subscribe(result => {
+            this.cards = result.items;
+            this.reduced.emit(this.cards.length === 0);
+        });
     }
 
     public ngAfterViewInit(): void {
@@ -168,21 +175,5 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     public reduce(isReduced: boolean): void {
         this.reduced.emit(isReduced);
-    }
-
-    /**
-     * Called when the input card is changed to update the corresponding
-     * query variable with the new card id.
-     */
-    private updateCardsQueryVariables(): void {
-        this.cardsQueryVariables.set('search', {
-            filter: {
-                groups: [
-                    {
-                        conditions: [{cards: {have: {values: [this.card.id]}}}],
-                    },
-                ],
-            },
-        });
     }
 }

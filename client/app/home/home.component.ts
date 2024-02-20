@@ -3,7 +3,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
     ActivatedRoute,
+    Event,
     NavigationEnd,
+    Params,
     Router,
     RouteReuseStrategy,
     RouterLink,
@@ -45,6 +47,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -84,6 +87,10 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     public progress: number | null = null;
     private uploaded = 0;
 
+    private readonly errors$: Observable<readonly Error[]>;
+    private readonly routerEvents$: Observable<Event>;
+    private readonly routeFirstChildParams$: Observable<Params> | undefined;
+
     public constructor(
         public readonly themeService: ThemeService,
         public readonly route: ActivatedRoute,
@@ -99,11 +106,16 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     ) {
         super();
         this.network.errors.next([]);
+        this.errors$ = this.network.errors.pipe(takeUntilDestroyed());
+        this.routerEvents$ = this.router.events.pipe(
+            takeUntilDestroyed(),
+            filter(event => event instanceof NavigationEnd),
+        );
+        this.routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
     }
 
     public ngOnInit(): void {
-        // Watch errors
-        this.network.errors.pipe(takeUntil(this.ngUnsubscribe)).subscribe(errors => {
+        this.errors$.subscribe(errors => {
             this.errors = this.errors.concat(errors);
         });
 
@@ -111,20 +123,18 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
             this.user = user;
         });
 
-        this.route.firstChild?.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+        // Hide or show the navigation menu if nav=[0,1] in query string params.
+        this.routeFirstChildParams$?.subscribe(params => {
             if (params.nav && /^[01]$/.test(params.nav)) {
                 this.nav = +params.nav;
             }
         });
 
-        this.router.events
-            .pipe(
-                takeUntil(this.ngUnsubscribe),
-                filter(event => event instanceof NavigationEnd),
-            )
-            .subscribe(() => {
-                document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
-            });
+        // When navigating, scroll to top for each scrollable elements to avoid
+        // having the previous "page"'s scroll position.
+        this.routerEvents$.subscribe(() => {
+            document.querySelectorAll('.mat-sidenav-content, .scrollable').forEach(i => i.scroll({top: 0}));
+        });
 
         // Welcome dialog would be shown to visitors once per session
         if (this.userService.hasTempAccess() && sessionStorage.getItem('welcomed') !== 'true') {

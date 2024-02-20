@@ -45,7 +45,6 @@ import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 import {PageEvent} from '@angular/material/paginator';
-import {takeUntil} from 'rxjs/operators';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
@@ -57,6 +56,8 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
+import {Data} from '@angular/router';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -210,6 +211,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         offset: null,
     };
 
+    private readonly routeData$: Observable<Data>;
+    private readonly service$: Observable<Cards['cards']>;
+
     public constructor(
         private readonly cardService: CardService,
         private readonly collectionService: CollectionService,
@@ -223,6 +227,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         super(cardService);
 
         this.naturalSearchFacets = facetService.getFacets();
+
+        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
+        this.service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
     }
 
     public override ngOnInit(): void {
@@ -260,7 +267,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
         // Listen to route data and resolved data
         // Required because when /:id change, the route stays the same, and component is not re-initialized
-        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+        this.routeData$.subscribe(data => {
             this.showLogo = data.showLogo;
             this.updateShowDownloadCollection();
 
@@ -536,7 +543,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Override to never use cache
      */
     protected override getDataObservable(): Observable<Cards['cards']> {
-        return this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntil(this.ngUnsubscribe));
+        return this.service$;
     }
 
     /**

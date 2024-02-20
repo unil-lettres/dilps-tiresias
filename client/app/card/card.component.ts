@@ -2,7 +2,7 @@ import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgModel, FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Data, Router} from '@angular/router';
 import {findKey, sortBy, identity} from 'lodash-es';
 import {QuillModules, QuillEditorComponent} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
@@ -61,7 +61,6 @@ import {
     NaturalTableButtonComponent,
 } from '@ecodev/natural';
 import {ThemePalette} from '@angular/material/core';
-import {takeUntil} from 'rxjs/operators';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {StampComponent} from '../shared/components/stamp/stamp.component';
 import {FilesComponent} from '../files/files/files.component';
@@ -89,8 +88,9 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {forkJoin} from 'rxjs';
+import {Observable, forkJoin} from 'rxjs';
 import {state, style, transition, trigger, animate} from '@angular/animations';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -419,6 +419,9 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
+    private readonly routeData$: Observable<Data>;
+    private readonly routeParams$: Observable<Data>;
+
     public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
@@ -439,6 +442,9 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly linkService: NaturalLinkMutationService,
     ) {
         super();
+
+        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
+        this.routeParams$ = this.route.params.pipe(takeUntilDestroyed());
     }
 
     @Input()
@@ -456,11 +462,9 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.user = user;
         });
 
-        this.route.data
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(
-                data => ({showLogo: this.showLogo, showSlideshowRelatedCards: this.showSlideshowRelatedCards} = data),
-            );
+        this.routeData$.subscribe(
+            data => ({showLogo: this.showLogo, showSlideshowRelatedCards: this.showSlideshowRelatedCards} = data),
+        );
 
         if (this.model && !this.fetchedModel) {
             // When mass editing, show a form with an empty model (without any fetched model)
@@ -477,7 +481,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             // (An better alternative would be to create a new @Output that emits when model change)
             this.initCard();
         } else {
-            this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+            this.routeParams$.subscribe(params => {
                 if (params.cardId) {
                     this.fetchedModel = this.route.snapshot.data.card;
                     this.model = cardToCardInput(this.fetchedModel!);

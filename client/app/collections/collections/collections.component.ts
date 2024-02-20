@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DestroyRef, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet, Data} from '@angular/router';
 import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
 import {
@@ -13,7 +13,6 @@ import {
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
-import {takeUntil} from 'rxjs/operators';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
@@ -25,6 +24,8 @@ import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {Observable} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-collections',
@@ -50,6 +51,8 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
     ],
 })
 export class CollectionsComponent extends NaturalAbstractController implements OnInit {
+    private readonly destroyRef = inject(DestroyRef);
+
     public rootCollections: Collections['collections']['items'][0][] = [];
 
     /**
@@ -80,6 +83,9 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
+    private readonly routeData$: Observable<Data>;
+    private readonly collectionsService$: Observable<Collections['collections']>;
+
     public constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
@@ -87,13 +93,16 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         private readonly dialog: MatDialog,
     ) {
         super();
+
+        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
+        this.collectionsService$ = this.collectionsService.watchAll(this.queryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnInit(): void {
         this.queryVariables.set('variables', this.defaultVariables);
         this.queryVariables.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
 
-        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+        this.routeData$.subscribe(data => {
             // data.creator is the logged in user here.
 
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, data.creator);
@@ -117,18 +126,15 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             }
         });
 
-        this.collectionsService
-            .watchAll(this.queryVariables)
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe(collections => {
-                if (collections.pageIndex === 0) {
-                    this.rootCollections = collections.items;
-                } else {
-                    this.rootCollections = this.rootCollections.concat(collections.items);
-                }
+        this.collectionsService$.subscribe(collections => {
+            if (collections.pageIndex === 0) {
+                this.rootCollections = collections.items;
+            } else {
+                this.rootCollections = this.rootCollections.concat(collections.items);
+            }
 
-                this.hasMore = collections.length > this.rootCollections.length;
-            });
+            this.hasMore = collections.length > this.rootCollections.length;
+        });
     }
 
     public toggle(collection: Collections['collections']['items'][0]): void {
@@ -145,7 +151,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
 
         this.collectionsService
             .watchAll(qvm)
-            .pipe(takeUntil(this.ngUnsubscribe))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(results => {
                 this.children.set(collection.id, results.items);
             });

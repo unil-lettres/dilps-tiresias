@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
@@ -31,6 +31,7 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export interface ThesaurusModel {
     name: string;
@@ -76,6 +77,8 @@ export class ThesaurusComponent<
     extends NaturalAbstractController
     implements OnInit
 {
+    private readonly destroyRef = inject(DestroyRef);
+
     /**
      * Reference to autocomplete
      */
@@ -175,11 +178,20 @@ export class ThesaurusComponent<
      */
     private lockOpenDialog!: boolean;
 
+    private readonly formChange$: Observable<any>;
+
     public constructor(
         private readonly dialog: MatDialog,
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
+
+        this.formChange$ = this.formControl.valueChanges.pipe(
+            takeUntilDestroyed(),
+            distinctUntilChanged(),
+            filter(val => isString(val)),
+            debounceTime(300),
+        );
     }
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
@@ -204,18 +216,11 @@ export class ThesaurusComponent<
 
         this.variablesManager.set('sorting', {sorting: [sorting]});
 
-        this.formControl.valueChanges
-            .pipe(
-                takeUntil(this.ngUnsubscribe),
-                distinctUntilChanged(),
-                filter(val => isString(val)),
-                debounceTime(300),
-            )
-            .subscribe(val => {
-                this.variablesManager.set('search', {
-                    filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]},
-                });
+        this.formChange$.subscribe(val => {
+            this.variablesManager.set('search', {
+                filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]},
             });
+        });
     }
 
     public openItem(item: ThesaurusModel): void {
@@ -254,9 +259,8 @@ export class ThesaurusComponent<
             return;
         }
 
-        this.resultsCache = this.service.watchAll(this.variablesManager).pipe(takeUntil(this.ngUnsubscribe));
+        this.resultsCache = this.service.watchAll(this.variablesManager).pipe(takeUntilDestroyed(this.destroyRef));
 
-        // Init query
         this.resultsCache.subscribe(data => {
             const nbTotal = data.length;
             const nbListed = Math.min(data.length, this.pageSize);
