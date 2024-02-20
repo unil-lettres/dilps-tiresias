@@ -132,7 +132,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
         this.cardService
             .watchAll(this.cardsQueryVariables)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(result => (this.cards = result.items));
+            .subscribe(result => {
+                this.cards = result.items;
+                this.reduced.emit(this.cards.length === 0);
+            });
     }
 
     public ngAfterViewInit(): void {
@@ -169,7 +172,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     /**
      * Called when the input card is changed to update the corresponding
-     * query variable with the new card id..
+     * query variable with the new card id.
      */
     private updateCardsQueryVariables(): void {
         this.cardsQueryVariables.set('search', {
