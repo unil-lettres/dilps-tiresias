@@ -1,8 +1,8 @@
-import {Inject, Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, assertInInjectionContext} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Apollo} from 'apollo-angular';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
-import {map, takeUntil} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
 import {
     Cards,
@@ -40,31 +40,28 @@ import {
     viewerQuery,
 } from './user.queries';
 import {LOCAL_STORAGE, NaturalDebounceService, NaturalStorage} from '@ecodev/natural';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService
-    extends AbstractContextualizedService<
-        User['user'],
-        UserVariables,
-        Users['users'],
-        UsersVariables,
-        CreateUser['createUser'],
-        CreateUserVariables,
-        UpdateUser['updateUser'],
-        UpdateUserVariables,
-        DeleteUsers['deleteUsers'],
-        never
-    >
-    implements OnDestroy
-{
+export class UserService extends AbstractContextualizedService<
+    User['user'],
+    UserVariables,
+    Users['users'],
+    UsersVariables,
+    CreateUser['createUser'],
+    CreateUserVariables,
+    UpdateUser['updateUser'],
+    UpdateUserVariables,
+    DeleteUsers['deleteUsers'],
+    never
+> {
     /**
      * This key will be used to store the viewer ID, but that value should never
      * be trusted, and it only exist to notify changes across browser tabs.
      */
     private readonly storageKey = 'viewer';
-    private readonly onDestroy = new Subject<void>();
 
     public constructor(
         apollo: Apollo,
@@ -146,14 +143,14 @@ export class UserService
         ];
     }
 
-    public ngOnDestroy(): void {
-        this.onDestroy.next();
-        this.onDestroy.complete();
-    }
-
+    /**
+     * Do not call this method outside injection context.
+     */
     private keepViewerSyncedAcrossBrowserTabs(): void {
+        assertInInjectionContext;
+
         fromEvent<StorageEvent>(window, 'storage')
-            .pipe(takeUntil(this.onDestroy))
+            .pipe(takeUntilDestroyed())
             .subscribe(event => {
                 if (event.key !== this.storageKey) {
                     return;

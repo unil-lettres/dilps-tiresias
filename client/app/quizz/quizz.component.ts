@@ -69,7 +69,6 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         });
 
         this.formChange$.subscribe(val => {
-            console.log(this.card);
             if (this.card) {
                 this.attributes = test(val, this.card);
             }

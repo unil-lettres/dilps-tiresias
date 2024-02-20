@@ -1,36 +1,33 @@
 import {Apollo} from 'apollo-angular';
-import {Inject, Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, assertInInjectionContext} from '@angular/core';
 import {SITE} from '../../app.config';
 import {Site, Statistic, Statistics, StatisticsVariables, StatisticVariables} from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
 import {NaturalDebounceService} from '@ecodev/natural';
 import {Observable, Subject, switchMap} from 'rxjs';
-import {debounceTime, takeUntil} from 'rxjs/operators';
+import {debounceTime} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
     providedIn: 'root',
 })
-export class StatisticService
-    extends AbstractContextualizedService<
-        Statistic['statistic'],
-        StatisticVariables,
-        Statistics['statistics'],
-        StatisticsVariables,
-        never,
-        never,
-        never,
-        never,
-        never,
-        never
-    >
-    implements OnDestroy
-{
+export class StatisticService extends AbstractContextualizedService<
+    Statistic['statistic'],
+    StatisticVariables,
+    Statistics['statistics'],
+    StatisticsVariables,
+    never,
+    never,
+    never,
+    never,
+    never,
+    never
+> {
     private readonly page = new Subject<void>();
     private readonly detail = new Subject<void>();
     private readonly search = new Subject<void>();
-    private readonly onDestroy = new Subject<void>();
 
     public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
         super(apollo, naturalDebounceService, 'statistic', statisticQuery, statisticsQuery, null, null, null, site);
@@ -41,12 +38,16 @@ export class StatisticService
     }
 
     /**
-     * Create a subscription that will send the mutation with a debounced time
+     * Create a subscription that will send the mutation with a debounced time.
+     *
+     * This method must only be called from an injection context.
      */
     private createSub(subject: Observable<void>, mutation: DocumentNode): void {
+        assertInInjectionContext;
+
         subject
             .pipe(
-                takeUntil(this.onDestroy),
+                takeUntilDestroyed(),
                 debounceTime(800),
                 switchMap(() =>
                     this.apollo.mutate<unknown, never>({
@@ -67,10 +68,5 @@ export class StatisticService
 
     public recordSearch(): void {
         this.search.next();
-    }
-
-    public ngOnDestroy(): void {
-        this.onDestroy.next();
-        this.onDestroy.complete();
     }
 }
