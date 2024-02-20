@@ -13,7 +13,7 @@ import {
     RouterOutlet,
 } from '@angular/router';
 import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, concatMap, filter, finalize, takeUntil, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, finalize, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';

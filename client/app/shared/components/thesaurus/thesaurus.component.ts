@@ -20,7 +20,7 @@ import {
 } from '@ecodev/natural';
 import {clone, isArray, isObject, isString, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
 import {MaterialSortingField} from '../../generated-types';

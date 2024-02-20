@@ -15,7 +15,7 @@ import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
-import {filter, takeUntil} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';

@@ -3,7 +3,6 @@ import {Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject} from
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
-import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {Cards, Site} from '../shared/generated-types';

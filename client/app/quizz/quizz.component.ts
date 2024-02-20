@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute, Params} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
-import {debounceTime, takeUntil} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
