@@ -1,14 +1,27 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {
+    AfterViewInit,
+    Component,
+    DestroyRef,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    inject,
+} from '@angular/core';
+import {ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
-import {takeUntil} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Observable} from 'rxjs';
 
 export interface ContentChange {
     visible?: number;
@@ -25,6 +38,8 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     imports: [NaturalGalleryComponent, FlexModule],
 })
 export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
+    private readonly destroyRef = inject(DestroyRef);
+
     /**
      * Only used to help typescript understand the generic type of <natural-gallery>
      */
@@ -80,6 +95,8 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      * Lightbox image dimension
      */
     private enlargedHeight = 2000;
+
+    private readonly routerEvents$: Observable<Event>;
 
     public options: NaturalGalleryOptions = {
         gap: 5,
@@ -149,10 +166,15 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     ) {
         super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
+
+        this.routerEvents$ = this.router.events.pipe(
+            takeUntilDestroyed(),
+            filter(event => event instanceof NavigationEnd),
+        );
     }
 
     public ngOnInit(): void {
-        this.dataSource.internalDataObservable.pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+        this.dataSource.internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(result => {
             if (!this.gallery || !result) {
                 return;
             }
@@ -177,16 +199,15 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         });
 
         // Restore scroll when component is retrieved from reuse strategy
-        this.router.events.pipe(takeUntil(this.ngUnsubscribe)).subscribe(event => {
-            if (event instanceof NavigationEnd) {
-                const restoreScroll = this.lastCollectionId === this.route.snapshot?.data?.collection?.id;
-                this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
-                setTimeout(() => {
-                    if (restoreScroll && this.scrollable) {
-                        this.scrollable.nativeElement.scrollTop = this.scrollTop;
-                    }
-                }, 200);
-            }
+        this.routerEvents$.subscribe(() => {
+            const restoreScroll = this.lastCollectionId === this.route.snapshot?.data?.collection?.id;
+            this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
+
+            setTimeout(() => {
+                if (restoreScroll && this.scrollable) {
+                    this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                }
+            }, 200);
         });
     }
 

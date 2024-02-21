@@ -1,9 +1,8 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
 import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
-import {takeUntil} from 'rxjs/operators';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {Cards, Site} from '../shared/generated-types';
@@ -13,6 +12,7 @@ import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
@@ -30,6 +30,8 @@ import {CommonModule} from '@angular/common';
     ],
 })
 export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
+    private readonly destroyRef = inject(DestroyRef);
+
     /**
      * DataSource containing cards
      */
@@ -63,7 +65,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
     public ngOnInit(): void {
         this.dataSource
             .connect()
-            .pipe(takeUntil(this.ngUnsubscribe))
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(cards => {
                 this.cards = cards;
                 this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));

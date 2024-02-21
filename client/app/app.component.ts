@@ -4,7 +4,6 @@ import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
 import {ThemeService} from './shared/services/theme.service';
-import {takeUntil} from 'rxjs/operators';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
 import {CommonModule} from '@angular/common';
@@ -12,6 +11,8 @@ import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
+import {Observable} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-root',
@@ -35,6 +36,8 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon')!;
 
+    private readonly themeService$: Observable<string>;
+
     public constructor(
         private readonly themeService: ThemeService,
         private readonly overlayContainer: OverlayContainer,
@@ -45,6 +48,8 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         super();
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
+
+        this.themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
         // Register custom icons.
         [
@@ -58,7 +63,7 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.themeService.theme.pipe(takeUntil(this.ngUnsubscribe)).subscribe(newTheme => {
+        this.themeService$.subscribe(newTheme => {
             if (this.lastTheme) {
                 document.body.classList.remove(this.lastTheme);
             }

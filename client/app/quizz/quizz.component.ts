@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {debounceTime, takeUntil} from 'rxjs/operators';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
@@ -15,6 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-quizz',
@@ -46,36 +47,32 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
         dating: false,
     };
     public formCtrl: FormControl = new FormControl();
-    private routeParamsSub: Subscription | null = null;
-    private formChangeSub: Subscription | null = null;
+    private routeParams$: Observable<Params>;
+    private formChange$: Observable<any>;
 
     public constructor(
         private readonly route: ActivatedRoute,
         private readonly cardService: CardService,
     ) {
         super();
-    }
 
-    public override ngOnDestroy(): void {
-        this.routeParamsSub?.unsubscribe();
-        this.formChangeSub?.unsubscribe();
+        this.routeParams$ = this.route.params.pipe(takeUntilDestroyed());
+        this.formChange$ = this.formCtrl.valueChanges.pipe(takeUntilDestroyed(), debounceTime(500));
     }
 
     public ngOnInit(): void {
-        this.routeParamsSub = this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe(params => {
+        this.routeParams$.subscribe(params => {
             if (params.cards) {
                 this.cards = params.cards.split(',');
                 this.getCard(this.cards[0]);
             }
         });
 
-        this.formChangeSub = this.formCtrl.valueChanges
-            .pipe(takeUntil(this.ngUnsubscribe), debounceTime(500))
-            .subscribe(val => {
-                if (this.card) {
-                    this.attributes = test(val, this.card);
-                }
-            });
+        this.formChange$.subscribe(val => {
+            if (this.card) {
+                this.attributes = test(val, this.card);
+            }
+        });
     }
 
     public goToNext(): void {
