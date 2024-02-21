@@ -67,6 +67,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     @Output()
     public reduced = new EventEmitter<boolean>();
 
+    @Output()
+    public closed = new EventEmitter<boolean>();
+
     public readonly CardService = CardService;
 
     /**
@@ -141,7 +144,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public ngOnInit(): void {
         this.cardService$.subscribe(result => {
             this.cards = result.items;
-            this.reduced.emit(this.cards.length === 0);
+            this.closed.emit(this.cards.length === 0);
         });
     }
 
