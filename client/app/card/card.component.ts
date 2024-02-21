@@ -417,6 +417,12 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         isbn: '',
     };
 
+    /**
+     * Whether the related cards are closed or not.
+     * Closed means the related cards are not showing at all, not even reduced.
+     */
+    public isRelatedCardsClosed = false;
+
     @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
     public constructor(
@@ -497,17 +503,18 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         this.initCard();
     }
 
-    public get isRelatedCardsReduce(): boolean {
-        return localStorage.getItem('isRelatedCardsReduce') === 'true';
+    public get isRelatedCardsReduced(): boolean {
+        return localStorage.getItem('isRelatedCardsReduced') === 'true';
     }
 
-    public set isRelatedCardsReduce(value: boolean) {
-        localStorage.setItem('isRelatedCardsReduce', value.toString());
+    public set isRelatedCardsReduced(value: boolean) {
+        localStorage.setItem('isRelatedCardsReduced', value.toString());
     }
 
     public shouldDisplaySlideShowRelatedCards(): boolean {
         return (
-            !this.isRelatedCardsReduce &&
+            !this.isRelatedCardsClosed &&
+            !this.isRelatedCardsReduced &&
             this.showCards &&
             this.showSlideshowRelatedCards &&
             !!this.fetchedModel &&

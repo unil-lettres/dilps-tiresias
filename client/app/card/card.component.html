@@ -997,8 +997,9 @@
         <app-related-cards
             *ngIf="showCards && showSlideshowRelatedCards && fetchedModel"
             [card]="fetchedModel"
-            [isReduced]="isRelatedCardsReduce"
-            (reduced)="isRelatedCardsReduce = $event"
+            [isReduced]="isRelatedCardsReduced"
+            (reduced)="isRelatedCardsReduced = $event"
+            (closed)="isRelatedCardsClosed = $event"
         ></app-related-cards>
     </div>
 </div>
