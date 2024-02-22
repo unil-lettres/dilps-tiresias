@@ -7,6 +7,7 @@ namespace Application\Api\Input\Operator;
 use Application\Model\Artist;
 use Application\Model\Card;
 use Application\Model\Country;
+use Application\Model\Domain;
 use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
@@ -14,7 +15,18 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
 {
     protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
-        if (in_array($metadata->getName(), [Institution::class, Artist::class, Country::class], true)) {
+        if (
+            in_array(
+                $metadata->getName(),
+                [
+                    Domain::class,
+                    Institution::class,
+                    Artist::class,
+                    Country::class,
+                ],
+                true
+            )
+        ) {
             return ['name'];
         }
 
@@ -42,7 +54,7 @@ class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperator
     protected function getSearchableJoinedEntities(): array
     {
         return [
-            Card::class => ['institution', 'country'],
+            Card::class => ['institution', 'country', 'domains'],
         ];
     }
 }
