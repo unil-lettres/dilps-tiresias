@@ -425,8 +425,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
-    private readonly routeData$: Observable<Data>;
-    private readonly routeParams$: Observable<Data>;
+    private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
+    private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -448,9 +448,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly linkService: NaturalLinkMutationService,
     ) {
         super();
-
-        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
-        this.routeParams$ = this.route.params.pipe(takeUntilDestroyed());
     }
 
     @Input()

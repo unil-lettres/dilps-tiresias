@@ -83,8 +83,11 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
-    private readonly routeData$: Observable<Data>;
-    private readonly collectionsService$: Observable<Collections['collections']>;
+    private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
+
+    private readonly collectionsService$ = this.collectionsService
+        .watchAll(this.queryVariables)
+        .pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -93,9 +96,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         private readonly dialog: MatDialog,
     ) {
         super();
-
-        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
-        this.collectionsService$ = this.collectionsService.watchAll(this.queryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnInit(): void {

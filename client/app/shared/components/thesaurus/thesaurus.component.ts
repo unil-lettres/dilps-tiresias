@@ -178,20 +178,18 @@ export class ThesaurusComponent<
      */
     private lockOpenDialog!: boolean;
 
-    private readonly formChange$: Observable<any>;
+    private readonly formChange$ = this.formControl.valueChanges.pipe(
+        takeUntilDestroyed(),
+        distinctUntilChanged(),
+        filter(val => isString(val)),
+        debounceTime(300),
+    );
 
     public constructor(
         private readonly dialog: MatDialog,
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
     ) {
         super();
-
-        this.formChange$ = this.formControl.valueChanges.pipe(
-            takeUntilDestroyed(),
-            distinctUntilChanged(),
-            filter(val => isString(val)),
-            debounceTime(300),
-        );
     }
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;

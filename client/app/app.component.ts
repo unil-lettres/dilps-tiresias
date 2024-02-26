@@ -36,7 +36,7 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon')!;
 
-    private readonly themeService$: Observable<string>;
+    private readonly themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly themeService: ThemeService,
@@ -48,8 +48,6 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         super();
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
-
-        this.themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
         // Register custom icons.
         [

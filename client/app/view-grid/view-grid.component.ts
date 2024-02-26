@@ -96,7 +96,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      */
     private enlargedHeight = 2000;
 
-    private readonly routerEvents$: Observable<Event>;
+    private readonly routerEvents$ = this.router.events.pipe(
+        takeUntilDestroyed(),
+        filter(event => event instanceof NavigationEnd),
+    );
 
     public options: NaturalGalleryOptions = {
         gap: 5,
@@ -166,11 +169,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     ) {
         super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
-
-        this.routerEvents$ = this.router.events.pipe(
-            takeUntilDestroyed(),
-            filter(event => event instanceof NavigationEnd),
-        );
     }
 
     public ngOnInit(): void {

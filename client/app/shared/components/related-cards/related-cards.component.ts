@@ -109,7 +109,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private readonly resizeObserver = new ResizeObserver(() => this.updateButtonsState());
 
-    private readonly cardService$: Observable<Cards['cards']>;
+    private readonly cardService$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
 
     public constructor(
         public readonly cardService: CardService,
@@ -121,8 +121,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
             .subscribe(result => {
                 this.breakpointXSmall = result.matches;
             });
-
-        this.cardService$ = cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
