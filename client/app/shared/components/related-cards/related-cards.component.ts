@@ -32,7 +32,7 @@ import {Observable} from 'rxjs';
         {
             provide: IMAGE_LOADER,
             useValue: (config: ImageLoaderConfig) => {
-                return CardService.getImageLink(config.loaderParams?.card, Math.min(config?.width ?? 200, 200));
+                return CardService.getImageLink(config.loaderParams?.card, Math.min(config?.width ?? 300, 300));
             },
         },
     ],
