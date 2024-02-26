@@ -11,7 +11,6 @@ import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-import {Observable} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

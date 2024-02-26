@@ -1,6 +1,6 @@
 import {Component, DestroyRef, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet, Data} from '@angular/router';
+import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
 import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
 import {
@@ -24,7 +24,6 @@ import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {Observable} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

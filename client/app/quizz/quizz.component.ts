@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ActivatedRoute, Params} from '@angular/router';
-import {Observable} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';

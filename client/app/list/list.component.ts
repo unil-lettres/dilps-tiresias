@@ -56,7 +56,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
-import {Data} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function applyChanges(

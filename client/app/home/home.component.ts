@@ -3,9 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
     ActivatedRoute,
-    Event,
     NavigationEnd,
-    Params,
     Router,
     RouteReuseStrategy,
     RouterLink,

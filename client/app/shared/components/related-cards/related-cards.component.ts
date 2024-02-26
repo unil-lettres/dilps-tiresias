@@ -21,7 +21,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-related-cards',

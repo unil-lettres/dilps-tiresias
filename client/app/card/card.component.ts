@@ -2,7 +2,7 @@ import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgModel, FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Data, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {findKey, sortBy, identity} from 'lodash-es';
 import {QuillModules, QuillEditorComponent} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
@@ -88,7 +88,7 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {Observable, forkJoin} from 'rxjs';
+import {forkJoin} from 'rxjs';
 import {state, style, transition, trigger, animate} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
