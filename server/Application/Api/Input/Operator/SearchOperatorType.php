@@ -11,7 +11,7 @@ use Application\Model\Domain;
 use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class SearchOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
+class SearchOperatorType extends AbstractSearchOperatorType
 {
     protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {

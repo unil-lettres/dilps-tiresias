@@ -9,7 +9,7 @@ use Application\Model\Institution;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\Api\Exception;
 
-class LocalityOrInstitutionLocalityOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
+class LocalityOrInstitutionLocalityOperatorType extends AbstractSearchOperatorType
 {
     protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {

@@ -6,7 +6,7 @@ namespace Application\Api\Input\Operator;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class NameOrExpandedNameOperatorType extends \Ecodev\Felix\Api\Input\Operator\SearchOperatorType
+class NameOrExpandedNameOperatorType extends AbstractSearchOperatorType
 {
     protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array
     {
