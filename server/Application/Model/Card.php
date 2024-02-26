@@ -6,7 +6,6 @@ namespace Application\Model;
 
 use Application\Api\Enum\CardVisibilityType;
 use Application\Api\FileException;
-use Application\Api\Input\Operator\ArtistOrTechniqueAuthorOperatorType;
 use Application\Api\Input\Operator\CardYearRangeOperatorType;
 use Application\Api\Input\Operator\DatingYearRangeOperatorType;
 use Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType;
@@ -51,7 +50,6 @@ use Throwable;
 #[ORM\Index(name: 'card_area_idx', columns: ['area'])]
 #[ORM\UniqueConstraint(name: 'unique_code', columns: ['code', 'site'])]
 #[API\Filter(field: 'nameOrExpandedName', operator: NameOrExpandedNameOperatorType::class, type: 'string')]
-#[API\Filter(field: 'artistOrTechniqueAuthor', operator: ArtistOrTechniqueAuthorOperatorType::class, type: 'string')]
 #[API\Filter(field: 'localityOrInstitutionLocality', operator: LocalityOrInstitutionLocalityOperatorType::class, type: 'string')]
 #[API\Filter(field: 'datingYearRange', operator: DatingYearRangeOperatorType::class, type: 'int')]
 #[API\Filter(field: 'cardYearRange', operator: CardYearRangeOperatorType::class, type: 'int')]
