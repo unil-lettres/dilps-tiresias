@@ -16,16 +16,15 @@
 @use 'themes/tiresias-staging';
 
 @mixin applyTheme($theme) {
-    color: mat.get-color-from-palette(map.get($theme, foreground), base);
-
     @include mat.autocomplete-color($theme);
     @include mat.button-color($theme);
-    @include mat.card-color($theme);
+    @include mat.button-toggle-color($theme);
     @include mat.checkbox-color($theme);
     @include mat.chips-color($theme);
     @include mat.core-color($theme);
     @include mat.datepicker-color($theme);
     @include mat.dialog-color($theme);
+    @include mat.divider-color($theme);
     @include mat.expansion-color($theme);
     @include mat.fab-color($theme);
     @include mat.form-field-color($theme);
@@ -52,16 +51,60 @@
     @include components.components-theme($theme);
 }
 
-// Include Material densities, typographies and  core (only once !)
-// Only 30 modules used on a total of 37 modules
+// Include Material bases, densities, typographies and core (only once !)
+// Only 31 modules used on a total of 37 modules
+
+// This fake theme is only use to tell Material we use Material v2, and not v3. Colors are never used.
+$fake-material-v2-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: mat.define-palette(mat.$indigo-palette),
+            accent: mat.define-palette(mat.$indigo-palette),
+        ),
+    )
+);
+
+@include mat.autocomplete-base($fake-material-v2-theme);
+@include mat.button-base($fake-material-v2-theme);
+@include mat.button-toggle-base($fake-material-v2-theme);
+@include mat.checkbox-base($fake-material-v2-theme);
+@include mat.chips-base($fake-material-v2-theme);
+@include mat.core-base($fake-material-v2-theme);
+@include mat.datepicker-base($fake-material-v2-theme);
+@include mat.dialog-base($fake-material-v2-theme);
+@include mat.divider-base($fake-material-v2-theme);
+@include mat.expansion-base($fake-material-v2-theme);
+@include mat.fab-base($fake-material-v2-theme);
+@include mat.form-field-base($fake-material-v2-theme);
+@include mat.grid-list-base($fake-material-v2-theme);
+@include mat.icon-base($fake-material-v2-theme);
+@include mat.icon-button-base($fake-material-v2-theme);
+@include mat.input-base($fake-material-v2-theme);
+@include mat.list-base($fake-material-v2-theme);
+@include mat.menu-base($fake-material-v2-theme);
+@include mat.paginator-base($fake-material-v2-theme);
+@include mat.progress-spinner-base($fake-material-v2-theme);
+@include mat.select-base($fake-material-v2-theme);
+@include mat.sidenav-base($fake-material-v2-theme);
+@include mat.slide-toggle-base($fake-material-v2-theme);
+@include mat.slider-base($fake-material-v2-theme);
+@include mat.snack-bar-base($fake-material-v2-theme);
+@include mat.sort-base($fake-material-v2-theme);
+@include mat.table-base($fake-material-v2-theme);
+@include mat.tabs-base($fake-material-v2-theme);
+@include mat.toolbar-base($fake-material-v2-theme);
+@include mat.tooltip-base($fake-material-v2-theme);
+@include mat.tree-base($fake-material-v2-theme);
+
 @include mat.autocomplete-density(0);
 @include mat.button-density(0);
-@include mat.card-density(0);
+@include mat.button-toggle-density(0);
 @include mat.checkbox-density(0);
 @include mat.chips-density(0);
 @include mat.core-density(0);
 @include mat.datepicker-density(0);
 @include mat.dialog-density(0);
+@include mat.divider-density(0);
 @include mat.expansion-density(0);
 @include mat.fab-density(0);
 @include mat.form-field-density(0);
@@ -88,12 +131,13 @@
 @include mat.typography-hierarchy(typography.$custom-typography-gt-sm);
 @include mat.autocomplete-typography(typography.$custom-typography-gt-sm);
 @include mat.button-typography(typography.$custom-typography-gt-sm);
-@include mat.card-typography(typography.$custom-typography-gt-sm);
+@include mat.button-toggle-typography(typography.$custom-typography-gt-sm);
 @include mat.checkbox-typography(typography.$custom-typography-gt-sm);
 @include mat.chips-typography(typography.$custom-typography-gt-sm);
 @include mat.core-typography(typography.$custom-typography-gt-sm);
 @include mat.datepicker-typography(typography.$custom-typography-gt-sm);
 @include mat.dialog-typography(typography.$custom-typography-gt-sm);
+@include mat.divider-typography(typography.$custom-typography-gt-sm);
 @include mat.expansion-typography(typography.$custom-typography-gt-sm);
 @include mat.fab-typography(typography.$custom-typography-gt-sm);
 @include mat.form-field-typography(typography.$custom-typography-gt-sm);
