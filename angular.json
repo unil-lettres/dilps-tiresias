@@ -17,15 +17,15 @@
             },
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "options": {
                         "outputPath": "htdocs",
                         "preserveSymlinks": true,
                         "index": "client/index.html",
-                        "main": "client/main.ts",
+                        "browser": "client/main.ts",
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
-                        "polyfills": "client/polyfills.ts",
+                        "polyfills": ["zone.js"],
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
                         "scripts": [],
@@ -65,9 +65,7 @@
                             ]
                         },
                         "development": {
-                            "buildOptimizer": false,
                             "optimization": false,
-                            "vendorChunk": true,
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": true
@@ -113,7 +111,7 @@
                     "options": {
                         "main": "client/test.ts",
                         "karmaConfig": "./karma.conf.js",
-                        "polyfills": "client/polyfills.ts",
+                        "polyfills": ["zone.js", "zone.js/testing"],
                         "tsConfig": "client/tsconfig.spec.json",
                         "scripts": [],
                         "styles": ["client/styles.scss"],

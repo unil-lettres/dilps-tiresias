@@ -58,7 +58,7 @@
         "rxjs": "^7.8.0",
         "shelljs": "^0.8.4",
         "snazzy-info-window": "^1.1.1",
-        "striptags": "^3.2.0",
+        "striptags": "^4.0.0-alpha.4",
         "swiper": "^11.0.6",
         "tslib": "^2.6.2",
         "yargs": "^17.6.2",

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import * as striptags from 'striptags';
+import {striptags} from 'striptags';
 
 @Pipe({
     name: 'stripTags',
@@ -7,6 +7,6 @@ import * as striptags from 'striptags';
 })
 export class StripTagsPipe implements PipeTransform {
     public transform(value: string | null | undefined): string {
-        return striptags(value ?? '', ['strong', 'em', 'u']);
+        return striptags(value ?? '', {allowedTags: new Set(['strong', 'em', 'u'])});
     }
 }

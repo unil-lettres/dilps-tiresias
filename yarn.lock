@@ -9744,10 +9744,10 @@ strip-json-comments@3.1.1, strip-json-comments@^3.1.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
 
-striptags@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/striptags/-/striptags-3.2.0.tgz#cc74a137db2de8b0b9a370006334161f7dd67052"
-  integrity sha512-g45ZOGzHDMe2bdYMdIvdAfCQkCTDMGBazSw1ypMowwGIee7ZQ5dU0rBJ8Jqgl+jAKIv4dbeE1jscZq9wid1Tkw==
+striptags@^4.0.0-alpha.4:
+  version "4.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/striptags/-/striptags-4.0.0-alpha.4.tgz#824f1ac040f824574316ce87a3663c0c4df9900d"
+  integrity sha512-/0jWyVWhpg9ciRHfjKYBpMHXct/HrFRfsR2HU77nGPbc8SPcVSIHZlZR/0TG3MyPq2C+HiHuwx8BlbcdI/cNbw==
 
 strong-log-transformer@^2.1.0:
   version "2.1.0"
