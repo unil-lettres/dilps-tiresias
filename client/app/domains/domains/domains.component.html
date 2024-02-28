@@ -11,76 +11,78 @@
     />
 </mat-toolbar>
 
-<div *ngIf="dataSource" class="padding padding-fab">
-    <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
-        <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Domaines</div>
-        <div fxLayout="row wrap">
-            <a *ngFor="let item of breadcrumbs" [routerLink]="getChildLink(item)" class="no-padding" mat-button>
-                <mat-icon naturalIcon="chevron_right"></mat-icon>
-                <span>{{ item.name }}</span>
-            </a>
+@if (dataSource) {
+    <div class="padding padding-fab">
+        <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Domaines</div>
+            <div fxLayout="row wrap">
+                @for (item of breadcrumbs; track item) {
+                    <a [routerLink]="getChildLink(item)" class="no-padding" mat-button>
+                        <mat-icon naturalIcon="chevron_right"></mat-icon>
+                        <span>{{ item.name }}</span>
+                    </a>
+                }
+            </div>
         </div>
+        <div [fxShow]="showTable()" class="responsive-table">
+            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+                <ng-container matColumnDef="navigation">
+                    <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
+                    <td *matCellDef="let element" mat-cell>
+                        @if (element.hasNavigation) {
+                            <natural-table-button
+                                [navigate]="getChildLink(element.item)"
+                                icon="chevron_right"
+                                matTooltip="Déployer"
+                            ></natural-table-button>
+                        }
+                    </td>
+                </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <div class="cell-content">
+                            <app-table-button
+                                (click)="edit(element.item)"
+                                [label]="element.item.name"
+                                icon="edit"
+                                matTooltip="Éditer"
+                            ></app-table-button>
+                            @if (searched) {
+                                <app-collection-hierarchy [collection]="element.item"></app-collection-hierarchy>
+                            }
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="usageCount">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
+                </ng-container>
+            </table>
+        </div>
+        @if (dataSource.data?.length === 0) {
+            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+                <div>Pas de résultats</div>
+            </div>
+        }
+        @if (!dataSource.data) {
+            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+                <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
+            </div>
+        }
+        @if (dataSource.data?.length) {
+            <mat-paginator
+                (page)="pagination($event)"
+                [length]="dataSource.data?.length"
+                [pageIndex]="dataSource.data?.pageIndex"
+                [pageSizeOptions]="pageSizeOptions"
+                [pageSize]="dataSource.data?.pageSize"
+            ></mat-paginator>
+        }
     </div>
-
-    <div [fxShow]="showTable()" class="responsive-table">
-        <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
-            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-
-            <ng-container matColumnDef="navigation">
-                <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
-                <td *matCellDef="let element" mat-cell>
-                    <natural-table-button
-                        *ngIf="element.hasNavigation"
-                        [navigate]="getChildLink(element.item)"
-                        icon="chevron_right"
-                        matTooltip="Déployer"
-                    ></natural-table-button>
-                </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
-                <td *matCellDef="let element" mat-cell>
-                    <div class="cell-content">
-                        <app-table-button
-                            (click)="edit(element.item)"
-                            [label]="element.item.name"
-                            icon="edit"
-                            matTooltip="Éditer"
-                        ></app-table-button>
-                        <app-collection-hierarchy
-                            *ngIf="searched"
-                            [collection]="element.item"
-                        ></app-collection-hierarchy>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="usageCount">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
-                <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
-            </ng-container>
-        </table>
-    </div>
-
-    <div *ngIf="dataSource?.data?.length === 0" class="margin" fxLayout="column" fxLayoutAlign="center center">
-        <div>Pas de résultats</div>
-    </div>
-
-    <div *ngIf="!dataSource?.data" class="margin" fxLayout="column" fxLayoutAlign="center center">
-        <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
-    </div>
-
-    <mat-paginator
-        (page)="pagination($event)"
-        *ngIf="dataSource.data?.length"
-        [length]="dataSource.data?.length"
-        [pageIndex]="dataSource.data?.pageIndex"
-        [pageSizeOptions]="pageSizeOptions"
-        [pageSize]="dataSource.data?.pageSize"
-    ></mat-paginator>
-</div>
+}
 
 <natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>

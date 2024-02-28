@@ -3,71 +3,84 @@
         <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
         <div fxFlex></div>
 
-        <ng-container *ngIf="user?.role === 'administrator'">
+        @if (user?.role === 'administrator') {
+            @if (change) {
+                <button
+                    (click)="accept()"
+                    mat-icon-button
+                    class="icon-button-circle-primary"
+                    matTooltip="Accepter suggestion"
+                >
+                    <mat-icon naturalIcon="check"></mat-icon>
+                </button>
+            }
+            @if (change) {
+                <button
+                    (click)="reject()"
+                    mat-icon-button
+                    class="icon-button-circle-warn"
+                    matTooltip="Refuser la suggestion"
+                >
+                    <mat-icon naturalIcon="close"></mat-icon>
+                </button>
+            }
+        }
+
+        @if (!change && original) {
             <button
-                (click)="accept()"
-                *ngIf="change"
+                (click)="update()"
                 mat-icon-button
                 class="icon-button-circle-primary"
-                matTooltip="Accepter suggestion"
+                matTooltip="Soumettre la suggestion à validation"
             >
-                <mat-icon naturalIcon="check"></mat-icon>
+                <mat-icon naturalIcon="save"></mat-icon>
             </button>
+        }
+        @if (!change && !original) {
             <button
-                (click)="reject()"
-                *ngIf="change"
+                (click)="create()"
                 mat-icon-button
-                class="icon-button-circle-warn"
-                matTooltip="Refuser la suggestion"
+                class="icon-button-circle-primary"
+                matTooltip="Soumettre l'ajout de cette fiche à validation"
             >
-                <mat-icon naturalIcon="close"></mat-icon>
+                <mat-icon naturalIcon="add"></mat-icon>
             </button>
-        </ng-container>
-
-        <button
-            (click)="update()"
-            *ngIf="!change && original"
-            mat-icon-button
-            class="icon-button-circle-primary"
-            matTooltip="Soumettre la suggestion à validation"
-        >
-            <mat-icon naturalIcon="save"></mat-icon>
-        </button>
-        <button
-            (click)="create()"
-            *ngIf="!change && !original"
-            mat-icon-button
-            class="icon-button-circle-primary"
-            matTooltip="Soumettre l'ajout de cette fiche à validation"
-        >
-            <mat-icon naturalIcon="add"></mat-icon>
-        </button>
+        }
     </mat-toolbar>
 
-    <div *ngIf="loaded" class="test" fxFlex fxLayout="row">
-        <!-- Original -->
-        <div *ngIf="!original" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <div class="mat-headline-4">Nouvelle fiche</div>
+    @if (loaded) {
+        <div class="test" fxFlex fxLayout="row">
+            <!-- Original -->
+            @if (!original) {
+                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                    <div class="mat-headline-4">Nouvelle fiche</div>
+                </div>
+            }
+            @if (original) {
+                <div class="card-original" fxFlex fxLayout="column">
+                    <app-card [fetchedModel]="original" fxFlex title="Original"></app-card>
+                </div>
+            }
+            <!-- Suggestion -->
+            @if (!suggestionInput) {
+                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                    <div class="mat-headline-4">Suppression de la fiche</div>
+                </div>
+            }
+            @if (suggestionInput) {
+                <div class="card-suggestion" fxFlex fxLayout="column">
+                    <app-card
+                        [model]="suggestionInput"
+                        [fetchedModel]="fetchedSuggestion"
+                        [editable]="true"
+                        [showTools]="showTools"
+                        [showCards]="false"
+                        [showCode]="false"
+                        fxFlex
+                        title="Suggestion"
+                    ></app-card>
+                </div>
+            }
         </div>
-        <div class="card-original" *ngIf="original" fxFlex fxLayout="column">
-            <app-card [fetchedModel]="original" fxFlex title="Original"></app-card>
-        </div>
-
-        <!-- Suggestion -->
-        <div *ngIf="!suggestionInput" fxFlex fxLayout="column" fxLayoutAlign="center center">
-            <div class="mat-headline-4">Suppression de la fiche</div>
-        </div>
-        <div class="card-suggestion" *ngIf="suggestionInput" fxFlex fxLayout="column">
-            <app-card
-                [model]="suggestionInput"
-                [fetchedModel]="fetchedSuggestion"
-                [editable]="true"
-                [showTools]="showTools"
-                [showCards]="false"
-                [showCode]="false"
-                fxFlex
-                title="Suggestion"
-            ></app-card>
-        </div>
-    </div>
+    }
 </div>

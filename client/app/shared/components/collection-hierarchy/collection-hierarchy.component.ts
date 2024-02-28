@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Collections} from '../../generated-types';
-import {CommonModule} from '@angular/common';
+
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
@@ -8,7 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     templateUrl: './collection-hierarchy.component.html',
     styleUrls: ['./collection-hierarchy.component.scss'],
     standalone: true,
-    imports: [CommonModule, MatTooltipModule],
+    imports: [MatTooltipModule],
 })
 export class CollectionHierarchyComponent implements OnInit {
     @Input({required: true})

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,7 +18,7 @@ import {FakeCollection} from 'client/app/collections/services/fake-collection.re
     templateUrl: './export-menu.component.html',
     styleUrls: ['./export-menu.component.scss'],
     standalone: true,
-    imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
 })
 export class ExportMenuComponent {
     @Input()

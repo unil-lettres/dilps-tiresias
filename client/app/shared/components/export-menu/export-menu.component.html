@@ -11,7 +11,9 @@
     <button mat-menu-item (click)="export(ExportFormat.zip)">
         {{ optionZipLabel }}
     </button>
-    <button (click)="export(ExportFormat.csv)" *ngIf="showExcelExportation" mat-menu-item>Exporter en Excel</button>
+    @if (showExcelExportation) {
+        <button (click)="export(ExportFormat.csv)" mat-menu-item>Exporter en Excel</button>
+    }
     <button
         mat-menu-item
         (click)="export(ExportFormat.pptx)"

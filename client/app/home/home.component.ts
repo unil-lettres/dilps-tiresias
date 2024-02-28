@@ -45,7 +45,7 @@ import {MatListModule} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {CommonModule} from '@angular/common';
+
 import {MatMenuModule} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -60,7 +60,6 @@ function isExcel(file: File): boolean {
     standalone: true,
     imports: [
         MatMenuModule,
-        CommonModule,
         RouterLink,
         RouterLinkActive,
         FlexModule,

@@ -3,35 +3,24 @@
 
     <button mat-button mat-dialog-close>Annuler</button>
 
-    <button
-        (click)="delete.emit(item)"
-        *ngIf="canDelete && item.id && item?.permissions?.delete"
-        color="warn"
-        mat-raised-button
-    >
-        <mat-icon naturalIcon="delete_forever"></mat-icon>
-        Supprimer
-    </button>
+    @if (canDelete && item.id && item.permissions.delete) {
+        <button (click)="delete.emit(item)" color="warn" mat-raised-button>
+            <mat-icon naturalIcon="delete_forever"></mat-icon>
+            Supprimer
+        </button>
+    }
 
-    <button
-        (click)="update.emit(item)"
-        *ngIf="item.id && item?.permissions?.update"
-        [disabled]="!!formCtrl?.errors"
-        color="primary"
-        mat-raised-button
-    >
-        <mat-icon naturalIcon="save"></mat-icon>
-        Enregistrer
-    </button>
+    @if (item.id && item.permissions.update) {
+        <button (click)="update.emit(item)" [disabled]="!!formCtrl?.errors" color="primary" mat-raised-button>
+            <mat-icon naturalIcon="save"></mat-icon>
+            Enregistrer
+        </button>
+    }
 
-    <button
-        (click)="create.emit(item)"
-        *ngIf="!item.id && canCreate"
-        [disabled]="!!formCtrl?.errors"
-        color="primary"
-        mat-raised-button
-    >
-        <mat-icon naturalIcon="add"></mat-icon>
-        Ajouter
-    </button>
+    @if (!item.id && canCreate) {
+        <button (click)="create.emit(item)" [disabled]="!!formCtrl?.errors" color="primary" mat-raised-button>
+            <mat-icon naturalIcon="add"></mat-icon>
+            Ajouter
+        </button>
+    }
 </div>

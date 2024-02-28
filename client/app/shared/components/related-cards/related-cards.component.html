@@ -1,11 +1,13 @@
 <div [hidden]="breakpointXSmall || cards.length === 0">
     <div class="wrapper" [class.reduced]="isReduced">
         <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
-            <div *ngFor="let card of cards">
-                <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.name">
-                    <img ngSrc="card-{{ card.id }}.jpg" [loaderParams]="{card: card}" priority fill placeholder />
-                </a>
-            </div>
+            @for (card of cards; track card) {
+                <div>
+                    <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.name">
+                        <img ngSrc="card-{{ card.id }}.jpg" [loaderParams]="{card: card}" priority fill placeholder />
+                    </a>
+                </div>
+            }
         </div>
         <button
             class="left"

@@ -9,18 +9,18 @@
                         <mat-form-field>
                             <mat-label>Période</mat-label>
                             <mat-select [(value)]="period" (selectionChange)="update()">
-                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                    item.name
-                                }}</mat-option>
+                                @for (item of availablePeriods; track item) {
+                                    <mat-option [value]="item.key">{{ item.name }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-label>Type</mat-label>
                             <mat-select [(value)]="statType" (selectionChange)="applyFrequentationTypeSelection()">
-                                <mat-option *ngFor="let item of availableTypes | keyvalue" [value]="item.key">{{
-                                    item.value
-                                }}</mat-option>
+                                @for (item of availableTypes | keyvalue; track item) {
+                                    <mat-option [value]="item.key">{{ item.value }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -37,18 +37,18 @@
                         <mat-form-field>
                             <mat-label>Période</mat-label>
                             <mat-select [(value)]="period" (selectionChange)="update()">
-                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                    item.name
-                                }}</mat-option>
+                                @for (item of availablePeriods; track item) {
+                                    <mat-option [value]="item.key">{{ item.name }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-label>Type</mat-label>
                             <mat-select [(value)]="cardType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                <mat-option *ngFor="let item of availableCardTypes | keyvalue" [value]="item.key">{{
-                                    item.value
-                                }}</mat-option>
+                                @for (item of availableCardTypes | keyvalue; track item) {
+                                    <mat-option [value]="item.key">{{ item.value }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
 
@@ -74,18 +74,18 @@
                         <mat-form-field>
                             <mat-label>Période</mat-label>
                             <mat-select [(value)]="period" (selectionChange)="update()">
-                                <mat-option *ngFor="let item of availablePeriods" [value]="item.key">{{
-                                    item.name
-                                }}</mat-option>
+                                @for (item of availablePeriods; track item) {
+                                    <mat-option [value]="item.key">{{ item.name }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-label>Type</mat-label>
                             <mat-select [(value)]="userType" (selectionChange)="applyCardAndUserTypeSelection()">
-                                <mat-option *ngFor="let item of availableUserTypes | keyvalue" [value]="item.key">{{
-                                    item.value
-                                }}</mat-option>
+                                @for (item of availableUserTypes | keyvalue; track item) {
+                                    <mat-option [value]="item.key">{{ item.value }}</mat-option>
+                                }
                             </mat-select>
                         </mat-form-field>
                     </div>

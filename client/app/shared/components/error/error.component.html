@@ -6,7 +6,9 @@
         </h1>
 
         <div fxLayout="column">
-            <p *ngIf="error">{{ error.message }}</p>
+            @if (error) {
+                <p>{{ error.message }}</p>
+            }
         </div>
         <!-- Spacer-->
         <div></div>

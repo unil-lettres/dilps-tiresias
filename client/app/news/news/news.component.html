@@ -32,14 +32,14 @@
                         maxlength="255"
                         type="url"
                     />
-                    <mat-error *ngIf="url.invalid && (url.dirty || url.touched)">URL invalide</mat-error>
-                    <mat-hint
-                        align="end"
-                        *ngIf="data.item.url?.length > 200"
-                        [ngClass]="{strong: data.item.url.length >= 255}"
-                    >
-                        {{ data.item.url.length }} / 255
-                    </mat-hint>
+                    @if (url.invalid && (url.dirty || url.touched)) {
+                        <mat-error>URL invalide</mat-error>
+                    }
+                    @if (data.item.url.length > 200) {
+                        <mat-hint align="end" [ngClass]="{strong: data.item.url.length >= 255}">
+                            {{ data.item.url.length }} / 255
+                        </mat-hint>
+                    }
                 </mat-form-field>
 
                 <input
@@ -50,8 +50,12 @@
                     type="file"
                 />
 
-                <img *ngIf="!imageData && data.item.imageUrl" [attr.src]="data.item.imageUrl" />
-                <div *ngIf="imageData" [style.backgroundImage]="imageData" class="image"></div>
+                @if (!imageData && data.item.imageUrl) {
+                    <img [attr.src]="data.item.imageUrl" />
+                }
+                @if (imageData) {
+                    <div [style.backgroundImage]="imageData" class="image"></div>
+                }
             </div>
         </mat-tab>
     </mat-tab-group>

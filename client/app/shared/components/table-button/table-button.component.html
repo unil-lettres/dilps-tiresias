@@ -1,40 +1,56 @@
 <!-- Because directives can't be applied conditionally (routerLink, mat-button and mat-icon-button), we have to use different elements -->
 
 <!-- App without navigation -->
-<a *ngIf="!navigate && label && !disable" mat-button>
-    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
-    <span>{{ label }}</span>
-</a>
+@if (!navigate && label && !disable) {
+    <a mat-button>
+        @if (icon) {
+            <mat-icon [naturalIcon]="icon"></mat-icon>
+        }
+        <span>{{ label }}</span>
+    </a>
+}
 
 <!-- ... and disabled -->
-<div *ngIf="!navigate && label && disable">
-    <span>{{ label }}</span>
-</div>
+@if (!navigate && label && disable) {
+    <div>
+        <span>{{ label }}</span>
+    </div>
+}
 
 <!-- App routed link with label... -->
-<a *ngIf="navigate && label" [queryParams]="queryParams" [routerLink]="navigate" mat-button>
-    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
-    <span>{{ label }}</span>
-</a>
+@if (navigate && label) {
+    <a [queryParams]="queryParams" [routerLink]="navigate" mat-button>
+        @if (icon) {
+            <mat-icon [naturalIcon]="icon"></mat-icon>
+        }
+        <span>{{ label }}</span>
+    </a>
+}
 
 <!-- ... and without label -->
-<a
-    *ngIf="navigate && !label"
-    [queryParamsHandling]="queryParamsHandling"
-    [queryParams]="queryParams"
-    [routerLink]="navigate"
-    mat-icon-button
->
-    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
-</a>
+@if (navigate && !label) {
+    <a [queryParamsHandling]="queryParamsHandling" [queryParams]="queryParams" [routerLink]="navigate" mat-icon-button>
+        @if (icon) {
+            <mat-icon [naturalIcon]="icon"></mat-icon>
+        }
+    </a>
+}
 
 <!-- External link with label... -->
-<a *ngIf="href && label" [attr.href]="href" mat-button>
-    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
-    <span>{{ label }}</span>
-</a>
+@if (href && label) {
+    <a [attr.href]="href" mat-button>
+        @if (icon) {
+            <mat-icon [naturalIcon]="icon"></mat-icon>
+        }
+        <span>{{ label }}</span>
+    </a>
+}
 
 <!-- ... and without label -->
-<a *ngIf="href && !label" [attr.href]="href" mat-icon-button>
-    <mat-icon *ngIf="icon" [naturalIcon]="icon"></mat-icon>
-</a>
+@if (href && !label) {
+    <a [attr.href]="href" mat-icon-button>
+        @if (icon) {
+            <mat-icon [naturalIcon]="icon"></mat-icon>
+        }
+    </a>
+}

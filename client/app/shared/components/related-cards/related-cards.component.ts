@@ -11,7 +11,7 @@ import {
     SimpleChanges,
     ViewChild,
 } from '@angular/core';
-import {CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
+import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
 import {Card, Cards, CardsVariables} from '../../generated-types';
@@ -36,15 +36,7 @@ import {Observable} from 'rxjs';
             },
         },
     ],
-    imports: [
-        CommonModule,
-        RouterLink,
-        MatTooltipModule,
-        MatIconModule,
-        NaturalIconDirective,
-        MatButtonModule,
-        NgOptimizedImage,
-    ],
+    imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     /**

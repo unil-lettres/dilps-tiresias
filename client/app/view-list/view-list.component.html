@@ -1,148 +1,190 @@
 <div class="scrollable">
-    <div *ngIf="dataSource" class="scrolled">
-        <mat-paginator
-            (page)="loadMore($event)"
-            *ngIf="dataSource.data?.length"
-            [length]="dataSource.data?.length"
-            [pageIndex]="dataSource.data?.pageIndex"
-            [pageSizeOptions]="[5, 10, 20, 50]"
-            [pageSize]="dataSource.data?.pageSize"
-            [showFirstLastButtons]="true"
-        ></mat-paginator>
-
-        <div *ngFor="let item of cards" class="line">
-            <div class="image-wrapper">
-                <a
-                    [routerLink]="['/card', item.id]"
-                    [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
-                    class="image"
-                ></a>
-            </div>
-
-            <div class="line-body">
-                <div class="line-body-table">
-                    <ng-container *ngIf="item.site === Site.tiresias">
-                        <div *ngIf="item.code">
-                            <div>Référence</div>
-                            <div>{{ item.code }}</div>
+    @if (dataSource) {
+        <div class="scrolled">
+            @if (dataSource.data?.length) {
+                <mat-paginator
+                    (page)="loadMore($event)"
+                    [length]="dataSource.data?.length"
+                    [pageIndex]="dataSource.data?.pageIndex"
+                    [pageSizeOptions]="[5, 10, 20, 50]"
+                    [pageSize]="dataSource.data?.pageSize"
+                    [showFirstLastButtons]="true"
+                ></mat-paginator>
+            }
+            @for (item of cards; track item) {
+                <div class="line">
+                    <div class="image-wrapper">
+                        <a
+                            [routerLink]="['/card', item.id]"
+                            [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
+                            class="image"
+                        ></a>
+                    </div>
+                    <div class="line-body">
+                        <div class="line-body-table">
+                            @if (item.site === Site.tiresias) {
+                                @if (item.code) {
+                                    <div>
+                                        <div>Référence</div>
+                                        <div>{{ item.code }}</div>
+                                    </div>
+                                }
+                            }
+                            <div>
+                                <div>Titre</div>
+                                <div [innerHTML]="item.name | truncate: ['250', '...']"></div>
+                            </div>
+                            @if (item.site === Site.dilps) {
+                                @if (item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)) {
+                                    <div>
+                                        <div>Titre étendu</div>
+                                        <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
+                                    </div>
+                                }
+                                @if (item.artists.length) {
+                                    <div>
+                                        <div>Artistes</div>
+                                        <div>
+                                            @for (artist of item.artists; track artist) {
+                                                <div>{{ artist.name }}</div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.addition) {
+                                    <div>
+                                        <div>Supplément</div>
+                                        <div>{{ item.addition | truncate: ['250', '...'] }}</div>
+                                    </div>
+                                }
+                            }
+                            @if (item.site === Site.tiresias) {
+                                @if (item.tags.length) {
+                                    <div>
+                                        <div>Mots clés</div>
+                                        <div>
+                                            @for (tag of item.tags | onlyLeaves; track tag) {
+                                                <div>{{ tag.hierarchicName }}</div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.periods.length) {
+                                    <div>
+                                        <div>Périodes</div>
+                                        <div>
+                                            @for (period of item.periods; track period) {
+                                                <div>{{ period.hierarchicName }}</div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                @if (item.from || item.to) {
+                                    <div>
+                                        <div>Datation</div>
+                                        <div>De {{ item.from }} jusqu'à {{ item.to }}</div>
+                                    </div>
+                                }
+                            }
+                            @if (item.dating) {
+                                <div>
+                                    @if (item.site === Site.dilps) {
+                                        <div>Datation</div>
+                                    }
+                                    @if (item.site === Site.tiresias) {
+                                        <div>Date (Datation)</div>
+                                    }
+                                    <div>{{ item.dating }}</div>
+                                </div>
+                            }
+                            @if (item.domains.length || item.dilpsDomain) {
+                                <div>
+                                    <div>Domaine</div>
+                                    <div>
+                                        @for (domain of item.domains | onlyLeaves; track domain) {
+                                            <div>
+                                                {{ domain.hierarchicName }}
+                                            </div>
+                                        }
+                                        <div>{{ item.dilpsDomain }}</div>
+                                    </div>
+                                </div>
+                            }
+                            @if (item.materials.length || item.material) {
+                                <div>
+                                    @if (item.site === Site.dilps) {
+                                        <div>Technique & matériel</div>
+                                    }
+                                    @if (item.site === Site.tiresias) {
+                                        <div>Matériel (Matériaux)</div>
+                                    }
+                                    <div>
+                                        @for (material of item.materials | onlyLeaves; track material) {
+                                            <div>
+                                                {{ material.hierarchicName }}
+                                            </div>
+                                        }
+                                        <div>{{ item.material }}</div>
+                                    </div>
+                                </div>
+                            }
+                            @if (item.site === Site.dilps && (item.format || item.documentSize)) {
+                                <div>
+                                    <div>Dimensions</div>
+                                    <div>{{ item.format || item.documentSize }}</div>
+                                </div>
+                            }
+                            @if (item.institution?.name) {
+                                <div>
+                                    @if (item.site === Site.dilps) {
+                                        <div>Lieu</div>
+                                    }
+                                    @if (item.site === Site.tiresias) {
+                                        <div>Lieu (Musée)</div>
+                                    }
+                                    <div>{{ item.institution?.name }}<br /></div>
+                                </div>
+                            }
+                            @if (item.street || item.locality || item.country?.name) {
+                                <div>
+                                    <div>Adresse</div>
+                                    <div>
+                                        {{ getCardAddress(item) }}
+                                    </div>
+                                </div>
+                            }
+                            @if (item.literature) {
+                                <div>
+                                    @if (item.site === Site.dilps) {
+                                        <div>Référence de l'image</div>
+                                    }
+                                    @if (item.site === Site.tiresias) {
+                                        <div>Source (référence de l'image)</div>
+                                    }
+                                    <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
+                                </div>
+                            }
                         </div>
-                    </ng-container>
-
+                    </div>
                     <div>
-                        <div>Titre</div>
-                        <div [innerHTML]="item.name | truncate: ['250', '...']"></div>
-                    </div>
-
-                    <ng-container *ngIf="item.site === Site.dilps">
-                        <div *ngIf="item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)">
-                            <div>Titre étendu</div>
-                            <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
-                        </div>
-
-                        <div *ngIf="item.artists?.length">
-                            <div>Artistes</div>
-                            <div>
-                                <div *ngFor="let artist of item.artists">{{ artist.name }}</div>
-                            </div>
-                        </div>
-
-                        <div *ngIf="item.addition">
-                            <div>Supplément</div>
-                            <div>{{ item.addition | truncate: ['250', '...'] }}</div>
-                        </div>
-                    </ng-container>
-
-                    <ng-container *ngIf="item.site === Site.tiresias">
-                        <div *ngIf="item.tags?.length">
-                            <div>Mots clés</div>
-                            <div>
-                                <div *ngFor="let tag of item.tags | onlyLeaves">{{ tag.hierarchicName }}</div>
-                            </div>
-                        </div>
-
-                        <div *ngIf="item.periods?.length">
-                            <div>Périodes</div>
-                            <div>
-                                <div *ngFor="let period of item.periods">{{ period.hierarchicName }}</div>
-                            </div>
-                        </div>
-
-                        <div *ngIf="item.from || item.to">
-                            <div>Datation</div>
-                            <div>De {{ item.from }} jusqu'à {{ item.to }}</div>
-                        </div>
-                    </ng-container>
-
-                    <div *ngIf="item.dating">
-                        <div *ngIf="item.site === Site.dilps">Datation</div>
-                        <div *ngIf="item.site === Site.tiresias">Date (Datation)</div>
-                        <div>{{ item.dating }}</div>
-                    </div>
-
-                    <div *ngIf="item.domains.length || item.dilpsDomain">
-                        <div>Domaine</div>
-                        <div>
-                            <div *ngFor="let domain of item.domains | onlyLeaves">
-                                {{ domain.hierarchicName }}
-                            </div>
-                            <div>{{ item.dilpsDomain }}</div>
-                        </div>
-                    </div>
-
-                    <div *ngIf="item.materials?.length || item.material">
-                        <div *ngIf="item.site === Site.dilps">Technique & matériel</div>
-                        <div *ngIf="item.site === Site.tiresias">Matériel (Matériaux)</div>
-                        <div>
-                            <div *ngFor="let material of item.materials | onlyLeaves">
-                                {{ material.hierarchicName }}
-                            </div>
-                            <div>{{ item.material }}</div>
-                        </div>
-                    </div>
-
-                    <div *ngIf="item.site === Site.dilps && (item.format || item.documentSize)">
-                        <div>Dimensions</div>
-                        <div>{{ item.format || item.documentSize }}</div>
-                    </div>
-
-                    <div *ngIf="item.institution?.name">
-                        <div *ngIf="item.site === Site.dilps">Lieu</div>
-                        <div *ngIf="item.site === Site.tiresias">Lieu (Musée)</div>
-                        <div>{{ item.institution?.name }}<br /></div>
-                    </div>
-
-                    <div *ngIf="item.street || item.locality || item.country?.name">
-                        <div>Adresse</div>
-                        <div>
-                            {{ getCardAddress(item) }}
-                        </div>
-                    </div>
-
-                    <div *ngIf="item.literature">
-                        <div *ngIf="item.site === Site.dilps">Référence de l'image</div>
-                        <div *ngIf="item.site === Site.tiresias">Source (référence de l'image)</div>
-                        <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
+                        <mat-checkbox
+                            (change)="$event ? selectionModel.toggle(item) : null"
+                            (click)="$event.stopPropagation()"
+                            [checked]="selectionModel.isSelected(item)"
+                        ></mat-checkbox>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <mat-checkbox
-                    (change)="$event ? selectionModel.toggle(item) : null"
-                    (click)="$event.stopPropagation()"
-                    [checked]="selectionModel.isSelected(item)"
-                ></mat-checkbox>
-            </div>
+            }
+            @if (dataSource.data?.length) {
+                <mat-paginator
+                    (page)="loadMore($event)"
+                    [length]="dataSource.data?.length"
+                    [pageIndex]="dataSource.data?.pageIndex"
+                    [pageSizeOptions]="[5, 10, 20, 50]"
+                    [pageSize]="dataSource.data?.pageSize"
+                    [showFirstLastButtons]="true"
+                ></mat-paginator>
+            }
         </div>
-
-        <mat-paginator
-            (page)="loadMore($event)"
-            *ngIf="dataSource.data?.length"
-            [length]="dataSource.data?.length"
-            [pageIndex]="dataSource.data?.pageIndex"
-            [pageSizeOptions]="[5, 10, 20, 50]"
-            [pageSize]="dataSource.data?.pageSize"
-            [showFirstLastButtons]="true"
-        ></mat-paginator>
-    </div>
+    }
 </div>

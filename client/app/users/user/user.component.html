@@ -12,32 +12,28 @@
                     <input [(ngModel)]="data.item.name" matInput name="name" />
                 </mat-form-field>
 
-                <mat-form-field *ngIf="!isShibbolethUser()">
-                    <mat-label>Email</mat-label>
-                    <input [(ngModel)]="data.item.email" matInput name="email" type="email" />
-                </mat-form-field>
-
-                <div
-                    *ngIf="
-                        (user?.globalPermissions?.user?.create || data.item?.permissions?.update) && !isShibbolethUser()
-                    "
-                    [formGroup]="passwordGroupCtrl"
-                    fxLayout="column"
-                    fxLayoutGap="10px"
-                >
+                @if (!isShibbolethUser()) {
                     <mat-form-field>
-                        <mat-label>Mot de passe</mat-label>
-                        <input [formControl]="passwordCtrl" matInput type="password" />
+                        <mat-label>Email</mat-label>
+                        <input [(ngModel)]="data.item.email" matInput name="email" type="email" />
                     </mat-form-field>
+                }
 
-                    <mat-form-field>
-                        <mat-label>Confirmation du mot passe</mat-label>
-                        <input [formControl]="passwordConfirmationCtrl" matInput type="password" />
-                        <mat-error *ngIf="passwordConfirmationCtrl.hasError('password')"
-                            >Le mot de passe n'est pas identique</mat-error
-                        >
-                    </mat-form-field>
-                </div>
+                @if ((user?.globalPermissions?.user?.create || data.item.permissions.update) && !isShibbolethUser()) {
+                    <div [formGroup]="passwordGroupCtrl" fxLayout="column" fxLayoutGap="10px">
+                        <mat-form-field>
+                            <mat-label>Mot de passe</mat-label>
+                            <input [formControl]="passwordCtrl" matInput type="password" />
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Confirmation du mot passe</mat-label>
+                            <input [formControl]="passwordConfirmationCtrl" matInput type="password" />
+                            @if (passwordConfirmationCtrl.hasError('password')) {
+                                <mat-error>Le mot de passe n'est pas identique</mat-error>
+                            }
+                        </mat-form-field>
+                    </div>
+                }
 
                 <app-thesaurus
                     (modelChange)="data.item.institution = $any($event)"
@@ -55,55 +51,59 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="data.item.id">
-                    <mat-label>Licence</mat-label>
-                    <input
-                        [(ngModel)]="data.item.termsAgreement"
-                        [matDatepicker]="picker2"
-                        disabled
-                        matInput
-                        name="termsAgreement"
-                    />
-                    <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
+                @if (data.item.id) {
+                    <mat-form-field>
+                        <mat-label>Licence</mat-label>
+                        <input
+                            [(ngModel)]="data.item.termsAgreement"
+                            [matDatepicker]="picker2"
+                            disabled
+                            matInput
+                            name="termsAgreement"
+                        />
+                        <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                }
 
                 <mat-form-field>
                     <mat-label>Rôle</mat-label>
                     <mat-select [(value)]="data.item.role" [disabled]="user?.id === data.item.id">
-                        <mat-option
-                            *ngFor="let role of roles"
-                            [value]="role.value"
-                            [disabled]="roleDisabled(role.value)"
-                        >
-                            {{ role.name }}</mat-option
-                        >
+                        @for (role of roles; track role) {
+                            <mat-option [value]="role.value" [disabled]="roleDisabled(role.value)">
+                                {{ role.name }}</mat-option
+                            >
+                        }
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field *ngIf="data.item.id">
-                    <mat-label>Type d'utilisateur</mat-label>
-                    <input
-                        [(ngModel)]="data.item.type"
-                        disabled
-                        matInput
-                        name="type"
-                        value="{{ data.item.type | type }}"
-                    />
-                </mat-form-field>
+                @if (data.item.id) {
+                    <mat-form-field>
+                        <mat-label>Type d'utilisateur</mat-label>
+                        <input
+                            [(ngModel)]="data.item.type"
+                            disabled
+                            matInput
+                            name="type"
+                            value="{{ data.item.type | type }}"
+                        />
+                    </mat-form-field>
+                }
             </div>
         </mat-tab>
 
-        <mat-tab label="Collections" *ngIf="data.item.id">
-            <natural-relations
-                [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
-                [hierarchicSelectorConfig]="collectionsHierarchicConfig"
-                [main]="data.item"
-                [service]="collectionService"
-                class="margin"
-                placeholder="Ajouter une collection"
-            ></natural-relations>
-        </mat-tab>
+        @if (data.item.id) {
+            <mat-tab label="Collections">
+                <natural-relations
+                    [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
+                    [hierarchicSelectorConfig]="collectionsHierarchicConfig"
+                    [main]="data.item"
+                    [service]="collectionService"
+                    class="margin"
+                    placeholder="Ajouter une collection"
+                ></natural-relations>
+            </mat-tab>
+        }
     </mat-tab-group>
 </mat-dialog-content>
 
