@@ -5,7 +5,6 @@
 
 import {Component} from '@angular/core';
 import {TypeTextComponent as EcoDevTypeTextComponent} from '@ecodev/natural';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';

@@ -53,7 +53,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {Data} from '@angular/router';

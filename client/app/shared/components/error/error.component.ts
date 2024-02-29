@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ErrorService} from './error.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
-
 import {MatIconModule} from '@angular/material/icon';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {NaturalIconDirective} from '@ecodev/natural';

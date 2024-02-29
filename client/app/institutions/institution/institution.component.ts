@@ -8,7 +8,6 @@ import {Institution} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {AddressComponent} from '../../shared/components/address/address.component';
-
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';

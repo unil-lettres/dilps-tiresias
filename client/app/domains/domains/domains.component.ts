@@ -13,7 +13,6 @@ import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
-
 import {
     NaturalSearchComponent,
     NaturalTableButtonComponent,

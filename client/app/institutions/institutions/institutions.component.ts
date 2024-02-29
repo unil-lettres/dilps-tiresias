@@ -9,7 +9,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-
 import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';

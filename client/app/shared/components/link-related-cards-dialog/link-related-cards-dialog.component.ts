@@ -1,5 +1,4 @@
 import {Component, Inject} from '@angular/core';
-
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';

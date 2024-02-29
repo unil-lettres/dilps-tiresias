@@ -6,7 +6,6 @@ import {Site} from './shared/generated-types';
 import {ThemeService} from './shared/services/theme.service';
 import {NaturalAbstractController} from '@ecodev/natural';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
-
 import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
 import {DomSanitizer} from '@angular/platform-browser';

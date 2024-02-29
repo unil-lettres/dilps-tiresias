@@ -10,7 +10,6 @@ import {SITE} from '../app.config';
 import {Site, Viewer} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
-
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';

@@ -2,7 +2,6 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Params, QueryParamsHandling, RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Collections} from '../../generated-types';
-
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({

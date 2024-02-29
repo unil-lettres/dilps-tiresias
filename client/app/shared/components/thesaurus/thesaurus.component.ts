@@ -28,7 +28,6 @@ import {MatOptionModule} from '@angular/material/core';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';

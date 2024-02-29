@@ -11,7 +11,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
-
 import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
