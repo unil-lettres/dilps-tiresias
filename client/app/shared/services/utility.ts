@@ -12,7 +12,7 @@ export function shuffleArray(a: any[]): any[] {
 export function getBase64Url(file: File | null): Promise<null | string> {
     return new Promise((resolve, reject) => {
         if (!file) {
-            reject(null);
+            reject(new Error('There is no file'));
             return;
         }
 

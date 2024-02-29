@@ -108,7 +108,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
 
         const hasCreator = !!this.data.item.creator;
-        const isCreator = hasCreator && this.user.id === this.data.item!.creator!.id;
+        const isCreator = hasCreator && this.user.id === this.data.item.creator!.id;
         const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
         if (isOwner) {

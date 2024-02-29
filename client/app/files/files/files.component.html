@@ -22,12 +22,12 @@
                 <td *matCellDef="let element" mat-cell>
                     @if (element.file?.permissions?.delete) {
                         <button mat-icon-button (click)="delete(element)" color="warn" matTooltip="Supprimer">
-                            <mat-icon color="warn" fontIcon="delete_forever"></mat-icon>
+                            <mat-icon color="warn" fontIcon="delete_forever" />
                         </button>
                     }
                     @if (element.input) {
                         <div>
-                            <mat-progress-spinner [diameter]="20" mode="indeterminate"></mat-progress-spinner>
+                            <mat-progress-spinner [diameter]="20" mode="indeterminate" />
                         </div>
                     }
                 </td>

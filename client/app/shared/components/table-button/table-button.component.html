@@ -4,7 +4,7 @@
 @if (!navigate && label && !disable) {
     <a mat-button>
         @if (icon) {
-            <mat-icon [naturalIcon]="icon"></mat-icon>
+            <mat-icon [naturalIcon]="icon" />
         }
         <span>{{ label }}</span>
     </a>
@@ -21,7 +21,7 @@
 @if (navigate && label) {
     <a [queryParams]="queryParams" [routerLink]="navigate" mat-button>
         @if (icon) {
-            <mat-icon [naturalIcon]="icon"></mat-icon>
+            <mat-icon [naturalIcon]="icon" />
         }
         <span>{{ label }}</span>
     </a>
@@ -31,7 +31,7 @@
 @if (navigate && !label) {
     <a [queryParamsHandling]="queryParamsHandling" [queryParams]="queryParams" [routerLink]="navigate" mat-icon-button>
         @if (icon) {
-            <mat-icon [naturalIcon]="icon"></mat-icon>
+            <mat-icon [naturalIcon]="icon" />
         }
     </a>
 }
@@ -40,7 +40,7 @@
 @if (href && label) {
     <a [attr.href]="href" mat-button>
         @if (icon) {
-            <mat-icon [naturalIcon]="icon"></mat-icon>
+            <mat-icon [naturalIcon]="icon" />
         }
         <span>{{ label }}</span>
     </a>
@@ -50,7 +50,7 @@
 @if (href && !label) {
     <a [attr.href]="href" mat-icon-button>
         @if (icon) {
-            <mat-icon [naturalIcon]="icon"></mat-icon>
+            <mat-icon [naturalIcon]="icon" />
         }
     </a>
 }

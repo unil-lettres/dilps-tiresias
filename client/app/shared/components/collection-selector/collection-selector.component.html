@@ -11,7 +11,7 @@
                 >
                     <ng-template let-item="item">
                         <div>{{ item.name }}</div>
-                        <app-collection-hierarchy [collection]="item"></app-collection-hierarchy>
+                        <app-collection-hierarchy [collection]="item" />
                     </ng-template>
                 </natural-select>
                 <div fxFlexAlign="end" fxLayout="row">
@@ -41,7 +41,7 @@
                         [filter]="listFilter"
                         [service]="collectionService"
                         placeholder="Collection parente"
-                    ></natural-select>
+                    />
                 }
 
                 <div fxFlexAlign="end" fxLayout="row">
@@ -59,14 +59,14 @@
         }
         @for (collection of image?.collections; track collection) {
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                <mat-icon naturalIcon="collections"></mat-icon>
+                <mat-icon naturalIcon="collections" />
                 <div fxFlex>{{ collection.name }}</div>
                 <button
                     (click)="unlink(image!, collection)"
                     mat-icon-button
                     matTooltip="Retirer la fiche de la collection"
                 >
-                    <mat-icon naturalIcon="remove"></mat-icon>
+                    <mat-icon naturalIcon="remove" />
                 </button>
             </div>
         }

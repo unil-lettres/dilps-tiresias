@@ -15,7 +15,7 @@
                     <app-address
                         [model]="data.item"
                         [readonly]="data.item.permissions && !data.item.permissions.update"
-                    ></app-address>
+                    />
                 }
             </div>
         </mat-tab>
@@ -31,5 +31,5 @@
         [canDelete]="data.item.canDelete"
         [item]="data.item"
         fxFlex
-    ></app-dialog-footer>
+    />
 </mat-dialog-actions>

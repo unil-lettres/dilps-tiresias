@@ -4,7 +4,13 @@
             @for (card of cards; track card) {
                 <div>
                     <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.name">
-                        <img ngSrc="card-{{ card.id }}.jpg" [loaderParams]="{card: card}" priority fill placeholder />
+                        <img
+                            [ngSrc]="'card-' + card.id + '.jpg'"
+                            [loaderParams]="{card: card}"
+                            priority
+                            fill
+                            placeholder
+                        />
                     </a>
                 </div>
             }
@@ -17,7 +23,7 @@
             [disabled]="scrollBarAtLeft"
             [hidden]="!hasScrollbar"
         >
-            <mat-icon naturalIcon="navigate_before"></mat-icon>
+            <mat-icon naturalIcon="navigate_before" />
         </button>
         <button
             class="right"
@@ -27,17 +33,17 @@
             [disabled]="scrollBarAtRight"
             [hidden]="!hasScrollbar"
         >
-            <mat-icon naturalIcon="navigate_next"></mat-icon>
+            <mat-icon naturalIcon="navigate_next" />
         </button>
     </div>
     <button
         class="btn-reduce"
         [class.reduced]="isReduced"
         mat-mini-fab
-        matTooltip="{{ isReduced ? 'Ouvrir' : 'Fermer' }} les images associées"
+        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + 'les images associées'"
         matTooltipPosition="left"
         (click)="reduced.emit(!isReduced)"
     >
-        <mat-icon naturalIcon="expand_more"></mat-icon>
+        <mat-icon naturalIcon="expand_more" />
     </button>
 </div>

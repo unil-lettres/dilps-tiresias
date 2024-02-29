@@ -79,7 +79,7 @@ export class TypeLocationComponent implements DropdownComponent {
             distance: null!,
         };
 
-        if (condition && condition.distance) {
+        if (condition?.distance) {
             value.longitude = condition.distance.longitude;
             value.latitude = condition.distance.latitude;
             value.distance = condition.distance.distance;

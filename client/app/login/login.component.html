@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="center center">
     <div class="login" fxLayout="column">
         <div fxLayout="column" fxLayoutGap="15px">
-            <app-logo [data]="{type: 'main', class: 'logo-main'}"></app-logo>
+            <app-logo [data]="{type: 'main', class: 'logo-main'}" />
 
-            <mat-divider></mat-divider>
+            <mat-divider />
 
             <div class="login-info" fxLayout="column" fxLayoutGap="15px">
                 Veuillez choisir une méthode d'authentification ou
@@ -15,9 +15,14 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
-                        href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{
-                            encodeUrl(returnUrl)
-                        }}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth"
+                        [href]="
+                            baseUrl +
+                            '/Shibboleth.sso/Login?target=' +
+                            encodeUrl(baseUrl) +
+                            '%2Fauth?returnUrl=' +
+                            encodeUrl(returnUrl) +
+                            '&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth'
+                        "
                         class="shib-link"
                     >
                         <img src="assets/images/logo-unil.svg" width="130" />
@@ -26,9 +31,14 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
-                        href="{{ baseUrl }}/Shibboleth.sso/Login?target={{ encodeUrl(baseUrl) }}%2Fauth?returnUrl={{
-                            encodeUrl(returnUrl)
-                        }}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth"
+                        [href]="
+                            baseUrl +
+                            '/Shibboleth.sso/Login?target=' +
+                            encodeUrl(baseUrl) +
+                            '%2Fauth?returnUrl=' +
+                            encodeUrl(returnUrl) +
+                            '&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth'
+                        "
                         class="shib-link"
                     >
                         <img src="assets/images/logo-unine.svg" width="90" />
@@ -36,7 +46,7 @@
                 </mat-grid-tile>
             </mat-grid-list>
 
-            <mat-divider></mat-divider>
+            <mat-divider />
 
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -90,12 +100,12 @@
 
             @if (site === Site.tiresias) {
                 <div fxLayout="column" fxLayoutGap="15px">
-                    <mat-divider></mat-divider>
+                    <mat-divider />
                     <a (click)="userService.startTempAccess()" mat-raised-button> Accès public </a>
                 </div>
             }
         </div>
     </div>
 
-    <app-carousel></app-carousel>
+    <app-carousel />
 </div>

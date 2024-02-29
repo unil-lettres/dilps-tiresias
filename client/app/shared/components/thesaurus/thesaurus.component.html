@@ -5,11 +5,7 @@
             <mat-chip-row (removed)="removeTerm(item)" [removable]="!readonly">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
                     @if (previewComponent) {
-                        <mat-icon
-                            (click)="openItem(item)"
-                            class="mat-mdc-chip-remove"
-                            fontIcon="remove_red_eye"
-                        ></mat-icon>
+                        <mat-icon (click)="openItem(item)" class="mat-mdc-chip-remove" fontIcon="remove_red_eye" />
                     }
                     <div fxFlex class="thesaurus-chip-label">
                         <span>{{ getLabel(item) }}</span>

@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 </mat-toolbar>
 
 @if (dataSource) {
@@ -50,7 +50,7 @@
         }
         @if (!dataSource.data) {
             <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
+                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
             </div>
         }
         @if (dataSource.data?.length) {
@@ -60,7 +60,7 @@
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
-            ></mat-paginator>
+            />
         }
     </div>
 }

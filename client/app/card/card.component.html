@@ -10,7 +10,7 @@
                     fxLayoutAlign="start center"
                 >
                     @if (showLogo) {
-                        <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+                        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
                     @if (title) {
                         <div>{{ title }}</div>
@@ -32,7 +32,7 @@
                     @if (showTools) {
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button (click)="toggleEdit()" [matTooltip]="'Passer en mode édition'" mat-icon-button>
-                                <mat-icon naturalIcon="edit"></mat-icon>
+                                <mat-icon naturalIcon="edit" />
                             </button>
                         }
                         @if (edit && fetchedModel?.permissions?.update) {
@@ -43,7 +43,7 @@
                                 matTooltip="Enregistrer"
                                 [disabled]="!formIsValid"
                             >
-                                <mat-icon naturalIcon="save"></mat-icon>
+                                <mat-icon naturalIcon="save" />
                             </button>
                         }
                         @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
@@ -53,17 +53,17 @@
                                 mat-icon-button
                                 matTooltip="Soumettre"
                             >
-                                <mat-icon naturalIcon="add_alert"></mat-icon>
+                                <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
                             <button (click)="suggestCreation()" color="primary" mat-icon-button matTooltip="Soumettre">
-                                <mat-icon naturalIcon="add_alert"></mat-icon>
+                                <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
                             <button (click)="create()" mat-icon-button matTooltip="Créer">
-                                <mat-icon naturalIcon="add"></mat-icon>
+                                <mat-icon naturalIcon="add" />
                             </button>
                         }
                         @if (edit) {
@@ -72,7 +72,7 @@
                                 mat-icon-button
                                 matTooltip="Importer les données d'une autre fiche"
                             >
-                                <mat-icon naturalIcon="content_copy"></mat-icon>
+                                <mat-icon naturalIcon="content_copy" />
                             </button>
                         }
                         @if (fetchedModel) {
@@ -80,7 +80,7 @@
                                 matTooltip="Exporter"
                                 [selectedCards]="[fetchedModel]"
                                 [showExcelExportation]="!this.isDilps"
-                            ></app-export-menu>
+                            />
                         }
                         @if (fetchedModel && user) {
                             <button
@@ -88,12 +88,12 @@
                                 mat-icon-button
                                 matTooltip="Ajouter ou retirer d'une collection"
                             >
-                                <mat-icon naturalIcon="library_add"></mat-icon>
+                                <mat-icon naturalIcon="library_add" />
                             </button>
                         }
                         @if (fetchedModel?.permissions?.delete) {
                             <button (click)="confirmDelete()" color="warn" mat-icon-button matTooltip="Supprimer">
-                                <mat-icon naturalIcon="delete_forever"></mat-icon>
+                                <mat-icon naturalIcon="delete_forever" />
                             </button>
                         }
                     }
@@ -144,7 +144,7 @@
                                     (click)="codeModel = code; useSuggestedCode($event)"
                                     [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
                                 >
-                                    <mat-icon naturalIcon="refresh"></mat-icon>
+                                    <mat-icon naturalIcon="refresh" />
                                 </button>
                             }
                             @if (code.invalid && (code?.dirty || code?.touched) && !code.errors?.maxlength) {
@@ -173,7 +173,7 @@
                                             : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
                                     "
                                     matTooltipPosition="after"
-                                ></quill-editor>
+                                />
                             }
                             @if (edit && (model.name | stripTags)?.length > 187) {
                                 <mat-hint [ngClass]="{strong: (model.name | stripTags)?.length >= 191}">
@@ -193,7 +193,7 @@
                             [readonly]="!edit"
                             [service]="domainService"
                             placeholder="Domaines"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (edit || (!!model.expandedName && model.expandedName !== model.name)) {
                         <div [ngClass]="{filled: !!model.expandedName, 'rich-text': true}" tabindex="-1">
@@ -211,7 +211,7 @@
                                             : 'Inclure d’éventuelles informations qui complètent le titre (exemple: le titre dans la langue originale)'
                                     "
                                     matTooltipPosition="after"
-                                ></quill-editor>
+                                />
                             }
                         </div>
                     }
@@ -225,7 +225,7 @@
                                     [disabled]="!edit"
                                     bounds="self"
                                     [modules]="multiLines"
-                                ></quill-editor>
+                                />
                             }
                         </div>
                     }
@@ -243,7 +243,7 @@
                             [readonly]="!edit"
                             [service]="artistService"
                             placeholder="Artistes"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (isDilps && (edit || !!model.techniqueAuthor)) {
                         <mat-form-field>
@@ -389,7 +389,7 @@
                             [readonly]="!edit"
                             [service]="materialService"
                             placeholder="Matériaux"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (!isDilps && (edit || !!model.productionPlace)) {
                         <mat-form-field>
@@ -413,7 +413,7 @@
                             [readonly]="!edit"
                             [service]="tagService"
                             placeholder="Mots clés"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (isDilps && (edit || !!institution)) {
                         <div class="mat-headline-6">Lieu</div>
@@ -434,7 +434,7 @@
                             [service]="institutionService"
                             [sortAutocompleteByUsageCount]="true"
                             placeholder="Institution"
-                        ></app-thesaurus>
+                        />
                     }
                     <!-- Institution address -->
                     @if (isDilps && !(model.locality || edit)) {
@@ -444,18 +444,13 @@
                             [vertical]="true"
                             [onlyMap]="true"
                             [allowExpandableMap]="true"
-                        ></app-address>
+                        />
                     }
                     <!-- Card address, if given -->
                     @if ((model.locality || edit) && !isDilps) {
                         <div>
                             <div class="mat-headline-6">Lieux de découverte</div>
-                            <app-address
-                                [model]="model"
-                                [readonly]="!edit"
-                                [vertical]="true"
-                                [isDilps]="isDilps"
-                            ></app-address>
+                            <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps" />
                         </div>
                     }
                     @if ((model.locality || edit) && isDilps) {
@@ -478,7 +473,7 @@
                                     <mat-icon
                                         class="address-toggle-arrow"
                                         [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
-                                    ></mat-icon>
+                                    />
                                 </div>
                                 <div [style.display]="accordionItem.expanded ? '' : 'none'">
                                     <app-address
@@ -487,7 +482,7 @@
                                         [vertical]="true"
                                         [isDilps]="isDilps"
                                         [allowExpandableMap]="true"
-                                    ></app-address>
+                                    />
                                 </div>
                             </cdk-accordion-item>
                         </cdk-accordion>
@@ -502,7 +497,7 @@
                             [readonly]="!edit"
                             [service]="antiqueNameService"
                             placeholder="Nom antique"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)) {
                         <div class="mat-headline-6">Datation</div>
@@ -518,7 +513,7 @@
                             [readonly]="!edit"
                             [service]="periodService"
                             placeholder="Périodes"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (!isDilps) {
                         <div fxLayout="row" fxLayoutGap="10px" class="double-fields">
@@ -555,16 +550,11 @@
                             [service]="institutionService"
                             [sortAutocompleteByUsageCount]="true"
                             placeholder="Institution"
-                        ></app-thesaurus>
+                        />
                     }
                     <!-- Institution address -->
                     @if (!isDilps && !(model.locality || edit)) {
-                        <app-address
-                            [model]="institution"
-                            [readonly]="!edit"
-                            [vertical]="true"
-                            [onlyMap]="true"
-                        ></app-address>
+                        <app-address [model]="institution" [readonly]="!edit" [vertical]="true" [onlyMap]="true" />
                     }
                     @if (!isDilps && (edit || !!model.objectReference)) {
                         <mat-form-field>
@@ -598,7 +588,7 @@
                             [readonly]="!edit"
                             [service]="documentTypeService"
                             placeholder="Type"
-                        ></app-thesaurus>
+                        />
                     }
                     @if (!isDilps && (edit || !!model.documentSize)) {
                         <mat-form-field>
@@ -678,7 +668,7 @@
                                             : 'La source est le lien URL ou la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page correspondant à l\'image.'
                                     "
                                     matTooltipPosition="after"
-                                ></quill-editor>
+                                />
                             }
                         </div>
                     }
@@ -871,13 +861,13 @@
                                     [disabled]="!edit"
                                     bounds="self"
                                     [modules]="multiLines"
-                                ></quill-editor>
+                                />
                             }
                         </div>
                     }
                     @if (!isDilps && !edit && model.url) {
                         <div>
-                            <a href="{{ model.url }}" [innerHTML]="model.urlDescription || model.url"></a>
+                            <a [href]="model.url" [innerHTML]="model.urlDescription || model.url"></a>
                         </div>
                     }
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
@@ -913,14 +903,14 @@
                                             icon="image"
                                             [matTooltip]="displayWith(item)"
                                             [matTooltipShowDelay]="500"
-                                        ></natural-table-button>
+                                        />
                                         @if (edit) {
                                             <button
                                                 (click)="openCopyRelatedCardsDialog(item)"
                                                 mat-icon-button
                                                 matTooltip="Copier les associations"
                                             >
-                                                <mat-icon naturalIcon="add_link"></mat-icon>
+                                                <mat-icon naturalIcon="add_link" />
                                             </button>
                                         }
                                     </div>
@@ -936,7 +926,7 @@
                         </div>
                     }
                     @if (fetchedModel) {
-                        <app-files [card]="fetchedModel" [disabled]="!edit"></app-files>
+                        <app-files [card]="fetchedModel" [disabled]="!edit" />
                     }
                     @if (isDilps && collectionCopyrights) {
                         <div>
@@ -948,7 +938,7 @@
             </ng-scrollbar>
             @if (fetchedModel) {
                 <div class="padding">
-                    <app-stamp [item]="fetchedModel"></app-stamp>
+                    <app-stamp [item]="fetchedModel" />
                 </div>
             }
         </div>
@@ -969,7 +959,7 @@
                         matTooltip="Télécharger l'image"
                         matTooltipPosition="left"
                     >
-                        <mat-icon naturalIcon="file_download"></mat-icon>
+                        <mat-icon naturalIcon="file_download" />
                     </a>
                 }
                 @if (imageSrc && !imageData) {
@@ -984,7 +974,7 @@
                         [isReduced]="isRelatedCardsReduced"
                         (reduced)="isRelatedCardsReduced = $event"
                         (closed)="isRelatedCardsClosed = $event"
-                    ></app-related-cards>
+                    />
                 }
             </div>
         }

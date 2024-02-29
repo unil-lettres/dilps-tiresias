@@ -1,8 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-interface Hierarchic {
+type Hierarchic = {
     hasChildren: boolean;
-}
+};
 
 /**
  * Return only the items that are leaves of the tree

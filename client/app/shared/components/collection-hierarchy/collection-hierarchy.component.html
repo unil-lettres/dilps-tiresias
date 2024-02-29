@@ -9,7 +9,7 @@
             </span>
         }
         @if (tooltipContent) {
-            <span matTooltip="{{ tooltipContent }}"> > ... > </span>
+            <span [matTooltip]="tooltipContent"> > ... > </span>
         }
         <span>{{ immedateAncestor }}</span>
     </div>

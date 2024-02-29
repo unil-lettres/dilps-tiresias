@@ -20,10 +20,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {CommonModule} from '@angular/common';
 
-interface Tuple {
+type Tuple = {
     file?: FileMinimal;
     input?: FileInput;
-}
+};
 
 @Component({
     selector: 'app-files',
@@ -72,7 +72,7 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
     public set card(card: Card['card']) {
         this._card = card;
 
-        if (this._card && this._card.id) {
+        if (this._card?.id) {
             const filter: FilesVariables = {
                 filter: {groups: [{conditions: [{card: {equal: {value: this._card.id}}}]}]},
             };

@@ -1,11 +1,11 @@
 <div fxFlex fxLayout="row">
     <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
         <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
-            <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+            <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             <div fxFlex></div>
             @if (canCreate) {
                 <button (click)="add()" [matTooltip]="'Créer une collection'" mat-icon-button>
-                    <mat-icon naturalIcon="add"></mat-icon>
+                    <mat-icon naturalIcon="add" />
                 </button>
             }
         </mat-toolbar>
@@ -39,7 +39,7 @@
                 }
 
                 @if (showUnclassified) {
-                    <mat-divider></mat-divider>
+                    <mat-divider />
                 }
 
                 <ng-template #recursiveList let-collections let-padding="padding">
@@ -60,7 +60,7 @@
                             </span>
                             @if (collection.permissions.update || collection.permissions.delete) {
                                 <button matListItemMeta (click)="edit($event, collection)" mat-icon-button>
-                                    <mat-icon naturalIcon="edit"></mat-icon>
+                                    <mat-icon naturalIcon="edit" />
                                 </button>
                             }
                         </a>
@@ -69,14 +69,14 @@
                                 recursiveList;
                                 context: {$implicit: children.get(collection.id), padding: padding + 20}
                             "
-                        ></ng-container>
+                        />
                     }
                 </ng-template>
 
                 <mat-nav-list>
                     <ng-container
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
-                    ></ng-container>
+                    />
                     @if (hasMore) {
                         <a
                             (click)="more()"
@@ -85,7 +85,7 @@
                             mat-list-item
                             class="mat-mdc-list-item-interactive"
                         >
-                            <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down"></mat-icon>
+                            <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
                             <span>Afficher d'avantage</span>
                         </a>
                     }
@@ -94,5 +94,5 @@
         </ng-scrollbar>
     </div>
 
-    <router-outlet></router-outlet>
+    <router-outlet />
 </div>

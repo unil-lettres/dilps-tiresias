@@ -9,7 +9,7 @@
                     [pageSizeOptions]="[5, 10, 20, 50]"
                     [pageSize]="dataSource.data?.pageSize"
                     [showFirstLastButtons]="true"
-                ></mat-paginator>
+                />
             }
             @for (item of cards; track item) {
                 <div class="line">
@@ -171,7 +171,7 @@
                             (change)="$event ? selectionModel.toggle(item) : null"
                             (click)="$event.stopPropagation()"
                             [checked]="selectionModel.isSelected(item)"
-                        ></mat-checkbox>
+                        />
                     </div>
                 </div>
             }
@@ -183,7 +183,7 @@
                     [pageSizeOptions]="[5, 10, 20, 50]"
                     [pageSize]="dataSource.data?.pageSize"
                     [showFirstLastButtons]="true"
-                ></mat-paginator>
+                />
             }
         </div>
     }

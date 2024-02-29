@@ -60,7 +60,7 @@
                     [service]="countryService"
                     [showIcon]="false"
                     placeholder="Pays"
-                ></natural-select>
+                />
             }
         </div>
     </div>
@@ -85,7 +85,7 @@
                 <mat-icon
                     class="address-toggle-arrow"
                     [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
-                ></mat-icon>
+                />
             </div>
         }
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
@@ -126,7 +126,7 @@
                                         : null)!
                                 "
                                 [options]="{draggable: !readonly}"
-                            ></map-marker>
+                            />
                         </google-map>
                     </div>
                 }
@@ -171,5 +171,5 @@
         placeholder="Précision"
         [disabled]="readonly"
         nullLabel="Non spécifiée"
-    ></natural-select-enum>
+    />
 }

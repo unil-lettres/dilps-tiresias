@@ -33,10 +33,10 @@
                 pas. Vous pouvez cependant créer des suggestions pour ces fiches, les modifications seront alors
                 soumises pour validation par un administrateur.
             </p>
-            <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}"></ng-container>
+            <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}" />
             @if (data.unchangeable?.length) {
                 <h2 class="mat-h2">Ces fiches seront ignorées :</h2>
-                <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.unchangeable}"></ng-container>
+                <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.unchangeable}" />
             }
         </div>
     }
@@ -50,7 +50,7 @@
                 [showToolbar]="false"
                 [showCode]="false"
                 style="height: 500px"
-            ></app-card>
+            />
         </div>
     }
 </mat-dialog-content>

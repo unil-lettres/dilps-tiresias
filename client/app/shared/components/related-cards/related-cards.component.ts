@@ -57,10 +57,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public slideshow!: ElementRef;
 
     @Output()
-    public reduced = new EventEmitter<boolean>();
+    public readonly reduced = new EventEmitter<boolean>();
 
     @Output()
-    public closed = new EventEmitter<boolean>();
+    public readonly closed = new EventEmitter<boolean>();
 
     public readonly CardService = CardService;
 

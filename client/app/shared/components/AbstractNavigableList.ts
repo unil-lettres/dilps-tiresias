@@ -38,7 +38,7 @@ export class AbstractNavigableList<
     /**
      * If a search has been performed through natural-search component.
      */
-    public searched: boolean = false;
+    public searched = false;
 
     /**
      * Dialog to open detail view

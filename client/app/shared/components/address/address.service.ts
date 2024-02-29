@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {isUndefined, mapValues, trim} from 'lodash-es';
 
-export interface Address {
+export type Address = {
     street?: string;
     postcode?: string;
     locality?: string;
@@ -9,7 +9,7 @@ export interface Address {
     countryIso2?: string;
     latitude?: number;
     longitude?: number;
-}
+};
 
 type PlaceModel =
     | Pick<google.maps.places.PlaceResult, 'address_components' | 'geometry'>

@@ -70,7 +70,7 @@ bootstrapApplication(AppComponent, {
                 stretchTabs: false,
             } satisfies MatTabsConfig,
         },
-        {provide: SITE, useValue: (window as Literal)['APP_SITE']},
+        {provide: SITE, useValue: (window as Literal).APP_SITE},
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,

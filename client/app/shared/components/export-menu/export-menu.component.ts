@@ -32,7 +32,7 @@ export class ExportMenuComponent {
 
     public ExportFormat = ExportFormat;
 
-    public pptValidationMessage: string | null = null;
+    public pptValidationMessage = '';
 
     private menuClosed$ = new Subject<void>();
 
@@ -86,7 +86,7 @@ export class ExportMenuComponent {
             .validate(input)
             .pipe(takeUntil(this.menuClosed$))
             .subscribe(validationMessage => {
-                this.pptValidationMessage = validationMessage;
+                this.pptValidationMessage = validationMessage ?? '';
             });
     }
 

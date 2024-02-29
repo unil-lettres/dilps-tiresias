@@ -14,7 +14,7 @@ export class CollectionHierarchyComponent implements OnInit {
     @Input({required: true})
     public collection!: Collections['collections']['items'][0];
 
-    public parents: Array<string> = [];
+    public parents: string[] = [];
 
     public ngOnInit(): void {
         this.parents = this.collection.hierarchicName.split('>').map(parent => parent.trim());

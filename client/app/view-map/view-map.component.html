@@ -6,8 +6,7 @@
                 [icon]="marker.icon"
                 [position]="{lat: marker.latitude, lng: marker.longitude}"
                 (mapClick)="openInfoWindow(mapMarker, marker)"
-            >
-            </map-marker>
+            />
         }
         <map-info-window [options]="infoWindowOption">
             <div>

@@ -9,6 +9,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     selector: 'app-table-button',
     templateUrl: './table-button.component.html',
     styleUrls: ['./table-button.component.scss'],
+    // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],

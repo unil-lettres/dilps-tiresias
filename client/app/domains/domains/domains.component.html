@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
         (selectionChange)="search($event)"
@@ -18,7 +18,7 @@
             <div fxLayout="row wrap">
                 @for (item of breadcrumbs; track item) {
                     <a [routerLink]="getChildLink(item)" class="no-padding" mat-button>
-                        <mat-icon naturalIcon="chevron_right"></mat-icon>
+                        <mat-icon naturalIcon="chevron_right" />
                         <span>{{ item.name }}</span>
                     </a>
                 }
@@ -36,7 +36,7 @@
                                 [navigate]="getChildLink(element.item)"
                                 icon="chevron_right"
                                 matTooltip="Déployer"
-                            ></natural-table-button>
+                            />
                         }
                     </td>
                 </ng-container>
@@ -50,9 +50,9 @@
                                 [label]="element.item.name"
                                 icon="edit"
                                 matTooltip="Éditer"
-                            ></app-table-button>
+                            />
                             @if (searched) {
-                                <app-collection-hierarchy [collection]="element.item"></app-collection-hierarchy>
+                                <app-collection-hierarchy [collection]="element.item" />
                             }
                         </div>
                     </td>
@@ -70,7 +70,7 @@
         }
         @if (!dataSource.data) {
             <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
+                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
             </div>
         }
         @if (dataSource.data?.length) {
@@ -80,9 +80,9 @@
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
-            ></mat-paginator>
+            />
         }
     </div>
 }
 
-<natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>
+<natural-fixed-button (click)="add()" icon="add" />

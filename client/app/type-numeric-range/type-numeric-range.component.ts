@@ -24,11 +24,11 @@ import {
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-export interface TypeNumericRangeConfiguration {
+export type TypeNumericRangeConfiguration = {
     min?: number | null;
     max?: number | null;
     step?: number | null;
-}
+};
 
 class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {

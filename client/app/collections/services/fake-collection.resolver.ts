@@ -1,9 +1,9 @@
 import {ActivatedRouteSnapshot} from '@angular/router';
 
-export interface FakeCollection {
+export type FakeCollection = {
     id: string;
     __typename: 'Collection';
-}
+};
 
 /**
  * Converts ID into fake collection

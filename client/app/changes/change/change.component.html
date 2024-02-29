@@ -1,6 +1,6 @@
 <div class="containerWithToolbar" fxFlex fxLayout="column">
     <mat-toolbar class="main-toolbar" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-        <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
         <div fxFlex></div>
 
         @if (user?.role === 'administrator') {
@@ -11,7 +11,7 @@
                     class="icon-button-circle-primary"
                     matTooltip="Accepter suggestion"
                 >
-                    <mat-icon naturalIcon="check"></mat-icon>
+                    <mat-icon naturalIcon="check" />
                 </button>
             }
             @if (change) {
@@ -21,7 +21,7 @@
                     class="icon-button-circle-warn"
                     matTooltip="Refuser la suggestion"
                 >
-                    <mat-icon naturalIcon="close"></mat-icon>
+                    <mat-icon naturalIcon="close" />
                 </button>
             }
         }
@@ -33,7 +33,7 @@
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre la suggestion à validation"
             >
-                <mat-icon naturalIcon="save"></mat-icon>
+                <mat-icon naturalIcon="save" />
             </button>
         }
         @if (!change && !original) {
@@ -43,7 +43,7 @@
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre l'ajout de cette fiche à validation"
             >
-                <mat-icon naturalIcon="add"></mat-icon>
+                <mat-icon naturalIcon="add" />
             </button>
         }
     </mat-toolbar>
@@ -58,7 +58,7 @@
             }
             @if (original) {
                 <div class="card-original" fxFlex fxLayout="column">
-                    <app-card [fetchedModel]="original" fxFlex title="Original"></app-card>
+                    <app-card [fetchedModel]="original" fxFlex title="Original" />
                 </div>
             }
             <!-- Suggestion -->
@@ -78,7 +78,7 @@
                         [showCode]="false"
                         fxFlex
                         title="Suggestion"
-                    ></app-card>
+                    />
                 </div>
             }
         </div>

@@ -86,7 +86,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public icon: google.maps.Symbol | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
-        mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
+        mapTypeId: this.site === Site.dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
         gestureHandling: 'cooperative',
@@ -267,13 +267,20 @@ export class AddressComponent implements OnInit, OnChanges {
         @Inject(SITE) private readonly site: Site,
     ) {}
 
+    public ngOnChanges(): void {
+        if (this.model) {
+            this.latitude = +this.model.latitude!;
+            this.longitude = +this.model.longitude!;
+        }
+    }
+
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
         qvm.set('pagination', {pagination: {pageSize: 9999}});
 
-        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries!.items));
+        this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
 
-        if (this.model && this.model.latitude && this.model.longitude) {
+        if (this.model?.latitude && this.model.longitude) {
             this.latitude = +this.model.latitude;
             this.longitude = +this.model.longitude;
             this.zoom = 12;
@@ -289,13 +296,6 @@ export class AddressComponent implements OnInit, OnChanges {
                 });
             });
         });
-    }
-
-    public ngOnChanges(): void {
-        if (this.model) {
-            this.latitude = +this.model.latitude!;
-            this.longitude = +this.model.longitude!;
-        }
     }
 
     public updateSearch(): void {

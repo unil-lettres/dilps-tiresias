@@ -5,35 +5,35 @@ import {CommonModule} from '@angular/common';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
-interface Row {
+type Row = {
     name: string;
     value: number;
-}
+};
 
-interface Table {
+type Table = {
     name: string;
     rows: Row[];
-}
+};
 
-interface SimpleChart {
+type SimpleChart = {
     name: string;
     series: any[];
     categories: string[];
-}
+};
 
-export interface StatisticInput {
+export type StatisticInput = {
     tables: Table[];
     chart: SimpleChart;
-}
+};
 
 type RowPercent = {
     percent: number;
 } & Row;
 
-interface TableSource {
+type TableSource = {
     name: string;
     dataSource: MatTableDataSource<RowPercent>;
-}
+};
 
 function percent(count: number, total: number): number {
     if (total === 0) {

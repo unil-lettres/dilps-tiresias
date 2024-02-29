@@ -23,10 +23,10 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Observable} from 'rxjs';
 
-export interface ContentChange {
+export type ContentChange = {
     visible?: number;
     total?: number;
-}
+};
 
 type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
 

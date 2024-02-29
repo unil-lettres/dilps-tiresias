@@ -1,11 +1,11 @@
 <button
     [matMenuTriggerFor]="menu"
     mat-icon-button
-    matTooltip="{{ tooltip }}"
+    [matTooltip]="tooltip"
     (menuOpened)="menuOpened()"
     (menuClosed)="menuClosed()"
 >
-    <mat-icon naturalIcon="share_windows"></mat-icon>
+    <mat-icon naturalIcon="share_windows" />
 </button>
 <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="export(ExportFormat.zip)">
@@ -18,7 +18,7 @@
         mat-menu-item
         (click)="export(ExportFormat.pptx)"
         [disabled]="!!pptValidationMessage"
-        matTooltip="{{ pptValidationMessage }}"
+        [matTooltip]="pptValidationMessage"
     >
         Exporter en PowerPoint
     </button>

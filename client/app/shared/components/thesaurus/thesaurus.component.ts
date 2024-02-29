@@ -33,14 +33,14 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-export interface ThesaurusModel {
+export type ThesaurusModel = {
     name: string;
     locality?: string;
     hierarchicName?: string;
     __typename?: string;
     from?: number | null;
     to?: number | null;
-}
+};
 
 @Component({
     selector: 'app-thesaurus',
@@ -308,7 +308,7 @@ export class ThesaurusComponent<
             .afterClosed()
             .subscribe(result => {
                 this.lockOpenDialog = false;
-                if (result && result.hierarchicSelection) {
+                if (result?.hierarchicSelection) {
                     // Find the only selection amongst all possible keys
                     const keyWithSelection = Object.keys(result.hierarchicSelection).find(
                         key => result.hierarchicSelection?.[key][0],

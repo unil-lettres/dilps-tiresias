@@ -36,7 +36,7 @@
                                     routerLink="/"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="home" />
                                 </a>
                                 <!-- Mes collections privées -->
                                 <a
@@ -46,7 +46,7 @@
                                     routerLink="/my-collection"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="collections_bookmark"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="collections_bookmark" />
                                 </a>
                                 <!-- Collections publiques -->
                                 <a
@@ -56,7 +56,7 @@
                                     routerLink="/collection"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="collections"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="collections" />
                                 </a>
                                 <!-- Fonds -->
                                 <a
@@ -66,7 +66,7 @@
                                     routerLink="/source"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="folder_special"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="folder_special" />
                                 </a>
                                 <!-- Notifications -->
                                 <a
@@ -76,7 +76,7 @@
                                     routerLink="/notification"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="notifications"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="notifications" />
                                 </a>
                                 <!-- Add photos -->
                                 @if (
@@ -94,7 +94,7 @@
                                         [multiple]="true"
                                         naturalFileSelect
                                     >
-                                        <mat-icon matListItemIcon naturalIcon="file_upload"></mat-icon>
+                                        <mat-icon matListItemIcon naturalIcon="file_upload" />
                                     </a>
                                 }
                                 @if (progress !== null && progress > 0) {
@@ -104,7 +104,7 @@
                                             color="accent"
                                             [diameter]="24"
                                             [strokeWidth]="5"
-                                        ></mat-progress-spinner>
+                                        />
                                     </a>
                                 }
                                 <!-- Export template -->
@@ -121,14 +121,14 @@
                                             matTooltip="Télécharger le modèle pour import Excel"
                                             matTooltipPosition="after"
                                         >
-                                            <mat-icon matListItemIcon naturalIcon="file_download"></mat-icon>
+                                            <mat-icon matListItemIcon naturalIcon="file_download" />
                                         </a>
                                     }
                                 }
                             </mat-nav-list>
                             <!-- Thésaurus -->
                             @if (showThesaurusMenu()) {
-                                <mat-divider></mat-divider>
+                                <mat-divider />
                                 <mat-nav-list>
                                     <a
                                         mat-list-item
@@ -136,13 +136,13 @@
                                         matTooltipPosition="after"
                                         [matMenuTriggerFor]="thesaurusMenu"
                                     >
-                                        <mat-icon matListItemIcon naturalIcon="book"></mat-icon>
+                                        <mat-icon matListItemIcon naturalIcon="book" />
                                     </a>
                                 </mat-nav-list>
                             }
                             <!-- Administration -->
                             @if (user.role === 'administrator') {
-                                <mat-divider></mat-divider>
+                                <mat-divider />
                                 <mat-nav-list>
                                     <a
                                         mat-list-item
@@ -150,11 +150,11 @@
                                         matTooltipPosition="after"
                                         [matMenuTriggerFor]="adminMenu"
                                     >
-                                        <mat-icon matListItemIcon naturalIcon="build"></mat-icon>
+                                        <mat-icon matListItemIcon naturalIcon="build" />
                                     </a>
                                 </mat-nav-list>
                             }
-                            <mat-divider></mat-divider>
+                            <mat-divider />
                             <mat-nav-list fxFlex>
                                 <!-- Account -->
                                 <a
@@ -163,7 +163,7 @@
                                     matTooltip="Mon compte"
                                     matTooltipPosition="after"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
                                 </a>
                                 <!-- Logout -->
                                 <a
@@ -172,7 +172,7 @@
                                     matTooltip="Se déconnecter"
                                     matTooltipPosition="after"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="exit_to_app"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="exit_to_app" />
                                 </a>
                             </mat-nav-list>
                         }
@@ -185,7 +185,7 @@
                                     routerLink="/"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="home" />
                                 </a>
                                 <!-- Logout -->
                                 <a
@@ -194,12 +194,12 @@
                                     matTooltip="Se connecter"
                                     matTooltipPosition="after"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
                                 </a>
                                 <!-- Contact -->
                                 @if (site === Site.tiresias) {
                                     <a (click)="mailto()" mat-list-item matTooltip="Contact" matTooltipPosition="after">
-                                        <mat-icon matListItemIcon naturalIcon="announcement"></mat-icon>
+                                        <mat-icon matListItemIcon naturalIcon="announcement" />
                                         <span>Contact</span>
                                     </a>
                                 }
@@ -213,13 +213,13 @@
                                 class="icon-button-circle-warn"
                                 style="margin: 0 11px"
                             >
-                                <mat-icon naturalIcon="error"></mat-icon>
+                                <mat-icon naturalIcon="error" />
                             </a>
                         }
                         <mat-nav-list>
                             <!-- Theme -->
                             <a (click)="themeService.toggleNightMode()" mat-list-item>
-                                <mat-icon matListItemIcon naturalIcon="invert_colors"></mat-icon>
+                                <mat-icon matListItemIcon naturalIcon="invert_colors" />
                                 <span>Changer couleurs</span>
                             </a>
                         </mat-nav-list>
@@ -229,7 +229,7 @@
         }
 
         <div fxFlex fxLayout="row" id="appContent">
-            <router-outlet></router-outlet>
+            <router-outlet />
         </div>
     </mat-sidenav-container>
 </div>
@@ -252,7 +252,7 @@
         </div>
     }
     <button (click)="errors = []" mat-menu-item>
-        <mat-icon matMenuItemIcon naturalIcon="close"></mat-icon>
+        <mat-icon matMenuItemIcon naturalIcon="close" />
         Effacer et fermer
     </button>
 </mat-menu>

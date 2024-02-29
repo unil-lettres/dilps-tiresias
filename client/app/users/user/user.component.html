@@ -42,13 +42,13 @@
                     [service]="institutionService"
                     [sortAutocompleteByUsageCount]="true"
                     placeholder="Institution"
-                ></app-thesaurus>
+                />
 
                 <mat-form-field>
                     <mat-label>Active jusqu'au</mat-label>
                     <input [(ngModel)]="data.item.activeUntil" [matDatepicker]="picker" matInput name="activeUntil" />
-                    <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle [for]="picker" matIconSuffix />
+                    <mat-datepicker #picker />
                 </mat-form-field>
 
                 @if (data.item.id) {
@@ -61,8 +61,8 @@
                             matInput
                             name="termsAgreement"
                         />
-                        <mat-datepicker-toggle [for]="picker2" matIconSuffix></mat-datepicker-toggle>
-                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-datepicker-toggle [for]="picker2" matIconSuffix />
+                        <mat-datepicker #picker2 />
                     </mat-form-field>
                 }
 
@@ -85,7 +85,7 @@
                             disabled
                             matInput
                             name="type"
-                            value="{{ data.item.type | type }}"
+                            [value]="data.item.type | type"
                         />
                     </mat-form-field>
                 }
@@ -101,7 +101,7 @@
                     [service]="collectionService"
                     class="margin"
                     placeholder="Ajouter une collection"
-                ></natural-relations>
+                />
             </mat-tab>
         }
     </mat-tab-group>
@@ -117,5 +117,5 @@
         [formCtrl]="passwordConfirmationCtrl"
         [item]="data.item"
         fxFlex
-    ></app-dialog-footer>
+    />
 </mat-dialog-actions>

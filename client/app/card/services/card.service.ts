@@ -40,13 +40,13 @@ import {
 import {Observable, of} from 'rxjs';
 import {Literal, mergeOverrideArray, NaturalDebounceService, WithId} from '@ecodev/natural';
 
-interface CardWithImage {
+type CardWithImage = {
     id?: string;
     hasImage?: boolean;
     height?: number;
     width?: number;
     updateDate?: string | null;
-}
+};
 
 @Injectable({
     providedIn: 'root',
@@ -84,7 +84,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     public static getImageLink(card: CardWithImage | null, height: number | null): null | string {
-        if (!card || !card.id || !card.hasImage) {
+        if (!card?.id || !card.hasImage) {
             return null;
         }
 
