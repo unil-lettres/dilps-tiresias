@@ -17,6 +17,7 @@
         <div class="responsive-table" [fxShow]="showTable()">
             <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
                 <!-- Login Column -->
+
                 <ng-container matColumnDef="login">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Login</th>
                     <td *matCellDef="let element" mat-cell>
@@ -29,26 +30,31 @@
                     </td>
                 </ng-container>
                 <!-- Name Column -->
+
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
                 </ng-container>
                 <!-- Email Column -->
+
                 <ng-container matColumnDef="email">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
                     <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
                 </ng-container>
                 <!-- Role Column -->
+
                 <ng-container matColumnDef="role">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
                     <td *matCellDef="let element" mat-cell>{{ element.role | enum: 'UserRole' | async }}</td>
                 </ng-container>
                 <!-- Type Column -->
+
                 <ng-container matColumnDef="type">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
                     <td *matCellDef="let element" mat-cell>{{ element.type | type }}</td>
                 </ng-container>
                 <!-- activeUntil Column -->
+
                 <ng-container matColumnDef="activeUntil">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Validité</th>
                     <td *matCellDef="let element" mat-cell>{{ element.activeUntil | date: 'dd.MM.yyyy' }}</td>

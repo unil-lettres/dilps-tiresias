@@ -19,6 +19,7 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
                 <!-- Name Column -->
+
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element" mat-cell>
@@ -30,6 +31,7 @@
                         />
                     </td>
                 </ng-container>
+
                 <ng-container matColumnDef="usageCount">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
                     <td *matCellDef="let element" mat-cell>{{ element.usageCount }}</td>

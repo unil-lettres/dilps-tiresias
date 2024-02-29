@@ -19,6 +19,7 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
                 <!-- Active Column -->
+
                 <ng-container matColumnDef="isActive">
                     <th *matHeaderCellDef mat-header-cell natural-3em-column>Actif</th>
                     <td *matCellDef="let element" mat-cell>
@@ -28,6 +29,7 @@
                     </td>
                 </ng-container>
                 <!-- Image Column -->
+
                 <ng-container matColumnDef="image">
                     <th *matHeaderCellDef mat-header-cell natural-3em-column>Image</th>
                     <td *matCellDef="let element" mat-cell>
@@ -35,6 +37,7 @@
                     </td>
                 </ng-container>
                 <!-- Name Column -->
+
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element" mat-cell>
@@ -47,6 +50,7 @@
                     </td>
                 </ng-container>
                 <!-- Link Column -->
+
                 <ng-container matColumnDef="url">
                     <th *matHeaderCellDef mat-header-cell>Lien</th>
                     <td *matCellDef="let element" mat-cell>{{ element.url }}</td>

@@ -14,14 +14,17 @@
                 <table mat-table [dataSource]="table.dataSource">
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
                     <ng-container matColumnDef="name">
                         <th *matHeaderCellDef mat-header-cell>{{ table.name }}</th>
                         <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
                     </ng-container>
+
                     <ng-container matColumnDef="absolute">
                         <th *matHeaderCellDef mat-header-cell></th>
                         <td *matCellDef="let element" mat-cell style="text-align: right">{{ element.value }}</td>
                     </ng-container>
+
                     <ng-container matColumnDef="percent">
                         <th *matHeaderCellDef mat-header-cell></th>
                         <td *matCellDef="let element" mat-cell style="text-align: right">

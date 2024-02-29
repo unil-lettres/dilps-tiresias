@@ -28,6 +28,7 @@
             <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+
                 <ng-container matColumnDef="navigation">
                     <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
                     <td *matCellDef="let element" mat-cell>
@@ -41,6 +42,7 @@
                     </td>
                 </ng-container>
                 <!-- Name Column -->
+
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element" mat-cell>
@@ -57,6 +59,7 @@
                         </div>
                     </td>
                 </ng-container>
+
                 <ng-container matColumnDef="usageCount">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
                     <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
