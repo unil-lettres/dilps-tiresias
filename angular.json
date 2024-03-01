@@ -19,7 +19,10 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
                     "options": {
-                        "outputPath": "htdocs",
+                        "outputPath": {
+                            "base": "htdocs",
+                            "browser": ""
+                        },
                         "preserveSymlinks": true,
                         "index": "client/index.html",
                         "browser": "client/main.ts",
