@@ -36,7 +36,7 @@
         "@bugsnag/core": "^7.19.0",
         "@bugsnag/js": "^7.22.4",
         "@bugsnag/plugin-angular": "^7.22.4",
-        "@ecodev/angular-natural-gallery": "^19.0.0",
+        "@ecodev/angular-natural-gallery": "^20.0.0",
         "@ecodev/natural": "^56.0.1",
         "@graphql-codegen/cli": "^5.0.2",
         "@graphql-codegen/typescript-apollo-angular": "^4.0.0",

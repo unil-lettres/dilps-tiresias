@@ -26,7 +26,7 @@
     @include scroll.scroll($theme);
     @include home.home($theme);
     @include toolbar.toolbar($theme);
-    @include angular-natural-gallery.gallery-theme($theme);
+    @include angular-natural-gallery.natural-gallery-theme($theme);
     @include collections.collections($theme);
     @include alert.alert($theme);
     @include address.address($theme);
