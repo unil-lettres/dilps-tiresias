@@ -11,7 +11,7 @@ register();
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
-    styleUrls: ['./carousel.component.scss'],
+    styleUrl: './carousel.component.scss',
     // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None,
     standalone: true,

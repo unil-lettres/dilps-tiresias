@@ -18,7 +18,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
 @Component({
     selector: 'app-change',
     templateUrl: './change.component.html',
-    styleUrls: ['./change.component.scss'],
+    styleUrl: './change.component.scss',
     standalone: true,
     imports: [
         FlexModule,

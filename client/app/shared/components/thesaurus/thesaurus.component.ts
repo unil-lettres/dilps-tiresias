@@ -44,7 +44,7 @@ export type ThesaurusModel = {
 @Component({
     selector: 'app-thesaurus',
     templateUrl: './thesaurus.component.html',
-    styleUrls: ['./thesaurus.component.scss'],
+    styleUrl: './thesaurus.component.scss',
     standalone: true,
     imports: [
         MatFormFieldModule,

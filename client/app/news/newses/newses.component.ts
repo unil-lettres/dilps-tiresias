@@ -19,7 +19,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
     selector: 'app-newses',
     templateUrl: './newses.component.html',
-    styleUrls: ['./newses.component.scss'],
+    styleUrl: './newses.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,

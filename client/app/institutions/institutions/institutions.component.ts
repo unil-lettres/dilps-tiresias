@@ -17,7 +17,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
     selector: 'app-institutions',
     templateUrl: './institutions.component.html',
-    styleUrls: ['./institutions.component.scss'],
+    styleUrl: './institutions.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,

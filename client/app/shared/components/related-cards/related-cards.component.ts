@@ -26,7 +26,7 @@ import {Observable} from 'rxjs';
 @Component({
     selector: 'app-related-cards',
     templateUrl: './related-cards.component.html',
-    styleUrls: ['./related-cards.component.scss'],
+    styleUrl: './related-cards.component.scss',
     standalone: true,
     providers: [
         {

@@ -15,7 +15,7 @@ import {FakeCollection} from 'client/app/collections/services/fake-collection.re
 @Component({
     selector: 'app-export-menu',
     templateUrl: './export-menu.component.html',
-    styleUrls: ['./export-menu.component.scss'],
+    styleUrl: './export-menu.component.scss',
     standalone: true,
     imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
 })

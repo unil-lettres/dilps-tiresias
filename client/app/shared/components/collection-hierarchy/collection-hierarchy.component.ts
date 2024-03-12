@@ -5,7 +5,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 @Component({
     selector: 'app-collection-hierarchy',
     templateUrl: './collection-hierarchy.component.html',
-    styleUrls: ['./collection-hierarchy.component.scss'],
+    styleUrl: './collection-hierarchy.component.scss',
     standalone: true,
     imports: [MatTooltipModule],
 })

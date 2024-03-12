@@ -20,7 +20,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-quizz',
     templateUrl: './quizz.component.html',
-    styleUrls: ['./quizz.component.scss'],
+    styleUrl: './quizz.component.scss',
     standalone: true,
     imports: [
         FlexModule,

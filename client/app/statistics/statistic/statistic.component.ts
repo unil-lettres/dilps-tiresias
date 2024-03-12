@@ -46,7 +46,7 @@ function percent(count: number, total: number): number {
 @Component({
     selector: 'app-statistic',
     templateUrl: './statistic.component.html',
-    styleUrls: ['./statistic.component.scss'],
+    styleUrl: './statistic.component.scss',
     standalone: true,
     imports: [FlexModule, HighchartsChartModule, CommonModule, MatTableModule, CommonModule],
 })

@@ -19,7 +19,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
-    styleUrls: ['./news.component.scss'],
+    styleUrl: './news.component.scss',
     standalone: true,
     imports: [
         MatDialogModule,

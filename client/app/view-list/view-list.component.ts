@@ -17,7 +17,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-view-list',
     templateUrl: './view-list.component.html',
-    styleUrls: ['./view-list.component.scss'],
+    styleUrl: './view-list.component.scss',
     standalone: true,
     imports: [
         CommonModule,

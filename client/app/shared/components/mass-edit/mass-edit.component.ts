@@ -14,7 +14,7 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 @Component({
     selector: 'app-mass-edit',
     templateUrl: './mass-edit.component.html',
-    styleUrls: ['./mass-edit.component.scss'],
+    styleUrl: './mass-edit.component.scss',
     standalone: true,
     imports: [
         FlexModule,

@@ -9,7 +9,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 @Component({
     selector: 'app-number-selector',
     templateUrl: './number-selector.component.html',
-    styleUrls: ['./number-selector.component.scss'],
+    styleUrl: './number-selector.component.scss',
     standalone: true,
     imports: [MatDialogModule, FlexModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
 })

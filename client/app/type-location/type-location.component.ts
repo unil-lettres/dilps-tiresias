@@ -15,7 +15,7 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     templateUrl: './type-location.component.html',
-    styleUrls: ['./type-location.component.scss'],
+    styleUrl: './type-location.component.scss',
     standalone: true,
     imports: [FormsModule, FlexModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })

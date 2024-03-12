@@ -25,7 +25,7 @@ type Marker = {
 @Component({
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
-    styleUrls: ['./view-map.component.scss'],
+    styleUrl: './view-map.component.scss',
     standalone: true,
     imports: [GoogleMapsModule, FlexModule, RouterLink, MatButtonModule],
 })

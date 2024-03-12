@@ -25,7 +25,7 @@ import {CommonModule} from '@angular/common';
 @Component({
     selector: 'app-address',
     templateUrl: './address.component.html',
-    styleUrls: ['./address.component.scss'],
+    styleUrl: './address.component.scss',
     providers: [AddressService, CountryService],
     standalone: true,
     imports: [

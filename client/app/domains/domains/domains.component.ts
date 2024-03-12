@@ -27,7 +27,7 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 @Component({
     selector: 'app-domains',
     templateUrl: './domains.component.html',
-    styleUrls: ['./domains.component.scss'],
+    styleUrl: './domains.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,

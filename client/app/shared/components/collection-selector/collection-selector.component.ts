@@ -42,7 +42,7 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
 @Component({
     selector: 'app-collection-selector',
     templateUrl: './collection-selector.component.html',
-    styleUrls: ['./collection-selector.component.scss'],
+    styleUrl: './collection-selector.component.scss',
     standalone: true,
     imports: [
         MatDialogModule,

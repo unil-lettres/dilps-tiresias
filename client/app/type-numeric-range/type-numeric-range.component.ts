@@ -61,7 +61,7 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
 
 @Component({
     templateUrl: './type-numeric-range.component.html',
-    styleUrls: ['./type-numeric-range.component.scss'],
+    styleUrl: './type-numeric-range.component.scss',
     standalone: true,
     imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })

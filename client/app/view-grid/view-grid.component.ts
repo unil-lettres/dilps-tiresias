@@ -33,7 +33,7 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
 @Component({
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
-    styleUrls: ['./view-grid.component.scss'],
+    styleUrl: './view-grid.component.scss',
     standalone: true,
     imports: [NaturalGalleryComponent, FlexModule],
 })

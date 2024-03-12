@@ -79,7 +79,7 @@ type SerieData = {
 @Component({
     selector: 'app-statistics',
     templateUrl: './statistics.component.html',
-    styleUrls: ['./statistic.component.scss'],
+    styleUrl: './statistic.component.scss',
     providers: [
         {
             // Remove "hint" section below mat-form-field if empty.

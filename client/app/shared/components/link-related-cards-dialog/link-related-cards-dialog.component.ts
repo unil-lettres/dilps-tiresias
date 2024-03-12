@@ -22,7 +22,7 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 @Component({
     selector: 'app-link-related-cards-dialog',
     templateUrl: './link-related-cards-dialog.component.html',
-    styleUrls: ['./link-related-cards-dialog.component.scss'],
+    styleUrl: './link-related-cards-dialog.component.scss',
     standalone: true,
     imports: [MatButtonModule, MatIconModule, NaturalIconDirective, MatDialogModule, MatCheckboxModule, FormsModule],
 })
