@@ -28,29 +28,27 @@ import {MatOptionModule} from '@angular/material/core';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {CommonModule} from '@angular/common';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-export interface ThesaurusModel {
+export type ThesaurusModel = {
     name: string;
     locality?: string;
     hierarchicName?: string;
     __typename?: string;
     from?: number | null;
     to?: number | null;
-}
+};
 
 @Component({
     selector: 'app-thesaurus',
     templateUrl: './thesaurus.component.html',
-    styleUrls: ['./thesaurus.component.scss'],
+    styleUrl: './thesaurus.component.scss',
     standalone: true,
     imports: [
         MatFormFieldModule,
         MatChipsModule,
-        CommonModule,
         FlexModule,
         MatIconModule,
         FormsModule,
@@ -307,7 +305,7 @@ export class ThesaurusComponent<
             .afterClosed()
             .subscribe(result => {
                 this.lockOpenDialog = false;
-                if (result && result.hierarchicSelection) {
+                if (result?.hierarchicSelection) {
                     // Find the only selection amongst all possible keys
                     const keyWithSelection = Object.keys(result.hierarchicSelection).find(
                         key => result.hierarchicSelection?.[key][0],

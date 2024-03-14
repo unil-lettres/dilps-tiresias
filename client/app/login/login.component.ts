@@ -10,7 +10,6 @@ import {SITE} from '../app.config';
 import {Site, Viewer} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
-import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
@@ -24,7 +23,7 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    styleUrl: './login.component.scss',
     standalone: true,
     imports: [
         FlexModule,
@@ -36,7 +35,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
-        CommonModule,
         CarouselComponent,
     ],
 })

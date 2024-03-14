@@ -11,13 +11,9 @@
     >
         Titre
     </div>
-    <div
-        (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])"
-        mat-menu-item
-        *ngIf="site === Site.dilps"
-    >
-        Artistes
-    </div>
+    @if (site === Site.dilps) {
+        <div (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])" mat-menu-item>Artistes</div>
+    }
     <div
         (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
@@ -58,207 +54,194 @@
     >
         Domaine
     </div>
-    <div
-        *ngIf="site === Site.tiresias"
-        (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])"
-        mat-menu-item
-    >
-        Type de document
-    </div>
+    @if (site === Site.tiresias) {
+        <div (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])" mat-menu-item>
+            Type de document
+        </div>
+    }
     <div (click)="sorting([{active: CardSortingField.code, direction: 'asc', nullAsHighest: true}])" mat-menu-item>
         Référence
     </div>
 </mat-menu>
 
-<div *ngIf="dataSource" class="containerWithToolbar" fxFlex fxLayout="column">
-    <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-        <app-logo *ngIf="showLogo" [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
-
-        <ng-container *ngIf="selected?.length">
+@if (dataSource) {
+    <div class="containerWithToolbar" fxFlex fxLayout="column">
+        <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            @if (showLogo) {
+                <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
+            }
+            @if (selected.length) {
+                @if (!!user) {
+                    <button
+                        (click)="linkSelectionToCollection(selected)"
+                        mat-icon-button
+                        matTooltip="Ajouter ou retirer d'une collection"
+                    >
+                        <mat-icon naturalIcon="library_add" />
+                    </button>
+                }
+                @if (collection?.id) {
+                    <button
+                        (click)="unlinkFromCollection(selected)"
+                        mat-icon-button
+                        matTooltip="Supprimer de la collection"
+                    >
+                        <mat-icon svgIcon="library_remove" />
+                    </button>
+                }
+                <app-export-menu
+                    matTooltip="Exporter"
+                    [selectedCards]="selected"
+                    [showExcelExportation]="this.site !== Site.dilps"
+                />
+                @if (canMassEdit()) {
+                    <button (click)="edit(selected)" mat-icon-button matTooltip="Editer en masse">
+                        <mat-icon naturalIcon="edit" />
+                    </button>
+                }
+                @if (user?.role === 'administrator') {
+                    <button
+                        (click)="delete(selected)"
+                        color="warn"
+                        mat-icon-button
+                        matTooltip="Supprimer la fiche définitivement"
+                    >
+                        <mat-icon naturalIcon="delete_forever" />
+                    </button>
+                }
+            }
+            @if (!selected.length && user) {
+                @if (collection?.id) {
+                    <button
+                        (click)="linkCollectionToCollection(collection!)"
+                        mat-icon-button
+                        matTooltip="Ajouter la collection à une autre collection"
+                    >
+                        <mat-icon naturalIcon="library_add" />
+                    </button>
+                }
+                @if (showDownloadCollection) {
+                    <app-export-menu [collection]="collection" [showExcelExportation]="this.site !== Site.dilps" />
+                }
+            }
+            <natural-search
+                (selectionChange)="search($event)"
+                [facets]="naturalSearchFacets"
+                [selections]="naturalSearchSelections"
+                dropdownTitle="Recherche approfondie"
+                class="searchField"
+                fxFlex
+                fxFlexAlign="start"
+            />
+            @if (viewMode !== ViewMode.grid) {
+                <button (click)="setViewMode(ViewMode.grid)" mat-icon-button matTooltip="Affichage Mosaïque">
+                    <mat-icon naturalIcon="view_compact" />
+                </button>
+            }
+            @if (viewMode !== ViewMode.list) {
+                <button (click)="setViewMode(ViewMode.list)" mat-icon-button matTooltip="Affichage Liste">
+                    <mat-icon naturalIcon="view_list" />
+                </button>
+            }
+            @if (site === Site.tiresias && selected.length && viewMode !== ViewMode.map) {
+                <button (click)="setViewMode(ViewMode.map)" mat-icon-button matTooltip="Affichage Carte">
+                    <mat-icon naturalIcon="map" />
+                </button>
+            }
             <button
-                (click)="linkSelectionToCollection(selected)"
-                *ngIf="!!user"
+                [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                 mat-icon-button
-                matTooltip="Ajouter ou retirer d'une collection"
+                matTooltip="Trier"
             >
-                <mat-icon naturalIcon="library_add"></mat-icon>
+                <mat-icon svgIcon="sort_asc" />
             </button>
-            <button
-                (click)="unlinkFromCollection(selected)"
-                *ngIf="collection?.id"
-                mat-icon-button
-                matTooltip="Supprimer de la collection"
-            >
-                <mat-icon svgIcon="library_remove"></mat-icon>
-            </button>
-
-            <app-export-menu
-                matTooltip="Exporter"
-                [selectedCards]="selected"
-                [showExcelExportation]="this.site !== Site.dilps"
-            ></app-export-menu>
-
-            <button (click)="edit(selected)" *ngIf="canMassEdit()" mat-icon-button matTooltip="Editer en masse">
-                <mat-icon naturalIcon="edit"></mat-icon>
-            </button>
-
-            <button
-                (click)="delete(selected)"
-                *ngIf="user?.role === 'administrator'"
-                color="warn"
-                mat-icon-button
-                matTooltip="Supprimer la fiche définitivement"
-            >
-                <mat-icon naturalIcon="delete_forever"></mat-icon>
-            </button>
-        </ng-container>
-
-        <ng-container *ngIf="!selected?.length && user">
-            <button
-                (click)="linkCollectionToCollection(collection!)"
-                *ngIf="collection?.id"
-                mat-icon-button
-                matTooltip="Ajouter la collection à une autre collection"
-            >
-                <mat-icon naturalIcon="library_add"></mat-icon>
-            </button>
-
-            <app-export-menu
-                *ngIf="showDownloadCollection"
-                [collection]="collection"
-                [showExcelExportation]="this.site !== Site.dilps"
-            ></app-export-menu>
-        </ng-container>
-
-        <natural-search
-            (selectionChange)="search($event)"
-            [facets]="naturalSearchFacets"
-            [selections]="naturalSearchSelections"
-            dropdownTitle="Recherche approfondie"
-            class="searchField"
-            fxFlex
-            fxFlexAlign="start"
-        />
-
-        <button
-            (click)="setViewMode(ViewMode.grid)"
-            *ngIf="viewMode !== ViewMode.grid"
-            mat-icon-button
-            matTooltip="Affichage Mosaïque"
-        >
-            <mat-icon naturalIcon="view_compact"></mat-icon>
-        </button>
-
-        <button
-            (click)="setViewMode(ViewMode.list)"
-            *ngIf="viewMode !== ViewMode.list"
-            mat-icon-button
-            matTooltip="Affichage Liste"
-        >
-            <mat-icon naturalIcon="view_list"></mat-icon>
-        </button>
-
-        <button
-            (click)="setViewMode(ViewMode.map)"
-            *ngIf="site === Site.tiresias && selected?.length && viewMode !== ViewMode.map"
-            mat-icon-button
-            matTooltip="Affichage Carte"
-        >
-            <mat-icon naturalIcon="map"></mat-icon>
-        </button>
-
-        <button
-            [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
-            mat-icon-button
-            matTooltip="Trier"
-        >
-            <mat-icon svgIcon="sort_asc"></mat-icon>
-        </button>
-
-        <button
-            *ngIf="viewMode === ViewMode.grid"
-            (click)="toggleLabels()"
-            mat-icon-button
-            [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
-        >
-            <mat-icon *ngIf="!showLabels" naturalIcon="font_download"></mat-icon>
-            <mat-icon *ngIf="showLabels" naturalIcon="font_download_off"></mat-icon>
-        </button>
-
-        <button (click)="unselectAll()" *ngIf="selected?.length" mat-icon-button matTooltip="Désélectionner tout">
-            <mat-icon naturalIcon="deselect"></mat-icon>
-        </button>
-
-        <button
-            (click)="selectAll()"
-            *ngIf="!selected?.length"
-            mat-icon-button
-            matTooltip="Sélectionner les images visibles"
-        >
-            <mat-icon svgIcon="select_all_mark"></mat-icon>
-        </button>
-
-        <ng-container *ngIf="selected?.length">
-            <button
-                (click)="goToQuizz(selected)"
-                *ngIf="!!user && site === Site.dilps"
-                mat-icon-button
-                matTooltip="Lecture d'oeuvre"
-            >
-                <mat-icon svgIcon="cards_game"></mat-icon>
-            </button>
-        </ng-container>
-
-        <ng-container *ngIf="!selected?.length && user">
-            <button *ngIf="site === Site.dilps" (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
-                <mat-icon svgIcon="cards_game"></mat-icon>
-            </button>
-        </ng-container>
-
-        <div *ngIf="viewMode === ViewMode.grid">
-            <mat-chip-set>
-                <mat-chip>{{ gridNumberVisibleItems }}/{{ gridNumberTotalItems }}</mat-chip>
-            </mat-chip-set>
-        </div>
-    </mat-toolbar>
-    <div *ngIf="this.dataSource.data?.length === 0; else viewResults" class="empty-result">
-        <div>
-            <p>Aucun élément ne correspond aux termes recherchés.</p>
-            <p>Essayez de :</p>
-            <ul>
-                <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
-                <li>Simplifier la recherche.</li>
-                <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
-                <li>Enlever virgules, déterminants, prépositions, ...</li>
-                <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
-            </ul>
-        </div>
+            @if (viewMode === ViewMode.grid) {
+                <button
+                    (click)="toggleLabels()"
+                    mat-icon-button
+                    [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
+                >
+                    @if (!showLabels) {
+                        <mat-icon naturalIcon="font_download" />
+                    }
+                    @if (showLabels) {
+                        <mat-icon naturalIcon="font_download_off" />
+                    }
+                </button>
+            }
+            @if (selected.length) {
+                <button (click)="unselectAll()" mat-icon-button matTooltip="Désélectionner tout">
+                    <mat-icon naturalIcon="deselect" />
+                </button>
+            }
+            @if (!selected.length) {
+                <button (click)="selectAll()" mat-icon-button matTooltip="Sélectionner les images visibles">
+                    <mat-icon svgIcon="select_all_mark" />
+                </button>
+            }
+            @if (selected.length) {
+                @if (!!user && site === Site.dilps) {
+                    <button (click)="goToQuizz(selected)" mat-icon-button matTooltip="Lecture d'oeuvre">
+                        <mat-icon svgIcon="cards_game" />
+                    </button>
+                }
+            }
+            @if (!selected.length && user) {
+                @if (site === Site.dilps) {
+                    <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
+                        <mat-icon svgIcon="cards_game" />
+                    </button>
+                }
+            }
+            @if (viewMode === ViewMode.grid) {
+                <div>
+                    <mat-chip-set>
+                        <mat-chip>{{ gridNumberVisibleItems }}/{{ gridNumberTotalItems }}</mat-chip>
+                    </mat-chip-set>
+                </div>
+            }
+        </mat-toolbar>
+        @if (this.dataSource.data?.length === 0) {
+            <div class="empty-result">
+                <div>
+                    <p>Aucun élément ne correspond aux termes recherchés.</p>
+                    <p>Essayez de :</p>
+                    <ul>
+                        <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
+                        <li>Simplifier la recherche.</li>
+                        <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
+                        <li>Enlever virgules, déterminants, prépositions, ...</li>
+                        <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
+                    </ul>
+                </div>
+            </div>
+        } @else {
+            @if (viewMode === ViewMode.grid) {
+                <app-view-grid
+                    (pagination)="pagination($event)"
+                    (selectionChange)="select($event)"
+                    (contentChange)="gridContentChange($event)"
+                    [dataSource]="dataSource"
+                    [selected]="selected"
+                    [style.height]="'100%'"
+                />
+            }
+            @if (viewMode === ViewMode.list) {
+                <app-view-list
+                    (pagination)="pagination($event)"
+                    (selectionChange)="select($event)"
+                    [dataSource]="dataSource"
+                    [selected]="selected"
+                    [style.height]="'100%'"
+                />
+            }
+            @if (viewMode === ViewMode.map) {
+                <app-view-map
+                    [cards]="selected"
+                    [style.height]="'100%'"
+                    (searchByLocation)="searchByLocation($event)"
+                />
+            }
+        }
     </div>
-    <ng-template #viewResults>
-        <app-view-grid
-            (pagination)="pagination($event)"
-            (selectionChange)="select($event)"
-            (contentChange)="gridContentChange($event)"
-            *ngIf="viewMode === ViewMode.grid"
-            [dataSource]="dataSource"
-            [selected]="selected"
-            [style.height]="'100%'"
-        ></app-view-grid>
-
-        <app-view-list
-            (pagination)="pagination($event)"
-            (selectionChange)="select($event)"
-            *ngIf="viewMode === ViewMode.list"
-            [dataSource]="dataSource"
-            [selected]="selected"
-            [style.height]="'100%'"
-        ></app-view-list>
-
-        <app-view-map
-            *ngIf="viewMode === ViewMode.map"
-            [cards]="selected"
-            [style.height]="'100%'"
-            (searchByLocation)="searchByLocation($event)"
-        ></app-view-map>
-    </ng-template>
-</div>
+}

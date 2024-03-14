@@ -13,42 +13,52 @@
     </div>
 
     <div fxFlex fxLayout="row">
-        <div *ngIf="imageSrc" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
-        <div *ngIf="card" fxFlex="300px" fxLayout="column" fxLayoutGap="10px;">
-            <mat-expansion-panel class="instructions">
-                <mat-expansion-panel-header>
-                    <mat-panel-title> Instructions </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                <div fxLayout="column" fxLayoutGap="10px">
-                    <p>Utilisez le champ de saisie situé en haut de la page pour commencer !</p>
-                    <p>
-                        Les différents termes peuvent être saisis sans ordre précis et sans tenir compte de la présence
-                        de majuscules ou de minuscules.
-                    </p>
-                    <p>
-                        Les dates s'écrivent en chiffres. Pour indiquer un siècle, rentrez n'importe quelle année de ce
-                        dernier (exemple: 1986 pour le XXe siècle).
-                    </p>
-                </div>
-            </mat-expansion-panel>
-
-            <div *ngIf="card.name" [ngClass]="{valid: attributes.name}" class="attribute">
-                <div class="attributeName">Titre</div>
-                <div [matTooltip]="card.name" class="attributeAnswer">Voir réponse</div>
+        @if (imageSrc) {
+            <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+        }
+        @if (card) {
+            <div fxFlex="300px" fxLayout="column" fxLayoutGap="10px;">
+                <mat-expansion-panel class="instructions">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Instructions </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <p>Utilisez le champ de saisie situé en haut de la page pour commencer !</p>
+                        <p>
+                            Les différents termes peuvent être saisis sans ordre précis et sans tenir compte de la
+                            présence de majuscules ou de minuscules.
+                        </p>
+                        <p>
+                            Les dates s'écrivent en chiffres. Pour indiquer un siècle, rentrez n'importe quelle année de
+                            ce dernier (exemple: 1986 pour le XXe siècle).
+                        </p>
+                    </div>
+                </mat-expansion-panel>
+                @if (card.name) {
+                    <div [ngClass]="{valid: attributes.name}" class="attribute">
+                        <div class="attributeName">Titre</div>
+                        <div [matTooltip]="card.name" class="attributeAnswer">Voir réponse</div>
+                    </div>
+                }
+                @if (card.artists.length) {
+                    <div [ngClass]="{valid: attributes.artists}" class="attribute">
+                        <div class="attributeName">Artistes</div>
+                        <div [matTooltip]="getArtistsNames(card.artists)" class="attributeAnswer">Voir réponse</div>
+                    </div>
+                }
+                @if (card.dating) {
+                    <div [ngClass]="{valid: attributes.dating}" class="attribute">
+                        <div class="attributeName">Datation</div>
+                        <div [matTooltip]="card.dating" class="attributeAnswer">Voir réponse</div>
+                    </div>
+                }
+                @if (card.institution) {
+                    <div [ngClass]="{valid: attributes.institution}" class="attribute">
+                        <div class="attributeName">Lieu</div>
+                        <div [matTooltip]="card.institution.name" class="attributeAnswer">Voir réponse</div>
+                    </div>
+                }
             </div>
-            <div *ngIf="card.artists?.length" [ngClass]="{valid: attributes.artists}" class="attribute">
-                <div class="attributeName">Artistes</div>
-                <div [matTooltip]="getArtistsNames(card.artists)" class="attributeAnswer">Voir réponse</div>
-            </div>
-            <div *ngIf="card.dating" [ngClass]="{valid: attributes.dating}" class="attribute">
-                <div class="attributeName">Datation</div>
-                <div [matTooltip]="card.dating" class="attributeAnswer">Voir réponse</div>
-            </div>
-            <div *ngIf="card.institution" [ngClass]="{valid: attributes.institution}" class="attribute">
-                <div class="attributeName">Lieu</div>
-                <div [matTooltip]="card.institution.name" class="attributeAnswer">Voir réponse</div>
-            </div>
-        </div>
+        }
     </div>
 </div>

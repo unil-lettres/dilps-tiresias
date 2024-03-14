@@ -71,6 +71,10 @@ return [
         'permissions' => '0770',
     ],
     [
+        'path' => 'node_modules/@esbuild/linux-x64/bin/*',
+        'permissions' => '0770',
+    ],
+    [
         'path' => 'bin/pre-commit.sh',
         'permissions' => '0770',
     ],

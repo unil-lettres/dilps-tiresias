@@ -4,7 +4,7 @@ import {LoginPage} from './login.po';
 test.describe('Login page', () => {
     let app: LoginPage;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(({page}) => {
         app = new LoginPage(page);
     });
 

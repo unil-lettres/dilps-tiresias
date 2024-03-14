@@ -20,15 +20,15 @@ import {
     NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {CommonModule} from '@angular/common';
+
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-export interface TypeNumericRangeConfiguration {
+export type TypeNumericRangeConfiguration = {
     min?: number | null;
     max?: number | null;
     step?: number | null;
-}
+};
 
 class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -61,9 +61,9 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
 
 @Component({
     templateUrl: './type-numeric-range.component.html',
-    styleUrls: ['./type-numeric-range.component.scss'],
+    styleUrl: './type-numeric-range.component.scss',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');

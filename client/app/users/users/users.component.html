@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-    <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+    <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
         (selectionChange)="search($event)"
@@ -11,75 +11,78 @@
     />
 </mat-toolbar>
 
-<div *ngIf="dataSource" class="padding padding-fab">
-    <div class="mat-headline-5">Utilisateurs</div>
+@if (dataSource) {
+    <div class="padding padding-fab">
+        <div class="mat-headline-5">Utilisateurs</div>
+        <div class="responsive-table" [fxShow]="showTable()">
+            <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
+                <!-- Login Column -->
 
-    <div class="responsive-table" [fxShow]="showTable()">
-        <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
-            <!-- Login Column -->
-            <ng-container matColumnDef="login">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Login</th>
-                <td *matCellDef="let element" mat-cell>
-                    <app-table-button
-                        (click)="isLegacyUser(element) || edit(element)"
-                        [disable]="isLegacyUser(element)"
-                        [label]="element.login"
-                        icon="edit"
-                    ></app-table-button>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="login">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Login</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <app-table-button
+                            (click)="isLegacyUser(element) || edit(element)"
+                            [disable]="isLegacyUser(element)"
+                            [label]="element.login"
+                            icon="edit"
+                        />
+                    </td>
+                </ng-container>
+                <!-- Name Column -->
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
-                <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
-            </ng-container>
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
+                </ng-container>
+                <!-- Email Column -->
 
-            <!-- Email Column -->
-            <ng-container matColumnDef="email">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
-                <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
-            </ng-container>
+                <ng-container matColumnDef="email">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Email</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+                </ng-container>
+                <!-- Role Column -->
 
-            <!-- Role Column -->
-            <ng-container matColumnDef="role">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
-                <td *matCellDef="let element" mat-cell>{{ element.role | enum: 'UserRole' | async }}</td>
-            </ng-container>
+                <ng-container matColumnDef="role">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Role</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.role | enum: 'UserRole' | async }}</td>
+                </ng-container>
+                <!-- Type Column -->
 
-            <!-- Type Column -->
-            <ng-container matColumnDef="type">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
-                <td *matCellDef="let element" mat-cell>{{ element.type | type }}</td>
-            </ng-container>
+                <ng-container matColumnDef="type">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.type | type }}</td>
+                </ng-container>
+                <!-- activeUntil Column -->
 
-            <!-- activeUntil Column -->
-            <ng-container matColumnDef="activeUntil">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Validité</th>
-                <td *matCellDef="let element" mat-cell>{{ element.activeUntil | date: 'dd.MM.yyyy' }}</td>
-            </ng-container>
-
-            <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-            <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-        </table>
+                <ng-container matColumnDef="activeUntil">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Validité</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.activeUntil | date: 'dd.MM.yyyy' }}</td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+            </table>
+        </div>
+        @if (dataSource.data?.length === 0) {
+            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+                <div>Pas de résultats</div>
+            </div>
+        }
+        @if (!dataSource.data) {
+            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+            </div>
+        }
+        @if (dataSource.data?.length) {
+            <mat-paginator
+                (page)="pagination($event)"
+                [length]="dataSource.data?.length"
+                [pageIndex]="dataSource.data?.pageIndex"
+                [pageSizeOptions]="pageSizeOptions"
+                [pageSize]="dataSource.data?.pageSize"
+            />
+        }
     </div>
+}
 
-    <div *ngIf="dataSource?.data?.length === 0" class="margin" fxLayout="column" fxLayoutAlign="center center">
-        <div>Pas de résultats</div>
-    </div>
-
-    <div *ngIf="!dataSource?.data" class="margin" fxLayout="column" fxLayoutAlign="center center">
-        <mat-progress-spinner [diameter]="40" mode="indeterminate"></mat-progress-spinner>
-    </div>
-
-    <mat-paginator
-        (page)="pagination($event)"
-        *ngIf="dataSource.data?.length"
-        [length]="dataSource.data?.length"
-        [pageIndex]="dataSource.data?.pageIndex"
-        [pageSizeOptions]="pageSizeOptions"
-        [pageSize]="dataSource.data?.pageSize"
-    ></mat-paginator>
-</div>
-
-<natural-fixed-button (click)="add()" icon="add"></natural-fixed-button>
+<natural-fixed-button (click)="add()" icon="add" />

@@ -4,17 +4,16 @@ import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
-import {GoogleMap, MapInfoWindow, MapMarker, GoogleMapsModule} from '@angular/google-maps';
+import {GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker} from '@angular/google-maps';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {CommonModule} from '@angular/common';
 import Icon = google.maps.Icon;
 
-export interface Location {
+export type Location = {
     longitude: number;
     latitude: number;
-}
+};
 
 type Marker = {
     name: string;
@@ -26,9 +25,9 @@ type Marker = {
 @Component({
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
-    styleUrls: ['./view-map.component.scss'],
+    styleUrl: './view-map.component.scss',
     standalone: true,
-    imports: [CommonModule, GoogleMapsModule, FlexModule, RouterLink, MatButtonModule],
+    imports: [GoogleMapsModule, FlexModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent extends NaturalAbstractController {
     public selectedMarker: Marker | null = null;
@@ -49,7 +48,7 @@ export class ViewMapComponent extends NaturalAbstractController {
     };
     public markers: Marker[] | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
-        mapTypeId: this.site === 'dilps' ? 'roadmap' : 'satellite',
+        mapTypeId: this.site === Site.dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
         scrollwheel: true,

@@ -13,7 +13,6 @@ import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
 import {
     NaturalSearchComponent,
     NaturalTableButtonComponent,
@@ -28,14 +27,13 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 @Component({
     selector: 'app-materials',
     templateUrl: './materials.component.html',
-    styleUrls: ['./materials.component.scss'],
+    styleUrl: './materials.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,
         FlexModule,
         LogoComponent,
         NaturalSearchComponent,
-        CommonModule,
         RouterLink,
         MatButtonModule,
         MatIconModule,

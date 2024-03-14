@@ -1,6 +1,8 @@
 import {QuillConfig} from 'ngx-quill';
 import {pick} from 'lodash-es';
-import {Delta} from 'quill';
+import {ClipboardMatcherCallback} from 'quill';
+
+type Delta = ReturnType<ClipboardMatcherCallback>;
 
 export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta {
     const ops: any[] = [];

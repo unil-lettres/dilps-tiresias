@@ -29,7 +29,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-collections',
     templateUrl: './collections.component.html',
-    styleUrls: ['./collections.component.scss'],
+    styleUrl: './collections.component.scss',
     standalone: true,
     imports: [
         FlexModule,

@@ -1,5 +1,4 @@
 import {Component, Inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
@@ -23,17 +22,9 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 @Component({
     selector: 'app-link-related-cards-dialog',
     templateUrl: './link-related-cards-dialog.component.html',
-    styleUrls: ['./link-related-cards-dialog.component.scss'],
+    styleUrl: './link-related-cards-dialog.component.scss',
     standalone: true,
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        MatIconModule,
-        NaturalIconDirective,
-        MatDialogModule,
-        MatCheckboxModule,
-        FormsModule,
-    ],
+    imports: [MatButtonModule, MatIconModule, NaturalIconDirective, MatDialogModule, MatCheckboxModule, FormsModule],
 })
 export class LinkRelatedCardsDialogComponent {
     public readonly cards: CheckablCards;

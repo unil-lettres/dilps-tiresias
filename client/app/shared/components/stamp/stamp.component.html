@@ -1,17 +1,28 @@
-<div *ngIf="item" class="mat-caption" fxLayout="column" fxLayoutAlign="stretch stretch">
-    <div *ngIf="item.creationDate || item.creator">
-        Créé
-        <span *ngIf="item.creator"> par {{ item.creator.login }}</span>
-        <span *ngIf="item.creationDate">
-            le {{ item.creationDate | date: 'dd.MM.yyyy' }} à {{ item.creationDate | date: 'HH:mm' }}
-        </span>
+@if (item) {
+    <div class="mat-caption" fxLayout="column" fxLayoutAlign="stretch stretch">
+        @if (item.creationDate || item.creator) {
+            <div>
+                Créé
+                @if (item.creator) {
+                    <span> par {{ item.creator.login }}</span>
+                }
+                @if (item.creationDate) {
+                    <span>
+                        le {{ item.creationDate | date: 'dd.MM.yyyy' }} à {{ item.creationDate | date: 'HH:mm' }}
+                    </span>
+                }
+            </div>
+        }
+        @if (item.updateDate || item.updater) {
+            <div>
+                Edité
+                @if (item.updater) {
+                    <span>par {{ item.updater.login }}</span>
+                }
+                @if (item.updateDate) {
+                    <span> le {{ item.updateDate | date: 'dd.MM.yyyy' }} à {{ item.updateDate | date: 'HH:mm' }} </span>
+                }
+            </div>
+        }
     </div>
-
-    <div *ngIf="item.updateDate || item.updater">
-        Edité
-        <span *ngIf="item.updater">par {{ item.updater.login }}</span>
-        <span *ngIf="item.updateDate">
-            le {{ item.updateDate | date: 'dd.MM.yyyy' }} à {{ item.updateDate | date: 'HH:mm' }}
-        </span>
-    </div>
-</div>
+}

@@ -5,7 +5,7 @@ import {Site} from '../../generated-types';
 @Component({
     selector: 'app-logo',
     templateUrl: './logo.component.html',
-    styleUrls: ['./logo.component.scss'],
+    styleUrl: './logo.component.scss',
     standalone: true,
 })
 export class LogoComponent {

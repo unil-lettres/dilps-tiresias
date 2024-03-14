@@ -4,7 +4,7 @@ import {AppPage} from './app.po';
 test.describe('dilps app', () => {
     let app: AppPage;
 
-    test.beforeEach(async ({page}) => {
+    test.beforeEach(({page}) => {
         app = new AppPage(page);
     });
 

@@ -12,14 +12,18 @@
             (keydown.enter)="close()"
         />
         <mat-error>
-            <span *ngIf="form.hasError('toGreaterThanFrom')">{{ fromCtrl.value }} > {{ toCtrl.value }}</span>
-            <span *ngIf="fromCtrl.hasError('min') && !form.hasError('toGreaterThanFrom')"
-                >< {{ configuration.min }}</span
-            >
-            <span *ngIf="fromCtrl.hasError('max') && !form.hasError('toGreaterThanFrom')"
-                >> {{ configuration.max }}</span
-            >
-            <span *ngIf="fromCtrl.hasError('required')">*</span>
+            @if (form.hasError('toGreaterThanFrom')) {
+                <span>{{ fromCtrl.value }} > {{ toCtrl.value }}</span>
+            }
+            @if (fromCtrl.hasError('min') && !form.hasError('toGreaterThanFrom')) {
+                <span>< {{ configuration.min }}</span>
+            }
+            @if (fromCtrl.hasError('max') && !form.hasError('toGreaterThanFrom')) {
+                <span>> {{ configuration.max }}</span>
+            }
+            @if (fromCtrl.hasError('required')) {
+                <span>*</span>
+            }
         </mat-error>
     </mat-form-field>
 
@@ -36,9 +40,15 @@
             (keydown.enter)="close()"
         />
         <mat-error>
-            <span *ngIf="toCtrl.hasError('min') && !form.hasError('toGreaterThanFrom')">< {{ configuration.min }}</span>
-            <span *ngIf="toCtrl.hasError('max') && !form.hasError('toGreaterThanFrom')">> {{ configuration.max }}</span>
-            <span *ngIf="toCtrl.hasError('required')">*</span>
+            @if (toCtrl.hasError('min') && !form.hasError('toGreaterThanFrom')) {
+                <span>< {{ configuration.min }}</span>
+            }
+            @if (toCtrl.hasError('max') && !form.hasError('toGreaterThanFrom')) {
+                <span>> {{ configuration.max }}</span>
+            }
+            @if (toCtrl.hasError('required')) {
+                <span>*</span>
+            }
         </mat-error>
     </mat-form-field>
 </form>

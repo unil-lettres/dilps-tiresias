@@ -11,7 +11,7 @@
                 >
                     <ng-template let-item="item">
                         <div>{{ item.name }}</div>
-                        <app-collection-hierarchy [collection]="item"></app-collection-hierarchy>
+                        <app-collection-hierarchy [collection]="item" />
                     </ng-template>
                 </natural-select>
                 <div fxFlexAlign="end" fxLayout="row">
@@ -35,13 +35,14 @@
                     <textarea [(ngModel)]="newCollection.description" matInput></textarea>
                 </mat-form-field>
 
-                <natural-select
-                    *ngIf="listFilter"
-                    [(ngModel)]="newCollection.parent"
-                    [filter]="listFilter"
-                    [service]="collectionService"
-                    placeholder="Collection parente"
-                ></natural-select>
+                @if (listFilter) {
+                    <natural-select
+                        [(ngModel)]="newCollection.parent"
+                        [filter]="listFilter"
+                        [service]="collectionService"
+                        placeholder="Collection parente"
+                    />
+                }
 
                 <div fxFlexAlign="end" fxLayout="row">
                     <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
@@ -53,18 +54,21 @@
     </mat-tab-group>
 
     <div fxLayout="column">
-        <div *ngIf="image?.collections?.length" class="mat-subtitle-1">Collections liées à la fiche</div>
-        <div
-            *ngFor="let collection of image?.collections"
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            fxLayoutGap="10px"
-        >
-            <mat-icon naturalIcon="collections"></mat-icon>
-            <div fxFlex>{{ collection.name }}</div>
-            <button (click)="unlink(image!, collection)" mat-icon-button matTooltip="Retirer la fiche de la collection">
-                <mat-icon naturalIcon="remove"></mat-icon>
-            </button>
-        </div>
+        @if (image?.collections?.length) {
+            <div class="mat-subtitle-1">Collections liées à la fiche</div>
+        }
+        @for (collection of image?.collections; track collection) {
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <mat-icon naturalIcon="collections" />
+                <div fxFlex>{{ collection.name }}</div>
+                <button
+                    (click)="unlink(image!, collection)"
+                    mat-icon-button
+                    matTooltip="Retirer la fiche de la collection"
+                >
+                    <mat-icon naturalIcon="remove" />
+                </button>
+            </div>
+        }
     </div>
 </mat-dialog-content>

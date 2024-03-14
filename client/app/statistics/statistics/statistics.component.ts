@@ -38,48 +38,48 @@ function formatDate(date: Date): string {
     return date.getFullYear() + '-' + month;
 }
 
-interface Period {
+type Period = {
     name: string;
     key: string;
     filter: StatisticFilter;
-}
+};
 
-interface Values {
+type Values = {
     pageCount: number;
     detailCount: number;
     searchCount: number;
     uniqueLoginCount: number;
-}
+};
 
-interface Stat {
+type Stat = {
     name: string;
     values: Values;
-}
+};
 
-interface Data {
+type Data = {
     anonymous: Stat;
     default: Stat;
     aai: Stat;
     total: Stat;
-}
+};
 
-interface SeriesData {
+type SeriesData = {
     anonymous: SerieData;
     default: SerieData;
     aai: SerieData;
-}
+};
 
-interface SerieData {
+type SerieData = {
     pageCount: number[];
     detailCount: number[];
     searchCount: number[];
     uniqueLoginCount: number[];
-}
+};
 
 @Component({
     selector: 'app-statistics',
     templateUrl: './statistics.component.html',
-    styleUrls: ['./statistic.component.scss'],
+    styleUrl: './statistic.component.scss',
     providers: [
         {
             // Remove "hint" section below mat-form-field if empty.
@@ -110,7 +110,7 @@ export class StatisticsComponent {
     public statType: keyof Values = 'pageCount';
     public cardType = 'cardCreation';
     public userType = 'userCreation';
-    private series: Map<keyof Values, any> = new Map();
+    private series = new Map<keyof Values, any>();
 
     public availableTypes = {
         pageCount: 'Visites de page',

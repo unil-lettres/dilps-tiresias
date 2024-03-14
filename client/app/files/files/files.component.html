@@ -1,51 +1,55 @@
-<div *ngIf="!disabled || dataSource.data?.items.length > 0" [ngClass]="{'margin-bottom-hint': disabled}">
-    <div class="mat-headline-6">Fichiers joints</div>
+@if (!disabled || dataSource.data?.items.length > 0) {
+    <div [ngClass]="{'margin-bottom-hint': disabled}">
+        <div class="mat-headline-6">Fichiers joints</div>
+        <table [dataSource]="dataSource" mat-table>
+            <ng-container matColumnDef="name">
+                <td *matCellDef="let element" mat-cell>
+                    @if (element.file) {
+                        <div>
+                            <a [href]="'/api/file/' + element.file.id + '/' + element.file.name">{{
+                                element.file.name
+                            }}</a>
+                        </div>
+                    }
+                    @if (element.input) {
+                        <div>
+                            {{ element.input.name }}
+                        </div>
+                    }
+                </td>
+            </ng-container>
 
-    <table [dataSource]="dataSource" mat-table>
-        <ng-container matColumnDef="name">
-            <td *matCellDef="let element" mat-cell>
-                <div *ngIf="element.file">
-                    <a [href]="'/api/file/' + element.file.id + '/' + element.file.name">{{ element.file.name }}</a>
-                </div>
-                <div *ngIf="element.input">
-                    {{ element.input.name }}
-                </div>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="delete">
-            <td *matCellDef="let element" mat-cell>
+            <ng-container matColumnDef="delete">
+                <td *matCellDef="let element" mat-cell>
+                    @if (element.file?.permissions?.delete) {
+                        <button mat-icon-button (click)="delete(element)" color="warn" matTooltip="Supprimer">
+                            <mat-icon color="warn" fontIcon="delete_forever" />
+                        </button>
+                    }
+                    @if (element.input) {
+                        <div>
+                            <mat-progress-spinner [diameter]="20" mode="indeterminate" />
+                        </div>
+                    }
+                </td>
+            </ng-container>
+            <tr *matRowDef="let row; columns: columns" mat-row></tr>
+        </table>
+        @if (dataSource.data?.length === 0) {
+            <div>Aucun fichier joint</div>
+        }
+        <div fxLayoutAlign="end">
+            @if (!disabled) {
                 <button
-                    *ngIf="element.file?.permissions?.delete"
-                    mat-icon-button
-                    (click)="delete(element)"
-                    color="warn"
-                    matTooltip="Supprimer"
+                    mat-raised-button
+                    naturalFileSelect
+                    [multiple]="true"
+                    [accept]="accept"
+                    (filesChange)="uploadFiles($event)"
                 >
-                    <mat-icon color="warn" fontIcon="delete_forever"></mat-icon>
+                    Joindre un fichier
                 </button>
-
-                <div *ngIf="element.input">
-                    <mat-progress-spinner [diameter]="20" mode="indeterminate"></mat-progress-spinner>
-                </div>
-            </td>
-        </ng-container>
-
-        <tr *matRowDef="let row; columns: columns" mat-row></tr>
-    </table>
-
-    <div *ngIf="dataSource.data?.length === 0">Aucun fichier joint</div>
-
-    <div fxLayoutAlign="end">
-        <button
-            *ngIf="!disabled"
-            mat-raised-button
-            naturalFileSelect
-            [multiple]="true"
-            [accept]="accept"
-            (filesChange)="uploadFiles($event)"
-        >
-            Joindre un fichier
-        </button>
+            }
+        </div>
     </div>
-</div>
+}

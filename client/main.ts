@@ -3,7 +3,7 @@ import {environment} from './environments/environment';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {QuillModule} from 'ngx-quill';
-import {DateAdapter, MatNativeDateModule} from '@angular/material/core';
+import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {provideAnimations, provideNoopAnimations} from '@angular/platform-browser/animations';
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
@@ -45,7 +45,8 @@ const disableAnimations =
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(MatNativeDateModule, QuillModule.forRoot(quillConfig)),
+        importProvidersFrom(QuillModule.forRoot(quillConfig)),
+        provideNativeDateAdapter(),
         Apollo,
         disableAnimations ? provideNoopAnimations() : provideAnimations(),
         naturalProviders,
@@ -69,7 +70,7 @@ bootstrapApplication(AppComponent, {
                 stretchTabs: false,
             } satisfies MatTabsConfig,
         },
-        {provide: SITE, useValue: (window as Literal)['APP_SITE']},
+        {provide: SITE, useValue: (window as Literal).APP_SITE},
         {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,

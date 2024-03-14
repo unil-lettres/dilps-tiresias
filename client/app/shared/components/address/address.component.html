@@ -1,60 +1,70 @@
-<div *ngIf="!onlyMap" [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
-    <mat-form-field *ngIf="!readonly || !!model?.street">
-        <mat-label>Rue</mat-label>
-        <input (keyup.enter)="search()" [(ngModel)]="model!.street" [readonly]="readonly" matInput maxlength="255" />
-        <mat-hint align="end" *ngIf="model?.street?.length > 200" [ngClass]="{strong: model!.street!.length >= 255}">
-            {{ model!.street!.length }} / 255
-        </mat-hint>
-    </mat-form-field>
-
-    <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column' : 'row'">
-        <mat-form-field *ngIf="isDilps && (!readonly || !!model?.postcode)">
-            <mat-label>NPA</mat-label>
-            <input
-                (keyup.enter)="search()"
-                [(ngModel)]="model!.postcode"
-                [readonly]="readonly"
-                matInput
-                maxlength="20"
-            />
-            <mat-hint
-                align="end"
-                *ngIf="model?.postcode?.length > 15"
-                [ngClass]="{strong: model!.postcode!.length >= 20}"
-            >
-                {{ model!.postcode!.length }} / 20
-            </mat-hint>
-        </mat-form-field>
-
-        <mat-form-field *ngIf="!readonly || !!model?.locality" [fxFlex]="!vertical">
-            <mat-label>Localité</mat-label>
-            <input
-                (keyup.enter)="search()"
-                [(ngModel)]="model!.locality"
-                [readonly]="readonly"
-                matInput
-                maxlength="191"
-            />
-            <mat-hint
-                align="end"
-                *ngIf="model?.locality?.length > 150"
-                [ngClass]="{strong: model!.locality!.length >= 191}"
-            >
-                {{ model!.locality!.length }} / 191
-            </mat-hint>
-        </mat-form-field>
-
-        <natural-select
-            (keyup.enter)="search()"
-            *ngIf="countries && (!readonly || !!model?.country)"
-            [(ngModel)]="model!.country"
-            [disabled]="readonly"
-            [service]="countryService"
-            [showIcon]="false"
-            placeholder="Pays"
-        ></natural-select>
+@if (!onlyMap) {
+    <div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
+        @if (!readonly || !!model?.street) {
+            <mat-form-field>
+                <mat-label>Rue</mat-label>
+                <input
+                    (keyup.enter)="search()"
+                    [(ngModel)]="model!.street"
+                    [readonly]="readonly"
+                    matInput
+                    maxlength="255"
+                />
+                @if (model?.street?.length > 200) {
+                    <mat-hint align="end" [ngClass]="{strong: model!.street!.length >= 255}">
+                        {{ model!.street!.length }} / 255
+                    </mat-hint>
+                }
+            </mat-form-field>
+        }
+        <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column' : 'row'">
+            @if (isDilps && (!readonly || !!model?.postcode)) {
+                <mat-form-field>
+                    <mat-label>NPA</mat-label>
+                    <input
+                        (keyup.enter)="search()"
+                        [(ngModel)]="model!.postcode"
+                        [readonly]="readonly"
+                        matInput
+                        maxlength="20"
+                    />
+                    @if (model?.postcode?.length > 15) {
+                        <mat-hint align="end" [ngClass]="{strong: model!.postcode!.length >= 20}">
+                            {{ model!.postcode!.length }} / 20
+                        </mat-hint>
+                    }
+                </mat-form-field>
+            }
+            @if (!readonly || !!model?.locality) {
+                <mat-form-field [fxFlex]="!vertical">
+                    <mat-label>Localité</mat-label>
+                    <input
+                        (keyup.enter)="search()"
+                        [(ngModel)]="model!.locality"
+                        [readonly]="readonly"
+                        matInput
+                        maxlength="191"
+                    />
+                    @if (model?.locality?.length > 150) {
+                        <mat-hint align="end" [ngClass]="{strong: model!.locality!.length >= 191}">
+                            {{ model!.locality!.length }} / 191
+                        </mat-hint>
+                    }
+                </mat-form-field>
+            }
+            @if (countries && (!readonly || !!model?.country)) {
+                <natural-select
+                    (keyup.enter)="search()"
+                    [(ngModel)]="model!.country"
+                    [disabled]="readonly"
+                    [service]="countryService"
+                    [showIcon]="false"
+                    placeholder="Pays"
+                />
+            }
+        </div>
     </div>
-</div>
+}
 
 <cdk-accordion>
     <cdk-accordion-item
@@ -64,19 +74,20 @@
         tabindex="0"
         [attr.aria-expanded]="accordionItem.expanded"
     >
-        <div
-            *ngIf="allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude"
-            class="map-accordion-header"
-            (click)="accordionItem.toggle()"
-            fxLayout="row"
-            fxLayoutAlign="end center"
-        >
-            <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte </span>
-            <mat-icon
-                class="address-toggle-arrow"
-                [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
-            ></mat-icon>
-        </div>
+        @if (allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude) {
+            <div
+                class="map-accordion-header"
+                (click)="accordionItem.toggle()"
+                fxLayout="row"
+                fxLayoutAlign="end center"
+            >
+                <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte </span>
+                <mat-icon
+                    class="address-toggle-arrow"
+                    [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
+                />
+            </div>
+        }
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
             <div id="mapZone">
                 <mat-form-field
@@ -97,63 +108,68 @@
                 </mat-form-field>
 
                 <!-- Map -->
-                <div
-                    class="wrapper-google-map"
-                    *ngIf="(mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))"
-                >
-                    <google-map
-                        [options]="mapOptions"
-                        [center]="{lat: latitude, lng: longitude}"
-                        [zoom]="zoom"
-                        height="450px"
-                        width="100%"
-                    >
-                        <map-marker
-                            (mapDragend)="onMarkerDrag($event)"
-                            [icon]="icon!"
-                            [position]="
-                                (model?.latitude && model?.longitude
-                                    ? {lat: model?.latitude, lng: model?.longitude}
-                                    : null)!
-                            "
-                            [options]="{draggable: !readonly}"
-                        ></map-marker>
-                    </google-map>
-                </div>
+                @if ((mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))) {
+                    <div class="wrapper-google-map">
+                        <google-map
+                            [options]="mapOptions"
+                            [center]="{lat: latitude, lng: longitude}"
+                            [zoom]="zoom"
+                            height="450px"
+                            width="100%"
+                        >
+                            <map-marker
+                                (mapDragend)="onMarkerDrag($event)"
+                                [icon]="icon!"
+                                [position]="
+                                    (model?.latitude && model?.longitude
+                                        ? {lat: model?.latitude, lng: model?.longitude}
+                                        : null)!
+                                "
+                                [options]="{draggable: !readonly}"
+                            />
+                        </google-map>
+                    </div>
+                }
             </div>
         </div>
     </cdk-accordion-item>
 </cdk-accordion>
 
-<div fxLayout="row" fxLayoutGap="10px" *ngIf="!isDilps" class="double-fields">
-    <mat-form-field *ngIf="!readonly || !!model?.latitude">
-        <mat-label>Latitude</mat-label>
-        <input
-            type="number"
-            (ngModelChange)="recenter()"
-            [(ngModel)]="model!.latitude"
-            [readonly]="readonly"
-            matInput
-        />
-    </mat-form-field>
+@if (!isDilps) {
+    <div fxLayout="row" fxLayoutGap="10px" class="double-fields">
+        @if (!readonly || !!model?.latitude) {
+            <mat-form-field>
+                <mat-label>Latitude</mat-label>
+                <input
+                    type="number"
+                    (ngModelChange)="recenter()"
+                    [(ngModel)]="model!.latitude"
+                    [readonly]="readonly"
+                    matInput
+                />
+            </mat-form-field>
+        }
+        @if (!readonly || !!model?.longitude) {
+            <mat-form-field fxFlex="183px">
+                <mat-label>Longitude</mat-label>
+                <input
+                    type="number"
+                    (ngModelChange)="recenter()"
+                    [(ngModel)]="model!.longitude"
+                    [readonly]="readonly"
+                    matInput
+                />
+            </mat-form-field>
+        }
+    </div>
+}
 
-    <mat-form-field fxFlex="183px" *ngIf="!readonly || !!model?.longitude">
-        <mat-label>Longitude</mat-label>
-        <input
-            type="number"
-            (ngModelChange)="recenter()"
-            [(ngModel)]="model!.longitude"
-            [readonly]="readonly"
-            matInput
-        />
-    </mat-form-field>
-</div>
-
-<natural-select-enum
-    *ngIf="!isDilps && (!readonly || !!model?.precision)"
-    [(ngModel)]="model!.precision"
-    enumName="Precision"
-    placeholder="Précision"
-    [disabled]="readonly"
-    nullLabel="Non spécifiée"
-></natural-select-enum>
+@if (!isDilps && (!readonly || !!model?.precision)) {
+    <natural-select-enum
+        [(ngModel)]="model!.precision"
+        enumName="Precision"
+        placeholder="Précision"
+        [disabled]="readonly"
+        nullLabel="Non spécifiée"
+    />
+}

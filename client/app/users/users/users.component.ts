@@ -19,7 +19,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    styleUrl: './users.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,

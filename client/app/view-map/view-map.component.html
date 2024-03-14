@@ -1,20 +1,21 @@
-<google-map *ngIf="markers" [options]="mapOptions" height="100%" width="100%">
-    <map-marker
-        #mapMarker="mapMarker"
-        *ngFor="let marker of markers"
-        [icon]="marker.icon"
-        [position]="{lat: marker.latitude, lng: marker.longitude}"
-        (mapClick)="openInfoWindow(mapMarker, marker)"
-    >
-    </map-marker>
-
-    <map-info-window [options]="infoWindowOption">
-        <div>
-            <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
-            <a [routerLink]="['/card', selectedMarker?.id]" fxLayout="column" fxLayoutAlign="center center">
-                <img [attr.src]="selectedMarker?.imageSrc" class="img" />
-            </a>
-            <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>
-        </div>
-    </map-info-window>
-</google-map>
+@if (markers) {
+    <google-map [options]="mapOptions" height="100%" width="100%">
+        @for (marker of markers; track marker) {
+            <map-marker
+                #mapMarker="mapMarker"
+                [icon]="marker.icon"
+                [position]="{lat: marker.latitude, lng: marker.longitude}"
+                (mapClick)="openInfoWindow(mapMarker, marker)"
+            />
+        }
+        <map-info-window [options]="infoWindowOption">
+            <div>
+                <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
+                <a [routerLink]="['/card', selectedMarker?.id]" fxLayout="column" fxLayoutAlign="center center">
+                    <img [attr.src]="selectedMarker?.imageSrc" class="img" />
+                </a>
+                <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>
+            </div>
+        </map-info-window>
+    </google-map>
+}

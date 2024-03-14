@@ -2,16 +2,18 @@
     <mat-tab-group>
         <mat-tab label="Collection">
             <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
-                <div *ngIf="showVisibility" class="innerSpacing" fxLayout="column" style="max-width: 400px">
-                    <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
-                    <mat-slider
-                        [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
-                        [max]="3"
-                        [min]="1"
-                        [step]="1"
-                        ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
-                    /></mat-slider>
-                </div>
+                @if (showVisibility) {
+                    <div class="innerSpacing" fxLayout="column" style="max-width: 400px">
+                        <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
+                        <mat-slider
+                            [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
+                            [max]="3"
+                            [min]="1"
+                            [step]="1"
+                            ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
+                        /></mat-slider>
+                    </div>
+                }
 
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
@@ -23,15 +25,19 @@
                     <input [(ngModel)]="data.item.description" matInput />
                 </mat-form-field>
 
-                <mat-form-field *ngIf="data.item.isSource">
-                    <mat-label>Droits d'utilisation</mat-label>
-                    <input [(ngModel)]="data.item.usageRights" matInput />
-                </mat-form-field>
+                @if (data.item.isSource) {
+                    <mat-form-field>
+                        <mat-label>Droits d'utilisation</mat-label>
+                        <input [(ngModel)]="data.item.usageRights" matInput />
+                    </mat-form-field>
+                }
 
-                <mat-form-field *ngIf="data.item.isSource">
-                    <mat-label>Copyrights</mat-label>
-                    <input [(ngModel)]="data.item.copyrights" matInput />
-                </mat-form-field>
+                @if (data.item.isSource) {
+                    <mat-form-field>
+                        <mat-label>Copyrights</mat-label>
+                        <input [(ngModel)]="data.item.copyrights" matInput />
+                    </mat-form-field>
+                }
 
                 <app-thesaurus
                     (modelChange)="data.item.institution = $any($event)"
@@ -40,7 +46,7 @@
                     [service]="institutionService"
                     [sortAutocompleteByUsageCount]="true"
                     placeholder="Institution"
-                ></app-thesaurus>
+                />
 
                 <natural-select-hierarchic
                     [(ngModel)]="data.item.parent"
@@ -49,23 +55,25 @@
                     [showIcon]="false"
                     clearLabel="Dissocier de la collection parente"
                     placeholder="Collection parente"
-                ></natural-select-hierarchic>
+                />
 
-                <mat-slide-toggle *ngIf="user?.role === 'administrator'" [(ngModel)]="data.item.isSource"
-                    >Est un fonds</mat-slide-toggle
-                >
+                @if (user?.role === 'administrator') {
+                    <mat-slide-toggle [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
+                }
             </div>
         </mat-tab>
-        <mat-tab *ngIf="data.item.id" label="Abonnés">
-            <natural-relations
-                [displayWith]="displayFn"
-                [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
-                [main]="data.item"
-                [service]="userService"
-                class="margin"
-                placeholder="Ajouter un abonné"
-            ></natural-relations>
-        </mat-tab>
+        @if (data.item.id) {
+            <mat-tab label="Abonnés">
+                <natural-relations
+                    [displayWith]="displayFn"
+                    [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
+                    [main]="data.item"
+                    [service]="userService"
+                    class="margin"
+                    placeholder="Ajouter un abonné"
+                />
+            </mat-tab>
+        }
     </mat-tab-group>
 </mat-dialog-content>
 
@@ -78,5 +86,5 @@
         [canDelete]="true"
         [item]="data.item"
         fxFlex
-    ></app-dialog-footer>
+    />
 </mat-dialog-actions>

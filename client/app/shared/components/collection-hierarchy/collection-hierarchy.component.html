@@ -1,8 +1,16 @@
-<div *ngIf="collection.hierarchicName !== collection.name" class="mat-caption">
-    <span *ngIf="immedateAncestor !== lastAcestor">
-        {{ lastAcestor }}
-        <span *ngIf="!tooltipContent"> > </span>
-    </span>
-    <span *ngIf="tooltipContent" matTooltip="{{ tooltipContent }}"> > ... > </span>
-    <span>{{ immedateAncestor }}</span>
-</div>
+@if (collection.hierarchicName !== collection.name) {
+    <div class="mat-caption">
+        @if (immedateAncestor !== lastAcestor) {
+            <span>
+                {{ lastAcestor }}
+                @if (!tooltipContent) {
+                    <span> > </span>
+                }
+            </span>
+        }
+        @if (tooltipContent) {
+            <span [matTooltip]="tooltipContent"> > ... > </span>
+        }
+        <span>{{ immedateAncestor }}</span>
+    </div>
+}

@@ -1,3 +1,5 @@
-<ng-progress [spinner]="false" [trickleSpeed]="100"></ng-progress>
-<router-outlet (activate)="initialized = true"></router-outlet>
-<app-boot-loader *ngIf="!initialized"></app-boot-loader>
+<ng-progress [spinner]="false" [trickleSpeed]="100" />
+<router-outlet (activate)="initialized = true" />
+@if (!initialized) {
+    <app-boot-loader />
+}

@@ -53,7 +53,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -79,10 +78,10 @@ function applyChanges(
     return result;
 }
 
-export interface ViewInterface {
+export type ViewInterface = {
     selectAll: () => Promise<Cards['cards']['items'][0][]>;
     unselectAll: () => void;
-}
+};
 
 enum ViewMode {
     grid = 'grid',
@@ -93,11 +92,10 @@ enum ViewMode {
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss'],
+    styleUrl: './list.component.scss',
     standalone: true,
     imports: [
         MatMenuModule,
-        CommonModule,
         FlexModule,
         MatToolbarModule,
         LogoComponent,
@@ -194,7 +192,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Sorting applied when none is asked
      */
-    protected override defaultSorting: Array<Sorting> = [
+    protected override defaultSorting: Sorting[] = [
         {
             field: CardSortingField.creationDate,
             order: SortingOrder.DESC,
@@ -343,8 +341,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      */
     public updateShowDownloadCollection(): void {
         const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user && this.user.role && (!roles || (roles && roles.includes(this.user.role)));
-        const hasCollection = this.collection && this.collection.id;
+        const roleIsAllowed = this.user?.role && (!roles || (roles && roles.includes(this.user.role)));
+        const hasCollection = this.collection?.id;
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
 
@@ -354,7 +352,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public reset(): void {
         this.selected = [];
-        this.pagination(this.defaultPagination as Required<PaginationInput>); // reset pagination, will clean url
+        this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
     public linkSelectionToCollection(selection: Cards['cards']['items'][0][]): void {

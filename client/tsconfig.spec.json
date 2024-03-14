@@ -2,9 +2,9 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "../out-tsc/spec",
-        "types": ["jasmine", "node", "googlemaps"],
+        "types": ["jasmine", "node", "googlemaps", "@angular/localize"],
         "skipLibCheck": true
     },
-    "files": ["test.ts", "polyfills.ts"],
+    "files": ["test.ts"],
     "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

@@ -11,7 +11,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
-import {CommonModule} from '@angular/common';
 import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
@@ -20,14 +19,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
     selector: 'app-newses',
     templateUrl: './newses.component.html',
-    styleUrls: ['./newses.component.scss'],
+    styleUrl: './newses.component.scss',
     standalone: true,
     imports: [
         MatToolbarModule,
         FlexModule,
         LogoComponent,
         NaturalSearchComponent,
-        CommonModule,
         ExtendedModule,
         MatTableModule,
         MatSortModule,

@@ -2,16 +2,16 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Params, QueryParamsHandling, RouterLink} from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {CommonModule} from '@angular/common';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-table-button',
     templateUrl: './table-button.component.html',
-    styleUrls: ['./table-button.component.scss'],
+    styleUrl: './table-button.component.scss',
+    // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
+    imports: [MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
 })
 export class TableButtonComponent {
     @Input() public queryParams: Params = {};

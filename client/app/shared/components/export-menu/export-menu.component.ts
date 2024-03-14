@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -16,9 +15,9 @@ import {FakeCollection} from 'client/app/collections/services/fake-collection.re
 @Component({
     selector: 'app-export-menu',
     templateUrl: './export-menu.component.html',
-    styleUrls: ['./export-menu.component.scss'],
+    styleUrl: './export-menu.component.scss',
     standalone: true,
-    imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
 })
 export class ExportMenuComponent {
     @Input()
@@ -32,7 +31,7 @@ export class ExportMenuComponent {
 
     public ExportFormat = ExportFormat;
 
-    public pptValidationMessage: string | null = null;
+    public pptValidationMessage = '';
 
     private menuClosed$ = new Subject<void>();
 
@@ -86,7 +85,7 @@ export class ExportMenuComponent {
             .validate(input)
             .pipe(takeUntil(this.menuClosed$))
             .subscribe(validationMessage => {
-                this.pptValidationMessage = validationMessage;
+                this.pptValidationMessage = validationMessage ?? '';
             });
     }
 

@@ -10,7 +10,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
-import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
@@ -19,13 +18,12 @@ import {NaturalIconDirective} from '@ecodev/natural';
 @Component({
     selector: 'app-change',
     templateUrl: './change.component.html',
-    styleUrls: ['./change.component.scss'],
+    styleUrl: './change.component.scss',
     standalone: true,
     imports: [
         FlexModule,
         MatToolbarModule,
         LogoComponent,
-        CommonModule,
         MatButtonModule,
         MatTooltipModule,
         HideTooltipDirective,

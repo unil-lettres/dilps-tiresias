@@ -1,12 +1,14 @@
 <div class="body padding">
     <div fxLayout="column" fxLayoutGap="30px">
         <h1 class="mat-headline-4">
-            <mat-icon naturalIcon="mood_bad" [size]="60"></mat-icon>
+            <mat-icon naturalIcon="mood_bad" [size]="60" />
             Oups, une erreur est survenue
         </h1>
 
         <div fxLayout="column">
-            <p *ngIf="error">{{ error.message }}</p>
+            @if (error) {
+                <p>{{ error.message }}</p>
+            }
         </div>
         <!-- Spacer-->
         <div></div>

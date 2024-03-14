@@ -11,7 +11,7 @@ import {
     SimpleChanges,
     ViewChild,
 } from '@angular/core';
-import {CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
+import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
 import {Card, Cards, CardsVariables} from '../../generated-types';
@@ -25,7 +25,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 @Component({
     selector: 'app-related-cards',
     templateUrl: './related-cards.component.html',
-    styleUrls: ['./related-cards.component.scss'],
+    styleUrl: './related-cards.component.scss',
     standalone: true,
     providers: [
         {
@@ -35,15 +35,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
             },
         },
     ],
-    imports: [
-        CommonModule,
-        RouterLink,
-        MatTooltipModule,
-        MatIconModule,
-        NaturalIconDirective,
-        MatButtonModule,
-        NgOptimizedImage,
-    ],
+    imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     /**
@@ -64,10 +56,10 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public slideshow!: ElementRef;
 
     @Output()
-    public reduced = new EventEmitter<boolean>();
+    public readonly reduced = new EventEmitter<boolean>();
 
     @Output()
-    public closed = new EventEmitter<boolean>();
+    public readonly closed = new EventEmitter<boolean>();
 
     public readonly CardService = CardService;
 

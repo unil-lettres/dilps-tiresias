@@ -8,7 +8,7 @@ import {AbstractControl, Validator, NG_VALIDATORS} from '@angular/forms';
     standalone: true,
 })
 export class UrlValidatorDirective implements Validator {
-    public validate(control: AbstractControl): {[key: string]: any} | null {
+    public validate(control: AbstractControl): Record<string, any> | null {
         // Ask the browser to validate for us
         const c: HTMLInputElement = document.createElement('input');
         c.type = 'url';

@@ -8,7 +8,6 @@ import {FakeCollection} from '../../../collections/services/fake-collection.reso
 import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
-import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
@@ -43,7 +42,7 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
 @Component({
     selector: 'app-collection-selector',
     templateUrl: './collection-selector.component.html',
-    styleUrls: ['./collection-selector.component.scss'],
+    styleUrl: './collection-selector.component.scss',
     standalone: true,
     imports: [
         MatDialogModule,
@@ -54,7 +53,6 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
-        CommonModule,
         MatIconModule,
         MatTooltipModule,
         HideTooltipDirective,

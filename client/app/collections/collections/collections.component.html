@@ -1,41 +1,49 @@
 <div fxFlex fxLayout="row">
     <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
         <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
-            <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+            <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             <div fxFlex></div>
-            <button (click)="add()" *ngIf="canCreate" [matTooltip]="'Créer une collection'" mat-icon-button>
-                <mat-icon naturalIcon="add"></mat-icon>
-            </button>
+            @if (canCreate) {
+                <button (click)="add()" [matTooltip]="'Créer une collection'" mat-icon-button>
+                    <mat-icon naturalIcon="add" />
+                </button>
+            }
         </mat-toolbar>
 
         <ng-scrollbar fxFlex>
             <div class="scrolled" fxLayout="column">
-                <mat-nav-list *ngIf="showUnclassified">
-                    <a
-                        [routerLinkActiveOptions]="{exact: true}"
-                        [routerLink]="['.']"
-                        mat-list-item
-                        routerLinkActive="active"
-                    >
-                        <span>Non classé</span>
-                    </a>
-                </mat-nav-list>
+                @if (showUnclassified) {
+                    <mat-nav-list>
+                        <a
+                            [routerLinkActiveOptions]="{exact: true}"
+                            [routerLink]="['.']"
+                            mat-list-item
+                            routerLinkActive="active"
+                        >
+                            <span>Non classé</span>
+                        </a>
+                    </mat-nav-list>
+                }
 
-                <mat-nav-list *ngIf="showMyCards">
-                    <a
-                        [routerLinkActiveOptions]="{exact: true}"
-                        [routerLink]="['my-cards']"
-                        mat-list-item
-                        routerLinkActive="active"
-                    >
-                        <span>Mes images</span>
-                    </a>
-                </mat-nav-list>
+                @if (showMyCards) {
+                    <mat-nav-list>
+                        <a
+                            [routerLinkActiveOptions]="{exact: true}"
+                            [routerLink]="['my-cards']"
+                            mat-list-item
+                            routerLinkActive="active"
+                        >
+                            <span>Mes images</span>
+                        </a>
+                    </mat-nav-list>
+                }
 
-                <mat-divider *ngIf="showUnclassified"></mat-divider>
+                @if (showUnclassified) {
+                    <mat-divider />
+                }
 
                 <ng-template #recursiveList let-collections let-padding="padding">
-                    <ng-container *ngFor="let collection of collections">
+                    @for (collection of collections; track collection) {
                         <a
                             (click)="toggle(collection)"
                             [routerLink]="collection.id"
@@ -46,45 +54,45 @@
                         >
                             <span matListItemTitle>
                                 {{ collection.name }}
-                                <span *ngIf="collection.hasUsers">&nbsp;(*)</span>
+                                @if (collection.hasUsers) {
+                                    <span>&nbsp;(*)</span>
+                                }
                             </span>
-                            <button
-                                matListItemMeta
-                                (click)="edit($event, collection)"
-                                *ngIf="collection.permissions.update || collection.permissions.delete"
-                                mat-icon-button
-                            >
-                                <mat-icon naturalIcon="edit"></mat-icon>
-                            </button>
+                            @if (collection.permissions.update || collection.permissions.delete) {
+                                <button matListItemMeta (click)="edit($event, collection)" mat-icon-button>
+                                    <mat-icon naturalIcon="edit" />
+                                </button>
+                            }
                         </a>
                         <ng-container
                             *ngTemplateOutlet="
                                 recursiveList;
                                 context: {$implicit: children.get(collection.id), padding: padding + 20}
                             "
-                        ></ng-container>
-                    </ng-container>
+                        />
+                    }
                 </ng-template>
 
                 <mat-nav-list>
                     <ng-container
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
-                    ></ng-container>
-                    <a
-                        (click)="more()"
-                        *ngIf="hasMore"
-                        fxLayout="column"
-                        fxLayoutAlign="center"
-                        mat-list-item
-                        class="mat-mdc-list-item-interactive"
-                    >
-                        <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down"></mat-icon>
-                        <span>Afficher d'avantage</span>
-                    </a>
+                    />
+                    @if (hasMore) {
+                        <a
+                            (click)="more()"
+                            fxLayout="column"
+                            fxLayoutAlign="center"
+                            mat-list-item
+                            class="mat-mdc-list-item-interactive"
+                        >
+                            <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
+                            <span>Afficher d'avantage</span>
+                        </a>
+                    }
                 </mat-nav-list>
             </div>
         </ng-scrollbar>
     </div>
 
-    <router-outlet></router-outlet>
+    <router-outlet />
 </div>

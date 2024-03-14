@@ -29,20 +29,18 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
-import {CommonModule} from '@angular/common';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-collection',
     templateUrl: './collection.component.html',
-    styleUrls: ['./collection.component.scss'],
+    styleUrl: './collection.component.scss',
     standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,
         FlexModule,
-        CommonModule,
         MatSliderModule,
         FormsModule,
         MatFormFieldModule,
@@ -109,7 +107,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
 
         const hasCreator = !!this.data.item.creator;
-        const isCreator = hasCreator && this.user.id === this.data.item!.creator!.id;
+        const isCreator = hasCreator && this.user.id === this.data.item.creator!.id;
         const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
         if (isOwner) {

@@ -22,17 +22,17 @@ import {Cards} from '../shared/generated-types';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-export interface ContentChange {
+export type ContentChange = {
     visible?: number;
     total?: number;
-}
+};
 
 type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
-    styleUrls: ['./view-grid.component.scss'],
+    styleUrl: './view-grid.component.scss',
     standalone: true,
     imports: [NaturalGalleryComponent, FlexModule],
 })

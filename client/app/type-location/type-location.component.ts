@@ -9,16 +9,15 @@ import {
     FilterGroupConditionField,
 } from '@ecodev/natural';
 import {LocationOperatorString} from '../shared/generated-types';
-import {CommonModule} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     templateUrl: './type-location.component.html',
-    styleUrls: ['./type-location.component.scss'],
+    styleUrl: './type-location.component.scss',
     standalone: true,
-    imports: [FormsModule, FlexModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule],
+    imports: [FormsModule, FlexModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeLocationComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');
@@ -79,7 +78,7 @@ export class TypeLocationComponent implements DropdownComponent {
             distance: null!,
         };
 
-        if (condition && condition.distance) {
+        if (condition?.distance) {
             value.longitude = condition.distance.longitude;
             value.latitude = condition.distance.latitude;
             value.distance = condition.distance.distance;

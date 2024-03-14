@@ -7,7 +7,15 @@ const config: CodegenConfig = {
     generates: {
         'client/app/shared/generated-types.ts': {
             // preset: 'near-operation-file',
-            plugins: ['typescript', 'typescript-operations'],
+            plugins: [
+                'typescript',
+                'typescript-operations',
+                {
+                    add: {
+                        content: '/* eslint-disable */',
+                    },
+                },
+            ],
         },
     },
     hooks: {

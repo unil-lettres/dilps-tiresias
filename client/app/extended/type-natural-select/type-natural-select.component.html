@@ -1,10 +1,11 @@
 <form [formGroup]="form">
-    <natural-select
-        style="display: inline"
-        *ngIf="configuration && requireValueCtrl"
-        [formControl]="valueCtrl"
-        [placeholder]="configuration.placeholder"
-        [service]="configuration.service"
-        [filter]="configuration.filter"
-    ></natural-select>
+    @if (configuration && requireValueCtrl) {
+        <natural-select
+            style="display: inline"
+            [formControl]="valueCtrl"
+            [placeholder]="configuration.placeholder"
+            [service]="configuration.service"
+            [filter]="configuration.filter"
+        />
+    }
 </form>

@@ -101,27 +101,27 @@ export function cardToCardInput(fetchedModel: Card['card']): CardInputWithId {
     });
 }
 
-export interface VisibilityConfig<V> {
+export type VisibilityConfig<V> = {
     value: V;
     text: string;
     color: NonNullable<ThemePalette>;
-}
+};
 
 type Visibilities<V> = Record<1 | 2 | 3, VisibilityConfig<V>>;
 type CardVisibilities = Visibilities<CardVisibility>;
 export type CollectionVisibilities = Visibilities<CollectionVisibility>;
 
-interface InitialCardValues {
+type InitialCardValues = {
     page?: InputMaybe<string>;
     figure?: InputMaybe<string>;
     table?: InputMaybe<string>;
     isbn?: InputMaybe<string>;
-}
+};
 
 @Component({
     selector: 'app-card',
     templateUrl: './card.component.html',
-    styleUrls: ['./card.component.scss'],
+    styleUrl: './card.component.scss',
     standalone: true,
     imports: [
         CommonModule,
@@ -460,6 +460,10 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             ((!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid)) ?? false;
     }
 
+    public ngOnChanges(): void {
+        this.initCard();
+    }
+
     public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
@@ -498,10 +502,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         }
 
         this.statisticService.recordDetail();
-    }
-
-    public ngOnChanges(): void {
-        this.initCard();
     }
 
     public get isRelatedCardsReduced(): boolean {
@@ -797,7 +797,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                     this.assertFetchedCard(this.fetchedModel);
                     this.fetchedModel = {
                         ...this.fetchedModel,
-                        collections: [...result!.collections],
+                        collections: [...result.collections],
                     };
                     this.updateCollections();
                 });

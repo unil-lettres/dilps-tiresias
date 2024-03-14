@@ -16,7 +16,7 @@ export class ThemeService {
         'tiresias-development',
     ];
 
-    public readonly theme: BehaviorSubject<string> = new BehaviorSubject(this.themes[0]);
+    public readonly theme = new BehaviorSubject<string>(this.themes[0]);
     private darkActivated = false;
 
     private storageKey = '';

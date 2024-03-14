@@ -1,9 +1,9 @@
 <mat-menu #thesaurusMenu="matMenu" [overlapTrigger]="false">
-    <ng-container *ngIf="site === Site.dilps">
+    @if (site === Site.dilps) {
         <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
         <button mat-menu-item routerLink="/artist" routerLinkActive="active">Artistes</button>
-    </ng-container>
-    <ng-container *ngIf="site === Site.tiresias">
+    }
+    @if (site === Site.tiresias) {
         <button mat-menu-item routerLink="/domain" routerLinkActive="active">Domaines</button>
         <button mat-menu-item routerLink="/period" routerLinkActive="active">Périodes</button>
         <button mat-menu-item routerLink="/material" routerLinkActive="active">Matériaux</button>
@@ -11,7 +11,7 @@
         <button mat-menu-item routerLink="/antique-name" routerLinkActive="active">Noms antiques</button>
         <button mat-menu-item routerLink="/document-type" routerLinkActive="active">Type de documents</button>
         <button mat-menu-item routerLink="/tag" routerLinkActive="active">Mots-clés</button>
-    </ng-container>
+    }
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
@@ -22,227 +22,214 @@
 
 <div fxFlex fxLayout="column">
     <mat-sidenav-container fxFlex fxLayout="column">
-        <mat-sidenav
-            *ngIf="showNavigationMenu()"
-            class="menuMinimized"
-            id="menu"
-            mode="side"
-            opened="true"
-            position="start"
-        >
-            <ng-scrollbar>
-                <div fxLayout="column" fxFill>
-                    <ng-container *ngIf="user">
-                        <mat-nav-list>
-                            <!-- Dashboard -->
-                            <a
-                                [queryParams]="null"
-                                [routerLinkActiveOptions]="{exact: true}"
-                                mat-list-item
-                                routerLink="/"
-                                routerLinkActive="active"
-                            >
-                                <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
-                            </a>
-
-                            <!-- Mes collections privées -->
-                            <a
-                                mat-list-item
-                                matTooltip="Mes collections"
-                                matTooltipPosition="after"
-                                routerLink="/my-collection"
-                                routerLinkActive="active"
-                            >
-                                <mat-icon matListItemIcon naturalIcon="collections_bookmark"></mat-icon>
-                            </a>
-
-                            <!-- Collections publiques -->
-                            <a
-                                mat-list-item
-                                matTooltip="Collections publiques"
-                                matTooltipPosition="after"
-                                routerLink="/collection"
-                                routerLinkActive="active"
-                            >
-                                <mat-icon matListItemIcon naturalIcon="collections"></mat-icon>
-                            </a>
-
-                            <!-- Fonds -->
-                            <a
-                                mat-list-item
-                                matTooltip="Fonds"
-                                matTooltipPosition="after"
-                                routerLink="/source"
-                                routerLinkActive="active"
-                            >
-                                <mat-icon matListItemIcon naturalIcon="folder_special"></mat-icon>
-                            </a>
-
-                            <!-- Notifications -->
-                            <a
-                                mat-list-item
-                                matTooltip="Notifications"
-                                matTooltipPosition="after"
-                                routerLink="/notification"
-                                routerLinkActive="active"
-                            >
-                                <mat-icon matListItemIcon naturalIcon="notifications"></mat-icon>
-                            </a>
-
-                            <!-- Add photos -->
-                            <a
-                                (filesChange)="uploadImages($event)"
-                                *ngIf="
+        @if (showNavigationMenu()) {
+            <mat-sidenav class="menuMinimized" id="menu" mode="side" opened="true" position="start">
+                <ng-scrollbar>
+                    <div fxLayout="column" fxFill>
+                        @if (user) {
+                            <mat-nav-list>
+                                <!-- Dashboard -->
+                                <a
+                                    [queryParams]="null"
+                                    [routerLinkActiveOptions]="{exact: true}"
+                                    mat-list-item
+                                    routerLink="/"
+                                    routerLinkActive="active"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="home" />
+                                </a>
+                                <!-- Mes collections privées -->
+                                <a
+                                    mat-list-item
+                                    matTooltip="Mes collections"
+                                    matTooltipPosition="after"
+                                    routerLink="/my-collection"
+                                    routerLinkActive="active"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="collections_bookmark" />
+                                </a>
+                                <!-- Collections publiques -->
+                                <a
+                                    mat-list-item
+                                    matTooltip="Collections publiques"
+                                    matTooltipPosition="after"
+                                    routerLink="/collection"
+                                    routerLinkActive="active"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="collections" />
+                                </a>
+                                <!-- Fonds -->
+                                <a
+                                    mat-list-item
+                                    matTooltip="Fonds"
+                                    matTooltipPosition="after"
+                                    routerLink="/source"
+                                    routerLinkActive="active"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="folder_special" />
+                                </a>
+                                <!-- Notifications -->
+                                <a
+                                    mat-list-item
+                                    matTooltip="Notifications"
+                                    matTooltipPosition="after"
+                                    routerLink="/notification"
+                                    routerLinkActive="active"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="notifications" />
+                                </a>
+                                <!-- Add photos -->
+                                @if (
                                     progress === null &&
                                     (user.role === 'administrator' ||
                                         user.role === 'senior' ||
                                         user.role === 'junior' ||
                                         user.role === 'major')
-                                "
-                                mat-list-item
-                                matTooltip="Ajouter une image"
-                                matTooltipPosition="after"
-                                [multiple]="true"
-                                naturalFileSelect
-                            >
-                                <mat-icon matListItemIcon naturalIcon="file_upload"></mat-icon>
-                            </a>
-
-                            <a mat-list-item *ngIf="progress !== null && progress > 0">
-                                <mat-progress-spinner
-                                    [value]="progress"
-                                    color="accent"
-                                    [diameter]="24"
-                                    [strokeWidth]="5"
-                                ></mat-progress-spinner>
-                            </a>
-
-                            <!-- Export template -->
-                            <ng-container *ngIf="site === Site.tiresias">
-                                <a
-                                    href="/api/template"
-                                    *ngIf="
+                                ) {
+                                    <a
+                                        (filesChange)="uploadImages($event)"
+                                        mat-list-item
+                                        matTooltip="Ajouter une image"
+                                        matTooltipPosition="after"
+                                        [multiple]="true"
+                                        naturalFileSelect
+                                    >
+                                        <mat-icon matListItemIcon naturalIcon="file_upload" />
+                                    </a>
+                                }
+                                @if (progress !== null && progress > 0) {
+                                    <a mat-list-item>
+                                        <mat-progress-spinner
+                                            [value]="progress"
+                                            color="accent"
+                                            [diameter]="24"
+                                            [strokeWidth]="5"
+                                        />
+                                    </a>
+                                }
+                                <!-- Export template -->
+                                @if (site === Site.tiresias) {
+                                    @if (
                                         user.role === 'administrator' ||
                                         user.role === 'senior' ||
                                         user.role === 'junior' ||
                                         user.role === 'major'
-                                    "
-                                    mat-list-item
-                                    matTooltip="Télécharger le modèle pour import Excel"
-                                    matTooltipPosition="after"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="file_download"></mat-icon>
-                                </a>
-                            </ng-container>
-                        </mat-nav-list>
-
-                        <!-- Thésaurus -->
-                        <ng-container *ngIf="showThesaurusMenu()">
-                            <mat-divider></mat-divider>
-                            <mat-nav-list>
+                                    ) {
+                                        <a
+                                            href="/api/template"
+                                            mat-list-item
+                                            matTooltip="Télécharger le modèle pour import Excel"
+                                            matTooltipPosition="after"
+                                        >
+                                            <mat-icon matListItemIcon naturalIcon="file_download" />
+                                        </a>
+                                    }
+                                }
+                            </mat-nav-list>
+                            <!-- Thésaurus -->
+                            @if (showThesaurusMenu()) {
+                                <mat-divider />
+                                <mat-nav-list>
+                                    <a
+                                        mat-list-item
+                                        matTooltip="Thésaurus"
+                                        matTooltipPosition="after"
+                                        [matMenuTriggerFor]="thesaurusMenu"
+                                    >
+                                        <mat-icon matListItemIcon naturalIcon="book" />
+                                    </a>
+                                </mat-nav-list>
+                            }
+                            <!-- Administration -->
+                            @if (user.role === 'administrator') {
+                                <mat-divider />
+                                <mat-nav-list>
+                                    <a
+                                        mat-list-item
+                                        matTooltip="Gestion"
+                                        matTooltipPosition="after"
+                                        [matMenuTriggerFor]="adminMenu"
+                                    >
+                                        <mat-icon matListItemIcon naturalIcon="build" />
+                                    </a>
+                                </mat-nav-list>
+                            }
+                            <mat-divider />
+                            <mat-nav-list fxFlex>
+                                <!-- Account -->
                                 <a
+                                    (click)="editUser()"
                                     mat-list-item
-                                    matTooltip="Thésaurus"
+                                    matTooltip="Mon compte"
                                     matTooltipPosition="after"
-                                    [matMenuTriggerFor]="thesaurusMenu"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="book"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
+                                </a>
+                                <!-- Logout -->
+                                <a
+                                    (click)="userService.logout()"
+                                    mat-list-item
+                                    matTooltip="Se déconnecter"
+                                    matTooltipPosition="after"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="exit_to_app" />
                                 </a>
                             </mat-nav-list>
-                        </ng-container>
-
-                        <!-- Administration -->
-                        <ng-container *ngIf="user.role === 'administrator'">
-                            <mat-divider></mat-divider>
-                            <mat-nav-list>
+                        }
+                        @if (!user) {
+                            <mat-nav-list fxFlex>
+                                <!-- Dashboard -->
                                 <a
+                                    [routerLinkActiveOptions]="{exact: true}"
                                     mat-list-item
-                                    matTooltip="Gestion"
-                                    matTooltipPosition="after"
-                                    [matMenuTriggerFor]="adminMenu"
+                                    routerLink="/"
+                                    routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="build"></mat-icon>
+                                    <mat-icon matListItemIcon naturalIcon="home" />
                                 </a>
+                                <!-- Logout -->
+                                <a
+                                    (click)="userService.revokeTempAccess()"
+                                    mat-list-item
+                                    matTooltip="Se connecter"
+                                    matTooltipPosition="after"
+                                >
+                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
+                                </a>
+                                <!-- Contact -->
+                                @if (site === Site.tiresias) {
+                                    <a (click)="mailto()" mat-list-item matTooltip="Contact" matTooltipPosition="after">
+                                        <mat-icon matListItemIcon naturalIcon="announcement" />
+                                        <span>Contact</span>
+                                    </a>
+                                }
                             </mat-nav-list>
-                        </ng-container>
-
-                        <mat-divider></mat-divider>
-
-                        <mat-nav-list fxFlex>
-                            <!-- Account -->
-                            <a (click)="editUser()" mat-list-item matTooltip="Mon compte" matTooltipPosition="after">
-                                <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
-                            </a>
-
-                            <!-- Logout -->
+                        }
+                        <!-- Bottom nav -->
+                        @if (errors.length) {
                             <a
-                                (click)="userService.logout()"
-                                mat-list-item
-                                matTooltip="Se déconnecter"
-                                matTooltipPosition="after"
+                                [matMenuTriggerFor]="errorsMenu"
+                                mat-icon-button
+                                class="icon-button-circle-warn"
+                                style="margin: 0 11px"
                             >
-                                <mat-icon matListItemIcon naturalIcon="exit_to_app"></mat-icon>
+                                <mat-icon naturalIcon="error" />
+                            </a>
+                        }
+                        <mat-nav-list>
+                            <!-- Theme -->
+                            <a (click)="themeService.toggleNightMode()" mat-list-item>
+                                <mat-icon matListItemIcon naturalIcon="invert_colors" />
+                                <span>Changer couleurs</span>
                             </a>
                         </mat-nav-list>
-                    </ng-container>
-                    <mat-nav-list *ngIf="!user" fxFlex>
-                        <!-- Dashboard -->
-                        <a
-                            [routerLinkActiveOptions]="{exact: true}"
-                            mat-list-item
-                            routerLink="/"
-                            routerLinkActive="active"
-                        >
-                            <mat-icon matListItemIcon naturalIcon="home"></mat-icon>
-                        </a>
-
-                        <!-- Logout -->
-                        <a
-                            (click)="userService.revokeTempAccess()"
-                            mat-list-item
-                            matTooltip="Se connecter"
-                            matTooltipPosition="after"
-                        >
-                            <mat-icon matListItemIcon naturalIcon="account_circle"></mat-icon>
-                        </a>
-
-                        <!-- Contact -->
-                        <a
-                            *ngIf="site === Site.tiresias"
-                            (click)="mailto()"
-                            mat-list-item
-                            matTooltip="Contact"
-                            matTooltipPosition="after"
-                        >
-                            <mat-icon matListItemIcon naturalIcon="announcement"></mat-icon>
-                            <span>Contact</span>
-                        </a>
-                    </mat-nav-list>
-
-                    <!-- Bottom nav -->
-                    <a
-                        *ngIf="errors.length"
-                        [matMenuTriggerFor]="errorsMenu"
-                        mat-icon-button
-                        class="icon-button-circle-warn"
-                        style="margin: 0 11px"
-                    >
-                        <mat-icon naturalIcon="error"></mat-icon>
-                    </a>
-
-                    <mat-nav-list>
-                        <!-- Theme -->
-                        <a (click)="themeService.toggleNightMode()" mat-list-item>
-                            <mat-icon matListItemIcon naturalIcon="invert_colors"></mat-icon>
-                            <span>Changer couleurs</span>
-                        </a>
-                    </mat-nav-list>
-                </div>
-            </ng-scrollbar>
-        </mat-sidenav>
+                    </div>
+                </ng-scrollbar>
+            </mat-sidenav>
+        }
 
         <div fxFlex fxLayout="row" id="appContent">
-            <router-outlet></router-outlet>
+            <router-outlet />
         </div>
     </mat-sidenav-container>
 </div>
@@ -254,18 +241,18 @@
     fxLayout="column"
     fxLayoutGap="20px"
 >
-    <div
-        (click)="$event.stopPropagation()"
-        *ngFor="let error of errors"
-        class="error"
-        fxLayout="column"
-        style="user-select: text"
-    >
-        <span class="mat-caption" *ngIf="error.message">{{ error.message }}</span>
-        <span class="mat-caption" *ngIf="error.extensions?.debugMessage">{{ error.extensions?.debugMessage }}</span>
-    </div>
+    @for (error of errors; track error) {
+        <div (click)="$event.stopPropagation()" class="error" fxLayout="column" style="user-select: text">
+            @if (error.message) {
+                <span class="mat-caption">{{ error.message }}</span>
+            }
+            @if (error.extensions?.debugMessage) {
+                <span class="mat-caption">{{ error.extensions?.debugMessage }}</span>
+            }
+        </div>
+    }
     <button (click)="errors = []" mat-menu-item>
-        <mat-icon matMenuItemIcon naturalIcon="close"></mat-icon>
+        <mat-icon matMenuItemIcon naturalIcon="close" />
         Effacer et fermer
     </button>
 </mat-menu>
