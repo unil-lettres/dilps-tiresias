@@ -55,7 +55,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
-import {Data} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function applyChanges(
@@ -209,8 +208,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         offset: null,
     };
 
-    private readonly routeData$: Observable<Data>;
-    private readonly service$: Observable<Cards['cards']>;
+    private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
+
+    private readonly service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly cardService: CardService,
@@ -225,9 +225,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         super(cardService);
 
         this.naturalSearchFacets = facetService.getFacets();
-
-        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
-        this.service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
     }
 
     public override ngOnInit(): void {

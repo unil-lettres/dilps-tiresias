@@ -3,9 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
     ActivatedRoute,
-    Event,
     NavigationEnd,
-    Params,
     Router,
     RouteReuseStrategy,
     RouterLink,
@@ -85,9 +83,14 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     public progress: number | null = null;
     private uploaded = 0;
 
-    private readonly errors$: Observable<readonly Error[]>;
-    private readonly routerEvents$: Observable<Event>;
-    private readonly routeFirstChildParams$: Observable<Params> | undefined;
+    private readonly errors$ = this.network.errors.pipe(takeUntilDestroyed());
+
+    private readonly routerEvents$ = this.router.events.pipe(
+        takeUntilDestroyed(),
+        filter(event => event instanceof NavigationEnd),
+    );
+
+    private readonly routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
 
     public constructor(
         public readonly themeService: ThemeService,
@@ -104,12 +107,6 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
     ) {
         super();
         this.network.errors.next([]);
-        this.errors$ = this.network.errors.pipe(takeUntilDestroyed());
-        this.routerEvents$ = this.router.events.pipe(
-            takeUntilDestroyed(),
-            filter(event => event instanceof NavigationEnd),
-        );
-        this.routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
     }
 
     public ngOnInit(): void {

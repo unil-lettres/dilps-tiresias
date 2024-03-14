@@ -42,13 +42,17 @@ class ImageHandler extends AbstractHandler
             $path = $this->imageResizer->resize($card, $maxHeight, $useWebp);
         }
 
+        $queryParams = $request->getQueryParams();
+
         $resource = fopen($path, 'rb');
         $type = mime_content_type($path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $filename = $id . '.' . $extension;
+        $disposition = isset($queryParams['inline']) ? 'inline' : 'attachment';
+
         $response = new Response($resource, 200, [
             'content-type' => $type,
-            'content-disposition' => 'attachment; filename=' . $filename,
+            'content-disposition' => $disposition . '; filename=' . $filename,
             'cache-control' => 'max-age=' . (24 * 60 * 60), // 24 hours cache
         ]);
 

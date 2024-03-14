@@ -10,7 +10,6 @@ import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
-import {Observable} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -35,7 +34,7 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
 
     private favIcon: HTMLLinkElement = document.querySelector('#favIcon')!;
 
-    private readonly themeService$: Observable<string>;
+    private readonly themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly themeService: ThemeService,
@@ -47,8 +46,6 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         super();
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
-
-        this.themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
         // Register custom icons.
         [

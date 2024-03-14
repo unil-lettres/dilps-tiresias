@@ -1,6 +1,6 @@
 import {Component, DestroyRef, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet, Data} from '@angular/router';
+import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
 import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {isArray} from 'lodash-es';
 import {
@@ -24,7 +24,6 @@ import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {Observable} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -83,8 +82,11 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
-    private readonly routeData$: Observable<Data>;
-    private readonly collectionsService$: Observable<Collections['collections']>;
+    private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
+
+    private readonly collectionsService$ = this.collectionsService
+        .watchAll(this.queryVariables)
+        .pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -93,9 +95,6 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         private readonly dialog: MatDialog,
     ) {
         super();
-
-        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
-        this.collectionsService$ = this.collectionsService.watchAll(this.queryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnInit(): void {

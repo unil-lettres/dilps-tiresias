@@ -2,7 +2,7 @@ import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NgModel, FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Data, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {findKey, sortBy, identity} from 'lodash-es';
 import {QuillModules, QuillEditorComponent} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
@@ -88,7 +88,7 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {Observable, forkJoin} from 'rxjs';
+import {forkJoin} from 'rxjs';
 import {state, style, transition, trigger, animate} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -425,8 +425,8 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
 
     @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
-    private readonly routeData$: Observable<Data>;
-    private readonly routeParams$: Observable<Data>;
+    private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
+    private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());
 
     public constructor(
         private readonly route: ActivatedRoute,
@@ -448,9 +448,6 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly linkService: NaturalLinkMutationService,
     ) {
         super();
-
-        this.routeData$ = this.route.data.pipe(takeUntilDestroyed());
-        this.routeParams$ = this.route.params.pipe(takeUntilDestroyed());
     }
 
     @Input()

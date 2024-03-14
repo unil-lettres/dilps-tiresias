@@ -21,7 +21,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-related-cards',
@@ -32,7 +31,7 @@ import {Observable} from 'rxjs';
         {
             provide: IMAGE_LOADER,
             useValue: (config: ImageLoaderConfig) => {
-                return CardService.getImageLink(config.loaderParams?.card, Math.min(config?.width ?? 200, 200));
+                return CardService.getImageLink(config.loaderParams?.card, Math.min(config?.width ?? 300, 300));
             },
         },
     ],
@@ -101,7 +100,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private readonly resizeObserver = new ResizeObserver(() => this.updateButtonsState());
 
-    private readonly cardService$: Observable<Cards['cards']>;
+    private readonly cardService$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
 
     public constructor(
         public readonly cardService: CardService,
@@ -113,8 +112,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
             .subscribe(result => {
                 this.breakpointXSmall = result.matches;
             });
-
-        this.cardService$ = cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

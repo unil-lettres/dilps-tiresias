@@ -10,7 +10,7 @@ import {
     ViewChild,
     inject,
 } from '@angular/core';
-import {ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
@@ -21,7 +21,6 @@ import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Observable} from 'rxjs';
 
 export type ContentChange = {
     visible?: number;
@@ -96,7 +95,10 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
      */
     private enlargedHeight = 2000;
 
-    private readonly routerEvents$: Observable<Event>;
+    private readonly routerEvents$ = this.router.events.pipe(
+        takeUntilDestroyed(),
+        filter(event => event instanceof NavigationEnd),
+    );
 
     public options: NaturalGalleryOptions = {
         gap: 5,
@@ -166,11 +168,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
     ) {
         super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
-
-        this.routerEvents$ = this.router.events.pipe(
-            takeUntilDestroyed(),
-            filter(event => event instanceof NavigationEnd),
-        );
     }
 
     public ngOnInit(): void {
