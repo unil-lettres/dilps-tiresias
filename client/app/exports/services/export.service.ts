@@ -54,7 +54,7 @@ export class ExportService extends AbstractContextualizedService<
 
     public validate(object: ValidateExportVariables['input']): Observable<ValidateExport['validateExport']> {
         const variables = {
-            input: this.getInput(object),
+            input: this.getInput(object, true),
             ...this.getPartialVariablesForCreation(object),
         };
 

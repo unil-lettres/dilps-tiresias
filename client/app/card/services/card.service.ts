@@ -174,8 +174,8 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public override getInput(object: Literal): CardInput | CardPartialInput {
-        const input = super.getInput(object);
+    public override getInput(object: Literal, forCreation: boolean): CardInput | CardPartialInput {
+        const input = super.getInput(object, forCreation);
 
         // If file is undefined or null, prevent to send attribute to server
         if (!object.file) {
@@ -228,7 +228,7 @@ export class CardService extends AbstractContextualizedService<
 
         const variables = merge(
             {},
-            {input: this.getInput(object)},
+            {input: this.getInput(object, true)},
             this.getPartialVariablesForCreation(),
         ) satisfies CreateCardVariables;
 

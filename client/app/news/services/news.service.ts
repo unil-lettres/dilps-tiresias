@@ -59,8 +59,8 @@ export class NewsService extends AbstractContextualizedService<
         };
     }
 
-    public override getInput(object: Literal): NewsInput | NewsPartialInput {
-        const input = super.getInput(object);
+    public override getInput(object: Literal, forCreation: boolean): NewsInput | NewsPartialInput {
+        const input = super.getInput(object, forCreation);
 
         // If file is undefined or null, prevent to send attribute to server
         if (!object.file) {
