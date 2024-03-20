@@ -39,6 +39,7 @@ import {
     UserRole,
     Viewer,
     InputMaybe,
+    JoinType,
 } from '../shared/generated-types';
 import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
 import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -388,6 +389,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
      * Template exposed variable
      */
     public materialHierarchicConfig = onlyLeafMaterialHierarchicConfig;
+
+    /**
+     * Template exposed variable
+     */
+    public JoinType = JoinType;
 
     /**
      * Edition mode if true

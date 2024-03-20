@@ -908,7 +908,18 @@
 
                     <natural-relations
                         [disabled]="!edit"
-                        [filter]="{groups: [{conditions: [{cards: {have: {values: [fetchedModel.id]}}}]}]}"
+                        [filter]="{
+                            groups: [
+                                {
+                                    joins: {
+                                        cards: {
+                                            type: JoinType.innerJoin,
+                                            conditions: [{id: {equal: {value: fetchedModel.id}}}]
+                                        }
+                                    }
+                                }
+                            ]
+                        }"
                         [autocompleteSelectorFilter]="{
                             groups: [
                                 {
