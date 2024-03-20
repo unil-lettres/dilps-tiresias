@@ -14,7 +14,7 @@ import {
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
 import {RouterLink} from '@angular/router';
-import {Card, Cards, CardsVariables} from '../../generated-types';
+import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
@@ -122,7 +122,12 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
                 filter: {
                     groups: [
                         {
-                            conditions: [{cards: {have: {values: [this.card.id]}}}],
+                            joins: {
+                                cards: {
+                                    type: JoinType.innerJoin,
+                                    conditions: [{id: {equal: {value: this.card.id}}}],
+                                },
+                            },
                         },
                     ],
                 },
