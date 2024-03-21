@@ -6,9 +6,12 @@
                 <td *matCellDef="let element" mat-cell>
                     @if (element.file) {
                         <div>
-                            <a [href]="'/api/file/' + element.file.id + '/' + element.file.name">{{
-                                element.file.name
-                            }}</a>
+                            <a
+                                mat-button
+                                color="primary"
+                                [href]="'/api/file/' + element.file.id + '/' + element.file.name"
+                                >{{ element.file.name }}</a
+                            >
                         </div>
                     }
                     @if (element.input) {

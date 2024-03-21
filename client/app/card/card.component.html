@@ -829,6 +829,21 @@
                     @if (!isDilps && (edit || !!model.url)) {
                         <div class="mat-headline-6">Référence web</div>
                     }
+                    @if (!isDilps && !edit && model.url) {
+                        <mat-list style="padding: 0">
+                            <mat-list-item>
+                                <a
+                                    class="margin-bottom-hint"
+                                    color="primary"
+                                    style="justify-content: flex-start"
+                                    mat-button
+                                    [href]="model.url"
+                                    [innerHTML]="model.urlDescription || model.url"
+                                >
+                                </a>
+                            </mat-list-item>
+                        </mat-list>
+                    }
                     @if (!isDilps && edit) {
                         <mat-form-field>
                             <mat-label>URL</mat-label>
@@ -865,11 +880,6 @@
                                     [modules]="multiLines"
                                 />
                             }
-                        </div>
-                    }
-                    @if (!isDilps && !edit && model.url) {
-                        <div>
-                            <a [href]="model.url" [innerHTML]="model.urlDescription || model.url"></a>
                         </div>
                     }
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->

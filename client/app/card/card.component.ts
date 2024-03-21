@@ -94,6 +94,7 @@ import {state, style, transition, trigger, animate} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ErrorService} from '../shared/components/error/error.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
+import {MatListModule} from '@angular/material/list';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -157,6 +158,7 @@ type InitialCardValues = {
         RelatedCardsComponent,
         ExportMenuComponent,
         CardSkeletonComponent,
+        MatListModule,
     ],
     animations: [
         trigger('showHideRelatedCards', [
