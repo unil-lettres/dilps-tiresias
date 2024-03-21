@@ -9,6 +9,7 @@ export const cardDetailsFragment = gql`
         site
         code
         name
+        plainName
         expandedName
         hasImage
         height

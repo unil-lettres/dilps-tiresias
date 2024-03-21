@@ -37,7 +37,7 @@
                 @if (card.name) {
                     <div [ngClass]="{valid: attributes.name}" class="attribute">
                         <div class="attributeName">Titre</div>
-                        <div [matTooltip]="card.name" class="attributeAnswer">Voir réponse</div>
+                        <div [matTooltip]="card.plainName" class="attributeAnswer">Voir réponse</div>
                     </div>
                 }
                 @if (card.artists.length) {

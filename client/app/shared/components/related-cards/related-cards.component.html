@@ -3,7 +3,7 @@
         <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
             @for (card of cards; track card) {
                 <div>
-                    <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.name">
+                    <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.plainName">
                         <img
                             [ngSrc]="'card-' + card.id + '.jpg'"
                             [loaderParams]="{card: card}"

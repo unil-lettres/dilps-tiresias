@@ -113,4 +113,6 @@ REPLACE INTO export_card (export_id, card_id) VALUES
 (14001, 6001),
 (14001, 6002);
 
+UPDATE card SET plain_name = name;
+
 COMMIT ;

@@ -38,10 +38,26 @@ trait HasRichTextName
     }
 
     /**
+     * Set plain name.
+     */
+    public function setPlainName(string $plainName): void
+    {
+        $this->plainName = Utility::sanitizeRichText($plainName);
+    }
+
+    /**
      * Get name.
      */
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Get plain name.
+     */
+    public function getPlainName(): string
+    {
+        return $this->plainName;
     }
 }
