@@ -183,6 +183,21 @@
         }
     }
 
+    app-card-skeleton {
+        .background-fade {
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                if($is-dark-theme, rgb(48, 48, 48), rgb(250, 250, 250)) 90%
+            );
+        }
+
+        .bg-pulse {
+            animation: loading_pulse 1.5s infinite ease-in-out;
+            background-color: if($is-dark-theme, rgb(88, 88, 88), rgb(220, 220, 220));
+        }
+    }
+
     app-related-cards {
         .wrapper {
             border-top: $border;

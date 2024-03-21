@@ -92,6 +92,7 @@ import {
 import {forkJoin} from 'rxjs';
 import {state, style, transition, trigger, animate} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {CardSkeletonComponent} from './card-skeleton.component';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -154,6 +155,7 @@ type InitialCardValues = {
         NaturalIconDirective,
         RelatedCardsComponent,
         ExportMenuComponent,
+        CardSkeletonComponent,
     ],
     animations: [
         trigger('showHideRelatedCards', [
