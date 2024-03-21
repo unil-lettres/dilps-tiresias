@@ -89,9 +89,10 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {forkJoin} from 'rxjs';
+import {forkJoin, last} from 'rxjs';
 import {state, style, transition, trigger, animate} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {ErrorService} from '../shared/components/error/error.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
 
 export type CardInputWithId = CardInput & {id?: string};
@@ -441,6 +442,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly router: Router,
         private readonly changeService: ChangeService,
         public readonly cardService: CardService,
+        public readonly errorService: ErrorService,
         private readonly alertService: AlertService,
         public readonly artistService: ArtistService,
         public readonly institutionService: InstitutionService,
@@ -498,9 +500,13 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         } else {
             this.routeParams$.subscribe(params => {
                 if (params.cardId) {
-                    this.fetchedModel = this.route.snapshot.data.card;
-                    this.model = cardToCardInput(this.fetchedModel!);
-                    this.initCard();
+                    const observable = this.cardService.getOne(params.cardId).pipe(last());
+                    this.errorService.redirectIfError(observable).subscribe(card => {
+                        this.fetchedModel = card;
+
+                        this.model = cardToCardInput(this.fetchedModel!);
+                        this.initCard();
+                    });
                 } else {
                     throw new Error(
                         'Could not find a model to work with. app-card must receive one of [model] or [fetchedModel], or both, or the route should contain a card ID.',
