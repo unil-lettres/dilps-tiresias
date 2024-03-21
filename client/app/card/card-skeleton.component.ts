@@ -95,7 +95,7 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
             <div class="left-pane">
                 <div>
                     <div class="skeleton-menu">
-                        <app-logo [data]="{type: 'toolbar', class: 'logo'}"></app-logo>
+                        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                         <div class="block-button"></div>
                         <div class="block-button bg-pulse"></div>
                         <div class="block-button bg-pulse"></div>
@@ -115,7 +115,7 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
                 </div>
             </div>
             <div class="image">
-                <mat-spinner></mat-spinner>
+                <mat-spinner />
             </div>
         </div>
     `,

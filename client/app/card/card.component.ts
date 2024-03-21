@@ -506,7 +506,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
                     this.errorService.redirectIfError(observable).subscribe(card => {
                         this.fetchedModel = card;
 
-                        this.model = cardToCardInput(this.fetchedModel!);
+                        this.model = cardToCardInput(this.fetchedModel);
                         this.initCard();
                     });
                 } else {
