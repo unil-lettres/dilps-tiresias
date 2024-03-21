@@ -12,18 +12,6 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
                 width: 100%;
             }
 
-            @keyframes loading_pulse {
-                0% {
-                    opacity: 1;
-                }
-                50% {
-                    opacity: 0.2;
-                }
-                100% {
-                    opacity: 1;
-                }
-            }
-
             .background-fade {
                 background: transparent;
                 bottom: 0;

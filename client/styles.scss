@@ -180,3 +180,15 @@ td.mat-column-usageCount {
     right: 0;
     left: 0;
 }
+
+@keyframes loading_pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
