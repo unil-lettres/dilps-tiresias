@@ -1,4 +1,4 @@
-@if (!model) {
+@if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
     <div naturalFileDrop [fileSelectionDisabled]="!edit" (filesChange)="dropImage($event)" fxFlex fxLayout="row">
