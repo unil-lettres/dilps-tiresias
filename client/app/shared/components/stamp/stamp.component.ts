@@ -5,10 +5,10 @@ import {CommonModule} from '@angular/common';
 type User = {login: string};
 
 export type Stamped = {
-    creator: User | null;
-    updater: User | null;
-    creationDate: string | null;
-    updateDate: string | null;
+    creator?: User | null;
+    updater?: User | null;
+    creationDate?: string | null;
+    updateDate?: string | null;
 };
 
 @Component({

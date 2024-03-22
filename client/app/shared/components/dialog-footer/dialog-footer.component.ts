@@ -8,8 +8,8 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 type Model = Stamped & {
-    id: string;
-    permissions: {
+    id?: string;
+    permissions?: {
         /**
          * Whether the current logged in user can update
          */

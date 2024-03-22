@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
@@ -7,6 +7,7 @@ import {AlertService} from '../../shared/components/alert/alert.service';
 import {
     Collection,
     CollectionFilter,
+    Collections,
     CollectionVisibility,
     UpdateCollection,
     UserRole,
@@ -88,7 +89,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         userService: UserService,
         alertService: AlertService,
         dialogRef: MatDialogRef<CollectionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collection['collection']},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collections['collections']['items'][0]},
     ) {
         super(collectionService, alertService, dialogRef, userService, data);
     }
@@ -106,7 +107,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
             return false;
         }
 
-        const hasCreator = !!this.data.item.creator;
+        const hasCreator = this.isUpdatePage() && !!this.data.item.creator;
         const isCreator = hasCreator && this.user.id === this.data.item.creator!.id;
         const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
@@ -133,7 +134,9 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
             s => s.value === this.data.item.visibility,
         )! as keyof CollectionVisibilities;
 
-        this.institution = this.data.item.institution;
+        if (this.isUpdatePage()) {
+            this.institution = this.data.item.institution;
+        }
 
         this.showVisibility = this.computeShowVisibility();
 

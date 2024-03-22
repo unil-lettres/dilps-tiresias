@@ -1,10 +1,10 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {InstitutionService} from '../services/institution.service';
-import {Institution} from '../../shared/generated-types';
+import {Institutions} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {AddressComponent} from '../../shared/components/address/address.component';
@@ -35,7 +35,12 @@ export class InstitutionComponent extends AbstractDetailDirective<InstitutionSer
         alertSvc: AlertService,
         userSvc: UserService,
         dialogRef: MatDialogRef<InstitutionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Institution['institution'] & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA)
+        data:
+            | undefined
+            | {
+                  item: Institutions['institutions']['items'][0] & ThesaurusDetailDialogExtraData;
+              },
     ) {
         super(service, alertSvc, dialogRef, userSvc, data);
     }

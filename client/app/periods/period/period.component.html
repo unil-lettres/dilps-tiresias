@@ -6,7 +6,7 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -17,7 +17,7 @@
                         <input
                             type="number"
                             [(ngModel)]="data.item.from"
-                            [readonly]="data.item.permissions && !data.item.permissions.update"
+                            [readonly]="isUpdatePage() && !data.item.permissions.update"
                             matInput
                         />
                     </mat-form-field>
@@ -27,7 +27,7 @@
                         <input
                             type="number"
                             [(ngModel)]="data.item.to"
-                            [readonly]="data.item.permissions && !data.item.permissions.update"
+                            [readonly]="isUpdatePage() && !data.item.permissions.update"
                             matInput
                         />
                     </mat-form-field>

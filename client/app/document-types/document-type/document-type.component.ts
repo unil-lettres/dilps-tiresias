@@ -1,10 +1,10 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {DocumentTypeService} from '../services/document-type.service';
-import {DocumentType} from '../../shared/generated-types';
+import {DocumentTypes} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -37,7 +37,7 @@ export class DocumentTypeComponent extends AbstractDetailDirective<
         userService: UserService,
         dialogRef: MatDialogRef<DocumentTypeComponent>,
         @Inject(MAT_DIALOG_DATA)
-        data: undefined | {item: DocumentType['documentType'] & ThesaurusDetailDialogExtraData},
+        data: undefined | {item: DocumentTypes['documentTypes']['items'][0] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

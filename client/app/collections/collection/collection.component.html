@@ -62,7 +62,7 @@
                 }
             </div>
         </mat-tab>
-        @if (data.item.id) {
+        @if (isUpdatePage()) {
             <mat-tab label="Abonnés">
                 <natural-relations
                     [displayWith]="displayFn"

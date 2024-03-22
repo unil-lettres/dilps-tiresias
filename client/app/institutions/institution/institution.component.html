@@ -6,16 +6,13 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
 
                 @if (data.item.street !== undefined) {
-                    <app-address
-                        [model]="data.item"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
-                    />
+                    <app-address [model]="data.item" [readonly]="isUpdatePage() && !data.item.permissions.update" />
                 }
             </div>
         </mat-tab>

@@ -3,17 +3,17 @@ import {
     AbstractControl,
     FormControl,
     FormGroup,
-    ValidationErrors,
     FormsModule,
     ReactiveFormsModule,
+    ValidationErrors,
 } from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ArtistComponent} from '../../artists/artist/artist.component';
 import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
+import {UpdateUser, User, UserRole, Users, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
@@ -79,7 +79,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
         public readonly collectionService: CollectionService,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: User['user']},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Users['users']['items'][0]},
         naturalEnumService: NaturalEnumService,
     ) {
         super(service, alertService, dialogRef, userService, data);
@@ -109,8 +109,11 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     }
 
     protected override postQuery(): void {
-        this.institution = this.data.item.institution;
-        this.userService.getUserRolesAvailable(this.data.item).subscribe(userRoles => {
+        if (this.isUpdatePage()) {
+            this.institution = this.data.item.institution;
+        }
+
+        this.userService.getUserRolesAvailable(this.isUpdatePage() ? this.data.item : null).subscribe(userRoles => {
             this.userRolesAvailable = userRoles;
         });
     }

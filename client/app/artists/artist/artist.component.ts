@@ -1,10 +1,10 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {ArtistService} from '../services/artist.service';
-import {Artist} from '../../shared/generated-types';
+import {Artists} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -33,7 +33,12 @@ export class ArtistComponent extends AbstractDetailDirective<ArtistService, Thes
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<ArtistComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Artist['artist'] & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA)
+        data:
+            | undefined
+            | {
+                  item: Artists['artists']['items'][0] & ThesaurusDetailDialogExtraData;
+              },
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

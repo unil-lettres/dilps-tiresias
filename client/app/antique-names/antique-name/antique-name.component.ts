@@ -1,10 +1,10 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {UserService} from '../../users/services/user.service';
 import {AntiqueNameService} from '../services/antique-name.service';
-import {AntiqueName} from '../../shared/generated-types';
+import {AntiqueNames} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -33,7 +33,12 @@ export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameSer
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<AntiqueNameComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: AntiqueName['antiqueName'] & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA)
+        data:
+            | undefined
+            | {
+                  item: AntiqueNames['antiqueNames']['items'][0] & ThesaurusDetailDialogExtraData;
+              },
     ) {
         super(service, alertService, dialogRef, userService, data);
     }

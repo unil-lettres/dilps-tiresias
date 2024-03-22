@@ -1,11 +1,11 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AlertService} from '../../shared/components/alert/alert.service';
 import {tagHierarchicConfig} from '../../shared/hierarchic-configurations/TagConfiguration';
 import {UserService} from '../../users/services/user.service';
 import {TagService} from '../services/tag.service';
-import {Tag, TagFilter} from '../../shared/generated-types';
+import {TagFilter, Tags} from '../../shared/generated-types';
 import {HierarchicFiltersConfiguration, NaturalSelectHierarchicComponent} from '@ecodev/natural';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -39,14 +39,14 @@ export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusD
         alertService: AlertService,
         userService: UserService,
         dialogRef: MatDialogRef<TagComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tag['tag'] & ThesaurusDetailDialogExtraData},
+        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Tags['tags']['items'][0] & ThesaurusDetailDialogExtraData},
     ) {
         super(service, alertService, dialogRef, userService, data);
     }
 
     protected override postQuery(): void {
         // Prevent parent choices that would form cyclic hierarchy
-        if (this.data.item.id) {
+        if (this.isUpdatePage()) {
             this.ancestorsHierarchicFilters = [
                 {
                     service: TagService,

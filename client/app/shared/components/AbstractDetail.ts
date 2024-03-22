@@ -4,8 +4,10 @@ import {merge} from 'lodash-es';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 import {
+    ExtractTallOne,
     ExtractTone,
     ExtractTupdate,
+    ExtractVcreate,
     Literal,
     NaturalAbstractModelService,
     PaginatedData,
@@ -14,7 +16,9 @@ import {
 } from '@ecodev/natural';
 import {Viewer} from '../generated-types';
 
-type Data<TService, Extra> = {item: WithId<ExtractTone<TService>> & Extra};
+type Data<TService, Extra> = {
+    item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
+};
 
 @Directive()
 export class AbstractDetailDirective<
@@ -33,6 +37,13 @@ export class AbstractDetailDirective<
     Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit
 {
+    /**
+     * Once set, this must not change anymore, especially not right after the creation mutation,
+     * so the form does not switch from creation mode to update mode without an actual reload of
+     * model from DB (by navigating to update page).
+     */
+    #isUpdatePage = false;
+
     public user: Viewer['viewer'] | null = null;
 
     public data: Data<TService, Extra> = {
@@ -44,20 +55,31 @@ export class AbstractDetailDirective<
         private readonly alertService: AlertService,
         public readonly dialogRef: MatDialogRef<unknown>,
         public readonly userService: UserService,
-        data: Data<TService, Extra> | undefined,
+        data: {item: ExtractTallOne<TService> & Extra} | undefined,
     ) {
         this.data = merge({item: this.service.getDefaultForServer()}, data);
     }
 
     public ngOnInit(): void {
-        if (this.data.item.id) {
+        if ('id' in this.data.item && this.data.item.id) {
             this.service.getOne(this.data.item.id).subscribe(res => {
                 merge(this.data.item, res); // init all fields considering getOne query
+                this.#isUpdatePage = true;
                 this.postQuery();
             });
         }
 
         this.userService.getCurrentUser().subscribe(user => (this.user = user));
+    }
+
+    /**
+     * Returns whether `data.model` was fetched from DB, so we are on an update page, or if it is a new object
+     * with (only) default values, so we are on a creation page.
+     *
+     * This should be used instead of checking `data.model.id` directly, in order to type guard and get proper typing
+     */
+    protected isUpdatePage(): this is {data: {item: WithId<ExtractTone<TService>>}} {
+        return this.#isUpdatePage;
     }
 
     public update(): void {
@@ -79,12 +101,13 @@ export class AbstractDetailDirective<
         this.alertService
             .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
-                if (confirmed) {
-                    this.service.delete([this.data.item]).subscribe(() => {
-                        this.alertService.info('Supprimé');
-                        this.dialogRef.close(null);
-                    });
+                if (!confirmed || !this.isUpdatePage()) {
+                    return;
                 }
+                this.service.delete([this.data.item]).subscribe(() => {
+                    this.alertService.info('Supprimé');
+                    this.dialogRef.close(null);
+                });
             });
     }
 

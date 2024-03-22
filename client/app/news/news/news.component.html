@@ -8,7 +8,7 @@
                     <mat-label>Nom</mat-label>
                     <input
                         [(ngModel)]="data.item.name"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -17,7 +17,7 @@
                     <mat-label>Description</mat-label>
                     <input
                         [(ngModel)]="data.item.description"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                     />
                 </mat-form-field>
@@ -27,7 +27,7 @@
                     <input
                         [(ngModel)]="data.item.url"
                         #url="ngModel"
-                        [readonly]="data.item.permissions && !data.item.permissions.update"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                         maxlength="255"
                         type="url"
@@ -35,16 +35,16 @@
                     @if (url.invalid && (url.dirty || url.touched)) {
                         <mat-error>URL invalide</mat-error>
                     }
-                    @if (data.item.url.length > 200) {
-                        <mat-hint align="end" [ngClass]="{strong: data.item.url.length >= 255}">
-                            {{ data.item.url.length }} / 255
+                    @if (data.item.url?.length > 200) {
+                        <mat-hint align="end" [ngClass]="{strong: data.item.url?.length >= 255}">
+                            {{ data.item.url?.length }} / 255
                         </mat-hint>
                     }
                 </mat-form-field>
 
                 <input
                     (change)="upload($event)"
-                    [readonly]="data.item.permissions && !data.item.permissions.update"
+                    [readonly]="isUpdatePage() && !data.item.permissions.update"
                     name="Image"
                     placeholder="Lien"
                     type="file"
