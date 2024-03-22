@@ -81,7 +81,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@ngbracket/ngx-layout/flex';
-import {CommonModule} from '@angular/common';
+import {CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {
@@ -159,6 +159,20 @@ type InitialCardValues = {
         ExportMenuComponent,
         CardSkeletonComponent,
         MatListModule,
+        NgOptimizedImage,
+    ],
+    providers: [
+        {
+            provide: IMAGE_LOADER,
+            useValue: (config: ImageLoaderConfig) => {
+                if (config.isPlaceholder && config.loaderParams?.card) {
+                    return CardService.getImageLink(config.loaderParams.card, 300);
+                }
+
+                return config.src;
+                // return CardService.getImageLink(config.loaderParams?.card, 300);
+            },
+        },
     ],
     animations: [
         trigger('showHideRelatedCards', [
@@ -502,6 +516,9 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         } else {
             this.routeParams$.subscribe(params => {
                 if (params.cardId) {
+                    // Used to force NgOptimizedImage to update loaderParams.
+                    this.imageSrc = '';
+
                     const observable = this.cardService.getOne(params.cardId).pipe(last());
                     this.errorService.redirectIfError(observable).subscribe(card => {
                         this.fetchedModel = card;
