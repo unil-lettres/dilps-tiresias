@@ -1,6 +1,5 @@
-import {Inject, Injectable, assertInInjectionContext} from '@angular/core';
+import {assertInInjectionContext, Inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Apollo} from 'apollo-angular';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
@@ -39,7 +38,7 @@ import {
     usersQuery,
     viewerQuery,
 } from './user.queries';
-import {LOCAL_STORAGE, NaturalDebounceService, NaturalStorage} from '@ecodev/natural';
+import {LOCAL_STORAGE, NaturalStorage} from '@ecodev/natural';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -64,14 +63,12 @@ export class UserService extends AbstractContextualizedService<
     private readonly storageKey = 'viewer';
 
     public constructor(
-        apollo: Apollo,
-        naturalDebounceService: NaturalDebounceService,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         @Inject(SITE) site: Site,
         @Inject(LOCAL_STORAGE) private readonly storage: NaturalStorage,
     ) {
-        super(apollo, naturalDebounceService, 'user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
+        super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
         this.keepViewerSyncedAcrossBrowserTabs();
     }
 

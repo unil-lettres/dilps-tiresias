@@ -1,5 +1,4 @@
 import {RouteReuseStrategy} from '@angular/router';
-import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {merge, mergeWith} from 'lodash-es';
 import {map} from 'rxjs/operators';
@@ -38,7 +37,7 @@ import {
     updateCard,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
-import {Literal, mergeOverrideArray, NaturalDebounceService, WithId} from '@ecodev/natural';
+import {Literal, mergeOverrideArray, WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;
@@ -66,12 +65,10 @@ export class CardService extends AbstractContextualizedService<
     private collectionIdForCreation: string | null = null;
 
     public constructor(
-        apollo: Apollo,
-        naturalDebounceService: NaturalDebounceService,
         @Inject(SITE) site: Site,
         private readonly routeReuse: RouteReuseStrategy,
     ) {
-        super(apollo, naturalDebounceService, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
+        super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
     public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {
