@@ -337,6 +337,25 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     public artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
 
     /**
+     * Used to display a loading placeholder while the modal is loading.
+     * We cannot rely only on the fact that model is null because when we click
+     * on a related card, modal is not set back to null. So the placeholder will
+     * not show.
+     */
+    public loadingIndicator = false;
+
+    /**
+     * Used to set a minimum time the placeholder should be displayed to avoid
+     * screen flickering.
+     *
+     * Note about @defer and @placeholder directive: it is not used here because
+     * it can't revert back to the placeholder. So there is no way we can display
+     * the placeholder when we click on a related card to show again the loading
+     * state.
+     */
+    public minimalLoadingWait = false;
+
+    /**
      * Template exposed variable
      */
     public InstitutionComponent = InstitutionComponent;
@@ -501,12 +520,19 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.initCard();
         } else {
             this.routeParams$.subscribe(params => {
+                this.loadingIndicator = true;
+                this.minimalLoadingWait = true;
+                setTimeout(() => {
+                    this.minimalLoadingWait = false;
+                }, 700);
+
                 if (params.cardId) {
                     const observable = this.cardService.getOne(params.cardId).pipe(last());
                     this.errorService.redirectIfError(observable).subscribe(card => {
                         this.fetchedModel = card;
 
                         this.model = cardToCardInput(this.fetchedModel);
+                        this.loadingIndicator = false;
                         this.initCard();
                     });
                 } else {
