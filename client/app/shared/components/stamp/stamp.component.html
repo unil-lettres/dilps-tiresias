@@ -1,7 +1,7 @@
 @if (item) {
     <div class="mat-caption" fxLayout="column" fxLayoutAlign="stretch stretch">
         @if (item.creationDate || item.creator) {
-            <div>
+            <div class="body-1">
                 Créé
                 @if (item.creator) {
                     <span> par {{ item.creator.login }}</span>
