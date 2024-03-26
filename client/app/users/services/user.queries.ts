@@ -129,6 +129,7 @@ export const updateUser = gql`
     mutation UpdateUser($id: UserID!, $input: UserPartialInput!) {
         updateUser(id: $id, input: $input) {
             id
+            name
             termsAgreement
             updateDate
             updater {

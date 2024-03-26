@@ -65,6 +65,8 @@ export const createTag = gql`
 export const updateTag = gql`
     mutation UpdateTag($id: TagID!, $input: TagPartialInput!) {
         updateTag(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

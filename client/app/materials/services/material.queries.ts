@@ -66,6 +66,8 @@ export const createMaterial = gql`
 export const updateMaterial = gql`
     mutation UpdateMaterial($id: MaterialID!, $input: MaterialPartialInput!) {
         updateMaterial(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta
