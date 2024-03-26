@@ -1,5 +1,3 @@
-version: '2.4'
-
 networks:
     dilps-tiresias-net:
         driver: bridge
