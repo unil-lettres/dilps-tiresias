@@ -59,4 +59,10 @@
             height: auto;
         }
     }
+
+    /** "Monkey patching" wrong color for natural search icon */
+    .natural-dropdown-container natural-search mat-icon,
+    natural-select mat-icon {
+        color: mat.get-color-from-palette($fg, text) !important;
+    }
 }
