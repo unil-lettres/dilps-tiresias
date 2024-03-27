@@ -1,6 +1,4 @@
-import {NaturalDebounceService} from '@ecodev/natural';
-import {Apollo} from 'apollo-angular';
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
     CreateDomain,
     CreateDomainVariables,
@@ -33,18 +31,8 @@ export class DomainService extends AbstractContextualizedService<
     DeleteDomains['deleteDomains'],
     never
 > {
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
-        super(
-            apollo,
-            naturalDebounceService,
-            'domain',
-            domainQuery,
-            domainsQuery,
-            createDomain,
-            updateDomain,
-            deleteDomains,
-            site,
-        );
+    public constructor(@Inject(SITE) site: Site) {
+        super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
     }
 
     public override getDefaultForServer(): DomainInput {

@@ -1,4 +1,3 @@
-import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {SITE} from '../../app.config';
 import {
@@ -17,7 +16,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
-import {Literal, NaturalDebounceService} from '@ecodev/natural';
+import {Literal} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -34,18 +33,8 @@ export class NewsService extends AbstractContextualizedService<
     DeleteNewses['deleteNewses'],
     never
 > {
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
-        super(
-            apollo,
-            naturalDebounceService,
-            'news',
-            newsQuery,
-            newsesQuery,
-            createNews,
-            updateNews,
-            deleteNewses,
-            site,
-        );
+    public constructor(@Inject(SITE) site: Site) {
+        super('news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
     }
 
     public override getDefaultForServer(): NewsInput {
@@ -59,8 +48,8 @@ export class NewsService extends AbstractContextualizedService<
         };
     }
 
-    public override getInput(object: Literal): NewsInput | NewsPartialInput {
-        const input = super.getInput(object);
+    public override getInput(object: Literal, forCreation: boolean): NewsInput | NewsPartialInput {
+        const input = super.getInput(object, forCreation);
 
         // If file is undefined or null, prevent to send attribute to server
         if (!object.file) {

@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             .subscribe(accepted => {
                 if (accepted) {
                     this.userService
-                        .updatePartially({
+                        .updateNow({
                             id: user.id,
                             termsAgreement: formatIsoDateTime(new Date()),
                         })

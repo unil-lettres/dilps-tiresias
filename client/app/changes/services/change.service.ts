@@ -1,7 +1,5 @@
-import {NaturalDebounceService} from '@ecodev/natural';
 import {merge} from 'lodash-es';
 import {Inject, Injectable} from '@angular/core';
-import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
@@ -46,8 +44,8 @@ export class ChangeService extends AbstractContextualizedService<
     null,
     never
 > {
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
-        super(apollo, naturalDebounceService, 'change', changeQuery, changesQuery, null, null, null, site);
+    public constructor(@Inject(SITE) site: Site) {
+        super('change', changeQuery, changesQuery, null, null, null, site);
     }
 
     public acceptChange(change: {id: string}): Observable<AcceptChange['acceptChange']> {

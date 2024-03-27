@@ -69,6 +69,8 @@ export const createPeriod = gql`
 export const updatePeriod = gql`
     mutation UpdatePeriod($id: PeriodID!, $input: PeriodPartialInput!) {
         updatePeriod(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

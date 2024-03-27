@@ -1,12 +1,4 @@
-import {Apollo} from 'apollo-angular';
-import {
-    Literal,
-    NaturalAbstractModelService,
-    NaturalDebounceService,
-    PaginatedData,
-    QueryVariables,
-    VariablesWithInput,
-} from '@ecodev/natural';
+import {Literal, NaturalAbstractModelService, PaginatedData, QueryVariables, VariablesWithInput} from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
 import {Site} from '../generated-types';
 import {Observable, of} from 'rxjs';
@@ -26,8 +18,6 @@ export class AbstractContextualizedService<
     },
 > extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete, Vdelete> {
     public constructor(
-        apollo: Apollo,
-        naturalDebounceService: NaturalDebounceService,
         name: string,
         oneQuery: DocumentNode | null,
         allQuery: DocumentNode | null,
@@ -36,7 +26,7 @@ export class AbstractContextualizedService<
         deleteMutation: DocumentNode | null,
         public readonly site: Site,
     ) {
-        super(apollo, naturalDebounceService, name, oneQuery, allQuery, createMutation, updateMutation, deleteMutation);
+        super(name, oneQuery, allQuery, createMutation, updateMutation, deleteMutation);
     }
 
     /**

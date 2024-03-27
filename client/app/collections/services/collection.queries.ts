@@ -82,6 +82,8 @@ export const createCollection = gql`
 export const updateCollection = gql`
     mutation UpdateCollection($id: CollectionID!, $input: CollectionPartialInput!) {
         updateCollection(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta
