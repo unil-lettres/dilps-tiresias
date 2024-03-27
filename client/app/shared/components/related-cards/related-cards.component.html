@@ -40,7 +40,7 @@
         class="btn-reduce"
         [class.reduced]="isReduced"
         mat-mini-fab
-        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + 'les images associées'"
+        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + ' les images associées'"
         matTooltipPosition="left"
         (click)="reduced.emit(!isReduced)"
     >
