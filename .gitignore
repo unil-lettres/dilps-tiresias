@@ -26,6 +26,8 @@
 /htdocs/*.eot
 /htdocs/assets
 /.idea/
+/.devcontainer/
+/.fleet/
 /out/
 /logs/
 /node_modules/
