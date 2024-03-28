@@ -986,7 +986,17 @@
                     </a>
                 }
                 @if (imageSrc && !imageData) {
-                    <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+                    <div style="position: relative; width: 100%; height: 100%">
+                        <img
+                            [ngSrc]="imageSrc"
+                            [loaderParams]="{card: model}"
+                            priority
+                            fill
+                            placeholder
+                            disableOptimizedSrcset
+                            style="object-fit: contain"
+                        />
+                    </div>
                 }
                 @if (imageData) {
                     <div [style.backgroundImage]="imageData" class="image" fxFlex></div>
