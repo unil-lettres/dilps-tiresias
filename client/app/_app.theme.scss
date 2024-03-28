@@ -9,18 +9,8 @@
     $background: map.get($theme, background);
     $foreground: map.get($theme, foreground);
 
-    $config: mat.get-color-config($theme);
-    $is-dark-theme: map.get($config, is-dark);
-
-    $font-color: if($is-dark-theme, rgb(255, 255, 255, 0.87), rgba(0, 0, 0, 0.87));
-
     app-root {
         background: mat.get-color-from-palette($background, background);
-    }
-
-    .body-1,
-    .body-2 {
-        color: $font-color;
     }
 
     ng-progress {
@@ -69,7 +59,6 @@
     }
 
     .natural-dropdown-container .dropdown-title {
-        color: $font-color;
         font-size: mat.font-size(typography.$custom-typography-gt-sm, 'headline-5');
         padding: 3px 20px 13px;
         opacity: 1;
