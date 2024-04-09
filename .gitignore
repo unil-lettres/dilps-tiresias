@@ -48,3 +48,6 @@ supervisord.pid
 
 # keep it at the end of the file
 !.gitkeep
+
+js-sources-map.zip
+/js-sources-map/
