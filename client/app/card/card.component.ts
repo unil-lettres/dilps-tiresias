@@ -764,7 +764,15 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             return;
         }
 
-        this.cardService.updateNow(this.model).subscribe(card => {
+        const tmpModel = {
+            ...this.model,
+            updater: {...(this.model as any).updater},
+        };
+
+        console.log(Object.isFrozen((tmpModel as any).updater)); // false
+        console.log(Object.isFrozen((this.model as any).updater)); // true
+
+        this.cardService.updateNow(tmpModel).subscribe(card => {
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
