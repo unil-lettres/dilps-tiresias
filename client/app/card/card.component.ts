@@ -764,6 +764,10 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             return;
         }
 
+        // Temporary fix to avoid error when editing by a new updater.
+        // This will not update the stamp (why???...).
+        this.model.updater = {...(this.model as any).updater};
+
         this.cardService.updateNow(this.model).subscribe(card => {
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
