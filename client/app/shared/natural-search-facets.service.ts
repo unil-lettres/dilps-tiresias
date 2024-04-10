@@ -32,6 +32,7 @@ import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfigur
 import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration';
 import {TypeTextComponent} from '../extended/type-text/type-text.component';
 import {TypeNaturalSelectComponent} from '../extended/type-natural-select/type-natural-select.component';
+import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 
 export const adminConfig: NaturalSearchFacets = [
     {
@@ -205,6 +206,16 @@ export class NaturalSearchFacetsService {
             transform: replaceOperatorByName,
         } satisfies DropdownFacet<never>,
         {
+            display: 'Nom antique',
+            field: 'antiqueNames',
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: this.antiqueNameService,
+                placeholder: 'Nom antique',
+                filter: {},
+            },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<AntiqueNameService>>,
+        {
             display: 'Période',
             field: 'periods',
             component: TypeHierarchicSelectorComponent,
@@ -271,6 +282,7 @@ export class NaturalSearchFacetsService {
         private readonly artistService: ArtistService,
         private readonly documentTypeService: DocumentTypeService,
         private readonly institutionService: InstitutionService,
+        private readonly antiqueNameService: AntiqueNameService,
     ) {}
 
     public getFacets(): NaturalSearchFacets {

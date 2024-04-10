@@ -68,6 +68,7 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(cards => {
                 this.cards = cards;
+                this.selectionModel.clear();
                 this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));
             });
 

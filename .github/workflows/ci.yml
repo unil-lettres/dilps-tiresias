@@ -10,7 +10,7 @@ jobs:
                 php-versions: ['8.2']
                 composer-version: ['2.6']
                 mariadb-version: ['10.6']
-                node-version: ['18']
+                node-version: ['20']
 
         env:
             MYSQL_HOST: '127.0.0.1'

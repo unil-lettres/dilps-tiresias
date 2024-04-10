@@ -10,12 +10,16 @@ coding_style:
                 concatenation: true
 
 build:
+    environment:
+        variables:
+            NVM_NODEJS_ORG_MIRROR: 'https://nodejs.org/dist'
+            NODEJS_ORG_MIRROR: 'https://nodejs.org/dist'
     nodes:
         analysis:
             image: default-jammy
             environment:
                 php: 8.2
-                node: 18
+                node: 20
             tests:
                 override:
                     - php-scrutinizer-run

@@ -21,7 +21,7 @@ upload_file() {
         echo "Uploading source map for $file.js to $host..."
         curl --http1.1 "$BUGSNAG_API_URL" \
             -F apiKey="$BUGSNAG_API_KEY" \
-            -F minifiedUrl="https://$host/$file.*.js" \
+            -F minifiedUrl="https://$host/$file*.js" \
             -F sourceMap="@$PWD/js-sources-map/$file.js.map" \
             -F minifiedFile="@$PWD/js-sources-map/$file.js" \
             -F overwrite=true
