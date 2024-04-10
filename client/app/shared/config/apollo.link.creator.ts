@@ -58,7 +58,7 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
         // Show Graphql responses with errors to end-users (but do not decrease pending queries because it is done by uploadInterceptor)
         if (errorResponse.graphQLErrors) {
             errorResponse.graphQLErrors.forEach(error => {
-                if (error.extensions.showSnack) {
+                if (error.extensions?.showSnack) {
                     // Show whatever server prepared for end-user, with a bit more time to read
                     alertService.error(error.message, 5000);
                 } else {
