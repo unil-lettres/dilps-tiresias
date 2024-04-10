@@ -63,7 +63,7 @@ import {
 } from '@ecodev/natural';
 import {ThemePalette} from '@angular/material/core';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
-import {StampComponent} from '../shared/components/stamp/stamp.component';
+import {StampComponent, Stamped} from '../shared/components/stamp/stamp.component';
 import {FilesComponent} from '../files/files/files.component';
 import {AddressComponent} from '../shared/components/address/address.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
@@ -337,6 +337,11 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
     public artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
 
     /**
+     * Cache stamped data from server.
+     */
+    public stamp: Stamped = {};
+
+    /**
      * Used to display a loading placeholder while the modal is loading.
      * We cannot rely only on the fact that model is null because when we click
      * on a related card, modal is not set back to null. So the placeholder will
@@ -588,6 +593,13 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
             this.artists = this.fetchedModel?.artists ?? []; // cache, see attribute docs
 
+            this.stamp = {
+                creator: this.fetchedModel?.creator,
+                updater: this.fetchedModel?.updater,
+                creationDate: this.fetchedModel?.creationDate,
+                updateDate: this.fetchedModel?.updateDate,
+            };
+
             const src = CardService.getImageLink(this.model, 2000);
             if (src) {
                 this.imageSrc = src;
@@ -768,6 +780,13 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
             this.alertService.info('Mis à jour');
             this.institution = card.institution;
             this.artists = card.artists;
+
+            this.stamp = {
+                ...this.stamp,
+                updater: card.updater,
+                updateDate: card.updateDate,
+            };
+
             this.refreshInitialCardValues();
             this.edit = false;
         });
