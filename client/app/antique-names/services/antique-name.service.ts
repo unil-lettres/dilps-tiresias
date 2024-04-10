@@ -1,5 +1,4 @@
-import {Apollo} from 'apollo-angular';
-import {Injectable, Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {
     AntiqueName,
     AntiqueNameInput,
@@ -22,7 +21,6 @@ import {
 } from './antique-name.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {SITE} from '../../app.config';
-import {NaturalDebounceService} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -39,10 +37,8 @@ export class AntiqueNameService extends AbstractContextualizedService<
     DeleteAntiqueNames['deleteAntiqueNames'],
     never
 > {
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
+    public constructor(@Inject(SITE) site: Site) {
         super(
-            apollo,
-            naturalDebounceService,
             'antiqueName',
             antiqueNameQuery,
             antiqueNamesQuery,

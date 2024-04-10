@@ -1,10 +1,8 @@
-import {Apollo} from 'apollo-angular';
-import {Inject, Injectable, assertInInjectionContext} from '@angular/core';
+import {assertInInjectionContext, Inject, Injectable} from '@angular/core';
 import {SITE} from '../../app.config';
 import {Site, Statistic, Statistics, StatisticsVariables, StatisticVariables} from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
-import {NaturalDebounceService} from '@ecodev/natural';
 import {Observable, Subject, switchMap} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {DocumentNode} from 'graphql';
@@ -29,8 +27,8 @@ export class StatisticService extends AbstractContextualizedService<
     private readonly detail = new Subject<void>();
     private readonly search = new Subject<void>();
 
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
-        super(apollo, naturalDebounceService, 'statistic', statisticQuery, statisticsQuery, null, null, null, site);
+    public constructor(@Inject(SITE) site: Site) {
+        super('statistic', statisticQuery, statisticsQuery, null, null, null, site);
 
         this.createSub(this.page, recordPage);
         this.createSub(this.detail, recordDetail);

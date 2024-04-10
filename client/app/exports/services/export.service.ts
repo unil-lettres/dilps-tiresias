@@ -1,5 +1,3 @@
-import {NaturalDebounceService} from '@ecodev/natural';
-import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
 import {
     CreateExport,
@@ -35,8 +33,8 @@ export class ExportService extends AbstractContextualizedService<
     never,
     never
 > {
-    public constructor(apollo: Apollo, naturalDebounceService: NaturalDebounceService, @Inject(SITE) site: Site) {
-        super(apollo, naturalDebounceService, 'export', exportQuery, exportsQuery, createExport, null, null, site);
+    public constructor(@Inject(SITE) site: Site) {
+        super('export', exportQuery, exportsQuery, createExport, null, null, site);
     }
 
     public override getDefaultForServer(): Required<CreateExportInput> {
@@ -54,7 +52,7 @@ export class ExportService extends AbstractContextualizedService<
 
     public validate(object: ValidateExportVariables['input']): Observable<ValidateExport['validateExport']> {
         const variables = {
-            input: this.getInput(object),
+            input: this.getInput(object, true),
             ...this.getPartialVariablesForCreation(object),
         };
 

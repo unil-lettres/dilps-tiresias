@@ -18,7 +18,7 @@ import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
 import {IScrollbarOptions, NG_SCROLLBAR_OPTIONS} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
-import {apolloOptionsProvider} from './app/shared/config/apollo.link.creator';
+import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './app/statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';

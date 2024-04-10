@@ -74,6 +74,8 @@ export const createInstitution = gql`
 export const updateInstitution = gql`
     mutation UpdateInstitution($id: InstitutionID!, $input: InstitutionPartialInput!) {
         updateInstitution(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

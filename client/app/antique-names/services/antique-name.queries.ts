@@ -55,6 +55,8 @@ export const createAntiqueName = gql`
 export const updateAntiqueName = gql`
     mutation UpdateAntiqueName($id: AntiqueNameID!, $input: AntiqueNamePartialInput!) {
         updateAntiqueName(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

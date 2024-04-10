@@ -55,6 +55,8 @@ export const createDocumentType = gql`
 export const updateDocumentType = gql`
     mutation UpdateDocumentType($id: DocumentTypeID!, $input: DocumentTypePartialInput!) {
         updateDocumentType(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

@@ -91,9 +91,9 @@ export class AbstractDetailDirective<
     }
 
     public create(): void {
-        this.service.create(this.data.item).subscribe(() => {
+        this.service.create(this.data.item).subscribe(newItem => {
             this.alertService.info('Créé');
-            this.dialogRef.close(this.data.item);
+            this.dialogRef.close(newItem);
         });
     }
 

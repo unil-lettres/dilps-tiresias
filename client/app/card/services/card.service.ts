@@ -1,7 +1,6 @@
 import {RouteReuseStrategy} from '@angular/router';
-import {Apollo} from 'apollo-angular';
 import {Inject, Injectable} from '@angular/core';
-import {merge, mergeWith} from 'lodash-es';
+import {merge} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {SITE} from '../../app.config';
@@ -38,7 +37,7 @@ import {
     updateCard,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
-import {Literal, mergeOverrideArray, NaturalDebounceService, WithId} from '@ecodev/natural';
+import {Literal, WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;
@@ -66,12 +65,10 @@ export class CardService extends AbstractContextualizedService<
     private collectionIdForCreation: string | null = null;
 
     public constructor(
-        apollo: Apollo,
-        naturalDebounceService: NaturalDebounceService,
         @Inject(SITE) site: Site,
         private readonly routeReuse: RouteReuseStrategy,
     ) {
-        super(apollo, naturalDebounceService, 'card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
+        super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 
     public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {
@@ -174,8 +171,8 @@ export class CardService extends AbstractContextualizedService<
         };
     }
 
-    public override getInput(object: Literal): CardInput | CardPartialInput {
-        const input = super.getInput(object);
+    public override getInput(object: Literal, forCreation: boolean): CardInput | CardPartialInput {
+        const input = super.getInput(object, forCreation);
 
         // If file is undefined or null, prevent to send attribute to server
         if (!object.file) {
@@ -193,7 +190,7 @@ export class CardService extends AbstractContextualizedService<
     public createWithCollection(
         object: CreateCardVariables['input'],
         collection: CreateCardVariables['collection'],
-    ): Observable<CreateCard['createCard']> {
+    ): Observable<unknown> {
         this.collectionIdForCreation = collection ? collection.id : null;
 
         return this.createWithoutRefetch(object);
@@ -228,7 +225,7 @@ export class CardService extends AbstractContextualizedService<
 
         const variables = merge(
             {},
-            {input: this.getInput(object)},
+            {input: this.getInput(object, true)},
             this.getPartialVariablesForCreation(),
         ) satisfies CreateCardVariables;
 
@@ -237,13 +234,7 @@ export class CardService extends AbstractContextualizedService<
                 mutation: this.createMutation!,
                 variables: variables,
             })
-            .pipe(
-                map(result => {
-                    const newObject = this.mapCreation(result);
-
-                    return mergeWith(object, newObject, mergeOverrideArray);
-                }),
-            );
+            .pipe(map(result => result.data!.createCard));
     }
 
     public getCollectionCopyrights(card: Card['card']): Observable<string> {

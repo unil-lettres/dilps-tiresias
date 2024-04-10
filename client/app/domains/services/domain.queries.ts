@@ -65,6 +65,8 @@ export const createDomain = gql`
 export const updateDomain = gql`
     mutation UpdateDomain($id: DomainID!, $input: DomainPartialInput!) {
         updateDomain(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

@@ -55,6 +55,8 @@ export const createArtist = gql`
 export const updateArtist = gql`
     mutation UpdateArtist($id: ArtistID!, $input: ArtistPartialInput!) {
         updateArtist(id: $id, input: $input) {
+            id
+            name
             updateDate
             updater {
                 ...UserMeta

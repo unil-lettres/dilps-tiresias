@@ -5,7 +5,7 @@ import {Injectable, NgZone} from '@angular/core';
 import {buildClientSchema} from 'graphql';
 import {addMocksToSchema} from '@graphql-tools/mock';
 import {schema as introspectionResult} from '../../../../data/tmp/schema';
-import {apolloDefaultOptions} from '../config/apollo.link.creator';
+import {apolloDefaultOptions} from '../config/apollo-options.provider';
 
 /**
  * A mock Apollo to be used in tests only
