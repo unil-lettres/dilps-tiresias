@@ -1621,10 +1621,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-10.0.1.tgz#831ecbb6cbc16f75c55a31f165bce29a794c1092"
   integrity sha512-zMpQoLalFscinwwxy33wU42TWRPZEkShwrXPqK/3x5NBi00D7faZAAgTmGNe7534SBbeIjlTgeLRgEx7MOHIvg==
 
-"@ecodev/natural@^57.0.6":
-  version "57.0.6"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-57.0.6.tgz#bba79c04812d528cd002510b9cde48da27a40487"
-  integrity sha512-rvDJIoNBDrji+RZTRg5kx0uAqEMv/imgNQdiYlBFoHqht0WxBnVrUlN2ilB+/kQe/Irj0bJKxrqYs46fGsQCyw==
+"@ecodev/natural@^57.0.7":
+  version "57.0.7"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-57.0.7.tgz#322cb9e7d943b296e699be81761193f7dbf1669e"
+  integrity sha512-FKkS1WrcpgZAxjRyyDuHYE8JJ0bo/7Qd3Ws2Jg4SjSUWUbc0zLVsrCpHcGZd3xQCjV+yfuxsMX1bMYwwN0CSZg==
   dependencies:
     crypto-es "^2.0.3"
     extract-files "^13.0.0"
