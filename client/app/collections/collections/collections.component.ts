@@ -2,7 +2,6 @@ import {Component, DestroyRef, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
 import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {isArray} from 'lodash-es';
 import {
     Collections,
     CollectionsVariables,
@@ -195,7 +194,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
             return true;
         }
 
-        if (isArray(allowedRoles) && allowedRoles.length) {
+        if (Array.isArray(allowedRoles) && allowedRoles.length) {
             for (const allowedRole of allowedRoles) {
                 if (allowedRole === user.role) {
                     return true;

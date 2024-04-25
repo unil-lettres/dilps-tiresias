@@ -18,7 +18,7 @@ import {
     QueryVariables,
     SortingOrder,
 } from '@ecodev/natural';
-import {clone, isArray, isObject, isString, merge} from 'lodash-es';
+import {clone, isObject, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
@@ -179,7 +179,7 @@ export class ThesaurusComponent<
     private readonly formChange$ = this.formControl.valueChanges.pipe(
         takeUntilDestroyed(),
         distinctUntilChanged(),
-        filter(val => isString(val)),
+        filter(val => typeof val === 'string'),
         debounceTime(300),
     );
 
@@ -395,7 +395,7 @@ export class ThesaurusComponent<
         if (!this.multiple && isObject(this._model)) {
             this.items = [this._model as ThesaurusModel];
             this.notifyModel();
-        } else if (this.multiple && isArray(this._model)) {
+        } else if (this.multiple && Array.isArray(this._model)) {
             this.items = clone(this._model); // clone to get rid of readonly
             this.notifyModel();
         }

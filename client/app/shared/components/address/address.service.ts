@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isUndefined, mapValues, trim} from 'lodash-es';
+import {mapValues} from 'lodash-es';
 
 export type Address = {
     street?: string;
@@ -37,13 +37,13 @@ export class AddressService {
 
         place.address_components?.forEach(addressComponent => {
             const addressType = addressComponent.types[0];
-            if (!isUndefined(this.config[addressType])) {
+            if (this.config[addressType] !== undefined) {
                 tmpGAddress[addressType] = addressComponent[this.config[addressType]];
             }
         });
 
         const address: Address = {
-            street: trim(tmpGAddress.route + ' ' + tmpGAddress.street_number),
+            street: (tmpGAddress.route + ' ' + tmpGAddress.street_number).trim(),
             postcode: tmpGAddress.postal_code,
             locality: tmpGAddress.locality,
             countryIso2: tmpGAddress.country,
