@@ -71,7 +71,7 @@ bootstrapApplication(AppComponent, {
             } satisfies MatTabsConfig,
         },
         {provide: SITE, useValue: (window as Literal).APP_SITE},
-        // {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
+        {provide: ErrorHandler, useFactory: bugsnagErrorHandlerFactory},
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
