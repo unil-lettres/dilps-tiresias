@@ -13,7 +13,7 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -22,7 +22,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     styleUrl: './quizz.component.scss',
     standalone: true,
     imports: [
-        FlexModule,
         MatFormFieldModule,
         MatInputModule,
         FormsModule,

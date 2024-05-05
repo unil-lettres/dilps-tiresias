@@ -11,7 +11,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
@@ -21,7 +21,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     standalone: true,
     imports: [
         MatToolbarModule,
-        FlexModule,
+
         LogoComponent,
         NaturalSearchComponent,
         MatTableModule,

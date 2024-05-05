@@ -65,8 +65,8 @@
 </mat-menu>
 
 @if (dataSource) {
-    <div class="containerWithToolbar" fxFlex fxLayout="column">
-        <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+    <div class="containerWithToolbar nat-vertical nat-expand">
+        <mat-toolbar class="nat-horizontal nat-left nat-center nat-gap-10">
             @if (showLogo) {
                 <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             }
@@ -129,9 +129,7 @@
                 [facets]="naturalSearchFacets"
                 [selections]="naturalSearchSelections"
                 dropdownTitle="Recherche approfondie"
-                class="searchField"
-                fxFlex
-                fxFlexAlign="start"
+                class="searchField nat-expand"
             />
             @if (viewMode !== ViewMode.grid) {
                 <button (click)="setViewMode(ViewMode.grid)" mat-icon-button matTooltip="Affichage Mosaïque">

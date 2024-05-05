@@ -12,7 +12,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
@@ -21,7 +21,6 @@ import {NaturalIconDirective} from '@ecodev/natural';
     styleUrl: './change.component.scss',
     standalone: true,
     imports: [
-        FlexModule,
         MatToolbarModule,
         LogoComponent,
         MatButtonModule,

@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-left nat-center nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
@@ -6,25 +6,24 @@
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        fxFlex
-        fxFlexAlign="start"
+        class="nat-expand"
     />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding padding-fab">
-        <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
-            <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Mots-clés</div>
-            <div fxLayout="row wrap">
+    <div class="nat-padding padding-fab">
+        <div class="nat-margin-bottom nat-horizontal nat-wrap nat-left nat-top">
+            <div [routerLink]="getChildLink(null)" class="mat-headline-5 nat-no-margin">Mots-clés</div>
+            <div class="nat-horizontal nat-wrap">
                 @for (item of breadcrumbs; track item) {
-                    <a [routerLink]="getChildLink(item)" class="no-padding" mat-button>
+                    <a [routerLink]="getChildLink(item)" class="nat-no-padding" mat-button>
                         <mat-icon naturalIcon="chevron_right" />
                         <span>{{ item.name }}</span>
                     </a>
                 }
             </div>
         </div>
-        <div [fxShow]="showTable()" class="responsive-table">
+        <div [class.nat-show]="showTable()" class="responsive-table">
             <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
@@ -67,10 +66,10 @@
             </table>
         </div>
         @if (showNoResults()) {
-            <div class="margin-v" fxLayout="column" fxLayoutAlign="center center">Pas de résultats</div>
+            <div class="nat-margin-vertical nat-vertical nat-center">Pas de résultats</div>
         }
         @if (!dataSource.data) {
-            <div fxLayout="column" fxLayoutAlign="center center">
+            <div class="nat-vertical nat-center">
                 <mat-progress-spinner [diameter]="40" mode="indeterminate" />
             </div>
         }

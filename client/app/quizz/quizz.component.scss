@@ -31,3 +31,16 @@
         font-weight: bold;
     }
 }
+
+.card {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 400px;
+    max-width: 400px;
+    min-width: 400px;
+}
+
+.title {
+    align-items: baseline;
+}

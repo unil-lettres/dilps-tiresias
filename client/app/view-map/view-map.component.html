@@ -11,7 +11,7 @@
         <map-info-window [options]="infoWindowOption">
             <div>
                 <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
-                <a [routerLink]="['/card', selectedMarker?.id]" fxLayout="column" fxLayoutAlign="center center">
+                <a [routerLink]="['/card', selectedMarker?.id]" class="nat-vertical nat-center">
                     <img [attr.src]="selectedMarker?.imageSrc" class="img" />
                 </a>
                 <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>

@@ -9,10 +9,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
+
 import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
@@ -22,10 +22,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     standalone: true,
     imports: [
         MatToolbarModule,
-        FlexModule,
+
         LogoComponent,
         NaturalSearchComponent,
-        ExtendedModule,
+
         MatTableModule,
         MatSortModule,
         TableButtonComponent,

@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Période">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
@@ -11,7 +11,7 @@
                     />
                 </mat-form-field>
 
-                <div fxLayout="row" fxLayoutGap="20px">
+                <div class="nat-horizontal nat-gap">
                     <mat-form-field [style.width]="'45%'">
                         <mat-label>A partir de</mat-label>
                         <input
@@ -56,6 +56,6 @@
         [canCreate]="user?.globalPermissions?.period?.create"
         [canDelete]="data.item.canDelete"
         [item]="data.item"
-        fxFlex
+        class="nat-expand"
     />
 </mat-dialog-actions>

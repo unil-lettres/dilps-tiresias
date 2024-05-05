@@ -13,7 +13,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatTabsModule} from '@angular/material/tabs';
 import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-hierarchy.component';
 
@@ -47,7 +47,7 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     imports: [
         MatDialogModule,
         MatTabsModule,
-        FlexModule,
+
         NaturalSelectComponent,
         FormsModule,
         MatButtonModule,

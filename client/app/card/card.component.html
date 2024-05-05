@@ -1,23 +1,23 @@
 @if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
-    <div naturalFileDrop [fileSelectionDisabled]="!edit" (filesChange)="dropImage($event)" fxFlex fxLayout="row">
+    <div
+        naturalFileDrop
+        [fileSelectionDisabled]="!edit"
+        (filesChange)="dropImage($event)"
+        class="nat-expand nat-horizontal"
+    >
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-        <div [ngClass]="{containerWithToolbar: showToolbar}" class="left-pane" fxFlex="400px" fxLayout="column">
+        <div [ngClass]="{containerWithToolbar: showToolbar}" class="left-pane nat-vertical">
             @if (showToolbar) {
-                <mat-toolbar
-                    [ngClass]="edit ? 'edition' : ''"
-                    fxFlex="none"
-                    fxLayout="row"
-                    fxLayoutAlign="start center"
-                >
+                <mat-toolbar [ngClass]="edit ? 'edition' : ''" class="nat-horizontal nat-left nat-center">
                     @if (showLogo) {
                         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
                     @if (title) {
                         <div>{{ title }}</div>
                     }
-                    <div fxFlex></div>
+                    <div class="nat-expand"></div>
                     <mat-menu #changeMenu="matMenu" [overlapTrigger]="false">
                         @if (canSuggestUpdate()) {
                             <button (click)="suggestUpdate()" mat-menu-item>Suggérer une modification</button>
@@ -101,11 +101,11 @@
                     }
                 </mat-toolbar>
             }
-            <ng-scrollbar fxFlex>
-                <div class="padding-scrollbar scrolled" fxLayout="column" fxLayoutAlign="start stretch">
+            <ng-scrollbar class="nat-expand">
+                <div class="padding-scrollbar scrolled nat-vertical">
                     @if (user?.role === 'administrator') {
-                        <div fxLayout="column">
-                            <div fxLayout="row">
+                        <div class="nat-vertical">
+                            <div class="nat-horizontal">
                                 {{
                                     visibilities[visibility]
                                         ? 'Visible ' + visibilities[visibility].text
@@ -118,11 +118,12 @@
                                 [max]="3"
                                 [min]="1"
                                 [step]="1"
-                                ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
-                            /></mat-slider>
+                            >
+                                <input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()" />
+                            </mat-slider>
                         </div>
                     }
-                    <div class="padding mat-subtitle-2">
+                    <div class="nat-padding mat-subtitle-2">
                         @for (collection of sortedCollections; track collection) {
                             <div>{{ collection.hierarchicName }}</div>
                         }
@@ -150,7 +151,7 @@
                                 </button>
                             }
                             @if (code.invalid && (code?.dirty || code?.touched) && !code.errors?.maxlength) {
-                                <mat-error>Cette référence est déjà attribuée à une fiche </mat-error>
+                                <mat-error>Cette référence est déjà attribuée à une fiche</mat-error>
                             }
                             @if (edit && model.code?.length > 23) {
                                 <mat-hint align="end" [ngClass]="{strong: model.code?.length >= 30}">
@@ -466,10 +467,8 @@
                                 [attr.aria-expanded]="accordionItem.expanded"
                             >
                                 <div
-                                    class="address-title mat-headline-6"
+                                    class="address-title mat-headline-6 nat-horizontal"
                                     (click)="accordionItem.toggle()"
-                                    fxLayout="row"
-                                    fxLayoutAlign="start baseline"
                                 >
                                     <span>Adresse</span>
                                     <mat-icon
@@ -518,9 +517,9 @@
                         />
                     }
                     @if (!isDilps) {
-                        <div fxLayout="row" fxLayoutGap="10px" class="double-fields">
+                        <div class="nat-horizontal double-fields nat-gap-10" debug="">
                             @if (edit || !!model.from) {
-                                <mat-form-field fxFlex="183px">
+                                <mat-form-field class="from-to-fields">
                                     <mat-label>A partir de</mat-label>
                                     <input
                                         [(ngModel)]="model.from"
@@ -532,7 +531,7 @@
                                 </mat-form-field>
                             }
                             @if (edit || !!model.to) {
-                                <mat-form-field fxFlex="183px">
+                                <mat-form-field class="from-to-fields">
                                     <mat-label>Jusqu'à</mat-label>
                                     <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1" />
                                 </mat-form-field>
@@ -833,14 +832,13 @@
                         <mat-list style="padding: 0">
                             <mat-list-item>
                                 <a
-                                    class="margin-bottom-hint"
+                                    class="nat-margin-bottom-hint"
                                     color="primary"
                                     style="justify-content: flex-start"
                                     mat-button
                                     [href]="model.url"
                                     [innerHTML]="model.urlDescription || model.url"
-                                >
-                                </a>
+                                ></a>
                             </mat-list-item>
                         </mat-list>
                     }
@@ -940,7 +938,7 @@
                                 </ng-template>
                             </natural-relations>
                             @if (edit) {
-                                <div class="margin-bottom-hint btn-link-related-cards">
+                                <div class="nat-margin-bottom-hint btn-link-related-cards">
                                     <button mat-raised-button (click)="openLinkRelatedCardsDialog()">
                                         Associer les fiches entre elles
                                     </button>
@@ -960,16 +958,14 @@
                 </div>
             </ng-scrollbar>
             @if (fetchedModel) {
-                <div class="padding">
+                <div class="nat-padding">
                     <app-stamp [item]="stamp" />
                 </div>
             }
         </div>
         @if (showImage) {
             <div
-                class="image-container"
-                fxFlex
-                fxLayout="column"
+                class="image-container nat-vertical nat-expand"
                 [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
                 [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
             >
@@ -986,10 +982,10 @@
                     </a>
                 }
                 @if (imageSrc && !imageData) {
-                    <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+                    <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image nat-expand"></div>
                 }
                 @if (imageData) {
-                    <div [style.backgroundImage]="imageData" class="image" fxFlex></div>
+                    <div [style.backgroundImage]="imageData" class="image nat-expand"></div>
                 }
                 @if (showCards && showSlideshowRelatedCards && fetchedModel) {
                     <app-related-cards

@@ -12,6 +12,24 @@
     background-repeat: no-repeat;
 }
 
+.left-pane {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 400px;
+    max-width: 400px;
+    min-width: 400px;
+}
+
+.from-to-fields {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 183px;
+    max-width: 183px;
+    min-width: 183px;
+}
+
 mat-slider {
     margin: 0 15px;
 }

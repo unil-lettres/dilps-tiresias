@@ -1,5 +1,5 @@
 @if (!onlyMap) {
-    <div [fxLayoutGap]="vertical ? '0px' : '10px'" fxLayout="column">
+    <div class="nat-vertical nat-gap-horizontal-10">
         @if (!readonly || !!model?.street) {
             <mat-form-field>
                 <mat-label>Rue</mat-label>
@@ -17,7 +17,7 @@
                 }
             </mat-form-field>
         }
-        <div [fxLayoutGap]="vertical ? '0px' : '10px'" [fxLayout]="vertical ? 'column' : 'row'">
+        <div class="nat-gap-horizontal-10" [class.nat-horizontal]="!vertical" [class.nat-vertical]="vertical">
             @if (isDilps && (!readonly || !!model?.postcode)) {
                 <mat-form-field>
                     <mat-label>NPA</mat-label>
@@ -36,7 +36,7 @@
                 </mat-form-field>
             }
             @if (!readonly || !!model?.locality) {
-                <mat-form-field [fxFlex]="!vertical">
+                <mat-form-field [class.nat-expand]="!vertical">
                     <mat-label>Localité</mat-label>
                     <input
                         (keyup.enter)="search()"
@@ -75,13 +75,8 @@
         [attr.aria-expanded]="accordionItem.expanded"
     >
         @if (allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude) {
-            <div
-                class="map-accordion-header"
-                (click)="accordionItem.toggle()"
-                fxLayout="row"
-                fxLayoutAlign="end center"
-            >
-                <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte </span>
+            <div class="map-accordion-header nat-horizontal nat-right nat-center" (click)="accordionItem.toggle()">
+                <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte</span>
                 <mat-icon
                     class="address-toggle-arrow"
                     [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
@@ -91,7 +86,7 @@
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
             <div id="mapZone">
                 <mat-form-field
-                    [fxShow]="(mapApiService.loaded | async) && !readonly"
+                    [class.nat-show]="(mapApiService.loaded | async) && !readonly"
                     class="mat-elevation-z4"
                     id="search"
                 >
@@ -136,7 +131,7 @@
 </cdk-accordion>
 
 @if (!isDilps) {
-    <div fxLayout="row" fxLayoutGap="10px" class="double-fields">
+    <div class="nat-horizontal double-fields nat-gap-10">
         @if (!readonly || !!model?.latitude) {
             <mat-form-field>
                 <mat-label>Latitude</mat-label>
@@ -150,7 +145,7 @@
             </mat-form-field>
         }
         @if (!readonly || !!model?.longitude) {
-            <mat-form-field fxFlex="183px">
+            <mat-form-field>
                 <mat-label>Longitude</mat-label>
                 <input
                     type="number"

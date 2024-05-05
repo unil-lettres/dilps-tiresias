@@ -30,7 +30,11 @@
                         "deleteOutputPath": false,
                         "polyfills": ["zone.js"],
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
-                        "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
+                        "styles": [
+                            "client/styles.scss",
+                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css",
+                            "node_modules/@ecodev/natural-layout/natural-layout.css"
+                        ],
                         "scripts": [],
                         "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags"]
                     },

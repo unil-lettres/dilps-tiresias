@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Artiste">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
@@ -23,6 +23,6 @@
         [canCreate]="user?.globalPermissions?.artist?.create"
         [canDelete]="data.item.canDelete"
         [item]="data.item"
-        fxFlex
+        class="nat-expand"
     />
 </mat-dialog-actions>

@@ -22,7 +22,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -31,7 +31,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     styleUrl: './collections.component.scss',
     standalone: true,
     imports: [
-        FlexModule,
         MatToolbarModule,
         LogoComponent,
         CommonModule,

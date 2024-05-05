@@ -1,10 +1,10 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Collection">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 @if (showVisibility) {
-                    <div class="innerSpacing" fxLayout="column" style="max-width: 400px">
-                        <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
+                    <div class="innerSpacing nat-vertical" style="max-width: 400px">
+                        <div class="nat-horizontal">Visible {{ visibilities[visibility].text }}</div>
                         <mat-slider
                             [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
                             [max]="3"
@@ -69,7 +69,7 @@
                     [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
                     [main]="data.item"
                     [service]="userService"
-                    class="margin"
+                    class="nat-margin"
                     placeholder="Ajouter un abonné"
                 />
             </mat-tab>
@@ -85,6 +85,6 @@
         [canCreate]="user?.globalPermissions?.collection?.create"
         [canDelete]="true"
         [item]="data.item"
-        fxFlex
+        class="nat-expand"
     />
 </mat-dialog-actions>

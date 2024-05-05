@@ -28,7 +28,7 @@ import {FormsModule} from '@angular/forms';
 import {MatOptionModule} from '@angular/material/core';
 import {CommonModule} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatTabsModule} from '@angular/material/tabs';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 
@@ -93,7 +93,7 @@ type SerieData = {
     imports: [
         LogoComponent,
         MatTabsModule,
-        FlexModule,
+
         MatFormFieldModule,
         MatSelectModule,
         CommonModule,

@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="10px">
+<div class="nat-vertical nat-lg-horizontal nat-gap-10">
     <div>
         <highcharts-chart
             [Highcharts]="Highcharts"
@@ -8,7 +8,7 @@
             style="width: 100%; height: 400px; display: block; max-width: 600px"
         />
     </div>
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px">
+    <div class="nat-vertical nat-sm-horizontal nat-gap-10">
         @for (table of tables; track table) {
             <div>
                 <table mat-table [dataSource]="table.dataSource">

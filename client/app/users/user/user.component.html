@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Utilisateur">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field class="width-auto">
                     <mat-label>Login</mat-label>
                     <input [(ngModel)]="data.item.login" [disabled]="!!data.item.id" matInput name="login" />
@@ -23,7 +23,7 @@
                     (user?.globalPermissions?.user?.create || (isUpdatePage() && data.item.permissions.update)) &&
                     !isShibbolethUser()
                 ) {
-                    <div [formGroup]="passwordGroupCtrl" fxLayout="column" fxLayoutGap="10px">
+                    <div [formGroup]="passwordGroupCtrl" class="nat-vertical nat-gap-10">
                         <mat-form-field>
                             <mat-label>Mot de passe</mat-label>
                             <input [formControl]="passwordCtrl" matInput type="password" />
@@ -102,7 +102,7 @@
                     [hierarchicSelectorConfig]="collectionsHierarchicConfig"
                     [main]="data.item"
                     [service]="collectionService"
-                    class="margin"
+                    class="nat-margin"
                     placeholder="Ajouter une collection"
                 />
             </mat-tab>
@@ -119,6 +119,6 @@
         [canDelete]="true"
         [formCtrl]="passwordConfirmationCtrl"
         [item]="data.item"
-        fxFlex
+        class="nat-expand"
     />
 </mat-dialog-actions>

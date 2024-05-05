@@ -20,12 +20,12 @@
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
-<div fxFlex fxLayout="column">
-    <mat-sidenav-container fxFlex fxLayout="column">
+<div class="nat-expand nat-vertical">
+    <mat-sidenav-container class="nat-expand nat-vertical">
         @if (showNavigationMenu()) {
             <mat-sidenav class="menuMinimized" id="menu" mode="side" opened="true" position="start">
                 <ng-scrollbar>
-                    <div fxLayout="column" fxFill>
+                    <div class="nat-vertical nat-fill">
                         @if (user) {
                             <mat-nav-list>
                                 <!-- Dashboard -->
@@ -124,9 +124,8 @@
                                             <mat-icon matListItemIcon naturalIcon="file_download" />
                                         </a>
                                     }
-                                }
-                            </mat-nav-list>
-                            <!-- Thésaurus -->
+                                }</mat-nav-list
+                            ><!-- Thésaurus -->
                             @if (showThesaurusMenu()) {
                                 <mat-divider />
                                 <mat-nav-list>
@@ -155,7 +154,7 @@
                                 </mat-nav-list>
                             }
                             <mat-divider />
-                            <mat-nav-list fxFlex>
+                            <mat-nav-list class="nat-expand">
                                 <!-- Account -->
                                 <a
                                     (click)="editUser()"
@@ -177,7 +176,7 @@
                             </mat-nav-list>
                         }
                         @if (!user) {
-                            <mat-nav-list fxFlex>
+                            <mat-nav-list class="nat-expand">
                                 <!-- Dashboard -->
                                 <a
                                     [routerLinkActiveOptions]="{exact: true}"
@@ -228,21 +227,15 @@
             </mat-sidenav>
         }
 
-        <div fxFlex fxLayout="row" id="appContent">
+        <div class="nat-expand nat-horizontal" id="appContent">
             <router-outlet />
         </div>
     </mat-sidenav-container>
 </div>
 
-<mat-menu
-    #errorsMenu="matMenu"
-    [overlapTrigger]="false"
-    class="padding error-menu"
-    fxLayout="column"
-    fxLayoutGap="20px"
->
+<mat-menu #errorsMenu="matMenu" [overlapTrigger]="false" class="nat-padding error-menu nat-gap nat-vertical">
     @for (error of errors; track error) {
-        <div (click)="$event.stopPropagation()" class="error" fxLayout="column" style="user-select: text">
+        <div (click)="$event.stopPropagation()" class="error nat-vertical" style="user-select: text">
             @if (error.message) {
                 <span class="mat-caption">{{ error.message }}</span>
             }

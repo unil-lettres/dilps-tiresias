@@ -1,11 +1,11 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-left nat-center nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding">
+    <div class="nat-padding">
         <div class="mat-headline-5">Notifications</div>
-        <div class="responsive-table" [fxShow]="showTable()">
+        <div class="responsive-table" [class.nat-show]="showTable()">
             <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr
@@ -49,12 +49,12 @@
             </table>
         </div>
         @if (dataSource.data?.length === 0) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+            <div class="nat-margin nat-vertical nat-center">
                 <div>Pas de résultats</div>
             </div>
         }
         @if (!dataSource.data) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+            <div class="nat-margin nat-vertical nat-center">
                 <mat-progress-spinner [diameter]="40" mode="indeterminate" />
             </div>
         }

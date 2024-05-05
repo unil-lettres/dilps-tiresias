@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-left nat-center nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
@@ -6,15 +6,14 @@
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        fxFlex
-        fxFlexAlign="start"
+        class="nat-expand"
     />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding padding-fab">
+    <div class="nat-padding padding-fab">
         <div class="mat-headline-5">Noms antiques</div>
-        <div [fxShow]="showTable()" class="responsive-table">
+        <div [class.nat-show]="showTable()" class="responsive-table">
             <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
@@ -39,12 +38,12 @@
             </table>
         </div>
         @if (dataSource.data?.length === 0) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+            <div class="nat-margin nat-vertical nat-center">
                 <div>Pas de résultats</div>
             </div>
         }
         @if (!dataSource.data) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
+            <div class="nat-margin nat-vertical nat-center">
                 <mat-progress-spinner [diameter]="40" mode="indeterminate" />
             </div>
         }

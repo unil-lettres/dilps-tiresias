@@ -11,13 +11,12 @@ import {
 import {LocationOperatorString} from '../shared/generated-types';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
     standalone: true,
-    imports: [FormsModule, FlexModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeLocationComponent implements DropdownComponent {
     public renderedValue = new BehaviorSubject<string>('');

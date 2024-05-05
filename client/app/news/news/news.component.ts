@@ -13,7 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
@@ -24,7 +24,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     imports: [
         MatDialogModule,
         MatTabsModule,
-        FlexModule,
+
         MatCheckboxModule,
         FormsModule,
         MatFormFieldModule,

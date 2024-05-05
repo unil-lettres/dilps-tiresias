@@ -3,11 +3,11 @@
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         @for (item of items; track item) {
             <mat-chip-row (removed)="removeTerm(item)" [removable]="!readonly">
-                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                <div class="nat-horizontal nat-center nat-gap-5">
                     @if (previewComponent) {
                         <mat-icon (click)="openItem(item)" class="mat-mdc-chip-remove" fontIcon="remove_red_eye" />
                     }
-                    <div fxFlex class="thesaurus-chip-label">
+                    <div class="nat-expand thesaurus-chip-label">
                         <span>{{ getLabel(item) }}</span>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
             (focus)="focus()"
             (keydown.enter)="onEnter()"
             [formControl]="formControl"
-            [fxShow]="!readonly || items.length === 0"
+            [class.nat-show]="!readonly || items.length === 0"
             [matAutocomplete]="autocomplete"
             [matChipInputFor]="chipList"
             [readonly]="readonly"
@@ -35,7 +35,7 @@
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">
         @for (item of suggestions; track item) {
             <mat-option [value]="item" class="multiline">
-                <div fxLayout="column" class="padding-v">
+                <div class="nat-vertical nat-padding-vertical">
                     <div>{{ item.name }}</div>
                     @if (item?.locality) {
                         <div class="mat-caption">{{ item.locality }}</div>

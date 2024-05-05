@@ -25,7 +25,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
+
 import {MatTabsModule} from '@angular/material/tabs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -47,7 +47,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     imports: [
         MatDialogModule,
         MatTabsModule,
-        FlexModule,
+
         MatFormFieldModule,
         MatInputModule,
         FormsModule,

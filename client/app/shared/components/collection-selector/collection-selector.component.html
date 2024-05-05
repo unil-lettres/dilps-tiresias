@@ -2,7 +2,7 @@
     <mat-tab-group>
         <!-- Collection existante -->
         <mat-tab label="Collection existante">
-            <div class="padding-v" fxLayout="column">
+            <div class="nat-padding-vertical nat-vertical">
                 <natural-select
                     [(ngModel)]="collection"
                     [filter]="listFilter"
@@ -14,7 +14,7 @@
                         <app-collection-hierarchy [collection]="item" />
                     </ng-template>
                 </natural-select>
-                <div fxFlexAlign="end" fxLayout="row">
+                <div>
                     <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>
                         Ajouter à la collection
                     </button>
@@ -24,7 +24,7 @@
 
         <!-- Nouvelle collection -->
         <mat-tab label="Nouvelle collection">
-            <div class="padding-v" fxLayout="column">
+            <div class="nat-padding-vertical nat-vertical">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input [(ngModel)]="newCollection.name" matInput />
@@ -44,7 +44,7 @@
                     />
                 }
 
-                <div fxFlexAlign="end" fxLayout="row">
+                <div>
                     <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
                         Ajouter à une nouvelle collection privée
                     </button>
@@ -53,14 +53,14 @@
         </mat-tab>
     </mat-tab-group>
 
-    <div fxLayout="column">
+    <div class="nat-vertical">
         @if (image?.collections?.length) {
             <div class="mat-subtitle-1">Collections liées à la fiche</div>
         }
         @for (collection of image?.collections; track collection) {
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <div class="nat-horizontal nat-left nat-center nat-gap-10">
                 <mat-icon naturalIcon="collections" />
-                <div fxFlex>{{ collection.name }}</div>
+                <div class="nat-expand">{{ collection.name }}</div>
                 <button
                     (click)="unlink(image!, collection)"
                     mat-icon-button

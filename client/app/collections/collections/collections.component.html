@@ -1,8 +1,8 @@
-<div fxFlex fxLayout="row">
-    <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
-        <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
+<div class="nat-expand nat-horizontal">
+    <div class="containerWithToolbar nat-vertical left-pane">
+        <mat-toolbar class="nat-horizontal nat-left nat-center">
             <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-            <div fxFlex></div>
+            <div class="nat-expand"></div>
             @if (canCreate) {
                 <button (click)="add()" [matTooltip]="'Créer une collection'" mat-icon-button>
                     <mat-icon naturalIcon="add" />
@@ -10,8 +10,8 @@
             }
         </mat-toolbar>
 
-        <ng-scrollbar fxFlex>
-            <div class="scrolled" fxLayout="column">
+        <ng-scrollbar class="nat-expand">
+            <div class="scrolled nat-vertical">
                 @if (showUnclassified) {
                     <mat-nav-list>
                         <a
@@ -78,13 +78,7 @@
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
                     />
                     @if (hasMore) {
-                        <a
-                            (click)="more()"
-                            fxLayout="column"
-                            fxLayoutAlign="center"
-                            mat-list-item
-                            class="mat-mdc-list-item-interactive"
-                        >
+                        <a (click)="more()" class="nat-vertical mat-mdc-list-item-interactive" mat-list-item>
                             <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
                             <span>Afficher d'avantage</span>
                         </a>

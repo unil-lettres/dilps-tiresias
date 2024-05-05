@@ -1,7 +1,7 @@
-<div class="containerWithToolbar" fxFlex fxLayout="column">
-    <mat-toolbar class="main-toolbar" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<div class="containerWithToolbar nat-vertical nat-expand">
+    <mat-toolbar class="main-toolbar nat-horizontal nat-left nat-center nat-gap">
         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-        <div fxFlex></div>
+        <div class="nat-expand"></div>
 
         @if (user?.role === 'administrator') {
             @if (change) {
@@ -49,26 +49,26 @@
     </mat-toolbar>
 
     @if (loaded) {
-        <div class="test" fxFlex fxLayout="row">
+        <div class="test nat-horizontal nat-expand">
             <!-- Original -->
             @if (!original) {
-                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Nouvelle fiche</div>
                 </div>
             }
             @if (original) {
-                <div class="card-original" fxFlex fxLayout="column">
-                    <app-card [fetchedModel]="original" fxFlex title="Original" />
+                <div class="card-original nat-vertical nat-expand">
+                    <app-card [fetchedModel]="original" class="nat-expand" title="Original" />
                 </div>
             }
             <!-- Suggestion -->
             @if (!suggestionInput) {
-                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Suppression de la fiche</div>
                 </div>
             }
             @if (suggestionInput) {
-                <div class="card-suggestion" fxFlex fxLayout="column">
+                <div class="card-suggestion nat-vertical nat-expand">
                     <app-card
                         [model]="suggestionInput"
                         [fetchedModel]="fetchedSuggestion"
@@ -76,7 +76,7 @@
                         [showTools]="showTools"
                         [showCards]="false"
                         [showCode]="false"
-                        fxFlex
+                        class="nat-expand"
                         title="Suggestion"
                     />
                 </div>

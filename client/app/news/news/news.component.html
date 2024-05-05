@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Actualité">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-checkbox [(ngModel)]="data.item.isActive">Actif </mat-checkbox>
 
                 <mat-form-field>
@@ -70,6 +70,6 @@
         [canDelete]="true"
         [item]="data.item"
         [formCtrl]="$any(url)"
-        fxFlex
+        class="nat-expand"
     />
 </mat-dialog-actions>

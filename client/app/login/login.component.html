@@ -1,11 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <div class="login" fxLayout="column">
-        <div fxLayout="column" fxLayoutGap="15px">
+<div class="nat-horizontal nat-center">
+    <div class="login nat-vertical">
+        <div class="nat-vertical nat-gap-15">
             <app-logo [data]="{type: 'main', class: 'logo-main'}" />
 
             <mat-divider />
 
-            <div class="login-info" fxLayout="column" fxLayoutGap="15px">
+            <div class="login-info nat-gap-15 nat-vertical">
                 Veuillez choisir une méthode d'authentification ou
                 <br />
                 utiliser le bouton "Accès public"
@@ -54,7 +54,7 @@
                 </mat-expansion-panel-header>
 
                 <form>
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <mat-form-field class="width-auto">
                             <mat-label>Login</mat-label>
                             <input
@@ -69,7 +69,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <mat-form-field class="width-auto">
                             <mat-label>Password</mat-label>
                             <input
@@ -84,7 +84,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <button
                             (click)="login()"
                             [disabled]="loading || !loginForm.login || !loginForm.password"
@@ -99,7 +99,7 @@
             </mat-expansion-panel>
 
             @if (site === Site.tiresias) {
-                <div fxLayout="column" fxLayoutGap="15px">
+                <div class="nat-vertical nat-gap-15">
                     <mat-divider />
                     <a (click)="userService.startTempAccess()" mat-raised-button> Accès public </a>
                 </div>

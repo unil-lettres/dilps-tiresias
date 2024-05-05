@@ -1,8 +1,8 @@
 <!-- Template list -->
 <ng-template #listTemplate let-items>
-    <div fxLayout="column" fxLayoutGap="10px" class="padding-v">
+    <div class="nat-vertical nat-padding-vertical nat-gap-10">
         @for (item of items; track item) {
-            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <div class="nat-horizontal nat-gap-10 nat-left nat-center">
                 <div class="image-wrapper">
                     <a
                         [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
@@ -27,7 +27,7 @@
 
 <mat-dialog-content>
     @if (step === 1) {
-        <div fxLayout="column" fxLayoutGap="10px">
+        <div class="nat-vertical nat-gap-10">
             <p class="mat-body">
                 Vous n'avez pas les permissions pour éditer les fiches ci-dessous. Les modifications ne les affecteront
                 pas. Vous pouvez cependant créer des suggestions pour ces fiches, les modifications seront alors
@@ -41,7 +41,7 @@
         </div>
     }
     @if (step === 2) {
-        <div fxLayout="column">
+        <div class="nat-vertical">
             <p class="mat-body">Les champs vides sont ignorés.</p>
             <app-card
                 [model]="card"
@@ -59,7 +59,7 @@
     @if (data.changeable.length) {
         <mat-checkbox [(ngModel)]="createSuggestions">Créer les suggestions</mat-checkbox>
     }
-    <div fxFlex></div>
+    <div class="nat-expand"></div>
     <button mat-button mat-dialog-close>Annuler</button>
     @if (step === 1) {
         <button color="primary" mat-raised-button (click)="step = 2">J'ai compris, continuer.</button>
