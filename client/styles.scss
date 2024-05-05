@@ -31,12 +31,12 @@ body {
  * Debug
  */
 pre.debug {
-    padding: 10px;
     margin: 10px;
-    font-size: 16px;
-    line-height: 1.5em;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5em;
     font-family: Courrier, monospace;
 }
 
@@ -56,9 +56,9 @@ pre.debug {
     height: 100vh;
 
     router-outlet + * {
+        flex: 1;
         height: 100vh;
         min-height: 0;
-        flex: 1;
     }
 }
 
@@ -116,14 +116,14 @@ natural-gallery {
         }
 
         .selectBtn {
+            display: flex;
             top: var(--marge);
             left: var(--marge);
-            transition: none;
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            transition: none;
+            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.4);
             padding: 0;
 
             .marker {
@@ -152,8 +152,8 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 
 // Align right so big number are easier to spot
 .mat-column-usageCount {
-    text-align: right !important;
     width: 12em;
+    text-align: right !important;
 }
 
 // Try to keep number roughly under the column header
@@ -177,8 +177,8 @@ td.mat-column-usageCount {
 .ng-scroll-viewport {
     /* Replace inset property not supported by Safari 13. */
     top: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
     left: 0;
 }
 

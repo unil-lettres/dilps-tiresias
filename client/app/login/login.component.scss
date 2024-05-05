@@ -1,6 +1,6 @@
 :host {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     padding: 20px;
 
@@ -14,8 +14,8 @@ app-carousel {
 }
 
 .shib-link {
-    height: auto !important; // allow button grow in height
     flex: auto;
+    height: auto !important; // allow button grow in height
 
     img {
         height: 100px;

@@ -17,8 +17,8 @@
             }
 
             .mat-mdc-list-item {
-                color: mat.get-color-from-palette($primary, default-contrast);
                 height: 64px;
+                color: mat.get-color-from-palette($primary, default-contrast);
 
                 * {
                     color: inherit;
@@ -44,8 +44,8 @@
     }
 
     .mat-mdc-menu-panel.error-menu {
-        max-width: none !important;
         width: auto !important;
+        max-width: none !important;
 
         .mat-caption {
             word-break: break-all;

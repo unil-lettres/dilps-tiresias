@@ -39,24 +39,24 @@
         .rich-text {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.12, 0.02));
-            border-bottom: $border-bottom-width solid mat.get-color-from-palette($fg, base, 0.5);
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            margin-bottom: $hint-height;
-            outline: none;
-            padding: 24px 10px 0 $rich-text-padding-left;
             position: relative;
             transition: color $transition-animation;
+            margin-bottom: $hint-height;
+            outline: none;
+            border-bottom: $border-bottom-width solid mat.get-color-from-palette($fg, base, 0.5);
+            border-top-right-radius: 4px;
+            border-top-left-radius: 4px;
+            background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.12, 0.02));
+            padding: 24px 10px 0 $rich-text-padding-left;
 
             &::after {
-                content: '';
-                background-color: $primary-color;
-                bottom: -$border-bottom-width;
-                height: 2px;
-                left: 50%;
                 position: absolute;
+                bottom: -$border-bottom-width;
+                left: 50%;
+                background-color: $primary-color;
                 width: 0;
+                height: 2px;
+                content: '';
             }
 
             &:hover {
@@ -67,11 +67,11 @@
                 background: mat.get-color-from-palette($fg, base, if($is-dark-theme, 0.25, 0.1));
 
                 &::after {
-                    width: 100%;
                     transform: translateX(-50%);
                     transition:
                         width $transition-animation,
                         transform $transition-animation;
+                    width: 100%;
                 }
 
                 .label {
@@ -88,14 +88,14 @@
             }
 
             .label {
-                color: $label-color;
-                font-size: $font-size-body-1;
-                left: $rich-text-padding-left;
                 position: absolute;
                 top: 28px;
+                left: $rich-text-padding-left;
                 transform: translateY(-50%);
                 transform-origin: top left;
                 transition: transform $transition-animation;
+                color: $label-color;
+                font-size: $font-size-body-1;
             }
 
             .ql-container {
@@ -147,10 +147,10 @@
             natural-table-button {
                 overflow: hidden;
                 span {
-                    line-height: 1.5em;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
                     width: 100%;
+                    overflow: hidden;
+                    line-height: 1.5em;
+                    text-overflow: ellipsis;
                 }
             }
         }

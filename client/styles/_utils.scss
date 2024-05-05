@@ -6,8 +6,8 @@
    */
 @mixin centerContent {
     display: flex;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     .centered-content {
         margin: auto;
     }
@@ -15,12 +15,12 @@
 
 @mixin fixedToolbar() {
     .containerWithToolbar {
-        min-height: 0;
         position: relative;
+        min-height: 0;
 
         .scrollable:not(perfect-scrollbar) {
-            overflow-y: auto;
             padding-top: 64px;
+            overflow-y: auto;
         }
 
         .scrolled {
@@ -30,8 +30,8 @@
         mat-toolbar {
             position: absolute;
             top: 0;
-            left: 0;
             right: 0;
+            left: 0;
             z-index: 10;
         }
     }
