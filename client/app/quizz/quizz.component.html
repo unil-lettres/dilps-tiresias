@@ -6,15 +6,15 @@
         <div class="nat-padding nat-horizontal nat-left nat-center nat-gap nat-expand">
             <mat-form-field class="nat-expand">
                 <mat-label>Saisissez votre réponse</mat-label>
-                <input [formControl]="formCtrl" matInput />
+                <input matInput [formControl]="formCtrl" />
             </mat-form-field>
-            <button (click)="goToNext()" color="primary" mat-raised-button>Suivant</button>
+            <button color="primary" mat-raised-button (click)="goToNext()">Suivant</button>
         </div>
     </div>
 
     <div class="nat-expand nat-horizontal">
         @if (imageSrc) {
-            <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image nat-expand"></div>
+            <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
         }
         @if (card) {
             <div class="card nat-vertical nat-gap-10">
@@ -35,27 +35,27 @@
                     </div>
                 </mat-expansion-panel>
                 @if (card.name) {
-                    <div [ngClass]="{valid: attributes.name}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.name}">
                         <div class="attributeName">Titre</div>
-                        <div [matTooltip]="card.plainName" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.plainName">Voir réponse</div>
                     </div>
                 }
                 @if (card.artists.length) {
-                    <div [ngClass]="{valid: attributes.artists}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.artists}">
                         <div class="attributeName">Artistes</div>
-                        <div [matTooltip]="getArtistsNames(card.artists)" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="getArtistsNames(card.artists)">Voir réponse</div>
                     </div>
                 }
                 @if (card.dating) {
-                    <div [ngClass]="{valid: attributes.dating}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.dating}">
                         <div class="attributeName">Datation</div>
-                        <div [matTooltip]="card.dating" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.dating">Voir réponse</div>
                     </div>
                 }
                 @if (card.institution) {
-                    <div [ngClass]="{valid: attributes.institution}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.institution}">
                         <div class="attributeName">Lieu</div>
-                        <div [matTooltip]="card.institution.name" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.institution.name">Voir réponse</div>
                     </div>
                 }
             </div>

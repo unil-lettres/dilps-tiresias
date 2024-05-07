@@ -2,24 +2,24 @@
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
-        (selectionChange)="search($event)"
+        class="nat-expand"
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        class="nat-expand"
+        (selectionChange)="search($event)"
     />
 </mat-toolbar>
 
 @if (dataSource) {
     <div class="nat-padding padding-fab">
         <div class="mat-headline-5">Institutions</div>
-        <table [dataSource]="dataSource" mat-table (matSortChange)="sorting([$event])" matSort>
+        <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
             <!-- Name Column -->
 
             <ng-container matColumnDef="name">
                 <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                 <td *matCellDef="let element" mat-cell>
-                    <app-table-button (click)="edit(element)" [label]="element.name" icon="edit" matTooltip="Éditer" />
+                    <app-table-button icon="edit" matTooltip="Éditer" [label]="element.name" (click)="edit(element)" />
                 </td>
             </ng-container>
 
@@ -44,19 +44,19 @@
         }
         @if (!dataSource.data) {
             <div class="nat-margin nat-vertical nat-center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>
 }
 
-<natural-fixed-button (click)="add()" icon="add" />
+<natural-fixed-button icon="add" (click)="add()" />

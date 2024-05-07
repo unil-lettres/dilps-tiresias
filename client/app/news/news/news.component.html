@@ -7,30 +7,30 @@
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
-                        [(ngModel)]="data.item.name"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
+                        [(ngModel)]="data.item.name"
                     />
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Description</mat-label>
                     <input
-                        [(ngModel)]="data.item.description"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
+                        [(ngModel)]="data.item.description"
                     />
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Lien</mat-label>
                     <input
-                        [(ngModel)]="data.item.url"
                         #url="ngModel"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
                         maxlength="255"
                         type="url"
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
+                        [(ngModel)]="data.item.url"
                     />
                     @if (url.invalid && (url.dirty || url.touched)) {
                         <mat-error>URL invalide</mat-error>
@@ -43,18 +43,18 @@
                 </mat-form-field>
 
                 <input
-                    (change)="upload($event)"
-                    [readonly]="isUpdatePage() && !data.item.permissions.update"
                     name="Image"
                     placeholder="Lien"
                     type="file"
+                    [readonly]="isUpdatePage() && !data.item.permissions.update"
+                    (change)="upload($event)"
                 />
 
                 @if (!imageData && data.item.imageUrl) {
                     <img [attr.src]="data.item.imageUrl" />
                 }
                 @if (imageData) {
-                    <div [style.backgroundImage]="imageData" class="image"></div>
+                    <div class="image" [style.backgroundImage]="imageData"></div>
                 }
             </div>
         </mat-tab>
@@ -63,13 +63,13 @@
 
 <mat-dialog-actions>
     <app-dialog-footer
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
+        class="nat-expand"
         [canCreate]="user?.globalPermissions?.news?.create"
         [canDelete]="true"
         [item]="data.item"
         [formCtrl]="$any(url)"
-        class="nat-expand"
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
     />
 </mat-dialog-actions>

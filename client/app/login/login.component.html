@@ -15,6 +15,7 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
+                        class="shib-link"
                         [href]="
                             baseUrl +
                             '/Shibboleth.sso/Login?target=' +
@@ -23,7 +24,6 @@
                             encodeUrl(returnUrl) +
                             '&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth'
                         "
-                        class="shib-link"
                     >
                         <img src="assets/images/logo-unil.svg" width="130" />
                     </a>
@@ -31,6 +31,7 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
+                        class="shib-link"
                         [href]="
                             baseUrl +
                             '/Shibboleth.sso/Login?target=' +
@@ -39,7 +40,6 @@
                             encodeUrl(returnUrl) +
                             '&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth'
                         "
-                        class="shib-link"
                     >
                         <img src="assets/images/logo-unine.svg" width="90" />
                     </a>
@@ -58,13 +58,13 @@
                         <mat-form-field class="width-auto">
                             <mat-label>Login</mat-label>
                             <input
-                                (focus)="snackBar.dismiss()"
-                                [(ngModel)]="loginForm.login"
-                                [disabled]="loading"
                                 autofocus
                                 matInput
                                 name="login"
                                 required="required"
+                                [disabled]="loading"
+                                [(ngModel)]="loginForm.login"
+                                (focus)="snackBar.dismiss()"
                             />
                         </mat-form-field>
                     </div>
@@ -73,24 +73,24 @@
                         <mat-form-field class="width-auto">
                             <mat-label>Password</mat-label>
                             <input
-                                (focus)="snackBar.dismiss()"
-                                [(ngModel)]="loginForm.password"
-                                [disabled]="loading"
                                 matInput
                                 name="password"
                                 required="required"
                                 type="password"
+                                [disabled]="loading"
+                                [(ngModel)]="loginForm.password"
+                                (focus)="snackBar.dismiss()"
                             />
                         </mat-form-field>
                     </div>
 
                     <div class="nat-vertical nat-gap-10">
                         <button
-                            (click)="login()"
-                            [disabled]="loading || !loginForm.login || !loginForm.password"
                             color="primary"
                             mat-raised-button
                             type="submit"
+                            [disabled]="loading || !loginForm.login || !loginForm.password"
+                            (click)="login()"
                         >
                             Se connecter
                         </button>
@@ -101,7 +101,7 @@
             @if (site === Site.tiresias) {
                 <div class="nat-vertical nat-gap-15">
                     <mat-divider />
-                    <a (click)="userService.startTempAccess()" mat-raised-button> Accès public </a>
+                    <a mat-raised-button (click)="userService.startTempAccess()"> Accès public </a>
                 </div>
             }
         </div>

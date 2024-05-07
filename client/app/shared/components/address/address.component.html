@@ -4,11 +4,11 @@
             <mat-form-field>
                 <mat-label>Rue</mat-label>
                 <input
-                    (keyup.enter)="search()"
-                    [(ngModel)]="model!.street"
-                    [readonly]="readonly"
                     matInput
                     maxlength="255"
+                    [readonly]="readonly"
+                    [(ngModel)]="model!.street"
+                    (keyup.enter)="search()"
                 />
                 @if (model?.street?.length > 200) {
                     <mat-hint align="end" [ngClass]="{strong: model!.street!.length >= 255}">
@@ -22,11 +22,11 @@
                 <mat-form-field>
                     <mat-label>NPA</mat-label>
                     <input
-                        (keyup.enter)="search()"
-                        [(ngModel)]="model!.postcode"
-                        [readonly]="readonly"
                         matInput
                         maxlength="20"
+                        [readonly]="readonly"
+                        [(ngModel)]="model!.postcode"
+                        (keyup.enter)="search()"
                     />
                     @if (model?.postcode?.length > 15) {
                         <mat-hint align="end" [ngClass]="{strong: model!.postcode!.length >= 20}">
@@ -39,11 +39,11 @@
                 <mat-form-field [class.nat-expand]="!vertical">
                     <mat-label>Localité</mat-label>
                     <input
-                        (keyup.enter)="search()"
-                        [(ngModel)]="model!.locality"
-                        [readonly]="readonly"
                         matInput
                         maxlength="191"
+                        [readonly]="readonly"
+                        [(ngModel)]="model!.locality"
+                        (keyup.enter)="search()"
                     />
                     @if (model?.locality?.length > 150) {
                         <mat-hint align="end" [ngClass]="{strong: model!.locality!.length >= 191}">
@@ -54,12 +54,12 @@
             }
             @if (countries && (!readonly || !!model?.country)) {
                 <natural-select
-                    (keyup.enter)="search()"
-                    [(ngModel)]="model!.country"
+                    placeholder="Pays"
                     [disabled]="readonly"
                     [service]="countryService"
                     [showIcon]="false"
-                    placeholder="Pays"
+                    [(ngModel)]="model!.country"
+                    (keyup.enter)="search()"
                 />
             }
         </div>
@@ -69,9 +69,9 @@
 <cdk-accordion>
     <cdk-accordion-item
         #accordionItem="cdkAccordionItem"
-        [expanded]="!allowExpandableMap || !readonly"
         role="button"
         tabindex="0"
+        [expanded]="!allowExpandableMap || !readonly"
         [attr.aria-expanded]="accordionItem.expanded"
     >
         @if (allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude) {
@@ -86,19 +86,19 @@
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
             <div id="mapZone">
                 <mat-form-field
-                    [class.nat-show]="(mapApiService.loaded | async) && !readonly"
                     class="mat-elevation-z4"
                     id="search"
+                    [class.nat-show]="(mapApiService.loaded | async) && !readonly"
                 >
                     <mat-label>Chercher</mat-label>
                     <input
                         #input
-                        [formControl]="formCtrl"
                         autocapitalize="off"
                         autocorrect="off"
                         class="form-control"
                         matInput
                         spellcheck="off"
+                        [formControl]="formCtrl"
                     />
                 </mat-form-field>
 
@@ -106,14 +106,13 @@
                 @if ((mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))) {
                     <div class="wrapper-google-map">
                         <google-map
+                            height="450px"
+                            width="100%"
                             [options]="mapOptions"
                             [center]="{lat: latitude, lng: longitude}"
                             [zoom]="zoom"
-                            height="450px"
-                            width="100%"
                         >
                             <map-marker
-                                (mapDragend)="onMarkerDrag($event)"
                                 [icon]="icon!"
                                 [position]="
                                     (model?.latitude && model?.longitude
@@ -121,6 +120,7 @@
                                         : null)!
                                 "
                                 [options]="{draggable: !readonly}"
+                                (mapDragend)="onMarkerDrag($event)"
                             />
                         </google-map>
                     </div>
@@ -137,10 +137,10 @@
                 <mat-label>Latitude</mat-label>
                 <input
                     type="number"
-                    (ngModelChange)="recenter()"
-                    [(ngModel)]="model!.latitude"
-                    [readonly]="readonly"
                     matInput
+                    [readonly]="readonly"
+                    [(ngModel)]="model!.latitude"
+                    (ngModelChange)="recenter()"
                 />
             </mat-form-field>
         }
@@ -149,10 +149,10 @@
                 <mat-label>Longitude</mat-label>
                 <input
                     type="number"
-                    (ngModelChange)="recenter()"
-                    [(ngModel)]="model!.longitude"
-                    [readonly]="readonly"
                     matInput
+                    [readonly]="readonly"
+                    [(ngModel)]="model!.longitude"
+                    (ngModelChange)="recenter()"
                 />
             </mat-form-field>
         }
@@ -161,10 +161,10 @@
 
 @if (!isDilps && (!readonly || !!model?.precision)) {
     <natural-select-enum
-        [(ngModel)]="model!.precision"
         enumName="Precision"
         placeholder="Précision"
-        [disabled]="readonly"
         nullLabel="Non spécifiée"
+        [disabled]="readonly"
+        [(ngModel)]="model!.precision"
     />
 }

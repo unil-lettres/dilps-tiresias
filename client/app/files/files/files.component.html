@@ -1,7 +1,7 @@
 @if (!disabled || dataSource.data?.items.length > 0) {
     <div [ngClass]="{'margin-bottom-hint': disabled}">
         <div class="mat-headline-6">Fichiers joints</div>
-        <table [dataSource]="dataSource" mat-table>
+        <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <td *matCellDef="let element" mat-cell>
                     @if (element.file) {
@@ -25,13 +25,13 @@
             <ng-container matColumnDef="delete">
                 <td *matCellDef="let element" mat-cell>
                     @if (element.file?.permissions?.delete) {
-                        <button mat-icon-button (click)="delete(element)" color="warn" matTooltip="Supprimer">
+                        <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="delete(element)">
                             <mat-icon color="warn" fontIcon="delete_forever" />
                         </button>
                     }
                     @if (element.input) {
                         <div>
-                            <mat-progress-spinner [diameter]="20" mode="indeterminate" />
+                            <mat-progress-spinner mode="indeterminate" [diameter]="20" />
                         </div>
                     }
                 </td>

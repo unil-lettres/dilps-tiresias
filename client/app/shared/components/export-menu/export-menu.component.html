@@ -1,6 +1,6 @@
 <button
-    [matMenuTriggerFor]="menu"
     mat-icon-button
+    [matMenuTriggerFor]="menu"
     [matTooltip]="tooltip"
     (menuOpened)="menuOpened()"
     (menuClosed)="menuClosed()"
@@ -12,13 +12,13 @@
         {{ optionZipLabel }}
     </button>
     @if (showExcelExportation) {
-        <button (click)="export(ExportFormat.csv)" mat-menu-item>Exporter en Excel</button>
+        <button mat-menu-item (click)="export(ExportFormat.csv)">Exporter en Excel</button>
     }
     <button
         mat-menu-item
-        (click)="export(ExportFormat.pptx)"
         [disabled]="!!pptValidationMessage"
         [matTooltip]="pptValidationMessage"
+        (click)="export(ExportFormat.pptx)"
     >
         Exporter en PowerPoint
     </button>

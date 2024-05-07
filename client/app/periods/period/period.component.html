@@ -5,9 +5,9 @@
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
-                        [(ngModel)]="data.item.name"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
+                        [(ngModel)]="data.item.name"
                     />
                 </mat-form-field>
 
@@ -16,9 +16,9 @@
                         <mat-label>A partir de</mat-label>
                         <input
                             type="number"
-                            [(ngModel)]="data.item.from"
-                            [readonly]="isUpdatePage() && !data.item.permissions.update"
                             matInput
+                            [readonly]="isUpdatePage() && !data.item.permissions.update"
+                            [(ngModel)]="data.item.from"
                         />
                     </mat-form-field>
 
@@ -26,22 +26,22 @@
                         <mat-label>Jusqu'à</mat-label>
                         <input
                             type="number"
-                            [(ngModel)]="data.item.to"
-                            [readonly]="isUpdatePage() && !data.item.permissions.update"
                             matInput
+                            [readonly]="isUpdatePage() && !data.item.permissions.update"
+                            [(ngModel)]="data.item.to"
                         />
                     </mat-form-field>
                 </div>
 
                 <natural-select-hierarchic
-                    [(ngModel)]="data.item.parent"
-                    [config]="hierarchicConfig"
-                    [filters]="ancestorsHierarchicFilters"
-                    [showIcon]="false"
                     clearLabel="Dissocier"
                     placeholder="Parent"
                     selectLabel="Associer au parent"
+                    [config]="hierarchicConfig"
+                    [filters]="ancestorsHierarchicFilters"
+                    [showIcon]="false"
                     [displayWith]="displayWith"
+                    [(ngModel)]="data.item.parent"
                 />
             </div>
         </mat-tab>
@@ -50,12 +50,12 @@
 
 <mat-dialog-actions>
     <app-dialog-footer
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
+        class="nat-expand"
         [canCreate]="user?.globalPermissions?.period?.create"
         [canDelete]="data.item.canDelete"
         [item]="data.item"
-        class="nat-expand"
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
     />
 </mat-dialog-actions>

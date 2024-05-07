@@ -6,20 +6,20 @@
         @if (user?.role === 'administrator') {
             @if (change) {
                 <button
-                    (click)="accept()"
                     mat-icon-button
                     class="icon-button-circle-primary"
                     matTooltip="Accepter suggestion"
+                    (click)="accept()"
                 >
                     <mat-icon naturalIcon="check" />
                 </button>
             }
             @if (change) {
                 <button
-                    (click)="reject()"
                     mat-icon-button
                     class="icon-button-circle-warn"
                     matTooltip="Refuser la suggestion"
+                    (click)="reject()"
                 >
                     <mat-icon naturalIcon="close" />
                 </button>
@@ -28,20 +28,20 @@
 
         @if (!change && original) {
             <button
-                (click)="update()"
                 mat-icon-button
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre la suggestion à validation"
+                (click)="update()"
             >
                 <mat-icon naturalIcon="save" />
             </button>
         }
         @if (!change && !original) {
             <button
-                (click)="create()"
                 mat-icon-button
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre l'ajout de cette fiche à validation"
+                (click)="create()"
             >
                 <mat-icon naturalIcon="add" />
             </button>
@@ -58,7 +58,7 @@
             }
             @if (original) {
                 <div class="card-original nat-vertical nat-expand">
-                    <app-card [fetchedModel]="original" class="nat-expand" title="Original" />
+                    <app-card class="nat-expand" title="Original" [fetchedModel]="original" />
                 </div>
             }
             <!-- Suggestion -->
@@ -70,14 +70,14 @@
             @if (suggestionInput) {
                 <div class="card-suggestion nat-vertical nat-expand">
                     <app-card
+                        class="nat-expand"
+                        title="Suggestion"
                         [model]="suggestionInput"
                         [fetchedModel]="fetchedSuggestion"
                         [editable]="true"
                         [showTools]="showTools"
                         [showCards]="false"
                         [showCode]="false"
-                        class="nat-expand"
-                        title="Suggestion"
                     />
                 </div>
             }

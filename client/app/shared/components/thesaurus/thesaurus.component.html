@@ -2,10 +2,10 @@
     <mat-label>{{ placeholder }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         @for (item of items; track item) {
-            <mat-chip-row (removed)="removeTerm(item)" [removable]="!readonly">
+            <mat-chip-row [removable]="!readonly" (removed)="removeTerm(item)">
                 <div class="nat-horizontal nat-center nat-gap-5">
                     @if (previewComponent) {
-                        <mat-icon (click)="openItem(item)" class="mat-mdc-chip-remove" fontIcon="remove_red_eye" />
+                        <mat-icon class="mat-mdc-chip-remove" fontIcon="remove_red_eye" (click)="openItem(item)" />
                     }
                     <div class="nat-expand thesaurus-chip-label">
                         <span>{{ getLabel(item) }}</span>
@@ -20,21 +20,21 @@
         }
 
         <input
-            (focus)="focus()"
-            (keydown.enter)="onEnter()"
+            #thesaurusInput
             [formControl]="formControl"
             [class.nat-show]="!readonly || items.length === 0"
             [matAutocomplete]="autocomplete"
             [matChipInputFor]="chipList"
             [readonly]="readonly"
-            #thesaurusInput
+            (focus)="focus()"
+            (keydown.enter)="onEnter()"
         />
     </mat-chip-grid>
 
     <!-- Autocomplete menu -->
     <mat-autocomplete #autocomplete="matAutocomplete" (optionSelected)="selectSuggestion($event)">
         @for (item of suggestions; track item) {
-            <mat-option [value]="item" class="multiline">
+            <mat-option class="multiline" [value]="item">
                 <div class="nat-vertical nat-padding-vertical">
                     <div>{{ item.name }}</div>
                     @if (item?.locality) {

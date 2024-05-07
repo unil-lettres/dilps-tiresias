@@ -5,8 +5,8 @@
             <div class="nat-horizontal nat-gap-10 nat-left nat-center">
                 <div class="image-wrapper">
                     <a
-                        [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
                         class="image"
+                        [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
                     ></a>
                 </div>
                 <div>
@@ -44,12 +44,12 @@
         <div class="nat-vertical">
             <p class="mat-body">Les champs vides sont ignorés.</p>
             <app-card
+                style="height: 500px"
                 [model]="card"
                 [showCards]="false"
                 [showImage]="false"
                 [showToolbar]="false"
                 [showCode]="false"
-                style="height: 500px"
             />
         </div>
     }
@@ -66,9 +66,9 @@
     }
     @if (step === 2) {
         <button
-            [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
             color="primary"
             mat-raised-button
+            [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
         >
             Valider
         </button>

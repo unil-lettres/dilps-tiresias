@@ -1,65 +1,65 @@
 <mat-menu #dilpsSortingMenu="matMenu" [overlapTrigger]="false">
-    <div (click)="sorting([{active: CardSortingField.creationDate, direction: 'desc'}])" mat-menu-item>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.creationDate, direction: 'desc'}])">
         Date d'insertion en tête
     </div>
-    <div (click)="sorting([{active: CardSortingField.updateDate, direction: 'desc'}])" mat-menu-item>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.updateDate, direction: 'desc'}])">
         Date de dernière édition en tête
     </div>
     <div
-        (click)="sorting([{active: CardSortingField.plainName, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.plainName, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Titre
     </div>
     @if (site === Site.dilps) {
-        <div (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])" mat-menu-item>Artistes</div>
+        <div mat-menu-item (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])">Artistes</div>
     }
     <div
-        (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Datation
     </div>
     <div
-        (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Domaine
     </div>
-    <div (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])" mat-menu-item>Lieu</div>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])">Lieu</div>
 </mat-menu>
 <mat-menu #tiresiasSortingMenu="matMenu" [overlapTrigger]="false">
     <div
-        (click)="sorting([{active: CardSortingField.plainName, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.plainName, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Titre
     </div>
-    <div (click)="sorting([{active: CardSortingField.creationDate, direction: 'desc'}])" mat-menu-item>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.creationDate, direction: 'desc'}])">
         Date d'insertion
     </div>
-    <div (click)="sorting([{active: CardSortingField.updateDate, direction: 'desc'}])" mat-menu-item>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.updateDate, direction: 'desc'}])">
         Date de dernière édition
     </div>
     <div
-        (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Datation
     </div>
-    <div (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])" mat-menu-item>Lieu</div>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])">Lieu</div>
     <div
-        (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc', emptyStringAsHighest: true}])"
         mat-menu-item
+        (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc', emptyStringAsHighest: true}])"
     >
         Domaine
     </div>
     @if (site === Site.tiresias) {
-        <div (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])" mat-menu-item>
+        <div mat-menu-item (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])">
             Type de document
         </div>
     }
-    <div (click)="sorting([{active: CardSortingField.code, direction: 'asc', nullAsHighest: true}])" mat-menu-item>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.code, direction: 'asc', nullAsHighest: true}])">
         Référence
     </div>
 </mat-menu>
@@ -73,18 +73,18 @@
             @if (selected.length) {
                 @if (!!user) {
                     <button
-                        (click)="linkSelectionToCollection(selected)"
                         mat-icon-button
                         matTooltip="Ajouter ou retirer d'une collection"
+                        (click)="linkSelectionToCollection(selected)"
                     >
                         <mat-icon naturalIcon="library_add" />
                     </button>
                 }
                 @if (collection?.id) {
                     <button
-                        (click)="unlinkFromCollection(selected)"
                         mat-icon-button
                         matTooltip="Supprimer de la collection"
+                        (click)="unlinkFromCollection(selected)"
                     >
                         <mat-icon svgIcon="library_remove" />
                     </button>
@@ -95,16 +95,16 @@
                     [showExcelExportation]="this.site !== Site.dilps"
                 />
                 @if (canMassEdit()) {
-                    <button (click)="edit(selected)" mat-icon-button matTooltip="Editer en masse">
+                    <button mat-icon-button matTooltip="Editer en masse" (click)="edit(selected)">
                         <mat-icon naturalIcon="edit" />
                     </button>
                 }
                 @if (user?.role === 'administrator') {
                     <button
-                        (click)="delete(selected)"
                         color="warn"
                         mat-icon-button
                         matTooltip="Supprimer la fiche définitivement"
+                        (click)="delete(selected)"
                     >
                         <mat-icon naturalIcon="delete_forever" />
                     </button>
@@ -113,9 +113,9 @@
             @if (!selected.length && user) {
                 @if (collection?.id) {
                     <button
-                        (click)="linkCollectionToCollection(collection!)"
                         mat-icon-button
                         matTooltip="Ajouter la collection à une autre collection"
+                        (click)="linkCollectionToCollection(collection!)"
                     >
                         <mat-icon naturalIcon="library_add" />
                     </button>
@@ -125,39 +125,39 @@
                 }
             }
             <natural-search
-                (selectionChange)="search($event)"
-                [facets]="naturalSearchFacets"
-                [selections]="naturalSearchSelections"
                 dropdownTitle="Recherche approfondie"
                 class="searchField nat-expand"
+                [facets]="naturalSearchFacets"
+                [selections]="naturalSearchSelections"
+                (selectionChange)="search($event)"
             />
             @if (viewMode !== ViewMode.grid) {
-                <button (click)="setViewMode(ViewMode.grid)" mat-icon-button matTooltip="Affichage Mosaïque">
+                <button mat-icon-button matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
                     <mat-icon naturalIcon="view_compact" />
                 </button>
             }
             @if (viewMode !== ViewMode.list) {
-                <button (click)="setViewMode(ViewMode.list)" mat-icon-button matTooltip="Affichage Liste">
+                <button mat-icon-button matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
                     <mat-icon naturalIcon="view_list" />
                 </button>
             }
             @if (site === Site.tiresias && selected.length && viewMode !== ViewMode.map) {
-                <button (click)="setViewMode(ViewMode.map)" mat-icon-button matTooltip="Affichage Carte">
+                <button mat-icon-button matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
                     <mat-icon naturalIcon="map" />
                 </button>
             }
             <button
-                [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                 mat-icon-button
                 matTooltip="Trier"
+                [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
             >
                 <mat-icon svgIcon="sort_asc" />
             </button>
             @if (viewMode === ViewMode.grid) {
                 <button
-                    (click)="toggleLabels()"
                     mat-icon-button
                     [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
+                    (click)="toggleLabels()"
                 >
                     @if (!showLabels) {
                         <mat-icon naturalIcon="font_download" />
@@ -168,25 +168,25 @@
                 </button>
             }
             @if (selected.length) {
-                <button (click)="unselectAll()" mat-icon-button matTooltip="Désélectionner tout">
+                <button mat-icon-button matTooltip="Désélectionner tout" (click)="unselectAll()">
                     <mat-icon naturalIcon="deselect" />
                 </button>
             }
             @if (!selected.length) {
-                <button (click)="selectAll()" mat-icon-button matTooltip="Sélectionner les images visibles">
+                <button mat-icon-button matTooltip="Sélectionner les images visibles" (click)="selectAll()">
                     <mat-icon svgIcon="select_all_mark" />
                 </button>
             }
             @if (selected.length) {
                 @if (!!user && site === Site.dilps) {
-                    <button (click)="goToQuizz(selected)" mat-icon-button matTooltip="Lecture d'oeuvre">
+                    <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
                         <mat-icon svgIcon="cards_game" />
                     </button>
                 }
             }
             @if (!selected.length && user) {
                 @if (site === Site.dilps) {
-                    <button (click)="goToQuizz()" mat-icon-button matTooltip="Lecture d'oeuvre">
+                    <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
                         <mat-icon svgIcon="cards_game" />
                     </button>
                 }
@@ -216,21 +216,21 @@
         } @else {
             @if (viewMode === ViewMode.grid) {
                 <app-view-grid
-                    (pagination)="pagination($event)"
-                    (selectionChange)="select($event)"
-                    (contentChange)="gridContentChange($event)"
                     [dataSource]="dataSource"
                     [selected]="selected"
                     [style.height]="'100%'"
+                    (pagination)="pagination($event)"
+                    (selectionChange)="select($event)"
+                    (contentChange)="gridContentChange($event)"
                 />
             }
             @if (viewMode === ViewMode.list) {
                 <app-view-list
-                    (pagination)="pagination($event)"
-                    (selectionChange)="select($event)"
                     [dataSource]="dataSource"
                     [selected]="selected"
                     [style.height]="'100%'"
+                    (pagination)="pagination($event)"
+                    (selectionChange)="select($event)"
                 />
             }
             @if (viewMode === ViewMode.map) {

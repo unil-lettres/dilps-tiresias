@@ -4,10 +4,10 @@
         <mat-tab label="Collection existante">
             <div class="nat-padding-vertical nat-vertical">
                 <natural-select
-                    [(ngModel)]="collection"
+                    placeholder="Sélectionnez la collection"
                     [filter]="listFilter"
                     [service]="collectionService"
-                    placeholder="Sélectionnez la collection"
+                    [(ngModel)]="collection"
                 >
                     <ng-template let-item="item">
                         <div>{{ item.name }}</div>
@@ -15,7 +15,7 @@
                     </ng-template>
                 </natural-select>
                 <div>
-                    <button (click)="link()" [disabled]="!collection?.id" color="primary" mat-flat-button>
+                    <button color="primary" mat-flat-button [disabled]="!collection?.id" (click)="link()">
                         Ajouter à la collection
                     </button>
                 </div>
@@ -27,25 +27,25 @@
             <div class="nat-padding-vertical nat-vertical">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
-                    <input [(ngModel)]="newCollection.name" matInput />
+                    <input matInput [(ngModel)]="newCollection.name" />
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Description</mat-label>
-                    <textarea [(ngModel)]="newCollection.description" matInput></textarea>
+                    <textarea matInput [(ngModel)]="newCollection.description"></textarea>
                 </mat-form-field>
 
                 @if (listFilter) {
                     <natural-select
-                        [(ngModel)]="newCollection.parent"
+                        placeholder="Collection parente"
                         [filter]="listFilter"
                         [service]="collectionService"
-                        placeholder="Collection parente"
+                        [(ngModel)]="newCollection.parent"
                     />
                 }
 
                 <div>
-                    <button (click)="createAndLink()" [disabled]="!newCollection.name" color="primary" mat-flat-button>
+                    <button color="primary" mat-flat-button [disabled]="!newCollection.name" (click)="createAndLink()">
                         Ajouter à une nouvelle collection privée
                     </button>
                 </div>
@@ -62,9 +62,9 @@
                 <mat-icon naturalIcon="collections" />
                 <div class="nat-expand">{{ collection.name }}</div>
                 <button
-                    (click)="unlink(image!, collection)"
                     mat-icon-button
                     matTooltip="Retirer la fiche de la collection"
+                    (click)="unlink(image!, collection)"
                 >
                     <mat-icon naturalIcon="remove" />
                 </button>

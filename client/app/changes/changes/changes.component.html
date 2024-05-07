@@ -6,13 +6,13 @@
     <div class="nat-padding">
         <div class="mat-headline-5">Notifications</div>
         <div class="responsive-table" [class.nat-show]="showTable()">
-            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr
                     *matRowDef="let row; columns: displayedColumns"
-                    [routerLink]="[row.id]"
                     mat-row
                     style="cursor: pointer"
+                    [routerLink]="[row.id]"
                 ></tr>
                 <!-- Type -->
 
@@ -55,16 +55,16 @@
         }
         @if (!dataSource.data) {
             <div class="nat-margin nat-vertical nat-center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>

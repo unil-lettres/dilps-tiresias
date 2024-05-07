@@ -2,29 +2,29 @@
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
-        (selectionChange)="search($event)"
+        class="nat-expand"
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        class="nat-expand"
+        (selectionChange)="search($event)"
     />
 </mat-toolbar>
 
 @if (dataSource) {
     <div class="nat-padding padding-fab">
         <div class="nat-margin-bottom nat-horizontal nat-wrap">
-            <div [routerLink]="getChildLink(null)" class="mat-headline-5 nat-no-margin">Matériaux</div>
+            <div class="mat-headline-5 nat-no-margin" [routerLink]="getChildLink(null)">Matériaux</div>
             <div class="nat-horizontal nat-wrap">
                 @for (item of breadcrumbs; track item) {
-                    <a [routerLink]="getChildLink(item)" class="nat-no-padding" mat-button>
+                    <a class="nat-no-padding" mat-button [routerLink]="getChildLink(item)">
                         <mat-icon naturalIcon="chevron_right" />
                         <span>{{ item.name }}</span>
                     </a>
                 }
             </div>
         </div>
-        <div [class.nat-show]="showTable()" class="responsive-table">
-            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+        <div class="responsive-table" [class.nat-show]="showTable()">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
@@ -33,9 +33,9 @@
                     <td *matCellDef="let element" mat-cell>
                         @if (element.hasNavigation) {
                             <natural-table-button
-                                [navigate]="getChildLink(element.item)"
                                 icon="chevron_right"
                                 matTooltip="Déployer"
+                                [navigate]="getChildLink(element.item)"
                             />
                         }
                     </td>
@@ -47,10 +47,10 @@
                     <td *matCellDef="let element" mat-cell>
                         <div class="cell-content">
                             <app-table-button
-                                (click)="edit(element.item)"
-                                [label]="element.item.name"
                                 icon="edit"
                                 matTooltip="Éditer"
+                                [label]="element.item.name"
+                                (click)="edit(element.item)"
                             />
                             @if (searched) {
                                 <app-collection-hierarchy [collection]="element.item" />
@@ -70,19 +70,19 @@
         }
         @if (!dataSource.data) {
             <div class="nat-vertical nat-center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>
 }
 
-<natural-fixed-button (click)="add()" icon="add" />
+<natural-fixed-button icon="add" (click)="add()" />
