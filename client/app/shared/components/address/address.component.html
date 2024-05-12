@@ -17,7 +17,7 @@
                 }
             </mat-form-field>
         }
-        <div class="nat-gap-horizontal-10" [class.nat-horizontal]="!vertical" [class.nat-vertical]="vertical">
+        <div class="nat-gap-horizontal-10 nat-vertical nat-wrap" [class.nat-md-horizontal]="!vertical">
             @if (isDilps && (!readonly || !!model?.postcode)) {
                 <mat-form-field>
                     <mat-label>NPA</mat-label>
@@ -88,7 +88,7 @@
                 <mat-form-field
                     class="mat-elevation-z4"
                     id="search"
-                    [class.nat-show]="(mapApiService.loaded | async) && !readonly"
+                    [class.nat-hide]="!((mapApiService.loaded | async) && !readonly)"
                 >
                     <mat-label>Chercher</mat-label>
                     <input

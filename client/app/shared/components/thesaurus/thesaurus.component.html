@@ -22,7 +22,7 @@
         <input
             #thesaurusInput
             [formControl]="formControl"
-            [class.nat-show]="!readonly || items.length === 0"
+            [class.show]="!readonly || items.length === 0"
             [matAutocomplete]="autocomplete"
             [matChipInputFor]="chipList"
             [readonly]="readonly"

@@ -10,7 +10,7 @@
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
         <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar}">
             @if (showToolbar) {
-                <mat-toolbar class="nat-horizontal nat-left nat-center" [ngClass]="edit ? 'edition' : ''">
+                <mat-toolbar class="nat-horizontal nat-align" [ngClass]="edit ? 'edition' : ''">
                     @if (showLogo) {
                         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
