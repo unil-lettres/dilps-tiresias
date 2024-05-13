@@ -19,7 +19,13 @@
         (click)="export(ExportFormat.pptx)"
         [disabled]="!!pptValidationMessage"
         [matTooltip]="pptValidationMessage"
+        [matMenuTriggerFor]="pptOptions"
     >
         Exporter en PowerPoint
     </button>
+</mat-menu>
+
+<mat-menu #pptOptions="matMenu">
+    <button mat-menu-item (click)="export(ExportFormat.pptx, ExportTheme.light)">Thème clair</button>
+    <button mat-menu-item (click)="export(ExportFormat.pptx, ExportTheme.dark)">Thème sombre</button>
 </mat-menu>
