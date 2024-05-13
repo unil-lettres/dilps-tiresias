@@ -92,7 +92,6 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
                     </div>
                     <div class="background-fade"></div>
 
-                    <div class="block-input bg-pulse"></div>
                     <div class="block-input block-input-xs bg-pulse"></div>
                     <div class="block-input block-input-sm bg-pulse"></div>
                     <div class="block-input block-input-xl bg-pulse"></div>
