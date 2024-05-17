@@ -85,7 +85,7 @@ jobs:
               run: ./bin/build.sh
 
             - name: Load test data
-              run: ./bin/load-test-data.php
+              run: ./bin/load-test-data.php --no-interaction
 
             - name: PHP CS Fixer
               run: ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr

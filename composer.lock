@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6e71532dd4bbedf8c3121886d4b34fb",
+    "content-hash": "b6e47e8bf2c16f663c12d918c14abecf",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1605,16 +1605,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "13.3.1",
+            "version": "13.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "a7380df3f76a83accae30db963b742df5fe36d10"
+                "reference": "381412b653f8368557ac4d009deb014c7716faf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/a7380df3f76a83accae30db963b742df5fe36d10",
-                "reference": "a7380df3f76a83accae30db963b742df5fe36d10",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/381412b653f8368557ac4d009deb014c7716faf5",
+                "reference": "381412b653f8368557ac4d009deb014c7716faf5",
                 "shasum": ""
             },
             "require": {
@@ -1626,6 +1626,7 @@
                 "ext-fileinfo": "*",
                 "ext-json": "*",
                 "ext-pdo": "*",
+                "ext-readline": "*",
                 "imagine/imagine": "^1.3",
                 "laminas/laminas-diactoros": "^3.1",
                 "laminas/laminas-log": "^2.16",
@@ -1670,9 +1671,9 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/13.3.1"
+                "source": "https://github.com/Ecodev/felix/tree/13.4.0"
             },
-            "time": "2024-04-05T02:24:39+00:00"
+            "time": "2024-05-17T03:16:11+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
