@@ -26,11 +26,25 @@
                     <div class="nat-vertical nat-gap-10" [formGroup]="passwordGroupCtrl">
                         <mat-form-field>
                             <mat-label>Mot de passe</mat-label>
-                            <input matInput type="password" [formControl]="passwordCtrl" />
+                            <input
+                                matInput
+                                type="password"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                [formControl]="passwordCtrl"
+                            />
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Confirmation du mot passe</mat-label>
-                            <input matInput type="password" [formControl]="passwordConfirmationCtrl" />
+                            <input
+                                matInput
+                                type="password"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                [formControl]="passwordConfirmationCtrl"
+                            />
                             @if (passwordConfirmationCtrl.hasError('password')) {
                                 <mat-error>Le mot de passe n'est pas identique</mat-error>
                             }
