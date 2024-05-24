@@ -1621,10 +1621,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-10.0.1.tgz#831ecbb6cbc16f75c55a31f165bce29a794c1092"
   integrity sha512-zMpQoLalFscinwwxy33wU42TWRPZEkShwrXPqK/3x5NBi00D7faZAAgTmGNe7534SBbeIjlTgeLRgEx7MOHIvg==
 
-"@ecodev/natural-layout@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.1.tgz#702af9f1560b5a3708e67b69e47c94d7df2ab9f6"
-  integrity sha512-U1kwHw8FpZMOzq6PVrGuWr6FH4pf13yqz7v2tjp2DeidNiwhcgYUu/vwmFpW4ha0OFSl2ge1BiQxmoRCkTA9KA==
+"@ecodev/natural-layout@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.2.tgz#e2c64c2ddb3c60793a39236b52624fde323e610a"
+  integrity sha512-BV75kFQmpfuSBNQ1jyKu+IdGkFTMESjPrtKrEyc3MqcmVhV5IiYU0LXTaghLZozuZgCT9HfMOnEsh05aS2j9uQ==
 
 "@ecodev/natural@^58.0.6":
   version "58.0.6"
