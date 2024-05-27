@@ -13,32 +13,30 @@
 @if (dataSource) {
     <div class="nat-padding padding-fab">
         <div class="mat-headline-5">Noms antiques</div>
-        @if (showTable()) {
-            <div class="responsive-table">
-                <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
-                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-                    <!-- Name Column -->
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+                <!-- Name Column -->
 
-                    <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
-                        <td *matCellDef="let element" mat-cell>
-                            <app-table-button
-                                icon="edit"
-                                matTooltip="Éditer"
-                                [label]="element.name"
-                                (click)="edit(element)"
-                            />
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <app-table-button
+                            icon="edit"
+                            matTooltip="Éditer"
+                            [label]="element.name"
+                            (click)="edit(element)"
+                        />
+                    </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="usageCount">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.usageCount }}</td>
-                    </ng-container>
-                </table>
-            </div>
-        }
+                <ng-container matColumnDef="usageCount">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.usageCount }}</td>
+                </ng-container>
+            </table>
+        </div>
 
         @if (showNoResults()) {
             <div class="nat-margin text-center">Pas de résultats</div>

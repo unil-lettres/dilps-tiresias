@@ -23,62 +23,60 @@
                 }
             </div>
         </div>
-        @if (showTable()) {
-            <div class="responsive-table">
-                <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
-                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
-                    <ng-container matColumnDef="navigation">
-                        <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
-                        <td *matCellDef="let element" mat-cell>
-                            @if (element.hasNavigation) {
-                                <natural-table-button
-                                    icon="chevron_right"
-                                    matTooltip="Déployer"
-                                    [navigate]="getChildLink(element.item)"
-                                />
+                <ng-container matColumnDef="navigation">
+                    <th *matHeaderCellDef mat-header-cell natural-3em-column></th>
+                    <td *matCellDef="let element" mat-cell>
+                        @if (element.hasNavigation) {
+                            <natural-table-button
+                                icon="chevron_right"
+                                matTooltip="Déployer"
+                                [navigate]="getChildLink(element.item)"
+                            />
+                        }
+                    </td>
+                </ng-container>
+                <!-- Name Column -->
+
+                <ng-container matColumnDef="name">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
+                    <td *matCellDef="let element" mat-cell>
+                        <div class="cell-content">
+                            <app-table-button
+                                icon="edit"
+                                matTooltip="Éditer"
+                                [label]="element.item.name"
+                                (click)="edit(element.item)"
+                            />
+                            @if (searched) {
+                                <app-collection-hierarchy [collection]="element.item" />
                             }
-                        </td>
-                    </ng-container>
-                    <!-- Name Column -->
+                        </div>
+                    </td>
+                </ng-container>
+                <!-- From Column -->
 
-                    <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
-                        <td *matCellDef="let element" mat-cell>
-                            <div class="cell-content">
-                                <app-table-button
-                                    icon="edit"
-                                    matTooltip="Éditer"
-                                    [label]="element.item.name"
-                                    (click)="edit(element.item)"
-                                />
-                                @if (searched) {
-                                    <app-collection-hierarchy [collection]="element.item" />
-                                }
-                            </div>
-                        </td>
-                    </ng-container>
-                    <!-- From Column -->
+                <ng-container matColumnDef="from">
+                    <th *matHeaderCellDef mat-header-cell>A partir de</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.item.from }}</td>
+                </ng-container>
+                <!-- To Column -->
 
-                    <ng-container matColumnDef="from">
-                        <th *matHeaderCellDef mat-header-cell>A partir de</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.item.from }}</td>
-                    </ng-container>
-                    <!-- To Column -->
+                <ng-container matColumnDef="to">
+                    <th *matHeaderCellDef mat-header-cell>Jusqu'à</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.item.to }}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="to">
-                        <th *matHeaderCellDef mat-header-cell>Jusqu'à</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.item.to }}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="usageCount">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
-                    </ng-container>
-                </table>
-            </div>
-        }
+                <ng-container matColumnDef="usageCount">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.item.usageCount }}</td>
+                </ng-container>
+            </table>
+        </div>
 
         @if (showNoResults()) {
             <div class="nat-margin-vertical nat-vertical nat-center">Pas de résultats</div>

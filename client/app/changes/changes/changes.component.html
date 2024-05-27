@@ -5,51 +5,49 @@
 @if (dataSource) {
     <div class="nat-padding">
         <div class="mat-headline-5">Notifications</div>
-        @if (showTable()) {
-            <div class="responsive-table">
-                <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
-                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                    <tr
-                        *matRowDef="let row; columns: displayedColumns"
-                        mat-row
-                        style="cursor: pointer"
-                        [routerLink]="[row.id]"
-                    ></tr>
-                    <!-- Type -->
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
+                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                <tr
+                    *matRowDef="let row; columns: displayedColumns"
+                    mat-row
+                    style="cursor: pointer"
+                    [routerLink]="[row.id]"
+                ></tr>
+                <!-- Type -->
 
-                    <ng-container matColumnDef="type">
-                        <th *matHeaderCellDef mat-header-cell>Type</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.type }}</td>
-                    </ng-container>
-                    <!-- Name Column -->
+                <ng-container matColumnDef="type">
+                    <th *matHeaderCellDef mat-header-cell>Type</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.type }}</td>
+                </ng-container>
+                <!-- Name Column -->
 
-                    <ng-container matColumnDef="original">
-                        <th *matHeaderCellDef mat-header-cell>Originale</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.original?.name }}</td>
-                    </ng-container>
-                    <!-- Suggestion -->
+                <ng-container matColumnDef="original">
+                    <th *matHeaderCellDef mat-header-cell>Originale</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.original?.name }}</td>
+                </ng-container>
+                <!-- Suggestion -->
 
-                    <ng-container matColumnDef="suggestion">
-                        <th *matHeaderCellDef mat-header-cell>Suggestion</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.suggestion?.name }}</td>
-                    </ng-container>
-                    <!-- Creator -->
+                <ng-container matColumnDef="suggestion">
+                    <th *matHeaderCellDef mat-header-cell>Suggestion</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.suggestion?.name }}</td>
+                </ng-container>
+                <!-- Creator -->
 
-                    <ng-container matColumnDef="owner">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Utilisateur</th>
-                        <td *matCellDef="let element" mat-cell>{{ element.owner?.login }}</td>
-                    </ng-container>
-                    <!-- Creation date -->
+                <ng-container matColumnDef="owner">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Utilisateur</th>
+                    <td *matCellDef="let element" mat-cell>{{ element.owner?.login }}</td>
+                </ng-container>
+                <!-- Creation date -->
 
-                    <ng-container matColumnDef="creationDate">
-                        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
-                        <td *matCellDef="let element" mat-cell>
-                            {{ element.creationDate | date: 'dd.MM.yyyy' }} à {{ element.creationDate | date: 'HH:mm' }}
-                        </td>
-                    </ng-container>
-                </table>
-            </div>
-        }
+                <ng-container matColumnDef="creationDate">
+                    <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+                    <td *matCellDef="let element" mat-cell>
+                        {{ element.creationDate | date: 'dd.MM.yyyy' }} à {{ element.creationDate | date: 'HH:mm' }}
+                    </td>
+                </ng-container>
+            </table>
+        </div>
 
         @if (showNoResults()) {
             <div class="nat-margin text-center">Pas de résultats</div>
