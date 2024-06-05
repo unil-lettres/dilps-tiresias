@@ -22,10 +22,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     standalone: true,
     imports: [
         MatToolbarModule,
-
         LogoComponent,
         NaturalSearchComponent,
-
         MatTableModule,
         MatSortModule,
         TableButtonComponent,

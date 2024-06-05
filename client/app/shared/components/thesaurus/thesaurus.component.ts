@@ -49,12 +49,10 @@ export type ThesaurusModel = {
     imports: [
         MatFormFieldModule,
         MatChipsModule,
-
         MatIconModule,
         FormsModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-
         MatOptionModule,
     ],
 })

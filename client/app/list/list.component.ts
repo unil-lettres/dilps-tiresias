@@ -96,7 +96,6 @@ enum ViewMode {
     standalone: true,
     imports: [
         MatMenuModule,
-
         MatToolbarModule,
         LogoComponent,
         MatButtonModule,

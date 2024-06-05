@@ -59,7 +59,6 @@ function isExcel(file: File): boolean {
         MatMenuModule,
         RouterLink,
         RouterLinkActive,
-
         MatSidenavModule,
         NgScrollbar,
         MatListModule,

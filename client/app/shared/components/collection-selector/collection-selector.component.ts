@@ -47,7 +47,6 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     imports: [
         MatDialogModule,
         MatTabsModule,
-
         NaturalSelectComponent,
         FormsModule,
         MatButtonModule,

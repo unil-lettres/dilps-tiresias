@@ -47,7 +47,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     imports: [
         MatDialogModule,
         MatTabsModule,
-
         MatFormFieldModule,
         MatInputModule,
         FormsModule,

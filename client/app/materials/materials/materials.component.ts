@@ -31,13 +31,11 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     standalone: true,
     imports: [
         MatToolbarModule,
-
         LogoComponent,
         NaturalSearchComponent,
         RouterLink,
         MatButtonModule,
         MatIconModule,
-
         MatTableModule,
         MatSortModule,
         NaturalTableButtonComponent,

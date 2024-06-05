@@ -24,7 +24,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     imports: [
         MatDialogModule,
         MatTabsModule,
-
         MatCheckboxModule,
         FormsModule,
         MatFormFieldModule,

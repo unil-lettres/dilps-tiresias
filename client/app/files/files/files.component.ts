@@ -38,7 +38,6 @@ type Tuple = {
         HideTooltipDirective,
         MatIconModule,
         MatProgressSpinnerModule,
-
         NaturalFileSelectDirective,
     ],
 })

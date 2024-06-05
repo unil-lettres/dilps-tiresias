@@ -130,7 +130,6 @@ type InitialCardValues = {
     imports: [
         CommonModule,
         NaturalFileDropDirective,
-
         MatToolbarModule,
         LogoComponent,
         MatMenuModule,

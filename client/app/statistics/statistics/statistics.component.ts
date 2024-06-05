@@ -93,7 +93,6 @@ type SerieData = {
     imports: [
         LogoComponent,
         MatTabsModule,
-
         MatFormFieldModule,
         MatSelectModule,
         CommonModule,
