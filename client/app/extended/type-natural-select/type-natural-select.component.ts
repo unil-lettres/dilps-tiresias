@@ -2,7 +2,6 @@
  * This class was extended from its module to hide the operators list
  * and always use "is".
  */
-
 import {Component} from '@angular/core';
 import {
     TypeNaturalSelectComponent as EcoDevTypeNaturalSelectComponent,
@@ -10,7 +9,6 @@ import {
     NaturalAbstractModelService,
     NaturalSelectComponent,
 } from '@ecodev/natural';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({

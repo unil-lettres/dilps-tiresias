@@ -16,10 +16,8 @@ import {MapApiService} from '../../../view-map/map-api.service';
 import {GoogleMapsModule} from '@angular/google-maps';
 import {MatIconModule} from '@angular/material/icon';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
-
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
 import {CommonModule} from '@angular/common';
 
 @Component({

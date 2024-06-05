@@ -25,9 +25,7 @@ import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
 import {MaterialSortingField} from '../../generated-types';
 import {MatOptionModule} from '@angular/material/core';
-
 import {MatIconModule} from '@angular/material/icon';
-
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';

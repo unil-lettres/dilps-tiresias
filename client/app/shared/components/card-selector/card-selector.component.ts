@@ -4,7 +4,6 @@ import {Cards} from '../../generated-types';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalSelectComponent} from '@ecodev/natural';
-
 import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({

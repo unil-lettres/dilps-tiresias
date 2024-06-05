@@ -12,7 +12,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({

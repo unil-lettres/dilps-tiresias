@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-
 import {CommonModule} from '@angular/common';
 
 type User = {login: string};

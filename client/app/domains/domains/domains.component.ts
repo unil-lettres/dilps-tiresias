@@ -9,7 +9,6 @@ import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directi
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
@@ -20,7 +19,6 @@ import {
     NaturalIconDirective,
 } from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
 

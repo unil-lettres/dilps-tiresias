@@ -30,7 +30,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
-
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({

@@ -22,7 +22,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({

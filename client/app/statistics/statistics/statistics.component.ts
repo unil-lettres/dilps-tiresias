@@ -28,7 +28,6 @@ import {FormsModule} from '@angular/forms';
 import {MatOptionModule} from '@angular/material/core';
 import {CommonModule} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
-
 import {MatTabsModule} from '@angular/material/tabs';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 

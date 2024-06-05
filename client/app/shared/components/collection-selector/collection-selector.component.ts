@@ -13,7 +13,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
-
 import {MatTabsModule} from '@angular/material/tabs';
 import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-hierarchy.component';
 

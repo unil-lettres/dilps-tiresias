@@ -19,7 +19,6 @@ import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
-
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type ContentChange = {

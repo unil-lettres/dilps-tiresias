@@ -3,7 +3,6 @@ import {ErrorService} from './error.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({

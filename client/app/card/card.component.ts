@@ -80,7 +80,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
 import {CommonModule} from '@angular/common';
 import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
