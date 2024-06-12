@@ -11,13 +11,19 @@ import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
+import {CommonModule} from '@angular/common';
+
+export enum ExportTheme {
+    dark = 'dark',
+    light = 'light',
+}
 
 @Component({
     selector: 'app-export-menu',
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
     standalone: true,
-    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
 })
 export class ExportMenuComponent {
     @Input()
@@ -30,6 +36,7 @@ export class ExportMenuComponent {
     public collection: FakeCollection | null | undefined = null;
 
     public ExportFormat = ExportFormat;
+    public ExportTheme = ExportTheme;
 
     public pptValidationMessage = '';
 
@@ -94,13 +101,25 @@ export class ExportMenuComponent {
         this.menuClosed$.complete();
     }
 
-    public export(format: ExportFormat): void {
+    public export(format: ExportFormat, theme: ExportTheme = ExportTheme.dark): void {
         const input = this.exportService.getDefaultForServer();
         input.cards.push(...this.selectedCards.map(card => card.id));
         if (this.collection?.id) {
             input.collections = [this.collection.id];
         }
         input.format = format;
+
+        switch (theme) {
+            case ExportTheme.light:
+                input.backgroundColor = '#FFFFFF';
+                input.textColor = '#000000';
+                break;
+            case ExportTheme.dark:
+            default:
+                input.backgroundColor = '#000000';
+                input.textColor = '#FFFFFF';
+        }
+
         this.exportService
             .create(input)
             .pipe(

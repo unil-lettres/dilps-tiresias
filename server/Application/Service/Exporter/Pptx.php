@@ -15,6 +15,7 @@ use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Shape\RichText;
 use PhpOffice\PhpPresentation\Shape\RichText\Run;
 use PhpOffice\PhpPresentation\Slide;
+use PhpOffice\PhpPresentation\Slide\SlideMaster;
 use PhpOffice\PhpPresentation\Style\Alignment;
 use PhpOffice\PhpPresentation\Style\Color;
 use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
@@ -64,6 +65,15 @@ class Pptx implements Writer
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
         $properties->setKeywords('Université de Lausanne');
 
+        $slideBackgroundColor = new Slide\Background\Color();
+        $slideBackgroundColor->setColor(new Color($this->backgroundColor));
+
+        // Define default background color for all slides.
+        array_map(
+            fn (SlideMaster $masterSlide) => $masterSlide->setBackground($slideBackgroundColor),
+            $this->presentation->getAllMasterSlides(),
+        );
+
         // Remove default slide
         $this->presentation->removeSlideByIndex(0);
     }
@@ -77,12 +87,6 @@ class Pptx implements Writer
 
         // Create slide
         $slide = $this->presentation->createSlide();
-        $slide->setBackground();
-
-        // Set background color
-        $backgroundColor = new Slide\Background\Color();
-        $backgroundColor->setColor(new Color($this->backgroundColor));
-        $slide->setBackground($backgroundColor);
 
         $this->insertImage($slide, $card);
         $this->insertLegend($slide, $card);

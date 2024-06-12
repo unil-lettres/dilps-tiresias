@@ -552,8 +552,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
             {
                 width: '400px',
                 position: {
-                    top: '74px',
-                    right: '10px',
+                    top: '64px',
+                    left: '160px',
                 },
                 data: data,
             },
