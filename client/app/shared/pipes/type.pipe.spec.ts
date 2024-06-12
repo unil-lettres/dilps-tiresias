@@ -1,23 +1,20 @@
 import {TestBed} from '@angular/core/testing';
 import {SITE} from '../../app.config';
-import {UserService} from '../../users/services/user.service';
 import {Site, UserType} from '../generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../testing/MockApolloProvider';
 import {TypePipe} from './type.pipe';
 import {LOCAL_STORAGE, NaturalMemoryStorage} from '@ecodev/natural';
+import {provideRouter} from '@angular/router';
 
 describe('TypePipe', () => {
     let pipe: TypePipe;
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
+                provideRouter([]),
                 {
                     provide: TypePipe,
                     useClass: TypePipe,
-                },
-                {
-                    provide: UserService,
-                    useClass: UserService,
                 },
                 MOCK_APOLLO_PROVIDER,
                 {
