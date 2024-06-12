@@ -1,5 +1,4 @@
 import {TestBed} from '@angular/core/testing';
-import {RouterTestingModule} from '@angular/router/testing';
 import {SITE} from '../../app.config';
 import {UserService} from '../../users/services/user.service';
 import {Site, UserType} from '../generated-types';
@@ -11,7 +10,6 @@ describe('TypePipe', () => {
     let pipe: TypePipe;
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule],
             providers: [
                 {
                     provide: TypePipe,
