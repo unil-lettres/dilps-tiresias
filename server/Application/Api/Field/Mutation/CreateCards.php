@@ -13,10 +13,9 @@ use GraphQL\Type\Definition\Type;
 
 class CreateCards implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'createCards',
+        yield 'createCards' => fn () => [
             'type' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getOutput(Card::class)))),
             'description' => 'Create multiple cards from an excel files and several images',
             'args' => [
@@ -24,7 +23,7 @@ class CreateCards implements FieldInterface
                 'images' => Type::nonNull(Type::listOf(Type::nonNull(_types()->get('Upload')))),
                 'collection' => _types()->getId(Collection::class),
             ],
-            'resolve' => function (array $root, array $args): array {
+            'resolve' => function ($root, array $args): array {
                 $site = $root['site'];
 
                 // Check ACL

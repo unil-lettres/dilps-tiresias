@@ -16,17 +16,16 @@ use Mezzio\Session\SessionInterface;
 
 abstract class Login implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'login',
+        yield 'login' => fn () => [
             'type' => Type::nonNull(_types()->getOutput(User::class)),
             'description' => 'Log in a user',
             'args' => [
                 'login' => Type::nonNull(_types()->get(LoginType::class)),
                 'password' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function (array $root, array $args, SessionInterface $session): User {
+            'resolve' => function ($root, array $args, SessionInterface $session): User {
                 $site = $root['site'];
 
                 // Logout

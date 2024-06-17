@@ -9,14 +9,12 @@ use Ecodev\Felix\Api\Field\FieldInterface;
 
 abstract class Viewer implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return
-            [
-                'name' => 'viewer',
-                'type' => _types()->getOutput(User::class),
-                'description' => 'Represents currently logged-in user',
-                'resolve' => fn (array $root, array $args): ?User => User::getCurrent(),
-            ];
+        yield 'viewer' => fn () => [
+            'type' => _types()->getOutput(User::class),
+            'description' => 'Represents currently logged-in user',
+            'resolve' => fn ($root, array $args): ?User => User::getCurrent(),
+        ];
     }
 }

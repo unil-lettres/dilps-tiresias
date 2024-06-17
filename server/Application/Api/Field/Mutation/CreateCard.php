@@ -15,17 +15,16 @@ use GraphQL\Type\Definition\Type;
  */
 class CreateCard implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'createCard',
+        yield 'createCard' => fn () => [
             'type' => Type::nonNull(_types()->getOutput(Card::class)),
             'description' => 'Create a new card',
             'args' => [
                 'input' => Type::nonNull(_types()->getInput(Card::class)),
                 'collection' => _types()->getId(Collection::class),
             ],
-            'resolve' => function (array $root, array $args): Card {
+            'resolve' => function ($root, array $args): Card {
                 // Check ACL
                 $object = new Card();
 

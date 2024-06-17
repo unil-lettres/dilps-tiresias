@@ -11,13 +11,12 @@ use Mezzio\Session\SessionInterface;
 
 abstract class Logout implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'logout',
+        yield 'logout' => fn () => [
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Log out a user',
-            'resolve' => function (array $root, array $args, SessionInterface $session): bool {
+            'resolve' => function ($root, array $args, SessionInterface $session): bool {
                 // Logout
                 $session->clear();
                 User::setCurrent(null);

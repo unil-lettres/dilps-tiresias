@@ -12,28 +12,26 @@ use GraphQL\Type\Definition\Type;
 
 abstract class ExtraStatistics implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return
-            [
-                'name' => 'extraStatistics',
-                'type' => Type::nonNull(Type::string()),
-                'description' => 'JSON encoded extra statistics',
-                'args' => [
-                    'period' => Type::nonNull(Type::string()),
-                    'user' => _types()->getId(User::class),
-                ],
-                'resolve' => function (array $root, array $args): string {
-                    $site = $root['site'];
+        yield 'extraStatistics' => fn () => [
+            'type' => Type::nonNull(Type::string()),
+            'description' => 'JSON encoded extra statistics',
+            'args' => [
+                'period' => Type::nonNull(Type::string()),
+                'user' => _types()->getId(User::class),
+            ],
+            'resolve' => function ($root, array $args): string {
+                $site = $root['site'];
 
-                    /** @var StatisticRepository $repository */
-                    $repository = _em()->getRepository(Statistic::class);
-                    $user = @$args['user'] ? $args['user']->getEntity() : null;
+                /** @var StatisticRepository $repository */
+                $repository = _em()->getRepository(Statistic::class);
+                $user = @$args['user'] ? $args['user']->getEntity() : null;
 
-                    $result = $repository->getExtraStatistics($site, $args['period'], $user);
+                $result = $repository->getExtraStatistics($site, $args['period'], $user);
 
-                    return json_encode($result);
-                },
-            ];
+                return json_encode($result);
+            },
+        ];
     }
 }
