@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff48aa9312f480d94752e1ea68663037",
+    "content-hash": "87e0e535b819529230800dacd661df99",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1605,23 +1605,23 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "14.0.0",
+            "version": "14.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "b122d23356392dcd2cf989bf35128f8208c51190"
+                "reference": "92342ecae1608c4f9c7da43a816b3cbd0587948c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/b122d23356392dcd2cf989bf35128f8208c51190",
-                "reference": "b122d23356392dcd2cf989bf35128f8208c51190",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/92342ecae1608c4f9c7da43a816b3cbd0587948c",
+                "reference": "92342ecae1608c4f9c7da43a816b3cbd0587948c",
                 "shasum": ""
             },
             "require": {
                 "cakephp/chronos": "^3.0.3",
                 "doctrine/dbal": "^3.6",
                 "doctrine/migrations": "^3.6",
-                "ecodev/graphql-doctrine": "^9.0",
+                "ecodev/graphql-doctrine": "^10.0",
                 "ext-bcmath": "*",
                 "ext-fileinfo": "*",
                 "ext-json": "*",
@@ -1671,22 +1671,22 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/14.0.0"
+                "source": "https://github.com/Ecodev/felix/tree/14.1.0"
             },
-            "time": "2024-06-17T04:33:55+00:00"
+            "time": "2024-06-17T11:17:46+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
-            "version": "9.0.0",
+            "version": "10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/graphql-doctrine.git",
-                "reference": "5acf0169f2e1b2b1ed0260cf0c758a5fc5368a10"
+                "reference": "087f5594434bfd02c0d24de57c57c0f1beafecab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/5acf0169f2e1b2b1ed0260cf0c758a5fc5368a10",
-                "reference": "5acf0169f2e1b2b1ed0260cf0c758a5fc5368a10",
+                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/087f5594434bfd02c0d24de57c57c0f1beafecab",
+                "reference": "087f5594434bfd02c0d24de57c57c0f1beafecab",
                 "shasum": ""
             },
             "require": {
@@ -1721,9 +1721,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Ecodev/graphql-doctrine/issues",
-                "source": "https://github.com/Ecodev/graphql-doctrine/tree/9.0.0"
+                "source": "https://github.com/Ecodev/graphql-doctrine/tree/10.0.0"
             },
-            "time": "2023-11-02T06:05:03+00:00"
+            "time": "2024-06-17T11:10:56+00:00"
         },
         {
             "name": "ecodev/graphql-upload",
