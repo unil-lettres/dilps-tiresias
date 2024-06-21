@@ -1,14 +1,14 @@
-<form [formGroup]="form" fxLayout="row" fxLayoutGap="10px">
+<form class="nat-horizontal nat-gap-10" [formGroup]="form">
     <mat-form-field>
         <mat-label>Latitude</mat-label>
         <input
-            (keydown.enter)="close()"
+            matInput
+            type="number"
             [formControl]="latitudeCtrl"
             [attr.min]="-90"
             [attr.max]="90"
             [required]="true"
-            matInput
-            type="number"
+            (keydown.enter)="close()"
         />
         @if (latitudeCtrl.hasError('min') || latitudeCtrl.hasError('max')) {
             <mat-error>La latitude doit être entre -180 et 180</mat-error>
@@ -18,13 +18,13 @@
     <mat-form-field>
         <mat-label>Longitude</mat-label>
         <input
-            (keydown.enter)="close()"
+            matInput
+            type="number"
             [formControl]="longitudeCtrl"
             [attr.min]="-180"
             [attr.max]="180"
             [required]="true"
-            matInput
-            type="number"
+            (keydown.enter)="close()"
         />
         @if (longitudeCtrl.hasError('min') || longitudeCtrl.hasError('max')) {
             <mat-error>La longitude doit être entre -180 et 180</mat-error>
@@ -34,13 +34,13 @@
     <mat-form-field>
         <mat-label>Rayon</mat-label>
         <input
-            (keydown.enter)="close()"
+            matInput
+            type="number"
             [formControl]="distanceCtrl"
             [attr.min]="1"
             [step]="50"
             [required]="true"
-            matInput
-            type="number"
+            (keydown.enter)="close()"
         />
         <span matTextSuffix>m</span>
 

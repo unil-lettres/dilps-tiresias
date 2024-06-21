@@ -1,21 +1,21 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Utilisateur">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field class="width-auto">
                     <mat-label>Login</mat-label>
-                    <input [(ngModel)]="data.item.login" [disabled]="!!data.item.id" matInput name="login" />
+                    <input matInput name="login" [disabled]="!!data.item.id" [(ngModel)]="data.item.login" />
                 </mat-form-field>
 
                 <mat-form-field class="width-auto">
                     <mat-label>Nom</mat-label>
-                    <input [(ngModel)]="data.item.name" matInput name="name" />
+                    <input matInput name="name" [(ngModel)]="data.item.name" />
                 </mat-form-field>
 
                 @if (!isShibbolethUser()) {
                     <mat-form-field>
                         <mat-label>Email</mat-label>
-                        <input [(ngModel)]="data.item.email" matInput name="email" type="email" />
+                        <input matInput name="email" type="email" [(ngModel)]="data.item.email" />
                     </mat-form-field>
                 }
 
@@ -23,14 +23,28 @@
                     (user?.globalPermissions?.user?.create || (isUpdatePage() && data.item.permissions.update)) &&
                     !isShibbolethUser()
                 ) {
-                    <div [formGroup]="passwordGroupCtrl" fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10" [formGroup]="passwordGroupCtrl">
                         <mat-form-field>
                             <mat-label>Mot de passe</mat-label>
-                            <input [formControl]="passwordCtrl" matInput type="password" />
+                            <input
+                                matInput
+                                type="password"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                [formControl]="passwordCtrl"
+                            />
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Confirmation du mot passe</mat-label>
-                            <input [formControl]="passwordConfirmationCtrl" matInput type="password" />
+                            <input
+                                matInput
+                                type="password"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                [formControl]="passwordConfirmationCtrl"
+                            />
                             @if (passwordConfirmationCtrl.hasError('password')) {
                                 <mat-error>Le mot de passe n'est pas identique</mat-error>
                             }
@@ -39,18 +53,18 @@
                 }
 
                 <app-thesaurus
-                    (modelChange)="data.item.institution = $any($event)"
+                    placeholder="Institution"
                     [model]="institution"
                     [multiple]="false"
                     [service]="institutionService"
                     [sortAutocompleteByUsageCount]="true"
-                    placeholder="Institution"
+                    (modelChange)="data.item.institution = $any($event)"
                 />
 
                 <mat-form-field>
                     <mat-label>Active jusqu'au</mat-label>
-                    <input [(ngModel)]="data.item.activeUntil" [matDatepicker]="picker" matInput name="activeUntil" />
-                    <mat-datepicker-toggle [for]="picker" matIconSuffix />
+                    <input matInput name="activeUntil" [matDatepicker]="picker" [(ngModel)]="data.item.activeUntil" />
+                    <mat-datepicker-toggle matIconSuffix [for]="picker" />
                     <mat-datepicker #picker />
                 </mat-form-field>
 
@@ -58,20 +72,20 @@
                     <mat-form-field>
                         <mat-label>Licence</mat-label>
                         <input
-                            [(ngModel)]="data.item.termsAgreement"
-                            [matDatepicker]="picker2"
                             disabled
                             matInput
                             name="termsAgreement"
+                            [matDatepicker]="picker2"
+                            [(ngModel)]="data.item.termsAgreement"
                         />
-                        <mat-datepicker-toggle [for]="picker2" matIconSuffix />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2" />
                         <mat-datepicker #picker2 />
                     </mat-form-field>
                 }
 
                 <mat-form-field>
                     <mat-label>Rôle</mat-label>
-                    <mat-select [(value)]="data.item.role" [disabled]="user?.id === data.item.id">
+                    <mat-select [disabled]="user?.id === data.item.id" [(value)]="data.item.role">
                         @for (role of roles; track role) {
                             <mat-option [value]="role.value" [disabled]="roleDisabled(role.value)">
                                 {{ role.name }}</mat-option
@@ -84,11 +98,11 @@
                     <mat-form-field>
                         <mat-label>Type d'utilisateur</mat-label>
                         <input
-                            [(ngModel)]="data.item.type"
                             disabled
                             matInput
                             name="type"
                             [value]="data.item.type | type"
+                            [(ngModel)]="data.item.type"
                         />
                     </mat-form-field>
                 }
@@ -98,12 +112,12 @@
         @if (isUpdatePage()) {
             <mat-tab label="Collections">
                 <natural-relations
+                    class="nat-margin"
+                    placeholder="Ajouter une collection"
                     [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
                     [hierarchicSelectorConfig]="collectionsHierarchicConfig"
                     [main]="data.item"
                     [service]="collectionService"
-                    class="margin"
-                    placeholder="Ajouter une collection"
                 />
             </mat-tab>
         }
@@ -112,13 +126,13 @@
 
 <mat-dialog-actions>
     <app-dialog-footer
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
+        class="nat-expand"
         [canCreate]="user?.globalPermissions?.user?.create"
         [canDelete]="true"
         [formCtrl]="passwordConfirmationCtrl"
         [item]="data.item"
-        fxFlex
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
     />
 </mat-dialog-actions>

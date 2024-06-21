@@ -13,17 +13,16 @@ use GraphQL\Type\Definition\Type;
 
 class SuggestCreation implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'suggestCreation',
+        yield 'suggestCreation' => fn () => [
             'type' => Type::nonNull(_types()->getOutput(Change::class)),
             'description' => 'Suggest the creation of a new image',
             'args' => [
                 'id' => Type::nonNull(_types()->getId(Card::class)),
                 'request' => Type::nonNull(Type::string()),
             ],
-            'resolve' => function (array $root, array $args): Change {
+            'resolve' => function ($root, array $args): Change {
                 $site = $root['site'];
 
                 $suggestion = $args['id']->getEntity();

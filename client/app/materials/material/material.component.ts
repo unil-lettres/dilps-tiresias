@@ -12,7 +12,6 @@ import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialo
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
@@ -22,7 +21,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     imports: [
         MatDialogModule,
         MatTabsModule,
-        FlexModule,
         MatFormFieldModule,
         MatInputModule,
         FormsModule,

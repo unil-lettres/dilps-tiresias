@@ -1,10 +1,10 @@
-<mat-dialog-content fxLayout="column">
+<mat-dialog-content>
     <mat-form-field>
         <mat-label>Nombre de fiches</mat-label>
-        <input [(ngModel)]="number" matInput />
+        <input matInput [(ngModel)]="number" />
     </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button [mat-dialog-close]="number" color="primary" mat-button>Sélectionner</button>
+    <button color="primary" mat-button [mat-dialog-close]="number">Sélectionner</button>
 </mat-dialog-actions>

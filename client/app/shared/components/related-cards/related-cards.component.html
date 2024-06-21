@@ -1,15 +1,15 @@
 <div [hidden]="breakpointXSmall || cards.length === 0">
     <div class="wrapper" [class.reduced]="isReduced">
-        <div class="slideshow" #slideshow (scroll)="updateButtonsState()">
+        <div #slideshow class="slideshow" (scroll)="updateButtonsState()">
             @for (card of cards; track card) {
                 <div>
-                    <a [routerLink]="['/card', card.id]" class="image" [matTooltip]="card.plainName">
+                    <a class="image" [routerLink]="['/card', card.id]" [matTooltip]="card.plainName">
                         <img
-                            [ngSrc]="'card-' + card.id + '.jpg'"
-                            [loaderParams]="{card: card}"
                             priority
                             fill
                             placeholder
+                            [ngSrc]="'card-' + card.id + '.jpg'"
+                            [loaderParams]="{card: card}"
                         />
                     </a>
                 </div>
@@ -19,9 +19,9 @@
             class="left"
             mat-mini-fab
             color="primary"
-            (click)="scrollLeft()"
             [disabled]="scrollBarAtLeft"
             [hidden]="!hasScrollbar"
+            (click)="scrollLeft()"
         >
             <mat-icon naturalIcon="navigate_before" />
         </button>
@@ -29,19 +29,19 @@
             class="right"
             mat-mini-fab
             color="primary"
-            (click)="scrollRight()"
             [disabled]="scrollBarAtRight"
             [hidden]="!hasScrollbar"
+            (click)="scrollRight()"
         >
             <mat-icon naturalIcon="navigate_next" />
         </button>
     </div>
     <button
         class="btn-reduce"
-        [class.reduced]="isReduced"
         mat-mini-fab
-        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + ' les images associées'"
         matTooltipPosition="left"
+        [class.reduced]="isReduced"
+        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + ' les images associées'"
         (click)="reduced.emit(!isReduced)"
     >
         <mat-icon naturalIcon="expand_more" />

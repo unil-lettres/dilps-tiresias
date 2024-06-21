@@ -27,22 +27,22 @@ use Application\Model\Period;
 use Application\Model\Statistic;
 use Application\Model\Tag;
 use Application\Model\User;
+use Ecodev\Felix\Utility;
 use GraphQL\Type\Definition\ObjectType;
 
 class QueryType extends ObjectType
 {
     public function __construct()
     {
-        $specializedFields = [
+        $fields = Utility::concat(
+            // Specialized fields
             Viewer::build(),
             ExtraStatistics::build(),
             UserRolesAvailable::build(),
             ValidateExport::build(),
             CollectionCopyrights::build(),
-        ];
 
-        $fields = array_merge(
-            $specializedFields,
+            // Standard fields
             Standard::buildQuery(Artist::class),
             Standard::buildQuery(Change::class),
             Standard::buildQuery(Collection::class),

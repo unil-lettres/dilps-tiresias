@@ -1,10 +1,10 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Collection">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 @if (showVisibility) {
-                    <div class="innerSpacing" fxLayout="column" style="max-width: 400px">
-                        <div fxLayout="row">Visible {{ visibilities[visibility].text }}</div>
+                    <div class="innerSpacing nat-vertical" style="max-width: 400px">
+                        <div class="nat-horizontal">Visible {{ visibilities[visibility].text }}</div>
                         <mat-slider
                             [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
                             [max]="3"
@@ -17,44 +17,44 @@
 
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
-                    <input [(ngModel)]="data.item.name" matInput />
+                    <input matInput [(ngModel)]="data.item.name" />
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Description</mat-label>
-                    <input [(ngModel)]="data.item.description" matInput />
+                    <input matInput [(ngModel)]="data.item.description" />
                 </mat-form-field>
 
                 @if (data.item.isSource) {
                     <mat-form-field>
                         <mat-label>Droits d'utilisation</mat-label>
-                        <input [(ngModel)]="data.item.usageRights" matInput />
+                        <input matInput [(ngModel)]="data.item.usageRights" />
                     </mat-form-field>
                 }
 
                 @if (data.item.isSource) {
                     <mat-form-field>
                         <mat-label>Copyrights</mat-label>
-                        <input [(ngModel)]="data.item.copyrights" matInput />
+                        <input matInput [(ngModel)]="data.item.copyrights" />
                     </mat-form-field>
                 }
 
                 <app-thesaurus
-                    (modelChange)="data.item.institution = $any($event)"
+                    placeholder="Institution"
                     [model]="institution"
                     [multiple]="false"
                     [service]="institutionService"
                     [sortAutocompleteByUsageCount]="true"
-                    placeholder="Institution"
+                    (modelChange)="data.item.institution = $any($event)"
                 />
 
                 <natural-select-hierarchic
-                    [(ngModel)]="data.item.parent"
+                    clearLabel="Dissocier de la collection parente"
+                    placeholder="Collection parente"
                     [config]="hierarchicConfig"
                     [filters]="ancestorsHierarchicFilters"
                     [showIcon]="false"
-                    clearLabel="Dissocier de la collection parente"
-                    placeholder="Collection parente"
+                    [(ngModel)]="data.item.parent"
                 />
 
                 @if (user?.role === 'administrator') {
@@ -65,12 +65,12 @@
         @if (isUpdatePage()) {
             <mat-tab label="Abonnés">
                 <natural-relations
+                    class="nat-margin"
+                    placeholder="Ajouter un abonné"
                     [displayWith]="displayFn"
                     [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
                     [main]="data.item"
                     [service]="userService"
-                    class="margin"
-                    placeholder="Ajouter un abonné"
                 />
             </mat-tab>
         }
@@ -79,12 +79,12 @@
 
 <mat-dialog-actions>
     <app-dialog-footer
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
+        class="nat-expand"
         [canCreate]="user?.globalPermissions?.collection?.create"
         [canDelete]="true"
         [item]="data.item"
-        fxFlex
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
     />
 </mat-dialog-actions>

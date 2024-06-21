@@ -1,24 +1,24 @@
 <mat-dialog-content>
     <mat-tab-group>
         <mat-tab label="Matériau">
-            <div class="padding-v" fxLayout="column" fxLayoutGap="10px">
+            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
-                        [(ngModel)]="data.item.name"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
                         matInput
+                        [readonly]="isUpdatePage() && !data.item.permissions.update"
+                        [(ngModel)]="data.item.name"
                     />
                 </mat-form-field>
 
                 <natural-select-hierarchic
-                    [(ngModel)]="data.item.parent"
-                    [config]="hierarchicConfig"
-                    [filters]="ancestorsHierarchicFilters"
-                    [showIcon]="false"
                     clearLabel="Dissocier"
                     placeholder="Parent"
                     selectLabel="Associer au parent"
+                    [config]="hierarchicConfig"
+                    [filters]="ancestorsHierarchicFilters"
+                    [showIcon]="false"
+                    [(ngModel)]="data.item.parent"
                 />
             </div>
         </mat-tab>
@@ -27,12 +27,12 @@
 
 <mat-dialog-actions>
     <app-dialog-footer
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
+        class="nat-expand"
         [canCreate]="user?.globalPermissions?.material?.create"
         [canDelete]="data.item.canDelete"
         [item]="data.item"
-        fxFlex
+        (create)="create()"
+        (delete)="delete()"
+        (update)="update()"
     />
 </mat-dialog-actions>

@@ -18,7 +18,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
 import {LogoComponent} from '../shared/components/logo/logo.component';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +25,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
     styleUrl: './login.component.scss',
     standalone: true,
     imports: [
-        FlexModule,
         LogoComponent,
         MatDividerModule,
         MatGridListModule,

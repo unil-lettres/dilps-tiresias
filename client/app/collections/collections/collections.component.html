@@ -1,24 +1,24 @@
-<div fxFlex fxLayout="row">
-    <div class="containerWithToolbar" fxFlex="400px" fxLayout="column">
-        <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="start center">
+<div class="nat-expand nat-horizontal">
+    <div class="containerWithToolbar nat-vertical left-pane">
+        <mat-toolbar class="nat-horizontal nat-align">
             <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-            <div fxFlex></div>
+            <div class="nat-expand"></div>
             @if (canCreate) {
-                <button (click)="add()" [matTooltip]="'Créer une collection'" mat-icon-button>
+                <button mat-icon-button [matTooltip]="'Créer une collection'" (click)="add()">
                     <mat-icon naturalIcon="add" />
                 </button>
             }
         </mat-toolbar>
 
-        <ng-scrollbar fxFlex>
-            <div class="scrolled" fxLayout="column">
+        <ng-scrollbar class="nat-expand">
+            <div class="scrolled nat-vertical">
                 @if (showUnclassified) {
                     <mat-nav-list>
                         <a
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [routerLink]="['.']"
                             mat-list-item
                             routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            [routerLink]="['.']"
                         >
                             <span>Non classé</span>
                         </a>
@@ -28,10 +28,10 @@
                 @if (showMyCards) {
                     <mat-nav-list>
                         <a
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [routerLink]="['my-cards']"
                             mat-list-item
                             routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}"
+                            [routerLink]="['my-cards']"
                         >
                             <span>Mes images</span>
                         </a>
@@ -45,12 +45,12 @@
                 <ng-template #recursiveList let-collections let-padding="padding">
                     @for (collection of collections; track collection) {
                         <a
-                            (click)="toggle(collection)"
-                            [routerLink]="collection.id"
-                            [style.padding-left.px]="padding"
                             mat-list-item
                             routerLinkActive="active"
                             class="mat-mdc-list-item-interactive"
+                            [routerLink]="collection.id"
+                            [style.padding-left.px]="padding"
+                            (click)="toggle(collection)"
                         >
                             <span matListItemTitle>
                                 {{ collection.name }}
@@ -59,7 +59,7 @@
                                 }
                             </span>
                             @if (collection.permissions.update || collection.permissions.delete) {
-                                <button matListItemMeta (click)="edit($event, collection)" mat-icon-button>
+                                <button matListItemMeta mat-icon-button (click)="edit($event, collection)">
                                     <mat-icon naturalIcon="edit" />
                                 </button>
                             }
@@ -78,13 +78,7 @@
                         *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
                     />
                     @if (hasMore) {
-                        <a
-                            (click)="more()"
-                            fxLayout="column"
-                            fxLayoutAlign="center"
-                            mat-list-item
-                            class="mat-mdc-list-item-interactive"
-                        >
+                        <a class="nat-vertical mat-mdc-list-item-interactive" mat-list-item (click)="more()">
                             <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
                             <span>Afficher d'avantage</span>
                         </a>

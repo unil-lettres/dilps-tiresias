@@ -11,13 +11,12 @@ use GraphQL\Type\Definition\Type;
 
 class RecordPage implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'recordPage',
+        yield 'recordPage' => fn () => [
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Record one page visit in statistics',
-            'resolve' => function (array $root, array $args): bool {
+            'resolve' => function ($root, array $args): bool {
                 $site = $root['site'];
 
                 /** @var StatisticRepository $statisticRepository */

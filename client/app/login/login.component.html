@@ -1,11 +1,11 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <div class="login" fxLayout="column">
-        <div fxLayout="column" fxLayoutGap="15px">
+<div class="nat-horizontal nat-center">
+    <div class="login nat-vertical">
+        <div class="nat-vertical nat-gap-15">
             <app-logo [data]="{type: 'main', class: 'logo-main'}" />
 
             <mat-divider />
 
-            <div class="login-info" fxLayout="column" fxLayoutGap="15px">
+            <div class="login-info nat-gap-15 nat-vertical">
                 Veuillez choisir une méthode d'authentification ou
                 <br />
                 utiliser le bouton "Accès public"
@@ -15,6 +15,7 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
+                        class="shib-link"
                         [href]="
                             baseUrl +
                             '/Shibboleth.sso/Login?target=' +
@@ -23,7 +24,6 @@
                             encodeUrl(returnUrl) +
                             '&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth'
                         "
-                        class="shib-link"
                     >
                         <img src="assets/images/logo-unil.svg" width="130" />
                     </a>
@@ -31,6 +31,7 @@
                 <mat-grid-tile>
                     <a
                         mat-raised-button
+                        class="shib-link"
                         [href]="
                             baseUrl +
                             '/Shibboleth.sso/Login?target=' +
@@ -39,7 +40,6 @@
                             encodeUrl(returnUrl) +
                             '&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth'
                         "
-                        class="shib-link"
                     >
                         <img src="assets/images/logo-unine.svg" width="90" />
                     </a>
@@ -54,43 +54,46 @@
                 </mat-expansion-panel-header>
 
                 <form>
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <mat-form-field class="width-auto">
                             <mat-label>Login</mat-label>
                             <input
-                                (focus)="snackBar.dismiss()"
-                                [(ngModel)]="loginForm.login"
-                                [disabled]="loading"
                                 autofocus
                                 matInput
                                 name="login"
                                 required="required"
+                                [disabled]="loading"
+                                [(ngModel)]="loginForm.login"
+                                (focus)="snackBar.dismiss()"
                             />
                         </mat-form-field>
                     </div>
 
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <mat-form-field class="width-auto">
                             <mat-label>Password</mat-label>
                             <input
-                                (focus)="snackBar.dismiss()"
-                                [(ngModel)]="loginForm.password"
-                                [disabled]="loading"
                                 matInput
                                 name="password"
                                 required="required"
                                 type="password"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                [disabled]="loading"
+                                [(ngModel)]="loginForm.password"
+                                (focus)="snackBar.dismiss()"
                             />
                         </mat-form-field>
                     </div>
 
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <button
-                            (click)="login()"
-                            [disabled]="loading || !loginForm.login || !loginForm.password"
                             color="primary"
                             mat-raised-button
                             type="submit"
+                            [disabled]="loading || !loginForm.login || !loginForm.password"
+                            (click)="login()"
                         >
                             Se connecter
                         </button>
@@ -99,9 +102,9 @@
             </mat-expansion-panel>
 
             @if (site === Site.tiresias) {
-                <div fxLayout="column" fxLayoutGap="15px">
+                <div class="nat-vertical nat-gap-15">
                     <mat-divider />
-                    <a (click)="userService.startTempAccess()" mat-raised-button> Accès public </a>
+                    <a mat-raised-button (click)="userService.startTempAccess()"> Accès public </a>
                 </div>
             }
         </div>

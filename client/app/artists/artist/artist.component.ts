@@ -10,22 +10,13 @@ import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialo
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-artist',
     templateUrl: './artist.component.html',
     standalone: true,
-    imports: [
-        MatDialogModule,
-        MatTabsModule,
-        FlexModule,
-        MatFormFieldModule,
-        MatInputModule,
-        FormsModule,
-        DialogFooterComponent,
-    ],
+    imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService, ThesaurusDetailDialogExtraData> {
     public constructor(

@@ -32,13 +32,15 @@ use Application\Model\News;
 use Application\Model\Period;
 use Application\Model\Tag;
 use Application\Model\User;
+use Ecodev\Felix\Utility;
 use GraphQL\Type\Definition\ObjectType;
 
 class MutationType extends ObjectType
 {
     public function __construct()
     {
-        $specializedFields = [
+        $fields = Utility::concat(
+            // Specialized fields
             SuggestCreation::build(),
             SuggestUpdate::build(),
             SuggestDeletion::build(),
@@ -53,13 +55,12 @@ class MutationType extends ObjectType
             CreateCard::build(),
             CreateCards::build(),
             CreateExport::build(),
-        ];
 
-        $fields = array_merge(
+            // Standard fields
             Standard::buildMutation(Artist::class),
             Standard::buildMutation(Collection::class),
             Standard::buildMutation(Institution::class),
-            Standard::buildMutation(Card::class),
+            Utility::filterByKeys(Standard::buildMutation(Card::class), 'updateCard', 'deleteCards'),
             Standard::buildMutation(User::class),
             Standard::buildMutation(DocumentType::class),
             Standard::buildMutation(Domain::class),
@@ -74,7 +75,6 @@ class MutationType extends ObjectType
             Standard::buildRelationMutation(Card::class, Collection::class, 'linkCard'),
             Standard::buildRelationMutation(Card::class, Period::class),
             Standard::buildRelationMutation(Card::class, Material::class),
-            $specializedFields,
         );
 
         $config = [

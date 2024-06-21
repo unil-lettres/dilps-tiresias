@@ -15,17 +15,17 @@
 
     ng-progress {
         .ng-bar {
-            height: 3px !important;
-            background-color: mat.get-color-from-palette($accent) !important;
             box-shadow: mat.get-color-from-palette($accent) 0 0 5px !important;
+            background-color: mat.get-color-from-palette($accent) !important;
+            height: 3px !important;
         }
 
         .ng-meteor {
-            opacity: 1 !important;
-            transform: none !important;
-            width: 25px !important;
             top: 0 !important;
+            transform: none !important;
+            opacity: 1 !important;
             box-shadow: mat.get-color-from-palette($accent) 0 0 20px !important;
+            width: 25px !important;
         }
     }
 
@@ -44,26 +44,26 @@
     }
 
     .icon-button-circle-primary {
-        color: mat.get-color-from-palette($primary, default-contrast);
         background-color: mat.get-color-from-palette($primary);
+        color: mat.get-color-from-palette($primary, default-contrast);
     }
 
     .icon-button-circle-accent {
-        color: mat.get-color-from-palette($accent, default-contrast);
         background-color: mat.get-color-from-palette($accent);
+        color: mat.get-color-from-palette($accent, default-contrast);
     }
 
     .icon-button-circle-warn {
-        color: mat.get-color-from-palette($warn, default-contrast);
         background-color: mat.get-color-from-palette($warn);
+        color: mat.get-color-from-palette($warn, default-contrast);
     }
 
     .natural-dropdown-container .dropdown-title {
-        font-size: mat.font-size(typography.$custom-typography-gt-sm, 'headline-5');
-        padding: 3px 20px 13px;
         opacity: 1;
-        text-align: center;
         border-bottom: 1px solid mat.get-color-from-palette($foreground, base, 0.5);
+        padding: 3px 20px 13px;
+        font-size: mat.font-size(typography.$custom-typography-gt-sm, 'headline-5');
+        text-align: center;
     }
 
     natural-gallery .natural-gallery-js .figure.selected {

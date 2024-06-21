@@ -11,16 +11,15 @@ use GraphQL\Type\Definition\Type;
 
 class RejectChange implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'rejectChange',
+        yield 'rejectChange' => fn () => [
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Reject the change',
             'args' => [
                 'id' => Type::nonNull(_types()->getId(Change::class)),
             ],
-            'resolve' => function (array $root, array $args): bool {
+            'resolve' => function ($root, array $args): bool {
                 /** @var Change $change */
                 $change = $args['id']->getEntity();
 

@@ -1,12 +1,12 @@
 <!-- Removed "Valeur" label -->
 <mat-form-field>
     <input
-        (keydown.enter)="close()"
+        matInput
+        type="text"
         [errorStateMatcher]="matcher"
         [formControl]="formCtrl"
         [required]="true"
-        matInput
-        type="text"
+        (keydown.enter)="close()"
     />
     @if (formCtrl.hasError('required')) {
         <mat-error>*</mat-error>

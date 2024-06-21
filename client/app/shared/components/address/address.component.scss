@@ -1,6 +1,6 @@
 .double-fields > * {
-    min-width: 0;
     width: calc(((400px - 2 * 12px) - 10px) / 2);
+    min-width: 0;
 }
 
 #mapZone {
@@ -12,13 +12,13 @@
 
     #search {
         position: absolute;
-        z-index: 5;
         top: 5px;
         left: 5px;
+        z-index: 5;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
         padding-bottom: -1.25em;
         width: 370px;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
     }
 }
 

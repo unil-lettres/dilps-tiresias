@@ -1,18 +1,17 @@
 swiper-container {
-    height: 450px;
     width: 800px;
+    height: 450px;
 }
 
 swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    background: #fff;
+    font-size: 18px;
+    text-align: center;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
@@ -36,19 +35,19 @@ swiper-slide img {
 }
 
 .carousel-news {
-    height: 100%;
-    width: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
     text-align: center;
 }
 
 .carousel-label {
     position: absolute;
-    left: 20px;
     bottom: 20px;
+    left: 20px;
     background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     max-width: calc(100% - 80px);

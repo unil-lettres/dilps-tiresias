@@ -10,7 +10,6 @@ describe('CarouselComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CarouselComponent],
             providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.tiresias}],
         }).compileComponents();
 

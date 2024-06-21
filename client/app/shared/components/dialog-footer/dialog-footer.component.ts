@@ -4,7 +4,6 @@ import {Stamped, StampComponent} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 type Model = Stamped & {
@@ -26,7 +25,7 @@ type Model = Stamped & {
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
     standalone: true,
-    imports: [FlexModule, StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
+    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
 })
 export class DialogFooterComponent {
     @Input() public canCreate = false;

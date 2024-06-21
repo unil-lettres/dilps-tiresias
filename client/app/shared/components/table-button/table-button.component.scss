@@ -1,19 +1,19 @@
 app-table-button {
-    flex: inherit;
     display: inherit;
-    align-items: inherit;
-    justify-content: inherit;
+    flex: inherit;
     flex-direction: inherit;
+    justify-content: inherit;
+    align-items: inherit;
 
     a.mat-mdc-button {
-        flex: 1;
         display: flex;
+        flex: 1;
         align-items: center;
+        border-radius: 0;
         padding: 0 5px;
+        line-height: 27px;
         text-align: left;
         white-space: normal;
-        line-height: 27px;
-        border-radius: 0;
         .mdc-button__label {
             display: flex;
             flex-direction: row;

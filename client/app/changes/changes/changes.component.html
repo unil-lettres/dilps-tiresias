@@ -1,18 +1,18 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-align nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding">
+    <div class="nat-padding">
         <div class="mat-headline-5">Notifications</div>
-        <div class="responsive-table" [fxShow]="showTable()">
-            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr
                     *matRowDef="let row; columns: displayedColumns"
-                    [routerLink]="[row.id]"
                     mat-row
                     style="cursor: pointer"
+                    [routerLink]="[row.id]"
                 ></tr>
                 <!-- Type -->
 
@@ -48,23 +48,22 @@
                 </ng-container>
             </table>
         </div>
-        @if (dataSource.data?.length === 0) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <div>Pas de résultats</div>
-            </div>
+
+        @if (showNoResults()) {
+            <div class="nat-margin text-center">Pas de résultats</div>
         }
         @if (!dataSource.data) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+            <div class="nat-margin nat-vertical nat-center">
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>

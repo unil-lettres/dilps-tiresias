@@ -3,21 +3,21 @@
         <div class="scrolled">
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    (page)="loadMore($event)"
                     [length]="dataSource.data?.length"
                     [pageIndex]="dataSource.data?.pageIndex"
                     [pageSizeOptions]="[5, 10, 20, 50]"
                     [pageSize]="dataSource.data?.pageSize"
                     [showFirstLastButtons]="true"
+                    (page)="loadMore($event)"
                 />
             }
             @for (item of cards; track item) {
                 <div class="line">
                     <div class="image-wrapper">
                         <a
+                            class="image"
                             [routerLink]="['/card', item.id]"
                             [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 200) + ')'}"
-                            class="image"
                         ></a>
                     </div>
                     <div class="line-body">
@@ -168,21 +168,21 @@
                     </div>
                     <div>
                         <mat-checkbox
+                            [checked]="selectionModel.isSelected(item)"
                             (change)="$event ? selectionModel.toggle(item) : null"
                             (click)="$event.stopPropagation()"
-                            [checked]="selectionModel.isSelected(item)"
                         />
                     </div>
                 </div>
             }
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    (page)="loadMore($event)"
                     [length]="dataSource.data?.length"
                     [pageIndex]="dataSource.data?.pageIndex"
                     [pageSizeOptions]="[5, 10, 20, 50]"
                     [pageSize]="dataSource.data?.pageSize"
                     [showFirstLastButtons]="true"
+                    (page)="loadMore($event)"
                 />
             }
         </div>

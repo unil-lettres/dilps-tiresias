@@ -1,6 +1,6 @@
 .name {
-    color: black;
     padding: 5px;
+    color: black;
 }
 
 .img {
@@ -13,16 +13,16 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    height: 200px;
     width: 300px;
 
+    height: 200px;
+
     .image {
-        height: 200px;
-        width: 300px;
-        background-size: contain;
         background-position: center;
+        background-size: contain;
         background-repeat: no-repeat;
+        width: 300px;
+        height: 200px;
     }
 }
 

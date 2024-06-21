@@ -3,7 +3,6 @@ import {ErrorService} from './error.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
@@ -11,7 +10,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     templateUrl: './error.component.html',
     styleUrl: './error.component.scss',
     standalone: true,
-    imports: [FlexModule, MatIconModule, MatButtonModule, RouterLink, NaturalIconDirective],
+    imports: [MatIconModule, MatButtonModule, RouterLink, NaturalIconDirective],
 })
 export class ErrorComponent {
     public readonly error: Error | null = null;

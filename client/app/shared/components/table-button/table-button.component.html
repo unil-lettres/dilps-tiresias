@@ -19,7 +19,7 @@
 
 <!-- App routed link with label... -->
 @if (navigate && label) {
-    <a [queryParams]="queryParams" [routerLink]="navigate" mat-button>
+    <a mat-button [queryParams]="queryParams" [routerLink]="navigate">
         @if (icon) {
             <mat-icon [naturalIcon]="icon" />
         }
@@ -29,7 +29,7 @@
 
 <!-- ... and without label -->
 @if (navigate && !label) {
-    <a [queryParamsHandling]="queryParamsHandling" [queryParams]="queryParams" [routerLink]="navigate" mat-icon-button>
+    <a mat-icon-button [queryParamsHandling]="queryParamsHandling" [queryParams]="queryParams" [routerLink]="navigate">
         @if (icon) {
             <mat-icon [naturalIcon]="icon" />
         }
@@ -38,7 +38,7 @@
 
 <!-- External link with label... -->
 @if (href && label) {
-    <a [attr.href]="href" mat-button>
+    <a mat-button [attr.href]="href">
         @if (icon) {
             <mat-icon [naturalIcon]="icon" />
         }
@@ -48,7 +48,7 @@
 
 <!-- ... and without label -->
 @if (href && !label) {
-    <a [attr.href]="href" mat-icon-button>
+    <a mat-icon-button [attr.href]="href">
         @if (icon) {
             <mat-icon [naturalIcon]="icon" />
         }

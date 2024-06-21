@@ -9,7 +9,6 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {CardComponent} from '../../../card/card.component';
 import {CommonModule} from '@angular/common';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 @Component({
     selector: 'app-mass-edit',
@@ -17,7 +16,6 @@ import {FlexModule} from '@ngbracket/ngx-layout/flex';
     styleUrl: './mass-edit.component.scss',
     standalone: true,
     imports: [
-        FlexModule,
         CommonModule,
         MatDialogModule,
         CardComponent,
