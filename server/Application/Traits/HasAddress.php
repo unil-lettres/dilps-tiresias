@@ -25,16 +25,16 @@ trait HasAddress
     #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
     private ?string $precision = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private string $street = '';
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => ''])]
     private string $postcode = '';
 
-    #[ORM\Column(type: 'string', length: 191)]
+    #[ORM\Column(type: 'string', length: 191, options: ['default' => ''])]
     private string $locality = '';
 
-    #[ORM\Column(type: 'string', length: 191)]
+    #[ORM\Column(type: 'string', length: 191, options: ['default' => ''])]
     private string $area = '';
 
     #[ORM\ManyToOne(targetEntity: Country::class)]

@@ -170,7 +170,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     #[ORM\OneToMany(targetEntity: Change::class, mappedBy: 'suggestion')]
     private DoctrineCollection $changes;
 
-    #[ORM\Column(type: 'string', length: 191)]
+    #[ORM\Column(type: 'string', length: 191, options: ['default' => ''])]
     private string $documentSize = '';
 
     #[ORM\Column(name: 'legacy_id', type: 'integer', nullable: true)]

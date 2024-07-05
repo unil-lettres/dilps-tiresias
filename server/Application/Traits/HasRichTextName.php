@@ -8,14 +8,14 @@ use Application\Utility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait for all objects with a richt text name and an automatic plain version (to sort and filter on).
+ * Trait for all objects with a rich text name and an automatic plain version (to sort and filter on).
  */
 trait HasRichTextName
 {
     #[ORM\Column(type: 'string', length: 191)]
     private string $name = '';
 
-    #[ORM\Column(type: 'string', length: 191)]
+    #[ORM\Column(type: 'string', length: 191, options: ['default' => ''])]
     private string $plainName = '';
 
     /**
