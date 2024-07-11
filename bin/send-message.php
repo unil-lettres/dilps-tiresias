@@ -1,6 +1,8 @@
 #! /usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Application\Model\Message;
 use Application\Repository\MessageRepository;
 use Ecodev\Felix\Service\Mailer;

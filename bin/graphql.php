@@ -1,6 +1,8 @@
 #! /usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 /**
  * A script to run a GraphQL query and print result as JSON
  * This is useful to introspect the entire schema for JS unit tests.

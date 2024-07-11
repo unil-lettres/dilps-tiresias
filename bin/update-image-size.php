@@ -1,6 +1,8 @@
 #! /usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 /**
  * A script to update image size data in DB from file on disk.
  */

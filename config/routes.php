@@ -48,7 +48,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     ], 'image');
 
     $app->get('/api/file/{id:\d+}[/{name}]', [
-        \Ecodev\Felix\Handler\FileHandler::class,
+        Ecodev\Felix\Handler\FileHandler::class,
     ], 'file');
 
     $app->get('/api/template', [
