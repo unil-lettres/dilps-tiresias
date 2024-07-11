@@ -98,7 +98,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     private const IMAGE_PATH = 'data/images/';
 
-    #[ORM\Column(type: 'CardVisibility', options: ['default' => CardVisibility::Private])]
+    #[ORM\Column(type: 'enum', options: ['default' => CardVisibility::Private])]
     private CardVisibility $visibility = CardVisibility::Private;
 
     #[ORM\Column(type: 'integer')]

@@ -37,7 +37,7 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
             $visibility[] = CollectionVisibility::Administrator->value;
         }
 
-        $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+        $userId = $user->getId() ?? -1;
         $visibility = Utility::quoteArray($visibility);
 
         $isAccessible = <<<STRING
@@ -81,10 +81,10 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
 
         $connection = $this->getEntityManager()->getConnection();
         $connection->executeStatement('REPLACE INTO card_collection (collection_id, card_id)
-            SELECT ' . $connection->quote($targetCollection->getId()) . ' AS collection_id, card_id
+            SELECT ' . ($targetCollection->getId() ?? -1) . ' AS collection_id, card_id
             FROM card_collection
             WHERE
-            collection_id = ' . $connection->quote($sourceCollection->getId()) . '
+            collection_id = ' . ($sourceCollection->getId() ?? -1) . '
             ' . (empty($cardSubQuery) ? '' : 'AND card_id IN (' . $cardSubQuery . ')'));
     }
 

@@ -45,7 +45,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ->where('card.visibility IN (' . Utility::quoteArray($visibility) . ')');
 
         if ($user) {
-            $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+            $userId = $user->getId() ?? -1;
             $qb->leftJoin('card', 'card_collection', 'card_collection', 'card_collection.card_id = card.id')
                 ->leftJoin('card_collection', 'collection_user', 'collection_user', 'card_collection.collection_id = collection_user.collection_id')
                 ->orWhere('card.owner_id = ' . $userId)

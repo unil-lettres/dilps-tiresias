@@ -67,8 +67,8 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         // Find most textual fields for the entity
         $fields = [];
         foreach ($metadata->fieldMappings as $mapping) {
-            if (in_array($mapping['fieldName'], $whitelistedFields, true)) {
-                $fieldName = $mapping['fieldName'];
+            if (in_array($mapping->fieldName, $whitelistedFields, true)) {
+                $fieldName = $mapping->fieldName;
                 $field = $alias . '.' . $fieldName;
                 $fields[] = $this->fieldToDql($metadata->getReflectionClass(), $fieldName, $field);
             }

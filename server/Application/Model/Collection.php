@@ -33,7 +33,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     use HasSite;
     use HasSorting;
 
-    #[ORM\Column(type: 'CollectionVisibility', options: ['default' => CollectionVisibility::Private])]
+    #[ORM\Column(type: 'enum', options: ['default' => CollectionVisibility::Private])]
     private CollectionVisibility $visibility = CollectionVisibility::Private;
 
     #[ORM\Column(type: 'text')]

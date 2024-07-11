@@ -22,7 +22,7 @@ class Change extends AbstractModel implements HasSiteInterface
 {
     use HasSite;
 
-    #[ORM\Column(type: 'ChangeType', options: ['default' => ChangeType::Update])]
+    #[ORM\Column(type: 'enum', options: ['default' => ChangeType::Update])]
     private ChangeType $type = ChangeType::Update;
 
     #[ORM\JoinColumn(onDelete: 'CASCADE')]

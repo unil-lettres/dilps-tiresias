@@ -6,9 +6,9 @@ namespace Application\Traits;
 
 use Application\Enum\Precision;
 use Application\Model\Country;
-use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Attribute as API;
+use LongitudeOne\Spatial\PHP\Types\Geography\Point;
 
 /**
  * Common fields to represent an address.
