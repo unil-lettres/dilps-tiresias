@@ -28,7 +28,7 @@
                         "browser": "client/main.ts",
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
-                        "polyfills": ["zone.js"],
+                        "polyfills": ["zone.js", "@angular/localize/init"],
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
                         "styles": [
                             "client/styles.scss",

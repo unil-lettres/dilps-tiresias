@@ -33,6 +33,10 @@ const config: CodegenConfig = {
         skipTypeNameForRoot: true, // Don't generate __typename for root types
         omitOperationSuffix: true,
         scalars: {
+            ID: {
+                output: 'string',
+                input: 'string | any',
+            },
             Chronos: {
                 output: 'string',
                 input: 'string | Date',

@@ -34,7 +34,6 @@ use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\Image;
 use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Attribute as API;
-use GraphQL\Doctrine\Definition\EntityID;
 use Imagine\Filter\Basic\Autorotate;
 use Imagine\Image\ImagineInterface;
 use InvalidArgumentException;
@@ -316,9 +315,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all materials at once.
      *
-     * @param null|EntityID[] $materials
+     * @param null|string[] $materials
      */
-    #[API\Input(type: '?MaterialID[]')]
+    #[API\Input(type: '?ID[]')]
     public function setMaterials(?array $materials): void
     {
         if (null === $materials) {
@@ -332,9 +331,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all antiqueNames at once.
      *
-     * @param null|EntityID[] $antiqueNames
+     * @param null|string[] $antiqueNames
      */
-    #[API\Input(type: '?AntiqueNameID[]')]
+    #[API\Input(type: '?ID[]')]
     public function setAntiqueNames(?array $antiqueNames): void
     {
         if (null === $antiqueNames) {
@@ -347,9 +346,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all domains at once.
      *
-     * @param null|EntityID[] $domains
+     * @param null|string[] $domains
      */
-    #[API\Input(type: '?DomainID[]')]
+    #[API\Input(type: '?ID[]')]
     public function setDomains(?array $domains): void
     {
         if (null === $domains) {
@@ -362,9 +361,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all periods at once.
      *
-     * @param null|EntityID[] $periods
+     * @param null|string[] $periods
      */
-    #[API\Input(type: '?PeriodID[]')]
+    #[API\Input(type: '?ID[]')]
     public function setPeriods(?array $periods): void
     {
         if (null === $periods) {
@@ -377,9 +376,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set all tags at once.
      *
-     * @param null|EntityID[] $tags
+     * @param null|string[] $tags
      */
-    #[API\Input(type: '?TagID[]')]
+    #[API\Input(type: '?ID[]')]
     public function setTags(?array $tags): void
     {
         if (null === $tags) {
@@ -390,12 +389,11 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $this->addEntireHierarchy($this->tags);
     }
 
-    private function setEntireCollection(array $entityIds, DoctrineCollection $collection, string $class): void
+    private function setEntireCollection(array $ids, DoctrineCollection $collection, string $class): void
     {
         $oldIds = Utility::modelToId($collection->toArray());
         sort($oldIds);
 
-        $ids = Utility::modelToId($entityIds);
         sort($ids);
 
         if ($oldIds === $ids && !in_array(null, $oldIds, true) && !in_array(null, $ids, true)) {

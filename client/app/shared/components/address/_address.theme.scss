@@ -10,7 +10,7 @@
     app-address {
         #mapZone {
             #search {
-                background: mat.get-color-from-palette($bg, background);
+                background: mat.m2-get-color-from-palette($bg, background);
             }
 
             mat-form-field {

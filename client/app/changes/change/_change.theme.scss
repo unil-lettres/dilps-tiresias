@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 
 @mixin change($theme) {
-    $config: mat.get-color-config($theme);
+    $config: mat.m2-get-color-config($theme);
     $is-dark-theme: map.get($config, is-dark);
 
     $border: 1px solid if($is-dark-theme, rgb(84, 84, 84), rgb(210 210 210));

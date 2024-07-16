@@ -5,6 +5,6 @@
 
     // Allow to show a hint a bit more visible when it's important
     mat-hint.strong {
-        color: mat.get-color-from-palette($warn) !important;
+        color: mat.m2-get-color-from-palette($warn) !important;
     }
 }

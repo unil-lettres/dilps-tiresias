@@ -1,18 +1,18 @@
 @use '@angular/material' as mat;
 
-$defaultConfig: mat.define-typography-config();
+$defaultConfig: mat.m2-define-typography-config();
 
 // This is the default Material typography, but:
 // - with Quicksand as first choice of font
 // - with button with normal letter-spacing instead of wider letter-spacing.
-$custom-typography-gt-sm: mat.define-typography-config(
+$custom-typography-gt-sm: mat.m2-define-typography-config(
     $font-family: 'Quicksand, Roboto, "Helvetica Neue", sans-serif',
     $button:
-        mat.define-typography-level(
+        mat.m2-define-typography-level(
             $font-family: 'Quicksand, Roboto, "Helvetica Neue", sans-serif',
-            $font-weight: mat.font-weight($defaultConfig, 'button'),
-            $font-size: mat.font-size($defaultConfig, 'button'),
-            $line-height: mat.line-height($defaultConfig, 'button'),
+            $font-weight: mat.m2-font-weight($defaultConfig, 'button'),
+            $font-size: mat.m2-font-size($defaultConfig, 'button'),
+            $line-height: mat.m2-line-height($defaultConfig, 'button'),
             $letter-spacing: normal,
         ),
 );

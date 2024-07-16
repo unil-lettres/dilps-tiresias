@@ -72,6 +72,38 @@
                             "properties": false
                         }
                     }
+                ],
+                "@typescript-eslint/restrict-plus-operands": [
+                    "error",
+                    {
+                        // Allow some flexibility
+                        "allowAny": true,
+                        "allowBoolean": true,
+                        "allowNullish": true,
+                        "allowNumberAndString": true
+                    }
+                ],
+                "@typescript-eslint/restrict-template-expressions": [
+                    "error",
+                    {
+                        // Allow some flexibility
+                        "allowAny": true,
+                        "allowBoolean": true,
+                        "allowNullish": true,
+                        "allowNumber": true
+                    }
+                ],
+                "@typescript-eslint/no-unused-expressions": [
+                    "error",
+                    {
+                        "allowTernary": true
+                    }
+                ],
+                "@typescript-eslint/no-unused-vars": [
+                    "error",
+                    {
+                        "caughtErrors": "none"
+                    }
                 ]
             }
         },

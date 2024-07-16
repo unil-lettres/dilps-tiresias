@@ -12,7 +12,6 @@ use Application\Model\Country;
 use Application\Model\Tag;
 use Application\Model\User;
 use Cake\Chronos\Chronos;
-use GraphQL\Doctrine\Definition\EntityID;
 use PHPUnit\Framework\TestCase;
 
 class CardTest extends TestCase
@@ -276,12 +275,12 @@ class CardTest extends TestCase
         self::assertEquals([], $this->toIds($card->getTags()));
 
         $card->setTags([
-            new EntityID(_em(), Tag::class, '4000'),
+            '4000',
         ]);
         self::assertEquals([], $this->toIds($card->getTags()), 'still empty because not leaf');
 
         $card->setTags([
-            new EntityID(_em(), Tag::class, '4001'),
+            '4001',
         ]);
         self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'leaf added and parent automatically added');
 
@@ -289,8 +288,8 @@ class CardTest extends TestCase
         self::assertEquals([], $this->toIds($card->getTags()));
 
         $card->setTags([
-            new EntityID(_em(), Tag::class, '4000'),
-            new EntityID(_em(), Tag::class, '4001'),
+            '4000',
+            '4001',
         ]);
         self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'also adding parent change nothing to result');
 
@@ -298,14 +297,14 @@ class CardTest extends TestCase
         self::assertEquals([], $this->toIds($card->getTags()));
 
         $card->setTags([
-            new EntityID(_em(), Tag::class, '4001'),
-            new EntityID(_em(), Tag::class, '4004'),
+            '4001',
+            '4004',
         ]);
         self::assertEquals([4001, 4000], $this->toIds($card->getTags()), 'adding another parent change nothing to result');
 
         $card->setTags([
-            new EntityID(_em(), Tag::class, '4001'),
-            new EntityID(_em(), Tag::class, '4005'),
+            '4001',
+            '4005',
         ]);
         self::assertEquals([4001, 4000, 4005, 4004], $this->toIds($card->getTags()), 'adding two leaves select everything');
 

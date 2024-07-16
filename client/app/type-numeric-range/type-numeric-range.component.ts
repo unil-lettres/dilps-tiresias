@@ -31,7 +31,7 @@ export type TypeNumericRangeConfiguration = {
 
 class InvalidWithValueStateMatcher implements ErrorStateMatcher {
     public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        return (form && form.invalid && (form.value.to || form.value.from)) || (control && control.invalid);
+        return (form?.invalid && (form.value.to || form.value.from)) || control?.invalid;
     }
 }
 

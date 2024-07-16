@@ -10,13 +10,13 @@
     $foreground: map.get($theme, foreground);
 
     app-root {
-        background: mat.get-color-from-palette($background, background);
+        background: mat.m2-get-color-from-palette($background, background);
     }
 
     ng-progress {
         .ng-bar {
-            box-shadow: mat.get-color-from-palette($accent) 0 0 5px !important;
-            background-color: mat.get-color-from-palette($accent) !important;
+            box-shadow: mat.m2-get-color-from-palette($accent) 0 0 5px !important;
+            background-color: mat.m2-get-color-from-palette($accent) !important;
             height: 3px !important;
         }
 
@@ -24,7 +24,7 @@
             top: 0 !important;
             transform: none !important;
             opacity: 1 !important;
-            box-shadow: mat.get-color-from-palette($accent) 0 0 20px !important;
+            box-shadow: mat.m2-get-color-from-palette($accent) 0 0 20px !important;
             width: 25px !important;
         }
     }
@@ -44,34 +44,34 @@
     }
 
     .icon-button-circle-primary {
-        background-color: mat.get-color-from-palette($primary);
-        color: mat.get-color-from-palette($primary, default-contrast);
+        background-color: mat.m2-get-color-from-palette($primary);
+        color: mat.m2-get-color-from-palette($primary, default-contrast);
     }
 
     .icon-button-circle-accent {
-        background-color: mat.get-color-from-palette($accent);
-        color: mat.get-color-from-palette($accent, default-contrast);
+        background-color: mat.m2-get-color-from-palette($accent);
+        color: mat.m2-get-color-from-palette($accent, default-contrast);
     }
 
     .icon-button-circle-warn {
-        background-color: mat.get-color-from-palette($warn);
-        color: mat.get-color-from-palette($warn, default-contrast);
+        background-color: mat.m2-get-color-from-palette($warn);
+        color: mat.m2-get-color-from-palette($warn, default-contrast);
     }
 
     .natural-dropdown-container .dropdown-title {
         opacity: 1;
-        border-bottom: 1px solid mat.get-color-from-palette($foreground, base, 0.5);
+        border-bottom: 1px solid mat.m2-get-color-from-palette($foreground, base, 0.5);
         padding: 3px 20px 13px;
-        font-size: mat.font-size(typography.$custom-typography-gt-sm, 'headline-5');
+        font-size: mat.m2-font-size(typography.$custom-typography-gt-sm, 'headline-5');
         text-align: center;
     }
 
     natural-gallery .natural-gallery-js .figure.selected {
-        border: 3px solid mat.get-color-from-palette($accent);
+        border: 3px solid mat.m2-get-color-from-palette($accent);
         border-radius: 3px;
 
         .selectBtn {
-            background: mat.get-color-from-palette($accent, $opacity: 0.3);
+            background: mat.m2-get-color-from-palette($accent, $opacity: 0.3);
         }
     }
 }

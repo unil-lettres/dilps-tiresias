@@ -339,7 +339,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      */
     public updateShowDownloadCollection(): void {
         const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user?.role && (!roles || (roles && roles.includes(this.user.role)));
+        const roleIsAllowed = this.user?.role && (!roles || roles?.includes(this.user.role));
         const hasCollection = this.collection?.id;
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }

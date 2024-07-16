@@ -894,21 +894,21 @@
                                             joins: {
                                                 cards: {
                                                     type: JoinType.innerJoin,
-                                                    conditions: [{id: {equal: {value: fetchedModel.id}}}]
-                                                }
-                                            }
-                                        }
-                                    ]
+                                                    conditions: [{id: {equal: {value: fetchedModel.id}}}],
+                                                },
+                                            },
+                                        },
+                                    ],
                                 }"
                                 [autocompleteSelectorFilter]="{
                                     groups: [
                                         {
                                             conditions: [
                                                 {id: {equal: {value: fetchedModel.id, not: true}}},
-                                                {cards: {have: {values: [fetchedModel.id], not: true}}}
-                                            ]
-                                        }
-                                    ]
+                                                {cards: {have: {values: [fetchedModel.id], not: true}}},
+                                            ],
+                                        },
+                                    ],
                                 }"
                                 [main]="fetchedModel"
                                 [service]="cardService"

@@ -144,7 +144,7 @@ export class UserService extends AbstractContextualizedService<
      * Do not call this method outside injection context.
      */
     private keepViewerSyncedAcrossBrowserTabs(): void {
-        assertInInjectionContext;
+        assertInInjectionContext(this.keepViewerSyncedAcrossBrowserTabs);
 
         fromEvent<StorageEvent>(window, 'storage')
             .pipe(takeUntilDestroyed())

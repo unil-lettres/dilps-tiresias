@@ -7,7 +7,7 @@
     $foreground: map.get($theme, foreground);
 
     .mat-toolbar {
-        background: mat.get-color-from-palette($background, background, 0.7);
-        color: mat.get-color-from-palette($foreground, text);
+        background: mat.m2-get-color-from-palette($background, background, 0.7);
+        color: mat.m2-get-color-from-palette($foreground, text);
     }
 }

@@ -9,17 +9,17 @@
 
     app-quizz {
         .attribute {
-            background: mat.get-color-from-palette($warn, 0.3);
+            background: mat.m2-get-color-from-palette($warn, 0.3);
 
             .attributeAnswer:hover {
-                background: mat.get-color-from-palette($warn, 0.2);
+                background: mat.m2-get-color-from-palette($warn, 0.2);
             }
 
             &.valid {
-                background: mat.get-color-from-palette($primary, 0.3);
+                background: mat.m2-get-color-from-palette($primary, 0.3);
 
                 .attributeAnswer:hover {
-                    background: mat.get-color-from-palette($primary, 0.2);
+                    background: mat.m2-get-color-from-palette($primary, 0.2);
                 }
             }
         }

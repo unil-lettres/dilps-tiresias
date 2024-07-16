@@ -37,11 +37,11 @@ $mat-tiresias: (
     ),
 );
 
-$primary: mat.define-palette($mat-tiresias);
-$accent: mat.define-palette(mat.$blue-palette);
-$warn: mat.define-palette(mat.$red-palette);
+$primary: mat.m2-define-palette($mat-tiresias);
+$accent: mat.m2-define-palette(mat.$m2-blue-palette);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$theme-light: mat.define-light-theme(
+$theme-light: mat.m2-define-light-theme(
     (
         color: (
             primary: $primary,
@@ -51,7 +51,7 @@ $theme-light: mat.define-light-theme(
     )
 );
 
-$theme-dark: mat.define-dark-theme(
+$theme-dark: mat.m2-define-dark-theme(
     (
         color: (
             primary: $primary,
