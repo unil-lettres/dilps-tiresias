@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject} from '@angular/core';
+import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject, provideZoneChangeDetection} from '@angular/core';
 import {environment} from './environments/environment';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
@@ -15,7 +15,7 @@ import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConf
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
-import {NgScrollbarOptions, NG_SCROLLBAR_OPTIONS} from 'ngx-scrollbar';
+import {NG_SCROLLBAR_OPTIONS, NgScrollbarOptions} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
@@ -45,6 +45,7 @@ const disableAnimations =
 
 bootstrapApplication(AppComponent, {
     providers: [
+        provideZoneChangeDetection({eventCoalescing: true}),
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
