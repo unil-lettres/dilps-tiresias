@@ -3,7 +3,7 @@ import {environment} from './environments/environment';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
-import {provideAnimations, provideNoopAnimations} from '@angular/platform-browser/animations';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
@@ -48,7 +48,7 @@ bootstrapApplication(AppComponent, {
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
-        disableAnimations ? provideNoopAnimations() : provideAnimations(),
+        provideAnimationsAsync(disableAnimations ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),
         {
