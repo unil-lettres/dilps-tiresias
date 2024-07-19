@@ -7,6 +7,14 @@
 }
 
 .mat-mdc-standard-chip {
-    height: auto;
     padding: 5px 0;
+    height: auto;
+}
+
+input {
+    display: none;
+}
+
+input.show {
+    display: block;
 }

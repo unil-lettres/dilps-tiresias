@@ -17,7 +17,7 @@
 
 @mixin applyTheme($theme) {
     $foreground: map.get($theme, foreground);
-    color: mat.get-color-from-palette($foreground, text);
+    color: mat.m2-get-color-from-palette($foreground, text);
 
     @include mat.autocomplete-color($theme);
     @include mat.button-color($theme);
@@ -58,11 +58,11 @@
 // Only 31 modules used on a total of 37 modules
 
 // This fake theme is only use to tell Material we use Material v2, and not v3. Colors are never used.
-$fake-material-v2-theme: mat.define-light-theme(
+$fake-material-v2-theme: mat.m2-define-light-theme(
     (
         color: (
-            primary: mat.define-palette(mat.$indigo-palette),
-            accent: mat.define-palette(mat.$indigo-palette),
+            primary: mat.m2-define-palette(mat.$m2-indigo-palette),
+            accent: mat.m2-define-palette(mat.$m2-indigo-palette),
         ),
     )
 );

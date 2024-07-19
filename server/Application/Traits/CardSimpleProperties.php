@@ -57,10 +57,10 @@ trait CardSimpleProperties
     #[ORM\Column(type: 'string', length: 30, options: ['default' => ''])]
     private string $isbn = '';
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private string $comment = '';
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', options: ['default' => ''])]
     private string $corpus = '';
 
     #[ORM\Column(type: 'string', options: ['default' => ''])]

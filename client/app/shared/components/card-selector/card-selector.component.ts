@@ -4,7 +4,6 @@ import {Cards} from '../../generated-types';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalSelectComponent} from '@ecodev/natural';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
@@ -12,7 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     templateUrl: './card-selector.component.html',
     styleUrl: './card-selector.component.scss',
     standalone: true,
-    imports: [MatDialogModule, FlexModule, NaturalSelectComponent, FormsModule, MatButtonModule],
+    imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButtonModule],
 })
 export class CardSelectorComponent {
     public card: Cards['cards']['items'][0] | null = null;

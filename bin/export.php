@@ -1,6 +1,8 @@
 #! /usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Application\Service\Exporter\Exporter;
 
 $container = require_once 'server/cli.php';

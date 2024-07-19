@@ -1,5 +1,5 @@
 @if (markers) {
-    <google-map [options]="mapOptions" height="100%" width="100%">
+    <google-map height="100%" width="100%" [options]="mapOptions">
         @for (marker of markers; track marker) {
             <map-marker
                 #mapMarker="mapMarker"
@@ -11,8 +11,8 @@
         <map-info-window [options]="infoWindowOption">
             <div>
                 <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
-                <a [routerLink]="['/card', selectedMarker?.id]" fxLayout="column" fxLayoutAlign="center center">
-                    <img [attr.src]="selectedMarker?.imageSrc" class="img" />
+                <a class="nat-vertical nat-center" [routerLink]="['/card', selectedMarker?.id]">
+                    <img class="img" [attr.src]="selectedMarker?.imageSrc" />
                 </a>
                 <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>
             </div>

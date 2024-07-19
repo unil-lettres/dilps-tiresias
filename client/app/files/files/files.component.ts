@@ -11,7 +11,6 @@ import {
 import {FileService} from '../services/file.service';
 import {map} from 'rxjs/operators';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
@@ -38,7 +37,6 @@ type Tuple = {
         HideTooltipDirective,
         MatIconModule,
         MatProgressSpinnerModule,
-        FlexModule,
         NaturalFileSelectDirective,
     ],
 })

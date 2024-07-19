@@ -2,14 +2,13 @@
     <div class="scrolled" style="width: 100%">
         <natural-gallery
             #gallery
-            (activate)="activate($event)"
-            (pagination)="loadMore($event)"
-            (select)="selectionChange.emit($event)"
+            class="nat-padding nat-expand"
             [options]="options"
             [scrollable]="scrollable"
             [items]="emptyItemsList"
-            class="padding"
-            fxFlex
+            (activate)="activate($event)"
+            (pagination)="loadMore($event)"
+            (select)="selectionChange.emit($event)"
         />
     </div>
 </div>

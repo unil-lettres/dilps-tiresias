@@ -25,9 +25,7 @@ import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
 import {MaterialSortingField} from '../../generated-types';
 import {MatOptionModule} from '@angular/material/core';
-import {ExtendedModule} from '@ngbracket/ngx-layout/extended';
 import {MatIconModule} from '@angular/material/icon';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -49,12 +47,10 @@ export type ThesaurusModel = {
     imports: [
         MatFormFieldModule,
         MatChipsModule,
-        FlexModule,
         MatIconModule,
         FormsModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        ExtendedModule,
         MatOptionModule,
     ],
 })
@@ -354,7 +350,7 @@ export class ThesaurusComponent<
             return '';
         }
 
-        return this.hierarchicSelectorConfig.filter(c => !!c.selectableAtKey)[0].selectableAtKey!;
+        return this.hierarchicSelectorConfig.find(c => !!c.selectableAtKey)!.selectableAtKey!;
     }
 
     /**

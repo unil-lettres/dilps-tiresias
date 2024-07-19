@@ -1,21 +1,20 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-align nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
-        (selectionChange)="search($event)"
+        class="nat-expand"
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        fxFlex
-        fxFlexAlign="start"
+        (selectionChange)="search($event)"
     />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding padding-fab">
+    <div class="nat-padding padding-fab">
         <div class="mat-headline-5">Actualités</div>
-        <div [fxShow]="showTable()" class="responsive-table">
-            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
                 <!-- Active Column -->
@@ -33,7 +32,7 @@
                 <ng-container matColumnDef="image">
                     <th *matHeaderCellDef mat-header-cell natural-3em-column>Image</th>
                     <td *matCellDef="let element" mat-cell>
-                        <div [style.background-image]="'url(' + element.imageUrl + ')'" class="image"></div>
+                        <div class="image" [style.background-image]="'url(' + element.imageUrl + ')'"></div>
                     </td>
                 </ng-container>
                 <!-- Name Column -->
@@ -42,10 +41,10 @@
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element" mat-cell>
                         <app-table-button
-                            (click)="edit(element)"
-                            [label]="element.name || 'Sans titre'"
                             icon="edit"
                             matTooltip="Éditer"
+                            [label]="element.name || 'Sans titre'"
+                            (click)="edit(element)"
                         />
                     </td>
                 </ng-container>
@@ -57,26 +56,25 @@
                 </ng-container>
             </table>
         </div>
-        @if (dataSource.data?.length === 0) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <div>Pas de résultats</div>
-            </div>
+
+        @if (showNoResults()) {
+            <div class="nat-margin text-center">Pas de résultats</div>
         }
         @if (!dataSource.data) {
-            <div class="margin" fxLayout="column" fxLayoutAlign="center center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+            <div class="nat-margin nat-vertical nat-center">
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>
 }
 
-<natural-fixed-button (click)="add()" icon="add" />
+<natural-fixed-button icon="add" (click)="add()" />

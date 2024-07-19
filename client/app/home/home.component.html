@@ -20,21 +20,21 @@
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
-<div fxFlex fxLayout="column">
-    <mat-sidenav-container fxFlex fxLayout="column">
+<div class="nat-expand nat-vertical">
+    <mat-sidenav-container class="nat-expand nat-vertical">
         @if (showNavigationMenu()) {
             <mat-sidenav class="menuMinimized" id="menu" mode="side" opened="true" position="start">
                 <ng-scrollbar>
-                    <div fxLayout="column" fxFill>
+                    <div class="nat-vertical nat-fill">
                         @if (user) {
                             <mat-nav-list>
                                 <!-- Dashboard -->
                                 <a
-                                    [queryParams]="null"
-                                    [routerLinkActiveOptions]="{exact: true}"
                                     mat-list-item
                                     routerLink="/"
                                     routerLinkActive="active"
+                                    [queryParams]="null"
+                                    [routerLinkActiveOptions]="{exact: true}"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="home" />
                                 </a>
@@ -87,12 +87,12 @@
                                         user.role === 'major')
                                 ) {
                                     <a
-                                        (filesChange)="uploadImages($event)"
                                         mat-list-item
                                         matTooltip="Ajouter une image"
                                         matTooltipPosition="after"
-                                        [multiple]="true"
                                         naturalFileSelect
+                                        [multiple]="true"
+                                        (filesChange)="uploadImages($event)"
                                     >
                                         <mat-icon matListItemIcon naturalIcon="file_upload" />
                                     </a>
@@ -100,8 +100,8 @@
                                 @if (progress !== null && progress > 0) {
                                     <a mat-list-item>
                                         <mat-progress-spinner
-                                            [value]="progress"
                                             color="accent"
+                                            [value]="progress"
                                             [diameter]="24"
                                             [strokeWidth]="5"
                                         />
@@ -124,9 +124,8 @@
                                             <mat-icon matListItemIcon naturalIcon="file_download" />
                                         </a>
                                     }
-                                }
-                            </mat-nav-list>
-                            <!-- Thésaurus -->
+                                }</mat-nav-list
+                            ><!-- Thésaurus -->
                             @if (showThesaurusMenu()) {
                                 <mat-divider />
                                 <mat-nav-list>
@@ -155,50 +154,50 @@
                                 </mat-nav-list>
                             }
                             <mat-divider />
-                            <mat-nav-list fxFlex>
+                            <mat-nav-list class="nat-expand">
                                 <!-- Account -->
                                 <a
-                                    (click)="editUser()"
                                     mat-list-item
                                     matTooltip="Mon compte"
                                     matTooltipPosition="after"
+                                    (click)="editUser()"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="account_circle" />
                                 </a>
                                 <!-- Logout -->
                                 <a
-                                    (click)="userService.logout()"
                                     mat-list-item
                                     matTooltip="Se déconnecter"
                                     matTooltipPosition="after"
+                                    (click)="userService.logout()"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="exit_to_app" />
                                 </a>
                             </mat-nav-list>
                         }
                         @if (!user) {
-                            <mat-nav-list fxFlex>
+                            <mat-nav-list class="nat-expand">
                                 <!-- Dashboard -->
                                 <a
-                                    [routerLinkActiveOptions]="{exact: true}"
                                     mat-list-item
                                     routerLink="/"
                                     routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="home" />
                                 </a>
                                 <!-- Logout -->
                                 <a
-                                    (click)="userService.revokeTempAccess()"
                                     mat-list-item
                                     matTooltip="Se connecter"
                                     matTooltipPosition="after"
+                                    (click)="userService.revokeTempAccess()"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="account_circle" />
                                 </a>
                                 <!-- Contact -->
                                 @if (site === Site.tiresias) {
-                                    <a (click)="mailto()" mat-list-item matTooltip="Contact" matTooltipPosition="after">
+                                    <a mat-list-item matTooltip="Contact" matTooltipPosition="after" (click)="mailto()">
                                         <mat-icon matListItemIcon naturalIcon="announcement" />
                                         <span>Contact</span>
                                     </a>
@@ -208,17 +207,17 @@
                         <!-- Bottom nav -->
                         @if (errors.length) {
                             <a
-                                [matMenuTriggerFor]="errorsMenu"
                                 mat-icon-button
                                 class="icon-button-circle-warn"
                                 style="margin: 0 11px"
+                                [matMenuTriggerFor]="errorsMenu"
                             >
                                 <mat-icon naturalIcon="error" />
                             </a>
                         }
                         <mat-nav-list>
                             <!-- Theme -->
-                            <a (click)="themeService.toggleNightMode()" mat-list-item>
+                            <a mat-list-item (click)="themeService.toggleNightMode()">
                                 <mat-icon matListItemIcon naturalIcon="invert_colors" />
                                 <span>Changer couleurs</span>
                             </a>
@@ -228,21 +227,15 @@
             </mat-sidenav>
         }
 
-        <div fxFlex fxLayout="row" id="appContent">
+        <div class="nat-expand nat-horizontal" id="appContent">
             <router-outlet />
         </div>
     </mat-sidenav-container>
 </div>
 
-<mat-menu
-    #errorsMenu="matMenu"
-    [overlapTrigger]="false"
-    class="padding error-menu"
-    fxLayout="column"
-    fxLayoutGap="20px"
->
+<mat-menu #errorsMenu="matMenu" class="nat-padding error-menu nat-gap nat-vertical" [overlapTrigger]="false">
     @for (error of errors; track error) {
-        <div (click)="$event.stopPropagation()" class="error" fxLayout="column" style="user-select: text">
+        <div class="error nat-vertical" style="user-select: text" (click)="$event.stopPropagation()">
             @if (error.message) {
                 <span class="mat-caption">{{ error.message }}</span>
             }
@@ -251,7 +244,7 @@
             }
         </div>
     }
-    <button (click)="errors = []" mat-menu-item>
+    <button mat-menu-item (click)="errors = []">
         <mat-icon matMenuItemIcon naturalIcon="close" />
         Effacer et fermer
     </button>

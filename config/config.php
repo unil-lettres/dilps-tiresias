@@ -18,19 +18,19 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
-    \Ecodev\Felix\ConfigProvider::class,
-    \Laminas\Diactoros\ConfigProvider::class,
-    \Mezzio\LaminasView\ConfigProvider::class,
-    \Laminas\Log\ConfigProvider::class,
-    \Laminas\Mail\ConfigProvider::class,
-    \Laminas\Validator\ConfigProvider::class,
-    \Mezzio\ConfigProvider::class,
-    \Mezzio\Helper\ConfigProvider::class,
-    \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
-    \Mezzio\Router\ConfigProvider::class,
-    \Laminas\HttpHandlerRunner\ConfigProvider::class,
-    \Mezzio\Session\Ext\ConfigProvider::class,
-    \Mezzio\Session\ConfigProvider::class,
+    Ecodev\Felix\ConfigProvider::class,
+    Laminas\Diactoros\ConfigProvider::class,
+    Mezzio\LaminasView\ConfigProvider::class,
+    Laminas\Log\ConfigProvider::class,
+    Laminas\Mail\ConfigProvider::class,
+    Laminas\Validator\ConfigProvider::class,
+    Mezzio\ConfigProvider::class,
+    Mezzio\Helper\ConfigProvider::class,
+    Mezzio\Router\FastRouteRouter\ConfigProvider::class,
+    Mezzio\Router\ConfigProvider::class,
+    Laminas\HttpHandlerRunner\ConfigProvider::class,
+    Mezzio\Session\Ext\ConfigProvider::class,
+    Mezzio\Session\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
     // Default Application module config

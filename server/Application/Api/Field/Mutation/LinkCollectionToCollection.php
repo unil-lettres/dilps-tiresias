@@ -12,17 +12,16 @@ use GraphQL\Type\Definition\Type;
 
 class LinkCollectionToCollection implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'linkCollectionToCollection',
+        yield 'linkCollectionToCollection' => fn () => [
             'type' => Type::nonNull(_types()->getOutput(Collection::class)),
             'description' => 'This will link all images from the source collection to the target collection. The returned collection is the target',
             'args' => [
                 'sourceCollection' => Type::nonNull(_types()->getId(Collection::class)),
                 'targetCollection' => Type::nonNull(_types()->getId(Collection::class)),
             ],
-            'resolve' => function (array $root, array $args): Collection {
+            'resolve' => function ($root, array $args): Collection {
                 $sourceCollection = $args['sourceCollection']->getEntity();
                 $targetCollection = $args['targetCollection']->getEntity();
 

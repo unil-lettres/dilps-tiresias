@@ -1,31 +1,30 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<mat-toolbar class="nat-horizontal nat-align nat-gap">
     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
 
     <natural-search
-        (selectionChange)="search($event)"
+        class="nat-expand"
         [facets]="naturalSearchFacets"
         [multipleGroups]="false"
         [selections]="naturalSearchSelections"
-        fxFlex
-        fxFlexAlign="start"
+        (selectionChange)="search($event)"
     />
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="padding padding-fab">
-        <div class="margin-bottom" fxLayout="row wrap" fxLayoutAlign="start center">
-            <div [routerLink]="getChildLink(null)" class="mat-headline-5 no-margin">Périodes</div>
-            <div fxLayout="row wrap">
+    <div class="nat-padding padding-fab">
+        <div class="nat-margin-bottom nat-horizontal nat-wrap">
+            <div class="mat-headline-5 nat-no-margin" [routerLink]="getChildLink(null)">Périodes</div>
+            <div class="nat-horizontal nat-wrap">
                 @for (item of breadcrumbs; track item) {
-                    <a [routerLink]="getChildLink(item)" class="no-padding" mat-button>
+                    <a class="nat-no-padding" mat-button [routerLink]="getChildLink(item)">
                         <mat-icon naturalIcon="chevron_right" />
                         <span>{{ item.name }}</span>
                     </a>
                 }
             </div>
         </div>
-        <div [fxShow]="showTable()" class="responsive-table">
-            <table (matSortChange)="sorting([$event])" [dataSource]="dataSource" mat-table matSort>
+        <div class="responsive-table">
+            <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
 
@@ -34,9 +33,9 @@
                     <td *matCellDef="let element" mat-cell>
                         @if (element.hasNavigation) {
                             <natural-table-button
-                                [navigate]="getChildLink(element.item)"
                                 icon="chevron_right"
                                 matTooltip="Déployer"
+                                [navigate]="getChildLink(element.item)"
                             />
                         }
                     </td>
@@ -48,10 +47,10 @@
                     <td *matCellDef="let element" mat-cell>
                         <div class="cell-content">
                             <app-table-button
-                                (click)="edit(element.item)"
-                                [label]="element.item.name"
                                 icon="edit"
                                 matTooltip="Éditer"
+                                [label]="element.item.name"
+                                (click)="edit(element.item)"
                             />
                             @if (searched) {
                                 <app-collection-hierarchy [collection]="element.item" />
@@ -78,24 +77,25 @@
                 </ng-container>
             </table>
         </div>
+
         @if (showNoResults()) {
-            <div class="margin-v" fxLayout="column" fxLayoutAlign="center center">Pas de résultats</div>
+            <div class="nat-margin-vertical nat-vertical nat-center">Pas de résultats</div>
         }
         @if (!dataSource.data) {
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <mat-progress-spinner [diameter]="40" mode="indeterminate" />
+            <div class="nat-vertical nat-center">
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
             </div>
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                (page)="pagination($event)"
                 [length]="dataSource.data?.length"
                 [pageIndex]="dataSource.data?.pageIndex"
                 [pageSizeOptions]="pageSizeOptions"
                 [pageSize]="dataSource.data?.pageSize"
+                (page)="pagination($event)"
             />
         }
     </div>
 }
 
-<natural-fixed-button (click)="add()" icon="add" />
+<natural-fixed-button icon="add" (click)="add()" />

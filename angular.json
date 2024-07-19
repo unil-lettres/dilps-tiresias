@@ -28,9 +28,13 @@
                         "browser": "client/main.ts",
                         "tsConfig": "client/tsconfig.app.json",
                         "deleteOutputPath": false,
-                        "polyfills": ["zone.js"],
+                        "polyfills": ["zone.js", "@angular/localize/init"],
                         "assets": ["client/assets", "client/favicon-dilps.ico", "client/favicon-tiresias.ico"],
-                        "styles": ["client/styles.scss", "node_modules/snazzy-info-window/dist/snazzy-info-window.css"],
+                        "styles": [
+                            "client/styles.scss",
+                            "node_modules/snazzy-info-window/dist/snazzy-info-window.css",
+                            "node_modules/@ecodev/natural-layout/natural-layout.css"
+                        ],
                         "scripts": [],
                         "allowedCommonJsDependencies": ["@agm/snazzy-info-window", "striptags"]
                     },
@@ -90,8 +94,7 @@
                     "options": {
                         "host": "dilps.lan",
                         "proxyConfig": "proxy.conf.json",
-                        "port": 4400,
-                        "allowedHosts": ["dilps.lan", "tiresias.lan"]
+                        "port": 4400
                     },
                     "configurations": {
                         "production": {

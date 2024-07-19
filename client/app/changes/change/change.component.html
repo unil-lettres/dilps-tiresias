@@ -1,25 +1,25 @@
-<div class="containerWithToolbar" fxFlex fxLayout="column">
-    <mat-toolbar class="main-toolbar" fxFlex="none" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+<div class="containerWithToolbar nat-vertical nat-expand">
+    <mat-toolbar class="main-toolbar nat-horizontal nat-align nat-gap">
         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-        <div fxFlex></div>
+        <div class="nat-expand"></div>
 
         @if (user?.role === 'administrator') {
             @if (change) {
                 <button
-                    (click)="accept()"
                     mat-icon-button
                     class="icon-button-circle-primary"
                     matTooltip="Accepter suggestion"
+                    (click)="accept()"
                 >
                     <mat-icon naturalIcon="check" />
                 </button>
             }
             @if (change) {
                 <button
-                    (click)="reject()"
                     mat-icon-button
                     class="icon-button-circle-warn"
                     matTooltip="Refuser la suggestion"
+                    (click)="reject()"
                 >
                     <mat-icon naturalIcon="close" />
                 </button>
@@ -28,20 +28,20 @@
 
         @if (!change && original) {
             <button
-                (click)="update()"
                 mat-icon-button
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre la suggestion à validation"
+                (click)="update()"
             >
                 <mat-icon naturalIcon="save" />
             </button>
         }
         @if (!change && !original) {
             <button
-                (click)="create()"
                 mat-icon-button
                 class="icon-button-circle-primary"
                 matTooltip="Soumettre l'ajout de cette fiche à validation"
+                (click)="create()"
             >
                 <mat-icon naturalIcon="add" />
             </button>
@@ -49,35 +49,35 @@
     </mat-toolbar>
 
     @if (loaded) {
-        <div class="test" fxFlex fxLayout="row">
+        <div class="test nat-horizontal nat-expand">
             <!-- Original -->
             @if (!original) {
-                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Nouvelle fiche</div>
                 </div>
             }
             @if (original) {
-                <div class="card-original" fxFlex fxLayout="column">
-                    <app-card [fetchedModel]="original" fxFlex title="Original" />
+                <div class="card-original nat-vertical nat-expand">
+                    <app-card class="nat-expand" title="Original" [fetchedModel]="original" />
                 </div>
             }
             <!-- Suggestion -->
             @if (!suggestionInput) {
-                <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Suppression de la fiche</div>
                 </div>
             }
             @if (suggestionInput) {
-                <div class="card-suggestion" fxFlex fxLayout="column">
+                <div class="card-suggestion nat-vertical nat-expand">
                     <app-card
+                        class="nat-expand"
+                        title="Suggestion"
                         [model]="suggestionInput"
                         [fetchedModel]="fetchedSuggestion"
                         [editable]="true"
                         [showTools]="showTools"
                         [showCards]="false"
                         [showCode]="false"
-                        fxFlex
-                        title="Suggestion"
                     />
                 </div>
             }

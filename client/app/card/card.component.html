@@ -1,78 +1,78 @@
 @if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
-    <div naturalFileDrop [fileSelectionDisabled]="!edit" (filesChange)="dropImage($event)" fxFlex fxLayout="row">
+    <div
+        naturalFileDrop
+        class="nat-expand nat-horizontal"
+        [fileSelectionDisabled]="!edit"
+        (filesChange)="dropImage($event)"
+    >
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-        <div [ngClass]="{containerWithToolbar: showToolbar}" class="left-pane" fxFlex="400px" fxLayout="column">
+        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar, borderRight: showImage}">
             @if (showToolbar) {
-                <mat-toolbar
-                    [ngClass]="edit ? 'edition' : ''"
-                    fxFlex="none"
-                    fxLayout="row"
-                    fxLayoutAlign="start center"
-                >
+                <mat-toolbar class="nat-horizontal nat-align" [ngClass]="edit ? 'edition' : ''">
                     @if (showLogo) {
                         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
                     @if (title) {
                         <div>{{ title }}</div>
                     }
-                    <div fxFlex></div>
+                    <div class="nat-expand"></div>
                     <mat-menu #changeMenu="matMenu" [overlapTrigger]="false">
                         @if (canSuggestUpdate()) {
-                            <button (click)="suggestUpdate()" mat-menu-item>Suggérer une modification</button>
+                            <button mat-menu-item (click)="suggestUpdate()">Suggérer une modification</button>
                         }
                         @if (canSuggestDelete()) {
-                            <button (click)="suggestDeletion()" mat-menu-item>Suggérer la suppression</button>
+                            <button mat-menu-item (click)="suggestDeletion()">Suggérer la suppression</button>
                         }
                         @if (canSuggestCreate()) {
-                            <button (click)="suggestCreation()" mat-menu-item>
+                            <button mat-menu-item (click)="suggestCreation()">
                                 {{ getSuggestAddLabel() }}
                             </button>
                         }
                     </mat-menu>
                     @if (showTools) {
                         @if (!edit && fetchedModel?.permissions?.update) {
-                            <button (click)="toggleEdit()" [matTooltip]="'Passer en mode édition'" mat-icon-button>
+                            <button mat-icon-button [matTooltip]="'Passer en mode édition'" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
                             </button>
                         }
                         @if (edit && fetchedModel?.permissions?.update) {
                             <button
-                                (click)="update()"
                                 mat-icon-button
                                 class="icon-button-circle-primary"
                                 matTooltip="Enregistrer"
                                 [disabled]="!formIsValid"
+                                (click)="update()"
                             >
                                 <mat-icon naturalIcon="save" />
                             </button>
                         }
                         @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
                             <button
-                                [matMenuTriggerFor]="changeMenu"
                                 color="primary"
                                 mat-icon-button
                                 matTooltip="Soumettre"
+                                [matMenuTriggerFor]="changeMenu"
                             >
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
-                            <button (click)="suggestCreation()" color="primary" mat-icon-button matTooltip="Soumettre">
+                            <button color="primary" mat-icon-button matTooltip="Soumettre" (click)="suggestCreation()">
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
-                            <button (click)="create()" mat-icon-button matTooltip="Créer">
+                            <button mat-icon-button matTooltip="Créer" (click)="create()">
                                 <mat-icon naturalIcon="add" />
                             </button>
                         }
                         @if (edit) {
                             <button
-                                (click)="complete()"
                                 mat-icon-button
                                 matTooltip="Importer les données d'une autre fiche"
+                                (click)="complete()"
                             >
                                 <mat-icon naturalIcon="content_copy" />
                             </button>
@@ -86,26 +86,26 @@
                         }
                         @if (fetchedModel && user) {
                             <button
-                                (click)="linkToCollection()"
                                 mat-icon-button
                                 matTooltip="Ajouter ou retirer d'une collection"
+                                (click)="linkToCollection()"
                             >
                                 <mat-icon naturalIcon="library_add" />
                             </button>
                         }
                         @if (fetchedModel?.permissions?.delete) {
-                            <button (click)="confirmDelete()" color="warn" mat-icon-button matTooltip="Supprimer">
+                            <button color="warn" mat-icon-button matTooltip="Supprimer" (click)="confirmDelete()">
                                 <mat-icon naturalIcon="delete_forever" />
                             </button>
                         }
                     }
                 </mat-toolbar>
             }
-            <ng-scrollbar fxFlex>
-                <div class="padding-scrollbar scrolled" fxLayout="column" fxLayoutAlign="start stretch">
+            <ng-scrollbar class="nat-expand">
+                <div class="padding-scrollbar scrolled nat-vertical">
                     @if (user?.role === 'administrator') {
-                        <div fxLayout="column">
-                            <div fxLayout="row">
+                        <div class="nat-vertical">
+                            <div class="nat-horizontal">
                                 {{
                                     visibilities[visibility]
                                         ? 'Visible ' + visibilities[visibility].text
@@ -118,11 +118,12 @@
                                 [max]="3"
                                 [min]="1"
                                 [step]="1"
-                                ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
-                            /></mat-slider>
+                            >
+                                <input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()" />
+                            </mat-slider>
                         </div>
                     }
-                    <div class="padding mat-subtitle-2">
+                    <div class="nat-padding mat-subtitle-2">
                         @for (collection of sortedCollections; track collection) {
                             <div>{{ collection.hierarchicName }}</div>
                         }
@@ -131,26 +132,26 @@
                         <mat-form-field>
                             <mat-label>Référence</mat-label>
                             <input
-                                [(ngModel)]="model.code"
                                 #code="ngModel"
-                                [readonly]="!edit || !canUpdateCode()"
                                 matInput
                                 maxlength="30"
+                                [readonly]="!edit || !canUpdateCode()"
                                 [appUniqueCode]="model"
+                                [(ngModel)]="model.code"
                                 (change)="codeModel = code; updateFormValidity()"
                             />
                             @if (showSuggestedCode()) {
                                 <button
                                     mat-icon-button
                                     matIconSuffix
-                                    (click)="codeModel = code; useSuggestedCode($event)"
                                     [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
+                                    (click)="codeModel = code; useSuggestedCode($event)"
                                 >
                                     <mat-icon naturalIcon="refresh" />
                                 </button>
                             }
                             @if (code.invalid && (code?.dirty || code?.touched) && !code.errors?.maxlength) {
-                                <mat-error>Cette référence est déjà attribuée à une fiche </mat-error>
+                                <mat-error>Cette référence est déjà attribuée à une fiche</mat-error>
                             }
                             @if (edit && model.code?.length > 23) {
                                 <mat-hint align="end" [ngClass]="{strong: model.code?.length >= 30}">
@@ -160,21 +161,21 @@
                         </mat-form-field>
                     }
                     @if (edit || !!model.name) {
-                        <div [ngClass]="{filled: !!model.name, 'rich-text': true}" tabindex="-1">
+                        <div tabindex="-1" [ngClass]="{filled: !!model.name, 'rich-text': true}">
                             <div class="label">Titre</div>
                             @if (edit || !!model.name) {
                                 <quill-editor
-                                    [ngModel]="model.name"
-                                    (ngModelChange)="model.name = $event || ''"
-                                    [disabled]="!edit"
                                     bounds="self"
+                                    matTooltipPosition="after"
+                                    [ngModel]="model.name"
+                                    [disabled]="!edit"
                                     [modules]="singleLine"
                                     [matTooltip]="
                                         !edit || !isDilps
                                             ? ''
                                             : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
                                     "
-                                    matTooltipPosition="after"
+                                    (ngModelChange)="model.name = $event || ''"
                                 />
                             }
                             @if (edit && (model.name | stripTags)?.length > 187) {
@@ -186,77 +187,77 @@
                     }
                     @if (!isDilps && (edit || !!model.domains?.length)) {
                         <app-thesaurus
+                            placeholder="Domaines"
                             [model]="model.domains"
-                            (modelChange)="model.domains = $any($event)"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="domainHierarchicConfig"
                             [multiple]="true"
                             [previewComponent]="DomainComponent"
                             [readonly]="!edit"
                             [service]="domainService"
-                            placeholder="Domaines"
+                            (modelChange)="model.domains = $any($event)"
                         />
                     }
                     @if (edit || (!!model.expandedName && model.expandedName !== model.name)) {
-                        <div [ngClass]="{filled: !!model.expandedName, 'rich-text': true}" tabindex="-1">
+                        <div tabindex="-1" [ngClass]="{filled: !!model.expandedName, 'rich-text': true}">
                             <div class="label">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
                             @if (edit || !!model.expandedName) {
                                 <quill-editor
-                                    [ngModel]="model.expandedName"
-                                    (ngModelChange)="model.expandedName = $event || ''"
-                                    [disabled]="!edit"
                                     bounds="self"
+                                    matTooltipPosition="after"
+                                    [ngModel]="model.expandedName"
+                                    [disabled]="!edit"
                                     [modules]="multiLines"
                                     [matTooltip]="
                                         !edit || !isDilps
                                             ? ''
                                             : 'Inclure d’éventuelles informations qui complètent le titre (exemple: le titre dans la langue originale)'
                                     "
-                                    matTooltipPosition="after"
+                                    (ngModelChange)="model.expandedName = $event || ''"
                                 />
                             }
                         </div>
                     }
                     @if (!isDilps && (edit || !!model.corpus)) {
-                        <div [ngClass]="{filled: !!model.corpus, 'rich-text': true}" tabindex="-1">
+                        <div tabindex="-1" [ngClass]="{filled: !!model.corpus, 'rich-text': true}">
                             <div class="label">Corpus</div>
                             @if (edit || !!model.corpus) {
                                 <quill-editor
-                                    [ngModel]="model.corpus"
-                                    (ngModelChange)="model.corpus = $event || ''"
-                                    [disabled]="!edit"
                                     bounds="self"
+                                    [ngModel]="model.corpus"
+                                    [disabled]="!edit"
                                     [modules]="multiLines"
+                                    (ngModelChange)="model.corpus = $event || ''"
                                 />
                             }
                         </div>
                     }
                     @if (isDilps && (edit || !!artists.length)) {
                         <app-thesaurus
-                            (modelChange)="model.artists = $any($event)"
+                            matTooltipPosition="after"
+                            placeholder="Artistes"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'Le nom de l\'artiste s\'insère sous la forme\n &quot;Nom, Prénom&quot;\n\nSi l\'artiste est inconnu, le champ doit rester vide.'
                             "
-                            matTooltipPosition="after"
                             [model]="artists"
                             [previewComponent]="ArtistComponent"
                             [readonly]="!edit"
                             [service]="artistService"
-                            placeholder="Artistes"
+                            (modelChange)="model.artists = $any($event)"
                         />
                     }
                     @if (isDilps && (edit || !!model.techniqueAuthor)) {
                         <mat-form-field>
                             <mat-label>Auteur technique</mat-label>
                             <textarea
-                                [(ngModel)]="model.techniqueAuthor"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.techniqueAuthor?.length >= 255}">
@@ -267,40 +268,40 @@
                     }
                     @if (isDilps && (edit || !!model.addition)) {
                         <mat-form-field
+                            matTooltipPosition="after"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'Le champ supplément permet de saisir toute information n\'entrant pas ailleurs (complément, précision, numéro d\'inventaire, etc.).'
                             "
-                            matTooltipPosition="after"
                         >
                             <mat-label>Supplément</mat-label>
                             <textarea
-                                [(ngModel)]="model.addition"
+                                matInput
                                 [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
-                                matInput
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.addition"
                             ></textarea>
                         </mat-form-field>
                     }
                     @if (isDilps && (edit || !!model.dating)) {
                         <mat-form-field
+                            matTooltipPosition="after"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'Les siècles s\'écrivent en chiffres romains\n&quot;Vers 1912&quot; s’écrit &quot;1912 (c.)&quot; (c. pour circa)'
                             "
-                            matTooltipPosition="after"
                         >
                             <mat-label>Datation</mat-label>
                             <textarea
-                                [(ngModel)]="model.dating"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.dating"
                             ></textarea>
                             @if (edit && model.dating?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.dating?.length >= 255}">
@@ -311,17 +312,17 @@
                     }
                     @if (isDilps && (edit || !!model.dilpsDomain)) {
                         <mat-form-field
-                            [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
                             matTooltipPosition="after"
+                            [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
                         >
                             <mat-label>Domaine</mat-label>
                             <textarea
-                                [(ngModel)]="model.dilpsDomain"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.dilpsDomain"
                             ></textarea>
                             @if (edit && model.dilpsDomain?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.dilpsDomain?.length >= 255}">
@@ -332,21 +333,21 @@
                     }
                     @if (isDilps && (edit || !!model.material)) {
                         <mat-form-field
+                            matTooltipPosition="after"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'Ce champ précise ce que &quot;Domaine&quot; donne de façon générale (exemple: &quot;Domaine: Peinture&quot;, &quot;Technique & Matériel: Huile sur toile&quot;)'
                             "
-                            matTooltipPosition="after"
                         >
                             <mat-label>Technique & Matériel</mat-label>
                             <textarea
-                                [(ngModel)]="model.material"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.material"
                             ></textarea>
                             @if (edit && model.material?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.material?.length >= 255}">
@@ -357,21 +358,21 @@
                     }
                     @if (isDilps && (edit || !!model.format)) {
                         <mat-form-field
+                            matTooltipPosition="after"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'Les dimensions s\'expriment en centimètres (exemple : &quot;19,9 x 32,5 cm&quot;).'
                             "
-                            matTooltipPosition="after"
                         >
                             <mat-label>Dimensions</mat-label>
                             <textarea
-                                [(ngModel)]="model.format"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.format"
                             ></textarea>
                             @if (edit && model.format?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.format?.length >= 255}">
@@ -382,21 +383,21 @@
                     }
                     @if (!isDilps && (edit || !!model.materials?.length)) {
                         <app-thesaurus
+                            placeholder="Matériaux"
                             [model]="model.materials"
-                            (modelChange)="model.materials = $any($event)"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="materialHierarchicConfig"
                             [multiple]="true"
                             [previewComponent]="MaterialComponent"
                             [readonly]="!edit"
                             [service]="materialService"
-                            placeholder="Matériaux"
+                            (modelChange)="model.materials = $any($event)"
                         />
                     }
                     @if (!isDilps && (edit || !!model.productionPlace)) {
                         <mat-form-field>
                             <mat-label>Lieu de production</mat-label>
-                            <input [(ngModel)]="model.productionPlace" [readonly]="!edit" matInput maxlength="60" />
+                            <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.productionPlace" />
                             @if (edit && model.productionPlace?.length > 47) {
                                 <mat-hint align="end" [ngClass]="{strong: model.productionPlace?.length >= 60}">
                                     {{ model.productionPlace!.length }} / 60
@@ -406,15 +407,15 @@
                     }
                     @if (!isDilps && (edit || !!model.tags?.length)) {
                         <app-thesaurus
+                            placeholder="Mots clés"
                             [model]="model.tags"
-                            (modelChange)="model.tags = $any($event)"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="tagHierarchicConfig"
                             [multiple]="true"
                             [previewComponent]="TagComponent"
                             [readonly]="!edit"
                             [service]="tagService"
-                            placeholder="Mots clés"
+                            (modelChange)="model.tags = $any($event)"
                         />
                     }
                     @if (isDilps && (edit || !!institution)) {
@@ -422,20 +423,20 @@
                     }
                     @if (isDilps && (edit || !!institution)) {
                         <app-thesaurus
-                            (modelChange)="model.institution = $any($event)"
+                            matTooltipPosition="after"
+                            placeholder="Institution"
                             [matTooltip]="
                                 !edit
                                     ? ''
                                     : 'L\'institution où se trouve l\'oeuvre.\n\nL\'institution s\'écrit en principe dans la langue originale du pays.'
                             "
-                            matTooltipPosition="after"
                             [model]="institution"
                             [multiple]="false"
                             [previewComponent]="InstitutionComponent"
                             [readonly]="!edit"
                             [service]="institutionService"
                             [sortAutocompleteByUsageCount]="true"
-                            placeholder="Institution"
+                            (modelChange)="model.institution = $any($event)"
                         />
                     }
                     <!-- Institution address -->
@@ -459,17 +460,15 @@
                         <cdk-accordion class="address-accordion">
                             <cdk-accordion-item
                                 #accordionItem="cdkAccordionItem"
-                                [expanded]="!this.edit"
                                 role="button"
                                 tabindex="0"
+                                [expanded]="!this.edit"
                                 [attr.id]="'address'"
                                 [attr.aria-expanded]="accordionItem.expanded"
                             >
                                 <div
-                                    class="address-title mat-headline-6"
+                                    class="address-title mat-headline-6 nat-horizontal"
                                     (click)="accordionItem.toggle()"
-                                    fxLayout="row"
-                                    fxLayoutAlign="start baseline"
                                 >
                                     <span>Adresse</span>
                                     <mat-icon
@@ -491,14 +490,14 @@
                     }
                     @if (!isDilps && (edit || !!model.antiqueNames?.length)) {
                         <app-thesaurus
+                            placeholder="Nom antique"
                             [model]="model.antiqueNames"
-                            (modelChange)="model.antiqueNames = $any($event)"
                             [allowFreeText]="false"
                             [multiple]="true"
                             [previewComponent]="AntiqueNameComponent"
                             [readonly]="!edit"
                             [service]="antiqueNameService"
-                            placeholder="Nom antique"
+                            (modelChange)="model.antiqueNames = $any($event)"
                         />
                     }
                     @if (!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)) {
@@ -506,35 +505,35 @@
                     }
                     @if (!isDilps && (edit || model.periods?.length)) {
                         <app-thesaurus
+                            placeholder="Périodes"
                             [model]="model.periods"
-                            (modelChange)="model.periods = $any($event)"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="periodHierarchicConfig"
                             [multiple]="true"
                             [previewComponent]="PeriodComponent"
                             [readonly]="!edit"
                             [service]="periodService"
-                            placeholder="Périodes"
+                            (modelChange)="model.periods = $any($event)"
                         />
                     }
                     @if (!isDilps) {
-                        <div fxLayout="row" fxLayoutGap="10px" class="double-fields">
+                        <div class="nat-horizontal double-fields nat-gap-10">
                             @if (edit || !!model.from) {
-                                <mat-form-field fxFlex="183px">
+                                <mat-form-field class="from-to-fields">
                                     <mat-label>A partir de</mat-label>
                                     <input
-                                        [(ngModel)]="model.from"
-                                        [readonly]="!edit"
                                         matInput
                                         type="number"
                                         step="1"
+                                        [readonly]="!edit"
+                                        [(ngModel)]="model.from"
                                     />
                                 </mat-form-field>
                             }
                             @if (edit || !!model.to) {
-                                <mat-form-field fxFlex="183px">
+                                <mat-form-field class="from-to-fields">
                                     <mat-label>Jusqu'à</mat-label>
-                                    <input [(ngModel)]="model.to" [readonly]="!edit" matInput type="number" step="1" />
+                                    <input matInput type="number" step="1" [readonly]="!edit" [(ngModel)]="model.to" />
                                 </mat-form-field>
                             }
                         </div>
@@ -544,14 +543,14 @@
                     }
                     @if (!isDilps && (edit || !!institution)) {
                         <app-thesaurus
-                            (modelChange)="model.institution = $any($event)"
+                            placeholder="Institution"
                             [model]="institution"
                             [multiple]="false"
                             [previewComponent]="InstitutionComponent"
                             [readonly]="!edit"
                             [service]="institutionService"
                             [sortAutocompleteByUsageCount]="true"
-                            placeholder="Institution"
+                            (modelChange)="model.institution = $any($event)"
                         />
                     }
                     <!-- Institution address -->
@@ -562,11 +561,11 @@
                         <mat-form-field>
                             <mat-label>Numéro d’inventaire</mat-label>
                             <textarea
-                                [(ngModel)]="model.objectReference"
+                                matInput
                                 [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
-                                matInput
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.objectReference"
                             ></textarea>
                         </mat-form-field>
                     }
@@ -582,26 +581,26 @@
                     }
                     @if (!isDilps && (edit || !!model.documentType)) {
                         <app-thesaurus
+                            placeholder="Type"
                             [model]="model.documentType"
-                            (modelChange)="model.documentType = $any($event)"
                             [allowFreeText]="false"
                             [multiple]="false"
                             [previewComponent]="DocumentTypeComponent"
                             [readonly]="!edit"
                             [service]="documentTypeService"
-                            placeholder="Type"
+                            (modelChange)="model.documentType = $any($event)"
                         />
                     }
                     @if (!isDilps && (edit || !!model.documentSize)) {
                         <mat-form-field>
                             <mat-label>Dimensions</mat-label>
                             <textarea
-                                [(ngModel)]="model.documentSize"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="191"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.documentSize"
                             ></textarea>
                             @if (edit && model.documentSize?.length > 150) {
                                 <mat-hint align="end" [ngClass]="{strong: model.documentSize?.length >= 191}">
@@ -614,12 +613,12 @@
                         <mat-form-field>
                             <mat-label>Auteur</mat-label>
                             <textarea
-                                [(ngModel)]="model.techniqueAuthor"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.techniqueAuthor?.length >= 255}">
@@ -631,7 +630,7 @@
                     @if (!isDilps && (edit || !!model.techniqueDate)) {
                         <mat-form-field>
                             <mat-label>Date ou année</mat-label>
-                            <input [(ngModel)]="model.techniqueDate" [readonly]="!edit" matInput maxlength="60" />
+                            <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.techniqueDate" />
                             @if (edit && model.techniqueDate?.length > 47) {
                                 <mat-hint align="end" [ngClass]="{strong: model.techniqueDate?.length >= 60}">
                                     {{ model.techniqueDate!.length }} / 60
@@ -655,21 +654,21 @@
                         <div class="mat-headline-6">Référence de l'image</div>
                     }
                     @if (edit || !!model.literature) {
-                        <div [ngClass]="{filled: !!model.literature, 'rich-text': true}" tabindex="-1">
+                        <div tabindex="-1" [ngClass]="{filled: !!model.literature, 'rich-text': true}">
                             <div class="label">Source</div>
                             @if (edit || !!model.literature) {
                                 <quill-editor
-                                    [ngModel]="model.literature"
-                                    (ngModelChange)="model.literature = $event || ''"
-                                    [disabled]="!edit"
                                     bounds="self"
+                                    matTooltipPosition="after"
+                                    [ngModel]="model.literature"
+                                    [disabled]="!edit"
                                     [modules]="multiLines"
                                     [matTooltip]="
                                         !edit || !isDilps
                                             ? ''
                                             : 'La source est le lien URL ou la référence bibliographique de l\'ouvrage d\'où provient l\'image.\n\nLa notice s\'écrit en principe sur le schéma :\n&quot;Prénom Nom, Titre et sous-titre, Lieu de publication : éditeur, année (première édition).&quot;\n\nNe pas oublier de noter le numéro de page correspondant à l\'image.'
                                     "
-                                    matTooltipPosition="after"
+                                    (ngModelChange)="model.literature = $event || ''"
                                 />
                             }
                         </div>
@@ -678,7 +677,7 @@
                         @if (!!initialCardValues.page) {
                             <mat-form-field>
                                 <mat-label>Page</mat-label>
-                                <input [(ngModel)]="model.page" [readonly]="true" matInput />
+                                <input matInput [readonly]="true" [(ngModel)]="model.page" />
                                 @if (!!model.page && edit) {
                                     <button
                                         matSuffix
@@ -706,7 +705,7 @@
                         @if (!!initialCardValues.figure) {
                             <mat-form-field>
                                 <mat-label>Figure</mat-label>
-                                <input [(ngModel)]="model.figure" [readonly]="true" matInput />
+                                <input matInput [readonly]="true" [(ngModel)]="model.figure" />
                                 @if (!!model.figure && edit) {
                                     <button
                                         matSuffix
@@ -734,7 +733,7 @@
                         @if (!!initialCardValues.table) {
                             <mat-form-field>
                                 <mat-label>Planche</mat-label>
-                                <input [(ngModel)]="model.table" [readonly]="true" matInput />
+                                <input matInput [readonly]="true" [(ngModel)]="model.table" />
                                 @if (!!model.table && edit) {
                                     <button
                                         matSuffix
@@ -761,11 +760,11 @@
                         }
                         @if (!!initialCardValues.isbn) {
                             <mat-form-field
-                                [matTooltip]="edit ? 'Numéro ISBN de l\'ouvrage source, sans les tirets.' : ''"
                                 matTooltipPosition="after"
+                                [matTooltip]="edit ? 'Numéro ISBN de l\'ouvrage source, sans les tirets.' : ''"
                             >
                                 <mat-label>ISBN</mat-label>
-                                <input [(ngModel)]="model.isbn" [readonly]="true" matInput />
+                                <input matInput [readonly]="true" [(ngModel)]="model.isbn" />
                                 @if (!!model.isbn && edit) {
                                     <button
                                         matSuffix
@@ -794,7 +793,7 @@
                     @if (!isDilps && (edit || !!model.isbn)) {
                         <mat-form-field>
                             <mat-label>ISBN / ISSN</mat-label>
-                            <input [(ngModel)]="model.isbn" [readonly]="!edit" matInput maxlength="30" />
+                            <input matInput maxlength="30" [readonly]="!edit" [(ngModel)]="model.isbn" />
                             @if (edit && model.isbn?.length > 23) {
                                 <mat-hint align="end" [ngClass]="{strong: model.isbn?.length >= 30}">
                                     {{ model.isbn!.length }} / 30
@@ -806,12 +805,12 @@
                         <mat-form-field>
                             <mat-label>Droits d'auteur</mat-label>
                             <textarea
-                                [(ngModel)]="model.rights"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.rights"
                             ></textarea>
                             @if (edit && model.rights?.length > 200) {
                                 <mat-hint align="end" [ngClass]="{strong: model.rights?.length >= 255}">
@@ -833,14 +832,13 @@
                         <mat-list style="padding: 0">
                             <mat-list-item>
                                 <a
-                                    class="margin-bottom-hint"
+                                    class="nat-margin-bottom-hint"
                                     color="primary"
                                     style="justify-content: flex-start"
                                     mat-button
                                     [href]="model.url"
                                     [innerHTML]="model.urlDescription || model.url"
-                                >
-                                </a>
+                                ></a>
                             </mat-list-item>
                         </mat-list>
                     }
@@ -848,15 +846,15 @@
                         <mat-form-field>
                             <mat-label>URL</mat-label>
                             <textarea
-                                [(ngModel)]="model.url"
                                 #url="ngModel"
-                                [readonly]="!edit"
                                 matInput
                                 maxlength="255"
                                 type="url"
-                                (change)="urlModel = url; updateFormValidity()"
+                                [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
+                                [(ngModel)]="model.url"
+                                (change)="urlModel = url; updateFormValidity()"
                             ></textarea>
                             @if (url.invalid && (url.dirty || url.touched)) {
                                 <mat-error>URL invalide</mat-error>
@@ -869,15 +867,15 @@
                         </mat-form-field>
                     }
                     @if (!isDilps && edit) {
-                        <div [ngClass]="{filled: !!model.urlDescription, 'rich-text': true}" tabindex="-1">
+                        <div tabindex="-1" [ngClass]="{filled: !!model.urlDescription, 'rich-text': true}">
                             <div class="label">Description</div>
                             @if (edit || !!model.urlDescription) {
                                 <quill-editor
-                                    [ngModel]="model.urlDescription"
-                                    (ngModelChange)="model.urlDescription = $event || ''"
-                                    [disabled]="!edit"
                                     bounds="self"
+                                    [ngModel]="model.urlDescription"
+                                    [disabled]="!edit"
                                     [modules]="multiLines"
+                                    (ngModelChange)="model.urlDescription = $event || ''"
                                 />
                             }
                         </div>
@@ -887,6 +885,8 @@
                         <div>
                             <div class="mat-headline-6">Fiches associées</div>
                             <natural-relations
+                                placeholder="Associer une fiche"
+                                id="fiches-additionnelles"
                                 [disabled]="!edit"
                                 [filter]="{
                                     groups: [
@@ -894,44 +894,42 @@
                                             joins: {
                                                 cards: {
                                                     type: JoinType.innerJoin,
-                                                    conditions: [{id: {equal: {value: fetchedModel.id}}}]
-                                                }
-                                            }
-                                        }
-                                    ]
+                                                    conditions: [{id: {equal: {value: fetchedModel.id}}}],
+                                                },
+                                            },
+                                        },
+                                    ],
                                 }"
                                 [autocompleteSelectorFilter]="{
                                     groups: [
                                         {
                                             conditions: [
                                                 {id: {equal: {value: fetchedModel.id, not: true}}},
-                                                {cards: {have: {values: [fetchedModel.id], not: true}}}
-                                            ]
-                                        }
-                                    ]
+                                                {cards: {have: {values: [fetchedModel.id], not: true}}},
+                                            ],
+                                        },
+                                    ],
                                 }"
                                 [main]="fetchedModel"
                                 [service]="cardService"
-                                placeholder="Associer une fiche"
                                 [displayWith]="displayWith"
-                                id="fiches-additionnelles"
                                 [ngClass]="{'margin-bottom-hint': !edit}"
                             >
                                 <ng-template let-item="item">
                                     <div [ngClass]="{'related-card-template': true}">
                                         <natural-table-button
                                             toolT
+                                            icon="image"
                                             [label]="displayWith(item)"
                                             [navigate]="['/card/', item.id]"
-                                            icon="image"
                                             [matTooltip]="displayWith(item)"
                                             [matTooltipShowDelay]="500"
                                         />
                                         @if (edit) {
                                             <button
-                                                (click)="openCopyRelatedCardsDialog(item)"
                                                 mat-icon-button
                                                 matTooltip="Copier les associations"
+                                                (click)="openCopyRelatedCardsDialog(item)"
                                             >
                                                 <mat-icon naturalIcon="add_link" />
                                             </button>
@@ -940,7 +938,7 @@
                                 </ng-template>
                             </natural-relations>
                             @if (edit) {
-                                <div class="margin-bottom-hint btn-link-related-cards">
+                                <div class="nat-margin-bottom-hint btn-link-related-cards">
                                     <button mat-raised-button (click)="openLinkRelatedCardsDialog()">
                                         Associer les fiches entre elles
                                     </button>
@@ -960,36 +958,34 @@
                 </div>
             </ng-scrollbar>
             @if (fetchedModel) {
-                <div class="padding">
+                <div class="nat-padding">
                     <app-stamp [item]="stamp" />
                 </div>
             }
         </div>
         @if (showImage) {
             <div
-                class="image-container"
-                fxFlex
-                fxLayout="column"
+                class="image-container nat-vertical nat-expand"
                 [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
                 [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
             >
                 @if (imageSrcFull && !imageData) {
                     <a
-                        [attr.href]="imageSrcFull"
                         download
                         mat-mini-fab
                         class="download-button"
                         matTooltip="Télécharger l'image"
                         matTooltipPosition="left"
+                        [attr.href]="imageSrcFull"
                     >
                         <mat-icon naturalIcon="file_download" />
                     </a>
                 }
                 @if (imageSrc && !imageData) {
-                    <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+                    <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
                 }
                 @if (imageData) {
-                    <div [style.backgroundImage]="imageData" class="image" fxFlex></div>
+                    <div class="image nat-expand" [style.backgroundImage]="imageData"></div>
                 }
                 @if (showCards && showSlideshowRelatedCards && fetchedModel) {
                     <app-related-cards

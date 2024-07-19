@@ -5,29 +5,31 @@
         "outDir": "./dist/out-tsc",
         "forceConsistentCasingInFileNames": true,
         "strict": true,
+        "esModuleInterop": true,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "sourceMap": true,
         "declaration": false,
-        "downlevelIteration": true,
         "experimentalDecorators": true,
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "importHelpers": true,
         "strictNullChecks": true,
         "target": "ES2022",
         "module": "es2020",
         "lib": ["es2018", "dom"],
-        "allowSyntheticDefaultImports": true,
         "noImplicitOverride": true,
         "useDefineForClassFields": false,
-        "skipLibCheck": true // required for photoswipe
+        "skipLibCheck": true
     },
     "angularCompilerOptions": {
         "strictInjectionParameters": true,
         "strictInputAccessModifiers": true,
         "strictTemplates": true,
         // Remove this when https://github.com/angular/angular/issues/37619 is fixed
-        "strictSafeNavigationTypes": false
+        "strictSafeNavigationTypes": false,
+        "extendedDiagnostics": {
+            "defaultCategory": "error"
+        }
     },
     // Otherwise, eslint parses our temp files and crashes, see https://github.com/typescript-eslint/typescript-eslint/issues/1192
     "exclude": ["data/", "htdocs/"]

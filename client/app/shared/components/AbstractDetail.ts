@@ -20,7 +20,7 @@ type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
 };
 
-@Directive()
+@Directive({standalone: true})
 export class AbstractDetailDirective<
     TService extends NaturalAbstractModelService<
         unknown,
@@ -42,7 +42,7 @@ export class AbstractDetailDirective<
      * so the form does not switch from creation mode to update mode without an actual reload of
      * model from DB (by navigating to update page).
      */
-    #isUpdatePage = false;
+    private _isUpdatePage = false;
 
     public user: Viewer['viewer'] | null = null;
 
@@ -64,7 +64,7 @@ export class AbstractDetailDirective<
         if ('id' in this.data.item && this.data.item.id) {
             this.service.getOne(this.data.item.id).subscribe(res => {
                 merge(this.data.item, res); // init all fields considering getOne query
-                this.#isUpdatePage = true;
+                this._isUpdatePage = true;
                 this.postQuery();
             });
         }
@@ -79,7 +79,7 @@ export class AbstractDetailDirective<
      * This should be used instead of checking `data.model.id` directly, in order to type guard and get proper typing
      */
     protected isUpdatePage(): this is {data: {item: WithId<ExtractTone<TService>>}} {
-        return this.#isUpdatePage;
+        return this._isUpdatePage;
     }
 
     public update(): void {

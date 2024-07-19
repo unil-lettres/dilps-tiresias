@@ -12,16 +12,15 @@ use GraphQL\Type\Definition\Type;
 
 class ValidateExport implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'validateExport',
+        yield 'validateExport' => fn () => [
             'type' => Type::string(),
             'description' => 'Validates that a new export can indeed be created. If valid return `null`, else return a message to be shown to end-user.',
             'args' => [
                 'input' => Type::nonNull(_types()->get(CreateExportInputType::class)),
             ],
-            'resolve' => function (array $root, array $args): ?string {
+            'resolve' => function ($root, array $args): ?string {
                 _em()->beginTransaction();
 
                 try {

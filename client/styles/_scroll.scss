@@ -3,13 +3,7 @@
 
 @mixin scroll($theme) {
     $foreground: map.get($theme, foreground);
-    .scrollbar-control {
-        --scrollbar-thumb-color: #{mat.get-color-from-palette($foreground, base, 0.3)};
-        --vertical-scrollbar-size: 9px;
-        justify-content: flex-end !important;
-    }
 
-    #menu .ng-scroll-content {
-        height: 100%;
-    }
+    --scrollbar-thumb-color: #{mat.m2-get-color-from-palette($foreground, base, 0.3)};
+    --scrollbar-thickness: 9;
 }

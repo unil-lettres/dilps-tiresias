@@ -41,7 +41,7 @@ export class StatisticService extends AbstractContextualizedService<
      * This method must only be called from an injection context.
      */
     private createSub(subject: Observable<void>, mutation: DocumentNode): void {
-        assertInInjectionContext;
+        assertInInjectionContext(this.createSub);
 
         subject
             .pipe(

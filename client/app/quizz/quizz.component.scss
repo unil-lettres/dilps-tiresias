@@ -1,12 +1,12 @@
 :host {
-    flex: 1 1 auto;
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
 }
 
 .image {
-    background-size: contain;
     background-position: center;
+    background-size: contain;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.33);
 }
@@ -27,7 +27,20 @@
     }
 
     .attributeName {
-        font-size: 16px;
         font-weight: bold;
+        font-size: 16px;
     }
+}
+
+.card {
+    display: flex;
+    flex: 1 1 400px;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 400px;
+    max-width: 400px;
+}
+
+.title {
+    align-items: baseline;
 }

@@ -20,16 +20,15 @@ use GraphQL\Type\Definition\Type;
  */
 class CreateExport implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'createExport',
+        yield 'createExport' => fn () => [
             'type' => Type::nonNull(_types()->getOutput(Export::class)),
             'description' => 'Create a new export',
             'args' => [
                 'input' => Type::nonNull(_types()->get(CreateExportInputType::class)),
             ],
-            'resolve' => function (array $root, array $args): Export {
+            'resolve' => function ($root, array $args): Export {
                 global $container;
 
                 /** @var Exporter $exporter */

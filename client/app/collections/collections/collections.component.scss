@@ -20,3 +20,12 @@ mat-nav-list {
 .active * {
     font-weight: bold !important;
 }
+
+.left-pane {
+    display: flex;
+    flex: 1 1 400px;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 400px;
+    max-width: 400px;
+}

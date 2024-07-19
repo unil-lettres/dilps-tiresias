@@ -1,5 +1,7 @@
 START TRANSACTION;
 
+SET sql_mode = 'STRICT_TRANS_TABLES';
+
 REPLACE INTO `collection` (`id`, parent_id, is_source, owner_id, visibility, copyrights, usage_rights, `name`, `description`, `site`) VALUES
   (2000, NULL, 1, 1003, 'private', '© ACME', 'Only if you ask nicely', 'Test collection 2000', 'Roads? Where we''re going we don''t need roads.', 'dilps'),
   (2001, NULL, 0, NULL, 'member', '', '', 'Test collection 2001', 'Hello. My name is Inigo Montoya. You killed my father. Prepare to die.', 'dilps'),
@@ -101,9 +103,9 @@ REPLACE INTO `antique_name` (`id`, `name`, `site`) VALUES
 REPLACE INTO file (id, card_id, name, filename, mime) VALUES
 (13000, 6000, 'Test file 13000', '4k123pkopvs3iDFV948abcde.pdf', 'application/pdf');
 
-REPLACE INTO export (id, site, card_count) VALUES
-(14000, 'dilps', 1),
-(14001, 'dilps', 2);
+REPLACE INTO export (id, site, card_count, file_size) VALUES
+(14000, 'dilps', 1, 0),
+(14001, 'dilps', 2, 0);
 
 REPLACE INTO export_collection (export_id, collection_id) VALUES
 (14001, 2001);

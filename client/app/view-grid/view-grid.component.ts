@@ -19,7 +19,6 @@ import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type ContentChange = {
@@ -34,7 +33,7 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
     standalone: true,
-    imports: [NaturalGalleryComponent, FlexModule],
+    imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
     private readonly destroyRef = inject(DestroyRef);

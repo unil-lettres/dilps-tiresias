@@ -7,9 +7,27 @@
 }
 
 .image {
-    background-size: contain;
     background-position: center;
+    background-size: contain;
     background-repeat: no-repeat;
+}
+
+.left-pane {
+    display: flex;
+    flex: 1 1 400px;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 400px;
+    max-width: 400px;
+}
+
+.from-to-fields {
+    display: flex;
+    flex: 1 1 183px;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 183px;
+    max-width: 183px;
 }
 
 mat-slider {
@@ -26,13 +44,13 @@ mat-slider {
 }
 
 .double-fields > * {
-    min-width: 0;
     width: calc(((400px - 2 * 12px) - 10px) / 2);
+    min-width: 0;
 }
 
 .image-container {
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
 
     .download-button {
         position: absolute;

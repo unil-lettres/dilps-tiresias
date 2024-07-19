@@ -1,10 +1,9 @@
-import {APP_INITIALIZER, enableProdMode, ErrorHandler, importProvidersFrom, inject} from '@angular/core';
+import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject, provideZoneChangeDetection} from '@angular/core';
 import {environment} from './environments/environment';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
-import {QuillModule} from 'ngx-quill';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
-import {provideAnimations, provideNoopAnimations} from '@angular/platform-browser/animations';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
@@ -16,12 +15,14 @@ import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConf
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
-import {IScrollbarOptions, NG_SCROLLBAR_OPTIONS} from 'ngx-scrollbar';
+import {NG_SCROLLBAR_OPTIONS, NgScrollbarOptions} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './app/statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
+import {provideQuillConfig} from 'ngx-quill';
+import {provideScrollbarOptions} from 'ngx-scrollbar';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
     enableProdMode();
@@ -45,17 +46,18 @@ const disableAnimations =
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(QuillModule.forRoot(quillConfig)),
+        provideZoneChangeDetection({eventCoalescing: true}),
+        provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
-        disableAnimations ? provideNoopAnimations() : provideAnimations(),
+        provideAnimationsAsync(disableAnimations ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),
         {
             provide: NG_SCROLLBAR_OPTIONS,
             useValue: {
                 visibility: 'hover',
-            } satisfies Partial<IScrollbarOptions>,
+            } satisfies Partial<NgScrollbarOptions>,
         },
         {
             // See https://github.com/angular/components/issues/26580
@@ -101,5 +103,11 @@ bootstrapApplication(AppComponent, {
                 };
             },
         },
+        provideScrollbarOptions({
+            visibility: 'hover',
+            appearance: 'compact',
+        }),
     ],
-}).catch(err => console.log(err));
+}).catch((err: unknown) => {
+    console.error(err);
+});

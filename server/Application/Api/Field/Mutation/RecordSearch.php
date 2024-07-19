@@ -11,13 +11,12 @@ use GraphQL\Type\Definition\Type;
 
 class RecordSearch implements FieldInterface
 {
-    public static function build(): array
+    public static function build(): iterable
     {
-        return [
-            'name' => 'recordSearch',
+        yield 'recordSearch' => fn () => [
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Record one search in statistics',
-            'resolve' => function (array $root, array $args): bool {
+            'resolve' => function ($root, array $args): bool {
                 $site = $root['site'];
 
                 /** @var StatisticRepository $statisticRepository */

@@ -55,7 +55,7 @@ function testMultipleThesaurus(words: string[], attributeValue: ThesaurusModel[]
 }
 
 function testDate(formValue: string, datings: Card['card']['datings']): boolean {
-    const years: string[] = uniq(formValue.match(/(-?\d+)/));
+    const years: string[] = uniq(/(-?\d+)/.exec(formValue));
     if (years) {
         for (const year of years) {
             const searched = new Date(year).getFullYear();

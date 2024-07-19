@@ -6,78 +6,76 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
 @Component({
     selector: 'app-card-skeleton',
     imports: [CommonModule, MatProgressSpinnerModule, LogoComponent],
-    styles: [
-        `
-            :host {
-                width: 100%;
-            }
+    styles: `
+        :host {
+            width: 100%;
+        }
 
-            .background-fade {
-                background: transparent;
-                bottom: 0;
-                height: 300px;
-                left: 0;
-                position: absolute;
-                right: 0;
-                z-index: 10;
-            }
+        .background-fade {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            background: transparent;
+            height: 300px;
+        }
 
-            .block-button {
-                border-radius: 50px;
-                height: 40px;
-                width: 40px;
-            }
+        .block-button {
+            border-radius: 50px;
+            width: 40px;
+            height: 40px;
+        }
 
-            .block-input {
-                border-radius: 10px;
-                height: 56px;
-                margin: 0 12px 22.5px 12px;
-                width: 375px;
-            }
+        .block-input {
+            margin: 0 12px 22.5px 12px;
+            border-radius: 10px;
+            width: 375px;
+            height: 56px;
+        }
 
-            .block-input-xs {
-                border-radius: 10px;
-                height: 15px;
-                margin: 0 20px 15px 20px;
-                width: 200px;
-            }
+        .block-input-xs {
+            margin: 0 20px 15px 20px;
+            border-radius: 10px;
+            width: 200px;
+            height: 15px;
+        }
 
-            .block-input-sm {
-                border-radius: 10px;
-                height: 7px;
-                margin: 0 auto 40px auto;
-                width: 330px;
-            }
+        .block-input-sm {
+            margin: 0 auto 40px auto;
+            border-radius: 10px;
+            width: 330px;
+            height: 7px;
+        }
 
-            .image {
-                align-items: center;
-                display: flex;
-                flex-grow: 1;
-                justify-content: space-around;
-            }
+        .image {
+            display: flex;
+            flex-grow: 1;
+            justify-content: space-around;
+            align-items: center;
+        }
 
-            .left-pane {
-                overflow: hidden;
-            }
+        .left-pane {
+            overflow: hidden;
+        }
 
-            .left-pane > div {
-                padding-top: 20px;
-                position: relative;
-            }
+        .left-pane > div {
+            position: relative;
+            padding-top: 20px;
+        }
 
-            .skeleton-menu {
-                display: flex;
-                height: 50px;
-                justify-content: space-between;
-                padding: 0 15px 15px;
-            }
+        .skeleton-menu {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px 15px;
+            height: 50px;
+        }
 
-            .skeleton-screen {
-                display: flex;
-                height: 100vh;
-            }
-        `,
-    ],
+        .skeleton-screen {
+            display: flex;
+            height: 100vh;
+        }
+    `,
     template: `
         <div class="skeleton-screen">
             <div class="left-pane">

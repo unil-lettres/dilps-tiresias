@@ -3,7 +3,6 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import Highcharts from 'highcharts/es-modules/masters/highcharts.src.js';
 import {CommonModule} from '@angular/common';
 import {HighchartsChartModule} from 'highcharts-angular';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 
 type Row = {
     name: string;
@@ -48,7 +47,7 @@ function percent(count: number, total: number): number {
     templateUrl: './statistic.component.html',
     styleUrl: './statistic.component.scss',
     standalone: true,
-    imports: [FlexModule, HighchartsChartModule, CommonModule, MatTableModule, CommonModule],
+    imports: [HighchartsChartModule, CommonModule, MatTableModule],
 })
 export class StatisticComponent {
     @Input({required: true})

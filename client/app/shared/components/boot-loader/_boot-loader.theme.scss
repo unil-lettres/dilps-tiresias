@@ -3,10 +3,10 @@
 @mixin boot-loader($theme) {
     $primary: map.get($theme, primary);
     .bootloader {
-        background: mat.get-color-from-palette($primary);
+        background: mat.m2-get-color-from-palette($primary);
 
         .sk-folding-cube .sk-cube:before {
-            background-color: mat.get-color-from-palette($primary, default-contrast, 100);
+            background-color: mat.m2-get-color-from-palette($primary, default-contrast, 100);
         }
     }
 }

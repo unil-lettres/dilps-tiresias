@@ -1,28 +1,28 @@
-<div fxFlex fxLayout="column">
-    <div class="padding" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px">
+<div class="nat-expand nat-vertical">
+    <div class="title nat-padding nat-gap nat-horizontal nat-left">
         <div class="mat-headline-5">Lecture d'oeuvres</div>
         <div class="mat-body-2">Image {{ currentIndex + 1 }} / {{ cards.length }}</div>
 
-        <div class="padding" fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-            <mat-form-field fxFlex>
+        <div class="nat-padding nat-horizontal nat-align nat-gap nat-expand">
+            <mat-form-field class="nat-expand">
                 <mat-label>Saisissez votre réponse</mat-label>
-                <input [formControl]="formCtrl" matInput />
+                <input matInput [formControl]="formCtrl" />
             </mat-form-field>
-            <button (click)="goToNext()" color="primary" mat-raised-button>Suivant</button>
+            <button color="primary" mat-raised-button (click)="goToNext()">Suivant</button>
         </div>
     </div>
 
-    <div fxFlex fxLayout="row">
+    <div class="nat-expand nat-horizontal">
         @if (imageSrc) {
-            <div [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}" class="image" fxFlex></div>
+            <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
         }
         @if (card) {
-            <div fxFlex="300px" fxLayout="column" fxLayoutGap="10px;">
+            <div class="card nat-vertical nat-gap-10">
                 <mat-expansion-panel class="instructions">
                     <mat-expansion-panel-header>
-                        <mat-panel-title> Instructions </mat-panel-title>
+                        <mat-panel-title> Instructions</mat-panel-title>
                     </mat-expansion-panel-header>
-                    <div fxLayout="column" fxLayoutGap="10px">
+                    <div class="nat-vertical nat-gap-10">
                         <p>Utilisez le champ de saisie situé en haut de la page pour commencer !</p>
                         <p>
                             Les différents termes peuvent être saisis sans ordre précis et sans tenir compte de la
@@ -35,27 +35,27 @@
                     </div>
                 </mat-expansion-panel>
                 @if (card.name) {
-                    <div [ngClass]="{valid: attributes.name}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.name}">
                         <div class="attributeName">Titre</div>
-                        <div [matTooltip]="card.plainName" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.plainName">Voir réponse</div>
                     </div>
                 }
                 @if (card.artists.length) {
-                    <div [ngClass]="{valid: attributes.artists}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.artists}">
                         <div class="attributeName">Artistes</div>
-                        <div [matTooltip]="getArtistsNames(card.artists)" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="getArtistsNames(card.artists)">Voir réponse</div>
                     </div>
                 }
                 @if (card.dating) {
-                    <div [ngClass]="{valid: attributes.dating}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.dating}">
                         <div class="attributeName">Datation</div>
-                        <div [matTooltip]="card.dating" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.dating">Voir réponse</div>
                     </div>
                 }
                 @if (card.institution) {
-                    <div [ngClass]="{valid: attributes.institution}" class="attribute">
+                    <div class="attribute" [ngClass]="{valid: attributes.institution}">
                         <div class="attributeName">Lieu</div>
-                        <div [matTooltip]="card.institution.name" class="attributeAnswer">Voir réponse</div>
+                        <div class="attributeAnswer" [matTooltip]="card.institution.name">Voir réponse</div>
                     </div>
                 }
             </div>

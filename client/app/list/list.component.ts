@@ -52,7 +52,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {FlexModule} from '@ngbracket/ngx-layout/flex';
 import {MatMenuModule} from '@angular/material/menu';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -96,7 +95,6 @@ enum ViewMode {
     standalone: true,
     imports: [
         MatMenuModule,
-        FlexModule,
         MatToolbarModule,
         LogoComponent,
         MatButtonModule,
@@ -341,7 +339,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      */
     public updateShowDownloadCollection(): void {
         const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user?.role && (!roles || (roles && roles.includes(this.user.role)));
+        const roleIsAllowed = this.user?.role && (!roles || roles?.includes(this.user.role));
         const hasCollection = this.collection?.id;
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
@@ -428,6 +426,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.dialog
             .open(MassEditComponent, {
                 maxWidth: '500px',
+                height: '75vh',
+                minHeight: '300px',
                 data: {changeable, unchangeable},
             })
             .afterClosed()
