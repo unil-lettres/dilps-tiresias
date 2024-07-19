@@ -22,6 +22,7 @@ import {filter} from 'rxjs/operators';
 import {StatisticService} from './app/statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
+import {provideScrollbarOptions} from 'ngx-scrollbar';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
     enableProdMode();
@@ -102,6 +103,10 @@ bootstrapApplication(AppComponent, {
                 };
             },
         },
+        provideScrollbarOptions({
+            visibility: 'hover',
+            appearance: 'compact',
+        }),
     ],
 }).catch((err: unknown) => {
     console.error(err);
