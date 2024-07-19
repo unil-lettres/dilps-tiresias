@@ -126,7 +126,7 @@ $userClause
 
     private function formatMonth(int $month): string
     {
-        return str_pad((string) $month, 2, '0', STR_PAD_LEFT);
+        return mb_str_pad((string) $month, 2, '0', STR_PAD_LEFT);
     }
 
     private function getDateField(bool $isCreation): string
