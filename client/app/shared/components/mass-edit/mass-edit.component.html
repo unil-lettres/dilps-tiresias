@@ -41,16 +41,9 @@
         </div>
     }
     @if (step === 2) {
-        <div class="nat-vertical">
+        <div class="nat-vertical" style="height: 100%">
             <p class="mat-body">Les champs vides sont ignorés.</p>
-            <app-card
-                style="height: 500px"
-                [model]="card"
-                [showCards]="false"
-                [showImage]="false"
-                [showToolbar]="false"
-                [showCode]="false"
-            />
+            <app-card [model]="card" [showCards]="false" [showImage]="false" [showToolbar]="false" [showCode]="false" />
         </div>
     }
 </mat-dialog-content>
