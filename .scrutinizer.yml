@@ -18,7 +18,7 @@ build:
         analysis:
             image: default-jammy
             environment:
-                php: 8.3
+                php: 8.3.0
                 node: 20
             tests:
                 override:
