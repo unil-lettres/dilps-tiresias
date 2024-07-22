@@ -15,7 +15,6 @@ import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConf
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
-import {NG_SCROLLBAR_OPTIONS, NgScrollbarOptions} from 'ngx-scrollbar';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
@@ -53,12 +52,6 @@ bootstrapApplication(AppComponent, {
         provideAnimationsAsync(disableAnimations ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),
-        {
-            provide: NG_SCROLLBAR_OPTIONS,
-            useValue: {
-                visibility: 'hover',
-            } satisfies Partial<NgScrollbarOptions>,
-        },
         {
             // See https://github.com/angular/components/issues/26580
             provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
