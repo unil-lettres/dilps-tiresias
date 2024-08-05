@@ -12,6 +12,7 @@ use Ecodev\Felix\Model\Traits\HasName;
  * A country.
  */
 #[ORM\Entity(CountryRepository::class)]
+#[ORM\Index(name: 'FULLTEXT__COUNTRY_NAME', flags: ['fulltext'], fields: ['name'])]
 class Country extends AbstractModel
 {
     use HasName;

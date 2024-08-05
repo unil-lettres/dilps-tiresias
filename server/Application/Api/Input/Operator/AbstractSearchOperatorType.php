@@ -16,6 +16,13 @@ use ReflectionClass;
 
 abstract class AbstractSearchOperatorType extends AbstractOperator
 {
+    /**
+     * Map a joined alias to the corresponding metadata entity.
+     *
+     * @var array<string, ClassMetadata>
+     */
+    protected $mapAliasToMetadata = [];
+
     protected function getConfiguration(LeafType $leafType): array
     {
         return [
@@ -53,6 +60,8 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
 
     protected function getSearchableFields(ClassMetadata $metadata, string $alias): array
     {
+        $this->mapAliasToMetadata[$alias] = $metadata;
+
         $whitelistedFields = $this->getSearchableFieldsWhitelist($metadata);
 
         // Find most textual fields for the entity
@@ -61,7 +70,6 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             if (in_array($mapping['fieldName'], $whitelistedFields, true)) {
                 $fieldName = $mapping['fieldName'];
                 $field = $alias . '.' . $fieldName;
-
                 $fields[] = $this->fieldToDql($metadata->getReflectionClass(), $fieldName, $field);
             }
         }
@@ -123,6 +131,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         $joinedMetadata = $queryBuilder->getEntityManager()->getMetadataFactory()->getMetadataFor($targetEntity);
         $joinedAlias = $uniqueNameFactory->createAliasName($targetEntity);
 
+        $this->mapAliasToMetadata[$joinedAlias] = $joinedMetadata;
         $queryBuilder->leftJoin($alias . '.' . $fieldName, $joinedAlias, Join::WITH);
 
         return $this->getSearchableFields($joinedMetadata, $joinedAlias);
@@ -137,43 +146,142 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             throw new Exception('Cannot find fields to search on for entity ' . $metadata->name);
         }
 
+        $matchesWhere = [];
+
+        // Split fields by table.
+        $fieldsByTable = [];
+        foreach ($fields as $field) {
+            $parts = explode('.', $field);
+            $table = $parts[0];
+            $fieldName = $parts[1];
+            if (!isset($fieldsByTable[$table])) {
+                $fieldsByTable[$table] = [];
+            }
+            $fieldsByTable[$table][] = $fieldName;
+        }
+
+        // Fulltext search is configured for minimum 3 characters length.
+        $wordsCandidate = array_filter($words, fn ($word) => mb_strlen($word) > 2);
+        $exactTermsCandidate = array_filter($exactTerms, fn ($exactTerm) => mb_strlen($exactTerm) > 2);
+
+        // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
+        // If there is at least one word greather than 2 characters, we use fulltext search and
+        // ignore the smaller words.
+        if (!empty($wordsCandidate) || !empty($exactTermsCandidate)) {
+            // Search if a table has a fulltext index available for the specified columns.
+            // It searches in the Doctrine metadata and not in the database schema.
+            foreach ($fieldsByTable as $table => $tableFields) {
+                $metadataClass = $this->mapAliasToMetadata[$table];
+
+                // Find an index flagged as fulltext.
+                foreach ($metadataClass->table['indexes'] as $index) {
+                    if (in_array('fulltext', $index['flags'] ?? [], true)) {
+                        // Check that all table fields are in the index columns.
+                        $fieldsInIndex = array_intersect($tableFields, $index['fields']);
+
+                        if (count($fieldsInIndex) === count($index['fields'])) {
+                            // All fields are in the index, we can use it.
+
+                            $parameterName = $uniqueNameFactory->createParameterName();
+                            $fullFieldsInIndex = array_map(fn ($field) => "$table.$field", $fieldsInIndex);
+                            $strFieldsInIndex = implode(',', $fullFieldsInIndex);
+
+                            // The "> 0" is a hack for Doctrine to not raise a syntaxe error.
+                            $matchesWhere[] = " (MATCH ($strFieldsInIndex) AGAINST (:$parameterName IN BOOLEAN MODE) > 0) ";
+
+                            $against = [];
+
+                            // Transform $wordsCandidate array to "+word1* +word2*".
+                            // With fulltext search, we cannot use wildcards at the
+                            // begining of a word (simulating  "LIKE '%word'"). It is
+                            // a small drawback that should not causes too much trouble.
+                            if (!empty($wordsCandidate)) {
+                                $against[] = '+' . implode('* +', $wordsCandidate) . '*';
+                            }
+
+                            // Transform $exactTerms array to '+"exactTerm1" +"exactTerm2"'.
+                            if (!empty($exactTermsCandidate)) {
+                                $against[] = '+"' . implode('" +"', $exactTermsCandidate) . '"';
+                            }
+
+                            $queryBuilder->setParameter(
+                                $parameterName,
+                                implode(' ', $against)
+                            );
+
+                            // Remove fields used in fulltext search from fields list.
+                            $fields = array_diff($fields, $fullFieldsInIndex);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Do not search ID with like, but with index.
+        $numbers = array_map('intval', array_filter($words, 'is_numeric'));
+        foreach ($fieldsByTable as $table => $tableFields) {
+            if (in_array('id', $tableFields, true)) {
+                if (!empty($numbers)) {
+                    $parameterName = $uniqueNameFactory->createParameterName();
+                    $matchesWhere[] = " $table.id IN (:$parameterName) ";
+
+                    $queryBuilder->setParameter(
+                        $parameterName,
+                        $numbers,
+                    );
+                }
+                $fields = array_diff($fields, ["$table.id"]);
+            }
+        }
+
         $wordWheres = [];
 
-        foreach ($words as $word) {
-            $parameterName = $uniqueNameFactory->createParameterName();
+        if (!empty($fields)) {
+            foreach ($words as $word) {
+                $parameterName = $uniqueNameFactory->createParameterName();
 
-            $fieldWheres = [];
-            foreach ($fields as $field) {
-                $fieldWheres[] = $field . ' LIKE :' . $parameterName;
+                $fieldWheres = [];
+                foreach ($fields as $field) {
+                    $fieldWheres[] = $field . ' LIKE :' . $parameterName;
+                }
+
+                $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
+                $queryBuilder->setParameter($parameterName, '%' . $word . '%');
             }
 
-            $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
-            $queryBuilder->setParameter($parameterName, '%' . $word . '%');
-        }
+            foreach ($exactTerms as $exactTerm) {
+                $parameterName = $uniqueNameFactory->createParameterName();
 
-        foreach ($exactTerms as $exactTerm) {
-            $parameterName = $uniqueNameFactory->createParameterName();
+                $fieldWheres = [];
+                foreach ($fields as $field) {
+                    $comparisons = [
+                        "$field LIKE :{$parameterName}_start",
+                        "$field LIKE :{$parameterName}_middle",
+                        "$field LIKE :{$parameterName}_end",
+                        "$field = :{$parameterName}_exact",
+                    ];
 
-            $fieldWheres = [];
-            foreach ($fields as $field) {
-                $comparisons = [
-                    "$field LIKE :{$parameterName}_start",
-                    "$field LIKE :{$parameterName}_middle",
-                    "$field LIKE :{$parameterName}_end",
-                    "$field = :{$parameterName}_exact",
-                ];
+                    $fieldWheres[] = '(' . implode(' OR ', $comparisons) . ')';
+                }
 
-                $fieldWheres[] = '(' . implode(' OR ', $comparisons) . ')';
+                $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
+
+                $queryBuilder->setParameter("{$parameterName}_start", "$exactTerm %");
+                $queryBuilder->setParameter("{$parameterName}_middle", "% $exactTerm %");
+                $queryBuilder->setParameter("{$parameterName}_end", "% $exactTerm");
+                $queryBuilder->setParameter("{$parameterName}_exact", $exactTerm);
             }
-
-            $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
-
-            $queryBuilder->setParameter("{$parameterName}_start", "$exactTerm %");
-            $queryBuilder->setParameter("{$parameterName}_middle", "% $exactTerm %");
-            $queryBuilder->setParameter("{$parameterName}_end", "% $exactTerm");
-            $queryBuilder->setParameter("{$parameterName}_exact", $exactTerm);
         }
 
-        return implode(' AND ', $wordWheres);
+        $wheres = [];
+        if ($wordWheres) {
+            $wheres[] = '(' . implode(' AND ', $wordWheres) . ')';
+        }
+        if ($matchesWhere) {
+            // TODO c'est bien un OR?
+            $wheres[] = '(' . implode(' OR ', $matchesWhere) . ')';
+        }
+
+        return implode(' OR ', $wheres);
     }
 }

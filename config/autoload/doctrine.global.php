@@ -48,6 +48,9 @@ return [
                     'geomfromtext' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText::class,
                     'st_distance' => CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STDistance::class,
                 ],
+                'string_functions' => [
+                    'match' => DoctrineExtensions\Query\Mysql\MatchAgainst::class,
+                ],
             ],
         ],
         'types' => [
