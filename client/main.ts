@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject, provideZoneChangeDetection} from '@angular/core';
+import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject} from '@angular/core';
 import {environment} from './environments/environment';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
@@ -45,7 +45,6 @@ const disableAnimations =
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideZoneChangeDetection({eventCoalescing: true}),
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
