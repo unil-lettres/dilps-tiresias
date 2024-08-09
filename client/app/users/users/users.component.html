@@ -11,7 +11,7 @@
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="nat-padding padding-fab">
+    <div class="nat-padding" style="padding-bottom: 120px !important">
         <div class="mat-headline-5">Utilisateurs</div>
         <div class="responsive-table">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
