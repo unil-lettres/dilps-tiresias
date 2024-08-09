@@ -14,7 +14,7 @@ import {AppRouteReuseStrategy} from './app/app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
-import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions} from '@angular/material/paginator';
+import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions, MatPaginatorIntl} from '@angular/material/paginator';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
@@ -22,6 +22,7 @@ import {StatisticService} from './app/statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
 import {provideScrollbarOptions} from 'ngx-scrollbar';
+import {CustomPaginatorIntl} from './app/shared/services/custom-paginator-intl.service';
 
 if (environment.environment === 'production' || environment.environment === 'staging') {
     enableProdMode();
@@ -99,6 +100,7 @@ bootstrapApplication(AppComponent, {
             visibility: 'hover',
             appearance: 'compact',
         }),
+        {provide: MatPaginatorIntl, useClass: CustomPaginatorIntl},
     ],
 }).catch((err: unknown) => {
     console.error(err);
