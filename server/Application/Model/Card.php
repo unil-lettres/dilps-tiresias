@@ -47,6 +47,27 @@ use Throwable;
 #[ORM\Index(name: 'card_plain_name_idx', columns: ['plain_name'])]
 #[ORM\Index(name: 'card_locality_idx', columns: ['locality'])]
 #[ORM\Index(name: 'card_area_idx', columns: ['area'])]
+#[ORM\Index(
+    name: 'FULLTEXT__CARD_CUSTOM_SEARCH',
+    flags: ['fulltext'],
+    fields: [
+        'dating',
+        'cachedArtistNames',
+        'addition',
+        'expandedName',
+        'material',
+        'dilpsDomain',
+        'techniqueAuthor',
+        'objectReference',
+        'corpus',
+        'street',
+        'locality',
+        'code',
+        'name',
+    ],
+)]
+#[ORM\Index(name: 'FULLTEXT__CARD_LOCALITY', flags: ['fulltext'], fields: ['locality'])]
+#[ORM\Index(name: 'FULLTEXT__CARD_NAMES', flags: ['fulltext'], fields: ['name', 'expandedName'])]
 #[ORM\UniqueConstraint(name: 'unique_code', columns: ['code', 'site'])]
 #[API\Filter(field: 'nameOrExpandedName', operator: NameOrExpandedNameOperatorType::class, type: 'string')]
 #[API\Filter(field: 'localityOrInstitutionLocality', operator: LocalityOrInstitutionLocalityOperatorType::class, type: 'string')]

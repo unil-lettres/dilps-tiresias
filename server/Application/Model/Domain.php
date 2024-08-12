@@ -19,6 +19,7 @@ use GraphQL\Doctrine\Attribute as API;
  */
 #[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
 #[ORM\Entity(DomainRepository::class)]
+#[ORM\Index(name: 'FULLTEXT__DOMAIN_NAME', flags: ['fulltext'], fields: ['name'])]
 class Domain extends Thesaurus implements HasParentInterface
 {
     use HasParent;
