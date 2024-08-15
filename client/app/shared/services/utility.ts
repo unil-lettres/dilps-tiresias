@@ -51,7 +51,11 @@ export function formatItemNameWithRoot(item: {name: string; hierarchicName: stri
     if (item.hierarchicName == item.name) {
         return item.name;
     }
-    const parents = item.hierarchicName.split('>').map((parent: string) => parent.trim());
+    const parents = item.hierarchicName
+        .split('>')
+        .map((parent: string) => parent.trim())
+        .filter((parent: string) => parent.length > 0);
+
     const strParents = parents.slice(0, parents.length - 1).join(' > ');
     return `${parents[parents.length - 1]} (${strParents})`;
 }
