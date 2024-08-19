@@ -278,7 +278,6 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             $wheres[] = '(' . implode(' AND ', $wordWheres) . ')';
         }
         if ($matchesWhere) {
-            // TODO c'est bien un OR?
             $wheres[] = '(' . implode(' OR ', $matchesWhere) . ')';
         }
 
