@@ -146,7 +146,8 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             throw new Exception('Cannot find fields to search on for entity ' . $metadata->name);
         }
 
-        $matchesWhere = [];
+        // Keep a list of fields that cannot be used for fulltext search.
+        $fieldsFullTextNotUsed = $fields;
 
         // Split fields by table.
         $fieldsByTable = [];
@@ -160,127 +161,147 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             $fieldsByTable[$table][] = $fieldName;
         }
 
-        // Fulltext search is configured for minimum 3 characters length.
-        $wordsCandidate = array_filter($words, fn ($word) => mb_strlen($word) > 2);
-        $exactTermsCandidate = array_filter($exactTerms, fn ($exactTerm) => mb_strlen($exactTerm) > 2);
+        // Search if a table has a fulltext index available for the specified columns.
+        // It searches in the Doctrine metadata and not in the database schema.
+        $fullTextIndexes = [];
+        $tableIds = [];
+        foreach ($fieldsByTable as $table => $tableFields) {
+            $metadataClass = $this->mapAliasToMetadata[$table];
 
-        // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
-        // If there is at least one word greather than 2 characters, we use fulltext search and
-        // ignore the smaller words.
-        if (!empty($wordsCandidate) || !empty($exactTermsCandidate)) {
-            // Search if a table has a fulltext index available for the specified columns.
-            // It searches in the Doctrine metadata and not in the database schema.
-            foreach ($fieldsByTable as $table => $tableFields) {
-                $metadataClass = $this->mapAliasToMetadata[$table];
+            // Find an index flagged as fulltext.
+            foreach ($metadataClass->table['indexes'] as $index) {
+                if (in_array('fulltext', $index['flags'] ?? [], true)) {
+                    // Check that all table fields are in the index columns.
+                    $fieldsInIndex = array_intersect($tableFields, $index['fields']);
 
-                // Find an index flagged as fulltext.
-                foreach ($metadataClass->table['indexes'] as $index) {
-                    if (in_array('fulltext', $index['flags'] ?? [], true)) {
-                        // Check that all table fields are in the index columns.
-                        $fieldsInIndex = array_intersect($tableFields, $index['fields']);
+                    if (count($fieldsInIndex) === count($index['fields'])) {
+                        // All fields are in the index, we can use it.
 
-                        if (count($fieldsInIndex) === count($index['fields'])) {
-                            // All fields are in the index, we can use it.
+                        $fullFieldsInIndex = array_map(fn ($field) => "$table.$field", $fieldsInIndex);
+                        $strFieldsInIndex = implode(',', $fullFieldsInIndex);
 
-                            $parameterName = $uniqueNameFactory->createParameterName();
-                            $fullFieldsInIndex = array_map(fn ($field) => "$table.$field", $fieldsInIndex);
-                            $strFieldsInIndex = implode(',', $fullFieldsInIndex);
+                        $fullTextIndexes[] = $strFieldsInIndex;
 
-                            // The "> 0" is a hack for Doctrine to not raise a syntaxe error.
-                            $matchesWhere[] = " (MATCH ($strFieldsInIndex) AGAINST (:$parameterName IN BOOLEAN MODE) > 0) ";
-
-                            $against = [];
-
-                            // Transform $wordsCandidate array to "+word1* +word2*".
-                            // With fulltext search, we cannot use wildcards at the
-                            // begining of a word (simulating  "LIKE '%word'"). It is
-                            // a small drawback that should not causes too much trouble.
-                            if (!empty($wordsCandidate)) {
-                                $against[] = '+' . implode('* +', $wordsCandidate) . '*';
-                            }
-
-                            // Transform $exactTerms array to '+"exactTerm1" +"exactTerm2"'.
-                            if (!empty($exactTermsCandidate)) {
-                                $against[] = '+"' . implode('" +"', $exactTermsCandidate) . '"';
-                            }
-
-                            $queryBuilder->setParameter(
-                                $parameterName,
-                                implode(' ', $against)
-                            );
-
-                            // Remove fields used in fulltext search from fields list.
-                            $fields = array_diff($fields, $fullFieldsInIndex);
-                        }
+                        // Remove fields used in fulltext search from fields list.
+                        $fieldsFullTextNotUsed = array_diff($fieldsFullTextNotUsed, $fullFieldsInIndex);
                     }
                 }
             }
-        }
 
-        // Do not search ID with like, but with index.
-        $numbers = array_map('intval', array_filter($words, 'is_numeric'));
-        foreach ($fieldsByTable as $table => $tableFields) {
             if (in_array('id', $tableFields, true)) {
-                if (!empty($numbers)) {
-                    $parameterName = $uniqueNameFactory->createParameterName();
-                    $matchesWhere[] = " $table.id IN (:$parameterName) ";
-
-                    $queryBuilder->setParameter(
-                        $parameterName,
-                        $numbers,
-                    );
-                }
-                $fields = array_diff($fields, ["$table.id"]);
+                $tableIds[] = "$table.id";
             }
         }
 
-        $wordWheres = [];
+        // Remove id field. It will be searched separately.
+        $fields = array_diff($fields, $tableIds);
+        $fieldsFullTextNotUsed = array_diff($fieldsFullTextNotUsed, $tableIds);
 
-        if (!empty($fields)) {
-            foreach ($words as $word) {
+        $andWheres = [];
+        foreach ($words as $word) {
+            $orWheres = [];
+
+            // Fulltext search is configured for minimum 3 characters length.
+            // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
+            if (mb_strlen($word) > 2) {
+                $fieldsForLike = $fieldsFullTextNotUsed;
+
                 $parameterName = $uniqueNameFactory->createParameterName();
 
-                $fieldWheres = [];
-                foreach ($fields as $field) {
-                    $fieldWheres[] = $field . ' LIKE :' . $parameterName;
-                }
+                // "+": The word is mandatory in all rows returned.
+                // "*": The wildcard, indicating zero or more characters.
+                //      It can only appear at the end of a word.
+                $queryBuilder->setParameter($parameterName, "+$word*");
 
-                $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
-                $queryBuilder->setParameter($parameterName, '%' . $word . '%');
+                $orWheres = array_merge(
+                    $orWheres,
+                    array_map(
+                        fn ($fullTextIndexe) => " (MATCH ($fullTextIndexe) AGAINST (:$parameterName IN BOOLEAN MODE) > 0) ",
+                        $fullTextIndexes,
+                    ),
+                );
+            } else {
+                $fieldsForLike = $fields;
             }
 
-            foreach ($exactTerms as $exactTerm) {
+            if (!empty($fieldsForLike)) {
+                $parameterName = $uniqueNameFactory->createParameterName();
+                $queryBuilder->setParameter($parameterName, '%' . $word . '%');
+
+                $orWheres = array_merge(
+                    $orWheres,
+                    array_map(
+                        fn ($field) => "$field LIKE :$parameterName",
+                        $fieldsForLike,
+                    ),
+                );
+            }
+
+            // Do not search ID with like, but with index.
+            if (is_numeric($word)) {
+                $number = (int) $word;
+
+                $orWheres = array_merge(
+                    $orWheres,
+                    array_map(
+                        fn ($tableId) => " $tableId = $number ",
+                        $tableIds,
+                    ),
+                );
+            }
+
+            $andWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+        }
+
+        foreach ($exactTerms as $exactTerm) {
+            $orWheres = [];
+
+            // Fulltext search is configured for minimum 3 characters length.
+            // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
+            if (mb_strlen($exactTerm) > 2) {
+                $fieldsForLike = $fieldsFullTextNotUsed;
+
                 $parameterName = $uniqueNameFactory->createParameterName();
 
-                $fieldWheres = [];
-                foreach ($fields as $field) {
-                    $comparisons = [
-                        "$field LIKE :{$parameterName}_start",
-                        "$field LIKE :{$parameterName}_middle",
-                        "$field LIKE :{$parameterName}_end",
-                        "$field = :{$parameterName}_exact",
-                    ];
+                // "+": The word is mandatory in all rows returned.
+                $queryBuilder->setParameter($parameterName, "+$exactTerm");
 
-                    $fieldWheres[] = '(' . implode(' OR ', $comparisons) . ')';
-                }
+                $orWheres = array_merge(
+                    $orWheres,
+                    array_map(
+                        fn ($fullTextIndexe) => " (MATCH ($fullTextIndexe) AGAINST (:$parameterName IN BOOLEAN MODE) > 0) ",
+                        $fullTextIndexes,
+                    ),
+                );
+            } else {
+                $fieldsForLike = $fields;
+            }
 
-                $wordWheres[] = '(' . implode(' OR ', $fieldWheres) . ')';
+            if (!empty($fieldsForLike)) {
+                $parameterName = $uniqueNameFactory->createParameterName();
 
                 $queryBuilder->setParameter("{$parameterName}_start", "$exactTerm %");
                 $queryBuilder->setParameter("{$parameterName}_middle", "% $exactTerm %");
                 $queryBuilder->setParameter("{$parameterName}_end", "% $exactTerm");
                 $queryBuilder->setParameter("{$parameterName}_exact", $exactTerm);
+
+                $orWheres = array_merge(
+                    $orWheres,
+                    ...array_map(
+                        fn ($field) => [
+                            "$field LIKE :{$parameterName}_start",
+                            "$field LIKE :{$parameterName}_middle",
+                            "$field LIKE :{$parameterName}_end",
+                            "$field = :{$parameterName}_exact",
+                        ],
+                        $fieldsForLike,
+                    ),
+                );
             }
+
+            $andWheres[] = '(' . implode(' OR ', $orWheres) . ')';
         }
 
-        $wheres = [];
-        if ($wordWheres) {
-            $wheres[] = '(' . implode(' AND ', $wordWheres) . ')';
-        }
-        if ($matchesWhere) {
-            $wheres[] = '(' . implode(' OR ', $matchesWhere) . ')';
-        }
-
-        return implode(' OR ', $wheres);
+        return implode(' AND ', $andWheres);
     }
 }
