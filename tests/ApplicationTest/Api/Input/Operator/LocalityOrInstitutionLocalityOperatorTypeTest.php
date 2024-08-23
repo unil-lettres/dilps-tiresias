@@ -21,7 +21,7 @@ class LocalityOrInstitutionLocalityOperatorTypeTest extends \PHPUnit\Framework\T
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '( (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (institution1.locality) AGAINST (:filter2 IN BOOLEAN MODE) > 0) )';
+        $expected = '( (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (institution1.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )';
         self::assertSame($expected, $actual);
 
         $joins = $qb->getDQLPart('join');
