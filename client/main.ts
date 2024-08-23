@@ -1,5 +1,4 @@
-import {APP_INITIALIZER, enableProdMode, ErrorHandler, inject} from '@angular/core';
-import {environment} from './environments/environment';
+import {APP_INITIALIZER, ErrorHandler, inject} from '@angular/core';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
@@ -23,10 +22,6 @@ import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
 import {provideScrollbarOptions} from 'ngx-scrollbar';
 import {CustomPaginatorIntl} from './app/shared/services/custom-paginator-intl.service';
-
-if (environment.environment === 'production' || environment.environment === 'staging') {
-    enableProdMode();
-}
 
 const matTooltipCustomConfig: MatTooltipDefaultOptions = {
     showDelay: 5,
