@@ -65,7 +65,7 @@ abstract class Helper
             $paginator->setUseOutputWalkers(true);
             $pagination['items'] = $paginator->getIterator();
         }
-        $pagination['length'] = $paginator->count();
+        $pagination['length'] = fn () => $paginator->count();
 
         return $pagination;
     }
