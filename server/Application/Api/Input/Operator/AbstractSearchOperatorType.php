@@ -203,7 +203,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
 
             // Fulltext search is configured for minimum 3 characters length.
             // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
-            if (mb_strlen($word) > 2) {
+            if (mb_strlen($word) > 2 && count($fullTextIndexes) > 0) {
                 $fieldsForLike = $fieldsFullTextNotUsed;
 
                 $parameterName = $uniqueNameFactory->createParameterName();
@@ -258,7 +258,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
 
             // Fulltext search is configured for minimum 3 characters length.
             // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
-            if (mb_strlen($exactTerm) > 2) {
+            if (mb_strlen($exactTerm) > 2 && count($fullTextIndexes) > 0) {
                 $fieldsForLike = $fieldsFullTextNotUsed;
 
                 $parameterName = $uniqueNameFactory->createParameterName();
