@@ -58,7 +58,7 @@ export class UserService extends AbstractContextualizedService<
 > {
     /**
      * This key will be used to store the viewer ID, but that value should never
-     * be trusted, and it only exist to notify changes across browser tabs.
+     * be trusted, and it only exists to notify changes across browser tabs.
      */
     private readonly storageKey = 'viewer';
 
