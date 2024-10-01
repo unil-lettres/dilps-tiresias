@@ -211,7 +211,8 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 // "+": The word is mandatory in all rows returned.
                 // "*": The wildcard, indicating zero or more characters.
                 //      It can only appear at the end of a word.
-                $queryBuilder->setParameter($parameterName, "+$word*");
+                $cleanedWord = $this->cleanFullTextSpecialChars($word);
+                $queryBuilder->setParameter($parameterName, "+$cleanedWord*");
 
                 $orWheres = array_merge(
                     $orWheres,
@@ -264,7 +265,8 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 $parameterName = $uniqueNameFactory->createParameterName();
 
                 // "+": The word is mandatory in all rows returned.
-                $queryBuilder->setParameter($parameterName, "+$exactTerm");
+                $cleanedExactTerm = $this->cleanFullTextSpecialChars($exactTerm);
+                $queryBuilder->setParameter($parameterName, "+$cleanedExactTerm");
 
                 $orWheres = array_merge(
                     $orWheres,
@@ -303,5 +305,14 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         }
 
         return implode(' AND ', $andWheres);
+    }
+
+    /**
+     * Replace, with spaces, special characters that have a special meaning in
+     * fulltext search boolean mode.
+     */
+    protected function cleanFullTextSpecialChars(string $word): string
+    {
+        return mb_ereg_replace('[+\-<>()~*]', ' ', $word);
     }
 }
