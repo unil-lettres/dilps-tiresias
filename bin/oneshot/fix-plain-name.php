@@ -3,10 +3,20 @@
 
 /**
  * This one time use script will fix the field `card.plain_name` not being
- * filled in since the bug introduced in ed5df283ec3ce40c806d6b66753d19a49b509d13.
+ * filled in nor updated since the bug introduced in
+ * ed5df283ec3ce40c806d6b66753d19a49b509d13 in v4.2.0 on 2024.04.09.
  *
- * For each cards that do not have a `plain_name` but have a `name`, it will
- * fill the `plain_name` with the plain text version of the `name`.
+ * We will only fix data since this bug was introduced. Because it seems that
+ * there was a lot of changes in policies of how HTML tags are stripped from
+ * name and how plain_name was generated and data have never been updated
+ * accordingly.
+ *
+ * So we can't just check if plain_name !== what plain_name should
+ * be, because it might have been generated correctly at the time but is no
+ * longer correct now.
+ *
+ * So for the sake of not changing that was not changed before, we will only fix
+ * data that was affected by this bug.
  */
 
 declare(strict_types=1);
@@ -22,11 +32,10 @@ $connection = _em()->getConnection();
 $sqlSelect = <<<SQL
         SELECT
             card.id,
+            card.plain_name,
             card.name
         FROM card
-        WHERE TRUE
-            AND plain_name = ''
-            AND name != ''
+        WHERE card.update_date >= '2024-04-09 00:00:00'
     SQL;
 $results = $connection->executeQuery($sqlSelect)->fetchAllAssociative();
 
@@ -38,22 +47,26 @@ $sqlUpdate = <<<SQL
         SET plain_name = :plainName
         WHERE id = :id
     SQL;
-foreach ($results as $result) {
-    $plainName = Utility::richTextToPlainText($result['name']);
-    $count = $connection->executeStatement(
-        $sqlUpdate,
-        [
-            'id' => $result['id'],
-            'plainName' => $plainName,
-        ],
-    );
 
-    if ($count === 1) {
-        echo "Card id {$result['id']} updated. name: {$result['name']}, plain name: $plainName\n";
-        ++$total;
-    } else {
-        echo "Card id {$result['id']} failed to update.\n";
-        ++$totalFailed;
+foreach ($results as $result) {
+    $fixedPlainName = Utility::richTextToPlainText($result['name']);
+
+    if ($fixedPlainName !== $result['plain_name']) {
+        $count = $connection->executeStatement(
+            $sqlUpdate,
+            [
+                'id' => $result['id'],
+                'plainName' => $fixedPlainName,
+            ],
+        );
+
+        if ($count === 1) {
+            echo "Card id {$result['id']} updated.\n    Name: {$result['name']}\n    Old plain name: {$result['plain_name']}\n    New plain name: $fixedPlainName\n\n";
+            ++$total;
+        } else {
+            echo "Card id {$result['id']} failed to update.\n";
+            ++$totalFailed;
+        }
     }
 }
 
