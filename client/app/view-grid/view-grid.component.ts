@@ -4,15 +4,15 @@ import {
     DestroyRef,
     ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnInit,
     Output,
     ViewChild,
-    inject,
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
-import {NaturalAbstractController, NaturalDataSource, PaginationInput} from '@ecodev/natural';
+import {NaturalDataSource, PaginationInput} from '@ecodev/natural';
 import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
 import {filter} from 'rxjs/operators';
@@ -35,7 +35,7 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     standalone: true,
     imports: [NaturalGalleryComponent],
 })
-export class ViewGridComponent extends NaturalAbstractController implements OnInit, ViewInterface, AfterViewInit {
+export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private readonly destroyRef = inject(DestroyRef);
 
     /**
@@ -165,7 +165,6 @@ export class ViewGridComponent extends NaturalAbstractController implements OnIn
         private readonly router: Router,
         private readonly route: ActivatedRoute,
     ) {
-        super();
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
     }
 

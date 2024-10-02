@@ -1,11 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
-import {NaturalAbstractController} from '@ecodev/natural';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -32,7 +31,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         HideTooltipDirective,
     ],
 })
-export class QuizzComponent extends NaturalAbstractController implements OnInit, OnDestroy {
+export class QuizzComponent implements OnInit {
     public cards: string[] = [];
     public card: Card['card'] | null = null;
     public imageSrc: string | null = null;
@@ -50,9 +49,7 @@ export class QuizzComponent extends NaturalAbstractController implements OnInit,
     public constructor(
         private readonly route: ActivatedRoute,
         private readonly cardService: CardService,
-    ) {
-        super();
-    }
+    ) {}
 
     public ngOnInit(): void {
         this.routeParams$.subscribe(params => {

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
@@ -26,12 +26,7 @@ import {NetworkActivityService} from '../shared/services/network-activity.servic
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
-import {
-    FileSelection,
-    NaturalAbstractController,
-    NaturalFileSelectDirective,
-    NaturalIconDirective,
-} from '@ecodev/natural';
+import {FileSelection, NaturalFileSelectDirective, NaturalIconDirective} from '@ecodev/natural';
 import {WelcomeComponent} from './welcome.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
@@ -72,7 +67,7 @@ function isExcel(file: File): boolean {
         NaturalIconDirective,
     ],
 })
-export class HomeComponent extends NaturalAbstractController implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
     public Site = Site;
 
     public errors: (Error & {extensions?: {debugMessage?: string}})[] = [];
@@ -103,7 +98,6 @@ export class HomeComponent extends NaturalAbstractController implements OnInit, 
         @Inject(SITE) public readonly site: Site,
         private readonly routeReuse: RouteReuseStrategy,
     ) {
-        super();
         this.network.errors.next([]);
     }
 

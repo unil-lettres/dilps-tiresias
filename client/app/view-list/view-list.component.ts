@@ -1,7 +1,7 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
-import {PageEvent, MatPaginatorModule} from '@angular/material/paginator';
-import {NaturalAbstractController, NaturalDataSource} from '@ecodev/natural';
+import {Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
@@ -29,7 +29,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         TruncatePipe,
     ],
 })
-export class ViewListComponent extends NaturalAbstractController implements OnInit, ViewInterface {
+export class ViewListComponent implements OnInit, ViewInterface {
     private readonly destroyRef = inject(DestroyRef);
 
     /**
@@ -57,10 +57,6 @@ export class ViewListComponent extends NaturalAbstractController implements OnIn
      */
     public Site = Site;
     public readonly CardService = CardService;
-
-    public constructor() {
-        super();
-    }
 
     public ngOnInit(): void {
         this.dataSource

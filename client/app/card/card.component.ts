@@ -1,10 +1,10 @@
 import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
 import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {NgModel, FormsModule} from '@angular/forms';
+import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, sortBy, identity} from 'lodash-es';
-import {QuillModules, QuillEditorComponent} from 'ngx-quill';
+import {findKey, identity, sortBy} from 'lodash-es';
+import {QuillEditorComponent, QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 import {ArtistComponent} from '../artists/artist/artist.component';
@@ -34,12 +34,12 @@ import {
     Cards,
     CardVisibility,
     CollectionVisibility,
+    InputMaybe,
+    JoinType,
     Site,
     UpdateCard,
     UserRole,
     Viewer,
-    InputMaybe,
-    JoinType,
 } from '../shared/generated-types';
 import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
 import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -54,7 +54,6 @@ import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
 import {
     FileSelection,
-    NaturalAbstractController,
     NaturalFileDropDirective,
     NaturalIconDirective,
     NaturalLinkMutationService,
@@ -89,7 +88,7 @@ import {
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
 import {forkJoin, last} from 'rxjs';
-import {state, style, transition, trigger, animate} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ErrorService} from '../shared/components/error/error.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
@@ -176,7 +175,7 @@ type InitialCardValues = {
         ]),
     ],
 })
-export class CardComponent extends NaturalAbstractController implements OnInit, OnChanges {
+export class CardComponent implements OnInit, OnChanges {
     /**
      * The card as input used for the form and mutation.
      *
@@ -480,9 +479,7 @@ export class CardComponent extends NaturalAbstractController implements OnInit, 
         private readonly userService: UserService,
         private readonly statisticService: StatisticService,
         private readonly linkService: NaturalLinkMutationService,
-    ) {
-        super();
-    }
+    ) {}
 
     @Input()
     public set editable(val: boolean) {

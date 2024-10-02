@@ -2,11 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
 import {
     FileSelection,
-    NaturalAbstractController,
     NaturalDataSource,
+    NaturalFileSelectDirective,
     NaturalQueryVariablesManager,
     PaginatedData,
-    NaturalFileSelectDirective,
 } from '@ecodev/natural';
 import {FileService} from '../services/file.service';
 import {map} from 'rxjs/operators';
@@ -40,7 +39,7 @@ type Tuple = {
         NaturalFileSelectDirective,
     ],
 })
-export class FilesComponent extends NaturalAbstractController implements OnInit {
+export class FilesComponent implements OnInit {
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -86,8 +85,6 @@ export class FilesComponent extends NaturalAbstractController implements OnInit 
         private readonly fileService: FileService,
         private readonly alertService: AlertService,
     ) {
-        super();
-
         // Trigger column selection
         this.disabled = false;
     }

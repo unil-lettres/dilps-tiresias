@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Inject, Input, NgZone, Output, ViewChild} from '@angular/core';
-import {NaturalAbstractController} from '@ecodev/natural';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -7,7 +6,6 @@ import {MapApiService} from './map-api.service';
 import {GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker} from '@angular/google-maps';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
-
 import Icon = google.maps.Icon;
 
 export type Location = {
@@ -29,7 +27,7 @@ type Marker = {
     standalone: true,
     imports: [GoogleMapsModule, RouterLink, MatButtonModule],
 })
-export class ViewMapComponent extends NaturalAbstractController {
+export class ViewMapComponent {
     public selectedMarker: Marker | null = null;
 
     @Input({required: true})
@@ -60,9 +58,7 @@ export class ViewMapComponent extends NaturalAbstractController {
         public readonly mapApiService: MapApiService,
         private readonly ngZone: NgZone,
         @Inject(SITE) private readonly site: Site,
-    ) {
-        super();
-    }
+    ) {}
 
     public static getIcon(iconName: Precision): Icon {
         return {

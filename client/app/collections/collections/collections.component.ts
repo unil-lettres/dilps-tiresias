@@ -1,7 +1,7 @@
-import {Component, DestroyRef, OnInit, inject} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet} from '@angular/router';
-import {NaturalAbstractController, NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {
     Collections,
     CollectionsVariables,
@@ -46,7 +46,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         NaturalIconDirective,
     ],
 })
-export class CollectionsComponent extends NaturalAbstractController implements OnInit {
+export class CollectionsComponent implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
 
     public rootCollections: Collections['collections']['items'][0][] = [];
@@ -90,9 +90,7 @@ export class CollectionsComponent extends NaturalAbstractController implements O
         private readonly router: Router,
         private readonly collectionsService: CollectionService,
         private readonly dialog: MatDialog,
-    ) {
-        super();
-    }
+    ) {}
 
     public ngOnInit(): void {
         this.queryVariables.set('variables', this.defaultVariables);

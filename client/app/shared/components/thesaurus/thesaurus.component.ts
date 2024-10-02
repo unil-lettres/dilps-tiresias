@@ -1,15 +1,14 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
+    MatAutocompleteModule,
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
-    MatAutocompleteModule,
 } from '@angular/material/autocomplete';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {
     HierarchicDialogConfig,
     Literal,
-    NaturalAbstractController,
     NaturalAbstractModelService,
     NaturalHierarchicConfiguration,
     NaturalHierarchicSelectorDialogService,
@@ -55,21 +54,19 @@ export type ThesaurusModel = {
     ],
 })
 export class ThesaurusComponent<
-        TService extends NaturalAbstractModelService<
-            any,
-            any,
-            PaginatedData<ThesaurusModel>,
-            QueryVariables,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any
-        >,
-    >
-    extends NaturalAbstractController
-    implements OnInit
+    TService extends NaturalAbstractModelService<
+        any,
+        any,
+        PaginatedData<ThesaurusModel>,
+        QueryVariables,
+        any,
+        any,
+        any,
+        any,
+        any,
+        any
+    >,
+> implements OnInit
 {
     private readonly destroyRef = inject(DestroyRef);
 
@@ -182,9 +179,7 @@ export class ThesaurusComponent<
     public constructor(
         private readonly dialog: MatDialog,
         private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
-    ) {
-        super();
-    }
+    ) {}
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
 

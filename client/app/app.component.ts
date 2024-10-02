@@ -4,7 +4,6 @@ import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
 import {ThemeService} from './shared/services/theme.service';
-import {NaturalAbstractController} from '@ecodev/natural';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
 import {RouterOutlet} from '@angular/router';
 import {NgProgressComponent} from 'ngx-progressbar';
@@ -19,7 +18,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     standalone: true,
     imports: [NgProgressComponent, RouterOutlet, BootLoaderComponent],
 })
-export class AppComponent extends NaturalAbstractController implements OnInit {
+export class AppComponent implements OnInit {
     /**
      * Bind theme at root-app level
      */
@@ -43,7 +42,6 @@ export class AppComponent extends NaturalAbstractController implements OnInit {
         private readonly domSanitizer: DomSanitizer,
         @Inject(SITE) private readonly site: Site,
     ) {
-        super();
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
 
