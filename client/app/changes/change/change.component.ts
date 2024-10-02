@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {merge} from 'lodash-es';
 import {cardToCardInput, CardComponent} from '../../card/card.component';
@@ -31,6 +31,12 @@ import {NaturalIconDirective} from '@ecodev/natural';
     ],
 })
 export class ChangeComponent implements OnInit {
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly changeService = inject(ChangeService);
+    private readonly cardService = inject(CardService);
+    private readonly userService = inject(UserService);
+
     public change!: Change['change'];
     public original: Card['card'] | null = null;
     public fetchedSuggestion: Card['card'] | null = null;
@@ -38,14 +44,6 @@ export class ChangeComponent implements OnInit {
     public loaded = false;
     public user!: Viewer['viewer'];
     public showTools = false;
-
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly changeService: ChangeService,
-        private readonly cardService: CardService,
-        private readonly userService: UserService,
-    ) {}
 
     public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => (this.user = user));

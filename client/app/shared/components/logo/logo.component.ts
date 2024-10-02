@@ -1,4 +1,4 @@
-import {Component, Inject, Input} from '@angular/core';
+import {Component, Input, inject} from '@angular/core';
 import {SITE} from '../../../app.config';
 import {Site} from '../../generated-types';
 
@@ -9,10 +9,10 @@ import {Site} from '../../generated-types';
     standalone: true,
 })
 export class LogoComponent {
+    public readonly site = inject<Site>(SITE);
+
     @Input() public data = {type: 'main', class: 'logo-main'};
     public Site = Site;
-
-    public constructor(@Inject(SITE) public readonly site: Site) {}
 
     public path(): string {
         switch (this.site) {

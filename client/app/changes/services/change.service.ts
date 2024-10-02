@@ -1,5 +1,5 @@
 import {merge} from 'lodash-es';
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SITE} from '../../app.config';
@@ -44,7 +44,9 @@ export class ChangeService extends AbstractContextualizedService<
     null,
     never
 > {
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('change', changeQuery, changesQuery, null, null, null, site);
     }
 

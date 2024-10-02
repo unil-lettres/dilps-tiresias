@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {ArtistComponent} from '../artist/artist.component';
 import {ArtistService} from '../services/artist.service';
@@ -33,7 +33,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ],
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
-    public constructor(service: ArtistService) {
+    public constructor() {
+        const service = inject(ArtistService);
+
         super(service, ArtistComponent);
     }
 }

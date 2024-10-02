@@ -1,20 +1,17 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject, OnInit} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
 import {
     Collection,
     CollectionFilter,
-    Collections,
     CollectionVisibility,
     UpdateCollection,
     UserRole,
     Users,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
-import {UserService} from '../../users/services/user.service';
 import {CollectionService} from '../services/collection.service';
 import {CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
@@ -52,6 +49,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     ],
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
+    public readonly institutionService = inject(InstitutionService);
+    public readonly collectionService: CollectionService;
+
     public visibility: keyof CollectionVisibilities = 1;
     public visibilities: CollectionVisibilities = {
         1: {
@@ -81,15 +81,11 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     public showVisibility = true;
 
-    public constructor(
-        public readonly institutionService: InstitutionService,
-        public readonly collectionService: CollectionService,
-        userService: UserService,
-        alertService: AlertService,
-        dialogRef: MatDialogRef<CollectionComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Collections['collections']['items'][0]},
-    ) {
-        super(collectionService, alertService, dialogRef, userService, data);
+    public constructor() {
+        const collectionService = inject(CollectionService);
+
+        super(collectionService);
+        this.collectionService = collectionService;
     }
 
     public updateVisibility(): void {

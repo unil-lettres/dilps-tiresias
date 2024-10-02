@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
     AbstractControl,
     FormGroupDirective,
@@ -65,6 +65,8 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
     imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
+    protected readonly dropdownRef = inject(NaturalDropdownRef);
+
     public renderedValue = new BehaviorSubject<string>('');
     public configuration: TypeNumericRangeConfiguration;
     public matcher = new InvalidWithValueStateMatcher();
@@ -78,10 +80,9 @@ export class TypeNumericRangeComponent implements DropdownComponent {
         step: null,
     };
 
-    public constructor(
-        @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<TypeNumericRangeConfiguration>,
-        protected readonly dropdownRef: NaturalDropdownRef,
-    ) {
+    public constructor() {
+        const data = inject<NaturalDropdownData<TypeNumericRangeConfiguration>>(NATURAL_DROPDOWN_DATA);
+
         this.configuration = {...this.defaults, ...data.configuration};
 
         this.form = new FormGroup({

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {SITE} from '../../app.config';
 import {Site} from '../generated-types';
@@ -21,7 +21,9 @@ export class ThemeService {
 
     private storageKey = '';
 
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         this.storageKey = site + '-theme';
 
         const theme = localStorage.getItem(this.storageKey);

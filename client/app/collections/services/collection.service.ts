@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, Observable} from 'rxjs';
 import {SITE} from '../../app.config';
@@ -45,10 +45,11 @@ export class CollectionService extends AbstractContextualizedService<
     DeleteCollections['deleteCollections'],
     never
 > {
-    public constructor(
-        private readonly linkService: NaturalLinkMutationService,
-        @Inject(SITE) site: Site,
-    ) {
+    private readonly linkService = inject(NaturalLinkMutationService);
+
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super(
             'collection',
             collectionQuery,

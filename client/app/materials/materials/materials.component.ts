@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {MaterialComponent} from '../material/material.component';
 import {MaterialService} from '../services/material.service';
@@ -48,7 +48,9 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     ],
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
-    public constructor(service: MaterialService) {
+    public constructor() {
+        const service = inject(MaterialService);
+
         super(service, MaterialComponent);
     }
 }

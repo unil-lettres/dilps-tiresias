@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -7,13 +7,11 @@ import {
     ReactiveFormsModule,
     ValidationErrors,
 } from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {ArtistComponent} from '../../artists/artist/artist.component';
+import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
-import {UpdateUser, User, UserRole, Users, UserType} from '../../shared/generated-types';
+import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
@@ -60,6 +58,9 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     ],
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
+    public readonly institutionService = inject(InstitutionService);
+    public readonly collectionService = inject(CollectionService);
+
     public collectionsHierarchicConfig = collectionsHierarchicConfig;
     public roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
@@ -70,17 +71,11 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
     public institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
 
-    public constructor(
-        public readonly institutionService: InstitutionService,
-        service: UserService,
-        alertService: AlertService,
-        userService: UserService,
-        dialogRef: MatDialogRef<ArtistComponent>,
-        public readonly collectionService: CollectionService,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Users['users']['items'][0]},
-        naturalEnumService: NaturalEnumService,
-    ) {
-        super(service, alertService, dialogRef, userService, data);
+    public constructor() {
+        const service = inject(UserService);
+        const naturalEnumService = inject(NaturalEnumService);
+
+        super(service);
 
         naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 

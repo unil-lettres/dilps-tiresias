@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
@@ -27,14 +27,16 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
     imports: [MatButtonModule, MatIconModule, NaturalIconDirective, MatDialogModule, MatCheckboxModule, FormsModule],
 })
 export class LinkRelatedCardsDialogComponent {
+    private readonly dialogRef = inject<MatDialogRef<LinkRelatedCardsDialogComponent>>(MatDialogRef);
+    public readonly data = inject<LinkRelatedCardsDialogData>(MAT_DIALOG_DATA);
+
     public readonly cards: CheckablCards;
     public readonly title: string;
     public readonly help: string;
 
-    public constructor(
-        private readonly dialogRef: MatDialogRef<LinkRelatedCardsDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public readonly data: LinkRelatedCardsDialogData,
-    ) {
+    public constructor() {
+        const data = this.data;
+
         this.cards = data.cards.map(card => ({checked: true, ...card}));
         this.title = data.title;
         this.help = data.help;

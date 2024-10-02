@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {Literal} from '@ecodev/natural';
 import {CardService} from '../../../card/services/card.service';
@@ -26,6 +26,9 @@ import {CommonModule} from '@angular/common';
     ],
 })
 export class MassEditComponent {
+    private readonly cardService = inject(CardService);
+    public readonly data = inject<Literal>(MAT_DIALOG_DATA);
+
     public readonly card: CardInput;
     public Site = Site;
     public step = 2;
@@ -37,10 +40,10 @@ export class MassEditComponent {
      */
     public readonly CardService = CardService;
 
-    public constructor(
-        private readonly cardService: CardService,
-        @Inject(MAT_DIALOG_DATA) public readonly data: Literal,
-    ) {
+    public constructor() {
+        const cardService = this.cardService;
+        const data = this.data;
+
         if (data?.changeable?.length || data?.unchangeable?.length) {
             this.step = 1;
         }

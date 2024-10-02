@@ -1,5 +1,5 @@
 import {Apollo} from 'apollo-angular';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
     MAT_FORM_FIELD_DEFAULT_OPTIONS,
     MatFormFieldDefaultOptions,
@@ -103,6 +103,9 @@ type SerieData = {
     ],
 })
 export class StatisticsComponent {
+    private readonly apollo = inject(Apollo);
+    public readonly userService = inject(UserService);
+
     public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
     public data!: Data;
     public statType: keyof Values = 'pageCount';
@@ -138,11 +141,9 @@ export class StatisticsComponent {
 
     // public usersFilter: UserFilter;
 
-    public constructor(
-        private readonly apollo: Apollo,
-        statisticService: StatisticService,
-        public readonly userService: UserService,
-    ) {
+    public constructor() {
+        const statisticService = inject(StatisticService);
+
         this.frequentationQvm.set('pagination', {
             pagination: {
                 pageSize: 999,

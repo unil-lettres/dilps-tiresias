@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, Validators, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
@@ -19,6 +19,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeLocationComponent implements DropdownComponent {
+    protected readonly dropdownRef = inject(NaturalDropdownRef);
+
     public renderedValue = new BehaviorSubject<string>('');
     public form: FormGroup;
 
@@ -26,10 +28,9 @@ export class TypeLocationComponent implements DropdownComponent {
     public latitudeCtrl = new FormControl();
     public distanceCtrl = new FormControl();
 
-    public constructor(
-        @Inject(NATURAL_DROPDOWN_DATA) data: NaturalDropdownData<never>,
-        protected readonly dropdownRef: NaturalDropdownRef,
-    ) {
+    public constructor() {
+        const data = inject<NaturalDropdownData<never>>(NATURAL_DROPDOWN_DATA);
+
         this.form = new FormGroup({
             longitude: this.longitudeCtrl,
             latitude: this.latitudeCtrl,

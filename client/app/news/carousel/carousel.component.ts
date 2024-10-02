@@ -1,4 +1,4 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation, inject} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
 import {Newses, NewsesVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
@@ -19,9 +19,9 @@ register();
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CarouselComponent implements OnInit {
-    public newses: Newses['newses']['items'][0][] = [];
+    public readonly newsService = inject(NewsService);
 
-    public constructor(public readonly newsService: NewsService) {}
+    public newses: Newses['newses']['items'][0][] = [];
 
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();

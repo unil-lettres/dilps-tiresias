@@ -10,6 +10,7 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
+    inject,
 } from '@angular/core';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -38,6 +39,8 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
     imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+    public readonly cardService = inject(CardService);
+
     /**
      * Offset to scroll when clicking on the scroll buttons.
      */
@@ -102,10 +105,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     private readonly cardService$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
 
-    public constructor(
-        public readonly cardService: CardService,
-        breakpointObserver: BreakpointObserver,
-    ) {
+    public constructor() {
+        const breakpointObserver = inject(BreakpointObserver);
+
         breakpointObserver
             .observe(Breakpoints.XSmall)
             .pipe(takeUntilDestroyed())

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, NgZone, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, NgZone, Output, ViewChild, inject} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -28,6 +28,10 @@ type Marker = {
     imports: [GoogleMapsModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent {
+    public readonly mapApiService = inject(MapApiService);
+    private readonly ngZone = inject(NgZone);
+    private readonly site = inject<Site>(SITE);
+
     public selectedMarker: Marker | null = null;
 
     @Input({required: true})
@@ -53,12 +57,6 @@ export class ViewMapComponent {
         streetViewControl: true,
         mapTypeControlOptions: {position: 10.0},
     };
-
-    public constructor(
-        public readonly mapApiService: MapApiService,
-        private readonly ngZone: NgZone,
-        @Inject(SITE) private readonly site: Site,
-    ) {}
 
     public static getIcon(iconName: Precision): Icon {
         return {

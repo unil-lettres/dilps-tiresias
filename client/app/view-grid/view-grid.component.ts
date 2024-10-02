@@ -36,6 +36,9 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
+    private readonly router = inject(Router);
+    private readonly route = inject(ActivatedRoute);
+
     private readonly destroyRef = inject(DestroyRef);
 
     /**
@@ -161,10 +164,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
     private lastCollectionId = 0;
 
-    public constructor(
-        private readonly router: Router,
-        private readonly route: ActivatedRoute,
-    ) {
+    public constructor() {
         this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
     }
 

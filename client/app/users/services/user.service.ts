@@ -1,4 +1,4 @@
-import {assertInInjectionContext, Inject, Injectable} from '@angular/core';
+import {assertInInjectionContext, Injectable, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -56,18 +56,19 @@ export class UserService extends AbstractContextualizedService<
     DeleteUsers['deleteUsers'],
     never
 > {
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly storage = inject<NaturalStorage>(LOCAL_STORAGE);
+
     /**
      * This key will be used to store the viewer ID, but that value should never
      * be trusted, and it only exists to notify changes across browser tabs.
      */
     private readonly storageKey = 'viewer';
 
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        @Inject(SITE) site: Site,
-        @Inject(LOCAL_STORAGE) private readonly storage: NaturalStorage,
-    ) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
         this.keepViewerSyncedAcrossBrowserTabs();
     }

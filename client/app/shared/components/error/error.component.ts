@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ErrorService} from './error.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
@@ -15,7 +15,10 @@ import {NaturalIconDirective} from '@ecodev/natural';
 export class ErrorComponent {
     public readonly error: Error | null = null;
 
-    public constructor(errorService: ErrorService, route: ActivatedRoute) {
+    public constructor() {
+        const errorService = inject(ErrorService);
+        const route = inject(ActivatedRoute);
+
         this.error = errorService.getLastError();
 
         if (route.snapshot.data.notFound) {

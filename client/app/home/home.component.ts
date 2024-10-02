@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
@@ -68,6 +68,18 @@ function isExcel(file: File): boolean {
     ],
 })
 export class HomeComponent implements OnInit {
+    public readonly themeService = inject(ThemeService);
+    public readonly route = inject(ActivatedRoute);
+    public readonly router = inject(Router);
+    public readonly userService = inject(UserService);
+    private readonly network = inject(NetworkActivityService);
+    private readonly snackBar = inject(MatSnackBar);
+    private readonly alertService = inject(AlertService);
+    private readonly dialog = inject(MatDialog);
+    private readonly cardService = inject(CardService);
+    public readonly site = inject<Site>(SITE);
+    private readonly routeReuse = inject(RouteReuseStrategy);
+
     public Site = Site;
 
     public errors: (Error & {extensions?: {debugMessage?: string}})[] = [];
@@ -85,19 +97,7 @@ export class HomeComponent implements OnInit {
 
     private readonly routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
 
-    public constructor(
-        public readonly themeService: ThemeService,
-        public readonly route: ActivatedRoute,
-        public readonly router: Router,
-        public readonly userService: UserService,
-        private readonly network: NetworkActivityService,
-        private readonly snackBar: MatSnackBar,
-        private readonly alertService: AlertService,
-        private readonly dialog: MatDialog,
-        private readonly cardService: CardService,
-        @Inject(SITE) public readonly site: Site,
-        private readonly routeReuse: RouteReuseStrategy,
-    ) {
+    public constructor() {
         this.network.errors.next([]);
     }
 

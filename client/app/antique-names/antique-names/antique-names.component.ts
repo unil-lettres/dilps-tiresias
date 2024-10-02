@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {AntiqueNameComponent} from '../antique-name/antique-name.component';
 import {AntiqueNameService} from '../services/antique-name.service';
@@ -33,7 +33,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ],
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
-    public constructor(service: AntiqueNameService) {
+    public constructor() {
+        const service = inject(AntiqueNameService);
+
         super(service, AntiqueNameComponent);
     }
 }

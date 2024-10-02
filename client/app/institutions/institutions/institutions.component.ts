@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {InstitutionComponent} from '../institution/institution.component';
 import {InstitutionService} from '../services/institution.service';
@@ -35,7 +35,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];
 
-    public constructor(service: InstitutionService) {
+    public constructor() {
+        const service = inject(InstitutionService);
+
         super(service, InstitutionComponent);
     }
 }

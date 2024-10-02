@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {Users, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
@@ -37,7 +37,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
-    public constructor(service: UserService) {
+    public constructor() {
+        const service = inject(UserService);
+
         super(service, UserComponent);
     }
 

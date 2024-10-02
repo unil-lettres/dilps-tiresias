@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, inject} from '@angular/core';
 import {Card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
 import {
     FileSelection,
@@ -40,6 +40,9 @@ type Tuple = {
     ],
 })
 export class FilesComponent implements OnInit {
+    private readonly fileService = inject(FileService);
+    private readonly alertService = inject(AlertService);
+
     public get disabled(): boolean {
         return this._disabled;
     }
@@ -81,10 +84,7 @@ export class FilesComponent implements OnInit {
     public dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
     private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
 
-    public constructor(
-        private readonly fileService: FileService,
-        private readonly alertService: AlertService,
-    ) {
+    public constructor() {
         // Trigger column selection
         this.disabled = false;
     }

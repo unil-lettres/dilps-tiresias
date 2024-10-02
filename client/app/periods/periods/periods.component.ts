@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {PeriodComponent} from '../period/period.component';
 import {PeriodService} from '../services/period.service';
@@ -50,7 +50,9 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];
 
-    public constructor(service: PeriodService) {
+    public constructor() {
+        const service = inject(PeriodService);
+
         super(service, PeriodComponent);
     }
 }

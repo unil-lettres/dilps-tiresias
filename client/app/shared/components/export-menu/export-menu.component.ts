@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, inject} from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -26,6 +26,10 @@ export enum ExportTheme {
     imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
 })
 export class ExportMenuComponent {
+    private readonly exportService = inject(ExportService);
+    private readonly alertService = inject(AlertService);
+    private readonly apollo = inject(Apollo);
+
     @Input()
     public showExcelExportation = true;
 
@@ -41,12 +45,6 @@ export class ExportMenuComponent {
     public pptValidationMessage = '';
 
     private menuClosed$ = new Subject<void>();
-
-    public constructor(
-        private readonly exportService: ExportService,
-        private readonly alertService: AlertService,
-        private readonly apollo: Apollo,
-    ) {}
 
     public get hasCards(): boolean {
         return this.selectedCards.length > 0;

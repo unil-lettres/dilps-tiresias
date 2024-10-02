@@ -1,12 +1,10 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
 import {domainHierarchicConfig} from '../../shared/hierarchic-configurations/DomainConfiguration';
-import {UserService} from '../../users/services/user.service';
 import {DomainService} from '../services/domain.service';
 import {HierarchicFiltersConfiguration, NaturalSelectHierarchicComponent} from '@ecodev/natural';
-import {DomainFilter, Domains} from '../../shared/generated-types';
+import {DomainFilter} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -32,19 +30,10 @@ export class DomainComponent extends AbstractDetailDirective<DomainService, Thes
     public hierarchicConfig = domainHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<DomainFilter> = [];
 
-    public constructor(
-        service: DomainService,
-        alertService: AlertService,
-        userService: UserService,
-        dialogRef: MatDialogRef<DomainComponent>,
-        @Inject(MAT_DIALOG_DATA)
-        data:
-            | undefined
-            | {
-                  item: Domains['domains']['items'][0] & ThesaurusDetailDialogExtraData;
-              },
-    ) {
-        super(service, alertService, dialogRef, userService, data);
+    public constructor() {
+        const service = inject(DomainService);
+
+        super(service);
     }
 
     protected override postQuery(): void {

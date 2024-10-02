@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ChangeService} from '../services/change.service';
 import {NaturalAbstractList} from '@ecodev/natural';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -29,7 +29,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
-    public constructor(service: ChangeService) {
+    public constructor() {
+        const service = inject(ChangeService);
+
         super(service);
     }
 }

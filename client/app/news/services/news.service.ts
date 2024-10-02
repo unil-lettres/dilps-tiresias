@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {SITE} from '../../app.config';
 import {
     CreateNews,
@@ -33,7 +33,9 @@ export class NewsService extends AbstractContextualizedService<
     DeleteNewses['deleteNewses'],
     never
 > {
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
     }
 

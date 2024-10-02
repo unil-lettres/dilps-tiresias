@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
@@ -8,10 +8,8 @@ import {ConfirmComponent} from './confirm.component';
     providedIn: 'root',
 })
 export class AlertService {
-    public constructor(
-        private readonly dialog: MatDialog,
-        private readonly snackBar: MatSnackBar,
-    ) {}
+    private readonly dialog = inject(MatDialog);
+    private readonly snackBar = inject(MatSnackBar);
 
     public info(message: string, duration = 1500): MatSnackBarRef<SimpleSnackBar> {
         return this.snackBar.open(message, undefined, {

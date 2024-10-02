@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
@@ -59,6 +59,13 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     ],
 })
 export class CollectionSelectorComponent implements OnInit {
+    public readonly collectionService = inject(CollectionService);
+    private readonly dialogRef =
+        inject<MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>>(MatDialogRef);
+    private readonly userService = inject(UserService);
+    private readonly alertService = inject(AlertService);
+    public readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
+
     public listFilter!: CollectionFilter;
     public collection: Collections['collections']['items'][0] | null = null;
     public image: Cards['cards']['items'][0] | undefined;
@@ -67,14 +74,6 @@ export class CollectionSelectorComponent implements OnInit {
         description: '',
         parent: null,
     };
-
-    public constructor(
-        public readonly collectionService: CollectionService,
-        private readonly dialogRef: MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>,
-        private readonly userService: UserService,
-        private readonly alertService: AlertService,
-        @Inject(MAT_DIALOG_DATA) public readonly data: CollectionSelectorData,
-    ) {}
 
     public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => {

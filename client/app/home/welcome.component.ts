@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {SITE} from '../app.config';
 import {Site} from '../shared/generated-types';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,9 +11,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     imports: [MatDialogModule, MatButtonModule],
 })
 export class WelcomeComponent {
-    public Site = Site;
+    public readonly site = inject<Site>(SITE);
 
-    public constructor(@Inject(SITE) public readonly site: Site) {}
+    public Site = Site;
 
     public getTitle(): string {
         switch (this.site) {

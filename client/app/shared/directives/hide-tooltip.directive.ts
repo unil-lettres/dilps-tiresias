@@ -1,4 +1,4 @@
-import {Directive, Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Directive, Injectable, OnDestroy, OnInit, inject} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 import {NavigationStart, Router} from '@angular/router';
 import {filter} from 'rxjs';
@@ -9,7 +9,9 @@ import {filter} from 'rxjs';
 class TooltipCollector {
     public readonly collection = new Set<MatTooltip>();
 
-    public constructor(router: Router) {
+    public constructor() {
+        const router = inject(Router);
+
         router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(() => {
             for (const tooltip of this.collection) {
                 if (tooltip._isTooltipVisible()) {
@@ -34,10 +36,8 @@ class TooltipCollector {
     standalone: true,
 })
 export class HideTooltipDirective implements OnInit, OnDestroy {
-    public constructor(
-        private readonly matToolTip: MatTooltip,
-        private readonly tooltipCollector: TooltipCollector,
-    ) {}
+    private readonly matToolTip = inject(MatTooltip);
+    private readonly tooltipCollector = inject(TooltipCollector);
 
     public ngOnInit(): void {
         this.tooltipCollector.collection.add(this.matToolTip);

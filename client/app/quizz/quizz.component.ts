@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
@@ -32,6 +32,9 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ],
 })
 export class QuizzComponent implements OnInit {
+    private readonly route = inject(ActivatedRoute);
+    private readonly cardService = inject(CardService);
+
     public cards: string[] = [];
     public card: Card['card'] | null = null;
     public imageSrc: string | null = null;
@@ -45,11 +48,6 @@ export class QuizzComponent implements OnInit {
     public formCtrl: FormControl = new FormControl();
     private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
     private formChange$ = this.formCtrl.valueChanges.pipe(takeUntilDestroyed(), debounceTime(500));
-
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly cardService: CardService,
-    ) {}
 
     public ngOnInit(): void {
         this.routeParams$.subscribe(params => {

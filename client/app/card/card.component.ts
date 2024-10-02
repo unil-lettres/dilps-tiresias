@@ -1,5 +1,5 @@
 import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
-import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild, inject} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -176,6 +176,25 @@ type InitialCardValues = {
     ],
 })
 export class CardComponent implements OnInit, OnChanges {
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly changeService = inject(ChangeService);
+    public readonly cardService = inject(CardService);
+    public readonly errorService = inject(ErrorService);
+    private readonly alertService = inject(AlertService);
+    public readonly artistService = inject(ArtistService);
+    public readonly institutionService = inject(InstitutionService);
+    public readonly materialService = inject(MaterialService);
+    public readonly tagService = inject(TagService);
+    public readonly documentTypeService = inject(DocumentTypeService);
+    public readonly domainService = inject(DomainService);
+    public readonly antiqueNameService = inject(AntiqueNameService);
+    public readonly periodService = inject(PeriodService);
+    private readonly dialog = inject(MatDialog);
+    private readonly userService = inject(UserService);
+    private readonly statisticService = inject(StatisticService);
+    private readonly linkService = inject(NaturalLinkMutationService);
+
     /**
      * The card as input used for the form and mutation.
      *
@@ -459,27 +478,6 @@ export class CardComponent implements OnInit, OnChanges {
 
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
     private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());
-
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly changeService: ChangeService,
-        public readonly cardService: CardService,
-        public readonly errorService: ErrorService,
-        private readonly alertService: AlertService,
-        public readonly artistService: ArtistService,
-        public readonly institutionService: InstitutionService,
-        public readonly materialService: MaterialService,
-        public readonly tagService: TagService,
-        public readonly documentTypeService: DocumentTypeService,
-        public readonly domainService: DomainService,
-        public readonly antiqueNameService: AntiqueNameService,
-        public readonly periodService: PeriodService,
-        private readonly dialog: MatDialog,
-        private readonly userService: UserService,
-        private readonly statisticService: StatisticService,
-        private readonly linkService: NaturalLinkMutationService,
-    ) {}
 
     @Input()
     public set editable(val: boolean) {

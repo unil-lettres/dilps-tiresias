@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {CardService} from '../../../card/services/card.service';
 import {Cards} from '../../generated-types';
 import {MatButtonModule} from '@angular/material/button';
@@ -14,9 +14,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButtonModule],
 })
 export class CardSelectorComponent {
-    public card: Cards['cards']['items'][0] | null = null;
+    public readonly cardService = inject(CardService);
 
-    public constructor(public readonly cardService: CardService) {}
+    public card: Cards['cards']['items'][0] | null = null;
 
     public displayWith(item: Cards['cards']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';

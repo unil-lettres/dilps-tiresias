@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {DocumentTypeComponent} from '../document-type/document-type.component';
 import {DocumentTypeService} from '../services/document-type.service';
@@ -33,7 +33,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     ],
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
-    public constructor(service: DocumentTypeService) {
+    public constructor() {
+        const service = inject(DocumentTypeService);
+
         super(service, DocumentTypeComponent);
     }
 }

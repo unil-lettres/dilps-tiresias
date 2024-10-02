@@ -1,11 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
 import {getBase64Url} from '../../shared/services/utility';
-import {UserService} from '../../users/services/user.service';
 import {NewsService} from '../services/news.service';
-import {Newses, NewsInput} from '../../shared/generated-types';
+import {NewsInput} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {CommonModule} from '@angular/common';
 import {UrlValidatorDirective} from '../../shared/directives/url-validator.directive';
@@ -35,14 +33,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File; imageUrl: string}> {
     public imageData: string | null = null;
 
-    public constructor(
-        service: NewsService,
-        alertService: AlertService,
-        userService: UserService,
-        dialogRef: MatDialogRef<NewsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: undefined | {item: Newses['newses']['items'][0]},
-    ) {
-        super(service, alertService, dialogRef, userService, data);
+    public constructor() {
+        const service = inject(NewsService);
+
+        super(service);
     }
 
     public upload(event: Event): void {

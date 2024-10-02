@@ -1,10 +1,7 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
-import {UserService} from '../../users/services/user.service';
 import {ArtistService} from '../services/artist.service';
-import {Artists} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -19,18 +16,9 @@ import {MatTabsModule} from '@angular/material/tabs';
     imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService, ThesaurusDetailDialogExtraData> {
-    public constructor(
-        service: ArtistService,
-        alertService: AlertService,
-        userService: UserService,
-        dialogRef: MatDialogRef<ArtistComponent>,
-        @Inject(MAT_DIALOG_DATA)
-        data:
-            | undefined
-            | {
-                  item: Artists['artists']['items'][0] & ThesaurusDetailDialogExtraData;
-              },
-    ) {
-        super(service, alertService, dialogRef, userService, data);
+    public constructor() {
+        const service = inject(ArtistService);
+
+        super(service);
     }
 }

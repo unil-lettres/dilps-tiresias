@@ -1,5 +1,5 @@
-import {Directive, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {Directive, inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'lodash-es';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
@@ -37,6 +37,10 @@ export class AbstractDetailDirective<
     Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit
 {
+    private readonly alertService = inject(AlertService);
+    public readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
+    public readonly userService = inject(UserService);
+
     /**
      * Once set, this must not change anymore, especially not right after the creation mutation,
      * so the form does not switch from creation mode to update mode without an actual reload of
@@ -50,13 +54,8 @@ export class AbstractDetailDirective<
         item: {},
     } as Data<TService, Extra>;
 
-    public constructor(
-        public readonly service: TService,
-        private readonly alertService: AlertService,
-        public readonly dialogRef: MatDialogRef<unknown>,
-        public readonly userService: UserService,
-        data: {item: ExtractTallOne<TService> & Extra} | undefined,
-    ) {
+    public constructor(public readonly service: TService) {
+        const data = inject<{item: ExtractTallOne<TService> & Extra} | undefined>(MAT_DIALOG_DATA);
         this.data = merge({item: this.service.getDefaultForServer()}, data);
     }
 

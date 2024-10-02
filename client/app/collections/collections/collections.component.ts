@@ -47,6 +47,11 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ],
 })
 export class CollectionsComponent implements OnInit {
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly collectionsService = inject(CollectionService);
+    private readonly dialog = inject(MatDialog);
+
     private readonly destroyRef = inject(DestroyRef);
 
     public rootCollections: Collections['collections']['items'][0][] = [];
@@ -84,13 +89,6 @@ export class CollectionsComponent implements OnInit {
     private readonly collectionsService$ = this.collectionsService
         .watchAll(this.queryVariables)
         .pipe(takeUntilDestroyed());
-
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly collectionsService: CollectionService,
-        private readonly dialog: MatDialog,
-    ) {}
 
     public ngOnInit(): void {
         this.queryVariables.set('variables', this.defaultVariables);

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {TagService} from '../services/tag.service';
 import {TagComponent} from '../tag/tag.component';
@@ -48,7 +48,9 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     ],
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
-    public constructor(service: TagService) {
+    public constructor() {
+        const service = inject(TagService);
+
         super(service, TagComponent);
     }
 }

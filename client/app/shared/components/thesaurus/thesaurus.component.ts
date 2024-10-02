@@ -68,6 +68,9 @@ export class ThesaurusComponent<
     >,
 > implements OnInit
 {
+    private readonly dialog = inject(MatDialog);
+    private readonly hierarchicSelectorDialogService = inject(NaturalHierarchicSelectorDialogService);
+
     private readonly destroyRef = inject(DestroyRef);
 
     /**
@@ -175,11 +178,6 @@ export class ThesaurusComponent<
         filter(val => typeof val === 'string'),
         debounceTime(300),
     );
-
-    public constructor(
-        private readonly dialog: MatDialog,
-        private readonly hierarchicSelectorDialogService: NaturalHierarchicSelectorDialogService,
-    ) {}
 
     private _model: ThesaurusModel | ThesaurusModel[] | null | undefined = null;
 

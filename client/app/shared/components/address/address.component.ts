@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, ViewChild, inject} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -41,6 +41,12 @@ import {CommonModule} from '@angular/common';
     ],
 })
 export class AddressComponent implements OnInit, OnChanges {
+    public readonly mapApiService = inject(MapApiService);
+    private readonly ngZone = inject(NgZone);
+    private readonly addressService = inject(AddressService);
+    public readonly countryService = inject(CountryService);
+    private readonly site = inject<Site>(SITE);
+
     @ViewChild('input', {static: true}) public inputRef!: ElementRef<HTMLInputElement>;
 
     /**
@@ -254,14 +260,6 @@ export class AddressComponent implements OnInit, OnChanges {
     };
     public countries: Countries['countries']['items'][0][] = [];
     private autocomplete: google.maps.places.Autocomplete | null = null;
-
-    public constructor(
-        public readonly mapApiService: MapApiService,
-        private readonly ngZone: NgZone,
-        private readonly addressService: AddressService,
-        public readonly countryService: CountryService,
-        @Inject(SITE) private readonly site: Site,
-    ) {}
 
     public ngOnChanges(): void {
         if (this.model) {

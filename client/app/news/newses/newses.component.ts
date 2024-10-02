@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {NewsComponent} from '../news/news.component';
 import {NewsService} from '../services/news.service';
@@ -37,7 +37,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];
 
-    public constructor(service: NewsService) {
+    public constructor() {
+        const service = inject(NewsService);
+
         super(service, NewsComponent);
     }
 }

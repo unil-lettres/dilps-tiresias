@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -111,6 +111,15 @@ enum ViewMode {
     ],
 })
 export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
+    private readonly cardService: CardService;
+    private readonly collectionService = inject(CollectionService);
+    private readonly userService = inject(UserService);
+    private readonly dialog = inject(MatDialog);
+    private readonly statisticService = inject(StatisticService);
+    public readonly facetService = inject(NaturalSearchFacetsService);
+    private readonly changeService = inject(ChangeService);
+    public readonly site = inject<Site>(SITE);
+
     /**
      * Reference to grid component
      */
@@ -210,17 +219,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     private readonly service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
 
-    public constructor(
-        private readonly cardService: CardService,
-        private readonly collectionService: CollectionService,
-        private readonly userService: UserService,
-        private readonly dialog: MatDialog,
-        private readonly statisticService: StatisticService,
-        public readonly facetService: NaturalSearchFacetsService,
-        private readonly changeService: ChangeService,
-        @Inject(SITE) public readonly site: Site,
-    ) {
+    public constructor() {
+        const cardService = inject(CardService);
+
         super(cardService);
+        this.cardService = cardService;
+        const facetService = this.facetService;
 
         this.naturalSearchFacets = facetService.getFacets();
     }

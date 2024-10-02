@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -10,9 +10,9 @@ import {catchError} from 'rxjs/operators';
     providedIn: 'root',
 })
 export class ErrorService {
-    private lastError: Error | null = null;
+    private readonly router = inject(Router);
 
-    public constructor(private readonly router: Router) {}
+    private lastError: Error | null = null;
 
     /**
      * Redirect to error page and display given error

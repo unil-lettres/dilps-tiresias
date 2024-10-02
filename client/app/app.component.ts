@@ -1,5 +1,5 @@
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, HostBinding, Inject, OnInit} from '@angular/core';
+import {Component, HostBinding, OnInit, inject} from '@angular/core';
 import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
@@ -19,6 +19,12 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     imports: [NgProgressComponent, RouterOutlet, BootLoaderComponent],
 })
 export class AppComponent implements OnInit {
+    private readonly themeService = inject(ThemeService);
+    private readonly overlayContainer = inject(OverlayContainer);
+    private readonly matIconRegistry = inject(MatIconRegistry);
+    private readonly domSanitizer = inject(DomSanitizer);
+    private readonly site = inject<Site>(SITE);
+
     /**
      * Bind theme at root-app level
      */
@@ -35,13 +41,12 @@ export class AppComponent implements OnInit {
 
     private readonly themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
-    public constructor(
-        private readonly themeService: ThemeService,
-        private readonly overlayContainer: OverlayContainer,
-        private readonly matIconRegistry: MatIconRegistry,
-        private readonly domSanitizer: DomSanitizer,
-        @Inject(SITE) private readonly site: Site,
-    ) {
+    public constructor() {
+        const themeService = this.themeService;
+        const matIconRegistry = this.matIconRegistry;
+        const domSanitizer = this.domSanitizer;
+        const site = this.site;
+
         themeService.set(site + '-' + environment.environment);
         this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
 

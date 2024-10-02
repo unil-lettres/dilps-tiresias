@@ -1,5 +1,5 @@
 import {RouteReuseStrategy} from '@angular/router';
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {merge} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
@@ -62,12 +62,13 @@ export class CardService extends AbstractContextualizedService<
     DeleteCards['deleteCards'],
     never
 > {
+    private readonly routeReuse = inject(RouteReuseStrategy);
+
     private collectionIdForCreation: string | null = null;
 
-    public constructor(
-        @Inject(SITE) site: Site,
-        private readonly routeReuse: RouteReuseStrategy,
-    ) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }
 

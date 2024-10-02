@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -37,6 +37,13 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
     ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    public readonly userService = inject(UserService);
+    public readonly dialog = inject(MatDialog);
+    public readonly snackBar = inject(MatSnackBar);
+    public readonly site = inject<Site>(SITE);
+
     public Site = Site;
 
     public loading = false;
@@ -58,15 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
      * Subscription to the logged in user observable
      */
     private currentUser: Subscription | null = null;
-
-    public constructor(
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        public readonly userService: UserService,
-        public readonly dialog: MatDialog,
-        public readonly snackBar: MatSnackBar,
-        @Inject(SITE) public readonly site: Site,
-    ) {}
 
     public ngOnInit(): void {
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';

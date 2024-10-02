@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
     Artist,
     ArtistInput,
@@ -31,7 +31,9 @@ export class ArtistService extends AbstractContextualizedService<
     DeleteArtists['deleteArtists'],
     never
 > {
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
     }
 

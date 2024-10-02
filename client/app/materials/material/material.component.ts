@@ -1,12 +1,10 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, inject} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {AlertService} from '../../shared/components/alert/alert.service';
 import {materialHierarchicConfig} from '../../shared/hierarchic-configurations/MaterialConfiguration';
-import {UserService} from '../../users/services/user.service';
 import {MaterialService} from '../services/material.service';
 import {HierarchicFiltersConfiguration, NaturalSelectHierarchicComponent} from '@ecodev/natural';
-import {MaterialFilter, Materials} from '../../shared/generated-types';
+import {MaterialFilter} from '../../shared/generated-types';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
@@ -32,19 +30,10 @@ export class MaterialComponent extends AbstractDetailDirective<MaterialService, 
     public hierarchicConfig = materialHierarchicConfig;
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<MaterialFilter> = [];
 
-    public constructor(
-        service: MaterialService,
-        alertService: AlertService,
-        userService: UserService,
-        dialogRef: MatDialogRef<MaterialComponent>,
-        @Inject(MAT_DIALOG_DATA)
-        data:
-            | undefined
-            | {
-                  item: Materials['materials']['items'][0] & ThesaurusDetailDialogExtraData;
-              },
-    ) {
-        super(service, alertService, dialogRef, userService, data);
+    public constructor() {
+        const service = inject(MaterialService);
+
+        super(service);
     }
 
     protected override postQuery(): void {

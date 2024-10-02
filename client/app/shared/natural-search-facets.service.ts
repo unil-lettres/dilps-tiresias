@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
     DropdownFacet,
     FlagFacet,
@@ -54,6 +54,16 @@ export const adminConfig: NaturalSearchFacets = [
     providedIn: 'root',
 })
 export class NaturalSearchFacetsService {
+    public readonly site = inject<Site>(SITE);
+    private readonly periodService = inject(PeriodService);
+    private readonly materialService = inject(MaterialService);
+    private readonly domainService = inject(DomainService);
+    private readonly tagService = inject(TagService);
+    private readonly artistService = inject(ArtistService);
+    private readonly documentTypeService = inject(DocumentTypeService);
+    private readonly institutionService = inject(InstitutionService);
+    private readonly antiqueNameService = inject(AntiqueNameService);
+
     private dilpsFacets: NaturalSearchFacets = [
         {
             display: 'Titre',
@@ -272,18 +282,6 @@ export class NaturalSearchFacetsService {
             transform: wrapLike,
         } satisfies DropdownFacet<never>,
     ];
-
-    public constructor(
-        @Inject(SITE) public readonly site: Site,
-        private readonly periodService: PeriodService,
-        private readonly materialService: MaterialService,
-        private readonly domainService: DomainService,
-        private readonly tagService: TagService,
-        private readonly artistService: ArtistService,
-        private readonly documentTypeService: DocumentTypeService,
-        private readonly institutionService: InstitutionService,
-        private readonly antiqueNameService: AntiqueNameService,
-    ) {}
 
     public getFacets(): NaturalSearchFacets {
         if (this.site === Site.dilps) {

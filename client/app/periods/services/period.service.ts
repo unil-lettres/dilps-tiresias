@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
     CreatePeriod,
     CreatePeriodVariables,
@@ -31,7 +31,9 @@ export class PeriodService extends AbstractContextualizedService<
     DeletePeriods['deletePeriods'],
     never
 > {
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
     }
 

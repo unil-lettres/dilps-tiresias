@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DomainComponent} from '../domain/domain.component';
 import {DomainService} from '../services/domain.service';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
@@ -48,7 +48,9 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     ],
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
-    public constructor(service: DomainService) {
+    public constructor() {
+        const service = inject(DomainService);
+
         super(service, DomainComponent);
     }
 }

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable, inject} from '@angular/core';
 import {
     CreateMaterial,
     CreateMaterialVariables,
@@ -31,7 +31,9 @@ export class MaterialService extends AbstractContextualizedService<
     DeleteMaterials['deleteMaterials'],
     never
 > {
-    public constructor(@Inject(SITE) site: Site) {
+    public constructor() {
+        const site = inject<Site>(SITE);
+
         super('material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials, site);
     }
 
