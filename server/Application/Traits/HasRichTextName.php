@@ -42,7 +42,7 @@ trait HasRichTextName
      */
     public function setPlainName(string $plainName): void
     {
-        $this->plainName = Utility::sanitizeRichText($plainName);
+        // Do nothing, plain name is automatically generated from name.
     }
 
     /**
