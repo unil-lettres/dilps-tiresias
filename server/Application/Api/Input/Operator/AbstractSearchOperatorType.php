@@ -310,9 +310,14 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
     /**
      * Replace, with spaces, special characters that have a special meaning in
      * fulltext search boolean mode.
+     *
+     * If an error is raised when trying to clean the word, the original word
+     * is returned. So it will not fail silently.
      */
     protected function cleanFullTextSpecialChars(string $word): string
     {
-        return mb_ereg_replace('[+\-<>()~*]', ' ', $word);
+        $result = mb_ereg_replace('[+\-<>()~*]', ' ', $word);
+
+        return $result === false || $result === null ? $word : $result;
     }
 }
