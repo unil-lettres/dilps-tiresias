@@ -11,7 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     imports: [MatDialogModule, MatButtonModule],
 })
 export class WelcomeComponent {
-    public readonly site = inject<Site>(SITE);
+    public readonly site = inject(SITE);
 
     public Site = Site;
 

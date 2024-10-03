@@ -1,5 +1,5 @@
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, HostBinding, OnInit, inject} from '@angular/core';
+import {Component, HostBinding, inject, OnInit} from '@angular/core';
 import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     private readonly overlayContainer = inject(OverlayContainer);
     private readonly matIconRegistry = inject(MatIconRegistry);
     private readonly domSanitizer = inject(DomSanitizer);
-    private readonly site = inject<Site>(SITE);
+    private readonly site = inject(SITE);
 
     /**
      * Bind theme at root-app level

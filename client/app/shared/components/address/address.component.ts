@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, NgZone, OnChanges, OnInit, ViewChild, inject} from '@angular/core';
+import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -45,7 +45,7 @@ export class AddressComponent implements OnInit, OnChanges {
     private readonly ngZone = inject(NgZone);
     private readonly addressService = inject(AddressService);
     public readonly countryService = inject(CountryService);
-    private readonly site = inject<Site>(SITE);
+    private readonly site = inject(SITE);
 
     @ViewChild('input', {static: true}) public inputRef!: ElementRef<HTMLInputElement>;
 

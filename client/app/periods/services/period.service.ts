@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     CreatePeriod,
     CreatePeriodVariables,
@@ -8,7 +8,6 @@ import {
     Periods,
     PeriodsVariables,
     PeriodVariables,
-    Site,
     UpdatePeriod,
     UpdatePeriodVariables,
 } from '../../shared/generated-types';
@@ -32,7 +31,7 @@ export class PeriodService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
     }

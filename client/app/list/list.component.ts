@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild, inject} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NaturalAbstractList,
+    NaturalIconDirective,
     NaturalQueryVariablesManager,
+    NaturalSearchComponent,
     NaturalSearchSelections,
     PaginationInput,
     Sorting,
     WithId,
-    NaturalSearchComponent,
-    NaturalIconDirective,
 } from '@ecodev/natural';
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
 import {forkJoin, Observable} from 'rxjs';
@@ -118,7 +118,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     private readonly statisticService = inject(StatisticService);
     public readonly facetService = inject(NaturalSearchFacetsService);
     private readonly changeService = inject(ChangeService);
-    public readonly site = inject<Site>(SITE);
+    public readonly site = inject(SITE);
 
     /**
      * Reference to grid component

@@ -1,10 +1,9 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {SITE} from '../../app.config';
 import {
     CreateTag,
     CreateTagVariables,
     DeleteTags,
-    Site,
     Tag,
     TagInput,
     Tags,
@@ -32,7 +31,7 @@ export class TagService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('tag', tagQuery, tagsQuery, createTag, updateTag, deleteTags, site);
     }

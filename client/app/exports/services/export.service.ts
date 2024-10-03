@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     CreateExport,
     CreateExportInput,
@@ -8,7 +8,6 @@ import {
     Exports,
     ExportsVariables,
     ExportVariables,
-    Site,
     ValidateExport,
     ValidateExportVariables,
 } from '../../shared/generated-types';
@@ -34,7 +33,7 @@ export class ExportService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('export', exportQuery, exportsQuery, createExport, null, null, site);
     }

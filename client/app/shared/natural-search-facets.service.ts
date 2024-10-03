@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     DropdownFacet,
     FlagFacet,
@@ -54,7 +54,7 @@ export const adminConfig: NaturalSearchFacets = [
     providedIn: 'root',
 })
 export class NaturalSearchFacetsService {
-    public readonly site = inject<Site>(SITE);
+    public readonly site = inject(SITE);
     private readonly periodService = inject(PeriodService);
     private readonly materialService = inject(MaterialService);
     private readonly domainService = inject(DomainService);

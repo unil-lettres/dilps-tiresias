@@ -1,4 +1,4 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
     private readonly alertService = inject(AlertService);
     private readonly dialog = inject(MatDialog);
     private readonly cardService = inject(CardService);
-    public readonly site = inject<Site>(SITE);
+    public readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy);
 
     public Site = Site;

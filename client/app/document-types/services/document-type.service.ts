@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     CreateDocumentType,
     CreateDocumentTypeVariables,
@@ -8,7 +8,6 @@ import {
     DocumentTypes,
     DocumentTypesVariables,
     DocumentTypeVariables,
-    Site,
     UpdateDocumentType,
     UpdateDocumentTypeVariables,
 } from '../../shared/generated-types';
@@ -38,7 +37,7 @@ export class DocumentTypeService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super(
             'documentType',

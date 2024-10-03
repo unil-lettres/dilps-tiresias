@@ -1,5 +1,5 @@
 import {RouteReuseStrategy} from '@angular/router';
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {merge} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
@@ -22,7 +22,6 @@ import {
     CreateCollection,
     DeleteCards,
     Precision,
-    Site,
     UpdateCard,
     UpdateCardVariables,
 } from '../../shared/generated-types';
@@ -67,7 +66,7 @@ export class CardService extends AbstractContextualizedService<
     private collectionIdForCreation: string | null = null;
 
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
     }

@@ -1,4 +1,4 @@
-import {assertInInjectionContext, Injectable, inject} from '@angular/core';
+import {assertInInjectionContext, inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -12,7 +12,6 @@ import {
     Login,
     LoginVariables,
     Logout,
-    Site,
     UpdateUser,
     UpdateUserVariables,
     User,
@@ -38,7 +37,7 @@ import {
     usersQuery,
     viewerQuery,
 } from './user.queries';
-import {LOCAL_STORAGE, NaturalStorage} from '@ecodev/natural';
+import {LOCAL_STORAGE} from '@ecodev/natural';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -58,7 +57,7 @@ export class UserService extends AbstractContextualizedService<
 > {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
-    private readonly storage = inject<NaturalStorage>(LOCAL_STORAGE);
+    private readonly storage = inject(LOCAL_STORAGE);
 
     /**
      * This key will be used to store the viewer ID, but that value should never
@@ -67,7 +66,7 @@ export class UserService extends AbstractContextualizedService<
     private readonly storageKey = 'viewer';
 
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
         this.keepViewerSyncedAcrossBrowserTabs();

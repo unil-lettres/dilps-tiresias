@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     CreateDomain,
     CreateDomainVariables,
@@ -8,7 +8,6 @@ import {
     Domains,
     DomainsVariables,
     DomainVariables,
-    Site,
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
@@ -32,7 +31,7 @@ export class DomainService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
     }

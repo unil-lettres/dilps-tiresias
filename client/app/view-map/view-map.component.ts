@@ -30,7 +30,7 @@ type Marker = {
 export class ViewMapComponent {
     public readonly mapApiService = inject(MapApiService);
     private readonly ngZone = inject(NgZone);
-    private readonly site = inject<Site>(SITE);
+    private readonly site = inject(SITE);
 
     public selectedMarker: Marker | null = null;
 

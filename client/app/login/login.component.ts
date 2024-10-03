@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public readonly userService = inject(UserService);
     public readonly dialog = inject(MatDialog);
     public readonly snackBar = inject(MatSnackBar);
-    public readonly site = inject<Site>(SITE);
+    public readonly site = inject(SITE);
 
     public Site = Site;
 

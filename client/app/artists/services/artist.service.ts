@@ -1,4 +1,4 @@
-import {Injectable, inject} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
     Artist,
     ArtistInput,
@@ -8,7 +8,6 @@ import {
     CreateArtist,
     CreateArtistVariables,
     DeleteArtists,
-    Site,
     UpdateArtist,
     UpdateArtistVariables,
 } from '../../shared/generated-types';
@@ -32,7 +31,7 @@ export class ArtistService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject<Site>(SITE);
+        const site = inject(SITE);
 
         super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
     }
