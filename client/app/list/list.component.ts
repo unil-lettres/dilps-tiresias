@@ -111,7 +111,6 @@ enum ViewMode {
     ],
 })
 export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
-    private readonly cardService: CardService;
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
     private readonly dialog = inject(MatDialog);
@@ -222,7 +221,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         const cardService = inject(CardService);
 
         super(cardService);
-        this.cardService = cardService;
 
         this.naturalSearchFacets = this.site === Site.dilps ? dilps() : tiresias();
     }
@@ -383,7 +381,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
             )
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.cardService.delete(selection, false).subscribe(() => {
+                    this.service.delete(selection, false).subscribe(() => {
                         this.alertService.info('Supprimé');
                         this.reset();
                     });
@@ -411,7 +409,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                         const quizzVars = new NaturalQueryVariablesManager(this.variablesManager);
                         quizzVars.set('sorting', {sorting: [{field: CardSortingField.random}]});
                         quizzVars.set('pagination', {pagination: {pageIndex: 0, pageSize: +num}});
-                        this.cardService.getAll(quizzVars).subscribe(cards => {
+                        this.service.getAll(quizzVars).subscribe(cards => {
                             this.router.navigateByUrl('quizz;cards=' + cards.items.map(e => e.id).join(','));
                         });
                     }
@@ -456,7 +454,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                 const observables: Observable<unknown>[] = [];
                 for (const s of selection) {
                     const changes = applyChanges(s, changeAttributes);
-                    observables.push(this.cardService.updateNow(changes, false));
+                    observables.push(this.service.updateNow(changes, false));
                 }
 
                 const suggestionsObservables: Observable<CreateCard['createCard']>[] = [];
@@ -467,7 +465,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                             original: changeableCard.id,
                             visibility: CardVisibility.private,
                         });
-                        suggestionsObservables.push(this.cardService.create(fetchedSuggestion as CardInput));
+                        suggestionsObservables.push(this.service.create(fetchedSuggestion as CardInput));
                     });
                 }
 
