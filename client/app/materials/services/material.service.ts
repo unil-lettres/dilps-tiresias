@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     CreateMaterial,
     CreateMaterialVariables,
@@ -12,7 +12,6 @@ import {
     UpdateMaterialVariables,
 } from '../../shared/generated-types';
 import {createMaterial, deleteMaterials, materialQuery, materialsQuery, updateMaterial} from './material.queries';
-import {SITE} from '../../app.config';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
@@ -31,9 +30,7 @@ export class MaterialService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials, site);
+        super('material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials);
     }
 
     public override getDefaultForServer(): MaterialInput {

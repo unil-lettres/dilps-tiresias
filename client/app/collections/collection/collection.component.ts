@@ -81,9 +81,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     public showVisibility = true;
 
     public constructor() {
-        const collectionService = inject(CollectionService);
-
-        super(collectionService);
+        super(inject(CollectionService));
     }
 
     public updateVisibility(): void {

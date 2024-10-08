@@ -17,8 +17,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 })
 export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameService, ThesaurusDetailDialogExtraData> {
     public constructor() {
-        const service = inject(AntiqueNameService);
-
-        super(service);
+        super(inject(AntiqueNameService));
     }
 }

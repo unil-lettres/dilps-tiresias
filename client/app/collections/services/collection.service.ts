@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, Observable} from 'rxjs';
-import {SITE} from '../../app.config';
 import {
     Cards,
     Collection,
@@ -47,17 +46,7 @@ export class CollectionService extends AbstractContextualizedService<
     private readonly linkService = inject(NaturalLinkMutationService);
 
     public constructor() {
-        const site = inject(SITE);
-
-        super(
-            'collection',
-            collectionQuery,
-            collectionsQuery,
-            createCollection,
-            updateCollection,
-            deleteCollections,
-            site,
-        );
+        super('collection', collectionQuery, collectionsQuery, createCollection, updateCollection, deleteCollections);
     }
 
     public override getDefaultForServer(): CollectionInput {

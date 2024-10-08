@@ -10,7 +10,7 @@ import {TableButtonComponent} from '../../shared/components/table-button/table-b
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {CommonModule} from '@angular/common';
-import {NaturalSearchComponent, NaturalFixedButtonComponent, NaturalEnumPipe} from '@ecodev/natural';
+import {NaturalEnumPipe, NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -38,9 +38,7 @@ export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
     public constructor() {
-        const service = inject(UserService);
-
-        super(service, UserComponent);
+        super(inject(UserService), UserComponent);
     }
 
     public isLegacyUser(user: Users['users']['items'][0]): boolean {

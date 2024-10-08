@@ -31,9 +31,7 @@ export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusD
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<TagFilter> = [];
 
     public constructor() {
-        const service = inject(TagService);
-
-        super(service);
+        super(inject(TagService));
     }
 
     protected override postQuery(): void {

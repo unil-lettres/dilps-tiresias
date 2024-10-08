@@ -13,10 +13,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {
-    NaturalSearchComponent,
-    NaturalTableButtonComponent,
     NaturalFixedButtonComponent,
     NaturalIconDirective,
+    NaturalSearchComponent,
+    NaturalTableButtonComponent,
 } from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -49,8 +49,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {
-        const service = inject(MaterialService);
-
-        super(service, MaterialComponent);
+        super(inject(MaterialService), MaterialComponent);
     }
 }

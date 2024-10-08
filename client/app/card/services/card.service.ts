@@ -3,7 +3,6 @@ import {inject, Injectable} from '@angular/core';
 import {merge} from 'lodash-es';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
-import {SITE} from '../../app.config';
 import {
     Card,
     CardInput,
@@ -66,9 +65,7 @@ export class CardService extends AbstractContextualizedService<
     private collectionIdForCreation: string | null = null;
 
     public constructor() {
-        const site = inject(SITE);
-
-        super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards, site);
+        super('card', cardQuery, cardsQuery, createCard, updateCard, deleteCards);
     }
 
     public static getImageFormat(card: CardWithImage, height: number): {height: number; width: number} {

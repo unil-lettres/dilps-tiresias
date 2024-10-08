@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     CreateExport,
     CreateExportInput,
@@ -13,7 +13,6 @@ import {
 } from '../../shared/generated-types';
 import {createExport, exportQuery, exportsQuery, validateExportQuery} from './export.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {SITE} from '../../app.config';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -33,9 +32,7 @@ export class ExportService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('export', exportQuery, exportsQuery, createExport, null, null, site);
+        super('export', exportQuery, exportsQuery, createExport, null, null);
     }
 
     public override getDefaultForServer(): Required<CreateExportInput> {

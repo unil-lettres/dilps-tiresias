@@ -26,8 +26,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 })
 export class InstitutionComponent extends AbstractDetailDirective<InstitutionService, ThesaurusDetailDialogExtraData> {
     public constructor() {
-        const service = inject(InstitutionService);
-
-        super(service);
+        super(inject(InstitutionService));
     }
 }

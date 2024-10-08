@@ -36,9 +36,7 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService, Thes
     }
 
     public constructor() {
-        const service = inject(PeriodService);
-
-        super(service);
+        super(inject(PeriodService));
     }
 
     protected override postQuery(): void {

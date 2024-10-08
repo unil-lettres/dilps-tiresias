@@ -30,8 +30,6 @@ export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
     public constructor() {
-        const service = inject(ChangeService);
-
-        super(service);
+        super(inject(ChangeService));
     }
 }

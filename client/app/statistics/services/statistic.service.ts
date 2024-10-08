@@ -1,5 +1,4 @@
-import {assertInInjectionContext, inject, Injectable} from '@angular/core';
-import {SITE} from '../../app.config';
+import {assertInInjectionContext, Injectable} from '@angular/core';
 import {Statistic, Statistics, StatisticsVariables, StatisticVariables} from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
@@ -28,9 +27,7 @@ export class StatisticService extends AbstractContextualizedService<
     private readonly search = new Subject<void>();
 
     public constructor() {
-        const site = inject(SITE);
-
-        super('statistic', statisticQuery, statisticsQuery, null, null, null, site);
+        super('statistic', statisticQuery, statisticsQuery, null, null, null);
 
         this.createSub(this.page, recordPage);
         this.createSub(this.detail, recordDetail);

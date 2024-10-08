@@ -218,9 +218,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     private readonly service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
 
     public constructor() {
-        const cardService = inject(CardService);
-
-        super(cardService);
+        super(inject(CardService));
 
         this.naturalSearchFacets = this.site === Site.dilps ? dilps() : tiresias();
     }

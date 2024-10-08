@@ -34,9 +34,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
     public imageData: string | null = null;
 
     public constructor() {
-        const service = inject(NewsService);
-
-        super(service);
+        super(inject(NewsService));
     }
 
     public upload(event: Event): void {

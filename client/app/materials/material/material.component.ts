@@ -31,9 +31,7 @@ export class MaterialComponent extends AbstractDetailDirective<MaterialService, 
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<MaterialFilter> = [];
 
     public constructor() {
-        const service = inject(MaterialService);
-
-        super(service);
+        super(inject(MaterialService));
     }
 
     protected override postQuery(): void {

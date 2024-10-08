@@ -31,9 +31,7 @@ export class DomainComponent extends AbstractDetailDirective<DomainService, Thes
     public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<DomainFilter> = [];
 
     public constructor() {
-        const service = inject(DomainService);
-
-        super(service);
+        super(inject(DomainService));
     }
 
     protected override postQuery(): void {

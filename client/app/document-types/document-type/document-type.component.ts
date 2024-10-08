@@ -20,8 +20,6 @@ export class DocumentTypeComponent extends AbstractDetailDirective<
     ThesaurusDetailDialogExtraData
 > {
     public constructor() {
-        const service = inject(DocumentTypeService);
-
-        super(service);
+        super(inject(DocumentTypeService));
     }
 }

@@ -72,11 +72,9 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     public institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
 
     public constructor() {
-        const service = inject(UserService);
+        super(inject(UserService));
+
         const naturalEnumService = inject(NaturalEnumService);
-
-        super(service);
-
         naturalEnumService.get('UserRole').subscribe(roles => (this.roles = roles));
 
         this.passwordCtrl = new FormControl('');

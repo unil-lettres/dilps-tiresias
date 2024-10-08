@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     CreateDomain,
     CreateDomainVariables,
@@ -12,7 +12,6 @@ import {
     UpdateDomainVariables,
 } from '../../shared/generated-types';
 import {createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
-import {SITE} from '../../app.config';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
@@ -31,9 +30,7 @@ export class DomainService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains, site);
+        super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains);
     }
 
     public override getDefaultForServer(): DomainInput {

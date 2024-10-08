@@ -1,8 +1,7 @@
 import {merge} from 'lodash-es';
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {SITE} from '../../app.config';
 import {
     AcceptChange,
     Card,
@@ -44,9 +43,7 @@ export class ChangeService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('change', changeQuery, changesQuery, null, null, null, site);
+        super('change', changeQuery, changesQuery, null, null, null);
     }
 
     public acceptChange(change: {id: string}): Observable<AcceptChange['acceptChange']> {

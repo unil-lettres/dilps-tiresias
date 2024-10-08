@@ -49,8 +49,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
     public constructor() {
-        const service = inject(TagService);
-
-        super(service, TagComponent);
+        super(inject(TagService), TagComponent);
     }
 }

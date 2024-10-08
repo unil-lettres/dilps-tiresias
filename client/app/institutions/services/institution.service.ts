@@ -1,5 +1,4 @@
-import {inject, Injectable} from '@angular/core';
-import {SITE} from '../../app.config';
+import {Injectable} from '@angular/core';
 import {
     CreateInstitution,
     CreateInstitutionVariables,
@@ -37,8 +36,6 @@ export class InstitutionService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
         super(
             'institution',
             institutionQuery,
@@ -46,7 +43,6 @@ export class InstitutionService extends AbstractContextualizedService<
             createInstitution,
             updateInstitution,
             deleteInstitutions,
-            site,
         );
     }
 

@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     CreateDocumentType,
     CreateDocumentTypeVariables,
@@ -19,7 +19,6 @@ import {
     updateDocumentType,
 } from './document-type.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {SITE} from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
@@ -37,8 +36,6 @@ export class DocumentTypeService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
         super(
             'documentType',
             documentTypeQuery,
@@ -46,7 +43,6 @@ export class DocumentTypeService extends AbstractContextualizedService<
             createDocumentType,
             updateDocumentType,
             deleteDocumentTypes,
-            site,
         );
     }
 

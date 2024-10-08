@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     CreatePeriod,
     CreatePeriodVariables,
@@ -12,7 +12,6 @@ import {
     UpdatePeriodVariables,
 } from '../../shared/generated-types';
 import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
-import {SITE} from '../../app.config';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
 @Injectable({
@@ -31,9 +30,7 @@ export class PeriodService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods, site);
+        super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods);
     }
 
     public override getDefaultForServer(): PeriodInput {

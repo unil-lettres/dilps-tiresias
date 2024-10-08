@@ -2,7 +2,6 @@ import {assertInInjectionContext, inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {SITE} from '../../app.config';
 import {
     Cards,
     CardVisibility,
@@ -66,9 +65,7 @@ export class UserService extends AbstractContextualizedService<
     private readonly storageKey = 'viewer';
 
     public constructor() {
-        const site = inject(SITE);
-
-        super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers, site);
+        super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers);
         this.keepViewerSyncedAcrossBrowserTabs();
     }
 

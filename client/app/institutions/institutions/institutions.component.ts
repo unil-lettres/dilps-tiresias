@@ -9,7 +9,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
+import {NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -36,8 +36,6 @@ export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];
 
     public constructor() {
-        const service = inject(InstitutionService);
-
-        super(service, InstitutionComponent);
+        super(inject(InstitutionService), InstitutionComponent);
     }
 }

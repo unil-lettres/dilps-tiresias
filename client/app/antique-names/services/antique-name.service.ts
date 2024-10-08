@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     AntiqueName,
     AntiqueNameInput,
@@ -19,7 +19,6 @@ import {
     updateAntiqueName,
 } from './antique-name.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {SITE} from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
@@ -37,8 +36,6 @@ export class AntiqueNameService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
         super(
             'antiqueName',
             antiqueNameQuery,
@@ -46,7 +43,6 @@ export class AntiqueNameService extends AbstractContextualizedService<
             createAntiqueName,
             updateAntiqueName,
             deleteAntiqueNames,
-            site,
         );
     }
 

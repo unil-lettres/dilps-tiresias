@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
     Artist,
     ArtistInput,
@@ -13,7 +13,6 @@ import {
 } from '../../shared/generated-types';
 import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {SITE} from '../../app.config';
 
 @Injectable({
     providedIn: 'root',
@@ -31,9 +30,7 @@ export class ArtistService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists, site);
+        super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists);
     }
 
     public override getDefaultForServer(): ArtistInput {

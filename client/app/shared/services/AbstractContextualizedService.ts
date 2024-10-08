@@ -1,7 +1,8 @@
 import {Literal, NaturalAbstractModelService, PaginatedData, QueryVariables, VariablesWithInput} from '@ecodev/natural';
 import {DocumentNode} from 'graphql';
-import {Site} from '../generated-types';
 import {Observable, of} from 'rxjs';
+import {inject} from '@angular/core';
+import {SITE} from '../../app.config';
 
 export class AbstractContextualizedService<
     Tone,
@@ -17,6 +18,8 @@ export class AbstractContextualizedService<
         ids: string[];
     },
 > extends NaturalAbstractModelService<Tone, Vone, Tall, Vall, Tcreate, Vcreate, Tupdate, Vupdate, Tdelete, Vdelete> {
+    public readonly site = inject(SITE);
+
     public constructor(
         name: string,
         oneQuery: DocumentNode | null,
@@ -24,7 +27,6 @@ export class AbstractContextualizedService<
         createMutation: DocumentNode | null,
         updateMutation: DocumentNode | null,
         deleteMutation: DocumentNode | null,
-        public readonly site: Site,
     ) {
         super(name, oneQuery, allQuery, createMutation, updateMutation, deleteMutation);
     }

@@ -1,5 +1,4 @@
-import {inject, Injectable} from '@angular/core';
-import {SITE} from '../../app.config';
+import {Injectable} from '@angular/core';
 import {
     CreateNews,
     CreateNewsVariables,
@@ -33,9 +32,7 @@ export class NewsService extends AbstractContextualizedService<
     never
 > {
     public constructor() {
-        const site = inject(SITE);
-
-        super('news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses, site);
+        super('news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses);
     }
 
     public override getDefaultForServer(): NewsInput {

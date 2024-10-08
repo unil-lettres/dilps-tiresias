@@ -9,7 +9,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
+import {NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -34,8 +34,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
     public constructor() {
-        const service = inject(DocumentTypeService);
-
-        super(service, DocumentTypeComponent);
+        super(inject(DocumentTypeService), DocumentTypeComponent);
     }
 }

@@ -17,8 +17,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService, ThesaurusDetailDialogExtraData> {
     public constructor() {
-        const service = inject(ArtistService);
-
-        super(service);
+        super(inject(ArtistService));
     }
 }

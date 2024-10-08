@@ -10,7 +10,7 @@ import {TableButtonComponent} from '../../shared/components/table-button/table-b
 import {MatIconModule} from '@angular/material/icon';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
-import {NaturalSearchComponent, NaturalFixedButtonComponent} from '@ecodev/natural';
+import {NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -38,8 +38,6 @@ export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];
 
     public constructor() {
-        const service = inject(NewsService);
-
-        super(service, NewsComponent);
+        super(inject(NewsService), NewsComponent);
     }
 }
