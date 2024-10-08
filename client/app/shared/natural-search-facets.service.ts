@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {assertInInjectionContext, inject} from '@angular/core';
 import {
     DropdownFacet,
     FlagFacet,
@@ -12,7 +12,6 @@ import {
     TypeSelectNaturalConfiguration,
     wrapLike,
 } from '@ecodev/natural';
-import {SITE} from '../app.config';
 import {ArtistService} from '../artists/services/artist.service';
 import {DocumentTypeService} from '../document-types/services/document-type.service';
 import {DomainService} from '../domains/services/domain.service';
@@ -34,7 +33,7 @@ import {TypeTextComponent} from '../extended/type-text/type-text.component';
 import {TypeNaturalSelectComponent} from '../extended/type-natural-select/type-natural-select.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 
-export const adminConfig: NaturalSearchFacets = [
+export const adminFacets: NaturalSearchFacets = [
     {
         display: 'Visibilité',
         field: 'visibility',
@@ -47,24 +46,13 @@ export const adminConfig: NaturalSearchFacets = [
     } satisfies DropdownFacet<TypeSelectConfiguration>,
 ];
 
-/**
- * Collection of configuration for natural-search accessible by the object name
- */
-@Injectable({
-    providedIn: 'root',
-})
-export class NaturalSearchFacetsService {
-    public readonly site = inject(SITE);
-    private readonly periodService = inject(PeriodService);
-    private readonly materialService = inject(MaterialService);
-    private readonly domainService = inject(DomainService);
-    private readonly tagService = inject(TagService);
-    private readonly artistService = inject(ArtistService);
-    private readonly documentTypeService = inject(DocumentTypeService);
-    private readonly institutionService = inject(InstitutionService);
-    private readonly antiqueNameService = inject(AntiqueNameService);
+export function dilps(): NaturalSearchFacets {
+    assertInInjectionContext(dilps);
 
-    private dilpsFacets: NaturalSearchFacets = [
+    const artistService = inject(ArtistService);
+    const institutionService = inject(InstitutionService);
+
+    return [
         {
             display: 'Titre',
             field: 'nameOrExpandedName',
@@ -76,7 +64,7 @@ export class NaturalSearchFacetsService {
             field: 'artists',
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: this.artistService,
+                service: artistService,
                 placeholder: 'Artistes',
                 filter: {},
             },
@@ -122,7 +110,7 @@ export class NaturalSearchFacetsService {
             field: 'institution',
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: this.institutionService,
+                service: institutionService,
                 placeholder: 'Institution',
                 filter: {},
             },
@@ -141,8 +129,20 @@ export class NaturalSearchFacetsService {
             inversed: true,
         } satisfies FlagFacet<CardFilterGroupConditionSite>,
     ];
+}
 
-    private tiresiasFacets: NaturalSearchFacets = [
+export function tiresias(): NaturalSearchFacets {
+    assertInInjectionContext(tiresias);
+
+    const periodService = inject(PeriodService);
+    const materialService = inject(MaterialService);
+    const domainService = inject(DomainService);
+    const tagService = inject(TagService);
+    const documentTypeService = inject(DocumentTypeService);
+    const institutionService = inject(InstitutionService);
+    const antiqueNameService = inject(AntiqueNameService);
+
+    return [
         {
             display: '[Inclure Dilps]',
             field: 'site',
@@ -163,7 +163,7 @@ export class NaturalSearchFacetsService {
             showValidateButton: true,
             configuration: {
                 key: 'domain',
-                service: this.domainService,
+                service: domainService,
                 config: domainHierarchicConfig,
             },
         } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
@@ -186,7 +186,7 @@ export class NaturalSearchFacetsService {
             showValidateButton: true,
             configuration: {
                 key: 'material',
-                service: this.materialService,
+                service: materialService,
                 config: materialHierarchicConfig,
             },
         } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
@@ -197,7 +197,7 @@ export class NaturalSearchFacetsService {
             showValidateButton: true,
             configuration: {
                 key: 'tag',
-                service: this.tagService,
+                service: tagService,
                 config: tagHierarchicConfig,
             },
         } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
@@ -220,7 +220,7 @@ export class NaturalSearchFacetsService {
             field: 'antiqueNames',
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: this.antiqueNameService,
+                service: antiqueNameService,
                 placeholder: 'Nom antique',
                 filter: {},
             },
@@ -232,7 +232,7 @@ export class NaturalSearchFacetsService {
             showValidateButton: true,
             configuration: {
                 key: 'period',
-                service: this.periodService,
+                service: periodService,
                 config: periodHierarchicConfig,
             },
         } satisfies DropdownFacet<TypeHierarchicSelectorConfiguration>,
@@ -247,7 +247,7 @@ export class NaturalSearchFacetsService {
             field: 'institution',
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: this.institutionService,
+                service: institutionService,
                 placeholder: 'Musée',
                 filter: {},
             },
@@ -264,7 +264,7 @@ export class NaturalSearchFacetsService {
             showValidateButton: true,
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: this.documentTypeService,
+                service: documentTypeService,
                 placeholder: 'Type de document',
                 filter: {},
             },
@@ -282,23 +282,4 @@ export class NaturalSearchFacetsService {
             transform: wrapLike,
         } satisfies DropdownFacet<never>,
     ];
-
-    public getFacets(): NaturalSearchFacets {
-        if (this.site === Site.dilps) {
-            return [...this.dilpsFacets];
-        } else {
-            return [...this.tiresiasFacets];
-        }
-    }
-
-    /**
-     * @returns the index to push the admin facets at.
-     */
-    public getAdminFacetsIndex(): number {
-        if (this.site === Site.dilps) {
-            return this.dilpsFacets.length - 1;
-        } else {
-            return this.tiresiasFacets.length;
-        }
-    }
 }

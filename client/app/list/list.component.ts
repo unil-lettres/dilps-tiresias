@@ -36,7 +36,7 @@ import {
     UserRole,
     Viewer,
 } from '../shared/generated-types';
-import {adminConfig, NaturalSearchFacetsService} from '../shared/natural-search-facets.service';
+import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets.service';
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
@@ -116,7 +116,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     private readonly userService = inject(UserService);
     private readonly dialog = inject(MatDialog);
     private readonly statisticService = inject(StatisticService);
-    public readonly facetService = inject(NaturalSearchFacetsService);
     private readonly changeService = inject(ChangeService);
     public readonly site = inject(SITE);
 
@@ -224,9 +223,8 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
         super(cardService);
         this.cardService = cardService;
-        const facetService = this.facetService;
 
-        this.naturalSearchFacets = facetService.getFacets();
+        this.naturalSearchFacets = this.site === Site.dilps ? dilps() : tiresias();
     }
 
     public override ngOnInit(): void {
@@ -252,7 +250,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
         const containAdminSelection = this.naturalSearchSelections.some(selection => {
             return selection.some(value => {
-                return adminConfig.some(config => {
+                return adminFacets.some(config => {
                     return config.field === value.field;
                 });
             });
@@ -570,9 +568,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Push admin config, but only if it does not already exist
      */
     private pushAdminConfig(): void {
-        if (!this.naturalSearchFacets.includes(adminConfig[0])) {
-            const index = this.facetService.getAdminFacetsIndex();
-            this.naturalSearchFacets.splice(index, 0, ...adminConfig);
+        if (!this.naturalSearchFacets.includes(adminFacets[0])) {
+            const index = this.naturalSearchFacets.length - (this.site === Site.dilps ? 1 : 0);
+            this.naturalSearchFacets.splice(index, 0, ...adminFacets);
         }
     }
 }
