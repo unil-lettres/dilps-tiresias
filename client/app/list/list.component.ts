@@ -36,7 +36,7 @@ import {
     UserRole,
     Viewer,
 } from '../shared/generated-types';
-import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets.service';
+import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets';
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
