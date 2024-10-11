@@ -39,12 +39,14 @@ const disableAnimations =
     // eslint-disable-next-line no-restricted-globals
     (navigator && /iPhone OS (8|9|10|11|12|13)_/.test(navigator.userAgent));
 
+const prefersReducedMotion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion)').matches : false;
+
 bootstrapApplication(AppComponent, {
     providers: [
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
-        provideAnimationsAsync(disableAnimations ? 'noop' : 'animations'),
+        provideAnimationsAsync(disableAnimations || prefersReducedMotion ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),
         {
