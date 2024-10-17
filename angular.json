@@ -40,6 +40,9 @@
                     },
                     "configurations": {
                         "production": {
+                            "define": {
+                                "globalThis.__DEV__": "false"
+                            },
                             "namedChunks": true,
                             "budgets": [
                                 {
