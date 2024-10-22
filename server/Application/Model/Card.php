@@ -32,6 +32,7 @@ use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\Image;
+use Ecodev\Felix\Service\ImageResizer;
 use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Attribute as API;
 use Imagine\Filter\Basic\Autorotate;
@@ -660,12 +661,20 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     #[API\Input(type: '?GraphQL\Upload\UploadType')]
     public function setFile(UploadedFileInterface $file): void
     {
+        global $container;
+
         $this->traitSetFile($file);
 
         try {
             $this->readFileInfo();
         } catch (Throwable $e) {
             throw new FileException($file, $e);
+        }
+
+        // Create most used thumbnails.
+        $imageResizer = $container->get(ImageResizer::class);
+        foreach ([300, 2000] as $maxHeight) {
+            $imageResizer->resize($this, $maxHeight, true);
         }
     }
 
