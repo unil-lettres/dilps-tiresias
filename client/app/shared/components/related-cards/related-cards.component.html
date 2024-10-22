@@ -4,13 +4,7 @@
             @for (card of cards; track card) {
                 <div>
                     <a class="image" [routerLink]="['/card', card.id]" [matTooltip]="card.plainName">
-                        <img
-                            priority
-                            fill
-                            placeholder
-                            [ngSrc]="'card-' + card.id + '.jpg'"
-                            [loaderParams]="{card: card}"
-                        />
+                        <img priority fill [ngSrc]="'card-' + card.id + '.jpg'" [loaderParams]="{card: card}" />
                     </a>
                 </div>
             }
