@@ -274,7 +274,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
 
                 // "+": The word is mandatory in all rows returned.
                 $cleanedExactTerm = $this->cleanFullTextSpecialChars($exactTerm);
-                $queryBuilder->setParameter($parameterName, "+$cleanedExactTerm");
+                $queryBuilder->setParameter($parameterName, "+\"$cleanedExactTerm\"");
 
                 $orWheres = array_merge(
                     $orWheres,
