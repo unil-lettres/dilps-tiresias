@@ -197,6 +197,15 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         $fields = array_diff($fields, $tableIds);
         $fieldsFullTextNotUsed = array_diff($fieldsFullTextNotUsed, $tableIds);
 
+        // Split words by spaces that replaced fulltext special char.
+        // Ex. Notre-Dame becomes two words: Notre and Dame.
+        $words = array_merge(
+            ...array_map(
+                fn ($word) => explode(' ', $this->cleanFullTextSpecialChars($word)),
+                $words,
+            )
+        );
+
         $andWheres = [];
         foreach ($words as $word) {
             $orWheres = [];
@@ -211,8 +220,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 // "+": The word is mandatory in all rows returned.
                 // "*": The wildcard, indicating zero or more characters.
                 //      It can only appear at the end of a word.
-                $cleanedWord = $this->cleanFullTextSpecialChars($word);
-                $queryBuilder->setParameter($parameterName, "+$cleanedWord*");
+                $queryBuilder->setParameter($parameterName, "+$word*");
 
                 $orWheres = array_merge(
                     $orWheres,
