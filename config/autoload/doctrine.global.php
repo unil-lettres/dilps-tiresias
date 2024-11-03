@@ -37,7 +37,7 @@ return [
         'configuration' => [
             'orm_default' => [
                 'naming_strategy' => Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class,
-                'proxy_dir' => 'data/cache/DoctrineORMModule/Proxy',
+                'proxy_dir' => getcwd() . '/data/cache/DoctrineORMModule/Proxy',
                 'generate_proxies' => false,
                 'filters' => [
                     Ecodev\Felix\ORM\Query\Filter\AclFilter::class => Ecodev\Felix\ORM\Query\Filter\AclFilter::class,
