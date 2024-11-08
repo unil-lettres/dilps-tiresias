@@ -15,6 +15,7 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
+                "prefer-object-spread": "error",
                 "@angular-eslint/component-max-inline-declarations": "off", // We use that mostly for testing, so it's fine
                 "@angular-eslint/no-forward-ref": "off", // We sometimes need it
                 "@angular-eslint/prefer-on-push-component-change-detection": "off",

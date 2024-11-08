@@ -97,10 +97,11 @@ import {MatListModule} from '@angular/material/list';
 export type CardInputWithId = CardInput & {id?: string};
 
 export function cardToCardInput(fetchedModel: Card['card']): CardInputWithId {
-    return Object.assign({}, fetchedModel, {
+    return {
+        ...fetchedModel,
         artists: fetchedModel.artists.map(a => a.name),
         institution: fetchedModel.institution?.name ?? null,
-    });
+    };
 }
 
 export type VisibilityConfig<V> = {
@@ -872,12 +873,13 @@ export class CardComponent implements OnInit, OnChanges {
                 this.assertFetchedCard(this.fetchedModel);
 
                 if (selection) {
-                    this.fetchedModel = Object.assign({}, selection, {
+                    this.fetchedModel = {
+                        ...selection,
                         id: this.fetchedModel.id,
                         code: this.fetchedModel.code,
                         visibility: this.model.visibility,
                         permissions: this.fetchedModel.permissions,
-                    });
+                    };
 
                     this.model = cardToCardInput(this.fetchedModel);
                     this.initCard();
