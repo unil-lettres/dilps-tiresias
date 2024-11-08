@@ -1711,10 +1711,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.2.tgz#e2c64c2ddb3c60793a39236b52624fde323e610a"
   integrity sha512-BV75kFQmpfuSBNQ1jyKu+IdGkFTMESjPrtKrEyc3MqcmVhV5IiYU0LXTaghLZozuZgCT9HfMOnEsh05aS2j9uQ==
 
-"@ecodev/natural@^61.1.1":
-  version "61.1.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-61.1.1.tgz#9349f3bb687c8830c05bfc31addec82eecfbd57b"
-  integrity sha512-qyDWZTht+lT7h4WfuqM2R2DW2BkrUU3CQmkbcJs4v+5ICMvjCz6QLCuXIiikCGoApF31psVuJW+N1AWD3/94cw==
+"@ecodev/natural@^61.1.2":
+  version "61.1.2"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-61.1.2.tgz#580422165f1fc27ff2d4e85feba773e7c3aae4c8"
+  integrity sha512-w9sSiGkNt+WoyiuMoyzc86J+fFLcqaBOapsqouNRKB8x03HtjBh7NDU2vqLQGSQSnmmYUb+8CI7qQdPp8hK8XA==
   dependencies:
     crypto-es "^2.0.3"
     extract-files "^13.0.0"
