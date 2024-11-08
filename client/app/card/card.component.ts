@@ -1,5 +1,5 @@
 import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
-import {Component, Input, OnChanges, OnInit, ViewChild, inject} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -877,7 +877,7 @@ export class CardComponent implements OnInit, OnChanges {
                         ...selection,
                         id: this.fetchedModel.id,
                         code: this.fetchedModel.code,
-                        visibility: this.model.visibility,
+                        visibility: this.model.visibility!,
                         permissions: this.fetchedModel.permissions,
                     };
 
