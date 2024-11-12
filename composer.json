@@ -49,7 +49,7 @@
         "creof/doctrine2-spatial": "^1.2",
         "creof/wkb-parser": "^2.4",
         "doctrine/lexer": "^2.1",
-        "ecodev/felix": "^15.1",
+        "ecodev/felix": "^15.2",
         "ecodev/graphql-doctrine": "^10.0",
         "ecodev/graphql-upload": "^7.0",
         "laminas/laminas-config-aggregator": "^1.15",
