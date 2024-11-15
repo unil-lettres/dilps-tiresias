@@ -1,5 +1,5 @@
 import {Directive} from '@angular/core';
-import {AbstractControl, Validator, NG_VALIDATORS} from '@angular/forms';
+import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector

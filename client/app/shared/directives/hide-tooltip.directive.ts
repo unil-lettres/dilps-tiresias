@@ -1,4 +1,4 @@
-import {Directive, Injectable, OnDestroy, OnInit, inject} from '@angular/core';
+import {Directive, inject, Injectable, OnDestroy, OnInit} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 import {NavigationStart, Router} from '@angular/router';
 import {filter} from 'rxjs';

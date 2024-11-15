@@ -1,5 +1,5 @@
-import {Component, OnInit, inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import {Component, inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
 import {Cards, CollectionFilter, Collections, CreateCollection, LogicalOperator, UserRole} from '../../generated-types';

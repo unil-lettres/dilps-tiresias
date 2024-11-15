@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, inject} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {Card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
 import {
     FileSelection,

@@ -1,7 +1,7 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {merge} from 'lodash-es';
-import {cardToCardInput, CardComponent} from '../../card/card.component';
+import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card, CardInput, CardVisibility, Change, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';

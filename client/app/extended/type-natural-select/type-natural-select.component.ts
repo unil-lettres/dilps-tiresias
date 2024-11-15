@@ -4,10 +4,10 @@
  */
 import {Component} from '@angular/core';
 import {
-    TypeNaturalSelectComponent as EcoDevTypeNaturalSelectComponent,
     FilterGroupConditionField,
     NaturalAbstractModelService,
     NaturalSelectComponent,
+    TypeNaturalSelectComponent as EcoDevTypeNaturalSelectComponent,
 } from '@ecodev/natural';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 

@@ -1,7 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {NaturalIconDirective} from '@ecodev/natural';
 import {Card} from '../../generated-types';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -24,7 +23,7 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
     templateUrl: './link-related-cards-dialog.component.html',
     styleUrl: './link-related-cards-dialog.component.scss',
     standalone: true,
-    imports: [MatButtonModule, MatIconModule, NaturalIconDirective, MatDialogModule, MatCheckboxModule, FormsModule],
+    imports: [MatButtonModule, MatIconModule, MatDialogModule, MatCheckboxModule, FormsModule],
 })
 export class LinkRelatedCardsDialogComponent {
     private readonly dialogRef = inject<MatDialogRef<LinkRelatedCardsDialogComponent>>(MatDialogRef);

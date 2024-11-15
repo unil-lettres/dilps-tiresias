@@ -1,15 +1,15 @@
 import {Component, inject} from '@angular/core';
 import {
     AbstractControl,
-    FormGroupDirective,
-    NgForm,
     FormControl,
     FormGroup,
+    FormGroupDirective,
+    FormsModule,
+    NgForm,
+    ReactiveFormsModule,
     ValidationErrors,
     ValidatorFn,
     Validators,
-    FormsModule,
-    ReactiveFormsModule,
 } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {BehaviorSubject} from 'rxjs';

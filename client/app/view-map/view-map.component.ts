@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, NgZone, Output, ViewChild, inject} from '@angular/core';
+import {Component, EventEmitter, inject, Input, NgZone, Output, ViewChild} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';

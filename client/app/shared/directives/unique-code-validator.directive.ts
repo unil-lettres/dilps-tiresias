@@ -1,4 +1,4 @@
-import {Directive, Input, inject} from '@angular/core';
+import {Directive, inject, Input} from '@angular/core';
 import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {CardService} from '../../card/services/card.service';

@@ -1,12 +1,12 @@
 import {Component, inject} from '@angular/core';
-import {FormControl, Validators, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
     DropdownComponent,
+    FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
     NaturalDropdownData,
     NaturalDropdownRef,
-    FilterGroupConditionField,
 } from '@ecodev/natural';
 import {LocationOperatorString} from '../shared/generated-types';
 import {MatInputModule} from '@angular/material/input';

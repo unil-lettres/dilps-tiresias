@@ -3,6 +3,7 @@ import {
     Component,
     ElementRef,
     EventEmitter,
+    inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -10,7 +11,6 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    inject,
 } from '@angular/core';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';

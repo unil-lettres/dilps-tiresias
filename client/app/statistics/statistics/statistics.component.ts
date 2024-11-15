@@ -20,7 +20,7 @@ import {
     StatisticsVariables,
     Users,
 } from '../../shared/generated-types';
-import {StatisticInput, StatisticComponent} from '../statistic/statistic.component';
+import {StatisticComponent, StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
