@@ -7,8 +7,7 @@ $defaultConfig: mat.m2-define-typography-config();
 // - with button with normal letter-spacing instead of wider letter-spacing.
 $custom-typography-gt-sm: mat.m2-define-typography-config(
     $font-family: 'Quicksand, Roboto, "Helvetica Neue", sans-serif',
-    $button:
-        mat.m2-define-typography-level(
+    $button: mat.m2-define-typography-level(
             $font-family: 'Quicksand, Roboto, "Helvetica Neue", sans-serif',
             $font-weight: mat.m2-font-weight($defaultConfig, 'button'),
             $font-size: mat.m2-font-size($defaultConfig, 'button'),

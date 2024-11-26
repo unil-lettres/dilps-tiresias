@@ -82,7 +82,7 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "^2.1.0",
         "postcss": "^8.4.39",
-        "prettier": "3.3.3",
+        "prettier": "3.4.0",
         "prettier-plugin-css-order": "^2.1.2",
         "ts-node": "^10.9.2",
         "typescript": "~5.5.3",
