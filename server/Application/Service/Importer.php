@@ -19,7 +19,7 @@ use Application\Repository\DocumentTypeRepository;
 use Application\Repository\DomainRepository;
 use Application\Repository\MaterialRepository;
 use Application\Repository\PeriodRepository;
-use Exception;
+use Ecodev\Felix\Api\Exception;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
