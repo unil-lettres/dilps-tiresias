@@ -24,14 +24,7 @@ class ImageResizer
      */
     public function resize(Image $image, int $maxHeight, bool $useWebp): string
     {
-        if ($image->getMime() === 'image/svg+xml') {
-            return $image->getPath();
-        }
-
-        $maxHeight = min($maxHeight, $image->getHeight());
-
-        $extension = $useWebp ? '.webp' : '.jpg';
-        $path = $this->getCachePath($image, '-' . $maxHeight . $extension);
+        $path = $this->getPath($image, $maxHeight, $useWebp);
 
         if (file_exists($path)) {
             return $path;
@@ -41,6 +34,13 @@ class ImageResizer
         $image->thumbnail(new Box(1_000_000, $maxHeight))->save($path);
 
         return $path;
+    }
+
+    public function isResizeNeeded(Image $image, int $maxHeight, bool $useWebp): bool
+    {
+        $path = $this->getPath($image, $maxHeight, $useWebp);
+
+        return !file_exists($path);
     }
 
     /**
@@ -65,5 +65,21 @@ class ImageResizer
         $basename = pathinfo($image->getFilename(), PATHINFO_FILENAME);
 
         return realpath('.') . '/' . self::CACHE_IMAGE_PATH . $basename . $suffix;
+    }
+
+    /**
+     * Return the path to use to display the image, or null if if no one fit.
+     */
+    protected function getPath(Image $image, int $maxHeight, bool $useWebp): string
+    {
+        if ($image->getMime() === 'image/svg+xml') {
+            return $image->getPath();
+        }
+
+        $maxHeight = min($maxHeight, $image->getHeight());
+        $extension = $useWebp ? '.webp' : '.jpg';
+        $path = $this->getCachePath($image, '-' . $maxHeight . $extension);
+
+        return $path;
     }
 }

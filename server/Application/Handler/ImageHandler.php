@@ -8,6 +8,7 @@ use Application\Repository\CardRepository;
 use Application\Service\ImageResizer;
 use Ecodev\Felix\Handler\AbstractHandler;
 use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -41,6 +42,18 @@ class ImageHandler extends AbstractHandler
             $accept = $request->getHeaderLine('accept');
             $useWebp = str_contains($accept, 'image/webp');
 
+            $resizeNeeded = $this->imageResizer->isResizeNeeded($card, $maxHeight, $useWebp);
+            $resizeSpecified = array_key_exists('resize', $request->getQueryParams());
+
+            if ($resizeNeeded && !$resizeSpecified) {
+                // If resize is needed, user must specify a specific query params.
+                // This allow to configure server load balance, but also work
+                // without any special configuration if not needed.
+                // Resizing operation is ressource intensive and could lead to block
+                // the server if not properly configured.
+                return new RedirectResponse($this->constructRedirectURI(), 302);
+            }
+
             $path = $this->imageResizer->resize($card, $maxHeight, $useWebp);
         }
 
@@ -59,5 +72,25 @@ class ImageHandler extends AbstractHandler
         ]);
 
         return $response;
+    }
+
+    /**
+     * Construct a new URI for the current request with the resize query
+     * parameter set to true.
+     */
+    protected function constructRedirectURI(): string
+    {
+        $currentUrl = $_SERVER['REQUEST_URI'];
+        $queryString = $_SERVER['QUERY_STRING'];
+
+        // Build the new query string
+        parse_str($queryString, $queryArray);
+        $queryArray['resize'] = 'true';
+        $newQueryString = http_build_query($queryArray);
+
+        // Reconstruct the URL with the new query string
+        $baseUrl = strtok($currentUrl, '?');
+
+        return $baseUrl . '?' . $newQueryString;
     }
 }
