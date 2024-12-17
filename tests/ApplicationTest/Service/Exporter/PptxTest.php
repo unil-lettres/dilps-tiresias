@@ -6,8 +6,8 @@ namespace ApplicationTest\Service\Exporter;
 
 use Application\Model\Card;
 use Application\Service\Exporter\Pptx;
+use Application\Service\ImageResizer;
 use ApplicationTest\Traits\TestWithTransaction;
-use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use PhpOffice\PhpPresentation\PhpPresentation;
 use PhpOffice\PhpPresentation\Reader\PowerPoint2007;

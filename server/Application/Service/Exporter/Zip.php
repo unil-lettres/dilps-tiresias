@@ -7,9 +7,9 @@ namespace Application\Service\Exporter;
 use Application\Model\Card;
 use Application\Model\Export;
 use Application\Model\User;
+use Application\Service\ImageResizer;
 use Application\Utility;
 use Ecodev\Felix\Api\Exception;
-use Ecodev\Felix\Service\ImageResizer;
 use Laminas\Escaper\Escaper;
 use ZipArchive;
 

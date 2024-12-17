@@ -36,6 +36,7 @@ return [
             Application\Service\Exporter\Pptx::class => Application\Service\Exporter\PptxFactory::class,
             Application\Service\Exporter\Zip::class => Application\Service\Exporter\ZipFactory::class,
             Application\Service\MessageQueuer::class => Application\Service\MessageQueuerFactory::class,
+            Application\Service\ImageResizer::class => Application\Service\ImageResizerFactory::class,
             Ecodev\Felix\Handler\FileHandler::class => Application\Handler\FileFactory::class,
             Ecodev\Felix\Handler\GraphQLHandler::class => Application\Handler\GraphQLFactory::class,
             Ecodev\Felix\Log\Writer\Db::class => Application\Log\DbWriterFactory::class,

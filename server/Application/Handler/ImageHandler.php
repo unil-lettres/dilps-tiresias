@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Application\Handler;
 
 use Application\Repository\CardRepository;
+use Application\Service\ImageResizer;
 use Ecodev\Felix\Handler\AbstractHandler;
-use Ecodev\Felix\Service\ImageResizer;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ImageHandler extends AbstractHandler
 {
-    public function __construct(private readonly CardRepository $cardRepository, private readonly ImageResizer $imageResizer)
-    {
+    public function __construct(
+        private readonly CardRepository $cardRepository,
+        private readonly ImageResizer $imageResizer,
+    ) {
     }
 
     /**

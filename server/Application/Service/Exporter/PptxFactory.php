@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Service\Exporter;
 
-use Ecodev\Felix\Service\ImageResizer;
+use Application\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use Psr\Container\ContainerInterface;
 

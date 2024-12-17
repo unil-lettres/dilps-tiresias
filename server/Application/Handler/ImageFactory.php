@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Application\Handler;
 
 use Application\Model\Card;
+use Application\Service\ImageResizer;
 use Doctrine\ORM\EntityManager;
-use Ecodev\Felix\Service\ImageResizer;
 use Psr\Container\ContainerInterface;
 
 class ImageFactory

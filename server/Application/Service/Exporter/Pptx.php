@@ -7,8 +7,8 @@ namespace Application\Service\Exporter;
 use Application\Model\Card;
 use Application\Model\Export;
 use Application\Model\User;
+use Application\Service\ImageResizer;
 use Application\Utility;
-use Ecodev\Felix\Service\ImageResizer;
 use Imagine\Image\ImagineInterface;
 use PhpOffice\PhpPresentation\DocumentLayout;
 use PhpOffice\PhpPresentation\PhpPresentation;
@@ -38,8 +38,10 @@ class Pptx implements Writer
 
     private PhpPresentation $presentation;
 
-    public function __construct(private readonly ImageResizer $imageResizer, private readonly ImagineInterface $imagine)
-    {
+    public function __construct(
+        private readonly ImageResizer $imageResizer,
+        private readonly ImagineInterface $imagine,
+    ) {
     }
 
     public function getExtension(): string
