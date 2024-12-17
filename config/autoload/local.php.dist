@@ -43,4 +43,14 @@ return [
     'log' => [
         'emails' => [], // List of developer emails to send bugs to
     ],
+    'session' => [
+        'persistence' => [
+            'ext' => [
+                // Lock or not PHP session variables. It can greatly increase
+                // performances, because images are not statically served.
+                // So we can load many images in parallel.
+                'non_locking' => true,
+            ],
+        ],
+    ],
 ];
