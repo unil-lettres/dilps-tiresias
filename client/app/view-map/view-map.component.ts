@@ -76,7 +76,7 @@ export class ViewMapComponent {
                     latitude: c.latitude!,
                     longitude: c.longitude!,
                     icon: ViewMapComponent.getIcon(c.precision!),
-                    imageSrc: CardService.getImageLink(c, 200)!,
+                    imageSrc: CardService.getImageLink(c, 300)!,
                 };
             });
     }
