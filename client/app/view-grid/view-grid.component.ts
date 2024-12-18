@@ -155,7 +155,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 });
             });
         },
-        infiniteScrollOffset: -200,
+        infiniteScrollOffset: -1000,
         ratioLimit: {
             min: 0.5,
             max: 2,
