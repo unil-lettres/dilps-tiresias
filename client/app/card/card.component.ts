@@ -87,7 +87,7 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {forkJoin, last} from 'rxjs';
+import {concatMap, from, last} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ErrorService} from '../shared/components/error/error.service';
@@ -664,16 +664,18 @@ export class CardComponent implements OnInit, OnChanges {
         this.openRelatedCardsDialog(
             cards => {
                 // Link all cards to each others (cards already link will not be affected).
-                const observables = cards.map(card =>
-                    this.linkService.linkMany(
-                        card,
-                        cards.filter(_card => _card.id != card.id),
-                    ),
-                );
-
-                forkJoin(observables).subscribe(() => {
-                    this.alertService.info('Liens créés dans les autres fiches');
-                });
+                from(cards)
+                    .pipe(
+                        concatMap(card =>
+                            this.linkService.linkMany(
+                                card,
+                                cards.filter(_card => _card.id != card.id),
+                            ),
+                        ),
+                    )
+                    .subscribe({
+                        complete: () => this.alertService.info('Liens créés dans les autres fiches'),
+                    });
             },
             'Associer plusieurs fiches entre elles',
             'Chaque fiche sélectionnée sera associée à toutes les autres également sélectionnées.',

@@ -11,7 +11,7 @@ import {
     WithId,
 } from '@ecodev/natural';
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
-import {forkJoin, Observable} from 'rxjs';
+import {concatMap, finalize, from, Observable} from 'rxjs';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
@@ -469,20 +469,23 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
                 // Last api call
                 const finish = (): void => {
-                    forkJoin(observables).subscribe(() => {
-                        this.alertService.info('Mis à jour');
-                        this.reset();
-                    });
+                    from(observables)
+                        .pipe(concatMap(observable => observable))
+                        .subscribe({
+                            complete: () => {
+                                this.alertService.info('Mis à jour');
+                                this.reset();
+                            },
+                        });
                 };
 
                 if (suggestionsObservables.length) {
-                    forkJoin(suggestionsObservables).subscribe(results => {
-                        results.forEach(card => {
-                            observables.push(this.changeService.suggestUpdate(card));
-                        });
-
-                        finish();
-                    });
+                    from(suggestionsObservables)
+                        .pipe(
+                            concatMap(observable => observable),
+                            finalize(() => finish()),
+                        )
+                        .subscribe(card => observables.push(this.changeService.suggestUpdate(card)));
                 } else {
                     finish();
                 }
