@@ -615,37 +615,49 @@ export class CardComponent implements OnInit, OnChanges {
 
     public openCopyRelatedCardsDialog(card: Card['card']): void {
         this.assertFetchedCard(this.fetchedModel);
-        this.openRelatedCardsDialog(
-            cards => {
-                if (cards) {
-                    this.assertFetchedCard(this.fetchedModel);
+        let otherCards: Card['card']['cards'] = [];
 
-                    this.linkService
-                        .linkMany(
-                            this.fetchedModel,
-                            cards.filter(_card => _card.id != card.id),
-                        )
-                        .subscribe(() => {
-                            this.alertService.info('Liens créés');
-                        });
-                }
+        this.cardService.getOne(card.id).subscribe({
+            next: _card => {
+                otherCards = _card.cards;
             },
-            'Copier les associations',
-            `Copie les associations de "${card.name}" vers cette fiche.`,
-            cards => {
-                const cardIds = cards.map(_card => _card.id);
-                // Return all related cards of the specified card filtered by
-                // cards already linked.
-                return card.cards.filter(_card => !cardIds.includes(_card.id) && _card.id != this.fetchedModel!.id);
+            complete: () => {
+                this.openRelatedCardsDialog(
+                    cards => {
+                        if (cards) {
+                            this.assertFetchedCard(this.fetchedModel);
+
+                            this.linkService
+                                .linkMany(
+                                    this.fetchedModel,
+                                    cards.filter(_card => _card.id != card.id),
+                                )
+                                .subscribe(() => {
+                                    this.alertService.info('Liens créés');
+                                });
+                        }
+                    },
+                    'Copier les associations',
+                    `Copie les associations de "${card.name}" vers cette fiche.`,
+                    cards => {
+                        const cardIds = cards.map(_card => _card.id);
+                        // Return all related cards of the specified card filtered by
+                        // cards already linked.
+                        console.log(otherCards);
+                        return otherCards.filter(
+                            _card => !cardIds.includes(_card.id) && _card.id != this.fetchedModel!.id,
+                        );
+                    },
+                    cards => {
+                        if (cards.length === 0) {
+                            this.alertService.info('Toutes les fiches sont déjà associées.');
+                            return false;
+                        }
+                        return true;
+                    },
+                );
             },
-            cards => {
-                if (cards.length === 0) {
-                    this.alertService.info('Toutes les fiches sont déjà associées.');
-                    return false;
-                }
-                return true;
-            },
-        );
+        });
     }
 
     public openLinkRelatedCardsDialog(): void {
