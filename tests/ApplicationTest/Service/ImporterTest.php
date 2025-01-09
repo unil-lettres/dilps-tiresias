@@ -55,8 +55,8 @@ class ImporterTest extends TestCase
 
         $collection = new Collection();
 
-        $importer = new Importer();
-        $cards = $importer->import($excel, $images, 'dilps', $collection);
+        $importer = new Importer('dilps');
+        $cards = $importer->import($excel, $images, $collection);
 
         self::assertCount(1, $cards[0]->getCollections());
         self::assertCount(1, $cards[1]->getCollections());
@@ -89,9 +89,9 @@ class ImporterTest extends TestCase
             ['invalid header'],
         ]);
 
-        $importer = new Importer();
+        $importer = new Importer('dilps');
         $this->expectExceptionMessage('Erreur dans la cellule A1: S\'attend à "Fichier image (avec ou sans extension)", mais a vu "invalid header"');
-        $importer->import($excel, [], 'dilps', null);
+        $importer->import($excel, [], null);
     }
 
     public function testImportThrowsWithTooManyFiles(): void
@@ -105,9 +105,9 @@ class ImporterTest extends TestCase
             'data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg',
         ]);
 
-        $importer = new Importer();
+        $importer = new Importer('dilps');
         $this->expectExceptionMessage('Erreur dans la cellule A2: 2 images ont été uploadé pour lesquelles aucune information ont été trouvée dans le fichier Excel: 5da49355cbcff, dw4jV3zYSPsqE2CB8BcP8ABD0');
-        $importer->import($excel, $images, 'dilps', null);
+        $importer->import($excel, $images, null);
     }
 
     public function testImportThrowsWithTooManyData(): void
@@ -119,9 +119,9 @@ class ImporterTest extends TestCase
 
         ]);
 
-        $importer = new Importer();
+        $importer = new Importer('dilps');
         $this->expectExceptionMessage('Erreur dans la cellule A2: Image présente dans le fichier Excel, mais pas retrouvée dans les images uploadées: 5da49355cbcff.jpeg');
-        $importer->import($excel, [], 'dilps', null);
+        $importer->import($excel, [], null);
     }
 
     public function testImportThrowsWithInvalidData(): void
@@ -136,8 +136,8 @@ class ImporterTest extends TestCase
             'data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg',
         ]);
 
-        $importer = new Importer();
+        $importer = new Importer('dilps');
         $this->expectExceptionMessage('Erreur dans la cellule D2: Domaine introuvable: non-existing-domain');
-        $importer->import($excel, $images, 'dilps', null);
+        $importer->import($excel, $images, null);
     }
 }

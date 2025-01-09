@@ -19,7 +19,7 @@ class DomainRepositoryTest extends AbstractRepositoryTest
 
     public function testGetFullNames(): void
     {
-        $actual = $this->repository->getFullNames();
+        $actual = $this->repository->getFullNames('dilps');
         $expected = [
             'Test domain 9000' => 9000,
             'Test domain 9001' => 9001,

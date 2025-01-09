@@ -79,15 +79,15 @@ class TemplateHandler implements RequestHandlerInterface
         $this->headers($sheet);
 
         $domainName = 'Domaines';
-        $domains = $this->domainRepository->getFullNames();
+        $domains = $this->domainRepository->getFullNames($this->site);
         $this->createList($spreadsheet, array_keys($domains), $domainName);
 
         $materialName = 'Matériaux';
-        $materials = $this->materialRepository->getFullNames();
+        $materials = $this->materialRepository->getFullNames($this->site);
         $this->createList($spreadsheet, array_keys($materials), $materialName);
 
         $periodName = 'Périodes';
-        $periods = $this->periodRepository->getFullNames();
+        $periods = $this->periodRepository->getFullNames($this->site);
         $this->createList($spreadsheet, array_keys($periods), $periodName);
 
         $documentTypeName = 'Document';

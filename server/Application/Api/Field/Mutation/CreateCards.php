@@ -43,8 +43,8 @@ class CreateCards implements FieldInterface
                 $excel = $args['excel'];
                 $images = $args['images'];
 
-                $importer = new Importer();
-                $cards = $importer->import($excel, $images, $site, $collection);
+                $importer = new Importer($site);
+                $cards = $importer->import($excel, $images, $collection);
 
                 _em()->flush();
 

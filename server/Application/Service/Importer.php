@@ -53,23 +53,21 @@ class Importer
      */
     private readonly array $periods;
 
-    private ?string $site = null;
-
     private ?Collection $collection = null;
 
-    public function __construct()
+    public function __construct(private readonly string $site)
     {
         /** @var DomainRepository $domainRepository */
         $domainRepository = _em()->getRepository(Domain::class);
-        $this->domains = $domainRepository->getFullNames();
+        $this->domains = $domainRepository->getFullNames($this->site);
 
         /** @var PeriodRepository $periodRepository */
         $periodRepository = _em()->getRepository(Period::class);
-        $this->periods = $periodRepository->getFullNames();
+        $this->periods = $periodRepository->getFullNames($this->site);
 
         /** @var MaterialRepository $materialRepository */
         $materialRepository = _em()->getRepository(Material::class);
-        $this->materials = $materialRepository->getFullNames();
+        $this->materials = $materialRepository->getFullNames($this->site);
 
         /** @var CountryRepository $countryRepository */
         $countryRepository = _em()->getRepository(Country::class);
@@ -80,9 +78,8 @@ class Importer
         $this->documentTypes = $documentTypeRepository->getNames();
     }
 
-    public function import(UploadedFileInterface $file, array $files, string $site, ?Collection $collection): array
+    public function import(UploadedFileInterface $file, array $files, ?Collection $collection): array
     {
-        $this->site = $site;
         $this->collection = $collection;
         $tempFile = tempnam('data/tmp/', 'import');
         $file->moveTo($tempFile);

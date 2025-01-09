@@ -40,19 +40,19 @@ abstract class AbstractHasParentRepository extends AbstractRepository
     /**
      * Returns an array of fullNames and their ID for all domains.
      */
-    public function getFullNames(): array
+    public function getFullNames(string $site): array
     {
         $connection = $this->getEntityManager()->getConnection();
         $table = $this->getClassMetadata()->getTableName();
         $table = $connection->quoteIdentifier($table);
 
         $sql = 'WITH RECURSIVE parent AS (
-    SELECT id, parent_id, name AS fullName FROM ' . $table . ' WHERE parent_id IS NULL
+    SELECT id, parent_id, name AS fullName FROM ' . $table . ' WHERE parent_id IS NULL and site = :site
     UNION
     SELECT child.id, child.parent_id, CONCAT(parent.fullName, " > ", child.name) AS fullName FROM ' . $table . ' AS child JOIN parent ON child.parent_id = parent.id
 ) SELECT id, fullName FROM parent ORDER BY fullName ASC';
 
-        $records = $connection->executeQuery($sql)->fetchAllAssociative();
+        $records = $connection->executeQuery($sql, ['site' => $site])->fetchAllAssociative();
 
         $result = [];
         foreach ($records as $r) {
