@@ -11,9 +11,7 @@
     >
         Titre
     </div>
-    @if (site === Site.dilps) {
-        <div mat-menu-item (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])">Artistes</div>
-    }
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.artists, direction: 'asc'}])">Artistes</div>
     <div
         mat-menu-item
         (click)="sorting([{active: CardSortingField.dating, direction: 'asc', emptyStringAsHighest: true}])"
@@ -54,11 +52,9 @@
     >
         Domaine
     </div>
-    @if (site === Site.tiresias) {
-        <div mat-menu-item (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])">
-            Type de document
-        </div>
-    }
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.documentType, direction: 'asc'}])">
+        Type de document
+    </div>
     <div mat-menu-item (click)="sorting([{active: CardSortingField.code, direction: 'asc', nullAsHighest: true}])">
         Référence
     </div>
