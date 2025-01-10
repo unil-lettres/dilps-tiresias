@@ -91,7 +91,7 @@ class TemplateHandler implements RequestHandlerInterface
         $this->createList($spreadsheet, array_keys($periods), $periodName);
 
         $documentTypeName = 'Document';
-        $documentTypes = $this->documentTypeRepository->getNames();
+        $documentTypes = $this->documentTypeRepository->getNames($this->site);
         $this->createList($spreadsheet, array_keys($documentTypes), $documentTypeName);
 
         $countryName = 'Pays';

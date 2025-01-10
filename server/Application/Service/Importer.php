@@ -75,7 +75,7 @@ class Importer
 
         /** @var DocumentTypeRepository $documentTypeRepository */
         $documentTypeRepository = _em()->getRepository(DocumentType::class);
-        $this->documentTypes = $documentTypeRepository->getNames();
+        $this->documentTypes = $documentTypeRepository->getNames($this->site);
     }
 
     public function import(UploadedFileInterface $file, array $files, ?Collection $collection): array
