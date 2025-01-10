@@ -97,16 +97,15 @@
                                     <div>{{ item.dating }}</div>
                                 </div>
                             }
-                            @if (item.domains.length || item.dilpsDomain) {
+                            @if (item.domains.length) {
                                 <div>
-                                    <div>Domaine</div>
+                                    <div>Domaines</div>
                                     <div>
                                         @for (domain of item.domains | onlyLeaves; track domain) {
                                             <div>
                                                 {{ domain.hierarchicName }}
                                             </div>
                                         }
-                                        <div>{{ item.dilpsDomain }}</div>
                                     </div>
                                 </div>
                             }

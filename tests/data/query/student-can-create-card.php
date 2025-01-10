@@ -34,7 +34,6 @@ return [
                 'addition' => 'test addition',
                 'expandedName' => 'test expandedName',
                 'material' => 'test material',
-                'dilpsDomain' => 'test domaine',
                 'techniqueAuthor' => 'test techniqueAuthor',
                 'format' => 'test format',
                 'literature' => 'test literature',

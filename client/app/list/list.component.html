@@ -18,12 +18,7 @@
     >
         Datation
     </div>
-    <div
-        mat-menu-item
-        (click)="sorting([{active: CardSortingField.dilpsDomain, direction: 'asc', emptyStringAsHighest: true}])"
-    >
-        Domaine
-    </div>
+    <div mat-menu-item (click)="sorting([{active: CardSortingField.domains, direction: 'asc'}])">Domaines</div>
     <div mat-menu-item (click)="sorting([{active: CardSortingField.institutionLocality, direction: 'asc'}])">Lieu</div>
 </mat-menu>
 <mat-menu #tiresiasSortingMenu="matMenu" [overlapTrigger]="false">

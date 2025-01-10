@@ -58,7 +58,6 @@ use Throwable;
         'addition',
         'expandedName',
         'material',
-        'dilpsDomain',
         'techniqueAuthor',
         'objectReference',
         'corpus',

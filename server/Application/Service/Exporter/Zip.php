@@ -116,11 +116,17 @@ class Zip implements Writer
         foreach ($card->getArtists() as $artist) {
             $artists[] = $artist->getName();
         }
-        $html .= $this->row('artiste', implode('<br>', $artists));
+        $html .= $this->row('artistes', implode('<br>', $artists));
 
         $html .= $this->row('supplément', $card->getAddition());
         $html .= $this->row('datation', $card->getDating());
-        $html .= $this->row('domaine', $card->getDilpsDomain());
+
+        $domains = array_map(
+            fn ($domain) => $domain->getName(),
+            $card->getDomains()->toArray(),
+        );
+        $html .= $this->row('domaines', implode('<br>', $domains));
+
         $html .= $this->row('technique & matériel', $card->getMaterial());
         $html .= $this->row('format', $card->getFormat());
         $html .= $this->row('adresse', implode(', ', array_filter([$card->getStreet(), $card->getPostcode(), $card->getLocality(), $card->getArea(), $card->getCountry() ? $card->getCountry()->getName() : ''])));

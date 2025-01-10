@@ -51,6 +51,7 @@ export function dilps(): NaturalSearchFacets {
 
     const artistService = inject(ArtistService);
     const institutionService = inject(InstitutionService);
+    const domainService = inject(DomainService);
 
     return [
         {
@@ -88,11 +89,15 @@ export function dilps(): NaturalSearchFacets {
             transform: replaceOperatorByField,
         } satisfies DropdownFacet<TypeNumericRangeConfiguration>,
         {
-            display: 'Domaine',
-            field: 'dilpsDomain',
-            component: TypeTextComponent,
-            transform: wrapLike,
-        } satisfies DropdownFacet<never>,
+            display: 'Domaines',
+            field: 'domains',
+            component: TypeNaturalSelectComponent,
+            configuration: {
+                service: domainService,
+                placeholder: 'Domaines',
+                filter: {},
+            },
+        } satisfies DropdownFacet<TypeSelectNaturalConfiguration<DomainService>>,
         {
             display: 'Technique & Matériel',
             field: 'material',

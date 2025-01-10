@@ -28,9 +28,6 @@ trait CardSimpleProperties
     private string $material = '';
 
     #[ORM\Column(type: 'string', options: ['default' => ''])]
-    private string $dilpsDomain = '';
-
-    #[ORM\Column(type: 'string', options: ['default' => ''])]
     private string $techniqueAuthor = '';
 
     #[ORM\Column(type: 'string', length: 60, options: ['default' => ''])]
@@ -106,16 +103,6 @@ trait CardSimpleProperties
     public function setMaterial(string $material): void
     {
         $this->material = $material;
-    }
-
-    public function getDilpsDomain(): string
-    {
-        return $this->dilpsDomain;
-    }
-
-    public function setDilpsDomain(string $dilpsDomain): void
-    {
-        $this->dilpsDomain = $dilpsDomain;
     }
 
     public function getTechniqueAuthor(): string

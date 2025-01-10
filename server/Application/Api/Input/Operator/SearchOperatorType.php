@@ -38,7 +38,6 @@ class SearchOperatorType extends AbstractSearchOperatorType
             'locality',
             'country',
             'material',
-            'dilpsDomain',
             'addition',
             'login',
             'email',

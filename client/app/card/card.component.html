@@ -310,26 +310,19 @@
                             }
                         </mat-form-field>
                     }
-                    @if (isDilps && (edit || !!model.dilpsDomain)) {
-                        <mat-form-field
+                    @if (isDilps && (edit || !!model.domains?.length)) {
+                        <app-thesaurus
                             matTooltipPosition="after"
+                            placeholder="Domaines"
                             [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
-                        >
-                            <mat-label>Domaine</mat-label>
-                            <textarea
-                                matInput
-                                maxlength="255"
-                                [readonly]="!edit"
-                                [cdkAutosizeMinRows]="1"
-                                [cdkTextareaAutosize]="true"
-                                [(ngModel)]="model.dilpsDomain"
-                            ></textarea>
-                            @if (edit && model.dilpsDomain?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.dilpsDomain?.length >= 255}">
-                                    {{ model.dilpsDomain!.length }} / 255
-                                </mat-hint>
-                            }
-                        </mat-form-field>
+                            [model]="model.domains"
+                            [allowFreeText]="false"
+                            [multiple]="true"
+                            [previewComponent]="DomainComponent"
+                            [readonly]="!edit"
+                            [service]="domainService"
+                            (modelChange)="model.domains = $any($event)"
+                        />
                     }
                     @if (isDilps && (edit || !!model.material)) {
                         <mat-form-field

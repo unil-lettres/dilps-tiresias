@@ -124,7 +124,6 @@ export class CardService extends AbstractContextualizedService<
             addition: '',
             expandedName: '',
             material: '',
-            dilpsDomain: '',
             techniqueAuthor: '',
             techniqueDate: '',
             objectReference: '',
