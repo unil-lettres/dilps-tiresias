@@ -11,5 +11,5 @@ use Application\Model\DocumentType;
  */
 class DocumentTypeRepository extends AbstractRepository
 {
-    use HasName;
+    use HasNames;
 }

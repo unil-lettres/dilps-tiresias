@@ -11,5 +11,5 @@ use Application\Model\AntiqueName;
  */
 class AntiqueNameRepository extends AbstractRepository
 {
-    use HasName;
+    use HasNames;
 }

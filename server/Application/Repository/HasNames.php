@@ -7,10 +7,10 @@ namespace Application\Repository;
 /**
  * Trait for all repositories with a name.
  */
-trait HasName
+trait HasNames
 {
     /**
-     * Returns an array of fullNames and their ID for all domains.
+     * Returns an array of names and their ID for all entries in the DB.
      */
     public function getNames(): array
     {

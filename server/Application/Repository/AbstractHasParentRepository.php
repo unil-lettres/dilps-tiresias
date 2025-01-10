@@ -38,7 +38,8 @@ abstract class AbstractHasParentRepository extends AbstractRepository
     }
 
     /**
-     * Returns an array of fullNames and their ID for all domains.
+     * Returns an array of fullNames and their ID for all entries in the DB for
+     * the given site.
      */
     public function getFullNames(string $site): array
     {

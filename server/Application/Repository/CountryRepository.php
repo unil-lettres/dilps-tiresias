@@ -11,5 +11,5 @@ use Application\Model\Country;
  */
 class CountryRepository extends AbstractRepository
 {
-    use HasName;
+    use HasNames;
 }
