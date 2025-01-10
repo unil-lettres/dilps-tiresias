@@ -19,13 +19,15 @@ class DomainRepositoryTest extends AbstractRepositoryTest
 
     public function testGetFullNames(): void
     {
-        $actual = $this->repository->getFullNames('dilps');
+        $actual = $this->repository->getFullNames('tiresias');
         $expected = [
             'Test domain 9000' => 9000,
             'Test domain 9001' => 9001,
         ];
-
         self::assertSame($expected, $actual);
+
+        $actual = $this->repository->getFullNames('dilps');
+        self::assertEmpty($actual);
     }
 
     public function testGetSelfAndDescendantsSubQuery(): void
