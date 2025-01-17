@@ -283,17 +283,17 @@ export class CardComponent implements OnInit, OnChanges {
      */
     public visibilities: CardVisibilities = {
         1: {
-            value: CardVisibility.private,
+            value: CardVisibility.Private,
             text: 'par moi, les admins et les abonnés',
             color: 'warn',
         },
         2: {
-            value: CardVisibility.member,
+            value: CardVisibility.Member,
             text: 'par les membres',
             color: 'accent',
         },
         3: {
-            value: CardVisibility.public,
+            value: CardVisibility.Public,
             text: 'par tous',
             color: 'primary',
         },
@@ -577,7 +577,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     public initCard(): void {
         if (this.model) {
-            this.isDilps = this.model.site === Site.dilps;
+            this.isDilps = this.model.site === Site.Dilps;
 
             // Init visibility
             this.visibility = +findKey(this.visibilities, s => {
@@ -753,7 +753,7 @@ export class CardComponent implements OnInit, OnChanges {
         }
 
         const visibleCollections = this.fetchedModel.collections.filter(
-            c => c.visibility !== CollectionVisibility.private,
+            c => c.visibility !== CollectionVisibility.Private,
         );
         this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
 
@@ -917,7 +917,7 @@ export class CardComponent implements OnInit, OnChanges {
             this.fetchedModel.owner.id === this.user.id &&
             !!this.fetchedModel.creator &&
             this.fetchedModel.creator.id === this.user.id &&
-            this.fetchedModel.visibility === CardVisibility.private
+            this.fetchedModel.visibility === CardVisibility.Private
         );
     }
 

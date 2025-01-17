@@ -10,7 +10,7 @@ describe('CarouselComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.tiresias}],
+            providers: [MOCK_APOLLO_PROVIDER, {provide: SITE, useValue: Site.Tiresias}],
         }).compileComponents();
 
         fixture = TestBed.createComponent(CarouselComponent);

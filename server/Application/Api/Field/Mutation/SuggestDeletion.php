@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
+use Application\Enum\ChangeType;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Repository\ChangeRepository;
@@ -23,13 +25,14 @@ class SuggestDeletion implements FieldInterface
                 'request' => Type::nonNull(Type::string()),
             ],
             'resolve' => function ($root, array $args): Change {
+                /** @var Site $site */
                 $site = $root['site'];
 
                 $original = $args['id']->getEntity();
 
                 /** @var ChangeRepository $changeRepository */
                 $changeRepository = _em()->getRepository(Change::class);
-                $change = $changeRepository->getOrCreate(Change::TYPE_DELETE, $original, $args['request'], $site);
+                $change = $changeRepository->getOrCreate(ChangeType::Delete, $original, $args['request'], $site);
 
                 Helper::throwIfDenied($change, 'create');
 

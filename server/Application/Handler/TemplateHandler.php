@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Handler;
 
-use Application\DBAL\Types\PrecisionType;
+use Application\Enum\Precision;
+use Application\Enum\Site;
 use Application\Model\User;
 use Application\Repository\CountryRepository;
 use Application\Repository\DocumentTypeRepository;
@@ -52,7 +53,7 @@ class TemplateHandler implements RequestHandlerInterface
 
     private int $col = 1;
 
-    public function __construct(private readonly string $site, private readonly DomainRepository $domainRepository, private readonly PeriodRepository $periodRepository, private readonly CountryRepository $countryRepository, private readonly MaterialRepository $materialRepository, private readonly DocumentTypeRepository $documentTypeRepository)
+    public function __construct(private readonly Site $site, private readonly DomainRepository $domainRepository, private readonly PeriodRepository $periodRepository, private readonly CountryRepository $countryRepository, private readonly MaterialRepository $materialRepository, private readonly DocumentTypeRepository $documentTypeRepository)
     {
     }
 
@@ -71,7 +72,7 @@ class TemplateHandler implements RequestHandlerInterface
      */
     private function export(): Spreadsheet
     {
-        $title = $this->site . '_' . date('c', time());
+        $title = $this->site->getDescription() . '_' . date('c', time());
 
         $spreadsheet = self::createSpreadsheet(User::getCurrent(), $this->site, $title);
         $sheet = $spreadsheet->getActiveSheet();
@@ -100,9 +101,9 @@ class TemplateHandler implements RequestHandlerInterface
 
         $precisionName = 'Précisions';
         $precisions = [
-            PrecisionType::LOCALITY,
-            PrecisionType::SITE,
-            PrecisionType::BUILDING,
+            Precision::Locality->value,
+            Precision::Site->value,
+            Precision::Building->value,
         ];
         $this->createList($spreadsheet, $precisions, $precisionName);
 
@@ -188,16 +189,16 @@ class TemplateHandler implements RequestHandlerInterface
             ->setFormula1('=' . $name);
     }
 
-    public static function createSpreadsheet(?User $user, string $site, string $title): Spreadsheet
+    public static function createSpreadsheet(?User $user, Site $site, string $title): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
 
         // Set a few meta data
         $properties = $spreadsheet->getProperties();
         $properties->setCreator($user ? $user->getLogin() : '');
-        $properties->setLastModifiedBy($site);
+        $properties->setLastModifiedBy($site->getDescription());
         $properties->setTitle($title);
-        $properties->setSubject('Généré par le système ' . $site);
+        $properties->setSubject('Généré par le système ' . $site->getDescription());
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
         $properties->setKeywords('Université de Lausanne');
 

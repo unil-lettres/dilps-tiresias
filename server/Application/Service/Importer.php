@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
-use Application\DBAL\Types\PrecisionType;
+use Application\Enum\Precision;
+use Application\Enum\Site;
 use Application\Handler\TemplateHandler;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
@@ -55,7 +56,7 @@ class Importer
 
     private ?Collection $collection = null;
 
-    public function __construct(private readonly string $site)
+    public function __construct(private readonly Site $site)
     {
         /** @var DomainRepository $domainRepository */
         $domainRepository = _em()->getRepository(Domain::class);
@@ -250,20 +251,15 @@ class Importer
         return $result;
     }
 
-    private function readPrecision(Worksheet $sheet, int $col, int $row): ?string
+    private function readPrecision(Worksheet $sheet, int $col, int $row): ?Precision
     {
         $value = $sheet->getCell([$col, $row])->getValue();
         if (!$value) {
             return null;
         }
 
-        $values = [
-            PrecisionType::BUILDING,
-            PrecisionType::LOCALITY,
-            PrecisionType::SITE,
-        ];
-
-        if (in_array($value, $values, true)) {
+        $value = Precision::tryFrom($value);
+        if ($value) {
             return $value;
         }
 

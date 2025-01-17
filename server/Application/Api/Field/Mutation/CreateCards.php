@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Service\Importer;
@@ -24,6 +25,7 @@ class CreateCards implements FieldInterface
                 'collection' => _types()->getId(Collection::class),
             ],
             'resolve' => function ($root, array $args): array {
+                /** @var Site $site */
                 $site = $root['site'];
 
                 // Check ACL

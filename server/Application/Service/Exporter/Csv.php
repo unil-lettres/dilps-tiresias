@@ -93,7 +93,7 @@ class Csv implements Writer
             $card->getTechniqueDate(),
             $card->getLatitude(),
             $card->getLongitude(),
-            $card->getPrecision(),
+            $card->getPrecision()?->value,
         ]);
     }
 

@@ -19,7 +19,7 @@ describe('TypePipe', () => {
                 MOCK_APOLLO_PROVIDER,
                 {
                     provide: SITE,
-                    useValue: Site.tiresias,
+                    useValue: Site.Tiresias,
                 },
                 {
                     provide: LOCAL_STORAGE,
@@ -33,9 +33,9 @@ describe('TypePipe', () => {
 
     it('create an instance', () => {
         expect(pipe).toBeTruthy();
-        expect(pipe.transform(UserType.default)).toBe('Externe');
-        expect(pipe.transform(UserType.aai)).toBe('AAI');
-        expect(pipe.transform(UserType.legacy)).toBe('Legacy');
+        expect(pipe.transform(UserType.Default)).toBe('Externe');
+        expect(pipe.transform(UserType.Aai)).toBe('AAI');
+        expect(pipe.transform(UserType.Legacy)).toBe('Legacy');
         expect(pipe.transform('non-existing-type' as UserType)).toBe('');
     });
 });

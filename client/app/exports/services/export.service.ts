@@ -37,7 +37,7 @@ export class ExportService extends AbstractContextualizedService<
 
     public override getDefaultForServer(): Required<CreateExportInput> {
         return {
-            format: ExportFormat.zip,
+            format: ExportFormat.Zip,
             maxHeight: 0,
             includeLegend: true,
             textColor: '#FFFFFF',

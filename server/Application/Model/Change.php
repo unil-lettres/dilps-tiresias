@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\Api\Enum\ChangeTypeType;
 use Application\Api\Input\Sorting\Owner;
+use Application\Enum\ChangeType;
 use Application\Repository\ChangeRepository;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -20,14 +20,10 @@ use GraphQL\Doctrine\Attribute as API;
 #[ORM\Entity(ChangeRepository::class)]
 class Change extends AbstractModel implements HasSiteInterface
 {
-    final public const TYPE_CREATE = 'create';
-    final public const TYPE_UPDATE = 'update';
-    final public const TYPE_DELETE = 'delete';
-
     use HasSite;
 
-    #[ORM\Column(type: 'ChangeType', options: ['default' => self::TYPE_UPDATE])]
-    private string $type = self::TYPE_UPDATE;
+    #[ORM\Column(type: 'ChangeType', options: ['default' => ChangeType::Update])]
+    private ChangeType $type = ChangeType::Update;
 
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Card::class)]
@@ -43,8 +39,7 @@ class Change extends AbstractModel implements HasSiteInterface
     /**
      * Get the type of change.
      */
-    #[API\Field(type: ChangeTypeType::class)]
-    public function getType(): string
+    public function getType(): ChangeType
     {
         return $this->type;
     }
@@ -52,8 +47,7 @@ class Change extends AbstractModel implements HasSiteInterface
     /**
      * Set the type of change.
      */
-    #[API\Field(type: ChangeTypeType::class)]
-    public function setType(string $type): void
+    public function setType(ChangeType $type): void
     {
         $this->type = $type;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Generator;
@@ -14,12 +15,12 @@ use InvalidArgumentException;
  */
 class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
-    public function getOrCreate(string $site): Statistic
+    public function getOrCreate(Site $site): Statistic
     {
         $date = date('Y-m');
         $statistic = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
             'date' => $date,
-            'site' => $site,
+            'site' => $site->value,
         ]));
 
         if (!$statistic) {
@@ -47,7 +48,7 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
         return 'SELECT id FROM statistic WHERE site = ' . $this->getEntityManager()->getConnection()->quote($user->getSite());
     }
 
-    public function getExtraStatistics(string $site, string $period, ?User $user): array
+    public function getExtraStatistics(Site $site, string $period, ?User $user): array
     {
         $userSuffix = $user ? ' par ' . $user->getLogin() : '';
 
@@ -87,7 +88,7 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
         return $extraStatistics;
     }
 
-    private function getCardVisibility(string $site, string $period, ?User $user, bool $isCreation): array
+    private function getCardVisibility(Site $site, string $period, ?User $user, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $userClause = $this->getUserClause($user, $isCreation);
@@ -144,11 +145,11 @@ $userClause
         return '';
     }
 
-    private function toTableRows(string $site, string $name, string $query): array
+    private function toTableRows(Site $site, string $name, string $query): array
     {
         $connection = $this->getEntityManager()->getConnection();
         $params = [
-            'site' => $site,
+            'site' => $site->value,
         ];
 
         $record = $connection->executeQuery($query, $params)->fetchAssociative();
@@ -167,7 +168,7 @@ $userClause
         ];
     }
 
-    private function getCardDescription(string $site, string $period, ?User $user, bool $isCreation): array
+    private function getCardDescription(Site $site, string $period, ?User $user, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $userClause = $this->getUserClause($user, $isCreation);
@@ -185,7 +186,7 @@ $userClause
         return $this->toTableRows($site, 'Titre étendu', $query);
     }
 
-    private function getCardGeolocation(string $site, string $period, ?User $user, bool $isCreation): array
+    private function getCardGeolocation(Site $site, string $period, ?User $user, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $userClause = $this->getUserClause($user, $isCreation);
@@ -203,7 +204,7 @@ $userClause
         return $this->toTableRows($site, 'Géolocalisation', $query);
     }
 
-    private function oneChart(string $site, string $period, string $table, bool $isCreation, string $field2, string $name, ?User $user = null): array
+    private function oneChart(Site $site, string $period, string $table, bool $isCreation, string $field2, string $name, ?User $user = null): array
     {
         $count = $this->countCardByMonth($site, $period, $table, $isCreation, $field2, $user);
         $countByDate = $this->groupByDateAndGroup($count, $period);
@@ -248,7 +249,7 @@ $userClause
         return $data;
     }
 
-    private function countCardByMonth(string $site, string $period, string $table, bool $isCreation, string $groupingField, ?User $user = null): array
+    private function countCardByMonth(Site $site, string $period, string $table, bool $isCreation, string $groupingField, ?User $user = null): array
     {
         $field = $this->getDateField($isCreation);
         $connection = $this->getEntityManager()->getConnection();
@@ -268,7 +269,7 @@ ORDER BY $month, $groupingField ASC
 ";
 
         $params = [
-            'site' => $site,
+            'site' => $site->value,
         ];
 
         $result = $connection->executeQuery($query, $params)->fetchAllAssociative();
@@ -349,7 +350,7 @@ ORDER BY $month, $groupingField ASC
         yield $date;
     }
 
-    private function getUserType(string $site, string $period, bool $isCreation): array
+    private function getUserType(Site $site, string $period, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $query = "SELECT
@@ -365,7 +366,7 @@ $periodClause
         return $this->toTableRows($site, 'Type', $query);
     }
 
-    private function getUserRole(string $site, string $period, bool $isCreation): array
+    private function getUserRole(Site $site, string $period, bool $isCreation): array
     {
         $periodClause = $this->getPeriodClause($isCreation, $period);
         $query = "SELECT

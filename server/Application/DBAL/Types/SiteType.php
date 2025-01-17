@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\Site;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class SiteType extends EnumType
+class SiteType extends PhpEnumType
 {
-    final public const DILPS = 'dilps';
-    final public const TIRESIAS = 'tiresias';
-
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            self::DILPS,
-            self::TIRESIAS,
-        ];
+        return Site::class;
     }
 }

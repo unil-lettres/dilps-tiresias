@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
@@ -11,7 +12,7 @@ use InvalidArgumentException;
 
 class StatisticRepositoryTest extends AbstractRepositoryTest
 {
-    private StatisticRepository  $repository;
+    private StatisticRepository $repository;
 
     protected function setUp(): void
     {
@@ -22,7 +23,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
     /**
      * @dataProvider providerGetExtraStatistics
      */
-    public function testGetExtraStatistics(string $site, string $poeriod, ?int $userId): void
+    public function testGetExtraStatistics(Site $site, string $poeriod, ?int $userId): void
     {
         $user = $userId ? $this->getEntityManager()->getRepository(User::class)->getOneById($userId) : null;
         $actual = $this->repository->getExtraStatistics($site, $poeriod, $user);
@@ -51,19 +52,18 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
 
     public function providerGetExtraStatistics(): iterable
     {
-        yield ['dilps', 'month', null];
-        yield ['dilps', 'all', null];
-        yield ['dilps', '2019', null];
-        yield ['tiresias', 'month', 1000];
-        yield ['tiresias', 'all', 1000];
-        yield ['tiresias', '2019', 1000];
-        yield ['tir\'asd"esias', '2019', 1000];
+        yield [Site::Dilps, 'month', null];
+        yield [Site::Dilps, 'all', null];
+        yield [Site::Dilps, '2019', null];
+        yield [Site::Tiresias, 'month', 1000];
+        yield [Site::Tiresias, 'all', 1000];
+        yield [Site::Tiresias, '2019', 1000];
     }
 
     /**
      * @dataProvider providerGetExtraStatisticsException
      */
-    public function testGetExtraStatisticsException(string $site, string $period, ?int $userId): void
+    public function testGetExtraStatisticsException(Site $site, string $period, ?int $userId): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -73,7 +73,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
 
     public function providerGetExtraStatisticsException(): iterable
     {
-        yield ['tiresias', '20asd\'1"9', 1000];
-        yield ['tiresias', 'bbb', 1000];
+        yield [Site::Tiresias, '20asd\'1"9', 1000];
+        yield [Site::Tiresias, 'bbb', 1000];
     }
 }

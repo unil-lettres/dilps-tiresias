@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Middleware;
 
+use Application\Enum\Site;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use Mezzio\Session\SessionInterface;
@@ -15,7 +16,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly UserRepository $userRepository, private readonly string $site)
+    public function __construct(private readonly UserRepository $userRepository, private readonly Site $site)
     {
     }
 

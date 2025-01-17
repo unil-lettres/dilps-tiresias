@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Institution;
 
 /**
@@ -14,7 +15,7 @@ class InstitutionRepository extends AbstractRepository
     /**
      * Get or create an institution by its name.
      */
-    public function getOrCreateByName(?string $name, string $site): ?Institution
+    public function getOrCreateByName(?string $name, Site $site): ?Institution
     {
         $name = trim($name ?? '');
 
@@ -24,7 +25,7 @@ class InstitutionRepository extends AbstractRepository
 
         $institution = $this->findOneBy([
             'name' => $name,
-            'site' => $site,
+            'site' => $site->value,
         ]);
 
         if (!$institution) {

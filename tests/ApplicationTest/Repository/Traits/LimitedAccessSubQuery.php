@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository\Traits;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -23,7 +23,7 @@ trait LimitedAccessSubQuery
     {
         /** @var UserRepository $userRepository */
         $userRepository = $this->getEntityManager()->getRepository(User::class);
-        $user = $userRepository->getOneByLogin($login, SiteType::DILPS);
+        $user = $userRepository->getOneByLogin($login, Site::Dilps);
         $subQuery = $this->repository->getAccessibleSubQuery($user);
 
         if (!$subQuery) {

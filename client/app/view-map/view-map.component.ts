@@ -50,7 +50,7 @@ export class ViewMapComponent {
     };
     public markers: Marker[] | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
-        mapTypeId: this.site === Site.dilps ? 'roadmap' : 'satellite',
+        mapTypeId: this.site === Site.Dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
         scrollwheel: true,
@@ -60,7 +60,7 @@ export class ViewMapComponent {
 
     public static getIcon(iconName: Precision): Icon {
         return {
-            url: 'assets/icons/gmap_' + (iconName || Precision.site) + '.png',
+            url: 'assets/icons/gmap_' + (iconName || Precision.Site) + '.png',
             size: new google.maps.Size(32, 37),
             anchor: new google.maps.Point(16, 37),
         };

@@ -6,7 +6,7 @@ namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
 use Application\Api\Input\CreateExportInputType;
-use Application\DBAL\Types\ExportFormatType;
+use Application\Enum\ExportFormat;
 use Application\Model\Export;
 use Application\Repository\ExportRepository;
 use Application\Service\Exporter\Exporter;
@@ -81,7 +81,7 @@ class CreateExport implements FieldInterface
         /** @var array */
         $config = $container->get('config');
         $exportPptxMaximumCardCount = $config['exportPptxMaximumCardCount'];
-        if ($export->getFormat() === ExportFormatType::PPTX && $cardCount > $exportPptxMaximumCardCount) {
+        if ($export->getFormat() === ExportFormat::Pptx && $cardCount > $exportPptxMaximumCardCount) {
             throw new Exception("L'export en PPTX est limité à $exportPptxMaximumCardCount fiches, mais la sélection actuelle est de $cardCount fiches.");
         }
 

@@ -20,12 +20,12 @@ export function canActivateAuth(route: ActivatedRouteSnapshot, state: RouterStat
             if (!user && !userService.hasTempAccess()) {
                 switch (site) {
                     // Tiresias visitors should be automatically logged as guest
-                    case Site.tiresias:
+                    case Site.Tiresias:
                         userService.startTempAccess();
                         router.navigateByUrl(state.url);
                         return true;
                     // Dilps visitors should be redirected to the login view
-                    case Site.dilps:
+                    case Site.Dilps:
                     default:
                         router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
                         return false;

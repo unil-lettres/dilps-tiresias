@@ -11,6 +11,7 @@ use Application\Acl\Assertion\IsOwnerOrResponsible;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\SameSite;
 use Application\Acl\Assertion\Visibility;
+use Application\Enum\CollectionVisibility;
 use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
@@ -109,7 +110,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $card, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $change, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $collection, 'create', new SameSite());
-        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([Collection::VISIBILITY_MEMBER, Collection::VISIBILITY_ADMINISTRATOR])), new SameSite()));
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([CollectionVisibility::Member, CollectionVisibility::Administrator])), new SameSite()));
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $tag, 'read');

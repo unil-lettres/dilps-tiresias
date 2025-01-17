@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Enum\UserType;
 use Application\Repository\StatisticRepository;
 use Application\Traits\HasSite;
 use Application\Traits\HasSiteInterface;
@@ -150,12 +151,12 @@ class Statistic extends AbstractModel implements HasSiteInterface
         $user = User::getCurrent();
         if (!$user) {
             ++$this->anonymousPageCount;
-        } elseif ($user->getType() === User::TYPE_DEFAULT) {
+        } elseif ($user->getType() === UserType::Default) {
             ++$this->defaultPageCount;
-        } elseif ($user->getType() === User::TYPE_AAI) {
+        } elseif ($user->getType() === UserType::Aai) {
             ++$this->aaiPageCount;
         } else {
-            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType()->value);
         }
     }
 
@@ -164,12 +165,12 @@ class Statistic extends AbstractModel implements HasSiteInterface
         $user = User::getCurrent();
         if (!$user) {
             ++$this->anonymousDetailCount;
-        } elseif ($user->getType() === User::TYPE_DEFAULT) {
+        } elseif ($user->getType() === UserType::Default) {
             ++$this->defaultDetailCount;
-        } elseif ($user->getType() === User::TYPE_AAI) {
+        } elseif ($user->getType() === UserType::Aai) {
             ++$this->aaiDetailCount;
         } else {
-            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType()->value);
         }
     }
 
@@ -178,32 +179,32 @@ class Statistic extends AbstractModel implements HasSiteInterface
         $user = User::getCurrent();
         if (!$user) {
             ++$this->anonymousSearchCount;
-        } elseif ($user->getType() === User::TYPE_DEFAULT) {
+        } elseif ($user->getType() === UserType::Default) {
             ++$this->defaultSearchCount;
-        } elseif ($user->getType() === User::TYPE_AAI) {
+        } elseif ($user->getType() === UserType::Aai) {
             ++$this->aaiSearchCount;
         } else {
-            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType()->value);
         }
     }
 
     public function recordLogin(): void
     {
         $user = User::getCurrent();
-        if ($user->getType() === User::TYPE_DEFAULT) {
+        if ($user->getType() === UserType::Default) {
             ++$this->defaultLoginCount;
 
             if (!in_array($user->getId(), $this->defaultLogins, true)) {
                 $this->defaultLogins[] = $user->getId();
             }
-        } elseif ($user->getType() === User::TYPE_AAI) {
+        } elseif ($user->getType() === UserType::Aai) {
             ++$this->aaiLoginCount;
 
             if (!in_array($user->getId(), $this->aaiLogins, true)) {
                 $this->aaiLogins[] = $user->getId();
             }
         } else {
-            throw new InvalidArgumentException('User type not supported: ' . $user->getType());
+            throw new InvalidArgumentException('User type not supported: ' . $user->getType()->value);
         }
     }
 }

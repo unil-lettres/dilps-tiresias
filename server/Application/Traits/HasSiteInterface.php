@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Enum\Site;
+
 /**
  * Trait for all objects with a site to separate them from each other.
  */
 interface HasSiteInterface
 {
-    public function getSite(): string;
+    public function getSite(): Site;
 
-    public function setSite(string $site): void;
+    public function setSite(Site $site): void;
 }
