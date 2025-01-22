@@ -1711,10 +1711,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.2.tgz#e2c64c2ddb3c60793a39236b52624fde323e610a"
   integrity sha512-BV75kFQmpfuSBNQ1jyKu+IdGkFTMESjPrtKrEyc3MqcmVhV5IiYU0LXTaghLZozuZgCT9HfMOnEsh05aS2j9uQ==
 
-"@ecodev/natural@^61.3.1":
-  version "61.3.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-61.3.1.tgz#9c0ae7e69bdc92ed549bcb24263162c5e2bc4961"
-  integrity sha512-xMjiZT7S0t3jgv7SRChRmm7VOl+ApA0Ad2W+W4uoGY/mgnNwQ2ZkbH8DSG+6z9WHwGzVBmeG9eK0qGUA3krb6w==
+"@ecodev/natural@^62.0.0":
+  version "62.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-62.0.0.tgz#14ed95bb4897b7502da7adb8c388fd61fd607d82"
+  integrity sha512-OAO3r+E0esPr/Zf0apnYpJsU1qqojzl3ElF+Qhm0rDXdUukNW3kIHLcyccMfrRN9yqQPrHriNQPShmTauQuFiw==
   dependencies:
     crypto-es "^2.0.3"
     extract-files "^13.0.0"
@@ -9884,10 +9884,15 @@ tsconfig-paths@^4.1.2:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.6.3, tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.5.3, tslib@^2.6.1, tslib@^2.6.2, tslib@^2.6.3, tslib@~2.6.0:
+tslib@2.6.3, tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0, tslib@^2.5.0, tslib@^2.6.1, tslib@^2.6.2, tslib@^2.6.3, tslib@~2.6.0:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.3.tgz#0438f810ad7a9edcde7a241c3d80db693c8cbfe0"
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
+
+tslib@^2.5.3:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 tslib@~2.4.0:
   version "2.4.1"

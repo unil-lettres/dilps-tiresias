@@ -149,12 +149,6 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 // Align right so big number are easier to spot
 .mat-column-usageCount {
     width: 12em;
-    text-align: right !important;
-}
-
-// Try to keep number roughly under the column header
-td.mat-column-usageCount {
-    padding-right: 3em !important;
 }
 
 // Style PhotoSwipe link to card button. Cannot be put in corresponding

@@ -20,7 +20,7 @@
                 <!-- Active Column -->
 
                 <ng-container matColumnDef="isActive">
-                    <th *matHeaderCellDef mat-header-cell natural-3em-column>Actif</th>
+                    <th *matHeaderCellDef mat-header-cell class="natural-3em-column">Actif</th>
                     <td *matCellDef="let element" mat-cell>
                         @if (element.isActive) {
                             <mat-icon fontIcon="check" />
@@ -30,7 +30,7 @@
                 <!-- Image Column -->
 
                 <ng-container matColumnDef="image">
-                    <th *matHeaderCellDef mat-header-cell natural-3em-column>Image</th>
+                    <th *matHeaderCellDef mat-header-cell class="natural-3em-column">Image</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="image" [style.background-image]="'url(' + element.imageUrl + ')'"></div>
                     </td>

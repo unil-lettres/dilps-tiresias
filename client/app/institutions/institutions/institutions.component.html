@@ -31,8 +31,16 @@
             </ng-container>
 
             <ng-container matColumnDef="usageCount">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header>Nombre de fiches</th>
-                <td *matCellDef="let element" mat-cell>{{ element.usageCount }}</td>
+                <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                    class="natural-align-right"
+                    arrowPosition="before"
+                >
+                    Nombre de fiches
+                </th>
+                <td *matCellDef="let element" mat-cell class="natural-align-right">{{ element.usageCount }}</td>
             </ng-container>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
