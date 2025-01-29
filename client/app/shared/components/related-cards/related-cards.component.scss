@@ -79,8 +79,6 @@
 
     > div {
         transition: transform 0.1s;
-        width: fit-content;
-        overflow: hidden;
 
         &:hover {
             transform: translateY(-5px);
