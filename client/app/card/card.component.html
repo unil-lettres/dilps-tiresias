@@ -245,6 +245,7 @@
                             [previewComponent]="ArtistComponent"
                             [readonly]="!edit"
                             [service]="artistService"
+                            [matchFromStartAutocomplete]="true"
                             (modelChange)="model.artists = $any($event)"
                         />
                     }
@@ -321,6 +322,7 @@
                             [previewComponent]="DomainComponent"
                             [readonly]="!edit"
                             [service]="domainService"
+                            [matchFromStartAutocomplete]="true"
                             (modelChange)="model.domains = $any($event)"
                         />
                     }
