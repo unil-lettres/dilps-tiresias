@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Mutation;
 
+use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Repository\StatisticRepository;
 use Ecodev\Felix\Api\Field\FieldInterface;
@@ -17,6 +18,7 @@ class RecordPage implements FieldInterface
             'type' => Type::nonNull(Type::boolean()),
             'description' => 'Record one page visit in statistics',
             'resolve' => function ($root, array $args): bool {
+                /** @var Site $site */
                 $site = $root['site'];
 
                 /** @var StatisticRepository $statisticRepository */

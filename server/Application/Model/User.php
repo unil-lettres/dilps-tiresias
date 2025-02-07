@@ -6,9 +6,9 @@ namespace Application\Model;
 
 use Application\Acl\Acl;
 use Application\Api\Enum\UserRoleType;
-use Application\Api\Enum\UserTypeType;
 use Application\Api\Output\GlobalPermissionsListType;
 use Application\Api\Scalar\LoginType;
+use Application\Enum\UserType;
 use Application\Repository\UserRepository;
 use Application\Service\Role;
 use Application\Traits\HasInstitution;
@@ -35,21 +35,6 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     use HasInstitution;
     use HasName;
     use HasSite;
-
-    /**
-     * Someone who is a normal user, not part of AAI.
-     */
-    final public const TYPE_DEFAULT = 'default';
-
-    /**
-     * Someone who log in via AAI system.
-     */
-    final public const TYPE_AAI = 'aai';
-
-    /**
-     * Empty shell used for legacy.
-     */
-    final public const TYPE_LEGACY = 'legacy';
 
     final public const ROLE_ANONYMOUS = 'anonymous';
     final public const ROLE_STUDENT = 'student';
@@ -123,8 +108,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $termsAgreement = null;
 
-    #[ORM\Column(type: 'UserType', options: ['default' => self::TYPE_DEFAULT])]
-    private string $type = self::TYPE_DEFAULT;
+    #[ORM\Column(type: 'UserType', options: ['default' => UserType::Default])]
+    private UserType $type = UserType::Default;
 
     /**
      * Constructor.
@@ -257,8 +242,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Set user type.
      */
-    #[API\Input(type: UserTypeType::class)]
-    public function setType(string $type): void
+    public function setType(UserType $type): void
     {
         $this->type = $type;
     }
@@ -266,8 +250,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * Get user type.
      */
-    #[API\Field(type: UserTypeType::class)]
-    public function getType(): string
+    public function getType(): UserType
     {
         return $this->type;
     }

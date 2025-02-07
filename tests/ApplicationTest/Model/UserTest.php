@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Model\User;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +18,7 @@ class UserTest extends TestCase
     public function testGetGlobalPermissions(): void
     {
         $user = new User();
-        $user->setSite(SiteType::DILPS);
+        $user->setSite(Site::Dilps);
         $actual = $user->getGlobalPermissions();
         $expected = [
             'artist' => [
@@ -122,7 +122,7 @@ class UserTest extends TestCase
         self::assertSame($user, User::getCurrent());
 
         $admin = new User(User::ROLE_ADMINISTRATOR);
-        $admin->setSite(SiteType::DILPS);
+        $admin->setSite(Site::Dilps);
         $actualForAdmin = $admin->getGlobalPermissions();
 
         self::assertEquals($expectedForAdmin, $actualForAdmin);

@@ -39,7 +39,7 @@ export const adminFacets: NaturalSearchFacets = [
         field: 'visibility',
         component: TypeSelectComponent,
         configuration: {
-            items: [CardVisibility.public, CardVisibility.member, CardVisibility.private],
+            items: [CardVisibility.Public, CardVisibility.Member, CardVisibility.Private],
             multiple: true,
             operators: false,
         },
@@ -130,7 +130,7 @@ export function dilps(): NaturalSearchFacets {
             display: '[Inclure Tiresias]',
             field: 'site',
             name: 'includeTiresias',
-            condition: {equal: {value: Site.dilps}},
+            condition: {equal: {value: Site.Dilps}},
             inversed: true,
         } satisfies FlagFacet<CardFilterGroupConditionSite>,
     ];
@@ -152,7 +152,7 @@ export function tiresias(): NaturalSearchFacets {
             display: '[Inclure Dilps]',
             field: 'site',
             name: 'includeDilps',
-            condition: {equal: {value: Site.tiresias}},
+            condition: {equal: {value: Site.Tiresias}},
             inversed: true,
         } satisfies FlagFacet<CardFilterGroupConditionSite>,
         {

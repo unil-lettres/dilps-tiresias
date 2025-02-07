@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\Api\Enum\CollectionVisibilityType;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
+use Application\Enum\CollectionVisibility;
 use Application\Repository\CollectionRepository;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasParent;
@@ -33,12 +33,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     use HasSite;
     use HasSorting;
 
-    final public const VISIBILITY_PRIVATE = 'private';
-    final public const VISIBILITY_ADMINISTRATOR = 'administrator';
-    final public const VISIBILITY_MEMBER = 'member';
-
-    #[ORM\Column(type: 'CollectionVisibility', options: ['default' => self::VISIBILITY_PRIVATE])]
-    private string $visibility = self::VISIBILITY_PRIVATE;
+    #[ORM\Column(type: 'CollectionVisibility', options: ['default' => CollectionVisibility::Private])]
+    private CollectionVisibility $visibility = CollectionVisibility::Private;
 
     #[ORM\Column(type: 'text')]
     private string $description = '';
@@ -81,8 +77,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Return whether this is publicly available to only to member, or only administrators, or only owner.
      */
-    #[API\Field(type: CollectionVisibilityType::class)]
-    public function getVisibility(): string
+    public function getVisibility(): CollectionVisibility
     {
         return $this->visibility;
     }
@@ -90,8 +85,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Set whether this is publicly available to only to member, or only administrators, or only owner.
      */
-    #[API\Input(type: CollectionVisibilityType::class)]
-    public function setVisibility(string $visibility): void
+    public function setVisibility(CollectionVisibility $visibility): void
     {
         $this->visibility = $visibility;
     }

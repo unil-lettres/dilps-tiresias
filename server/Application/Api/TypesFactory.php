@@ -16,16 +16,7 @@ class TypesFactory
         $entityManager = $container->get(EntityManager::class);
 
         $invokables = [
-            Enum\CardVisibilityType::class,
-            Enum\ChangeTypeType::class,
-            Enum\CollectionVisibilityType::class,
-            Enum\ExportFormatType::class,
-            Enum\ExportStatusType::class,
-            Enum\OrderType::class,
-            Enum\PrecisionType::class,
-            Enum\SiteType::class,
             Enum\UserRoleType::class,
-            Enum\UserTypeType::class,
             Input\CreateExportInputType::class,
             \Ecodev\Felix\Api\Input\PaginationInputType::class,
             MutationType::class,
@@ -65,6 +56,7 @@ class TypesFactory
             ],
             'abstract_factories' => [
                 \Ecodev\Felix\Api\Output\PaginationTypeFactory::class,
+                \Ecodev\Felix\Api\Enum\EnumAbstractFactory::class,
             ],
         ]);
 

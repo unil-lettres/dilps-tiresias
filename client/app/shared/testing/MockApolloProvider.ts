@@ -39,10 +39,10 @@ class MockApollo extends Apollo {
             Date: () => '2018-02-27',
             DateTime: () => '2018-01-18T11:43:31',
             Login: () => 'test string',
-            UserType: () => 'default',
+            UserType: () => 'Default',
             UserRole: () => 'student',
-            CardVisibility: () => 'private',
-            CollectionVisibility: () => 'private',
+            CardVisibility: () => 'Private',
+            CollectionVisibility: () => 'Private',
             Url: () => 'https://ecodev.ch',
         };
 

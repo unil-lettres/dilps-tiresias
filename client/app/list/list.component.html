@@ -78,7 +78,7 @@
                 <app-export-menu
                     matTooltip="Exporter"
                     [selectedCards]="selected"
-                    [showExcelExportation]="this.site !== Site.dilps"
+                    [showExcelExportation]="this.site !== Site.Dilps"
                 />
                 @if (canMassEdit()) {
                     <button mat-icon-button matTooltip="Editer en masse" (click)="edit(selected)">
@@ -107,7 +107,7 @@
                     </button>
                 }
                 @if (showDownloadCollection) {
-                    <app-export-menu [collection]="collection" [showExcelExportation]="this.site !== Site.dilps" />
+                    <app-export-menu [collection]="collection" [showExcelExportation]="this.site !== Site.Dilps" />
                 }
             }
             <natural-search
@@ -127,7 +127,7 @@
                     <mat-icon naturalIcon="view_list" />
                 </button>
             }
-            @if (site === Site.tiresias && selected.length && viewMode !== ViewMode.map) {
+            @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
                 <button mat-icon-button matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
                     <mat-icon naturalIcon="map" />
                 </button>
@@ -135,7 +135,7 @@
             <button
                 mat-icon-button
                 matTooltip="Trier"
-                [matMenuTriggerFor]="site === Site.dilps ? dilpsSortingMenu : tiresiasSortingMenu"
+                [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
             >
                 <mat-icon svgIcon="sort_asc" />
             </button>
@@ -164,14 +164,14 @@
                 </button>
             }
             @if (selected.length) {
-                @if (!!user && site === Site.dilps) {
+                @if (!!user && site === Site.Dilps) {
                     <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
                         <mat-icon svgIcon="cards_game" />
                     </button>
                 }
             }
             @if (!selected.length && user) {
-                @if (site === Site.dilps) {
+                @if (site === Site.Dilps) {
                     <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
                         <mat-icon svgIcon="cards_game" />
                     </button>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Export;
 use Application\Repository\CardRepository;
@@ -23,7 +23,7 @@ class CardRepositoryTest extends AbstractRepositoryTest
     {
         $card = new Card('test card');
 
-        $card->setSite(SiteType::DILPS);
+        $card->setSite(Site::Dilps);
         $card->setFilename('test card.jpg');
         $this->getEntityManager()->persist($card);
         $this->getEntityManager()->flush();

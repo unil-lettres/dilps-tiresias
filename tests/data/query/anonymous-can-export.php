@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-use Application\DBAL\Types\ExportFormatType;
-use Application\DBAL\Types\ExportStatusType;
-use Application\DBAL\Types\SiteType;
-
 return [
     [
         'query' => 'mutation CreateExport($zip: CreateExportInput!, $pptx: CreateExportInput!, $csv: CreateExportInput!) {
@@ -21,32 +17,32 @@ return [
         }',
         'variables' => [
             'zip' => [
-                'format' => ExportFormatType::ZIP,
+                'format' => Application\Enum\ExportFormat::Zip,
                 'cards' => [6005],
-                'site' => SiteType::DILPS,
+                'site' => Application\Enum\Site::Dilps,
             ],
             'pptx' => [
-                'format' => ExportFormatType::PPTX,
+                'format' => Application\Enum\ExportFormat::Pptx,
                 'cards' => [6005],
-                'site' => SiteType::DILPS,
+                'site' => Application\Enum\Site::Dilps,
             ],
             'csv' => [
-                'format' => ExportFormatType::CSV,
+                'format' => Application\Enum\ExportFormat::Csv,
                 'cards' => [6005],
-                'site' => SiteType::DILPS,
+                'site' => Application\Enum\Site::Dilps,
             ],
         ],
     ],
     [
         'data' => [
             'zip' => [
-                'status' => ExportStatusType::DONE,
+                'status' => 'Done',
             ],
             'pptx' => [
-                'status' => ExportStatusType::DONE,
+                'status' => 'Done',
             ],
             'csv' => [
-                'status' => ExportStatusType::DONE,
+                'status' => 'Done',
             ],
         ],
     ],

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Middleware;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Middleware\AuthenticationMiddleware;
 use Application\Model\User;
 use Application\Repository\UserRepository;
@@ -104,7 +104,7 @@ class AuthenticationMiddlewareTest extends TestCase
             }
         };
 
-        $middleware = new AuthenticationMiddleware($userRepository, SiteType::DILPS);
+        $middleware = new AuthenticationMiddleware($userRepository, Site::Dilps);
         $middleware->process($request, $handler);
 
         return $session;

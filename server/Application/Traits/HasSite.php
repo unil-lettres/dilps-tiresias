@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
-use Application\Api\Enum\SiteType;
+use Application\Enum\Site;
 use Doctrine\ORM\Mapping as ORM;
-use GraphQL\Doctrine\Attribute as API;
 
 /**
  * Trait for all objects with a site to separate them from each other.
@@ -14,16 +13,14 @@ use GraphQL\Doctrine\Attribute as API;
 trait HasSite
 {
     #[ORM\Column(type: 'Site')]
-    private string $site;
+    private Site $site;
 
-    #[API\Field(type: SiteType::class)]
-    public function getSite(): string
+    public function getSite(): Site
     {
         return $this->site;
     }
 
-    #[API\Input(type: SiteType::class)]
-    public function setSite(string $site): void
+    public function setSite(Site $site): void
     {
         $this->site = $site;
     }

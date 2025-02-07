@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Application\Model\Card;
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\CardVisibility;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class CardVisibilityType extends EnumType
+class CardVisibilityType extends PhpEnumType
 {
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            Card::VISIBILITY_PRIVATE,
-            Card::VISIBILITY_MEMBER,
-            Card::VISIBILITY_PUBLIC,
-        ];
+        return CardVisibility::class;
     }
 }

@@ -94,7 +94,7 @@ class Zip implements Writer
         $html = '<!DOCTYPE html>';
         $html .= '<html lang="fr">';
         $html .= '<head>';
-        $html .= '<title>Base de données ' . $this->export->getSite() . '</title>';
+        $html .= '<title>Base de données ' . $this->export->getSite()->getDescription() . '</title>';
         $html .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
         $html .= '<meta name="author" content="' . $this->escape->escapeHtmlAttr(User::getCurrent() ? User::getCurrent()->getLogin() : '') . '" />';
         $html .= '<style>';

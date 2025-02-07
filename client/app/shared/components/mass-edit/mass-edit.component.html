@@ -10,7 +10,7 @@
                     ></a>
                 </div>
                 <div>
-                    @if (item.code && item.site === Site.tiresias) {
+                    @if (item.code && item.site === Site.Tiresias) {
                         <div>{{ item.code }}</div>
                     }
                     <div [innerHTML]="item.name | truncate: ['250', '...']"></div>

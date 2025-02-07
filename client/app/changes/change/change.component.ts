@@ -68,7 +68,7 @@ export class ChangeComponent implements OnInit {
                 this.original = merge({}, card);
                 this.fetchedSuggestion = merge({}, card, {
                     original: card,
-                    visibility: CardVisibility.private,
+                    visibility: CardVisibility.Private,
                 });
                 this.suggestionInput = cardToCardInput(this.fetchedSuggestion);
                 this.suggestionInput.code = '';

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Enum\Precision;
 use Application\Model\Country;
 use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,7 @@ trait HasAddress
     private ?float $longitude = null;
 
     #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
-    private ?string $precision = null;
+    private ?Precision $precision = null;
 
     #[ORM\Column(type: 'string', options: ['default' => ''])]
     private string $street = '';
@@ -84,14 +85,12 @@ trait HasAddress
         $this->toLocation();
     }
 
-    #[API\Field(type: '?Precision')]
-    public function getPrecision(): ?string
+    public function getPrecision(): ?Precision
     {
         return $this->precision;
     }
 
-    #[API\Input(type: '?Precision')]
-    public function setPrecision(?string $precision): void
+    public function setPrecision(?Precision $precision): void
     {
         $this->precision = $precision;
     }

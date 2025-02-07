@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Acl\Assertion;
 
+use Application\Enum\CollectionVisibility;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Ecodev\Felix\Acl\Assertion\NamedAssertion;
@@ -14,16 +15,22 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 
 class Visibility implements NamedAssertion
 {
+    /**
+     * @var string[]
+     */
+    private readonly array $allowedVisibilitiesValues;
+
     public function getName(): string
     {
-        return 'la visibilité est ' . implode(' ou ', $this->allowedVisibilities);
+        return 'la visibilité est ' . implode(' ou ', $this->allowedVisibilitiesValues);
     }
 
     /**
-     * @param string[] $allowedVisibilities
+     * @param CollectionVisibility[] $allowedVisibilities
      */
     public function __construct(private readonly array $allowedVisibilities)
     {
+        $this->allowedVisibilitiesValues = array_map(fn (CollectionVisibility $type) => $type->value, $this->allowedVisibilities);
     }
 
     /**

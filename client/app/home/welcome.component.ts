@@ -17,9 +17,9 @@ export class WelcomeComponent {
 
     public getTitle(): string {
         switch (this.site) {
-            case Site.tiresias:
+            case Site.Tiresias:
                 return 'Bienvenue sur Tirésias';
-            case Site.dilps:
+            case Site.Dilps:
             default:
                 return 'Bienvenue sur Dilps';
         }
@@ -27,9 +27,9 @@ export class WelcomeComponent {
 
     public getContent(): string {
         switch (this.site) {
-            case Site.tiresias:
+            case Site.Tiresias:
                 return "La banque d'images de l'Institut d'archéologie et des sciences de l'Antiquité de l'Université de Lausanne.";
-            case Site.dilps:
+            case Site.Dilps:
             default:
                 return "La banque d'images de la section d'histoire de l'art de l'Université de Lausanne.";
         }

@@ -220,7 +220,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     public constructor() {
         super(inject(CardService));
 
-        this.naturalSearchFacets = this.site === Site.dilps ? dilps() : tiresias();
+        this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
     }
 
     public override ngOnInit(): void {
@@ -461,7 +461,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
                         const destination = applyChanges(changeableCard, changeAttributes);
                         const fetchedSuggestion = merge({}, destination, {
                             original: changeableCard.id,
-                            visibility: CardVisibility.private,
+                            visibility: CardVisibility.Private,
                         });
                         suggestionsObservables.push(this.service.create(fetchedSuggestion as CardInput));
                     });
@@ -568,7 +568,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      */
     private pushAdminConfig(): void {
         if (!this.naturalSearchFacets.includes(adminFacets[0])) {
-            const index = this.naturalSearchFacets.length - (this.site === Site.dilps ? 1 : 0);
+            const index = this.naturalSearchFacets.length - (this.site === Site.Dilps ? 1 : 0);
             this.naturalSearchFacets.splice(index, 0, ...adminFacets);
         }
     }

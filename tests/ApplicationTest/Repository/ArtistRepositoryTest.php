@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Artist;
 use Application\Repository\ArtistRepository;
 
@@ -25,7 +26,7 @@ class ArtistRepositoryTest extends AbstractRepositoryTest
             'Test foo', // duplicate
             'Test foo ', // duplicate with whitespace
         ];
-        $artists = $this->repository->getOrCreateByNames($names, 'dilps');
+        $artists = $this->repository->getOrCreateByNames($names, Site::Dilps);
 
         self::assertCount(2, $artists);
         self::assertSame('Test artist 3000', $artists[0]->getName());

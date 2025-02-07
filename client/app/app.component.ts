@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
         const site = this.site;
 
         themeService.set(site + '-' + environment.environment);
-        this.favIcon.href = site === Site.dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
+        this.favIcon.href = site === Site.Dilps ? 'favicon-dilps.ico' : 'favicon-tiresias.ico';
 
         // Register custom icons.
         [

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Application\Model\Card;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\UploadedFile;
 
@@ -30,7 +29,7 @@ return [
             'inputCard' => [
                 // Fake a a file uploaded with incorrect data, to check if we trust them (we should not)
                 'file' => new UploadedFile(new Stream('data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg'), 999, UPLOAD_ERR_OK, 'image.jpg', 'text/plain'),
-                'visibility' => Card::VISIBILITY_MEMBER,
+                'visibility' => 'Member',
                 'dating' => '1980 - 1990',
                 'addition' => 'test addition',
                 'expandedName' => 'test expandedName',

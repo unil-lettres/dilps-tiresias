@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Domain;
 use Application\Repository\DomainRepository;
 
@@ -19,14 +20,14 @@ class DomainRepositoryTest extends AbstractRepositoryTest
 
     public function testGetFullNames(): void
     {
-        $actual = $this->repository->getFullNames('tiresias');
+        $actual = $this->repository->getFullNames(Site::Tiresias);
         $expected = [
             'Test domain 9000' => 9000,
             'Test domain 9001' => 9001,
         ];
         self::assertSame($expected, $actual);
 
-        $actual = $this->repository->getFullNames('dilps');
+        $actual = $this->repository->getFullNames(Site::Dilps);
         self::assertEmpty($actual);
     }
 

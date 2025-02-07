@@ -73,7 +73,7 @@ export class UserService extends AbstractContextualizedService<
         return (
             !!user &&
             !!card &&
-            ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.private)
+            ((card.owner && user.id !== card.owner.id) || card.visibility !== CardVisibility.Private)
         );
     }
 
@@ -85,7 +85,7 @@ export class UserService extends AbstractContextualizedService<
             email: null,
             activeUntil: '',
             termsAgreement: null,
-            type: UserType.default,
+            type: UserType.Default,
             role: UserRole.student,
             institution: null,
             password: '',
@@ -123,15 +123,15 @@ export class UserService extends AbstractContextualizedService<
     public getTypes(): {name: UserType; text: string}[] {
         return [
             {
-                name: UserType.aai,
+                name: UserType.Aai,
                 text: 'AAI',
             },
             {
-                name: UserType.default,
+                name: UserType.Default,
                 text: 'Externe',
             },
             {
-                name: UserType.legacy,
+                name: UserType.Legacy,
                 text: 'Legacy',
             },
         ];

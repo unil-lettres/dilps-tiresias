@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Api\Field\Mutation;
 
 use Application\Api\Helper;
+use Application\Enum\ChangeType;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
@@ -30,7 +31,7 @@ class AcceptChange implements FieldInterface
 
                 $image = null;
                 switch ($change->getType()) {
-                    case Change::TYPE_CREATE:
+                    case ChangeType::Create:
                         $image = $change->getSuggestion();
                         $image->setOwner(User::getCurrent());
 
@@ -39,13 +40,13 @@ class AcceptChange implements FieldInterface
                         $image->timestampUpdate($fakeEvent);
 
                         break;
-                    case Change::TYPE_UPDATE:
+                    case ChangeType::Update:
                         $image = $change->getOriginal();
                         $change->getSuggestion()->copyInto($image);
                         _em()->remove($change->getSuggestion());
 
                         break;
-                    case Change::TYPE_DELETE:
+                    case ChangeType::Delete:
                         $original = $change->getOriginal();
 
                         // Trigger proxy loading, so the image on disk will be able to be deleted after the flush

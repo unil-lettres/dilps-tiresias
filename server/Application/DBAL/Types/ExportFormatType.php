@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\ExportFormat;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class ExportFormatType extends EnumType
+class ExportFormatType extends PhpEnumType
 {
-    final public const ZIP = 'zip';
-    final public const PPTX = 'pptx';
-    final public const CSV = 'csv';
-
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            self::ZIP,
-            self::PPTX,
-            self::CSV,
-        ];
+        return ExportFormat::class;
     }
 }

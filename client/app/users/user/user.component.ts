@@ -96,7 +96,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     }
 
     public isShibbolethUser(): boolean {
-        return this.data.item.type === UserType.aai;
+        return this.data.item.type === UserType.Aai;
     }
 
     protected override postQuery(): void {

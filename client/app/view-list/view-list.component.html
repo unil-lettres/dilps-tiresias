@@ -22,7 +22,7 @@
                     </div>
                     <div class="line-body">
                         <div class="line-body-table">
-                            @if (item.site === Site.tiresias) {
+                            @if (item.site === Site.Tiresias) {
                                 @if (item.code) {
                                     <div>
                                         <div>Référence</div>
@@ -34,7 +34,7 @@
                                 <div>Titre</div>
                                 <div [innerHTML]="item.name | truncate: ['250', '...']"></div>
                             </div>
-                            @if (item.site === Site.dilps) {
+                            @if (item.site === Site.Dilps) {
                                 @if (item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)) {
                                     <div>
                                         <div>Titre étendu</div>
@@ -58,7 +58,7 @@
                                     </div>
                                 }
                             }
-                            @if (item.site === Site.tiresias) {
+                            @if (item.site === Site.Tiresias) {
                                 @if (item.tags.length) {
                                     <div>
                                         <div>Mots clés</div>
@@ -88,10 +88,10 @@
                             }
                             @if (item.dating) {
                                 <div>
-                                    @if (item.site === Site.dilps) {
+                                    @if (item.site === Site.Dilps) {
                                         <div>Datation</div>
                                     }
-                                    @if (item.site === Site.tiresias) {
+                                    @if (item.site === Site.Tiresias) {
                                         <div>Date (Datation)</div>
                                     }
                                     <div>{{ item.dating }}</div>
@@ -111,10 +111,10 @@
                             }
                             @if (item.materials.length || item.material) {
                                 <div>
-                                    @if (item.site === Site.dilps) {
+                                    @if (item.site === Site.Dilps) {
                                         <div>Technique & matériel</div>
                                     }
-                                    @if (item.site === Site.tiresias) {
+                                    @if (item.site === Site.Tiresias) {
                                         <div>Matériel (Matériaux)</div>
                                     }
                                     <div>
@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                             }
-                            @if (item.site === Site.dilps && (item.format || item.documentSize)) {
+                            @if (item.site === Site.Dilps && (item.format || item.documentSize)) {
                                 <div>
                                     <div>Dimensions</div>
                                     <div>{{ item.format || item.documentSize }}</div>
@@ -135,10 +135,10 @@
                             }
                             @if (item.institution?.name) {
                                 <div>
-                                    @if (item.site === Site.dilps) {
+                                    @if (item.site === Site.Dilps) {
                                         <div>Lieu</div>
                                     }
-                                    @if (item.site === Site.tiresias) {
+                                    @if (item.site === Site.Tiresias) {
                                         <div>Lieu (Musée)</div>
                                     }
                                     <div>{{ item.institution?.name }}<br /></div>
@@ -154,10 +154,10 @@
                             }
                             @if (item.literature) {
                                 <div>
-                                    @if (item.site === Site.dilps) {
+                                    @if (item.site === Site.Dilps) {
                                         <div>Référence de l'image</div>
                                     }
-                                    @if (item.site === Site.tiresias) {
+                                    @if (item.site === Site.Tiresias) {
                                         <div>Source (référence de l'image)</div>
                                     }
                                     <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>

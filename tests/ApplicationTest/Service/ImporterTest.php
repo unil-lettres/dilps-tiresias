@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Service;
 
+use Application\Enum\Site;
 use Application\Handler\TemplateHandler;
 use Application\Model\Card;
 use Application\Model\Collection;
@@ -55,7 +56,7 @@ class ImporterTest extends TestCase
 
         $collection = new Collection();
 
-        $importer = new Importer('tiresias');
+        $importer = new Importer(Site::Tiresias);
         $cards = $importer->import($excel, $images, $collection);
 
         self::assertCount(1, $cards[0]->getCollections());
@@ -80,7 +81,7 @@ class ImporterTest extends TestCase
         self::assertSame('1997', $c->getTechniqueDate());
         self::assertSame(1.1231, $c->getLatitude());
         self::assertSame(123.132, $c->getLongitude());
-        self::assertSame('building', $c->getPrecision());
+        self::assertSame('building', $c->getPrecision()->value);
     }
 
     public function testImportThrowsWithWrongHeaders(): void
@@ -89,7 +90,7 @@ class ImporterTest extends TestCase
             ['invalid header'],
         ]);
 
-        $importer = new Importer('tiresias');
+        $importer = new Importer(Site::Tiresias);
         $this->expectExceptionMessage('Erreur dans la cellule A1: S\'attend à "Fichier image (avec ou sans extension)", mais a vu "invalid header"');
         $importer->import($excel, [], null);
     }
@@ -105,7 +106,7 @@ class ImporterTest extends TestCase
             'data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg',
         ]);
 
-        $importer = new Importer('tiresias');
+        $importer = new Importer(Site::Tiresias);
         $this->expectExceptionMessage('Erreur dans la cellule A2: 2 images ont été uploadé pour lesquelles aucune information ont été trouvée dans le fichier Excel: 5da49355cbcff, dw4jV3zYSPsqE2CB8BcP8ABD0');
         $importer->import($excel, $images, null);
     }
@@ -119,7 +120,7 @@ class ImporterTest extends TestCase
 
         ]);
 
-        $importer = new Importer('tiresias');
+        $importer = new Importer(Site::Tiresias);
         $this->expectExceptionMessage('Erreur dans la cellule A2: Image présente dans le fichier Excel, mais pas retrouvée dans les images uploadées: 5da49355cbcff.jpeg');
         $importer->import($excel, [], null);
     }
@@ -136,7 +137,7 @@ class ImporterTest extends TestCase
             'data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg',
         ]);
 
-        $importer = new Importer('tiresias');
+        $importer = new Importer(Site::Tiresias);
         $this->expectExceptionMessage('Erreur dans la cellule D2: Domaine introuvable: non-existing-domain');
         $importer->import($excel, $images, null);
     }

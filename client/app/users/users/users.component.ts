@@ -42,6 +42,6 @@ export class UsersComponent extends AbstractList<UserService> {
     }
 
     public isLegacyUser(user: Users['users']['items'][0]): boolean {
-        return user.type === UserType.legacy;
+        return user.type === UserType.Legacy;
     }
 }

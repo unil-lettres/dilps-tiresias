@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\DBAL\Types\ExportFormatType;
-use Application\DBAL\Types\ExportStatusType;
+use Application\Enum\ExportFormat;
+use Application\Enum\ExportStatus;
 use Application\Repository\ExportRepository;
 use Application\Traits\HasFileSize;
 use Application\Traits\HasSite;
@@ -41,11 +41,11 @@ class Export extends AbstractModel implements HasSiteInterface
     #[ORM\Column(type: 'string', length: 2000, options: ['default' => ''])]
     private string $filename = '';
 
-    #[ORM\Column(type: 'ExportStatus', options: ['default' => ExportStatusType::TODO])]
-    private string $status = ExportStatusType::TODO;
+    #[ORM\Column(type: 'ExportStatus', options: ['default' => ExportStatus::Todo])]
+    private ExportStatus $status = ExportStatus::Todo;
 
-    #[ORM\Column(type: 'ExportFormat', options: ['default' => ExportFormatType::ZIP])]
-    private string $format = ExportFormatType::ZIP;
+    #[ORM\Column(type: 'ExportFormat', options: ['default' => ExportFormat::Zip])]
+    private ExportFormat $format = ExportFormat::Zip;
 
     /**
      * Max height of image. Zero means no max.
@@ -125,28 +125,27 @@ class Export extends AbstractModel implements HasSiteInterface
         return $this->filename;
     }
 
-    #[API\Field(type: \Application\Api\Enum\ExportStatusType::class)]
-    public function getStatus(): string
+    public function getStatus(): ExportStatus
     {
         return $this->status;
     }
 
     public function markAsInProgress(string $filename): void
     {
-        $this->status = ExportStatusType::IN_PROGRESS;
+        $this->status = ExportStatus::InProgress;
         $this->start = new Chronos();
         $this->filename = $filename;
     }
 
     public function markAsDone(): void
     {
-        $this->status = ExportStatusType::DONE;
+        $this->status = ExportStatus::Done;
         $this->stats();
     }
 
     public function markAsErrored(Throwable $throwable): void
     {
-        $this->status = ExportStatusType::ERRORED;
+        $this->status = ExportStatus::Errored;
         $this->errorMessage = $throwable->getMessage();
         $this->stats();
     }
@@ -163,14 +162,12 @@ class Export extends AbstractModel implements HasSiteInterface
         }
     }
 
-    #[API\Field(type: \Application\Api\Enum\ExportFormatType::class)]
-    public function getFormat(): string
+    public function getFormat(): ExportFormat
     {
         return $this->format;
     }
 
-    #[API\Input(type: \Application\Api\Enum\ExportFormatType::class)]
-    public function setFormat(string $format): void
+    public function setFormat(ExportFormat $format): void
     {
         $this->format = $format;
     }

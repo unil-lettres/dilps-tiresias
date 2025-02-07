@@ -16,13 +16,13 @@ export class LogoComponent {
 
     public path(): string {
         switch (this.site) {
-            case Site.tiresias:
+            case Site.Tiresias:
                 if (this.data.type === 'main') {
                     return 'assets/images/logo-tiresias.svg';
                 } else {
                     return 'assets/images/logo-tiresias-mini.svg';
                 }
-            case Site.dilps:
+            case Site.Dilps:
             default:
                 return 'assets/images/logo-dilps.svg';
         }

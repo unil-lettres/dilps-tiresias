@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\CardVisibility;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\Export;
@@ -31,9 +32,9 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             return '';
         }
 
-        $visibility = [Card::VISIBILITY_PUBLIC];
+        $visibility = [CardVisibility::Public->value];
         if ($user) {
-            $visibility[] = Card::VISIBILITY_MEMBER;
+            $visibility[] = CardVisibility::Member->value;
         }
 
         $qb = $this->getEntityManager()

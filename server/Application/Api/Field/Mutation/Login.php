@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Api\Field\Mutation;
 
 use Application\Api\Scalar\LoginType;
+use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
@@ -26,6 +27,7 @@ abstract class Login implements FieldInterface
                 'password' => Type::nonNull(Type::string()),
             ],
             'resolve' => function ($root, array $args, SessionInterface $session): User {
+                /** @var Site $site */
                 $site = $root['site'];
 
                 // Logout

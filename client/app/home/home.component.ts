@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit {
             return card;
         });
 
-        const requireCollection = this.site === Site.tiresias;
+        const requireCollection = this.site === Site.Tiresias;
         const collection$ = requireCollection ? this.selectCollection() : of(undefined);
         collection$.subscribe(collection => {
             // Don't do anything if don't have a required collection
@@ -260,7 +260,7 @@ export class HomeComponent implements OnInit {
     public showThesaurusMenu(): boolean {
         const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.major, UserRole.junior];
         const tiresiasRoles = [UserRole.administrator];
-        const applicableRoles = this.site === Site.dilps ? dilpsRoles : tiresiasRoles;
+        const applicableRoles = this.site === Site.Dilps ? dilpsRoles : tiresiasRoles;
 
         return applicableRoles.includes(this.user!.role);
     }
@@ -284,9 +284,9 @@ export class HomeComponent implements OnInit {
 
     public contact(): string {
         switch (this.site) {
-            case Site.tiresias:
+            case Site.Tiresias:
                 return 'tiresias@unil.ch';
-            case Site.dilps:
+            case Site.Dilps:
             default:
                 return 'infra-lettres@unil.ch';
         }

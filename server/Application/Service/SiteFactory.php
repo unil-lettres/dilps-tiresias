@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,7 +13,7 @@ class SiteFactory
     /**
      * Return the current site, dilps or tiresias, from the request host name.
      */
-    public function __invoke(ContainerInterface $container): string
+    public function __invoke(ContainerInterface $container): Site
     {
         /** @var callable $requestFactory */
         $requestFactory = $container->get(ServerRequestInterface::class);
@@ -23,12 +23,12 @@ class SiteFactory
         return self::getSite($request->getServerParams()['SERVER_NAME'] ?? '');
     }
 
-    public static function getSite(string $serverName): string
+    public static function getSite(string $serverName): Site
     {
         if (preg_match('~tiresias~', $serverName)) {
-            return SiteType::TIRESIAS;
+            return Site::Tiresias;
         }
 
-        return SiteType::DILPS;
+        return Site::Dilps;
     }
 }

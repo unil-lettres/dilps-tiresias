@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Query;
 
+use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
@@ -22,6 +23,7 @@ abstract class ExtraStatistics implements FieldInterface
                 'user' => _types()->getId(User::class),
             ],
             'resolve' => function ($root, array $args): string {
+                /** @var Site $site */
                 $site = $root['site'];
 
                 /** @var StatisticRepository $repository */

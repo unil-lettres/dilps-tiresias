@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Model;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\CardVisibility;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\Collection;
@@ -70,8 +71,8 @@ class CardTest extends TestCase
         User::setCurrent($admin);
 
         $suggestion = new Card();
-        $suggestion->setSite(SiteType::DILPS);
-        $suggestion->setVisibility(Card::VISIBILITY_MEMBER);
+        $suggestion->setSite(Site::Dilps);
+        $suggestion->setVisibility(CardVisibility::Member);
         $suggestion->setCode('code-suggestion');
         $suggestion->setName('test name');
         $suggestion->setDating('2010');
@@ -89,7 +90,7 @@ class CardTest extends TestCase
         $suggestion->addCollection($collection);
 
         $original = new Card();
-        $original->setVisibility(Card::VISIBILITY_PUBLIC);
+        $original->setVisibility(CardVisibility::Public);
         $original->setCode('code-original');
         $original->setWidth(456);
         $original->setHeight(456);
@@ -97,7 +98,7 @@ class CardTest extends TestCase
         $suggestion->setOriginal($original);
         $suggestion->copyInto($original);
 
-        self::assertSame(Card::VISIBILITY_PUBLIC, $original->getVisibility());
+        self::assertSame(CardVisibility::Public, $original->getVisibility());
         self::assertSame('code-original', $original->getCode());
         self::assertSame('test name', $original->getName());
         self::assertSame('2010', $original->getDating());
@@ -164,7 +165,7 @@ class CardTest extends TestCase
     public function testGetPermissions(): void
     {
         $card = new Card();
-        $card->setSite(SiteType::DILPS);
+        $card->setSite(Site::Dilps);
         $actual = $card->getPermissions();
         $expected = [
             'create' => false,
@@ -176,7 +177,7 @@ class CardTest extends TestCase
 
         // Make it the current user as creator
         $user = new User();
-        $user->setSite(SiteType::DILPS);
+        $user->setSite(Site::Dilps);
         User::setCurrent($user);
         $card->timestampCreation();
 
@@ -206,7 +207,7 @@ class CardTest extends TestCase
     /**
      * @dataProvider providerSetVisibility
      */
-    public function testSetVisibility(string $role, string $previous, string $next, bool $shouldThrow): void
+    public function testSetVisibility(string $role, CardVisibility $previous, CardVisibility $next, bool $shouldThrow): void
     {
         $admin = new User(User::ROLE_ADMINISTRATOR);
         User::setCurrent($admin);
@@ -226,30 +227,30 @@ class CardTest extends TestCase
 
     public function providerSetVisibility(): iterable
     {
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, true];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, true];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_STUDENT, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PRIVATE, Card::VISIBILITY_PUBLIC, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_MEMBER, Card::VISIBILITY_PUBLIC, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PRIVATE, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_MEMBER, false];
-        yield [User::ROLE_ADMINISTRATOR, Card::VISIBILITY_PUBLIC, Card::VISIBILITY_PUBLIC, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Private, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Member, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Public, true];
+        yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Private, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Member, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Public, true];
+        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Private, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Member, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Public, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Private, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Member, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Public, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Member, CardVisibility::Private, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Member, CardVisibility::Member, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Member, CardVisibility::Public, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Public, CardVisibility::Private, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Public, CardVisibility::Member, false];
+        yield [User::ROLE_ADMINISTRATOR, CardVisibility::Public, CardVisibility::Public, false];
     }
 
     public function testSetInstitution(): void
     {
         $card = new Card();
-        $card->setSite(SiteType::DILPS);
+        $card->setSite(Site::Dilps);
         self::assertNull($card->getInstitution());
 
         $card->setInstitution('foo');
@@ -270,7 +271,7 @@ class CardTest extends TestCase
     public function testSetTags(): void
     {
         $card = new Card();
-        $card->setSite('dilps');
+        $card->setSite(Site::Dilps);
 
         self::assertEquals([], $this->toIds($card->getTags()));
 

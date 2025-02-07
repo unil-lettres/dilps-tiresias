@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\CollectionVisibility;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Model\User;
@@ -31,9 +32,9 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
         }
 
         // Todo : grant access to collections visible by admins to majors ?
-        $visibility = [Collection::VISIBILITY_MEMBER];
+        $visibility = [CollectionVisibility::Member->value];
         if ($user->getRole() === User::ROLE_ADMINISTRATOR) {
-            $visibility[] = Collection::VISIBILITY_ADMINISTRATOR;
+            $visibility[] = CollectionVisibility::Administrator->value;
         }
 
         $userId = $this->getEntityManager()->getConnection()->quote($user->getId());

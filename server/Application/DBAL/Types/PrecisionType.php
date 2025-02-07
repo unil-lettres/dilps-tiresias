@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\Precision;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class PrecisionType extends EnumType
+class PrecisionType extends PhpEnumType
 {
-    final public const LOCALITY = 'locality';
-    final public const SITE = 'site';
-    final public const BUILDING = 'building';
-
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            self::LOCALITY,
-            self::SITE,
-            self::BUILDING,
-        ];
+        return Precision::class;
     }
 }

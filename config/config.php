@@ -7,7 +7,7 @@ use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
-$site = SiteFactory::getSite(getenv('SERVER_NAME') ?: '');
+$site = SiteFactory::getSite(getenv('SERVER_NAME') ?: '')->value;
 $siteConfigFile = "config/autoload/$site.local.php";
 $cacheConfigFile = "data/cache/config-cache.$site.php";
 
