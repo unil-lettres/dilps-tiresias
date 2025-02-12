@@ -5,20 +5,33 @@ on:
             - 'develop'
             - 'master'
 
-env:
-    DOCKERHUB_REPOSITORY: unillett/dilps-tiresias
-
 jobs:
-    docker:
-        name: Build & Push
-        runs-on: ubuntu-latest
+    build:
+        name: Build
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                include:
+                    - os: ubuntu-latest
+                      arch: linux/amd64
+                    - os: ubuntu-24.04-arm
+                      arch: linux/arm64
 
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v3
+            - name: Prepare
+              run: |
+                  platform=${{ matrix.arch }}
+                  echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+
+            - name: Docker meta
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: |
+                      ${{ vars.DOCKERHUB_REPOSITORY }}
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
@@ -29,20 +42,84 @@ jobs:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Build and push
-              uses: docker/build-push-action@v5
+            - name: Build and push by digest
+              id: build
+              uses: docker/build-push-action@v6
               with:
                   context: ./dev/config
                   file: ./dev/config/app.dockerfile
-                  platforms: linux/amd64,linux/arm64
-                  push: true
-                  tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest
-                  cache-from: type=registry,ref=${{ env.DOCKERHUB_REPOSITORY }}:latest
-                  cache-to: type=inline
+                  platforms: ${{ matrix.arch }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  outputs: type=image,"name=${{ vars.DOCKERHUB_REPOSITORY }}",push-by-digest=true,name-canonical=true,push=true
+
+            - name: Export digest
+              run: |
+                  mkdir -p ${{ runner.temp }}/digests
+                  digest="${{ steps.build.outputs.digest }}"
+                  touch "${{ runner.temp }}/digests/${digest#sha256:}"
+
+            - name: Upload digest
+              uses: actions/upload-artifact@v4
+              with:
+                  name: digests-${{ env.PLATFORM_PAIR }}
+                  path: ${{ runner.temp }}/digests/*
+                  if-no-files-found: error
+                  retention-days: 1
+
+    merge:
+        name: Merge
+        runs-on: ubuntu-latest
+        needs: [build]
+        steps:
+            - name: Download digests
+              uses: actions/download-artifact@v4
+              with:
+                  path: ${{ runner.temp }}/digests
+                  pattern: digests-*
+                  merge-multiple: true
+
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Docker meta
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: |
+                      ${{ vars.DOCKERHUB_REPOSITORY }}
+                  tags: |
+                      type=raw,value=latest
+
+            - name: Create manifest list and push
+              working-directory: ${{ runner.temp }}/digests
+              run: |
+                  docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+                    $(printf '${{ vars.DOCKERHUB_REPOSITORY }}@sha256:%s ' *)
+
+            - name: Inspect image
+              run: |
+                  docker buildx imagetools inspect ${{ vars.DOCKERHUB_REPOSITORY }}:${{ steps.meta.outputs.version }}
+
+    update-description:
+        name: Update Description
+        runs-on: ubuntu-latest
+        needs: [merge]
+        if: success()
+        continue-on-error: false
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
             - name: Update description
               uses: peter-evans/dockerhub-description@v4
               with:
                   username: ${{ secrets.DOCKERHUB_USERNAME }}
                   password: ${{ secrets.DOCKERHUB_TOKEN }}
-                  repository: ${{ env.DOCKERHUB_REPOSITORY }}
+                  repository: ${{ vars.DOCKERHUB_REPOSITORY }}

@@ -120,6 +120,13 @@ export class ThesaurusComponent<
     @Input() public sortAutocompleteByUsageCount = false;
 
     /**
+     * The search query for the autocomplete list will search the beginning of
+     * the name (like name%) if true, otherwise will search anywhere in the
+     * name.
+     */
+    @Input() public matchFromStartAutocomplete = false;
+
+    /**
      * Emits when a selection is done
      */
     @Output() public readonly modelChange = new EventEmitter<
@@ -202,9 +209,15 @@ export class ThesaurusComponent<
         this.variablesManager.set('sorting', {sorting: [sorting]});
 
         this.formChange$.subscribe(val => {
-            this.variablesManager.set('search', {
-                filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]},
-            });
+            if (this.matchFromStartAutocomplete) {
+                this.variablesManager.set('search', {
+                    filter: {groups: [{conditions: [{name: {like: {value: `${val}%`}}}]}]},
+                });
+            } else {
+                this.variablesManager.set('search', {
+                    filter: {groups: [{conditions: [{custom: {search: {value: val}}}]}]},
+                });
+            }
         });
     }
 
