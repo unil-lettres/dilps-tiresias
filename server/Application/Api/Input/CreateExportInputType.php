@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Api\Input;
 
-use Application\Api\Enum\ExportFormatType;
-use Application\Api\Enum\SiteType;
+use Application\Enum\ExportFormat;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Collection;
 use Ecodev\Felix\Api\Scalar\ColorType;
@@ -20,8 +20,8 @@ class CreateExportInputType extends InputObjectType
             'description' => 'An export of cards in various format',
             'fields' => fn (): array => [
                 'format' => [
-                    'type' => _types()->get(ExportFormatType::class),
-                    'defaultValue' => \Application\DBAL\Types\ExportFormatType::ZIP,
+                    'type' => _types()->get(ExportFormat::class),
+                    'defaultValue' => ExportFormat::Zip,
                 ],
                 'maxHeight' => [
                     'type' => self::int(),
@@ -40,7 +40,7 @@ class CreateExportInputType extends InputObjectType
                     'defaultValue' => '#000000',
                 ],
                 'site' => [
-                    'type' => self::nonNull(_types()->get(SiteType::class)),
+                    'type' => self::nonNull(_types()->get(Site::class)),
                 ],
                 'collections' => [
                     'type' => self::nonNull(self::listOf(self::nonNull(_types()->getId(Collection::class)))),

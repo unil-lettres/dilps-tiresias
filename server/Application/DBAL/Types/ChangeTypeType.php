@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Application\Model\Change;
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\ChangeType;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class ChangeTypeType extends EnumType
+class ChangeTypeType extends PhpEnumType
 {
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            Change::TYPE_CREATE,
-            Change::TYPE_UPDATE,
-            Change::TYPE_DELETE,
-        ];
+        return ChangeType::class;
     }
 }

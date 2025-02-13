@@ -84,7 +84,7 @@ export class ExportMenuComponent {
         if (this.collection?.id) {
             input.collections = [this.collection.id];
         }
-        input.format = ExportFormat.pptx;
+        input.format = ExportFormat.Pptx;
 
         this.exportService
             .validate(input)

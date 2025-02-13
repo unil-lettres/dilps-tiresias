@@ -18,7 +18,7 @@ return [
             'inputUser' => [
                 'login' => 'testlogin',
                 'email' => 'test@email.com',
-                'type' => User::TYPE_DEFAULT,
+                'type' => 'Default',
                 'role' => User::ROLE_ADMINISTRATOR,
             ],
         ],

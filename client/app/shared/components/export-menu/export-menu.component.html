@@ -8,24 +8,24 @@
     <mat-icon naturalIcon="share_windows" />
 </button>
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="export(ExportFormat.zip)">
+    <button mat-menu-item (click)="export(ExportFormat.Zip)">
         {{ optionZipLabel }}
     </button>
     @if (showExcelExportation) {
-        <button mat-menu-item (click)="export(ExportFormat.csv)">Exporter en Excel</button>
+        <button mat-menu-item (click)="export(ExportFormat.Csv)">Exporter en Excel</button>
     }
     <button
         mat-menu-item
         [disabled]="!!pptValidationMessage"
         [matTooltip]="pptValidationMessage"
         [matMenuTriggerFor]="pptOptions"
-        (click)="export(ExportFormat.pptx)"
+        (click)="export(ExportFormat.Pptx)"
     >
         Exporter en PowerPoint
     </button>
 </mat-menu>
 
 <mat-menu #pptOptions="matMenu">
-    <button mat-menu-item (click)="export(ExportFormat.pptx, ExportTheme.light)">Thème clair</button>
-    <button mat-menu-item (click)="export(ExportFormat.pptx, ExportTheme.dark)">Thème sombre</button>
+    <button mat-menu-item (click)="export(ExportFormat.Pptx, ExportTheme.light)">Thème clair</button>
+    <button mat-menu-item (click)="export(ExportFormat.Pptx, ExportTheme.dark)">Thème sombre</button>
 </mat-menu>

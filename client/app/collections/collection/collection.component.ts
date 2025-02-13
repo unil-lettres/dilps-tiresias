@@ -54,17 +54,17 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     public visibility: keyof CollectionVisibilities = 1;
     public visibilities: CollectionVisibilities = {
         1: {
-            value: CollectionVisibility.private,
+            value: CollectionVisibility.Private,
             text: 'par moi et les abonnés',
             color: 'warn',
         },
         2: {
-            value: CollectionVisibility.administrator,
+            value: CollectionVisibility.Administrator,
             text: 'par moi, les admins et les abonnés',
             color: 'accent',
         },
         3: {
-            value: CollectionVisibility.member,
+            value: CollectionVisibility.Member,
             text: 'par les membres',
             color: 'primary',
         },
@@ -106,8 +106,8 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
 
         const collectionIsNotPrivate =
-            this.data.item.visibility === CollectionVisibility.administrator ||
-            this.data.item.visibility === CollectionVisibility.member;
+            this.data.item.visibility === CollectionVisibility.Administrator ||
+            this.data.item.visibility === CollectionVisibility.Member;
 
         // If is admin and has visibility
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Model\Export;
 use Application\Model\User;
 use Application\Repository\ExportRepository;
@@ -24,7 +24,7 @@ class ExportRepositoryTest extends AbstractRepositoryTest
     {
         /** @var UserRepository $userRepository */
         $userRepository = _em()->getRepository(User::class);
-        User::setCurrent($userRepository->getOneByLogin('administrator', SiteType::DILPS));
+        User::setCurrent($userRepository->getOneByLogin('administrator', Site::Dilps));
 
         /** @var Export $export1 */
         $export1 = $this->getEntityManager()->getReference(Export::class, 14000);

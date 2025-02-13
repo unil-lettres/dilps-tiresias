@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\Site;
+use Application\Enum\UserType;
 use Application\Model\User;
 use Ecodev\Felix\Api\Exception;
 
@@ -15,7 +17,7 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     /**
      * Returns the user authenticated by its login and password.
      */
-    public function getLoginPassword(string $login, string $password, string $site): ?User
+    public function getLoginPassword(string $login, string $password, Site $site): ?User
     {
         $user = $this->getOneByLogin($login, $site);
 
@@ -49,11 +51,11 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      *
      * This should only be used in tests or controlled environment.
      */
-    public function getOneByLogin(?string $login, string $site): ?User
+    public function getOneByLogin(?string $login, Site $site): ?User
     {
         $user = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
             'login' => $login,
-            'site' => $site,
+            'site' => $site->value,
         ]));
 
         return $user;
@@ -76,11 +78,11 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
      *
      * This should only be used in tests or controlled environment.
      */
-    public function getOneByEmail(?string $email, string $site): ?User
+    public function getOneByEmail(?string $email, Site $site): ?User
     {
         $user = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
             'email' => $email,
-            'site' => $site,
+            'site' => $site->value,
         ]));
 
         return $user;
@@ -89,12 +91,12 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
     /**
      * Create new Shibboleth user.
      */
-    public function createShibboleth(string $login, string $email, string $site): User
+    public function createShibboleth(string $login, string $email, Site $site): User
     {
         $user = new User();
         $user->setLogin($login);
         $user->setEmail($email);
-        $user->setType(User::TYPE_AAI);
+        $user->setType(UserType::Aai);
         $user->setRole(User::ROLE_STUDENT);
         $user->setSite($site);
         $user->setName('');

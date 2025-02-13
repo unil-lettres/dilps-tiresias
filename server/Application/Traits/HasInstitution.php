@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Traits;
 
+use Application\Enum\Site;
 use Application\Model\Institution;
 use Application\Repository\InstitutionRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +18,7 @@ trait HasInstitution
     #[ORM\ManyToOne(targetEntity: Institution::class)]
     private ?Institution $institution = null;
 
-    abstract public function getSite(): string;
+    abstract public function getSite(): Site;
 
     /**
      * Get the institution this object belongs to.

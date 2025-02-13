@@ -4,22 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\ExportStatus;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class ExportStatusType extends EnumType
+class ExportStatusType extends PhpEnumType
 {
-    final public const TODO = 'todo';
-    final public const IN_PROGRESS = 'in_progress';
-    final public const DONE = 'done';
-    final public const ERRORED = 'errored';
-
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            self::TODO,
-            self::IN_PROGRESS,
-            self::DONE,
-            self::ERRORED,
-        ];
+        return ExportStatus::class;
     }
 }

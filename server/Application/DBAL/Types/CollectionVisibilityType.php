@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Application\DBAL\Types;
 
-use Application\Model\Collection;
-use Ecodev\Felix\DBAL\Types\EnumType;
+use Application\Enum\CollectionVisibility;
+use Ecodev\Felix\DBAL\Types\PhpEnumType;
 
-class CollectionVisibilityType extends EnumType
+class CollectionVisibilityType extends PhpEnumType
 {
-    protected function getPossibleValues(): array
+    protected function getEnumType(): string
     {
-        return [
-            Collection::VISIBILITY_PRIVATE,
-            Collection::VISIBILITY_ADMINISTRATOR,
-            Collection::VISIBILITY_MEMBER,
-        ];
+        return CollectionVisibility::class;
     }
 }

@@ -6,7 +6,7 @@ namespace ApplicationTest\Api;
 
 use Application\Api\Schema;
 use Application\Api\Server;
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Site;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 use ApplicationTest\Traits\TestWithTransaction;
@@ -20,7 +20,7 @@ class ServerTest extends AbstractServer
     {
         /** @var UserRepository $userRepository */
         $userRepository = _em()->getRepository(User::class);
-        User::setCurrent($userRepository->getOneByLogin($user, SiteType::DILPS));
+        User::setCurrent($userRepository->getOneByLogin($user, Site::Dilps));
     }
 
     protected function createSchema(): \GraphQL\Type\Schema
@@ -30,6 +30,6 @@ class ServerTest extends AbstractServer
 
     protected function createServer(): \Ecodev\Felix\Api\Server
     {
-        return new Server(true, SiteType::DILPS);
+        return new Server(true, Site::Dilps);
     }
 }

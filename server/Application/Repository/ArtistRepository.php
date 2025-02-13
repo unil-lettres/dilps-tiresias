@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\Site;
 use Application\Model\Artist;
 
 /**
@@ -18,7 +19,7 @@ class ArtistRepository extends AbstractRepository
      *
      * @return Artist[]
      */
-    public function getOrCreateByNames(array $names, string $site): array
+    public function getOrCreateByNames(array $names, Site $site): array
     {
         if (!$names) {
             return [];
@@ -29,7 +30,7 @@ class ArtistRepository extends AbstractRepository
 
         $artists = $this->findBy([
             'name' => $names,
-            'site' => $site,
+            'site' => $site->value,
         ]);
 
         $found = [];

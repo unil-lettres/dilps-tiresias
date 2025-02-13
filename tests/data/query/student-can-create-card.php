@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Application\DBAL\Types\SiteType;
-use Application\Model\Card;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\UploadedFile;
 
@@ -28,8 +26,8 @@ return [
             'inputCard' => [
                 // Fake a a file uploaded with incorrect data, to check if we trust them (we should not)
                 'file' => new UploadedFile(new Stream('data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg'), 999, UPLOAD_ERR_OK, 'card.jpg', 'text/plain'),
-                'site' => SiteType::DILPS,
-                'visibility' => Card::VISIBILITY_MEMBER,
+                'site' => Application\Enum\Site::Dilps,
+                'visibility' => 'Member',
                 'dating' => 'test dating',
                 'addition' => 'test addition',
                 'expandedName' => 'test expandedName',

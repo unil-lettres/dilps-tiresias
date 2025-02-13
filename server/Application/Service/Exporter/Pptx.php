@@ -61,9 +61,9 @@ class Pptx implements Writer
         // Set a few meta data
         $properties = $this->presentation->getDocumentProperties();
         $properties->setCreator(User::getCurrent() ? User::getCurrent()->getLogin() : '');
-        $properties->setLastModifiedBy($this->export->getSite());
+        $properties->setLastModifiedBy($this->export->getSite()->getDescription());
         $properties->setTitle($title);
-        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->export->getSite());
+        $properties->setSubject('Présentation PowerPoint générée par le système ' . $this->export->getSite()->getDescription());
         $properties->setDescription("Certaines images sont soumises aux droits d'auteurs. Vous pouvez nous contactez à diatheque@unil.ch pour plus d'informations.");
         $properties->setKeywords('Université de Lausanne');
 

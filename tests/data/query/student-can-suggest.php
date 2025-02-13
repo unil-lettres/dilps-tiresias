@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Application\Model\Change;
-
 return [
     [
         'query' => 'mutation {
@@ -44,7 +42,7 @@ return [
     [
         'data' => [
             'suggestCreation' => [
-                'type' => Change::TYPE_CREATE,
+                'type' => 'Create',
                 'request' => 'test request',
                 'original' => null,
                 'suggestion' => [
@@ -52,7 +50,7 @@ return [
                 ],
             ],
             'suggestUpdate' => [
-                'type' => Change::TYPE_UPDATE,
+                'type' => 'Update',
                 'request' => 'test request',
                 'original' => [
                     'id' => '6000',
@@ -62,7 +60,7 @@ return [
                 ],
             ],
             'suggestDeletion' => [
-                'type' => Change::TYPE_DELETE,
+                'type' => 'Delete',
                 'request' => 'test request',
                 'original' => [
                     'id' => '6004',

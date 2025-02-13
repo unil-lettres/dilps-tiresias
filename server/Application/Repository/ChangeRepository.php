@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\ChangeType;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
@@ -16,14 +18,14 @@ class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repos
     /**
      * Get an open change for the given suggestion.
      */
-    public function getOrCreate(string $type, Card $card, string $request, string $site): Change
+    public function getOrCreate(ChangeType $type, Card $card, string $request, Site $site): Change
     {
         $criteria = [
-            'type' => $type,
-            'site' => $site,
+            'type' => $type->value,
+            'site' => $site->value,
         ];
 
-        if ($type === Change::TYPE_DELETE) {
+        if ($type === ChangeType::Delete) {
             $criteria['original'] = $card;
             $original = $card;
             $suggestion = null;

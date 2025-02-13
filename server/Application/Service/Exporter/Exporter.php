@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace Application\Service\Exporter;
 
-use Application\DBAL\Types\ExportFormatType;
+use Application\Enum\ExportFormat;
 use Application\Model\Export;
 use Application\Model\User;
 use Application\Repository\CardRepository;
 use Application\Repository\ExportRepository;
 use Application\Service\MessageQueuer;
-use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Service\Mailer;
 use InvalidArgumentException;
 use Throwable;
 
 class Exporter
 {
-    public function __construct(private readonly ExportRepository $exportRepository, private readonly CardRepository $cardRepository, private readonly MessageQueuer $messageQueuer, private readonly Mailer $mailer, private readonly Writer $zip, private readonly Writer $pptx, private readonly Writer $csv, private readonly string $phpPath)
-    {
+    public function __construct(
+        private readonly ExportRepository $exportRepository,
+        private readonly CardRepository $cardRepository,
+        private readonly MessageQueuer $messageQueuer,
+        private readonly Mailer $mailer,
+        private readonly Writer $zip,
+        private readonly Writer $pptx,
+        private readonly Writer $csv,
+        private readonly string $phpPath
+    ) {
     }
 
     /**
@@ -51,7 +58,7 @@ class Exporter
     public function export(Export $export): Export
     {
         $writer = $this->getWriter($export);
-        $title = $export->getSite() . '-' . $export->getId();
+        $title = $export->getSite()->value . '-' . $export->getId();
 
         // Poor man's security by using hard-to-guess suffix
         $suffix = bin2hex(random_bytes(5));
@@ -112,10 +119,9 @@ class Exporter
     private function getWriter(Export $export): Writer
     {
         return match ($export->getFormat()) {
-            ExportFormatType::ZIP => $this->zip,
-            ExportFormatType::PPTX => $this->pptx,
-            ExportFormatType::CSV => $this->csv,
-            default => throw new Exception('Invalid export format:' . $export->getFormat()),
+            ExportFormat::Zip => $this->zip,
+            ExportFormat::Pptx => $this->pptx,
+            ExportFormat::Csv => $this->csv,
         };
     }
 

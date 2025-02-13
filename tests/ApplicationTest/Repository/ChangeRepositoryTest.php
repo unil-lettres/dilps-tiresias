@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
-use Application\DBAL\Types\SiteType;
+use Application\Enum\ChangeType;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Change;
 use Application\Model\User;
@@ -25,23 +26,23 @@ class ChangeRepositoryTest extends AbstractRepositoryTest
     {
         /** @var UserRepository $userRepository */
         $userRepository = _em()->getRepository(User::class);
-        User::setCurrent($userRepository->getOneByLogin('administrator', SiteType::DILPS));
+        User::setCurrent($userRepository->getOneByLogin('administrator', Site::Dilps));
         $request = '';
         $creationSuggestion = _em()->getReference(Card::class, 6001);
         $updateSuggestion = _em()->getReference(Card::class, 6002);
         $deletionSuggestion = _em()->getReference(Card::class, 6000);
 
         // Can retrieve existing one
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_CREATE, $creationSuggestion, $request, 'dilps')->getId());
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $updateSuggestion, $request, 'dilps')->getId());
-        self::assertNotNull($this->repository->getOrCreate(Change::TYPE_DELETE, $deletionSuggestion, $request, 'dilps')->getId());
+        self::assertNotNull($this->repository->getOrCreate(ChangeType::Create, $creationSuggestion, $request, Site::Dilps)->getId());
+        self::assertNotNull($this->repository->getOrCreate(ChangeType::Update, $updateSuggestion, $request, Site::Dilps)->getId());
+        self::assertNotNull($this->repository->getOrCreate(ChangeType::Delete, $deletionSuggestion, $request, Site::Dilps)->getId());
 
         // Can create new one
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $creationSuggestion, $request, 'dilps')->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $creationSuggestion, $request, 'dilps')->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $updateSuggestion, $request, 'dilps')->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_DELETE, $updateSuggestion, $request, 'dilps')->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_CREATE, $deletionSuggestion, $request, 'dilps')->getId());
-        self::assertNull($this->repository->getOrCreate(Change::TYPE_UPDATE, $deletionSuggestion, $request, 'dilps')->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Update, $creationSuggestion, $request, Site::Dilps)->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Delete, $creationSuggestion, $request, Site::Dilps)->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Create, $updateSuggestion, $request, Site::Dilps)->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Delete, $updateSuggestion, $request, Site::Dilps)->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Create, $deletionSuggestion, $request, Site::Dilps)->getId());
+        self::assertNull($this->repository->getOrCreate(ChangeType::Update, $deletionSuggestion, $request, Site::Dilps)->getId());
     }
 }

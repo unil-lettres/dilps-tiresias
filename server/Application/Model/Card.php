@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
-use Application\Api\Enum\CardVisibilityType;
 use Application\Api\FileException;
 use Application\Api\Input\Operator\CardYearRangeOperatorType;
 use Application\Api\Input\Operator\DatingYearRangeOperatorType;
@@ -14,7 +13,8 @@ use Application\Api\Input\Operator\NameOrExpandedNameOperatorType;
 use Application\Api\Input\Sorting\Artists;
 use Application\Api\Input\Sorting\Domains;
 use Application\Api\Input\Sorting\InstitutionLocality;
-use Application\DBAL\Types\SiteType;
+use Application\Enum\CardVisibility;
+use Application\Enum\Site;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Service\ImageResizer;
@@ -97,12 +97,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     private const IMAGE_PATH = 'data/images/';
 
-    final public const VISIBILITY_PRIVATE = 'private';
-    final public const VISIBILITY_MEMBER = 'member';
-    final public const VISIBILITY_PUBLIC = 'public';
-
-    #[ORM\Column(type: 'CardVisibility', options: ['default' => self::VISIBILITY_PRIVATE])]
-    private string $visibility = self::VISIBILITY_PRIVATE;
+    #[ORM\Column(type: 'CardVisibility', options: ['default' => CardVisibility::Private])]
+    private CardVisibility $visibility = CardVisibility::Private;
 
     #[ORM\Column(type: 'integer')]
     private int $width = 0;
@@ -220,8 +216,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Return whether this is publicly available to everybody, or only member, or only owner.
      */
-    #[API\Field(type: CardVisibilityType::class)]
-    public function getVisibility(): string
+    public function getVisibility(): CardVisibility
     {
         return $this->visibility;
     }
@@ -229,15 +224,14 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     /**
      * Set whether this is publicly available to everybody, or only member, or only owner.
      */
-    #[API\Input(type: CardVisibilityType::class)]
-    public function setVisibility(string $visibility): void
+    public function setVisibility(CardVisibility $visibility): void
     {
         if ($this->visibility === $visibility) {
             return;
         }
 
         $user = User::getCurrent();
-        if ($visibility === self::VISIBILITY_PUBLIC && $user->getRole() !== User::ROLE_ADMINISTRATOR) {
+        if ($visibility === CardVisibility::Public && $user->getRole() !== User::ROLE_ADMINISTRATOR) {
             throw new Exception('Only administrator can make a card public');
         }
 
@@ -865,7 +859,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     public function setIsbn(string $isbn): void
     {
         // Field is readonly and can only be emptied (Dilps only).
-        if ($this->getSite() === SiteType::DILPS && $isbn !== '') {
+        if ($this->getSite() === Site::Dilps && $isbn !== '') {
             return;
         }
 

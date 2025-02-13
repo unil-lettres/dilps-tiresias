@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Service\Exporter;
 
-use Application\DBAL\Types\PrecisionType;
-use Application\DBAL\Types\SiteType;
+use Application\Enum\Precision;
+use Application\Enum\Site;
 use Application\Model\Card;
 use Application\Model\Country;
 use Application\Model\DocumentType;
@@ -40,7 +40,7 @@ class AbstractWriter extends TestCase
 
         $export->expects(self::any())
             ->method('getSite')
-            ->willReturn(SiteType::DILPS);
+            ->willReturn(Site::Dilps);
 
         $export->expects(self::once())
             ->method('getPath')
@@ -84,7 +84,7 @@ class AbstractWriter extends TestCase
         $card2->addPeriod($period);
         $card2->addMaterial($material);
         $card2->setCountry($country);
-        $card2->setPrecision(PrecisionType::BUILDING);
+        $card2->setPrecision(Precision::Building);
         $card2->setFilename('dw4jV3zYSPsqE2CB8BcP8ABD0.jpg');
 
         return [$card1, $card2];

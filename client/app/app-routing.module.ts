@@ -156,8 +156,8 @@ export const routes: Routes = [
                                         visibility: {
                                             in: {
                                                 values: [
-                                                    CollectionVisibility.administrator,
-                                                    CollectionVisibility.member,
+                                                    CollectionVisibility.Administrator,
+                                                    CollectionVisibility.Member,
                                                 ],
                                             },
                                         },

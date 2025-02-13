@@ -88,7 +88,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public icon: google.maps.Symbol | null = null;
     public readonly mapOptions: google.maps.MapOptions = {
-        mapTypeId: this.site === Site.dilps ? 'roadmap' : 'satellite',
+        mapTypeId: this.site === Site.Dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
         gestureHandling: 'cooperative',

@@ -37,7 +37,7 @@ class TemplateHandlerTest extends TestCase
         $response = $handler->handle($request);
 
         self::assertEquals(200, $response->getStatusCode());
-        self::assertStringContainsString('inline; filename="dilps', $response->getHeaderLine('content-disposition'));
+        self::assertStringContainsString('inline; filename="DILPS', $response->getHeaderLine('content-disposition'));
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->getHeaderLine('content-type'));
 
         // Write in a temp file

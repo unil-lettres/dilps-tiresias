@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Repository;
 
+use Application\Enum\Site;
 use Application\Model\AbstractModel;
 use Application\Traits\HasParentInterface;
 
@@ -41,7 +42,7 @@ abstract class AbstractHasParentRepository extends AbstractRepository
      * Returns an array of fullNames and their ID for all entries in the DB for
      * the given site.
      */
-    public function getFullNames(string $site): array
+    public function getFullNames(Site $site): array
     {
         $connection = $this->getEntityManager()->getConnection();
         $table = $this->getClassMetadata()->getTableName();
@@ -53,7 +54,7 @@ abstract class AbstractHasParentRepository extends AbstractRepository
     SELECT child.id, child.parent_id, CONCAT(parent.fullName, " > ", child.name) AS fullName FROM ' . $table . ' AS child JOIN parent ON child.parent_id = parent.id
 ) SELECT id, fullName FROM parent ORDER BY fullName ASC';
 
-        $records = $connection->executeQuery($sql, ['site' => $site])->fetchAllAssociative();
+        $records = $connection->executeQuery($sql, ['site' => $site->value])->fetchAllAssociative();
 
         $result = [];
         foreach ($records as $r) {

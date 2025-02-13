@@ -1,10 +1,10 @@
 <mat-menu #thesaurusMenu="matMenu" [overlapTrigger]="false">
-    @if (site === Site.dilps) {
+    @if (site === Site.Dilps) {
         <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
         <button mat-menu-item routerLink="/artist" routerLinkActive="active">Artistes</button>
         <button mat-menu-item routerLink="/domain" routerLinkActive="active">Domaines</button>
     }
-    @if (site === Site.tiresias) {
+    @if (site === Site.Tiresias) {
         <button mat-menu-item routerLink="/domain" routerLinkActive="active">Domaines</button>
         <button mat-menu-item routerLink="/period" routerLinkActive="active">Périodes</button>
         <button mat-menu-item routerLink="/material" routerLinkActive="active">Matériaux</button>
@@ -109,7 +109,7 @@
                                     </a>
                                 }
                                 <!-- Export template -->
-                                @if (site === Site.tiresias) {
+                                @if (site === Site.Tiresias) {
                                     @if (
                                         user.role === 'administrator' ||
                                         user.role === 'senior' ||
@@ -197,7 +197,7 @@
                                     <mat-icon matListItemIcon naturalIcon="account_circle" />
                                 </a>
                                 <!-- Contact -->
-                                @if (site === Site.tiresias) {
+                                @if (site === Site.Tiresias) {
                                     <a mat-list-item matTooltip="Contact" matTooltipPosition="after" (click)="mailto()">
                                         <mat-icon matListItemIcon naturalIcon="announcement" />
                                         <span>Contact</span>
