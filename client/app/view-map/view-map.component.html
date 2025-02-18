@@ -14,7 +14,9 @@
                 <a class="nat-vertical nat-center" [routerLink]="['/card', selectedMarker?.id]">
                     <img class="img" [attr.src]="selectedMarker?.imageSrc" />
                 </a>
-                <button mat-button (click)="forwardSearch(selectedMarker)">Rechercher les fiches à proximité</button>
+                <button mat-button style="color: black" (click)="forwardSearch(selectedMarker)">
+                    Rechercher les fiches à proximité
+                </button>
             </div>
         </map-info-window>
     </google-map>
