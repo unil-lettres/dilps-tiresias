@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {SITE} from '../../app.config';
+import {Site} from '../generated-types';
 
 @Injectable({
     providedIn: 'root',
@@ -33,6 +34,14 @@ export class ThemeService {
                 this.darkActivated = true;
             }
         }
+    }
+
+    public init(site: Site, environment: string): void {
+        const cssClassName = {
+            [Site.Dilps]: 'dilps',
+            [Site.Tiresias]: 'tiresias',
+        }[site];
+        this.set(`${cssClassName}-${environment}`);
     }
 
     public set(theme: string): void {
