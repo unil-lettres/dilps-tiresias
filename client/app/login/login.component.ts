@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public loading = false;
 
-    public status = 'default';
     public baseUrl = window.location.origin;
 
     /**
@@ -94,7 +93,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     public login(): void {
         this.snackBar.dismiss();
         this.loading = true;
-        this.status = 'loading';
         this.userService
             .login(this.loginForm)
             .pipe(finalize(() => (this.loading = false)))
