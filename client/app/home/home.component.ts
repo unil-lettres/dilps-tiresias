@@ -39,6 +39,7 @@ import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {GraphQLFormattedError} from 'graphql';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -82,7 +83,7 @@ export class HomeComponent implements OnInit {
 
     public Site = Site;
 
-    public errors: (Error & {extensions?: {debugMessage?: string}})[] = [];
+    public errors: GraphQLFormattedError[] = [];
     public user: Viewer['viewer'] | null = null;
     public nav = 1;
     public progress: number | null = null;
