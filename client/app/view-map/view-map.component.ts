@@ -58,9 +58,15 @@ export class ViewMapComponent {
         mapTypeControlOptions: {position: 10.0},
     };
 
-    public static getIcon(iconName: Precision): Icon {
+    public static getIcon(precision: Precision): Icon {
+        const iconName = {
+            [Precision.Site]: 'site',
+            [Precision.Building]: 'building',
+            [Precision.Locality]: 'locality',
+        }[precision || Precision.Site];
+
         return {
-            url: 'assets/icons/gmap_' + (iconName || Precision.Site) + '.png',
+            url: `assets/icons/gmap_${iconName}.png`,
             size: new google.maps.Size(32, 37),
             anchor: new google.maps.Point(16, 37),
         };
