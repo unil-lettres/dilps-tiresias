@@ -23,7 +23,7 @@ export class ThemeService {
     public constructor() {
         const site = inject(SITE);
 
-        this.storageKey = site + '-theme';
+        this.storageKey = site.toLowerCase() + '-theme';
 
         const theme = localStorage.getItem(this.storageKey);
 
