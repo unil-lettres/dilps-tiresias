@@ -103,7 +103,7 @@
             }
             <ng-scrollbar class="nat-expand">
                 <div class="padding-scrollbar scrolled nat-vertical">
-                    @if (user?.role === 'administrator') {
+                    @if (user?.role === UserRole.administrator) {
                         <div class="nat-vertical">
                             <div class="nat-horizontal">
                                 {{

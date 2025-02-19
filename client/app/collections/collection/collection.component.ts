@@ -50,6 +50,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public readonly institutionService = inject(InstitutionService);
+    public readonly UserRole = UserRole;
 
     public visibility: keyof CollectionVisibilities = 1;
     public visibilities: CollectionVisibilities = {

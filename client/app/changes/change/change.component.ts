@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {merge} from 'lodash-es';
 import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
-import {Card, CardInput, CardVisibility, Change, Viewer} from '../../shared/generated-types';
+import {Card, CardInput, CardVisibility, Change, UserRole, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
 import {MatIconModule} from '@angular/material/icon';
@@ -36,6 +36,7 @@ export class ChangeComponent implements OnInit {
     private readonly changeService = inject(ChangeService);
     private readonly cardService = inject(CardService);
     private readonly userService = inject(UserService);
+    public readonly UserRole = UserRole;
 
     public change!: Change['change'];
     public original: Card['card'] | null = null;

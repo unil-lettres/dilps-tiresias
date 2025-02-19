@@ -82,6 +82,7 @@ export class HomeComponent implements OnInit {
     private readonly routeReuse = inject(RouteReuseStrategy);
 
     public Site = Site;
+    public readonly UserRole = UserRole;
 
     public errors: GraphQLFormattedError[] = [];
     public user: Viewer['viewer'] | null = null;
