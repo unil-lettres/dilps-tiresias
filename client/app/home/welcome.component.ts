@@ -13,8 +13,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 export class WelcomeComponent {
     public readonly site = inject(SITE);
 
-    public Site = Site;
-
     public getTitle(): string {
         switch (this.site) {
             case Site.Tiresias:
