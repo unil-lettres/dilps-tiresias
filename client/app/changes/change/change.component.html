@@ -3,7 +3,7 @@
         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
         <div class="nat-expand"></div>
 
-        @if (user?.role === 'administrator') {
+        @if (user?.role === UserRole.administrator) {
             @if (change) {
                 <button
                     mat-icon-button

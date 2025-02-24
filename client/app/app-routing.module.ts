@@ -146,7 +146,6 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: false,
-                    // editionButtonsForRoles: [UserRole.administrator, UserRole.senior],
                     filter: {
                         groups: [
                             {
@@ -236,7 +235,6 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: [UserRole.administrator],
-                    // editionButtonsForRoles: [UserRole.administrator],
                     filter: {
                         groups: [
                             {conditions: [{isSource: {equal: {value: true}}} satisfies CollectionFilterGroupCondition]},

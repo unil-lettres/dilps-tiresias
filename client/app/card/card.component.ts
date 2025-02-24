@@ -303,6 +303,7 @@ export class CardComponent implements OnInit, OnChanges {
      * Currently logged user
      */
     public user!: Viewer['viewer'];
+    public readonly UserRole = UserRole;
 
     /**
      * Allow to use TAB to go to next field (as is standard)

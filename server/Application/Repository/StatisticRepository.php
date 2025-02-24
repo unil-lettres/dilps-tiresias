@@ -45,7 +45,7 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
             return '-1';
         }
 
-        return 'SELECT id FROM statistic WHERE site = ' . $this->getEntityManager()->getConnection()->quote($user->getSite());
+        return 'SELECT id FROM statistic WHERE site = ' . $this->getEntityManager()->getConnection()->quote($user->getSite()->value);
     }
 
     public function getExtraStatistics(Site $site, string $period, ?User $user): array

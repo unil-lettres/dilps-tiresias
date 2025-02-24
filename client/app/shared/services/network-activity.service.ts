@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {NgProgress} from 'ngx-progressbar';
 import {BehaviorSubject, Subject} from 'rxjs';
+import {GraphQLFormattedError} from 'graphql';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +18,7 @@ export class NetworkActivityService {
      * Observable specifying if app is loading or not
      */
     public readonly isPending = new BehaviorSubject<boolean>(false);
-    public readonly errors = new Subject<readonly Error[]>();
+    public readonly errors = new Subject<readonly GraphQLFormattedError[]>();
 
     public increase(): void {
         if (this.pending === 0) {
@@ -42,7 +43,7 @@ export class NetworkActivityService {
         }
     }
 
-    public updateErrors(errors: readonly Error[]): void {
+    public updateErrors(errors: readonly GraphQLFormattedError[]): void {
         if (errors?.length) {
             this.errors.next(errors);
         }

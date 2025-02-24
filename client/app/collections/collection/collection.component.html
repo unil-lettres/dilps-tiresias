@@ -57,7 +57,7 @@
                     [(ngModel)]="data.item.parent"
                 />
 
-                @if (user?.role === 'administrator') {
+                @if (user?.role === UserRole.administrator) {
                     <mat-slide-toggle [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
                 }
             </div>

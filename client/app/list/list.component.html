@@ -85,7 +85,7 @@
                         <mat-icon naturalIcon="edit" />
                     </button>
                 }
-                @if (user?.role === 'administrator') {
+                @if (user?.role === UserRole.administrator) {
                     <button
                         color="warn"
                         mat-icon-button

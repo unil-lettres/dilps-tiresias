@@ -82,10 +82,10 @@
                                 <!-- Add photos -->
                                 @if (
                                     progress === null &&
-                                    (user.role === 'administrator' ||
-                                        user.role === 'senior' ||
-                                        user.role === 'junior' ||
-                                        user.role === 'major')
+                                    (user.role === UserRole.administrator ||
+                                        user.role === UserRole.senior ||
+                                        user.role === UserRole.junior ||
+                                        user.role === UserRole.major)
                                 ) {
                                     <a
                                         mat-list-item
@@ -111,10 +111,10 @@
                                 <!-- Export template -->
                                 @if (site === Site.Tiresias) {
                                     @if (
-                                        user.role === 'administrator' ||
-                                        user.role === 'senior' ||
-                                        user.role === 'junior' ||
-                                        user.role === 'major'
+                                        user.role === UserRole.administrator ||
+                                        user.role === UserRole.senior ||
+                                        user.role === UserRole.junior ||
+                                        user.role === UserRole.major
                                     ) {
                                         <a
                                             href="/api/template"
@@ -141,7 +141,7 @@
                                 </mat-nav-list>
                             }
                             <!-- Administration -->
-                            @if (user.role === 'administrator') {
+                            @if (user.role === UserRole.administrator) {
                                 <mat-divider />
                                 <mat-nav-list>
                                     <a

@@ -12,7 +12,6 @@ export class LogoComponent {
     public readonly site = inject(SITE);
 
     @Input() public data = {type: 'main', class: 'logo-main'};
-    public Site = Site;
 
     public path(): string {
         switch (this.site) {
