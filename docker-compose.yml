@@ -28,7 +28,7 @@ services:
     dilps-tiresias-httpd:
         image: httpd:latest
         volumes:
-            - ./htdocs:/usr/local/apache2/htdocs
+            - ./htdocs:/var/www/htdocs
             - ./configuration/apache.conf:/usr/local/apache2/conf/global.conf
             - ./dev/config/httpd.conf:/usr/local/apache2/conf/httpd.conf
             - ./dev/config/httpd-mpm.conf:/usr/local/apache2/conf/extra/httpd-mpm.conf
