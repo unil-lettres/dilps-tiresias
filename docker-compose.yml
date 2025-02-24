@@ -14,6 +14,7 @@ services:
             - ./dev/.env
         volumes:
             - ./:/var/www
+            - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/99-php.ini
             - ./dev/config/pool-www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./dev/config/pool-thumbnails.conf:/usr/local/etc/php-fpm.d/thumbnails.conf
             - ./dev/config/zz-pool-docker.conf:/usr/local/etc/php-fpm.d/zz-thumbnails-docker.conf
