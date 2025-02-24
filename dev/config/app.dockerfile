@@ -1,4 +1,4 @@
-FROM php:8.3-apache-bookworm
+FROM php:8.3-fpm-bookworm
 
 ENV DOCKER_RUNNING=true
 
@@ -59,15 +59,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends yarn &&\
     yarn set version $YARN_VERSION
-
-# Enable apache configurations & modules
-COPY ./vhosts/* /etc/apache2/sites-available/
-RUN a2enmod rewrite && \
-    a2enmod expires && \
-    a2enmod headers && \
-    a2ensite dilps.conf && \
-    a2ensite tiresias.conf && \
-    a2dissite 000-default.conf
 
 # Replace default crontab
 ADD ./crontab /etc/crontab

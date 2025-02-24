@@ -14,13 +14,34 @@ services:
             - ./dev/.env
         volumes:
             - ./:/var/www
-            - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/99-php.ini
+            - ./dev/config/pool-www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./dev/config/pool-thumbnails.conf:/usr/local/etc/php-fpm.d/thumbnails.conf
+            - ./dev/config/zz-pool-docker.conf:/usr/local/etc/php-fpm.d/zz-thumbnails-docker.conf
         working_dir: /var/www
-        ports:
-            - '8181:80'
+        expose:
+            - '9000'
+            - '9100'
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-app
+
+    dilps-tiresias-httpd:
+        image: httpd:latest
+        volumes:
+            - ./htdocs:/var/www/htdocs
+            - ./configuration/apache.conf:/usr/local/apache2/conf/global.conf
+            - ./dev/config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - ./dev/config/httpd-mpm.conf:/usr/local/apache2/conf/extra/httpd-mpm.conf
+            - ./dev/config/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+        ports:
+            - '8181:80'
+        depends_on:
+            - dilps-tiresias-app
+        networks:
+            - dilps-tiresias-net
+        container_name: dilps-tiresias-httpd
+
     dilps-tiresias-mysql:
         image: mariadb:10.6
         env_file:
@@ -33,6 +54,7 @@ services:
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mysql
+
     dilps-tiresias-myadmin:
         image: phpmyadmin/phpmyadmin:latest
         env_file:
@@ -42,6 +64,7 @@ services:
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-myadmin
+
     dilps-tiresias-mailhog:
         image: mailhog/mailhog:latest
         expose:
