@@ -56,7 +56,7 @@ class AcceptChange implements FieldInterface
 
                         break;
                     default:
-                        throw new Exception('Unsupported change type: ' . $change->getType());
+                        throw new Exception('Unsupported change type: ' . $change->getType()->value);
                 }
 
                 _em()->remove($change);
