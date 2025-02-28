@@ -87,7 +87,7 @@ import {
     LinkRelatedCardsDialogData,
     LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {concatMap, from, last} from 'rxjs';
+import {concatMap, forkJoin, from, last, of} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ErrorService} from '../shared/components/error/error.service';
@@ -662,6 +662,7 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public openLinkRelatedCardsDialog(): void {
+        this.cardService.test();
         this.openRelatedCardsDialog(
             cards => {
                 // Link all cards to each others (cards already link will not be affected).

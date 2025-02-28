@@ -10,7 +10,6 @@ import {onError} from '@apollo/client/link/error';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {NetworkActivityService} from '../services/network-activity.service';
 import {AlertService} from '../components/alert/alert.service';
-import {createHttpLink} from '@ecodev/natural';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
 import {inject, Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
@@ -93,9 +92,7 @@ function createApolloLink(
 
     return routeReuseClearer.concat(
         errorLink.concat(
-            createHttpLink(httpLink, httpBatchLink, {
-                uri: '/graphql',
-            }),
+            ApolloLink.split((operation) => true, httpLink.create({uri: '/graphql'})),
         ),
     );
 }
