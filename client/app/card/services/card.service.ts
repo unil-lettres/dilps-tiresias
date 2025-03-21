@@ -34,7 +34,7 @@ import {
     deleteCards,
     updateCard,
 } from './card.queries';
-import {forkJoin, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Literal, WithId} from '@ecodev/natural';
 
 type CardWithImage = {
@@ -165,34 +165,6 @@ export class CardService extends AbstractContextualizedService<
             url: '',
             urlDescription: '',
         };
-    }
-
-    public test(): void {
-        const requests = Array.from({ length: 1000 }, () =>
-            this.apollo.watchQuery({
-            query: this.oneQuery!,
-            variables: { id: 6001 },
-            fetchPolicy: 'network-only',
-            nextFetchPolicy: 'network-only',
-            context: { requestId: Math.random(), queryDeduplication: false },
-            }).valueChanges
-        );
-
-        forkJoin(requests).subscribe({
-            next: value => console.log(value),
-            complete: () => console.log('This is how it ends!'),
-        });
-
-
-        // this.cardService.getOne("6042").subscribe((card) => console.log(card));
-        // this.cardService.getOne("6041").subscribe((card) => console.log(card));
-        
-        // console.log(requests);
-        // forkJoin(requests).subscribe({
-        //     next: value => console.log(value),
-        //     complete: () => console.log('This is how it ends!'),
-        // });
-        
     }
 
     public override getInput(object: Literal, forCreation: boolean): CardInput | CardPartialInput {
