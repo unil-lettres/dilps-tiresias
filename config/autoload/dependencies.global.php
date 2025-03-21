@@ -31,6 +31,7 @@ return [
             Application\Handler\ShibbolethHandler::class => Application\Handler\ShibbolethFactory::class,
             Application\Handler\TemplateHandler::class => Application\Handler\TemplateFactory::class,
             Application\Middleware\AuthenticationMiddleware::class => Application\Middleware\AuthenticationFactory::class,
+            Application\Middleware\RefreshSessionTimestampMiddleware::class => Application\Middleware\RefreshSessionTimestampMiddlewareFactory::class,
             Application\Service\Exporter\Csv::class => Application\Service\Exporter\CsvFactory::class,
             Application\Service\Exporter\Exporter::class => Application\Service\Exporter\ExporterFactory::class,
             Application\Service\Exporter\Pptx::class => Application\Service\Exporter\PptxFactory::class,

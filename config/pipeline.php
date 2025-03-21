@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Application\Middleware\AuthenticationMiddleware;
+use Application\Middleware\RefreshSessionTimestampMiddleware;
 use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Application;
 use Mezzio\Handler\NotFoundHandler;
@@ -48,6 +49,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(UrlHelperMiddleware::class);
     $app->pipe(SessionMiddleware::class);
     $app->pipe(AuthenticationMiddleware::class);
+    $app->pipe(RefreshSessionTimestampMiddleware::class);
 
     // Add more middleware here that needs to introspect the routing results; this
     // might include:
