@@ -56,7 +56,6 @@
         "ngx-scrollbar": "^15.1.0",
         "quill": "^2.0.2",
         "rxjs": "^7.8.0",
-        "shelljs": "^0.8.4",
         "snazzy-info-window": "^1.1.1",
         "striptags": "^4.0.0-alpha.4",
         "swiper": "^11.1.5",
