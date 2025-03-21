@@ -709,6 +709,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
         $size = $image->getSize();
 
+        // Ensure that we read fresh stats from disk.
+        clearstatcache(true, $path);
+
         $this->setWidth($size->getWidth());
         $this->setHeight($size->getHeight());
         $this->setFileSize(filesize($path));
