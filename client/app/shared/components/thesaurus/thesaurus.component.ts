@@ -127,6 +127,13 @@ export class ThesaurusComponent<
     @Input() public matchFromStartAutocomplete = false;
 
     /**
+     * The maximum length of the search query for the autocomplete list
+     * when matchFromStartAutocomplete is true. When max length is reached,
+     * the search will revert to its default behavior.
+     */
+    @Input() public matchFromStartAutocompleteMaxLength = 2;
+
+    /**
      * Emits when a selection is done
      */
     @Output() public readonly modelChange = new EventEmitter<
@@ -209,7 +216,7 @@ export class ThesaurusComponent<
         this.variablesManager.set('sorting', {sorting: [sorting]});
 
         this.formChange$.subscribe(val => {
-            if (this.matchFromStartAutocomplete) {
+            if (this.matchFromStartAutocomplete && val.length <= this.matchFromStartAutocompleteMaxLength) {
                 this.variablesManager.set('search', {
                     filter: {groups: [{conditions: [{name: {like: {value: `${val}%`}}}]}]},
                 });
