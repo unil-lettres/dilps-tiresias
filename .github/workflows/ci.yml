@@ -9,7 +9,7 @@ jobs:
             matrix:
                 php-versions: ['8.3']
                 composer-version: ['2.6']
-                mariadb-version: ['10.6']
+                mariadb-version: ['11.4']
                 node-version: ['20']
 
         env:
@@ -23,7 +23,7 @@ jobs:
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: yes
                     MYSQL_DATABASE: dilps
-                options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
+                options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=5s --health-timeout=2s --health-retries=5
 
         steps:
             - name: Install mariadb-client
@@ -74,7 +74,7 @@ jobs:
 
             - name: Prepare app
               run: |
-                  mysql --protocol=tcp --user=root --execute='SET GLOBAL sql_mode = "";'
+                  mariadb --protocol=tcp --user=root --execute='SET GLOBAL sql_mode = "";'
                   cp example.env .env
                   cp config/autoload/local.php.dist config/autoload/local.php
 
