@@ -43,12 +43,12 @@ services:
         container_name: dilps-tiresias-httpd
 
     dilps-tiresias-mysql:
-        image: mariadb:10.6
+        image: mariadb:11.4
         env_file:
             - ./dev/.env
         volumes:
             - mysql-data:/var/lib/mysql
-            - ./dev/config/my.cnf:/etc/mysql/my.cnf
+            - ./dev/config/my.cnf:/etc/mysql/conf.d/99-custom.cnf
         ports:
             - '3301:3306'
         networks:
