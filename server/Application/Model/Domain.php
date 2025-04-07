@@ -29,7 +29,7 @@ class Domain extends Thesaurus implements HasParentInterface
     private ?self $parent = null;
 
     /**
-     * @var Collection<Domain>
+     * @var Collection<int, Domain>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]

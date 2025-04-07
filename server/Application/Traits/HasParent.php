@@ -17,7 +17,7 @@ trait HasParent
     private ?self $parent = null;
 
     /**
-     * @var Collection<self>
+     * @var Collection<int, self>
      */
     private Collection $children;
 

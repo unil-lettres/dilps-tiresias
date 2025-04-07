@@ -28,7 +28,7 @@ class Tag extends Thesaurus implements HasParentInterface
     private ?self $parent = null;
 
     /**
-     * @var Collection<Tag>
+     * @var Collection<int, Tag>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]

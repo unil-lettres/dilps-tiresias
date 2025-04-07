@@ -28,7 +28,7 @@ class Material extends Thesaurus implements HasParentInterface
     private ?self $parent = null;
 
     /**
-     * @var Collection<Material>
+     * @var Collection<int, Material>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]

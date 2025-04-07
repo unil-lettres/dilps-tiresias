@@ -32,7 +32,7 @@ class Period extends Thesaurus implements HasParentInterface
     private ?self $parent = null;
 
     /**
-     * @var Collection<Period>
+     * @var Collection<int, Period>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC', 'id' => 'ASC'])]
