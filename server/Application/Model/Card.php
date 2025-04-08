@@ -37,6 +37,7 @@ use Ecodev\Felix\Model\Image;
 use Ecodev\Felix\Utility;
 use GraphQL\Doctrine\Attribute as API;
 use Imagine\Filter\Basic\Autorotate;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\ImagineInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\UploadedFileInterface;
@@ -661,7 +662,12 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         $this->traitSetFile($file);
 
         try {
-            $this->readFileInfo();
+            /** @var ImagineInterface $imagine */
+            $imagine = $container->get(ImagineInterface::class);
+            $image = $imagine->open($this->getPath());
+
+            $this->autorotate($image);
+            $this->readFileInfo($image);
         } catch (Throwable $e) {
             throw new FileException($file, $e);
         }
@@ -691,30 +697,49 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     }
 
     /**
+     * Try to auto-rotate image if EXIF says it's rotated.
+     * If the size of the resulting file exceed the autorized upload filesize
+     * configured for the server (php's upload_max_filesize), do nothing.
+     *
+     * More informations about EXIF orientation here:
+     * https://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
+     */
+    private function autorotate(ImageInterface $image): void
+    {
+        $autorotate = new Autorotate();
+
+        // Check if the image is EXIF oriented.
+        if (!empty($autorotate->getTransformations($image))) {
+            $autorotate->apply($image);
+
+            // Save the rotate image to a temporary file to check its size.
+            $tempFile = tempnam('data/tmp/', 'rotated-image');
+            $image->save($tempFile);
+            $maxSize = ini_parse_quantity(ini_get('upload_max_filesize'));
+            $newSize = filesize($tempFile);
+            unlink($tempFile);
+
+            // We only rotate if the size of the rotated file do not exceed the
+            // authorized upload filesize configured for the server.
+            if ($newSize < $maxSize) {
+                $image->save($this->getPath());
+            }
+        }
+    }
+
+    /**
      * Read dimension and size from file on disk.
      */
-    private function readFileInfo(): void
+    private function readFileInfo(ImageInterface $image): void
     {
-        global $container;
-        $path = $this->getPath();
-
-        /** @var ImagineInterface $imagine */
-        $imagine = $container->get(ImagineInterface::class);
-        $image = $imagine->open($path);
-
-        // Auto-rotate image if EXIF says it's rotated
-        $autorotate = new Autorotate();
-        $autorotate->apply($image);
-        $image->save($path);
+        // Ensure that we read fresh stats from disk.
+        clearstatcache(true, $this->getPath());
 
         $size = $image->getSize();
 
-        // Ensure that we read fresh stats from disk.
-        clearstatcache(true, $path);
-
         $this->setWidth($size->getWidth());
         $this->setHeight($size->getHeight());
-        $this->setFileSize(filesize($path));
+        $this->setFileSize(filesize($this->getPath()));
     }
 
     private function computeDatings(): void
