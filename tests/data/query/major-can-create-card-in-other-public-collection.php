@@ -13,7 +13,7 @@ return [
         'data' => [
             'createCard' => [
                 'name' => 'test name',
-                'fileSize' => 97599,
+                'fileSize' => 90188,
                 'width' => 960,
                 'height' => 425,
                 'code' => 'Test collection 2001-6014',
