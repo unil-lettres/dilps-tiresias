@@ -62,7 +62,7 @@ return [
         'data' => [
             'updateCard' => [
                 'name' => 'test name',
-                'fileSize' => 97599,
+                'fileSize' => 90188,
                 'width' => 960,
                 'height' => 425,
                 'institution' => [
