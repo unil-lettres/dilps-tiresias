@@ -19,8 +19,6 @@ trait HasRichTextName
     private string $plainName = '';
 
     /**
-     * Constructor.
-     *
      * @param string $name
      */
     public function __construct($name = '')

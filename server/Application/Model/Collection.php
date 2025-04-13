@@ -65,9 +65,6 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'collections')]
     private DoctrineCollection $users;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();

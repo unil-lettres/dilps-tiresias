@@ -195,9 +195,6 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     #[ORM\Column(name: 'legacy_id', type: 'integer', nullable: true)]
     private ?int $legacyId = null;
 
-    /**
-     * Constructor.
-     */
     public function __construct(string $name = '')
     {
         $this->setName($name);
