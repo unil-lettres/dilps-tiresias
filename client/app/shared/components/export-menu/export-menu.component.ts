@@ -22,7 +22,6 @@ export enum ExportTheme {
     selector: 'app-export-menu',
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
-    standalone: true,
     imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
 })
 export class ExportMenuComponent {

@@ -24,7 +24,8 @@
     @include mat.button-toggle-color($theme);
     @include mat.checkbox-color($theme);
     @include mat.chips-color($theme);
-    @include mat.core-color($theme);
+    @include mat.elevation-classes();
+    @include mat.app-background();
     @include mat.datepicker-color($theme);
     @include mat.dialog-color($theme);
     @include mat.divider-color($theme);
@@ -72,7 +73,8 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.button-toggle-base($fake-material-v2-theme);
 @include mat.checkbox-base($fake-material-v2-theme);
 @include mat.chips-base($fake-material-v2-theme);
-@include mat.core-base($fake-material-v2-theme);
+@include mat.elevation-classes();
+@include mat.app-background();
 @include mat.datepicker-base($fake-material-v2-theme);
 @include mat.dialog-base($fake-material-v2-theme);
 @include mat.divider-base($fake-material-v2-theme);
@@ -104,7 +106,8 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.button-toggle-density(0);
 @include mat.checkbox-density(0);
 @include mat.chips-density(0);
-@include mat.core-density(0);
+@include mat.elevation-classes();
+@include mat.app-background();
 @include mat.datepicker-density(0);
 @include mat.dialog-density(0);
 @include mat.divider-density(0);
@@ -137,7 +140,8 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.button-toggle-typography(typography.$custom-typography-gt-sm);
 @include mat.checkbox-typography(typography.$custom-typography-gt-sm);
 @include mat.chips-typography(typography.$custom-typography-gt-sm);
-@include mat.core-typography(typography.$custom-typography-gt-sm);
+@include mat.elevation-classes();
+@include mat.app-background();
 @include mat.datepicker-typography(typography.$custom-typography-gt-sm);
 @include mat.dialog-typography(typography.$custom-typography-gt-sm);
 @include mat.divider-typography(typography.$custom-typography-gt-sm);
@@ -164,7 +168,8 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.tooltip-typography(typography.$custom-typography-gt-sm);
 @include mat.tree-typography(typography.$custom-typography-gt-sm);
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 .dilps-production {
     @include applyTheme(dilps-production.$theme-light);

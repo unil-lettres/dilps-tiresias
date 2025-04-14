@@ -11,7 +11,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
     templateUrl: './type-text.component.html',
-    standalone: true,
     imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
 })
 export class TypeTextComponent extends EcoDevTypeTextComponent {}

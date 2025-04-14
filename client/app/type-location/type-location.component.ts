@@ -15,7 +15,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 @Component({
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeLocationComponent implements DropdownComponent {

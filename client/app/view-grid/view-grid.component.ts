@@ -32,7 +32,6 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
-    standalone: true,
     imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {

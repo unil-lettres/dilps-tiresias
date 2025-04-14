@@ -24,7 +24,6 @@ type Model = Stamped & {
     selector: 'app-dialog-footer',
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
-    standalone: true,
     imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
 })
 export class DialogFooterComponent {

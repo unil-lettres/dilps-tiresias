@@ -27,7 +27,6 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
     selector: 'app-related-cards',
     templateUrl: './related-cards.component.html',
     styleUrl: './related-cards.component.scss',
-    standalone: true,
     providers: [
         {
             provide: IMAGE_LOADER,

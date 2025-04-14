@@ -14,7 +14,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     selector: 'app-changes',
     templateUrl: './changes.component.html',
     styleUrl: './changes.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

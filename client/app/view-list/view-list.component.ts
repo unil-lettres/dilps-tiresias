@@ -18,7 +18,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     selector: 'app-view-list',
     templateUrl: './view-list.component.html',
     styleUrl: './view-list.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         MatPaginatorModule,

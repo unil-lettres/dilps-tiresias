@@ -26,7 +26,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     selector: 'app-tags',
     templateUrl: './tags.component.html',
     styleUrl: './tags.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

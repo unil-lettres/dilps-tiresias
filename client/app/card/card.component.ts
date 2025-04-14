@@ -125,7 +125,6 @@ type InitialCardValues = {
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         NaturalFileDropDirective,

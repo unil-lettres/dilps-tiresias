@@ -206,7 +206,7 @@
                             </mat-nav-list>
                         }
                         <!-- Bottom nav -->
-                        @if (errors.length) {
+                        @if (networkActivityService.errors().length) {
                             <a
                                 mat-icon-button
                                 class="icon-button-circle-warn"
@@ -235,7 +235,7 @@
 </div>
 
 <mat-menu #errorsMenu="matMenu" class="nat-padding error-menu nat-gap nat-vertical" [overlapTrigger]="false">
-    @for (error of errors; track error) {
+    @for (error of networkActivityService.errors(); track error) {
         <div class="error nat-vertical" style="user-select: text" (click)="$event.stopPropagation()">
             @if (error.message) {
                 <span class="mat-caption">{{ error.message }}</span>
@@ -245,7 +245,7 @@
             }
         </div>
     }
-    <button mat-menu-item (click)="errors = []">
+    <button mat-menu-item (click)="networkActivityService.clearErrors()">
         <mat-icon matMenuItemIcon naturalIcon="close" />
         Effacer et fermer
     </button>

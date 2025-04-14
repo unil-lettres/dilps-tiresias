@@ -7,7 +7,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 @Component({
     selector: 'app-welcome',
     templateUrl: './welcome.component.html',
-    standalone: true,
     imports: [MatDialogModule, MatButtonModule],
 })
 export class WelcomeComponent {

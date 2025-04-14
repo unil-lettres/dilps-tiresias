@@ -88,7 +88,6 @@ type SerieData = {
             } satisfies MatFormFieldDefaultOptions,
         },
     ],
-    standalone: true,
     imports: [
         LogoComponent,
         MatTabsModule,

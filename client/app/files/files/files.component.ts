@@ -27,7 +27,6 @@ type Tuple = {
     selector: 'app-files',
     templateUrl: './files.component.html',
     styleUrl: './files.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         MatTableModule,

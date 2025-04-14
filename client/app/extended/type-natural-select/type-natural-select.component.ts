@@ -13,7 +13,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
     templateUrl: './type-natural-select.component.html',
-    standalone: true,
     imports: [FormsModule, ReactiveFormsModule, NaturalSelectComponent],
 })
 export class TypeNaturalSelectComponent<

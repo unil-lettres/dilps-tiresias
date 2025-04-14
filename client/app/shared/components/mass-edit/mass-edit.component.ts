@@ -14,7 +14,6 @@ import {CommonModule} from '@angular/common';
     selector: 'app-mass-edit',
     templateUrl: './mass-edit.component.html',
     styleUrl: './mass-edit.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         MatDialogModule,

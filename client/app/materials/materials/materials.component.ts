@@ -26,7 +26,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     selector: 'app-materials',
     templateUrl: './materials.component.html',
     styleUrl: './materials.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

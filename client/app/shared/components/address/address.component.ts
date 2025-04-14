@@ -25,7 +25,6 @@ import {CommonModule} from '@angular/common';
     templateUrl: './address.component.html',
     styleUrl: './address.component.scss',
     providers: [AddressService, CountryService],
-    standalone: true,
     imports: [
         CommonModule,
         MatFormFieldModule,

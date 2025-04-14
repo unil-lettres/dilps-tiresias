@@ -15,7 +15,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 @Component({
     selector: 'app-material',
     templateUrl: './material.component.html',
-    standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,

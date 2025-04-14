@@ -17,7 +17,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     selector: 'app-document-types',
     templateUrl: './document-types.component.html',
     styleUrl: './document-types.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

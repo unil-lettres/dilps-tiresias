@@ -22,11 +22,10 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {Site, UserRole, Viewer} from '../shared/generated-types';
-import {NetworkActivityService} from '../shared/services/network-activity.service';
+import {FileSelection, NaturalFileSelectDirective, NaturalIconDirective, NetworkActivityService} from '@ecodev/natural';
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
-import {FileSelection, NaturalFileSelectDirective, NaturalIconDirective} from '@ecodev/natural';
 import {WelcomeComponent} from './welcome.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
@@ -39,7 +38,6 @@ import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatMenuModule} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {GraphQLFormattedError} from 'graphql';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -49,7 +47,6 @@ function isExcel(file: File): boolean {
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
-    standalone: true,
     imports: [
         MatMenuModule,
         RouterLink,
@@ -73,7 +70,7 @@ export class HomeComponent implements OnInit {
     public readonly route = inject(ActivatedRoute);
     public readonly router = inject(Router);
     public readonly userService = inject(UserService);
-    private readonly network = inject(NetworkActivityService);
+    public readonly networkActivityService = inject(NetworkActivityService);
     private readonly snackBar = inject(MatSnackBar);
     private readonly alertService = inject(AlertService);
     private readonly dialog = inject(MatDialog);
@@ -84,13 +81,10 @@ export class HomeComponent implements OnInit {
     public Site = Site;
     public readonly UserRole = UserRole;
 
-    public errors: GraphQLFormattedError[] = [];
     public user: Viewer['viewer'] | null = null;
     public nav = 1;
     public progress: number | null = null;
     private uploaded = 0;
-
-    private readonly errors$ = this.network.errors.pipe(takeUntilDestroyed());
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -100,14 +94,10 @@ export class HomeComponent implements OnInit {
     private readonly routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
 
     public constructor() {
-        this.network.errors.next([]);
+        this.networkActivityService.clearErrors();
     }
 
     public ngOnInit(): void {
-        this.errors$.subscribe(errors => {
-            this.errors = this.errors.concat(errors);
-        });
-
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
         });

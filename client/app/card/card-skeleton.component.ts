@@ -104,6 +104,5 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
             </div>
         </div>
     `,
-    standalone: true,
 })
 export class CardSkeletonComponent {}

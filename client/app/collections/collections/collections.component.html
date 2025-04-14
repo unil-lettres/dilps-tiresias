@@ -4,7 +4,7 @@
             <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             <div class="nat-expand"></div>
             @if (canCreate) {
-                <button mat-icon-button [matTooltip]="'Créer une collection'" (click)="add()">
+                <button mat-icon-button matTooltip="Créer une collection" (click)="add()">
                     <mat-icon naturalIcon="add" />
                 </button>
             }

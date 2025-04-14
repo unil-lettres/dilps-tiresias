@@ -18,7 +18,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     selector: 'app-quizz',
     templateUrl: './quizz.component.html',
     styleUrl: './quizz.component.scss',
-    standalone: true,
     imports: [
         MatFormFieldModule,
         MatInputModule,
