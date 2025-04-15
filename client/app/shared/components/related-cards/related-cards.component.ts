@@ -2,15 +2,14 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    EventEmitter,
     inject,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
-    Output,
     SimpleChanges,
     viewChild,
+    output,
 } from '@angular/core';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -56,11 +55,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     public readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
-    @Output()
-    public readonly reduced = new EventEmitter<boolean>();
+    public readonly reduced = output<boolean>();
 
-    @Output()
-    public readonly closed = new EventEmitter<boolean>();
+    public readonly closed = output<boolean>();
 
     public readonly CardService = CardService;
 

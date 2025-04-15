@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, NgZone, Output, viewChild} from '@angular/core';
+import {Component, inject, Input, NgZone, viewChild, output} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -41,7 +41,7 @@ export class ViewMapComponent {
         });
     }
 
-    @Output() public readonly searchByLocation = new EventEmitter<Location>();
+    public readonly searchByLocation = output<Location>();
     private readonly map = viewChild.required(GoogleMap);
     private readonly infoWindow = viewChild.required(MapInfoWindow);
     public readonly infoWindowOption: google.maps.InfoWindowOptions = {

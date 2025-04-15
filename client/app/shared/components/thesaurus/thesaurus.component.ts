@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, viewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, Input, OnInit, viewChild, output} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteModule,
@@ -135,9 +135,7 @@ export class ThesaurusComponent<
     /**
      * Emits when a selection is done
      */
-    @Output() public readonly modelChange = new EventEmitter<
-        string | string[] | ThesaurusModel | ThesaurusModel[] | null
-    >();
+    public readonly modelChange = output<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
 
     /**
      * Configuration for hierarchic relations

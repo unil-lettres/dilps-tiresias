@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input, output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {StampComponent, Stamped} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -31,7 +31,7 @@ export class DialogFooterComponent {
     @Input() public canDelete: boolean | undefined = false;
     @Input({required: true}) public item!: Model;
     @Input() public formCtrl: FormControl | null = null;
-    @Output() public readonly create = new EventEmitter<Model>();
-    @Output() public readonly update = new EventEmitter<Model>();
-    @Output() public readonly delete = new EventEmitter<Model>();
+    public readonly create = output<Model>();
+    public readonly update = output<Model>();
+    public readonly delete = output<Model>();
 }

@@ -3,12 +3,11 @@ import {
     Component,
     DestroyRef,
     ElementRef,
-    EventEmitter,
     inject,
     Input,
     OnInit,
-    Output,
     ViewChild,
+    output,
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
@@ -62,19 +61,17 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Emits when data is required
      */
-    @Output() public readonly pagination = new EventEmitter<PaginationInput>();
+    public readonly pagination = output<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public readonly contentChange = new EventEmitter<ContentChange>();
+    public readonly contentChange = output<ContentChange>();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public readonly selectionChange: EventEmitter<Cards['cards']['items'][0][]> = new EventEmitter<
-        Cards['cards']['items'][0][]
-    >();
+    public readonly selectionChange = output<Cards['cards']['items'][0][]>();
 
     /**
      * Reference to scrollable element
