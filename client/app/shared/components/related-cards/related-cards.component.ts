@@ -10,7 +10,7 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-    ViewChild,
+    viewChild,
 } from '@angular/core';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -54,8 +54,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     @Input()
     public isReduced = false;
 
-    @ViewChild('slideshow')
-    public slideshow!: ElementRef;
+    public readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
     @Output()
     public readonly reduced = new EventEmitter<boolean>();
@@ -144,7 +143,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     public ngAfterViewInit(): void {
-        this.resizeObserver.observe(this.slideshow.nativeElement);
+        this.resizeObserver.observe(this.slideshow().nativeElement);
     }
 
     public ngOnDestroy(): void {
@@ -152,11 +151,11 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     public scrollLeft(): void {
-        this.slideshow.nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
+        this.slideshow().nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
     }
 
     public scrollRight(): void {
-        this.slideshow.nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
+        this.slideshow().nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
     }
 
     /**
@@ -164,7 +163,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      * current scroll position and the size of the slideshow.
      */
     public updateButtonsState(): void {
-        const slideshow = this.slideshow.nativeElement;
+        const slideshow = this.slideshow().nativeElement;
 
         this.scrollBarAtLeft = slideshow.scrollLeft == 0;
         this.scrollBarAtRight = slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth;

@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -46,7 +46,7 @@ export class AddressComponent implements OnInit, OnChanges {
     public readonly countryService = inject(CountryService);
     private readonly site = inject(SITE);
 
-    @ViewChild('input', {static: true}) public inputRef!: ElementRef<HTMLInputElement>;
+    public readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
 
     /**
      * If true, layouts vertically some side by side elements
@@ -282,7 +282,7 @@ export class AddressComponent implements OnInit, OnChanges {
         // load Places Autocomplete
         this.mapApiService.loaded.subscribe(() => {
             this.icon = this.getIcon();
-            this.autocomplete = new google.maps.places.Autocomplete(this.inputRef.nativeElement);
+            this.autocomplete = new google.maps.places.Autocomplete(this.inputRef().nativeElement);
             this.autocomplete.addListener('place_changed', () => {
                 this.ngZone.run(() => {
                     this.onPlaceChange();
@@ -298,7 +298,7 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public search(): void {
         this.updateSearch();
-        this.inputRef.nativeElement.focus(); // focus in input to open google suggestions
+        this.inputRef().nativeElement.focus(); // focus in input to open google suggestions
     }
 
     public onPlaceChange(): void {

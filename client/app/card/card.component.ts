@@ -1,5 +1,5 @@
 import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
-import {Component, inject, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, viewChild} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -475,7 +475,7 @@ export class CardComponent implements OnInit, OnChanges {
      */
     public isRelatedCardsClosed = false;
 
-    @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
+    public readonly accordionItem = viewChild.required<CdkAccordionItem>('accordionItem');
 
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
     private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());

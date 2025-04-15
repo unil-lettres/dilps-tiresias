@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, viewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteModule,
@@ -75,12 +75,12 @@ export class ThesaurusComponent<
     /**
      * Reference to autocomplete
      */
-    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete!: MatAutocompleteTrigger;
+    public readonly autocomplete = viewChild.required(MatAutocompleteTrigger);
 
     /**
      * Reference to input field for add a thesaurus.
      */
-    @ViewChild('thesaurusInput', {static: true}) public thesaurusInput!: ElementRef<HTMLInputElement>;
+    public readonly thesaurusInput = viewChild.required<ElementRef<HTMLInputElement>>('thesaurusInput');
 
     /**
      * If true, manipulations are forbidden
@@ -344,7 +344,7 @@ export class ThesaurusComponent<
      * If not add the term as is. If it does, add the selected option.
      */
     public onEnter(): void {
-        const inputValue = this.thesaurusInput.nativeElement.value;
+        const inputValue = this.thesaurusInput().nativeElement.value;
         if (inputValue && this.allowFreeText) {
             this.addTerm({name: inputValue});
         }
@@ -371,7 +371,7 @@ export class ThesaurusComponent<
      * Always close the panel (without resetting results)
      */
     private addTerm(term: ThesaurusModel): void {
-        this.autocomplete.closePanel();
+        this.autocomplete().closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {
             if (!this.multiple) {
@@ -380,7 +380,7 @@ export class ThesaurusComponent<
             this.items.push(clone(term)); // clone to get rid of readonly
             this.notifyModel();
         }
-        this.thesaurusInput.nativeElement.value = '';
+        this.thesaurusInput().nativeElement.value = '';
     }
 
     private notifyModel(): void {

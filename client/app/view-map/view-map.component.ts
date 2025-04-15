@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, NgZone, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, inject, Input, NgZone, Output, viewChild} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -42,8 +42,8 @@ export class ViewMapComponent {
     }
 
     @Output() public readonly searchByLocation = new EventEmitter<Location>();
-    @ViewChild(GoogleMap) private map!: GoogleMap;
-    @ViewChild(MapInfoWindow) private infoWindow!: MapInfoWindow;
+    private readonly map = viewChild.required(GoogleMap);
+    private readonly infoWindow = viewChild.required(MapInfoWindow);
     public readonly infoWindowOption: google.maps.InfoWindowOptions = {
         maxWidth: 400,
     };
@@ -107,7 +107,7 @@ export class ViewMapComponent {
 
         this.mapApiService.loaded.subscribe(() =>
             setTimeout(() => {
-                this.map.fitBounds(bounds, {
+                this.map().fitBounds(bounds, {
                     top: 250,
                     right: 100,
                     left: 100,
@@ -119,6 +119,6 @@ export class ViewMapComponent {
 
     public openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
         this.selectedMarker = marker;
-        this.infoWindow.open(mapMarker);
+        this.infoWindow().open(mapMarker);
     }
 }
