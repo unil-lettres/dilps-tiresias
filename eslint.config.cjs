@@ -48,7 +48,6 @@ module.exports = tseslint.config(
                 },
             ],
             '@typescript-eslint/no-unnecessary-type-parameters': 'off', // The doc is scary, let's revisit this when we have time
-            '@typescript-eslint/no-deprecated': 'off', // TODO Angular 19: enable and solves them
             '@angular-eslint/directive-selector': [
                 'error',
                 {

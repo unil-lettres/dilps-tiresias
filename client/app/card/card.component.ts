@@ -929,7 +929,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     private getBase64(file: File | null): void {
         getBase64Url(file).then(result => {
-            this.imageData = result!;
+            this.imageData = result;
         });
     }
 
