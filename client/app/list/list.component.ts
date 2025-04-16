@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, viewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     NaturalAbstractList,
@@ -120,17 +120,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     /**
      * Reference to grid component
      */
-    @ViewChild(ViewGridComponent) public gridComponent: ViewGridComponent | null = null;
+    public readonly gridComponent = viewChild(ViewGridComponent);
 
     /**
      * Reference to list component
      */
-    @ViewChild(ViewListComponent) public listComponent: ViewListComponent | null = null;
-
-    /**
-     * Reference to map component
-     */
-    @ViewChild(ViewMapComponent) public mapComponent: ViewMapComponent | null = null;
+    public readonly listComponent = viewChild(ViewListComponent);
 
     /**
      * Expose enum for template
@@ -292,7 +287,9 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public toggleLabels(): void {
         this.showLabels = !this.showLabels;
-        this.gridComponent?.gallery?.gallery.then(gallery => gallery.setLabelHover(!this.showLabels));
+        this.gridComponent()
+            ?.gallery()
+            ?.gallery.then(gallery => gallery.setLabelHover(!this.showLabels));
         sessionStorage.setItem('showLabels', this.showLabels + '');
     }
 
@@ -545,7 +542,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Return the only activated View Component
      */
     private getViewComponent(): ViewInterface {
-        return (this.gridComponent || this.listComponent)!;
+        return (this.gridComponent() || this.listComponent())!;
     }
 
     private linkToCollection(data: CollectionSelectorData): void {
