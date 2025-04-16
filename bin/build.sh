@@ -12,8 +12,15 @@ if id "$DEPLOY_USER" >/dev/null 2>&1; then
         exit
     fi
 
+    # Use /mnt/data/tmp if it exists
+    TMP_DIR="/mnt/data/tmp"
+    if [ ! -d "$TMP_DIR" ]; then
+        TMP_DIR="/tmp"
+    fi
+
     # Declare a fake HOME, so that cache and various config files can be created
-    export HOME="/tmp/dilps-home"
+    export HOME="/tmp/$DEPLOY_USER"
+    export HOME="$TMP_DIR/home-$DEPLOY_USER"
 fi
 
 # Exit script on any error
@@ -55,7 +62,7 @@ if [ ! -n "$DOCKER_RUNNING" ]; then
 
   # Generate sources map by setting GENERATE_MAP env.
   if [ -n "$GENERATE_MAP" ]; then
-    RUN_CONFIG="${RUN_CONFIG}-map" 
+    RUN_CONFIG="${RUN_CONFIG}-map"
   fi
 
   yarn run ${RUN_CONFIG}
