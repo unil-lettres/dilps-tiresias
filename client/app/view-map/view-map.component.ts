@@ -42,8 +42,8 @@ export class ViewMapComponent {
     }
 
     public readonly searchByLocation = output<Location>();
-    private readonly map = viewChild.required(GoogleMap);
-    private readonly infoWindow = viewChild.required(MapInfoWindow);
+    private readonly map = viewChild(GoogleMap);
+    private readonly infoWindow = viewChild(MapInfoWindow);
     public readonly infoWindowOption: google.maps.InfoWindowOptions = {
         maxWidth: 400,
     };
@@ -107,7 +107,7 @@ export class ViewMapComponent {
 
         this.mapApiService.loaded.subscribe(() =>
             setTimeout(() => {
-                this.map().fitBounds(bounds, {
+                this.map()?.fitBounds(bounds, {
                     top: 250,
                     right: 100,
                     left: 100,
@@ -119,6 +119,6 @@ export class ViewMapComponent {
 
     public openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
         this.selectedMarker = marker;
-        this.infoWindow().open(mapMarker);
+        this.infoWindow()?.open(mapMarker);
     }
 }
