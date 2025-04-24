@@ -35,7 +35,7 @@ class AcceptChange implements FieldInterface
                         $image = $change->getSuggestion();
                         $image->setOwner(User::getCurrent());
 
-                        $changeSet = ['need some value here'];
+                        $changeSet = ['fakeProperty' => ['foo' => 'bar']];
                         $fakeEvent = new PreUpdateEventArgs($image, _em(), $changeSet);
                         $image->timestampUpdate($fakeEvent);
 

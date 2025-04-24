@@ -35,10 +35,10 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         ];
     }
 
-    public function getDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $field, ?array $args): ?string
+    public function getDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $field, ?array $args): string
     {
         if (!$args) {
-            return null;
+            return '';
         }
 
         $textFormat = new TextFormat($args['value']);
@@ -46,7 +46,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         $notExactTerms = $textFormat->notExactTerms();
 
         if (!$exactTerms && !$notExactTerms) {
-            return null;
+            return '';
         }
 
         $scalarFields = $this->getSearchableFields($metadata, $alias);
