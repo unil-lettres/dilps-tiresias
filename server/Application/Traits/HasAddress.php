@@ -23,7 +23,7 @@ trait HasAddress
 
     private ?float $longitude = null;
 
-    #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
+    #[ORM\Column(name: '`precision`', type: 'enum', nullable: true)]
     private ?Precision $precision = null;
 
     #[ORM\Column(type: 'string', options: ['default' => ''])]

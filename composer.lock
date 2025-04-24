@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a74aa6a1f712696979b127e3f7c6710",
+    "content-hash": "8b729d46636ecbe308d721c960df60d3",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -254,237 +254,6 @@
                 }
             ],
             "time": "2024-11-12T16:29:46+00:00"
-        },
-        {
-            "name": "creof/doctrine2-spatial",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creof/doctrine2-spatial.git",
-                "reference": "58ea5fae1c1b450ee08d7dac25cd9e8f5e6fdebd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creof/doctrine2-spatial/zipball/58ea5fae1c1b450ee08d7dac25cd9e8f5e6fdebd",
-                "reference": "58ea5fae1c1b450ee08d7dac25cd9e8f5e6fdebd",
-                "shasum": ""
-            },
-            "require": {
-                "creof/geo-parser": "~2.0",
-                "creof/wkb-parser": "~2.0",
-                "creof/wkt-parser": "~2.0",
-                "doctrine/orm": ">=2.3"
-            },
-            "require-dev": {
-                "phpunit/phpcov": "*",
-                "phpunit/phpunit": "<5.0",
-                "satooshi/php-coveralls": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CrEOF\\Spatial": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Derek Lambert",
-                    "email": "dlambert@dereklambert.com"
-                }
-            ],
-            "description": "Doctrine2 multi-platform support for spatial types and functions",
-            "keywords": [
-                "database",
-                "dbal",
-                "geography",
-                "geometry",
-                "gis",
-                "mysql",
-                "opengis",
-                "orm",
-                "postgis",
-                "postgresql",
-                "spatial"
-            ],
-            "support": {
-                "issues": "https://github.com/creof/doctrine2-spatial/issues",
-                "source": "https://github.com/creof/doctrine2-spatial/tree/master"
-            },
-            "time": "2017-07-13T16:48:25+00:00"
-        },
-        {
-            "name": "creof/geo-parser",
-            "version": "2.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creof/geo-parser.git",
-                "reference": "b55553a54c7775576c9ee629847973d0b6d7cbed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creof/geo-parser/zipball/b55553a54c7775576c9ee629847973d0b6d7cbed",
-                "reference": "b55553a54c7775576c9ee629847973d0b6d7cbed",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/lexer": ">=1.0",
-                "ext-spl": "*",
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "phpunit/phpunit": "~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CrEOF\\Geo\\String": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Derek J. Lambert",
-                    "email": "dlambert@dereklambert.com"
-                }
-            ],
-            "description": "Parser for geography coordinate strings",
-            "keywords": [
-                "coordinate",
-                "geo",
-                "geography",
-                "geometry",
-                "lexer",
-                "parser",
-                "spatial",
-                "string",
-                "text"
-            ],
-            "support": {
-                "issues": "https://github.com/creof/geo-parser/issues",
-                "source": "https://github.com/creof/geo-parser/tree/master"
-            },
-            "time": "2019-08-07T17:45:01+00:00"
-        },
-        {
-            "name": "creof/wkb-parser",
-            "version": "v2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creof/wkb-parser.git",
-                "reference": "97ac770f241adce3c46e3feb96e0e092531c833d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creof/wkb-parser/zipball/97ac770f241adce3c46e3feb96e0e092531c833d",
-                "reference": "97ac770f241adce3c46e3feb96e0e092531c833d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-spl": "*",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "phpunit/phpunit": ">=4.8",
-                "satooshi/php-coveralls": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CrEOF\\Geo\\WKB": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Derek J. Lambert",
-                    "email": "dlambert@dereklambert.com"
-                }
-            ],
-            "description": "Parser for well-known binary (WKB/EWKB) object data",
-            "keywords": [
-                "ewkb",
-                "geography",
-                "geometry",
-                "parser",
-                "spatial",
-                "string",
-                "text",
-                "wkb"
-            ],
-            "support": {
-                "issues": "https://github.com/creof/wkb-parser/issues",
-                "source": "https://github.com/creof/wkb-parser/tree/v2.4"
-            },
-            "time": "2022-02-15T22:46:31+00:00"
-        },
-        {
-            "name": "creof/wkt-parser",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/creof/wkt-parser.git",
-                "reference": "307a3fdc0b705c7b59b47751a7f7e8e45f98d11e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/creof/wkt-parser/zipball/307a3fdc0b705c7b59b47751a7f7e8e45f98d11e",
-                "reference": "307a3fdc0b705c7b59b47751a7f7e8e45f98d11e",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/lexer": ">=1.0",
-                "ext-spl": "*",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "dev-master",
-                "phpunit/phpunit": ">=4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "CrEOF\\Geo\\WKT": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Derek J. Lambert",
-                    "email": "dlambert@dereklambert.com"
-                }
-            ],
-            "description": "Parser for well-known text (WKT) object strings",
-            "keywords": [
-                "ewkt",
-                "geography",
-                "geometry",
-                "lexer",
-                "parser",
-                "spatial",
-                "string",
-                "text",
-                "wkt"
-            ],
-            "support": {
-                "issues": "https://github.com/creof/wkt-parser/issues",
-                "source": "https://github.com/creof/wkt-parser/tree/master"
-            },
-            "time": "2015-11-18T21:20:29+00:00"
         },
         {
             "name": "dflydev/fig-cookies",
@@ -3023,6 +2792,266 @@
             "time": "2024-11-21T17:42:20+00:00"
         },
         {
+            "name": "longitude-one/doctrine-spatial",
+            "version": "dev-mr-97",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/longitude-one/doctrine-spatial.git",
+                "reference": "78d33fb8e6b85451ac208882ea09283049429796"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/longitude-one/doctrine-spatial/zipball/78d33fb8e6b85451ac208882ea09283049429796",
+                "reference": "78d33fb8e6b85451ac208882ea09283049429796",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.19|^3.1",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "longitude-one/geo-parser": "^3.0.1",
+                "longitude-one/wkb-parser": "^3.0.0",
+                "longitude-one/wkt-parser": "^3.0.0",
+                "php": "^8.1"
+            },
+            "replace": {
+                "creof/doctrine2-spatial": "*"
+            },
+            "require-dev": {
+                "cache/array-adapter": "^1.1",
+                "dg/bypass-finals": "^1.3",
+                "monolog/monolog": "^2.0",
+                "phpunit/phpcov": "^9",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LongitudeOne\\Spatial": "lib/",
+                    "LongitudeOne\\Spatial\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Derek Lambert",
+                    "email": "dlambert@dereklambert.com"
+                },
+                {
+                    "name": "Alexandre Tranchant",
+                    "email": "alexandre.tranchant@gmail.com"
+                }
+            ],
+            "description": "Doctrine multi-platform support for spatial types and functions, compliant with Doctrine 2.19, 3.1, and dev ones (3.2 and 4.0).",
+            "keywords": [
+                "database",
+                "dbal",
+                "geography",
+                "geometry",
+                "gis",
+                "iso-13249",
+                "mariadb",
+                "mysql",
+                "opengis",
+                "orm",
+                "postgis",
+                "postgresql",
+                "spatial"
+            ],
+            "support": {
+                "issues": "https://github.com/longitude-one/doctrine-spatial/issues",
+                "source": "https://github.com/longitude-one/doctrine-spatial/tree/mr-97"
+            },
+            "time": "2025-01-22T12:49:39+00:00"
+        },
+        {
+            "name": "longitude-one/geo-parser",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/longitude-one/geo-parser.git",
+                "reference": "39b17ba2810bc09b3a6f07176cf41d0b0caf5b6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/longitude-one/geo-parser/zipball/39b17ba2810bc09b3a6f07176cf41d0b0caf5b6c",
+                "reference": "39b17ba2810bc09b3a6f07176cf41d0b0caf5b6c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^2.1|^3.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LongitudeOne\\Geo\\String": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Tranchant",
+                    "email": "alexandre.tranchant@gmail.com"
+                },
+                {
+                    "name": "Derek J. Lambert",
+                    "email": "dlambert@dereklambert.com"
+                }
+            ],
+            "description": "Parser for geography coordinate strings",
+            "keywords": [
+                "coordinate",
+                "geo",
+                "geography",
+                "geometry",
+                "lexer",
+                "parser",
+                "spatial",
+                "string",
+                "text"
+            ],
+            "support": {
+                "issues": "https://github.com/longitude-one/geo-parser/issues",
+                "source": "https://github.com/longitude-one/geo-parser/tree/3.0.1"
+            },
+            "time": "2024-05-23T05:41:35+00:00"
+        },
+        {
+            "name": "longitude-one/wkb-parser",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/longitude-one/wkb-parser.git",
+                "reference": "389acdebe0551ae44c75df538e98cda6a30793e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/longitude-one/wkb-parser/zipball/389acdebe0551ae44c75df538e98cda6a30793e8",
+                "reference": "389acdebe0551ae44c75df538e98cda6a30793e8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5.16"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LongitudeOne\\Geo\\WKB": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Derek J. Lambert",
+                    "email": "dlambert@dereklambert.com"
+                },
+                {
+                    "name": "Alexandre Tranchant",
+                    "email": "alexandre.tranchant@gmail.com"
+                }
+            ],
+            "description": "Parser for well-known binary (WKB/EWKB) object data",
+            "keywords": [
+                "ewkb",
+                "geography",
+                "geometry",
+                "parser",
+                "spatial",
+                "string",
+                "text",
+                "wkb"
+            ],
+            "support": {
+                "issues": "https://github.com/longitude-one/wkb-parser/issues",
+                "source": "https://github.com/longitude-one/wkb-parser/tree/3.0.0"
+            },
+            "time": "2024-04-10T11:59:36+00:00"
+        },
+        {
+            "name": "longitude-one/wkt-parser",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/longitude-one/wkt-parser.git",
+                "reference": "cb9ded868bfd0200e5134bf259b1e001b83ebaa2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/longitude-one/wkt-parser/zipball/cb9ded868bfd0200e5134bf259b1e001b83ebaa2",
+                "reference": "cb9ded868bfd0200e5134bf259b1e001b83ebaa2",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^2.1|^3.0",
+                "php": "^8.1"
+            },
+            "replace": {
+                "creof/wkt-parser": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LongitudeOne\\Geo\\WKT": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexandre Tranchant",
+                    "email": "alexandre.tranchant@gmail.com"
+                },
+                {
+                    "name": "axi"
+                },
+                {
+                    "name": "Derek J. Lambert",
+                    "email": "dlambert@dereklambert.com"
+                },
+                {
+                    "name": "ellisgl"
+                }
+            ],
+            "description": "Parser for well-known text (WKT) object strings",
+            "keywords": [
+                "ewkt",
+                "geography",
+                "geometry",
+                "lexer",
+                "parser",
+                "spatial",
+                "string",
+                "text",
+                "wkt"
+            ],
+            "support": {
+                "issues": "https://github.com/longitude-one/wkt-parser/issues",
+                "source": "https://github.com/longitude-one/wkt-parser/tree/3.0.0"
+            },
+            "time": "2024-04-27T07:44:31+00:00"
+        },
+        {
             "name": "maennchen/zipstream-php",
             "version": "3.1.2",
             "source": {
@@ -4201,16 +4230,16 @@
         },
         {
             "name": "phpoffice/phppresentation",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PHPPresentation.git",
-                "reference": "7a70b57df7ed3f05316aff2b83c307c61144b951"
+                "reference": "91553ed71754d8f97fff717365931e8ed210b62d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PHPPresentation/zipball/7a70b57df7ed3f05316aff2b83c307c61144b951",
-                "reference": "7a70b57df7ed3f05316aff2b83c307c61144b951",
+                "url": "https://api.github.com/repos/PHPOffice/PHPPresentation/zipball/91553ed71754d8f97fff717365931e8ed210b62d",
+                "reference": "91553ed71754d8f97fff717365931e8ed210b62d",
                 "shasum": ""
             },
             "require": {
@@ -4218,9 +4247,10 @@
                 "ext-zip": "*",
                 "php": "^7.1|^8.0",
                 "phpoffice/common": "^1",
-                "phpoffice/phpspreadsheet": "^1.9.0"
+                "phpoffice/phpspreadsheet": "^1.9 || ^2.0 || ^3.0"
             },
             "require-dev": {
+                "dompdf/dompdf": "^3.1",
                 "phpmd/phpmd": "2.*",
                 "phpstan/phpstan": "^0.12.88 || ^1.0.0",
                 "phpunit/phpunit": ">=7.0"
@@ -4228,6 +4258,7 @@
             "suggest": {
                 "ext-gd": "Required to add images"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -4264,9 +4295,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PHPPresentation/issues",
-                "source": "https://github.com/PHPOffice/PHPPresentation/tree/1.1.0"
+                "source": "https://github.com/PHPOffice/PHPPresentation/tree/master"
             },
-            "time": "2024-09-01T07:45:31+00:00"
+            "time": "2025-04-24T06:45:34+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -9725,6 +9756,8 @@
         "ecodev/felix": 20,
         "ecodev/graphql-doctrine": 20,
         "friendsofphp/php-cs-fixer": 0,
+        "longitude-one/doctrine-spatial": 20,
+        "phpoffice/phppresentation": 20,
         "phpstan/phpstan-doctrine": 0
     },
     "prefer-stable": false,
