@@ -4,7 +4,7 @@
     "name": "Dilps-Tiresias devcontainer",
     "dockerComposeFile": ["../docker-compose.yml"],
     "service": "dilps-tiresias-app",
-    "workspaceFolder": "/var/www",
+    "workspaceFolder": "/workspaces/dilps-tiresias",
     "features": {
         "ghcr.io/devcontainers/features/git:1": {
             "version": "2.43.0"
