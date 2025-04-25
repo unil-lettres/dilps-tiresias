@@ -22,6 +22,9 @@ services:
         expose:
             - '9000'
             - '9100'
+        depends_on:
+            dilps-tiresias-mysql:
+                condition: service_healthy
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-app
@@ -51,6 +54,12 @@ services:
             - ./dev/config/my.cnf:/etc/mysql/conf.d/99-custom.cnf
         ports:
             - '3301:3306'
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+            start_period: 30s
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mysql
