@@ -1,0 +1,42 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+    "name": "Dilps-Tiresias devcontainer",
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "dilps-tiresias-app",
+    "workspaceFolder": "/var/www",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "2.43.0"
+        },
+        "ghcr.io/guiyomh/features/vim": {}
+    },
+    // forward ports for the main application (8181), phpmyadmin (9797), and mailhog (8027)
+    "forwardPorts": [8181, 9797, 8027],
+    "postCreateCommand": "apt update && apt install -y --no-install-recommends tig",
+    "postAttachCommand": "git config --global --add safe.directory /var/www",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Angular.ng-template",
+                "bmewburn.vscode-intelephense-client",
+                "dbaeumer.vscode-eslint",
+                "eamodio.gitlens",
+                "EditorConfig.EditorConfig",
+                "esbenp.prettier-vscode",
+                "johnpapa.angular-essentials",
+                "MehediDracula.php-namespace-resolver",
+                "mikestead.dotenv",
+                "PKief.material-icon-theme",
+                "redhat.vscode-yaml",
+                "ryu1kn.partial-diff",
+                "xdebug.php-debug",
+                "xdebug.php-pack",
+                "zobo.php-intellisense",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    }
+}
