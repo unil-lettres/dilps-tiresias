@@ -40,7 +40,6 @@ return [
             Application\Service\ImageResizer::class => Application\Service\ImageResizerFactory::class,
             Ecodev\Felix\Handler\FileHandler::class => Application\Handler\FileFactory::class,
             Ecodev\Felix\Handler\GraphQLHandler::class => Application\Handler\GraphQLFactory::class,
-            Ecodev\Felix\Log\Writer\Db::class => Application\Log\DbWriterFactory::class,
             Ecodev\Felix\Service\Mailer::class => Application\Service\MailerFactory::class,
             GraphQL\Doctrine\Types::class => Application\Api\TypesFactory::class,
             Laminas\Stratigility\Middleware\ErrorHandler::class => Mezzio\Container\ErrorHandlerFactory::class,

@@ -21,8 +21,6 @@ $aggregator = new ConfigAggregator([
     Ecodev\Felix\ConfigProvider::class,
     Laminas\Diactoros\ConfigProvider::class,
     Mezzio\LaminasView\ConfigProvider::class,
-    Laminas\Log\ConfigProvider::class,
-    Laminas\Mail\ConfigProvider::class,
     Laminas\Validator\ConfigProvider::class,
     Mezzio\ConfigProvider::class,
     Mezzio\Helper\ConfigProvider::class,
