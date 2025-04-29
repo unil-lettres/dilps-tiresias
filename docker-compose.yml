@@ -25,6 +25,12 @@ services:
         depends_on:
             dilps-tiresias-mysql:
                 condition: service_healthy
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -f http://dilps-tiresias-httpd:80 || exit 1" ]
+            interval: 10s
+            timeout: 2s
+            retries: 5
+            start_period: 5m
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-app
@@ -38,7 +44,7 @@ services:
             - ./dev/config/httpd-mpm.conf:/usr/local/apache2/conf/extra/httpd-mpm.conf
             - ./dev/config/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
         ports:
-            - '127.0.0.1:8181:80'
+            - '8181:80'
         depends_on:
             - dilps-tiresias-app
         networks:
