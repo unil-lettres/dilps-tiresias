@@ -44,7 +44,7 @@ services:
             - ./dev/config/httpd-mpm.conf:/usr/local/apache2/conf/extra/httpd-mpm.conf
             - ./dev/config/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
         ports:
-            - '8181:80'
+            - '127.0.0.1:8181:80'
         depends_on:
             - dilps-tiresias-app
         networks:
