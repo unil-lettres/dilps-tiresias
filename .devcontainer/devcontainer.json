@@ -13,6 +13,14 @@
     },
     // forward ports for the main application (8181), phpmyadmin (9797), and mailhog (8027)
     "forwardPorts": [8181, 9797, 8027],
+    "portsAttributes": {
+        "9000": {
+            "onAutoForward": "ignore"
+        },
+        "9100": {
+            "onAutoForward": "ignore"
+        }
+    },
     "initializeCommand": "/bin/bash .devcontainer/initialize.sh",
     "postCreateCommand": "/bin/bash .devcontainer/post-create.sh",
     "customizations": {
