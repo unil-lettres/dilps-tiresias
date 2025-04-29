@@ -66,6 +66,10 @@ ADD ./crontab /etc/crontab
 # docker exec <container-id> supervisorctl restart <service>
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Copy php-fpm healthcheck script (used for app container healthcheck)
+COPY ./healthcheck-php-fpm.sh /usr/local/bin/healthcheck-php-fpm.sh
+RUN chmod +x /usr/local/bin/healthcheck-php-fpm.sh
+
 # Add the entrypoint script
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
