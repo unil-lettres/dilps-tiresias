@@ -12,6 +12,8 @@ Development:
 
 Dilps/Tiresias is a web application based on GraphQL for the API and Angular for the client.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/unil-lettres/dilps-tiresias)
+
 ## Installation
 
 The recommended way to get a working copy is the following:

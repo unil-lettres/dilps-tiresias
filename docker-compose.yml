@@ -22,6 +22,15 @@ services:
         expose:
             - '9000'
             - '9100'
+        depends_on:
+            dilps-tiresias-mysql:
+                condition: service_healthy
+        healthcheck:
+            test: ['CMD-SHELL', '. /usr/local/bin/healthcheck-php-fpm.sh']
+            interval: 10s
+            timeout: 2s
+            retries: 5
+            start_period: 5m
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-app
@@ -35,7 +44,7 @@ services:
             - ./dev/config/httpd-mpm.conf:/usr/local/apache2/conf/extra/httpd-mpm.conf
             - ./dev/config/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
         ports:
-            - '8181:80'
+            - '127.0.0.1:8181:80'
         depends_on:
             - dilps-tiresias-app
         networks:
@@ -46,11 +55,20 @@ services:
         image: mariadb:11.4
         env_file:
             - ./dev/.env
+        environment:
+            # Override needed for healthcheck
+            - MYSQL_HOST=127.0.0.1
         volumes:
             - mysql-data:/var/lib/mysql
             - ./dev/config/my.cnf:/etc/mysql/conf.d/99-custom.cnf
         ports:
-            - '3301:3306'
+            - '127.0.0.1:3301:3306'
+        healthcheck:
+            test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+            interval: 10s
+            timeout: 5s
+            retries: 3
+            start_period: 30s
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mysql
@@ -60,7 +78,7 @@ services:
         env_file:
             - ./dev/.env
         ports:
-            - '9797:80'
+            - '127.0.0.1:9797:80'
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-myadmin
@@ -70,7 +88,7 @@ services:
         expose:
             - '1025'
         ports:
-            - '8027:8025'
+            - '127.0.0.1:8027:8025'
         networks:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mailhog
