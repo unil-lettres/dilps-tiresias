@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, NgZone, Output, ViewChild} from '@angular/core';
+import {Component, inject, Input, NgZone, viewChild, output} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -24,7 +24,6 @@ type Marker = {
     selector: 'app-view-map',
     templateUrl: './view-map.component.html',
     styleUrl: './view-map.component.scss',
-    standalone: true,
     imports: [GoogleMapsModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent {
@@ -42,9 +41,9 @@ export class ViewMapComponent {
         });
     }
 
-    @Output() public readonly searchByLocation = new EventEmitter<Location>();
-    @ViewChild(GoogleMap) private map!: GoogleMap;
-    @ViewChild(MapInfoWindow) private infoWindow!: MapInfoWindow;
+    public readonly searchByLocation = output<Location>();
+    private readonly map = viewChild(GoogleMap);
+    private readonly infoWindow = viewChild(MapInfoWindow);
     public readonly infoWindowOption: google.maps.InfoWindowOptions = {
         maxWidth: 400,
     };
@@ -108,7 +107,7 @@ export class ViewMapComponent {
 
         this.mapApiService.loaded.subscribe(() =>
             setTimeout(() => {
-                this.map.fitBounds(bounds, {
+                this.map()?.fitBounds(bounds, {
                     top: 250,
                     right: 100,
                     left: 100,
@@ -120,6 +119,6 @@ export class ViewMapComponent {
 
     public openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
         this.selectedMarker = marker;
-        this.infoWindow.open(mapMarker);
+        this.infoWindow()?.open(mapMarker);
     }
 }

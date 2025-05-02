@@ -6,7 +6,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     selector: 'app-collection-hierarchy',
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
-    standalone: true,
     imports: [MatTooltipModule],
 })
 export class CollectionHierarchyComponent implements OnInit {

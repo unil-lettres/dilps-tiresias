@@ -16,7 +16,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 @Component({
     selector: 'app-period',
     templateUrl: './period.component.html',
-    standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,

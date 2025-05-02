@@ -23,7 +23,6 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
-    standalone: true,
     imports: [
         LogoComponent,
         MatDividerModule,

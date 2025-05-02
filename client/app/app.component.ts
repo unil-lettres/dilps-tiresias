@@ -1,24 +1,26 @@
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, HostBinding, inject, OnInit} from '@angular/core';
+import {Component, effect, HostBinding, inject, OnInit, viewChild} from '@angular/core';
 import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
 import {ThemeService} from './shared/services/theme.service';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
 import {RouterOutlet} from '@angular/router';
-import {NgProgressComponent} from 'ngx-progressbar';
+import {NgProgressbar, NgProgressRef} from 'ngx-progressbar';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NetworkActivityService} from '@ecodev/natural';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    standalone: true,
-    imports: [NgProgressComponent, RouterOutlet, BootLoaderComponent],
+    imports: [NgProgressbar, RouterOutlet, BootLoaderComponent],
 })
 export class AppComponent implements OnInit {
+    private readonly networkActivityService = inject(NetworkActivityService);
+    private readonly ngProgressRef = viewChild.required(NgProgressRef);
     private readonly themeService = inject(ThemeService);
     private readonly overlayContainer = inject(OverlayContainer);
     private readonly matIconRegistry = inject(MatIconRegistry);
@@ -42,6 +44,8 @@ export class AppComponent implements OnInit {
     private readonly themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
     public constructor() {
+        effect(() => this.networkActivityService.setProgressRef(this.ngProgressRef()));
+
         const themeService = this.themeService;
         const matIconRegistry = this.matIconRegistry;
         const domSanitizer = this.domSanitizer;

@@ -8,9 +8,8 @@ import {
 } from '@apollo/client/core';
 import {onError} from '@apollo/client/link/error';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
-import {NetworkActivityService} from '../services/network-activity.service';
+import {createHttpLink, NetworkActivityService} from '@ecodev/natural';
 import {AlertService} from '../components/alert/alert.service';
-import {createHttpLink} from '@ecodev/natural';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
 import {inject, Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
@@ -67,7 +66,7 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
                 }
             });
 
-            networkActivityService.updateErrors(errorResponse.graphQLErrors);
+            networkActivityService.addErrors(errorResponse.graphQLErrors);
         }
     });
 }

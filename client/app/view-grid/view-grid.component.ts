@@ -3,12 +3,11 @@ import {
     Component,
     DestroyRef,
     ElementRef,
-    EventEmitter,
     inject,
     Input,
     OnInit,
-    Output,
-    ViewChild,
+    output,
+    viewChild,
 } from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
@@ -32,7 +31,6 @@ type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
     selector: 'app-view-grid',
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
-    standalone: true,
     imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
@@ -49,7 +47,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Reference to gallery
      */
-    @ViewChild('gallery') public gallery: NaturalGalleryComponent<GalleryItem> | null = null;
+    public readonly gallery = viewChild<NaturalGalleryComponent<GalleryItem>>('gallery');
 
     /**
      * DataSource containing cards
@@ -63,24 +61,22 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Emits when data is required
      */
-    @Output() public readonly pagination = new EventEmitter<PaginationInput>();
+    public readonly pagination = output<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    @Output() public readonly contentChange = new EventEmitter<ContentChange>();
+    public readonly contentChange = output<ContentChange>();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public readonly selectionChange: EventEmitter<Cards['cards']['items'][0][]> = new EventEmitter<
-        Cards['cards']['items'][0][]
-    >();
+    public readonly selectionChange = output<Cards['cards']['items'][0][]>();
 
     /**
      * Reference to scrollable element
      */
-    @ViewChild('scrollable', {static: true}) private scrollable: ElementRef<HTMLElement> | null = null;
+    private readonly scrollable = viewChild<ElementRef<HTMLElement>>('scrollable');
 
     /**
      * Vertical scroll position cache
@@ -170,11 +166,12 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
     public ngOnInit(): void {
         this.dataSource.internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(result => {
-            if (!this.gallery || !result) {
+            const gallery = this.gallery();
+            if (!gallery || !result) {
                 return;
             }
 
-            this.gallery.gallery.then(gallery => {
+            gallery.gallery.then(gallery => {
                 if (!result.offset && gallery.collection.length) {
                     gallery.clear(); // fires new loadMore() call
                 } else {
@@ -186,8 +183,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         });
 
         // Cache scroll when user... scrolls
-        this.scrollable?.nativeElement.addEventListener('scroll', () => {
-            const scroll = this.scrollable?.nativeElement.scrollTop;
+        this.scrollable()?.nativeElement.addEventListener('scroll', () => {
+            const scroll = this.scrollable()?.nativeElement.scrollTop;
             if (scroll && scroll > 0) {
                 this.scrollTop = scroll;
             }
@@ -199,15 +196,16 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
             this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
 
             setTimeout(() => {
-                if (restoreScroll && this.scrollable) {
-                    this.scrollable.nativeElement.scrollTop = this.scrollTop;
+                const scrollable = this.scrollable();
+                if (restoreScroll && scrollable) {
+                    scrollable.nativeElement.scrollTop = this.scrollTop;
                 }
             }, 200);
         });
     }
 
     public ngAfterViewInit(): void {
-        this.gallery?.gallery.then(gallery =>
+        this.gallery()?.gallery.then(gallery =>
             gallery.addEventListener('item-added-to-dom', () => {
                 this.contentChange.emit({visible: gallery.domCollection.length});
             }),
@@ -223,11 +221,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     }
 
     public selectAll(): Promise<Cards['cards']['items'][0][]> {
-        return this.gallery!.gallery.then(gallery => gallery.selectVisibleItems());
+        return this.gallery()?.gallery.then(gallery => gallery.selectVisibleItems()) ?? Promise.resolve([]);
     }
 
     public unselectAll(): void {
-        this.gallery!.gallery.then(gallery => gallery.unselectAllItems());
+        this.gallery()?.gallery.then(gallery => gallery.unselectAllItems());
     }
 
     private formatImages(cards: Cards['cards']['items'][0][]): GalleryItem[] {

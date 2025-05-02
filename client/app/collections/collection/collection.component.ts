@@ -33,7 +33,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     selector: 'app-collection',
     templateUrl: './collection.component.html',
     styleUrl: './collection.component.scss',
-    standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,

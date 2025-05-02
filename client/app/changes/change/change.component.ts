@@ -18,7 +18,6 @@ import {NaturalIconDirective} from '@ecodev/natural';
     selector: 'app-change',
     templateUrl: './change.component.html',
     styleUrl: './change.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

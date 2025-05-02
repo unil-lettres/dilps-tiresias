@@ -1,5 +1,5 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {Component, DestroyRef, inject, Input, OnInit, output} from '@angular/core';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
@@ -18,7 +18,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     selector: 'app-view-list',
     templateUrl: './view-list.component.html',
     styleUrl: './view-list.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         MatPaginatorModule,
@@ -40,14 +39,12 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Emits when data is required
      */
-    @Output() public readonly pagination: EventEmitter<PageEvent> = new EventEmitter<PageEvent>();
+    public readonly pagination = output<PageEvent>();
 
     /**
      * Emits when some cards are selected
      */
-    @Output() public readonly selectionChange: EventEmitter<Cards['cards']['items'][0][]> = new EventEmitter<
-        Cards['cards']['items'][0][]
-    >();
+    public readonly selectionChange = output<Cards['cards']['items'][0][]>();
     @Input() public selected: Cards['cards']['items'][0][] = [];
     public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
     public cards: Cards['cards']['items'][0][] = [];

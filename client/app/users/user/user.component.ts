@@ -40,7 +40,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 @Component({
     selector: 'app-profile',
     templateUrl: './user.component.html',
-    standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,

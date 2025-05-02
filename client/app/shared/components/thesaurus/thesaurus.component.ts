@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, Input, OnInit, viewChild, output} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteModule,
@@ -42,7 +42,6 @@ export type ThesaurusModel = {
     selector: 'app-thesaurus',
     templateUrl: './thesaurus.component.html',
     styleUrl: './thesaurus.component.scss',
-    standalone: true,
     imports: [
         MatFormFieldModule,
         MatChipsModule,
@@ -76,12 +75,12 @@ export class ThesaurusComponent<
     /**
      * Reference to autocomplete
      */
-    @ViewChild(MatAutocompleteTrigger, {static: true}) public autocomplete!: MatAutocompleteTrigger;
+    public readonly autocomplete = viewChild.required(MatAutocompleteTrigger);
 
     /**
      * Reference to input field for add a thesaurus.
      */
-    @ViewChild('thesaurusInput', {static: true}) public thesaurusInput!: ElementRef<HTMLInputElement>;
+    public readonly thesaurusInput = viewChild.required<ElementRef<HTMLInputElement>>('thesaurusInput');
 
     /**
      * If true, manipulations are forbidden
@@ -136,9 +135,7 @@ export class ThesaurusComponent<
     /**
      * Emits when a selection is done
      */
-    @Output() public readonly modelChange = new EventEmitter<
-        string | string[] | ThesaurusModel | ThesaurusModel[] | null
-    >();
+    public readonly modelChange = output<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
 
     /**
      * Configuration for hierarchic relations
@@ -345,7 +342,7 @@ export class ThesaurusComponent<
      * If not add the term as is. If it does, add the selected option.
      */
     public onEnter(): void {
-        const inputValue = this.thesaurusInput.nativeElement.value;
+        const inputValue = this.thesaurusInput().nativeElement.value;
         if (inputValue && this.allowFreeText) {
             this.addTerm({name: inputValue});
         }
@@ -372,7 +369,7 @@ export class ThesaurusComponent<
      * Always close the panel (without resetting results)
      */
     private addTerm(term: ThesaurusModel): void {
-        this.autocomplete.closePanel();
+        this.autocomplete().closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {
             if (!this.multiple) {
@@ -381,7 +378,7 @@ export class ThesaurusComponent<
             this.items.push(clone(term)); // clone to get rid of readonly
             this.notifyModel();
         }
-        this.thesaurusInput.nativeElement.value = '';
+        this.thesaurusInput().nativeElement.value = '';
     }
 
     private notifyModel(): void {

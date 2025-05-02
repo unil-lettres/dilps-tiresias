@@ -13,7 +13,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 @Component({
     selector: 'app-institution',
     templateUrl: './institution.component.html',
-    standalone: true,
     imports: [
         MatDialogModule,
         MatTabsModule,

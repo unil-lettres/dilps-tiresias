@@ -1,5 +1,5 @@
-import {CdkAccordionItem, CdkAccordionModule} from '@angular/cdk/accordion';
-import {Component, inject, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -125,7 +125,6 @@ type InitialCardValues = {
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
-    standalone: true,
     imports: [
         CommonModule,
         NaturalFileDropDirective,
@@ -475,8 +474,6 @@ export class CardComponent implements OnInit, OnChanges {
      * Closed means the related cards are not showing at all, not even reduced.
      */
     public isRelatedCardsClosed = false;
-
-    @ViewChild('accordionItem', {static: false}) public accordionItem!: CdkAccordionItem;
 
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
     private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());
@@ -932,7 +929,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     private getBase64(file: File | null): void {
         getBase64Url(file).then(result => {
-            this.imageData = result!;
+            this.imageData = result;
         });
     }
 

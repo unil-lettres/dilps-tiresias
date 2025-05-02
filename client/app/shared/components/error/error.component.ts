@@ -9,7 +9,6 @@ import {NaturalIconDirective} from '@ecodev/natural';
     selector: 'app-error',
     templateUrl: './error.component.html',
     styleUrl: './error.component.scss',
-    standalone: true,
     imports: [MatIconModule, MatButtonModule, RouterLink, NaturalIconDirective],
 })
 export class ErrorComponent {

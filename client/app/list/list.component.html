@@ -78,7 +78,7 @@
                 <app-export-menu
                     matTooltip="Exporter"
                     [selectedCards]="selected"
-                    [showExcelExportation]="this.site !== Site.Dilps"
+                    [showExcelExportation]="site !== Site.Dilps"
                 />
                 @if (canMassEdit()) {
                     <button mat-icon-button matTooltip="Editer en masse" (click)="edit(selected)">
@@ -107,7 +107,7 @@
                     </button>
                 }
                 @if (showDownloadCollection) {
-                    <app-export-menu [collection]="collection" [showExcelExportation]="this.site !== Site.Dilps" />
+                    <app-export-menu [collection]="collection" [showExcelExportation]="site !== Site.Dilps" />
                 }
             }
             <natural-search
@@ -185,7 +185,7 @@
                 </div>
             }
         </mat-toolbar>
-        @if (this.dataSource.data?.length === 0) {
+        @if (dataSource.data?.length === 0) {
             <div class="empty-result">
                 <div>
                     <p>Aucun élément ne correspond aux termes recherchés.</p>

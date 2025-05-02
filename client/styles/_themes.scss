@@ -164,7 +164,8 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.tooltip-typography(typography.$custom-typography-gt-sm);
 @include mat.tree-typography(typography.$custom-typography-gt-sm);
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 .dilps-production {
     @include applyTheme(dilps-production.$theme-light);

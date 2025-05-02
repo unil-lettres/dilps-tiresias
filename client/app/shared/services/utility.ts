@@ -9,7 +9,7 @@ export function shuffleArray(a: any[]): any[] {
     return a;
 }
 
-export function getBase64Url(file: File | null): Promise<null | string> {
+export function getBase64Url(file: File | null): Promise<string> {
     return new Promise((resolve, reject) => {
         if (!file) {
             reject(new Error('There is no file'));
@@ -22,6 +22,7 @@ export function getBase64Url(file: File | null): Promise<null | string> {
             const url = 'url(data:image;base64,' + base64 + ')';
             resolve(url);
         });
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         reader.readAsBinaryString(file);
     });
 }

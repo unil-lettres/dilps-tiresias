@@ -33,7 +33,7 @@
                     </mat-menu>
                     @if (showTools) {
                         @if (!edit && fetchedModel?.permissions?.update) {
-                            <button mat-icon-button [matTooltip]="'Passer en mode édition'" (click)="toggleEdit()">
+                            <button mat-icon-button matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
                             </button>
                         }
@@ -81,7 +81,7 @@
                             <app-export-menu
                                 matTooltip="Exporter"
                                 [selectedCards]="[fetchedModel]"
-                                [showExcelExportation]="!this.isDilps"
+                                [showExcelExportation]="!isDilps"
                             />
                         }
                         @if (fetchedModel && user) {
@@ -457,7 +457,7 @@
                                 #accordionItem="cdkAccordionItem"
                                 role="button"
                                 tabindex="0"
-                                [expanded]="!this.edit"
+                                [expanded]="!edit"
                                 [attr.id]="'address'"
                                 [attr.aria-expanded]="accordionItem.expanded"
                             >

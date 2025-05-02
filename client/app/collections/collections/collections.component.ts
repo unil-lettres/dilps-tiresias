@@ -28,7 +28,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     selector: 'app-collections',
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

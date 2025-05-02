@@ -14,7 +14,6 @@ export type Stamped = {
     selector: 'app-stamp',
     templateUrl: './stamp.component.html',
     styleUrl: './stamp.component.scss',
-    standalone: true,
     imports: [CommonModule],
 })
 export class StampComponent {

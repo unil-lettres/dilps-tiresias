@@ -26,7 +26,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     selector: 'app-periods',
     templateUrl: './periods.component.html',
     styleUrl: './periods.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

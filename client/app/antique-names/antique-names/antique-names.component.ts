@@ -17,7 +17,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     selector: 'app-antique-names',
     templateUrl: './antique-names.component.html',
     styleUrl: './antique-names.component.scss',
-    standalone: true,
     imports: [
         MatToolbarModule,
         LogoComponent,

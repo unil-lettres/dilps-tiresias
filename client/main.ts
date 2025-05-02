@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, ErrorHandler, inject} from '@angular/core';
+import {ErrorHandler, inject, provideAppInitializer} from '@angular/core';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
@@ -6,7 +6,7 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
-import {activityInterceptor} from './app/shared/services/activity-interceptor';
+import {activityInterceptor, Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {provideHttpClient, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material/tooltip';
 import {AppRouteReuseStrategy} from './app/app-route-reuse-strategy';
@@ -14,7 +14,6 @@ import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConf
 import {bugsnagErrorHandlerFactory} from './app/shared/config/bugsnag';
 import {SITE} from './app/app.config';
 import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions, MatPaginatorIntl} from '@angular/material/paginator';
-import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {apolloOptionsProvider} from './app/shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './app/statistics/services/statistic.service';
@@ -32,11 +31,8 @@ const matTooltipCustomConfig: MatTooltipDefaultOptions = {
 
 // Disable animations if not supported (on iPhone 6 / Safari 13, or SSR)
 const disableAnimations =
-    // eslint-disable-next-line no-restricted-globals
     typeof document === 'undefined' ||
-    // eslint-disable-next-line no-restricted-globals
     !('animate' in document.documentElement) ||
-    // eslint-disable-next-line no-restricted-globals
     (navigator && /iPhone OS (8|9|10|11|12|13)_/.test(navigator.userAgent));
 
 const prefersReducedMotion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion)').matches : false;
@@ -75,24 +71,18 @@ bootstrapApplication(AppComponent, {
             }),
         ),
 
-        {
-            provide: APP_INITIALIZER,
-            multi: true,
-            useFactory: (): (() => void) => {
-                const dateAdapter = inject(DateAdapter<Date>);
-                const statisticService = inject(StatisticService);
-                const router = inject(Router);
+        provideAppInitializer(() => {
+            const dateAdapter = inject(DateAdapter<Date>);
+            const statisticService = inject(StatisticService);
+            const router = inject(Router);
 
-                return () => {
-                    // On each page change, record in stats
-                    router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
-                        statisticService.recordPage();
-                    });
+            // On each page change, record in stats
+            router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {
+                statisticService.recordPage();
+            });
 
-                    dateAdapter.setLocale('fr-ch');
-                };
-            },
-        },
+            dateAdapter.setLocale('fr-ch');
+        }),
         provideScrollbarOptions({
             visibility: 'hover',
             appearance: 'compact',

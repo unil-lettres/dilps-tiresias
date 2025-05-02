@@ -10,7 +10,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     selector: 'app-card-selector',
     templateUrl: './card-selector.component.html',
     styleUrl: './card-selector.component.scss',
-    standalone: true,
     imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButtonModule],
 })
 export class CardSelectorComponent {
