@@ -68,6 +68,7 @@ export function dilps(): NaturalSearchFacets {
                 service: artistService,
                 placeholder: 'Artistes',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<ArtistService>>,
         {
@@ -96,6 +97,7 @@ export function dilps(): NaturalSearchFacets {
                 service: domainService,
                 placeholder: 'Domaines',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<DomainService>>,
         {
@@ -118,6 +120,7 @@ export function dilps(): NaturalSearchFacets {
                 service: institutionService,
                 placeholder: 'Institution',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<InstitutionService>>,
         {
@@ -228,6 +231,7 @@ export function tiresias(): NaturalSearchFacets {
                 service: antiqueNameService,
                 placeholder: 'Nom antique',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<AntiqueNameService>>,
         {
@@ -255,6 +259,7 @@ export function tiresias(): NaturalSearchFacets {
                 service: institutionService,
                 placeholder: 'Musée',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<InstitutionService>>,
         {
@@ -272,6 +277,7 @@ export function tiresias(): NaturalSearchFacets {
                 service: documentTypeService,
                 placeholder: 'Type de document',
                 filter: {},
+                pageSize: 30,
             },
         } satisfies DropdownFacet<TypeSelectNaturalConfiguration<DocumentTypeService>>,
         {
