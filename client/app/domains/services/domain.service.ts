@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {
+    CardDomains,
+    CardsVariables,
     CreateDomain,
     CreateDomainVariables,
     DeleteDomains,
@@ -11,8 +15,8 @@ import {
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
-import {createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
 
 @Injectable({
     providedIn: 'root',
@@ -39,5 +43,14 @@ export class DomainService extends AbstractContextualizedService<
             parent: null,
             site: this.site,
         };
+    }
+
+    public getForCards(variables: CardsVariables): Observable<CardDomains['cardDomains']> {
+        return this.apollo
+            .query<CardDomains, CardsVariables>({
+                query: cardDomainsQuery,
+                variables: variables,
+            })
+            .pipe(map(result => result.data.cardDomains));
     }
 }

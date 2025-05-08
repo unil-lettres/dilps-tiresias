@@ -17,6 +17,15 @@ export const domainsQuery = gql`
     }
 `;
 
+export const cardDomainsQuery = gql`
+    query CardDomains($filter: CardFilter) {
+        cardDomains(filter: $filter) {
+            id
+            name
+        }
+    }
+`;
+
 export const domainQuery = gql`
     query Domain($id: DomainID!) {
         domain(id: $id) {

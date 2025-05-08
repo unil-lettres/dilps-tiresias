@@ -1,5 +1,13 @@
-import {Component, inject, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, viewChild} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MatButtonModule} from '@angular/material/button';
+import {MatChipsModule} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {PageEvent} from '@angular/material/paginator';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {
     NaturalAbstractList,
     NaturalIconDirective,
@@ -10,20 +18,27 @@ import {
     Sorting,
     WithId,
 } from '@ecodev/natural';
-import {clone, defaults, isArray, isNumber, isObject, isString, merge, pickBy} from 'lodash-es';
-import {concatMap, finalize, from, Observable} from 'rxjs';
+import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash-es';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {concatMap, finalize, from, Observable, of} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
 import {CollectionService} from '../collections/services/collection.service';
 import {FakeCollection} from '../collections/services/fake-collection.resolver';
+import {DomainService} from '../domains/services/domain.service';
 import {NumberSelectorComponent} from '../quizz/shared/number-selector/number-selector.component';
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
+import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
+import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
+import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {
     CardFilter,
     CardInput,
@@ -43,18 +58,6 @@ import {UserService} from '../users/services/user.service';
 import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
-import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
-import {PageEvent} from '@angular/material/paginator';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatIconModule} from '@angular/material/icon';
-import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {LogoComponent} from '../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
-import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -82,6 +85,12 @@ export type ViewInterface = {
     unselectAll: () => void;
 };
 
+type SelectableDomains = {
+    id: string;
+    name: string;
+    selected?: boolean;
+};
+
 enum ViewMode {
     grid = 'grid',
     list = 'list',
@@ -107,15 +116,22 @@ enum ViewMode {
         ViewMapComponent,
         NaturalIconDirective,
         ExportMenuComponent,
+        NgScrollbar,
     ],
 })
-export class ListComponent extends NaturalAbstractList<CardService> implements OnInit {
+export class ListComponent extends NaturalAbstractList<CardService> implements OnInit, AfterViewInit {
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
     private readonly dialog = inject(MatDialog);
     private readonly statisticService = inject(StatisticService);
     private readonly changeService = inject(ChangeService);
+    private readonly domainService = inject(DomainService);
     public readonly site = inject(SITE);
+
+    /**
+     * Reference to natural search
+     */
+    private readonly naturalSearchComponent = viewChild(NaturalSearchComponent);
 
     /**
      * Reference to grid component
@@ -178,6 +194,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Enum that specified the displayed list
      */
     public viewMode: ViewMode = ViewMode.grid;
+    public domains: SelectableDomains[] = [];
 
     /**
      * Specifies if labels must be always displayed or only on hover
@@ -282,6 +299,15 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
             }
 
             this.collection = data.collection || null;
+        });
+    }
+
+    /**
+     * Search component inner selections are not initialized before this stage, that's why we need after view init.
+     */
+    public ngAfterViewInit(): void {
+        this.fetchDomains().subscribe(() => {
+            this.domainSelectionChange();
         });
     }
 
@@ -502,6 +528,41 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
     public override search(naturalSearchSelections: NaturalSearchSelections): void {
         super.search(naturalSearchSelections);
         this.statisticService.recordSearch();
+    }
+
+    public fetchDomains(): Observable<SelectableDomains[]> {
+        const variables = this.variablesManager.variables.value; // card variables
+        if (this.hasActiveSearch()) {
+            return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
+                tap(result => {
+                    this.domains = result.map(d => ({...d}));
+                }),
+            );
+        } else {
+            this.domains = [];
+            this.variablesManager.set('domains', null);
+            return of(this.domains);
+        }
+    }
+
+    public domainSelectionChange(): void {
+        this.variablesManager.merge('pagination', {
+            pagination: pick(this.defaultPagination, ['offset', 'pageIndex']),
+        });
+
+        const domains = this.domains.filter(d => d.selected).map(d => d.id);
+        if (domains.length) {
+            this.variablesManager.set('domains', {
+                filter: {groups: [{conditions: [{domains: {have: {values: domains}}}]}]},
+            });
+        } else {
+            this.variablesManager.set('domains', null);
+        }
+    }
+
+    public hasActiveSearch(): boolean {
+        const selections = this.naturalSearchComponent()?.innerSelections;
+        return !!(selections && selections.reduce((acc, val) => acc.concat(val), []).length > 0);
     }
 
     public searchByLocation($event: Location): void {
