@@ -46,7 +46,7 @@
         "ext-json": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.5",
-        "ecodev/felix": "^16.0",
+        "ecodev/felix": "^16.1",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^7.0",
         "laminas/laminas-config-aggregator": "^1.15",
@@ -58,8 +58,7 @@
         "mezzio/mezzio-laminasviewrenderer": "^2.15",
         "mezzio/mezzio-session-ext": "^1.19",
         "phpoffice/phppresentation": "dev-master",
-        "phpoffice/phpspreadsheet": "^1.29",
-        "roave/psr-container-doctrine": "^5.1"
+        "phpoffice/phpspreadsheet": "^1.29"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
