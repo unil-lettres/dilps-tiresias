@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
-import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
@@ -25,6 +24,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTabsModule} from '@angular/material/tabs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password')!.value; // to get value in input tag
@@ -57,7 +57,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     ],
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
-    public readonly institutionService = inject(InstitutionService);
+    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     public readonly collectionService = inject(CollectionService);
 
     public collectionsHierarchicConfig = collectionsHierarchicConfig;

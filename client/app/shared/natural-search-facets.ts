@@ -32,6 +32,7 @@ import {tagHierarchicConfig} from './hierarchic-configurations/TagConfiguration'
 import {TypeTextComponent} from '../extended/type-text/type-text.component';
 import {TypeNaturalSelectComponent} from '../extended/type-natural-select/type-natural-select.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
+import {InstitutionSortedByUsageService} from '../institutions/services/institutionSortedByUsage.service';
 
 export const adminFacets: NaturalSearchFacets = [
     {
@@ -50,7 +51,7 @@ export function dilps(): NaturalSearchFacets {
     assertInInjectionContext(dilps);
 
     const artistService = inject(ArtistService);
-    const institutionService = inject(InstitutionService);
+    const institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     const domainService = inject(DomainService);
 
     return [
@@ -117,7 +118,7 @@ export function dilps(): NaturalSearchFacets {
             field: 'institution',
             component: TypeNaturalSelectComponent,
             configuration: {
-                service: institutionService,
+                service: institutionSortedByUsageService,
                 placeholder: 'Institution',
                 filter: {},
                 pageSize: 30,

@@ -429,8 +429,7 @@
                             [multiple]="false"
                             [previewComponent]="InstitutionComponent"
                             [readonly]="!edit"
-                            [service]="institutionService"
-                            [sortAutocompleteByUsageCount]="true"
+                            [service]="institutionSortedByUsageService"
                             (modelChange)="model.institution = $any($event)"
                         />
                     }
@@ -543,8 +542,7 @@
                             [multiple]="false"
                             [previewComponent]="InstitutionComponent"
                             [readonly]="!edit"
-                            [service]="institutionService"
-                            [sortAutocompleteByUsageCount]="true"
+                            [service]="institutionSortedByUsageService"
                             (modelChange)="model.institution = $any($event)"
                         />
                     }
