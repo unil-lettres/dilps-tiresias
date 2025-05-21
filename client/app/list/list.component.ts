@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, inject, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, inject, OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipsModule} from '@angular/material/chips';
@@ -132,6 +132,12 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Reference to natural search
      */
     private readonly naturalSearchComponent = viewChild(NaturalSearchComponent);
+
+    private readonly hasActiveSearch = computed(() => {
+        const selections = this.naturalSearchComponent()?.innerSelections();
+
+        return !!selections && selections.reduce((acc, val) => acc.concat(val), []).length > 0;
+    });
 
     /**
      * Reference to grid component
@@ -558,11 +564,6 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         } else {
             this.variablesManager.set('domains', null);
         }
-    }
-
-    public hasActiveSearch(): boolean {
-        const selections = this.naturalSearchComponent()?.innerSelections;
-        return !!(selections && selections.reduce((acc, val) => acc.concat(val), []).length > 0);
     }
 
     public searchByLocation($event: Location): void {
