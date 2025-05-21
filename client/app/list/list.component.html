@@ -115,7 +115,7 @@
                 class="nat-expand"
                 [facets]="naturalSearchFacets"
                 [selections]="naturalSearchSelections"
-                (selectionChange)="search($event)"
+                (selectionChange)="search($event); fetchDomains().subscribe()"
             />
             @if (viewMode !== ViewMode.grid) {
                 <button mat-icon-button matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
@@ -200,6 +200,27 @@
                 </div>
             </div>
         } @else {
+            @if (domains.length) {
+                <div>
+                    <ng-scrollbar id="domains-chips" orientation="horizontal" appearance="native" visibility="visible">
+                        <mat-chip-listbox
+                            aria-label="Domaines des fiches"
+                            aria-orientation="horizontal"
+                            [selectable]="true"
+                            [multiple]="true"
+                        >
+                            @for (domain of domains; track $index) {
+                                <mat-chip-option
+                                    [selected]="domain.selected"
+                                    (click)="domain.selected = !domain.selected; domainSelectionChange()"
+                                    >{{ domain.name }}
+                                </mat-chip-option>
+                            }
+                        </mat-chip-listbox>
+                    </ng-scrollbar>
+                </div>
+            }
+
             @if (viewMode === ViewMode.grid) {
                 <app-view-grid
                     [dataSource]="dataSource"

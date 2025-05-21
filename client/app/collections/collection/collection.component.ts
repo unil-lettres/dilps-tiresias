@@ -1,7 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {findKey} from 'lodash-es';
-import {InstitutionService} from '../../institutions/services/institution.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {
     Collection,
@@ -28,6 +27,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatTabsModule} from '@angular/material/tabs';
+import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
 @Component({
     selector: 'app-collection',
@@ -48,7 +48,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     ],
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
-    public readonly institutionService = inject(InstitutionService);
+    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     public readonly UserRole = UserRole;
 
     public visibility: keyof CollectionVisibilities = 1;

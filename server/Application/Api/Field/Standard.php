@@ -246,7 +246,7 @@ abstract class Standard
     /**
      * Return arguments used for the list.
      */
-    private static function getListArguments(ClassMetadata $class, string $classs, string $name): array
+    public static function getListArguments(ClassMetadata $class, string $classs, string $name): array
     {
         $listArgs = [
             [

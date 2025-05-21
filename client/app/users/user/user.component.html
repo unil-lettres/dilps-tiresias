@@ -56,8 +56,7 @@
                     placeholder="Institution"
                     [model]="institution"
                     [multiple]="false"
-                    [service]="institutionService"
-                    [sortAutocompleteByUsageCount]="true"
+                    [service]="institutionSortedByUsageService"
                     (modelChange)="data.item.institution = $any($event)"
                 />
 

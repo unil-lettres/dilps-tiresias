@@ -15,7 +15,6 @@ import {DocumentTypeService} from '../document-types/services/document-type.serv
 import {DomainComponent} from '../domains/domain/domain.component';
 import {DomainService} from '../domains/services/domain.service';
 import {InstitutionComponent} from '../institutions/institution/institution.component';
-import {InstitutionService} from '../institutions/services/institution.service';
 import {MaterialComponent} from '../materials/material/material.component';
 import {MaterialService} from '../materials/services/material.service';
 import {PeriodComponent} from '../periods/period/period.component';
@@ -93,6 +92,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ErrorService} from '../shared/components/error/error.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
 import {MatListModule} from '@angular/material/list';
+import {InstitutionSortedByUsageService} from '../institutions/services/institutionSortedByUsage.service';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -183,7 +183,7 @@ export class CardComponent implements OnInit, OnChanges {
     public readonly errorService = inject(ErrorService);
     private readonly alertService = inject(AlertService);
     public readonly artistService = inject(ArtistService);
-    public readonly institutionService = inject(InstitutionService);
+    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     public readonly materialService = inject(MaterialService);
     public readonly tagService = inject(TagService);
     public readonly documentTypeService = inject(DocumentTypeService);

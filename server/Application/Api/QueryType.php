@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api;
 
+use Application\Api\Field\Query\CardDomains;
 use Application\Api\Field\Query\CollectionCopyrights;
 use Application\Api\Field\Query\ExtraStatistics;
 use Application\Api\Field\Query\UserRolesAvailable;
@@ -41,6 +42,7 @@ class QueryType extends ObjectType
             UserRolesAvailable::build(),
             ValidateExport::build(),
             CollectionCopyrights::build(),
+            CardDomains::build(),
 
             // Standard fields
             Standard::buildQuery(Artist::class),

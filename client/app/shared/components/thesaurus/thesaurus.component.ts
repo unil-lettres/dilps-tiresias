@@ -1,4 +1,4 @@
-import {Component, DestroyRef, ElementRef, inject, Input, OnInit, viewChild, output} from '@angular/core';
+import {Component, DestroyRef, ElementRef, inject, Input, OnInit, output, viewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteModule,
@@ -15,14 +15,12 @@ import {
     NaturalQueryVariablesManager,
     PaginatedData,
     QueryVariables,
-    SortingOrder,
 } from '@ecodev/natural';
 import {clone, isObject, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {ComponentType} from '@angular/cdk/overlay';
-import {MaterialSortingField} from '../../generated-types';
 import {MatOptionModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
@@ -113,12 +111,6 @@ export class ThesaurusComponent<
     @Input() public previewComponent: ComponentType<unknown> | undefined;
 
     /**
-     * Sort autocomplete list by usage count DESC, otherwise, sort by
-     * name ASC.
-     */
-    @Input() public sortAutocompleteByUsageCount = false;
-
-    /**
      * The search query for the autocomplete list will search the beginning of
      * the name (like name%) if true, otherwise will search anywhere in the
      * name.
@@ -202,15 +194,6 @@ export class ThesaurusComponent<
         this.convertModel();
 
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
-
-        const sorting = {field: MaterialSortingField.name, order: SortingOrder.ASC};
-
-        if (this.sortAutocompleteByUsageCount) {
-            sorting.field = MaterialSortingField.usageCount;
-            sorting.order = SortingOrder.DESC;
-        }
-
-        this.variablesManager.set('sorting', {sorting: [sorting]});
 
         this.formChange$.subscribe(val => {
             if (this.matchFromStartAutocomplete && val.length <= this.matchFromStartAutocompleteMaxLength) {
