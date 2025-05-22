@@ -532,7 +532,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
 
     public fetchDomains(): Observable<SelectableDomains[]> {
         const variables = this.variablesManager.variables.value; // card variables
-        if (this.hasActiveSearch()) {
+        if (this.site === Site.Dilps && this.hasActiveSearch()) {
             return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
                 tap(result => {
                     this.domains = result.map(d => ({...d}));
