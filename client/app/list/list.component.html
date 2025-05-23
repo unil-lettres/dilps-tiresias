@@ -51,7 +51,7 @@
 </mat-menu>
 
 @if (dataSource) {
-    <div class="containerWithToolbar">
+    <div class="containerWithToolbar nat-vertical nat-expand">
         <mat-toolbar class="nat-horizontal nat-align nat-gap-10">
             @if (showLogo) {
                 <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
@@ -224,6 +224,7 @@
             @if (viewMode === ViewMode.grid) {
                 <app-view-grid
                     [dataSource]="dataSource"
+                    [style.height]="'100%'"
                     [selected]="selected"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
@@ -233,6 +234,7 @@
             @if (viewMode === ViewMode.list) {
                 <app-view-list
                     [dataSource]="dataSource"
+                    [style.height]="'100%'"
                     [selected]="selected"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
