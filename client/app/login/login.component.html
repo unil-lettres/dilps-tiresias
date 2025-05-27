@@ -41,7 +41,11 @@
                             '&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth'
                         "
                     >
-                        <img src="assets/images/logo-unine.svg" width="90" />
+                        @if (themeService.isDarkMode()) {
+                            <img src="assets/images/logo-unine-white.svg" width="100" />
+                        } @else {
+                            <img src="assets/images/logo-unine-dark.svg" width="100" />
+                        }
                     </a>
                 </mat-grid-tile>
             </mat-grid-list>

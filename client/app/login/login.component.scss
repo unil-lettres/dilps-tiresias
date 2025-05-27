@@ -17,7 +17,10 @@ app-carousel {
     flex: auto;
     height: auto !important; // allow button grow in height
 
+    svg,
     img {
+        display: flex;
+        align-items: center;
         height: 100px;
     }
 }

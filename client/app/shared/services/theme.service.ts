@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {SITE} from '../../app.config';
 import {Site} from '../generated-types';
@@ -17,7 +17,9 @@ export class ThemeService {
     ];
 
     public readonly theme = new BehaviorSubject<string>(this.themes[0]);
-    private darkActivated = false;
+
+    private readonly darkActivated = signal<boolean>(false);
+    public readonly isDarkMode = this.darkActivated.asReadonly();
 
     private storageKey = '';
 
@@ -31,7 +33,7 @@ export class ThemeService {
         if (theme) {
             this.theme.next(theme);
             if (theme.includes('-dark')) {
-                this.darkActivated = true;
+                this.darkActivated.set(true);
             }
         }
     }
@@ -51,7 +53,7 @@ export class ThemeService {
             return;
         }
 
-        if (this.darkActivated && !theme.includes('-dark')) {
+        if (this.darkActivated() && !theme.includes('-dark')) {
             theme += '-dark';
         } else {
             theme = theme.replace('-dark', '');
@@ -62,7 +64,7 @@ export class ThemeService {
     }
 
     public toggleNightMode(): void {
-        this.darkActivated = !this.darkActivated;
+        this.darkActivated.update(activated => !activated);
         this.set(this.theme.getValue());
     }
 }
