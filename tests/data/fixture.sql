@@ -84,14 +84,20 @@ REPLACE INTO `material` (`id`, `parent_id`, `name`, `site`) VALUES
 
 REPLACE INTO `domain` (`id`, `name`, `site`) VALUES
   (9000, 'Test domain 9000', 'tiresias'),
-  (9001, 'Test domain 9001', 'tiresias');
+  (9001, 'Test domain 9001', 'tiresias'),
+  (9002, 'Test domain 9002', 'dilps'),
+  (9003, 'Test domain 9003', 'dilps');
 
 REPLACE INTO `card_domain` (`domain_id`, `card_id`) VALUES
-	(9001, 6000),
-	(9001, 6001),
-	(9001, 6002),
-	(9000, 6003),
-	(9000, 6004);
+	(9000, 6007),
+	(9000, 6007),
+	(9001, 6008),
+	(9001, 6008),
+	(9002, 6001),
+	(9002, 6001),
+	(9002, 6002),
+	(9003, 6002),
+	(9003, 6002);
 
 REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
   (11000, 'Test document type 11000', 'tiresias'),
