@@ -28,14 +28,6 @@ return [
     [
         'data' => [
             'cardDomains' => [
-                [
-                    'id' => '9001',
-                    'name' => 'Test domain 9001',
-                ],
-                [
-                    'id' => '9000',
-                    'name' => 'Test domain 9000',
-                ],
             ],
         ],
     ],

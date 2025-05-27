@@ -87,11 +87,11 @@ REPLACE INTO `domain` (`id`, `name`, `site`) VALUES
   (9001, 'Test domain 9001', 'tiresias');
 
 REPLACE INTO `card_domain` (`domain_id`, `card_id`) VALUES
-	(9001, 6000),
-	(9001, 6001),
-	(9001, 6002),
-	(9000, 6003),
-	(9000, 6004);
+	(9001, 6007),
+	(9001, 6008),
+	(9001, 6009),
+	(9000, 6010),
+	(9000, 6011);
 
 REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
   (11000, 'Test document type 11000', 'tiresias'),
