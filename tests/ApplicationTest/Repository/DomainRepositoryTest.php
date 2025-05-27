@@ -28,7 +28,11 @@ class DomainRepositoryTest extends AbstractRepositoryTest
         self::assertSame($expected, $actual);
 
         $actual = $this->repository->getFullNames(Site::Dilps);
-        self::assertEmpty($actual);
+        $expected = [
+            'Test domain 9002' => 9002,
+            'Test domain 9003' => 9003,
+        ];
+        self::assertSame($expected, $actual);
     }
 
     public function testGetSelfAndDescendantsSubQuery(): void
