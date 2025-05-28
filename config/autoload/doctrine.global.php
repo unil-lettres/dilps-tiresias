@@ -46,7 +46,7 @@ return [
                     'rand' => DoctrineExtensions\Query\Mysql\Rand::class,
                     'native_in' => Ecodev\Felix\ORM\Query\NativeIn::class,
                     'geomfromtext' => LongitudeOne\Spatial\ORM\Query\AST\Functions\Standard\StGeomFromText::class,
-                    'st_distance' => LongitudeOne\Spatial\ORM\Query\AST\Functions\Standard\StDistance::class,
+                    'st_distance' => LongitudeOne\Spatial\ORM\Query\AST\Functions\MariaDB\SpDistance::class,
                 ],
                 'string_functions' => [
                     'match' => DoctrineExtensions\Query\Mysql\MatchAgainst::class,
