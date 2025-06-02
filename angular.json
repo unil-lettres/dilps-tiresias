@@ -97,7 +97,8 @@
                     "options": {
                         "host": "dilps.lan",
                         "proxyConfig": "proxy.conf.json",
-                        "port": 4400
+                        "port": 4400,
+                        "allowedHosts": ["dilps.lan", "tiresias.lan"]
                     },
                     "configurations": {
                         "production": {

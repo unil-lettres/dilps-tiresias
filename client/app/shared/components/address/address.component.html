@@ -88,7 +88,7 @@
                 <mat-form-field
                     class="mat-elevation-z4"
                     id="search"
-                    [class.nat-hide]="!((mapApiService.loaded | async) && !readonly)"
+                    [class.nat-hide]="!(!readonly && (googleMapLoaded | async))"
                 >
                     <mat-label>Chercher</mat-label>
                     <input
@@ -103,7 +103,7 @@
                 </mat-form-field>
 
                 <!-- Map -->
-                @if ((mapApiService.loaded | async) && (!readonly || (!!model?.latitude && !!model?.longitude))) {
+                @if ((!readonly || (!!model?.latitude && !!model?.longitude)) && (googleMapLoaded | async)) {
                     <div class="wrapper-google-map">
                         <google-map
                             height="450px"

@@ -17,7 +17,7 @@ try {
     $exporter = $container->get(Exporter::class);
     $exporter->exportAndSendMessage($id);
 } catch (Throwable $throwable) {
-    _log()->err($throwable->getMessage() . "\n\n" . $throwable->getTraceAsString());
+    _log()->error($throwable->getMessage() . "\n\n" . $throwable->getTraceAsString());
     echo $throwable->getMessage() . PHP_EOL;
     exit(1);
 }

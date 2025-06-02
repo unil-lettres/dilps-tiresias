@@ -60,7 +60,7 @@ class ExportRepository extends AbstractRepository
         $cardValues = [];
         $exportId = $export->getId();
         foreach ($ids as $id) {
-            $cardValues[] = '(' . $exportId . ', ' . $connection->quote($id) . ')';
+            $cardValues[] = '(' . $exportId . ', ' . $id . ')';
         }
 
         // Inject all card picked one-by-oneS

@@ -31,11 +31,7 @@ return [
     'files' => [
         'unlink' => true,
     ],
-    'smtp' => [
-        'name' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'dilps-tiresias-mailhog' : 'localhost',
-        'host' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'dilps-tiresias-mailhog' : 'localhost',
-        'port' => getenv('DEPLOY_ENV') === 'dev-docker' ? 1025 : 587,
-    ],
+    'smtp' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'smtp://dilps-tiresias-mailhog:1025' : 'smtp://localhost:587',
     'email' => [
         'from' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'no-reply@dilps.docker' : 'no-reply@dilps.lan',
         'fromName' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'Docker Dilps' : 'Local Dilps',

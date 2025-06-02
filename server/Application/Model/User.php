@@ -108,7 +108,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $termsAgreement = null;
 
-    #[ORM\Column(type: 'UserType', options: ['default' => UserType::Default])]
+    #[ORM\Column(type: 'enum', options: ['default' => UserType::Default])]
     private UserType $type = UserType::Default;
 
     /**

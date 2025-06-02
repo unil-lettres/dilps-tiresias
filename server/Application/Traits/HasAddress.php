@@ -6,9 +6,9 @@ namespace Application\Traits;
 
 use Application\Enum\Precision;
 use Application\Model\Country;
-use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Attribute as API;
+use LongitudeOne\Spatial\PHP\Types\Geography\Point;
 
 /**
  * Common fields to represent an address.
@@ -23,7 +23,7 @@ trait HasAddress
 
     private ?float $longitude = null;
 
-    #[ORM\Column(name: '`precision`', type: 'Precision', nullable: true)]
+    #[ORM\Column(name: '`precision`', type: 'enum', nullable: true)]
     private ?Precision $precision = null;
 
     #[ORM\Column(type: 'string', options: ['default' => ''])]

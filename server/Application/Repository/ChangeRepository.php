@@ -65,7 +65,7 @@ class ChangeRepository extends AbstractRepository implements \Ecodev\Felix\Repos
         }
 
         if ($user) {
-            $userId = $this->getEntityManager()->getConnection()->quote($user->getId());
+            $userId = $user->getId() ?? -1;
             $qb = $this->getEntityManager()->getConnection()->createQueryBuilder()
                 ->select('`change`.id')
                 ->from('`change`')

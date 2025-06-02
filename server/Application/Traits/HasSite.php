@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait HasSite
 {
-    #[ORM\Column(type: 'Site')]
+    #[ORM\Column(type: 'enum')]
     private Site $site;
 
     public function getSite(): Site

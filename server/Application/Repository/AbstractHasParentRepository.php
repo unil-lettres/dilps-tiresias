@@ -25,11 +25,10 @@ abstract class AbstractHasParentRepository extends AbstractRepository
 
         $connection = $this->getEntityManager()->getConnection();
         $table = $connection->quoteIdentifier($table);
-        $id = $connection->quote($itemId);
 
         $entireHierarchySql = "
             WITH RECURSIVE parent AS (
-                    SELECT $table.id, $table.parent_id FROM $table WHERE $table.id IN ($id)
+                    SELECT $table.id, $table.parent_id FROM $table WHERE $table.id IN ($itemId)
                     UNION
                     SELECT $table.id, $table.parent_id FROM $table JOIN parent ON $table.parent_id = parent.id
                 )

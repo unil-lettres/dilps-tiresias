@@ -41,10 +41,10 @@ class Export extends AbstractModel implements HasSiteInterface
     #[ORM\Column(type: 'string', length: 2000, options: ['default' => ''])]
     private string $filename = '';
 
-    #[ORM\Column(type: 'ExportStatus', options: ['default' => ExportStatus::Todo])]
+    #[ORM\Column(type: 'enum', options: ['default' => ExportStatus::Todo])]
     private ExportStatus $status = ExportStatus::Todo;
 
-    #[ORM\Column(type: 'ExportFormat', options: ['default' => ExportFormat::Zip])]
+    #[ORM\Column(type: 'enum', options: ['default' => ExportFormat::Zip])]
     private ExportFormat $format = ExportFormat::Zip;
 
     /**

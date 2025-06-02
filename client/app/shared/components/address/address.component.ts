@@ -19,6 +19,7 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {CommonModule} from '@angular/common';
+import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
@@ -40,11 +41,24 @@ import {CommonModule} from '@angular/common';
     ],
 })
 export class AddressComponent implements OnInit, OnChanges {
-    public readonly mapApiService = inject(MapApiService);
+    private readonly mapApiService = inject(MapApiService);
     private readonly ngZone = inject(NgZone);
     private readonly addressService = inject(AddressService);
     public readonly countryService = inject(CountryService);
     private readonly site = inject(SITE);
+
+    public readonly googleMapLoaded = this.mapApiService.loaded.pipe(
+        tap(() => {
+            // load Places Autocomplete
+            this.icon = this.getIcon();
+            this.autocomplete = new google.maps.places.Autocomplete(this.inputRef().nativeElement);
+            this.autocomplete.addListener('place_changed', () => {
+                this.ngZone.run(() => {
+                    this.onPlaceChange();
+                });
+            });
+        }),
+    );
 
     public readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
 
@@ -278,17 +292,6 @@ export class AddressComponent implements OnInit, OnChanges {
             this.longitude = +this.model.longitude;
             this.zoom = 12;
         }
-
-        // load Places Autocomplete
-        this.mapApiService.loaded.subscribe(() => {
-            this.icon = this.getIcon();
-            this.autocomplete = new google.maps.places.Autocomplete(this.inputRef().nativeElement);
-            this.autocomplete.addListener('place_changed', () => {
-                this.ngZone.run(() => {
-                    this.onPlaceChange();
-                });
-            });
-        });
     }
 
     public updateSearch(): void {

@@ -7,11 +7,6 @@ return [
     // We recommend using fully-qualified class names whenever possible as
     // service names.
     'dependencies' => [
-        // Use 'aliases' to alias a service name to another service. The
-        // key is the alias name, the value is the service to which it points.
-        'aliases' => [
-            Doctrine\ORM\EntityManager::class => 'doctrine.entity_manager.orm_default',
-        ],
         // Use 'invokables' for constructor-less services, or services that do
         // not require arguments to the constructor. Map a service name to the
         // class name.
@@ -23,8 +18,6 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             'doctrine.entity_manager.orm_default' => Application\ORM\EntityManagerFactory::class,
-            Doctrine\Migrations\Configuration\Migration\ConfigurationLoader::class => Roave\PsrContainerDoctrine\Migrations\ConfigurationLoaderFactory::class,
-            Doctrine\Migrations\DependencyFactory::class => Roave\PsrContainerDoctrine\Migrations\DependencyFactoryFactory::class,
             'site' => Application\Service\SiteFactory::class,
             Application\Handler\ImageHandler::class => Application\Handler\ImageFactory::class,
             Application\Handler\LegacyRedirectHandler::class => Application\Handler\LegacyRedirectFactory::class,
@@ -40,7 +33,6 @@ return [
             Application\Service\ImageResizer::class => Application\Service\ImageResizerFactory::class,
             Ecodev\Felix\Handler\FileHandler::class => Application\Handler\FileFactory::class,
             Ecodev\Felix\Handler\GraphQLHandler::class => Application\Handler\GraphQLFactory::class,
-            Ecodev\Felix\Log\Writer\Db::class => Application\Log\DbWriterFactory::class,
             Ecodev\Felix\Service\Mailer::class => Application\Service\MailerFactory::class,
             GraphQL\Doctrine\Types::class => Application\Api\TypesFactory::class,
             Laminas\Stratigility\Middleware\ErrorHandler::class => Mezzio\Container\ErrorHandlerFactory::class,

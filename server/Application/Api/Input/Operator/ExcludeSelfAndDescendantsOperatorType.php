@@ -27,10 +27,10 @@ class ExcludeSelfAndDescendantsOperatorType extends AbstractOperatorType
         ];
     }
 
-    public function getDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $qb, string $alias, string $field, ?array $args): ?string
+    public function getDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $field, ?array $args): string
     {
         if (!$args) {
-            return null;
+            return '';
         }
 
         $id = (int) $args['value'];

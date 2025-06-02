@@ -7,8 +7,8 @@ namespace Application\Service;
 use Application\Model\Message;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\Mailer;
-use Laminas\Mail\Transport\TransportInterface;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Mailer\Transport\TransportInterface;
 
 class MailerFactory
 {
