@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import Highcharts from 'highcharts/es-modules/masters/highcharts.src.js';
 import {CommonModule} from '@angular/common';
-import {HighchartsChartModule} from 'highcharts-angular';
+import {HighchartsChartComponent} from 'highcharts-angular';
 
 type Row = {
     name: string;
@@ -46,7 +45,7 @@ function percent(count: number, total: number): number {
     selector: 'app-statistic',
     templateUrl: './statistic.component.html',
     styleUrl: './statistic.component.scss',
-    imports: [HighchartsChartModule, CommonModule, MatTableModule],
+    imports: [CommonModule, MatTableModule, HighchartsChartComponent],
 })
 export class StatisticComponent {
     @Input({required: true})
@@ -79,7 +78,6 @@ export class StatisticComponent {
 
     public displayedColumns = ['name', 'absolute', 'percent'];
     public tables: TableSource[] = [];
-    public Highcharts: typeof Highcharts = Highcharts;
     public chartOptions: Highcharts.Options = {
         series: [],
     };

@@ -5998,10 +5998,10 @@ header-case@^2.0.4:
     capital-case "^1.0.4"
     tslib "^2.0.3"
 
-highcharts-angular@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/highcharts-angular/-/highcharts-angular-4.0.1.tgz#50a57d36614993c770e88a36b169601fa1e8d5de"
-  integrity sha512-KAy+RRJyrDDKFYLFr3p2O+ups3ZyDP3CoakHuO3u+ZUCm85ziJ29WT1qPjzp2NBupYt+MGZV/DAyPMi5iyAIHw==
+highcharts-angular@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/highcharts-angular/-/highcharts-angular-5.0.0.tgz#3733a2fe674530504850eb2d8496801b9caa917a"
+  integrity sha512-NjvTdzPaUaewSWtakqdYlYLeS8FdYl+ncrTG/SzeeePzJ3NVhggHxBHFR/+u1aMvza7a17lqpbf6YR/EYMl0Rw==
   dependencies:
     tslib "^2.0.0"
 

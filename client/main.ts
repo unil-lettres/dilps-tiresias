@@ -21,6 +21,7 @@ import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
 import {provideScrollbarOptions} from 'ngx-scrollbar';
 import {CustomPaginatorIntl} from './app/shared/services/custom-paginator-intl.service';
+import {provideHighcharts} from 'highcharts-angular';
 
 const matTooltipCustomConfig: MatTooltipDefaultOptions = {
     showDelay: 5,
@@ -88,6 +89,7 @@ bootstrapApplication(AppComponent, {
             appearance: 'compact',
         }),
         {provide: MatPaginatorIntl, useClass: CustomPaginatorIntl},
+        provideHighcharts(),
     ],
 }).catch((err: unknown) => {
     console.error(err);
