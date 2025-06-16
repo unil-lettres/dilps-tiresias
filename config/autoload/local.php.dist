@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 return [
     'hostname' => getenv('DEPLOY_ENV') === 'dev-docker' ? 'dilps.docker' : 'dilps.lan',
-    'phpPath' => getenv('DEPLOY_ENV') === 'dev-docker' ? '/usr/local/bin/php' : '/usr/bin/php8.3',
+    'phpPath' => getenv('DEPLOY_ENV') === 'dev-docker' ? '/usr/local/bin/php' : '/usr/bin/php8.4',
     'doctrine' => [
         'connection' => [
             'orm_default' => [
