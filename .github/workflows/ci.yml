@@ -15,6 +15,7 @@ jobs:
 
         env:
             MYSQL_HOST: '127.0.0.1'
+            PHP_CS_FIXER_IGNORE_ENV: true
 
         services:
             mariadb:
