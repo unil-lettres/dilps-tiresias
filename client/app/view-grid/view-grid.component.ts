@@ -4,6 +4,7 @@ import {
     DestroyRef,
     ElementRef,
     inject,
+    input,
     Input,
     OnInit,
     output,
@@ -72,6 +73,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * Emits when some cards are selected
      */
     public readonly selectionChange = output<Cards['cards']['items'][0][]>();
+
+    /**
+     * The margin-top size in px for the scrollable area.
+     */
+    public readonly scrolledMarginTop = input<string>();
 
     /**
      * Reference to scrollable element

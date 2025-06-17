@@ -1,5 +1,5 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, inject, Input, OnInit, output} from '@angular/core';
+import {Component, DestroyRef, inject, Input, OnInit, output, input} from '@angular/core';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
@@ -48,6 +48,11 @@ export class ViewListComponent implements OnInit, ViewInterface {
     @Input() public selected: Cards['cards']['items'][0][] = [];
     public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
     public cards: Cards['cards']['items'][0][] = [];
+
+    /**
+     * The margin-top size in px for the scrollable area.
+     */
+    public readonly scrolledMarginTop = input<string>();
 
     /**
      * Template exposed variable

@@ -1,6 +1,6 @@
 <div class="scrollable">
     @if (dataSource) {
-        <div class="scrolled">
+        <div class="scrolled" [style.marginTop]="scrolledMarginTop()">
             @if (dataSource.data?.length) {
                 <mat-paginator
                     [length]="dataSource.data?.length"

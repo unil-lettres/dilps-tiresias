@@ -201,8 +201,8 @@
             </div>
         } @else {
             @if (domains.length) {
-                <div>
-                    <ng-scrollbar id="domains-chips" orientation="horizontal" appearance="native" visibility="visible">
+                <div id="domains-chips">
+                    <ng-scrollbar orientation="horizontal" appearance="native" visibility="visible">
                         <mat-chip-listbox
                             aria-label="Domaines des fiches"
                             aria-orientation="horizontal"
@@ -226,6 +226,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
+                    [scrolledMarginTop]="domains.length ? '108px' : '64px'"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                     (contentChange)="gridContentChange($event)"
@@ -236,6 +237,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
+                    [scrolledMarginTop]="domains.length ? '117px' : '64px'"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                 />

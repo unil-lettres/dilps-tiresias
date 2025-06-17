@@ -5,6 +5,7 @@
     flex-direction: column;
     @include utils.fixedToolbar();
 }
+
 app-view-grid {
     position: relative;
     z-index: 9;
@@ -13,10 +14,13 @@ app-view-grid {
 .empty-result {
     margin: 100px auto;
 }
+
 #domains-chips {
     display: block;
-    position: relative;
+    position: absolute;
     top: 64px;
+    right: 0;
+    left: 0;
     z-index: 10;
-    padding-inline: 8px;
+    padding-left: 10px;
 }

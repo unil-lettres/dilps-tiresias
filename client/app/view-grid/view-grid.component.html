@@ -1,5 +1,5 @@
 <div #scrollable class="scrollable">
-    <div class="scrolled" style="width: 100%">
+    <div [style]="{width: '100%', marginTop: scrolledMarginTop()}">
         <natural-gallery
             #gallery
             class="nat-padding nat-expand"
