@@ -6,7 +6,8 @@
     $background: map.get($theme, background);
     $foreground: map.get($theme, foreground);
 
-    .mat-toolbar {
+    .mat-toolbar,
+    #domains-chips {
         background: mat.m2-get-color-from-palette($background, background, 0.7);
         color: mat.m2-get-color-from-palette($foreground, text);
     }
