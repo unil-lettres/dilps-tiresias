@@ -19,7 +19,7 @@ app-view-grid {
     display: block;
     position: absolute;
     top: 64px;
-    right: 0;
+    right: 15px; // Keep a space for the gallery scrollbar.
     left: 0;
     z-index: 10;
     padding-left: 10px;
