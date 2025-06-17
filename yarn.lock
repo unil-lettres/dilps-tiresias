@@ -1414,10 +1414,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.2.tgz#e2c64c2ddb3c60793a39236b52624fde323e610a"
   integrity sha512-BV75kFQmpfuSBNQ1jyKu+IdGkFTMESjPrtKrEyc3MqcmVhV5IiYU0LXTaghLZozuZgCT9HfMOnEsh05aS2j9uQ==
 
-"@ecodev/natural@^63.3.3":
-  version "63.3.3"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-63.3.3.tgz#8f6744b3248a59ed7828c4c10ed444dc78cdcb7d"
-  integrity sha512-R+uQB0zCVXdFzr6OtvfUxs/+SGl0aCs39X8Nfu75coxfviJBNqYckyXiVqKqP8ECcQt/LzQk4YvNWYYe0jxZSg==
+"@ecodev/natural@^63.4.0":
+  version "63.4.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-63.4.0.tgz#efa100f8de9d68fa9411cb79cf5786d19adc9fc4"
+  integrity sha512-0ux68Dxi1IJD42ShzIbWSOoFD/aY49z9VunDYFBzJCUSAQ4BGawhJR1aQX+9xbJHqx8rs5zmhyAI3QFCUJjnvg==
   dependencies:
     extract-files "^13.0.0"
     tslib "^2.8.1"
