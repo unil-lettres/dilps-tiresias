@@ -6,7 +6,6 @@ namespace Application\Model;
 
 use Application\Repository\ArtistRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Ecodev\Felix\Api\Exception;
 
 /**
  * An artist.
@@ -15,15 +14,4 @@ use Ecodev\Felix\Api\Exception;
 #[ORM\Entity(ArtistRepository::class)]
 class Artist extends Thesaurus
 {
-    public function setName(string $name): void
-    {
-        /** @var ArtistRepository $artistRepository */
-        $artistRepository = _em()->getRepository(self::class);
-
-        $exists = $artistRepository->findOneBy(['name' => $name]);
-        if ($exists && $exists->getId() !== $this->getId()) {
-            throw new Exception('Le nom de cet artiste existe déjà.');
-        }
-        parent::setName($name);
-    }
 }
