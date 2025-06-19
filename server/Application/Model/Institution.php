@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Repository\InstitutionRepository;
 use Application\Traits\HasAddress;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
 
 /**
  * An institution.
@@ -20,4 +21,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Institution extends Thesaurus
 {
     use HasAddress;
+
+    public function setName(string $name): void
+    {
+        /** @var InstitutionRepository $institutionRepository */
+        $institutionRepository = _em()->getRepository(self::class);
+
+        $exists = $institutionRepository->findOneBy(['name' => $name]);
+        if ($exists && $exists->getId() !== $this->getId()) {
+            throw new Exception('Le nom de cette institution existe déjà.');
+        }
+        parent::setName($name);
+    }
 }
