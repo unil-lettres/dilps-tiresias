@@ -22,6 +22,7 @@ import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pic
 import {NgScrollbar} from 'ngx-scrollbar';
 import {concatMap, finalize, from, Observable, of} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
@@ -119,13 +120,17 @@ enum ViewMode {
         NgScrollbar,
     ],
 })
-export class ListComponent extends NaturalAbstractList<CardService> implements OnInit, AfterViewInit {
+export class ListComponent
+    extends NaturalAbstractList<CardService>
+    implements OnInit, AfterViewInit, ReusableRouteStatus
+{
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
     private readonly dialog = inject(MatDialog);
     private readonly statisticService = inject(StatisticService);
     private readonly changeService = inject(ChangeService);
     private readonly domainService = inject(DomainService);
+
     public readonly site = inject(SITE);
 
     /**
@@ -206,6 +211,7 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
      * Specifies if labels must be always displayed or only on hover
      */
     public showLabels = false;
+    public routeReuseStatus: RouteReuseStatus = RouteReuseStatus.default;
 
     public Site = Site;
     public UserRole = UserRole;
@@ -315,6 +321,15 @@ export class ListComponent extends NaturalAbstractList<CardService> implements O
         this.fetchDomains().subscribe(() => {
             this.domainSelectionChange();
         });
+    }
+
+    protected override historyNavigationFilter(): boolean {
+        if (this.routeReuseStatus === RouteReuseStatus.retrieving) {
+            this.routeReuseStatus = RouteReuseStatus.default;
+            return false;
+        }
+
+        return true;
     }
 
     public toggleLabels(): void {

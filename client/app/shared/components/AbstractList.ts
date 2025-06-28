@@ -1,3 +1,4 @@
+import {ComponentType} from '@angular/cdk/overlay';
 import {inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
@@ -8,7 +9,6 @@ import {
     PaginatedData,
     QueryVariables,
 } from '@ecodev/natural';
-import {ComponentType} from '@angular/cdk/overlay';
 
 export class AbstractList<
         TService extends NaturalAbstractModelService<

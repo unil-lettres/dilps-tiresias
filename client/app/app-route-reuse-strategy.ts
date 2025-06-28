@@ -1,6 +1,16 @@
 import {ComponentRef} from '@angular/core';
 import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
 
+export enum RouteReuseStatus {
+    default = 'default',
+    stored = 'stored',
+    retrieving = 'retrieving',
+}
+
+export type ReusableRouteStatus = {
+    routeReuseStatus: RouteReuseStatus;
+}
+
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
     return route.pathFromRoot.map(v => v.url.map(segment => segment.toString()).join('/')).join('/');
 }
@@ -104,6 +114,9 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
             return;
         }
 
+        (
+            handle as DetachedRouteHandle & {componentRef: ComponentRef<ReusableRouteStatus>}
+        ).componentRef.instance.routeReuseStatus = RouteReuseStatus.stored;
         handles.set(storeKey, handle);
     }
 
@@ -138,7 +151,11 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         const handles = this.routes[getConfiguredUrl(route)];
         if (handles) {
             const storeKey = getStoreKey(route);
-            return handles.get(storeKey) ?? null;
+            const handle = handles.get(storeKey);
+            (
+                handle as DetachedRouteHandle & {componentRef: ComponentRef<ReusableRouteStatus>}
+            ).componentRef.instance.routeReuseStatus = RouteReuseStatus.retrieving;
+            return handle ?? null;
         }
 
         return null;
