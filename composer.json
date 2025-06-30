@@ -38,7 +38,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-PDO": "*",
         "ext-calendar": "*",
         "ext-fileinfo": "*",
@@ -49,21 +49,21 @@
         "ecodev/felix": "^16.1",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^7.0",
-        "laminas/laminas-config-aggregator": "^1.15",
-        "laminas/laminas-servicemanager": "^3.22",
+        "laminas/laminas-config-aggregator": "^1.18",
+        "laminas/laminas-servicemanager": "^3.23",
         "longitude-one/doctrine-spatial": "dev-mr-97",
-        "mezzio/mezzio": "^3.19",
-        "mezzio/mezzio-fastroute": "^3.11",
-        "mezzio/mezzio-helpers": "^5.16",
-        "mezzio/mezzio-laminasviewrenderer": "^2.15",
-        "mezzio/mezzio-session-ext": "^1.19",
-        "phpoffice/phppresentation": "dev-master",
+        "mezzio/mezzio": "^3.21",
+        "mezzio/mezzio-fastroute": "^3.13",
+        "mezzio/mezzio-helpers": "^5.18",
+        "mezzio/mezzio-laminasviewrenderer": "^2.18",
+        "mezzio/mezzio-session-ext": "^1.20",
+        "phpoffice/phppresentation": "^1.1",
         "phpoffice/phpspreadsheet": "^1.29"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
-        "laminas/laminas-development-mode": "^3.12",
+        "laminas/laminas-development-mode": "^3.13",
         "phpstan/phpstan-doctrine": "@stable",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^12.2"
     }
 }
