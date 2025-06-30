@@ -6,7 +6,6 @@ import {
     NaturalDropdownRef,
 } from '@ecodev/natural';
 import {TypeNumericRangeComponent, TypeNumericRangeConfiguration} from './type-numeric-range.component';
-import {provideNoopAnimations} from '@angular/platform-browser/animations';
 
 describe('TypeNumericRangeComponent', () => {
     let component: TypeNumericRangeComponent;
@@ -34,7 +33,6 @@ describe('TypeNumericRangeComponent', () => {
 
         await TestBed.configureTestingModule({
             providers: [
-                provideNoopAnimations(),
                 {
                     provide: NATURAL_DROPDOWN_DATA,
                     useValue: data,
