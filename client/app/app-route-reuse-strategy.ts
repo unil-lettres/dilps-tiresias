@@ -9,7 +9,7 @@ export enum RouteReuseStatus {
 
 export type ReusableRouteStatus = {
     routeReuseStatus: RouteReuseStatus;
-}
+};
 
 function getResolvedUrl(route: ActivatedRouteSnapshot): string {
     return route.pathFromRoot.map(v => v.url.map(segment => segment.toString()).join('/')).join('/');
