@@ -14,6 +14,7 @@ import {
     NaturalQueryVariablesManager,
     NaturalSearchComponent,
     NaturalSearchSelections,
+    onHistoryEvent,
     PaginationInput,
     Sorting,
     WithId,
@@ -21,7 +22,7 @@ import {
 import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash-es';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {concatMap, finalize, from, Observable, of} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {filter, tap} from 'rxjs/operators';
 import {ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -323,13 +324,18 @@ export class ListComponent
         });
     }
 
-    protected override historyNavigationFilter(): boolean {
-        if (this.routeReuseStatus === RouteReuseStatus.retrieving) {
-            this.routeReuseStatus = RouteReuseStatus.default;
-            return false;
-        }
+    protected override handleHistoryNavigation(): void {
+        onHistoryEvent(this.router).pipe(
+            takeUntilDestroyed(this.destroyRef),
+            filter(() => {
+                if (this.routeReuseStatus === RouteReuseStatus.retrieving) {
+                    this.routeReuseStatus = RouteReuseStatus.default;
+                    return false;
+                }
 
-        return true;
+                return true;
+            }),
+        );
     }
 
     public toggleLabels(): void {
