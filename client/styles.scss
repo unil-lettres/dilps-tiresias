@@ -27,31 +27,6 @@ body {
     margin-left: -10px;
 }
 
-/**
- * Debug
- */
-pre.debug {
-    margin: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    font-size: 16px;
-    line-height: 1.5em;
-    font-family: Courrier, monospace;
-}
-
-[debug] {
-    border: 2px solid red;
-}
-
-[debug][children] > * {
-    border: 2px solid orange;
-}
-
-[debug][children][grandchildren] > * > * {
-    border: 2px solid green;
-}
-
 #appContent {
     height: 100vh;
 
