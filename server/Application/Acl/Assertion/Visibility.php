@@ -28,8 +28,9 @@ class Visibility implements NamedAssertion
     /**
      * @param CollectionVisibility[] $allowedVisibilities
      */
-    public function __construct(private readonly array $allowedVisibilities)
-    {
+    public function __construct(
+        private readonly array $allowedVisibilities,
+    ) {
         $this->allowedVisibilitiesValues = array_map(fn (CollectionVisibility $type) => $type->value, $this->allowedVisibilities);
     }
 

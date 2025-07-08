@@ -150,7 +150,7 @@ class UserTest extends TestCase
         self::assertSame($newRole, $user2->getRole());
     }
 
-    public function providerSetRole(): iterable
+    public static function providerSetRole(): iterable
     {
         yield [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role from student to junior'];
         yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_STUDENT, null];

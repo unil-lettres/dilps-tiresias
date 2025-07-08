@@ -11,6 +11,4 @@ use Doctrine\ORM\Mapping as ORM;
  * A document type.
  */
 #[ORM\Entity(DocumentTypeRepository::class)]
-class DocumentType extends Thesaurus
-{
-}
+class DocumentType extends Thesaurus {}

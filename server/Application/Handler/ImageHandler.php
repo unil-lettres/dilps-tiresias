@@ -17,8 +17,7 @@ class ImageHandler extends AbstractHandler
     public function __construct(
         private readonly CardRepository $cardRepository,
         private readonly ImageResizer $imageResizer,
-    ) {
-    }
+    ) {}
 
     /**
      * Serve an image from disk, with optional dynamic resizing.

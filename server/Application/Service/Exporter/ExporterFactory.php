@@ -34,7 +34,7 @@ class ExporterFactory
             $zip,
             $pptx,
             $xlsx,
-            $config['phpPath']
+            $config['phpPath'],
         );
     }
 }

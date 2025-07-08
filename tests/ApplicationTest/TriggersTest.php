@@ -39,7 +39,7 @@ class TriggersTest extends TestCase
         $this->assertUsageCount($table, $id2, $initial2);
     }
 
-    public function providerGetUsageCountManyToMany(): iterable
+    public static function providerGetUsageCountManyToMany(): iterable
     {
         yield ['antique_name', 12000, 12001];
         yield ['artist', 3000, 3001];
@@ -115,7 +115,7 @@ class TriggersTest extends TestCase
         $this->assertUsageCount($table, $id2, $initial2);
     }
 
-    public function providerGetUsageCountManyToOne(): iterable
+    public static function providerGetUsageCountManyToOne(): iterable
     {
         yield ['institution', 5000, 5001, true];
         yield ['document_type', 11000, 11001, true];

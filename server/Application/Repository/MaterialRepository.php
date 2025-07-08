@@ -9,6 +9,4 @@ use Application\Model\Material;
 /**
  * @extends AbstractHasParentRepository<Material>
  */
-class MaterialRepository extends AbstractHasParentRepository
-{
-}
+class MaterialRepository extends AbstractHasParentRepository {}

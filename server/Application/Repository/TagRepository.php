@@ -9,6 +9,4 @@ use Application\Model\Tag;
 /**
  * @extends AbstractHasParentRepository<Tag>
  */
-class TagRepository extends AbstractHasParentRepository
-{
-}
+class TagRepository extends AbstractHasParentRepository {}

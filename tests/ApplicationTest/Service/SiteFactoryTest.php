@@ -11,14 +11,14 @@ use PHPUnit\Framework\TestCase;
 class SiteFactoryTest extends TestCase
 {
     /**
-     * @dataProvider provideGetSite
+     * @dataProvider providerGetSite
      */
     public function testGetSite(string $input, Site $expected): void
     {
         self::assertSame($expected, SiteFactory::getSite($input));
     }
 
-    public function provideGetSite(): iterable
+    public static function providerGetSite(): iterable
     {
         yield 'empty default to dilps' => ['', Site::Dilps];
         yield 'default to dilps' => ['unknown string', Site::Dilps];

@@ -10,7 +10,24 @@ use PHPUnit\Framework\TestCase;
 
 class DatingRuleTest extends TestCase
 {
-    public function providerCompute(): iterable
+    /**
+     * @dataProvider providerCompute
+     */
+    public function testCompute(string $input, array $expected): void
+    {
+        $datingRule = new DatingRule();
+        $actual = $datingRule->compute($input);
+
+        $actualFlat = [];
+        foreach ($actual as $a) {
+            self::assertInstanceOf(Dating::class, $a);
+            $actualFlat[] = [$a->getFrom()->format('Y-m-d'), $a->getTo()->format('Y-m-d')];
+        }
+
+        self::assertEquals($expected, $actualFlat);
+    }
+
+    public static function providerCompute(): iterable
     {
         yield 'empty' => ['', []];
         yield 'simple' => ['1295-2295', [['1295-01-01', '2295-12-31']]];
@@ -50,22 +67,5 @@ class DatingRuleTest extends TestCase
         yield ['nach 1874', [['1874-01-01', '1874-12-31']]];
         yield ['1. - 2. Jh. n. Chr.', [['0001-01-01', '0199-12-31']]];
         yield ['2. - 1. Jh. v. Chr.', [['-0200-01-01', '-0001-12-31']]];
-    }
-
-    /**
-     * @dataProvider providerCompute
-     */
-    public function testCompute(string $input, array $expected): void
-    {
-        $datingRule = new DatingRule();
-        $actual = $datingRule->compute($input);
-
-        $actualFlat = [];
-        foreach ($actual as $a) {
-            self::assertInstanceOf(Dating::class, $a);
-            $actualFlat[] = [$a->getFrom()->format('Y-m-d'), $a->getTo()->format('Y-m-d')];
-        }
-
-        self::assertEquals($expected, $actualFlat);
     }
 }

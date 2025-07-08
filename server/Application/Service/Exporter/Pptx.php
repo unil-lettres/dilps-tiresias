@@ -41,8 +41,7 @@ class Pptx implements Writer
     public function __construct(
         private readonly ImageResizer $imageResizer,
         private readonly ImagineInterface $imagine,
-    ) {
-    }
+    ) {}
 
     public function getExtension(): string
     {

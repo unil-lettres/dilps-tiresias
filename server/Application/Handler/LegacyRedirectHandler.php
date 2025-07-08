@@ -12,9 +12,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class LegacyRedirectHandler implements RequestHandlerInterface
 {
-    public function __construct(private readonly CardRepository $cardRepository)
-    {
-    }
+    public function __construct(
+        private readonly CardRepository $cardRepository,
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

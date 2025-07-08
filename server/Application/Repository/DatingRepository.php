@@ -9,6 +9,4 @@ use Application\Model\Dating;
 /**
  * @extends AbstractRepository<Dating>
  */
-class DatingRepository extends AbstractRepository
-{
-}
+class DatingRepository extends AbstractRepository {}

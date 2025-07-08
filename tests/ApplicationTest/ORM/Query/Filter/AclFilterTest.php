@@ -21,7 +21,28 @@ use PHPUnit\Framework\TestCase;
 
 class AclFilterTest extends TestCase
 {
-    public function providerFilter(): iterable
+    /**
+     * @dataProvider providerFilter
+     */
+    public function testFilter(?string $login, string $class, string $expected): void
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(User::class);
+        $user = $userRepository->getOneByLogin($login, Site::Dilps);
+        $filter = new AclFilter(_em());
+        $filter->setUser($user);
+        /** @var ClassMetadata $targetEntity */
+        $targetEntity = _em()->getMetadataFactory()->getMetadataFor($class);
+        $actual = $filter->addFilterConstraint($targetEntity, 'test');
+
+        if ($expected === '') {
+            self::assertSame($expected, $actual);
+        } else {
+            self::assertStringStartsWith($expected, $actual);
+        }
+    }
+
+    public static function providerFilter(): iterable
     {
         yield 'country is totally public public class, access everything' => [
             null,
@@ -93,26 +114,5 @@ class AclFilterTest extends TestCase
             Change::class,
             'test.id IN (SELECT `change`.id FROM `change` WHERE `change`.owner_id = 1003 OR `change`.creator_id = 1003)',
         ];
-    }
-
-    /**
-     * @dataProvider providerFilter
-     */
-    public function testFilter(?string $login, string $class, string $expected): void
-    {
-        /** @var UserRepository $userRepository */
-        $userRepository = _em()->getRepository(User::class);
-        $user = $userRepository->getOneByLogin($login, Site::Dilps);
-        $filter = new AclFilter(_em());
-        $filter->setUser($user);
-        /** @var ClassMetadata $targetEntity */
-        $targetEntity = _em()->getMetadataFactory()->getMetadataFor($class);
-        $actual = $filter->addFilterConstraint($targetEntity, 'test');
-
-        if ($expected === '') {
-            self::assertSame($expected, $actual);
-        } else {
-            self::assertStringStartsWith($expected, $actual);
-        }
     }
 }

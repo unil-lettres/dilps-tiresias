@@ -114,7 +114,7 @@ class DatingRule
                 'to' => fn (array $match): Chronos => self::toDateTime(-min((int) $match[2], (int) ($match[3])), 12, 31),
             ],
             // um 1875 v. Chr. == 1.1.-1875 - 31.12.-1875
-            '/^[[:space:]]*um[[:space:]]*(\d+)[[:space:]]*vor[[:space:]]chr.?[[:space:]]*(\\(.*\\))?[[:space:]]*$/' => [
+            '/^[[:space:]]*um[[:space:]]*(\d+)[[:space:]]*vor[[:space:]]chr.?[[:space:]]*(\(.*\))?[[:space:]]*$/' => [
                 'from' => fn (array $match): Chronos => self::toDateTime(-(int) $match[1], 1, 1),
                 'to' => fn (array $match): Chronos => self::toDateTime(-(int) $match[1], 12, 31),
             ],
@@ -186,7 +186,7 @@ class DatingRule
                 'to' => fn (array $match): Chronos => self::toDateTime((int) (($match[1] - 1) . '00') + 120, 12, 31),
             ],
             // 2. - 1. Jh. v. Chr. == -0200-01-01 - -0001-12-31
-            '/^[[:space:]]*(um|nach|vor)?[[:space:]]*(\d{1,2}).?[[:space:]]*-[[:space:]]*(\d{1,2}).?[[:space:]]*jh[[:space:]]*vor[[:space:]]*chr.?[[:space:]]*(\\(.*\\))?[[:space:]]*$/' => [
+            '/^[[:space:]]*(um|nach|vor)?[[:space:]]*(\d{1,2}).?[[:space:]]*-[[:space:]]*(\d{1,2}).?[[:space:]]*jh[[:space:]]*vor[[:space:]]*chr.?[[:space:]]*(\(.*\))?[[:space:]]*$/' => [
                 'from' => fn (array $match): Chronos => self::toDateTime(-(int) ((max((int) $match[2], (int) ($match[3]))) . '00'), 1, 1),
                 'to' => fn (array $match): Chronos => self::toDateTime(-(int) ((min((int) $match[2], (int) ($match[3])) - 1) . '01'), 12, 31),
             ],

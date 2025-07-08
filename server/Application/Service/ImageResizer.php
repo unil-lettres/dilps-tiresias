@@ -15,9 +15,9 @@ class ImageResizer
 {
     public const CACHE_IMAGE_PATH = 'data/cache/images/';
 
-    public function __construct(private readonly ImagineInterface $imagine)
-    {
-    }
+    public function __construct(
+        private readonly ImagineInterface $imagine,
+    ) {}
 
     /**
      * Resize image as JPG or WebP and return the path to the resized version.

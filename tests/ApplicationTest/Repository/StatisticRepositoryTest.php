@@ -50,7 +50,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         }
     }
 
-    public function providerGetExtraStatistics(): iterable
+    public static function providerGetExtraStatistics(): iterable
     {
         yield [Site::Dilps, 'month', null];
         yield [Site::Dilps, 'all', null];
@@ -71,7 +71,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         $this->repository->getExtraStatistics($site, $period, $user);
     }
 
-    public function providerGetExtraStatisticsException(): iterable
+    public static function providerGetExtraStatisticsException(): iterable
     {
         yield [Site::Tiresias, '20asd\'1"9', 1000];
         yield [Site::Tiresias, 'bbb', 1000];

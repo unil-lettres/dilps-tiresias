@@ -17,7 +17,7 @@ class UtilityTest extends TestCase
         self::assertSame($expected, Utility::sanitizeRichText($input));
     }
 
-    public function providerSanitizeRichText(): iterable
+    public static function providerSanitizeRichText(): iterable
     {
         yield ['', ''];
         yield [' foo ', ' foo '];
@@ -34,7 +34,7 @@ class UtilityTest extends TestCase
         self::assertSame($expected, Utility::sanitizeSingleLineRichText($input));
     }
 
-    public function providerSanitizeSingleLineRichText(): iterable
+    public static function providerSanitizeSingleLineRichText(): iterable
     {
         yield ['', ''];
         yield [' foo ', ' foo '];
@@ -51,7 +51,7 @@ class UtilityTest extends TestCase
         self::assertSame($expected, Utility::richTextToPlainText($input));
     }
 
-    public function providerRichTextToPlainText(): iterable
+    public static function providerRichTextToPlainText(): iterable
     {
         yield ['', ''];
         yield [' foo ', 'foo'];

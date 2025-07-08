@@ -10,7 +10,7 @@ use Application\Repository\InstitutionRepository;
 
 class InstitutionRepositoryTest extends AbstractRepositoryTest
 {
-    private InstitutionRepository  $repository;
+    private InstitutionRepository $repository;
 
     protected function setUp(): void
     {

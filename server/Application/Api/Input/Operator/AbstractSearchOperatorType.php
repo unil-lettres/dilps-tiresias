@@ -109,7 +109,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 foreach ($fieldNames as $fieldName) {
                     $fields = array_merge(
                         $fields,
-                        $this->searchOnJoinedEntity($uniqueNameFactory, $metadata, $queryBuilder, $alias, $fieldName)
+                        $this->searchOnJoinedEntity($uniqueNameFactory, $metadata, $queryBuilder, $alias, $fieldName),
                     );
                 }
             }
@@ -203,7 +203,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             ...array_map(
                 fn ($word) => explode(' ', $this->cleanFullTextSpecialChars($word)),
                 $words,
-            )
+            ),
         );
 
         $andWheres = [];

@@ -56,8 +56,9 @@ class Importer
 
     private ?Collection $collection = null;
 
-    public function __construct(private readonly Site $site)
-    {
+    public function __construct(
+        private readonly Site $site,
+    ) {
         /** @var DomainRepository $domainRepository */
         $domainRepository = _em()->getRepository(Domain::class);
         $this->domains = $domainRepository->getFullNames($this->site);

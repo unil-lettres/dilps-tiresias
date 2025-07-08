@@ -24,9 +24,8 @@ class Exporter
         private readonly Writer $zip,
         private readonly Writer $pptx,
         private readonly Writer $csv,
-        private readonly string $phpPath
-    ) {
-    }
+        private readonly string $phpPath,
+    ) {}
 
     /**
      * Export asynchronously in a separate process.

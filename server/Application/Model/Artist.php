@@ -12,6 +12,4 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\UniqueConstraint(name: 'unique_name', columns: ['name'])]
 #[ORM\Entity(ArtistRepository::class)]
-class Artist extends Thesaurus
-{
-}
+class Artist extends Thesaurus {}

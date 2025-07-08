@@ -11,6 +11,4 @@ use Doctrine\ORM\Mapping as ORM;
  * An antique / ancient name.
  */
 #[ORM\Entity(AntiqueNameRepository::class)]
-class AntiqueName extends Thesaurus
-{
-}
+class AntiqueName extends Thesaurus {}

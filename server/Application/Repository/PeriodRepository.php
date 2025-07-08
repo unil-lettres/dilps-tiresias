@@ -9,6 +9,4 @@ use Application\Model\Period;
 /**
  * @extends AbstractHasParentRepository<Period>
  */
-class PeriodRepository extends AbstractHasParentRepository
-{
-}
+class PeriodRepository extends AbstractHasParentRepository {}

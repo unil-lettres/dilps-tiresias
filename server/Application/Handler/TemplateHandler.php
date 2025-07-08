@@ -53,9 +53,14 @@ class TemplateHandler implements RequestHandlerInterface
 
     private int $col = 1;
 
-    public function __construct(private readonly Site $site, private readonly DomainRepository $domainRepository, private readonly PeriodRepository $periodRepository, private readonly CountryRepository $countryRepository, private readonly MaterialRepository $materialRepository, private readonly DocumentTypeRepository $documentTypeRepository)
-    {
-    }
+    public function __construct(
+        private readonly Site $site,
+        private readonly DomainRepository $domainRepository,
+        private readonly PeriodRepository $periodRepository,
+        private readonly CountryRepository $countryRepository,
+        private readonly MaterialRepository $materialRepository,
+        private readonly DocumentTypeRepository $documentTypeRepository,
+    ) {}
 
     /**
      * Serve multiples cards as PowerPoint file.
@@ -163,8 +168,8 @@ class TemplateHandler implements RequestHandlerInterface
             new NamedRange(
                 $name,
                 $sheet,
-                'A1:A' . ($row - 1)
-            )
+                'A1:A' . ($row - 1),
+            ),
         );
 
         return $name;

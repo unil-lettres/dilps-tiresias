@@ -26,7 +26,7 @@ if (!file_exists($config['config_cache_path'])) {
     printf(
         "Configured config cache file '%s' not found%s",
         $config['config_cache_path'],
-        PHP_EOL
+        PHP_EOL,
     );
     exit(0);
 }
@@ -35,7 +35,7 @@ if (false === unlink($config['config_cache_path'])) {
     printf(
         "Error removing config cache file '%s'%s",
         $config['config_cache_path'],
-        PHP_EOL
+        PHP_EOL,
     );
     exit(1);
 }
@@ -43,6 +43,6 @@ if (false === unlink($config['config_cache_path'])) {
 printf(
     "Removed configured config cache file '%s'%s",
     $config['config_cache_path'],
-    PHP_EOL
+    PHP_EOL,
 );
 exit(0);

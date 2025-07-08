@@ -12,7 +12,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Entity not found for class `Application\\Model\\Collection` and ID `2000`.',
+                'message' => 'Entity not found for class `Application\Model\Collection` and ID `2000`.',
                 'extensions' => [
                     'objectNotFound' => true,
                 ],

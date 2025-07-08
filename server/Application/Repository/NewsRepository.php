@@ -9,6 +9,4 @@ use Application\Model\News;
 /**
  * @extends AbstractRepository<News>
  */
-class NewsRepository extends AbstractRepository
-{
-}
+class NewsRepository extends AbstractRepository {}

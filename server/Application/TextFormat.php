@@ -19,9 +19,9 @@ class TextFormat
         '‟', '‘', '‛', '”', '’', '"', "'", '(', ')',
     ];
 
-    public function __construct(private string $text)
-    {
-    }
+    public function __construct(
+        private string $text,
+    ) {}
 
     /**
      * Parse the term to extract a list of words that are not quoted.

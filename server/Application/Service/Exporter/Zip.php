@@ -26,8 +26,9 @@ class Zip implements Writer
 
     private readonly Escaper $escape;
 
-    public function __construct(private readonly ImageResizer $imageResizer)
-    {
+    public function __construct(
+        private readonly ImageResizer $imageResizer,
+    ) {
         $this->escape = new Escaper();
     }
 

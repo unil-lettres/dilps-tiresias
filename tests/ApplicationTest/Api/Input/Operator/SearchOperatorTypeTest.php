@@ -36,7 +36,7 @@ class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function providerSearch(): iterable
+    public static function providerSearch(): iterable
     {
         yield 'simple' => [DocumentType::class, 'john', '(a.name LIKE :filter1)'];
         yield 'search predefined fields' => [User::class, 'john', '(a.login LIKE :filter1 OR a.email LIKE :filter1 OR a.name LIKE :filter1)'];

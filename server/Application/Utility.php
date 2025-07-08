@@ -57,7 +57,7 @@ abstract class Utility
                 "\n\n",
                 "\n\n",
             ],
-            $string
+            $string,
         )))));
     }
 }

@@ -16,9 +16,10 @@ use Ecodev\Felix\Service\MessageRenderer;
  */
 class MessageQueuer
 {
-    public function __construct(private readonly EntityManager $entityManager, private readonly MessageRenderer $messageRenderer)
-    {
-    }
+    public function __construct(
+        private readonly EntityManager $entityManager,
+        private readonly MessageRenderer $messageRenderer,
+    ) {}
 
     public function queueExportDone(User $user, Export $export): Message
     {

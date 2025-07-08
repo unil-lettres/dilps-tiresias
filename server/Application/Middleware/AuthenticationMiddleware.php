@@ -16,9 +16,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class AuthenticationMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly UserRepository $userRepository, private readonly Site $site)
-    {
-    }
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly Site $site,
+    ) {}
 
     /**
      * Load current user from session if exists and still valid.
@@ -67,7 +68,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
                     $user = $this->userRepository->createShibboleth(
                         $login,
                         $serverParams['mail'],
-                        $this->site
+                        $this->site,
                     );
                 }
 

@@ -42,7 +42,7 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         self::assertSame($expected, $actual);
     }
 
-    public function providerGetCopyrights(): iterable
+    public static function providerGetCopyrights(): iterable
     {
         yield [6000, '© ACME (Only if you ask nicely)'];
         yield [6001, ''];

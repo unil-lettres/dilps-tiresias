@@ -30,7 +30,7 @@ class SchemaTest extends TestCase
     {
         $result = GraphQL::executeQuery(
             $this->schema,
-            Introspection::getIntrospectionQuery()
+            Introspection::getIntrospectionQuery(),
         );
 
         self::assertSame([], $result->errors, 'should not have any errors during introspection');

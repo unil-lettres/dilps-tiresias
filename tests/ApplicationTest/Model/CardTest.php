@@ -225,7 +225,7 @@ class CardTest extends TestCase
         self::assertSame($next, $card->getVisibility());
     }
 
-    public function providerSetVisibility(): iterable
+    public static function providerSetVisibility(): iterable
     {
         yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Private, false];
         yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Member, false];

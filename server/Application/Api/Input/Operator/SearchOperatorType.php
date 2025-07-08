@@ -24,7 +24,7 @@ class SearchOperatorType extends AbstractSearchOperatorType
                     Artist::class,
                     Country::class,
                 ],
-                true
+                true,
             )
         ) {
             return ['name'];
