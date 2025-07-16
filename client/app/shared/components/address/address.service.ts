@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {mapValues} from 'lodash-es';
+import {mapValues} from 'es-toolkit';
 
 export type Address = {
     street?: string;

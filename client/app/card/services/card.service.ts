@@ -1,6 +1,6 @@
 import {RouteReuseStrategy} from '@angular/router';
 import {inject, Injectable} from '@angular/core';
-import {merge} from 'lodash-es';
+import {merge} from 'es-toolkit';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
@@ -112,7 +112,7 @@ export class CardService extends AbstractContextualizedService<
         }
 
         const fields = {src: this.getImageLink(card, height)};
-        return merge({}, card, fields);
+        return merge(merge({}, card), fields);
     }
 
     public override getDefaultForServer(): CardInput {
@@ -220,7 +220,6 @@ export class CardService extends AbstractContextualizedService<
         this.throwIfObservable(object);
 
         const variables = merge(
-            {},
             {input: this.getInput(object, true)},
             this.getPartialVariablesForCreation(),
         ) satisfies CreateCardVariables;

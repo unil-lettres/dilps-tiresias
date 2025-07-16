@@ -1,4 +1,4 @@
-import {merge} from 'lodash-es';
+import {merge} from 'es-toolkit';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';

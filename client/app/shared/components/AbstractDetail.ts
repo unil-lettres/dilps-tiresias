@@ -1,6 +1,6 @@
 import {Directive, inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {merge} from 'lodash-es';
+import {merge} from 'es-toolkit';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 import {
@@ -56,12 +56,12 @@ export class AbstractDetailDirective<
 
     public constructor(public readonly service: TService) {
         const data = inject<{item: ExtractTallOne<TService> & Extra} | undefined>(MAT_DIALOG_DATA);
-        this.data = merge({item: this.service.getDefaultForServer()}, data);
+        this.data = merge({item: this.service.getDefaultForServer()}, data ?? {});
     }
 
     public ngOnInit(): void {
         if ('id' in this.data.item && this.data.item.id) {
-            this.service.getOne(this.data.item.id).subscribe(res => {
+            this.service.getOne(this.data.item.id).subscribe((res: any) => {
                 merge(this.data.item, res); // init all fields considering getOne query
                 this._isUpdatePage = true;
                 this.postQuery();

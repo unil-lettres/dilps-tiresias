@@ -1,5 +1,5 @@
 import {QuillConfig} from 'ngx-quill';
-import {pick} from 'lodash-es';
+import {pick} from 'es-toolkit';
 import Delta from 'quill-delta';
 
 export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta {

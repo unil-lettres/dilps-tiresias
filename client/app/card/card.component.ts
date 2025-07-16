@@ -3,7 +3,7 @@ import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
-import {findKey, identity, sortBy} from 'lodash-es';
+import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -706,7 +706,7 @@ export class CardComponent implements OnInit, OnChanges {
         title: string,
         help: string,
         cardsInput: (cards: Card['card']['cards']) => Card['card']['cards'] = identity,
-        checkCards: (cards: Card['card']['cards']) => boolean = identity,
+        checkCards: (cards: Card['card']['cards']) => Card['card']['cards'] | boolean = identity,
     ): void {
         if (this.fetchedModel) {
             let cardsData: Card['card']['cards'] = [];
@@ -753,7 +753,7 @@ export class CardComponent implements OnInit, OnChanges {
         const visibleCollections = this.fetchedModel.collections.filter(
             c => c.visibility !== CollectionVisibility.Private,
         );
-        this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
+        this.sortedCollections = sortBy(visibleCollections, [c => c.hierarchicName]);
 
         this.cardService.getCollectionCopyrights(this.fetchedModel).subscribe(v => (this.collectionCopyrights = v));
 

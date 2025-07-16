@@ -7,7 +7,7 @@ import {
     NaturalSelectEnumComponent,
 } from '@ecodev/natural';
 // Format can remove following line, that is required to prevent warnings in console
-import {merge} from 'lodash-es';
+import {merge} from 'es-toolkit';
 import {CountryService} from '../../../countries/services/country.service';
 import {Card, CardInput, Countries, CountriesVariables, Institution, Site} from '../../generated-types';
 import {AddressService} from './address.service';
@@ -317,7 +317,7 @@ export class AddressComponent implements OnInit, OnChanges {
         this.longitude = place.geometry.location!.lng();
         this.zoom = 15;
 
-        merge(this.model, this.addressService.buildAddress(place));
+        merge(this.model!, this.addressService.buildAddress(place));
     }
 
     public onMarkerDrag(ev: google.maps.MapMouseEvent): void {
@@ -337,7 +337,7 @@ export class AddressComponent implements OnInit, OnChanges {
             },
             places => {
                 const address = this.addressService.buildAddress(places![0], false);
-                merge(this.model, address);
+                merge(this.model!, address);
                 this.model!.country = this.countries.find(c => c.code === address.countryIso2); // change reference
                 this.updateSearch();
             },

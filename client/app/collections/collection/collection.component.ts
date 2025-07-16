@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
-import {findKey} from 'lodash-es';
+import {findKey} from 'es-toolkit';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {
     Collection,
