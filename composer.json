@@ -51,7 +51,7 @@
         "ecodev/graphql-upload": "^7.0",
         "laminas/laminas-config-aggregator": "^1.15",
         "laminas/laminas-servicemanager": "^3.22",
-        "longitude-one/doctrine-spatial": "dev-mr-97",
+        "longitude-one/doctrine-spatial": "^5.0",
         "mezzio/mezzio": "^3.19",
         "mezzio/mezzio-fastroute": "^3.11",
         "mezzio/mezzio-helpers": "^5.16",

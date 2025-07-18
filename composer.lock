@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69e12ae10f663683a4ed3397916afbaa",
+    "content-hash": "8d0043bd43bf53d48c8b5ba773a18e63",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2577,21 +2577,20 @@
         },
         {
             "name": "longitude-one/doctrine-spatial",
-            "version": "dev-mr-97",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/longitude-one/doctrine-spatial.git",
-                "reference": "78d33fb8e6b85451ac208882ea09283049429796"
+                "reference": "3978cca3a034086de199a0c47d63742ac7e5fd22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/longitude-one/doctrine-spatial/zipball/78d33fb8e6b85451ac208882ea09283049429796",
-                "reference": "78d33fb8e6b85451ac208882ea09283049429796",
+                "url": "https://api.github.com/repos/longitude-one/doctrine-spatial/zipball/3978cca3a034086de199a0c47d63742ac7e5fd22",
+                "reference": "3978cca3a034086de199a0c47d63742ac7e5fd22",
                 "shasum": ""
             },
             "require": {
                 "doctrine/orm": "^2.19|^3.1",
-                "ext-json": "*",
                 "ext-mbstring": "*",
                 "longitude-one/geo-parser": "^3.0.1",
                 "longitude-one/wkb-parser": "^3.0.0",
@@ -2603,6 +2602,7 @@
             },
             "require-dev": {
                 "cache/array-adapter": "^1.1",
+                "composer/semver": "^3.4",
                 "dg/bypass-finals": "^1.3",
                 "monolog/monolog": "^2.0",
                 "phpunit/phpcov": "^9",
@@ -2647,9 +2647,9 @@
             ],
             "support": {
                 "issues": "https://github.com/longitude-one/doctrine-spatial/issues",
-                "source": "https://github.com/longitude-one/doctrine-spatial/tree/mr-97"
+                "source": "https://github.com/longitude-one/doctrine-spatial/tree/5.0.4"
             },
-            "time": "2025-01-22T12:49:39+00:00"
+            "time": "2025-07-17T11:32:52+00:00"
         },
         {
             "name": "longitude-one/geo-parser",
@@ -9810,7 +9810,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofphp/php-cs-fixer": 0,
-        "longitude-one/doctrine-spatial": 20,
         "phpoffice/phppresentation": 20,
         "phpstan/phpstan-doctrine": 0
     },
