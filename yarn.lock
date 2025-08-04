@@ -5220,6 +5220,11 @@ es-object-atoms@^1.0.0, es-object-atoms@^1.1.1:
   dependencies:
     es-errors "^1.3.0"
 
+es-toolkit@^1.39.8:
+  version "1.39.8"
+  resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.39.8.tgz#314aca3988fc1f2c3faa95b49c3029f44c690f50"
+  integrity sha512-A8QO9TfF+rltS8BXpdu8OS+rpGgEdnRhqIVxO/ZmNvnXBYgOdSsxukT55ELyP94gZIntWJ+Li9QRrT2u1Kitpg==
+
 esbuild-wasm@0.25.4:
   version "0.25.4"
   resolved "https://registry.yarnpkg.com/esbuild-wasm/-/esbuild-wasm-0.25.4.tgz#06744be7a790acd0a65c98c5a6289b31a17a0dcb"
