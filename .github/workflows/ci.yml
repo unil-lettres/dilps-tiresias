@@ -100,7 +100,7 @@ jobs:
 
             - name: Prettier
               id: app-prettier
-              run: ./node_modules/.bin/prettier --check .
+              run: ./node_modules/.bin/prettier --experimental-cli --check .
 
             - name: Test PHP
               id: app-test-php

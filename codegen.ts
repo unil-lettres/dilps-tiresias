@@ -19,7 +19,7 @@ const config: CodegenConfig = {
         },
     },
     hooks: {
-        afterAllFileWrite: ["prettier --ignore-path '' --write"],
+        afterAllFileWrite: ["prettier --experimental-cli --ignore-path '' --write"],
     },
     config: {
         // immutableTypes:true, // TODO enable this when we have time

@@ -6,7 +6,7 @@ files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(js|json|h
 if [ "$files" != "" ]; then
 
     # Run prettier before commit
-    echo "$files" | xargs ./node_modules/.bin/prettier --write
+    echo "$files" | xargs ./node_modules/.bin/prettier --experimental-cli --write
     if [ $? -ne 0 ]; then
         pass=false
     fi
