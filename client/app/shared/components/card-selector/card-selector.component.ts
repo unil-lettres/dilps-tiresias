@@ -8,9 +8,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-card-selector',
+    imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButtonModule],
     templateUrl: './card-selector.component.html',
     styleUrl: './card-selector.component.scss',
-    imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButtonModule],
 })
 export class CardSelectorComponent {
     public readonly cardService = inject(CardService);

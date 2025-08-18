@@ -39,7 +39,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 
 @Component({
     selector: 'app-profile',
-    templateUrl: './user.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -55,6 +54,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         DialogFooterComponent,
         TypePipe,
     ],
+    templateUrl: './user.component.html',
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
     public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);

@@ -24,8 +24,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 
 @Component({
     selector: 'app-periods',
-    templateUrl: './periods.component.html',
-    styleUrl: './periods.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -45,6 +43,8 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
+    templateUrl: './periods.component.html',
+    styleUrl: './periods.component.scss',
 })
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];

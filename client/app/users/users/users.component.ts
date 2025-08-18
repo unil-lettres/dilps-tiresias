@@ -16,8 +16,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-users',
-    templateUrl: './users.component.html',
-    styleUrl: './users.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -32,6 +30,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         NaturalEnumPipe,
         TypePipe,
     ],
+    templateUrl: './users.component.html',
+    styleUrl: './users.component.scss',
 })
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];

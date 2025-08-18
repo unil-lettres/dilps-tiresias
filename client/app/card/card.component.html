@@ -108,7 +108,7 @@
                             <div class="nat-horizontal">
                                 {{
                                     visibilities[visibility]
-                                        ? 'Visible ' + visibilities[visibility].text
+                                        ? `Visible ${visibilities[visibility].text}`
                                         : 'Visibilité inchangée'
                                 }}
                             </div>
@@ -144,7 +144,7 @@
                                 <button
                                     mat-icon-button
                                     matIconSuffix
-                                    [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
+                                    [matTooltip]="`Utiliser la référénce automatique  &quot;${suggestedCode}&quot;`"
                                     (click)="codeModel = code; useSuggestedCode($event)"
                                 >
                                     <mat-icon naturalIcon="refresh" />
@@ -974,7 +974,7 @@
                     </a>
                 }
                 @if (imageSrc && !imageData) {
-                    <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
+                    <div class="image nat-expand" [ngStyle]="{'background-image': `url(${imageSrc})`}"></div>
                 }
                 @if (imageData) {
                     <div class="image nat-expand" [style.backgroundImage]="imageData"></div>

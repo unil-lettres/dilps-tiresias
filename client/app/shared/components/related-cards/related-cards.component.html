@@ -4,7 +4,7 @@
             @for (card of cards; track card) {
                 <div>
                     <a class="image" [routerLink]="['/card', card.id]" [matTooltip]="card.plainName">
-                        <img priority fill [ngSrc]="'card-' + card.id + '.jpg'" [loaderParams]="{card: card}" />
+                        <img priority fill [ngSrc]="`card-${card.id}.jpg`" [loaderParams]="{card: card}" />
                     </a>
                 </div>
             }
@@ -35,7 +35,7 @@
         mat-mini-fab
         matTooltipPosition="left"
         [class.reduced]="isReduced"
-        [matTooltip]="(isReduced ? 'Ouvrir' : 'Fermer') + ' les images associées'"
+        [matTooltip]="`${isReduced ? 'Ouvrir' : 'Fermer'} les images associées`"
         (click)="reduced.emit(!isReduced)"
     >
         <mat-icon naturalIcon="expand_more" />

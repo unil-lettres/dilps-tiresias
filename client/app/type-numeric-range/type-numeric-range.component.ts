@@ -59,9 +59,9 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
 }
 
 @Component({
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './type-numeric-range.component.html',
     styleUrl: './type-numeric-range.component.scss',
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);

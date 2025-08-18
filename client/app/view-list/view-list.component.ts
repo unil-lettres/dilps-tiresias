@@ -16,8 +16,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
-    templateUrl: './view-list.component.html',
-    styleUrl: './view-list.component.scss',
     imports: [
         CommonModule,
         MatPaginatorModule,
@@ -27,6 +25,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         OnlyLeavesPipe,
         TruncatePipe,
     ],
+    templateUrl: './view-list.component.html',
+    styleUrl: './view-list.component.scss',
 })
 export class ViewListComponent implements OnInit, ViewInterface {
     private readonly destroyRef = inject(DestroyRef);

@@ -20,9 +20,9 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 
 @Component({
     selector: 'app-link-related-cards-dialog',
+    imports: [MatButtonModule, MatIconModule, MatDialogModule, MatCheckboxModule, FormsModule],
     templateUrl: './link-related-cards-dialog.component.html',
     styleUrl: './link-related-cards-dialog.component.scss',
-    imports: [MatButtonModule, MatIconModule, MatDialogModule, MatCheckboxModule, FormsModule],
 })
 export class LinkRelatedCardsDialogComponent {
     private readonly dialogRef = inject<MatDialogRef<LinkRelatedCardsDialogComponent>>(MatDialogRef);

@@ -12,7 +12,7 @@
                 <a
                     class="carousel-news"
                     [attr.href]="news.url"
-                    [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}"
+                    [ngStyle]="{'background-image': `url(${news.imageUrl})`}"
                 >
                     <div class="carousel-label">
                         <div class="name mat-headline-6">{{ news.name }}</div>

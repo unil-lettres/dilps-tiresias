@@ -20,9 +20,9 @@ export enum ExportTheme {
 
 @Component({
     selector: 'app-export-menu',
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
-    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
 })
 export class ExportMenuComponent {
     private readonly exportService = inject(ExportService);

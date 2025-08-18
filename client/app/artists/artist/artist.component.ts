@@ -11,8 +11,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-artist',
-    templateUrl: './artist.component.html',
     imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
+    templateUrl: './artist.component.html',
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService, ThesaurusDetailDialogExtraData> {
     public constructor() {

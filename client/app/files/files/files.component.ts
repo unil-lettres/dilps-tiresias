@@ -25,8 +25,6 @@ type Tuple = {
 
 @Component({
     selector: 'app-files',
-    templateUrl: './files.component.html',
-    styleUrl: './files.component.scss',
     imports: [
         CommonModule,
         MatTableModule,
@@ -37,6 +35,8 @@ type Tuple = {
         MatProgressSpinnerModule,
         NaturalFileSelectDirective,
     ],
+    templateUrl: './files.component.html',
+    styleUrl: './files.component.scss',
 })
 export class FilesComponent implements OnInit {
     private readonly fileService = inject(FileService);

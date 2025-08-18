@@ -36,9 +36,9 @@ type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
+    imports: [NaturalGalleryComponent],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
-    imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private readonly router = inject(Router);
