@@ -124,6 +124,7 @@ module.exports = tseslint.config(
         files: ['**/*.html'],
         extends: [...angular.configs.templateAll],
         rules: {
+            "@angular-eslint/template/cyclomatic-complexity": 'off', // todo : remove but need lots of rework probably
             '@angular-eslint/template/alt-text': 'off', // We don't care as much as we should about a11y
             '@angular-eslint/template/button-has-type': 'off',
             '@angular-eslint/template/click-events-have-key-events': 'off', // We don't care as much as we should about a11y
