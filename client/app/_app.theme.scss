@@ -66,12 +66,21 @@
         text-align: center;
     }
 
-    natural-gallery .natural-gallery-js .figure.selected {
-        border: 3px solid mat.m2-get-color-from-palette($accent);
-        border-radius: 3px;
+    natural-gallery .natural-gallery-js {
+        a,
+        button {
+            display: block;
+            width: 100%;
+        }
 
-        .selectBtn {
-            background: mat.m2-get-color-from-palette($accent, $opacity: 0.3);
+        .figure.selected {
+            border: 3px solid mat.m2-get-color-from-palette($accent);
+            --ngjs-focus-outline: 3px solid mat.m2-get-color-from-palette($accent);
+            --ngjs-figure-radius: 3px;
+
+            .select-btn {
+                background: mat.m2-get-color-from-palette($accent, $opacity: 0.3);
+            }
         }
     }
 }

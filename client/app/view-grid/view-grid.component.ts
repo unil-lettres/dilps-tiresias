@@ -10,23 +10,29 @@ import {
     output,
     viewChild,
 } from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalDataSource, PaginationInput} from '@ecodev/natural';
-import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
+import {
+    CustomEventDetailMap,
+    Item,
+    LabelVisibility,
+    ModelAttributes,
+    NaturalGalleryOptions,
+} from '@ecodev/natural-gallery-js';
 import {merge} from 'lodash-es';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {Cards} from '../shared/generated-types';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type ContentChange = {
     visible?: number;
     total?: number;
 };
 
-type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
+type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
@@ -43,12 +49,12 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Only used to help typescript understand the generic type of <natural-gallery>
      */
-    public readonly emptyItemsList: GalleryItem[] = [];
+    public readonly emptyItemsList: GalleryModel[] = [];
 
     /**
      * Reference to gallery
      */
-    public readonly gallery = viewChild<NaturalGalleryComponent<GalleryItem>>('gallery');
+    public readonly gallery = viewChild<NaturalGalleryComponent<GalleryModel>>('gallery');
 
     /**
      * DataSource containing cards
@@ -90,7 +96,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private scrollTop = 0;
 
     /**
-     * Row height of thumbails in grid
+     * Row height of thumbnails in grid
      */
     private thumbnailHeight = 300;
 
@@ -106,7 +112,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
     public options: NaturalGalleryOptions = {
         gap: 5,
-        showLabels: 'always',
+        labelVisibility: LabelVisibility.ALWAYS,
         rowHeight: this.thumbnailHeight,
         activable: true,
         selectable: true,
@@ -167,7 +173,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private lastCollectionId = 0;
 
     public constructor() {
-        this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
+        this.options.labelVisibility =
+            sessionStorage.getItem('showLabels') === 'false' ? LabelVisibility.HOVER : LabelVisibility.ALWAYS;
     }
 
     public ngOnInit(): void {
@@ -218,23 +225,26 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         );
     }
 
-    public loadMore(ev: CustomEventDetailMap<GalleryItem>['pagination']): void {
+    public loadMore(ev: CustomEventDetailMap<GalleryModel>['pagination']): void {
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(event: CustomEventDetailMap<GalleryItem>['activate']): void {
-        this.router.navigate(['card', event.model.id]);
+    public activate(item: GalleryModel): void {
+        this.router.navigate(['card', item.id]);
     }
 
-    public selectAll(): Promise<Cards['cards']['items'][0][]> {
-        return this.gallery()?.gallery.then(gallery => gallery.selectVisibleItems()) ?? Promise.resolve([]);
+    public selectAll(): Promise<GalleryModel[]> {
+        return (
+            this.gallery()?.gallery.then(gallery => gallery.selectDomCollection().map(i => i.model)) ??
+            Promise.resolve([])
+        );
     }
 
     public unselectAll(): void {
         this.gallery()?.gallery.then(gallery => gallery.unselectAllItems());
     }
 
-    private formatImages(cards: Cards['cards']['items'][0][]): GalleryItem[] {
+    private formatImages(cards: Cards['cards']['items'][0][]): GalleryModel[] {
         const selected = this.selected.map(c => c.id);
 
         return cards.map(card => {
@@ -273,5 +283,9 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
             return merge({}, card, thumb, big, fields);
         });
+    }
+
+    protected bindModel(event: Item<GalleryModel>[]): GalleryModel[] {
+        return event.map(i => i.model);
     }
 }
