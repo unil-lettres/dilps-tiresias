@@ -53,6 +53,7 @@
                     [config]="hierarchicConfig"
                     [filters]="ancestorsHierarchicFilters"
                     [showIcon]="false"
+                    [disabled]="isUpdatePage() && !data.item.permissions.update"
                     [(ngModel)]="data.item.parent"
                 />
 
