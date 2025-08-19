@@ -26,6 +26,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {
     Card,
@@ -154,6 +155,7 @@ type InitialCardValues = {
         ExportMenuComponent,
         CardSkeletonComponent,
         MatListModule,
+        HistoricIconComponent,
     ],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',

@@ -10,8 +10,9 @@
                             [max]="3"
                             [min]="1"
                             [step]="1"
-                            ><input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()"
-                        /></mat-slider>
+                        >
+                            <input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()" />
+                        </mat-slider>
                     </div>
                 }
 
@@ -57,9 +58,15 @@
                     [(ngModel)]="data.item.parent"
                 />
 
-                @if (user?.role === UserRole.administrator) {
-                    <mat-slide-toggle [(ngModel)]="data.item.isSource">Est un fonds</mat-slide-toggle>
-                }
+                <div class="nat-horizontal nat-gap-20">
+                    @if (user?.role === UserRole.administrator) {
+                        <mat-checkbox [(ngModel)]="data.item.isSource">Est un fonds</mat-checkbox>
+                    }
+
+                    @if (user?.role === UserRole.administrator && data.item.isSource) {
+                        <mat-checkbox [(ngModel)]="data.item.isHistoric">Est historique</mat-checkbox>
+                    }
+                </div>
             </div>
         </mat-tab>
         @if (isUpdatePage()) {

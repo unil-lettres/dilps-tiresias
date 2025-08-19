@@ -11,6 +11,8 @@ export const collectionsQuery = gql`
                 hierarchicName
                 hasUsers
                 isSource
+                isHistoric
+                showHistoric
                 copyrights
                 usageRights
                 permissions {
@@ -34,6 +36,8 @@ export const collectionQuery = gql`
             copyrights
             usageRights
             isSource
+            isHistoric
+            showHistoric
             sorting
             visibility
             parent {
@@ -68,6 +72,8 @@ export const createCollection = gql`
             name
             hierarchicName
             isSource
+            isHistoric
+            showHistoric
             copyrights
             usageRights
             creationDate
@@ -84,6 +90,7 @@ export const updateCollection = gql`
         updateCollection(id: $id, input: $input) {
             id
             name
+            showHistoric
             updateDate
             updater {
                 ...UserMeta

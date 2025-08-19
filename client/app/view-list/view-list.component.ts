@@ -5,6 +5,7 @@ import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'lodash-es';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards, Site} from '../shared/generated-types';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
@@ -24,6 +25,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         StripTagsPipe,
         OnlyLeavesPipe,
         TruncatePipe,
+        HistoricIconComponent,
     ],
     templateUrl: './view-list.component.html',
     styleUrl: './view-list.component.scss',

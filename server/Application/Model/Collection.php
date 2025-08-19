@@ -65,6 +65,9 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'collections')]
     private DoctrineCollection $users;
 
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isHistoric = false;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -182,5 +185,29 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function hasUsers(): bool
     {
         return count($this->users) > 0;
+    }
+
+    /**
+     * Returns whether the collection is historic (shows icon).
+     */
+    public function isHistoric(): bool
+    {
+        return $this->isHistoric;
+    }
+
+    /**
+     * Set whether the collection is historic (shows icon).
+     */
+    public function setIsHistoric(bool $isHistoric): void
+    {
+        $this->isHistoric = $isHistoric;
+    }
+
+    /**
+     * Return whether this card belongs to at least one historic collection.
+     */
+    public function getShowHistoric(): bool
+    {
+        return $this->isHistoric() && $this->isSource();
     }
 }

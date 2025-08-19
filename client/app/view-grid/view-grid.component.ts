@@ -25,6 +25,7 @@ import {merge} from 'lodash-es';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards} from '../shared/generated-types';
 
 export type ContentChange = {
@@ -36,7 +37,7 @@ type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
-    imports: [NaturalGalleryComponent],
+    imports: [NaturalGalleryComponent, HistoricIconComponent],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
 })
@@ -104,6 +105,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * Lightbox image dimension
      */
     private enlargedHeight = 2000;
+    private originalHistoricIcon: HTMLElement | null = null;
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -118,7 +120,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         selectable: true,
         lightbox: true,
         photoSwipePluginsInitFn: lightbox => {
-            lightbox.on('uiRegister', function () {
+            lightbox.on('uiRegister', () => {
                 // Link to card button
                 // https://photoswipe.com/adding-ui-elements/#adding-a-button-to-the-toolbar
                 lightbox.pswp.ui.registerElement({
@@ -127,7 +129,6 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     order: 5,
                     isButton: true,
                     html: 'Voir la fiche',
-
                     onClick: () => {
                         // Since we have no way to access the card id from PhotoSwipe,
                         // we simulate a click on the thumbnail's button.
@@ -143,22 +144,31 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     order: 8,
                     isButton: true,
                     tagName: 'a',
-
-                    // SVG with outline
                     html: {
                         isCustomSVG: true,
                         inner: '<path d="M20.5 14.3 17.1 18V10h-2.2v7.9l-3.4-3.6L10 16l6 6.1 6-6.1ZM23 23H9v2h14Z" id="pswp__icn-download"/>',
                         outlineID: 'pswp__icn-download',
                     },
-
                     onInit: (el: any, pswp: any) => {
                         el.setAttribute('download', '');
                         el.setAttribute('target', '_blank');
                         el.setAttribute('rel', 'noopener');
+                        pswp.on('change', () => (el.href = pswp.currSlide.data.src));
+                    },
+                });
 
-                        pswp.on('change', () => {
-                            el.href = pswp.currSlide.data.src;
-                        });
+                lightbox.pswp.ui.registerElement({
+                    name: 'historic-icon',
+                    order: 7,
+                    isButton: false,
+                    html: this.getHistoricIcon(35)?.outerHTML || '',
+                    onInit: (el: HTMLElement, pswp: any) => {
+                        const updateVisibility = (): void => {
+                            const card = pswp.currSlide?.data.item.model;
+                            el.style.opacity = card?.showHistoric ? '1' : '0';
+                        };
+                        updateVisibility();
+                        pswp.on('change', updateVisibility);
                     },
                 });
             });
@@ -287,5 +297,37 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
     protected bindModel(event: Item<GalleryModel>[]): GalleryModel[] {
         return event.map(i => i.model);
+    }
+
+    protected itemAddedToDom(item: Item<GalleryModel>): void {
+        if (!item.model.showHistoric) {
+            return;
+        }
+
+        const icon = this.getHistoricIcon();
+        if (icon) {
+            const caption = item.rootElement?.querySelector('figcaption button');
+            caption?.classList.add('historic');
+            caption?.prepend(icon);
+        }
+    }
+
+    private getHistoricIcon(heightPx?: number): HTMLElement | null {
+        if (!this.originalHistoricIcon) {
+            this.originalHistoricIcon = document.querySelector('#original-historic-icon');
+        }
+
+        if (!this.originalHistoricIcon) {
+            return null;
+        }
+
+        const duplicatedIcon = this.originalHistoricIcon.cloneNode(true) as HTMLElement;
+        duplicatedIcon.removeAttribute('id');
+
+        if (heightPx) {
+            duplicatedIcon.style.height = `${heightPx}px`;
+        }
+
+        return duplicatedIcon;
     }
 }

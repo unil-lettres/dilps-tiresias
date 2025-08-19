@@ -19,6 +19,10 @@
                             [routerLink]="['/card', item.id]"
                             [ngStyle]="{'background-image': `url(${CardService.getImageLink(item, 300)})`}"
                         ></a>
+
+                        @if (item.showHistoric) {
+                            <app-historic-icon />
+                        }
                     </div>
                     <div class="line-body">
                         <div class="line-body-table">

@@ -58,11 +58,16 @@
                                     <span>&nbsp;(*)</span>
                                 }
                             </span>
-                            @if (collection.permissions.update || collection.permissions.delete) {
-                                <button matListItemMeta mat-icon-button (click)="edit($event, collection)">
-                                    <mat-icon naturalIcon="edit" />
-                                </button>
-                            }
+                            <div matListItemMeta class="nat-horizontal nat-gap nat-align">
+                                @if (collection.isSource && collection.isHistoric) {
+                                    <app-historic-icon style="height: 30px" />
+                                }
+                                @if (collection.permissions.update || collection.permissions.delete) {
+                                    <button mat-icon-button (click)="edit($event, collection)">
+                                        <mat-icon naturalIcon="edit" />
+                                    </button>
+                                }
+                            </div>
                         </a>
                         <ng-container
                             *ngTemplateOutlet="

@@ -42,6 +42,7 @@ export const cardDetailsFragment = gql`
         productionPlace
         from
         to
+        showHistoric
         cards {
             id
             name

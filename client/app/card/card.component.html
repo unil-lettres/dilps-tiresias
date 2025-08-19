@@ -961,6 +961,10 @@
                 [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
                 [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
             >
+                @if (fetchedModel?.showHistoric) {
+                    <app-historic-icon />
+                }
+
                 @if (imageSrcFull && !imageData) {
                     <a
                         download

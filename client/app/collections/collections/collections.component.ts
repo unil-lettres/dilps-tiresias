@@ -2,6 +2,7 @@ import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {HistoricIconComponent} from '../../shared/components/historic-icon/historic-icon.component';
 import {
     Collections,
     CollectionsVariables,
@@ -41,6 +42,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         MatDividerModule,
         RouterOutlet,
         NaturalIconDirective,
+        HistoricIconComponent,
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
