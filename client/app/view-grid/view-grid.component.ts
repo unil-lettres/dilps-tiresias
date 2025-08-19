@@ -130,9 +130,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     isButton: true,
                     html: 'Voir la fiche',
                     onClick: () => {
-                        // Since we have no way to access the card id from PhotoSwipe,
-                        // we simulate a click on the thumbnail's button.
-                        lightbox.pswp.currSlide.data.element.querySelector('.button.activable').click();
+                        this.activate(lightbox.pswp.currSlide.data.item.model);
                         lightbox.pswp.destroy();
                     },
                 });
@@ -157,6 +155,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     },
                 });
 
+                // Historic icon
                 lightbox.pswp.ui.registerElement({
                     name: 'historic-icon',
                     order: 7,
