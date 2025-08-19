@@ -77,6 +77,17 @@ type SerieData = {
 
 @Component({
     selector: 'app-statistics',
+    templateUrl: './statistics.component.html',
+    styleUrl: './statistic.component.scss',
+    providers: [
+        {
+            // Remove "hint" section below mat-form-field if empty.
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: {
+                subscriptSizing: 'dynamic',
+            } satisfies MatFormFieldDefaultOptions,
+        },
+    ],
     imports: [
         LogoComponent,
         MatTabsModule,
@@ -88,17 +99,6 @@ type SerieData = {
         NaturalSelectComponent,
         FormsModule,
         NaturalLinkableTabDirective,
-    ],
-    templateUrl: './statistics.component.html',
-    styleUrl: './statistic.component.scss',
-    providers: [
-        {
-            // Remove "hint" section below mat-form-field if empty.
-            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-            useValue: {
-                subscriptSizing: 'dynamic',
-            } satisfies MatFormFieldDefaultOptions,
-        },
     ],
 })
 export class StatisticsComponent {

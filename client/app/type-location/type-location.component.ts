@@ -13,9 +13,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 })
 export class TypeLocationComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);

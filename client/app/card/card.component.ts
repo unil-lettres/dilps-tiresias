@@ -124,6 +124,8 @@ type InitialCardValues = {
 
 @Component({
     selector: 'app-card',
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss',
     imports: [
         CommonModule,
         NaturalFileDropDirective,
@@ -157,8 +159,6 @@ type InitialCardValues = {
         MatListModule,
         HistoricIconComponent,
     ],
-    templateUrl: './card.component.html',
-    styleUrl: './card.component.scss',
     animations: [
         trigger('showHideRelatedCards', [
             state(

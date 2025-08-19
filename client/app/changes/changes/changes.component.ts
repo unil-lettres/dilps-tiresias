@@ -12,6 +12,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-changes',
+    templateUrl: './changes.component.html',
+    styleUrl: './changes.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -22,8 +24,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatProgressSpinnerModule,
         MatPaginatorModule,
     ],
-    templateUrl: './changes.component.html',
-    styleUrl: './changes.component.scss',
 })
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];

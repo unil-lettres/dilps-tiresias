@@ -11,8 +11,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-document-type',
-    imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
     templateUrl: './document-type.component.html',
+    imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
 })
 export class DocumentTypeComponent extends AbstractDetailDirective<
     DocumentTypeService,

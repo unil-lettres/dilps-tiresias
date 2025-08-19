@@ -4,9 +4,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-collection-hierarchy',
-    imports: [MatTooltipModule],
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
+    imports: [MatTooltipModule],
 })
 export class CollectionHierarchyComponent implements OnInit {
     @Input({required: true})

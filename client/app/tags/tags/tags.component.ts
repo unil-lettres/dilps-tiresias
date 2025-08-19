@@ -24,6 +24,8 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 
 @Component({
     selector: 'app-tags',
+    templateUrl: './tags.component.html',
+    styleUrl: './tags.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -43,8 +45,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
-    templateUrl: './tags.component.html',
-    styleUrl: './tags.component.scss',
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
     public constructor() {

@@ -12,6 +12,8 @@ import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'app-mass-edit',
+    templateUrl: './mass-edit.component.html',
+    styleUrl: './mass-edit.component.scss',
     imports: [
         CommonModule,
         MatDialogModule,
@@ -21,8 +23,6 @@ import {CommonModule} from '@angular/common';
         MatButtonModule,
         TruncatePipe,
     ],
-    templateUrl: './mass-edit.component.html',
-    styleUrl: './mass-edit.component.scss',
 })
 export class MassEditComponent {
     private readonly cardService = inject(CardService);

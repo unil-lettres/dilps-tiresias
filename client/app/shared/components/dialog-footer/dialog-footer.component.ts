@@ -22,9 +22,9 @@ type Model = Stamped & {
 
 @Component({
     selector: 'app-dialog-footer',
-    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
+    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
 })
 export class DialogFooterComponent {
     @Input() public canCreate = false;

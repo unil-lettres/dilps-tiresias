@@ -12,8 +12,8 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
-    imports: [FormsModule, ReactiveFormsModule, NaturalSelectComponent],
     templateUrl: './type-natural-select.component.html',
+    imports: [FormsModule, ReactiveFormsModule, NaturalSelectComponent],
 })
 export class TypeNaturalSelectComponent<
     TService extends NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>,

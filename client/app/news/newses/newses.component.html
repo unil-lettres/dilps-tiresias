@@ -32,7 +32,7 @@
                 <ng-container matColumnDef="image">
                     <th *matHeaderCellDef mat-header-cell class="natural-3em-column">Image</th>
                     <td *matCellDef="let element" mat-cell>
-                        <div class="image" [style.background-image]="`url(${element.imageUrl})`"></div>
+                        <div class="image" [style.background-image]="'url(' + element.imageUrl + ')'"></div>
                     </td>
                 </ng-container>
                 <!-- Name Column -->

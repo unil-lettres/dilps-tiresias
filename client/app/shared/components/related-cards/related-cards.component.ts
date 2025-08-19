@@ -24,7 +24,6 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-related-cards',
-    imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
     templateUrl: './related-cards.component.html',
     styleUrl: './related-cards.component.scss',
     providers: [
@@ -35,6 +34,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
             },
         },
     ],
+    imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     public readonly cardService = inject(CardService);

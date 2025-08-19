@@ -24,6 +24,8 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 
 @Component({
     selector: 'app-materials',
+    templateUrl: './materials.component.html',
+    styleUrl: './materials.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -43,8 +45,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
-    templateUrl: './materials.component.html',
-    styleUrl: './materials.component.scss',
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {

@@ -11,8 +11,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-antique-name',
-    imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
     templateUrl: './antique-name.component.html',
+    imports: [MatDialogModule, MatTabsModule, MatFormFieldModule, MatInputModule, FormsModule, DialogFooterComponent],
 })
 export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameService, ThesaurusDetailDialogExtraData> {
     public constructor() {

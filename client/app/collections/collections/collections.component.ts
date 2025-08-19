@@ -27,6 +27,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-collections',
+    templateUrl: './collections.component.html',
+    styleUrl: './collections.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -44,8 +46,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         NaturalIconDirective,
         HistoricIconComponent,
     ],
-    templateUrl: './collections.component.html',
-    styleUrl: './collections.component.scss',
 })
 export class CollectionsComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

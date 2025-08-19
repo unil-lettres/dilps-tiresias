@@ -14,7 +14,7 @@
 
     <div class="nat-expand nat-horizontal">
         @if (imageSrc) {
-            <div class="image nat-expand" [ngStyle]="{'background-image': `url(${imageSrc})`}"></div>
+            <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
         }
         @if (card) {
             <div class="card nat-vertical nat-gap-10">

@@ -15,6 +15,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-period',
+    templateUrl: './period.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -24,7 +25,6 @@ import {MatTabsModule} from '@angular/material/tabs';
         DialogFooterComponent,
         NaturalSelectHierarchicComponent,
     ],
-    templateUrl: './period.component.html',
 })
 export class PeriodComponent extends AbstractDetailDirective<PeriodService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = periodHierarchicConfig;

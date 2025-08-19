@@ -10,7 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
     templateUrl: './type-text.component.html',
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
 })
 export class TypeTextComponent extends EcoDevTypeTextComponent {}

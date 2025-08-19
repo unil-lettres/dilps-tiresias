@@ -6,11 +6,11 @@ import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-table-button',
-    imports: [MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
     templateUrl: './table-button.component.html',
     styleUrl: './table-button.component.scss',
     // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None,
+    imports: [MatButtonModule, MatIconModule, RouterLink, NaturalIconDirective],
 })
 export class TableButtonComponent {
     @Input() public queryParams: Params = {};

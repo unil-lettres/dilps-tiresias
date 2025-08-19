@@ -10,11 +10,11 @@ register();
 
 @Component({
     selector: 'app-carousel',
-    imports: [CommonModule],
     templateUrl: './carousel.component.html',
     styleUrl: './carousel.component.scss',
     // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
     encapsulation: ViewEncapsulation.None,
+    imports: [CommonModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CarouselComponent implements OnInit {

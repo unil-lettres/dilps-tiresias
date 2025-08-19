@@ -15,6 +15,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-artists',
+    templateUrl: './artists.component.html',
+    styleUrl: './artists.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -28,8 +30,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
     ],
-    templateUrl: './artists.component.html',
-    styleUrl: './artists.component.scss',
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
     public constructor() {

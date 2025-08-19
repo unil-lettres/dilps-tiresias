@@ -12,9 +12,9 @@ export type Stamped = {
 
 @Component({
     selector: 'app-stamp',
-    imports: [CommonModule],
     templateUrl: './stamp.component.html',
     styleUrl: './stamp.component.scss',
+    imports: [CommonModule],
 })
 export class StampComponent {
     @Input({required: true}) public item!: Stamped;

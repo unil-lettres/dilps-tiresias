@@ -15,6 +15,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-news',
+    templateUrl: './news.component.html',
+    styleUrl: './news.component.scss',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -26,8 +28,6 @@ import {MatTabsModule} from '@angular/material/tabs';
         CommonModule,
         DialogFooterComponent,
     ],
-    templateUrl: './news.component.html',
-    styleUrl: './news.component.scss',
 })
 export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File; imageUrl: string}> {
     public imageData: string | null = null;

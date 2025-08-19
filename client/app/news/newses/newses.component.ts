@@ -16,6 +16,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-newses',
+    templateUrl: './newses.component.html',
+    styleUrl: './newses.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -30,8 +32,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
     ],
-    templateUrl: './newses.component.html',
-    styleUrl: './newses.component.scss',
 })
 export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];

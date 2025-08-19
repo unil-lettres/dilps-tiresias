@@ -45,6 +45,8 @@ function isExcel(file: File): boolean {
 
 @Component({
     selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
     imports: [
         MatMenuModule,
         RouterLink,
@@ -62,8 +64,6 @@ function isExcel(file: File): boolean {
         RouterOutlet,
         NaturalIconDirective,
     ],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
     public readonly themeService = inject(ThemeService);

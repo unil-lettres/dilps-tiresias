@@ -40,6 +40,8 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
 
 @Component({
     selector: 'app-collection-selector',
+    templateUrl: './collection-selector.component.html',
+    styleUrl: './collection-selector.component.scss',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -54,8 +56,6 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
-    templateUrl: './collection-selector.component.html',
-    styleUrl: './collection-selector.component.scss',
 })
 export class CollectionSelectorComponent implements OnInit {
     public readonly collectionService = inject(CollectionService);

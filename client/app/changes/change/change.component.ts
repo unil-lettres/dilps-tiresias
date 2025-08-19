@@ -16,6 +16,8 @@ import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-change',
+    templateUrl: './change.component.html',
+    styleUrl: './change.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -26,8 +28,6 @@ import {NaturalIconDirective} from '@ecodev/natural';
         CardComponent,
         NaturalIconDirective,
     ],
-    templateUrl: './change.component.html',
-    styleUrl: './change.component.scss',
 })
 export class ChangeComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);
