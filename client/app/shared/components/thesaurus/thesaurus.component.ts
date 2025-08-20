@@ -1,33 +1,39 @@
-import {Component, DestroyRef, ElementRef, inject, Input, OnInit, output, viewChild} from '@angular/core';
+import {ComponentType} from '@angular/cdk/overlay';
+import {Component, DestroyRef, ElementRef, inject, input, Input, OnInit, output, viewChild} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatAutocompleteModule,
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
+import {MatIconButton} from '@angular/material/button';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatOptionModule} from '@angular/material/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {Router} from '@angular/router';
 import {
     HierarchicDialogConfig,
     Literal,
+    makePlural,
     NaturalAbstractModelService,
     NaturalHierarchicConfiguration,
     NaturalHierarchicSelectorDialogService,
     NaturalQueryVariablesManager,
+    NaturalSearchSelections,
     PaginatedData,
     QueryVariables,
+    toUrl,
 } from '@ecodev/natural';
 import {clone, isObject, merge} from 'lodash-es';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
-import {ComponentType} from '@angular/cdk/overlay';
-import {MatOptionModule} from '@angular/material/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type ThesaurusModel = {
+    id?: string;
     name: string;
     locality?: string;
     hierarchicName?: string;
@@ -48,6 +54,7 @@ export type ThesaurusModel = {
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatOptionModule,
+        MatIconButton,
     ],
 })
 export class ThesaurusComponent<
@@ -66,6 +73,7 @@ export class ThesaurusComponent<
 > implements OnInit
 {
     private readonly dialog = inject(MatDialog);
+    private readonly router = inject(Router);
     private readonly hierarchicSelectorDialogService = inject(NaturalHierarchicSelectorDialogService);
 
     private readonly destroyRef = inject(DestroyRef);
@@ -108,7 +116,7 @@ export class ThesaurusComponent<
     /**
      * Component that renders the detail view of an entry
      */
-    @Input() public previewComponent: ComponentType<unknown> | undefined;
+    public readonly previewComponent = input<ComponentType<unknown>>();
 
     /**
      * The search query for the autocomplete list will search the beginning of
@@ -209,14 +217,15 @@ export class ThesaurusComponent<
     }
 
     public openItem(item: ThesaurusModel): void {
-        if (!this.previewComponent) {
+        const previewComponent = this.previewComponent();
+        if (!previewComponent) {
             return;
         }
 
         this.dialog
-            .open(this.previewComponent, {
+            .open(previewComponent, {
                 width: '800px',
-                data: {item: item},
+                data: {item},
             })
             .afterClosed()
             .subscribe(res => {
@@ -398,5 +407,19 @@ export class ThesaurusComponent<
         }
 
         return result;
+    }
+
+    protected search(item: ThesaurusModel): void {
+        if (!item.id || !item.__typename) {
+            return; // required for typing, but should not happen, button is already hidden in this situation
+        }
+
+        // Converts AntiqueName to antiqueName, etc... to match facets fields.
+        let field = this.multiple ? makePlural(item.__typename) : item.__typename;
+        field = field.charAt(0).toLowerCase() + field.slice(1);
+
+        const naturalSearchSelections: NaturalSearchSelections = [[{field, condition: {have: {values: [item.id]}}}]];
+        const ns = JSON.stringify(toUrl(naturalSearchSelections));
+        this.router.navigate(['/home', {ns}]);
     }
 }

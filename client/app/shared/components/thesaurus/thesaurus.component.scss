@@ -18,3 +18,20 @@ input {
 input.show {
     display: block;
 }
+
+.search-wrapper {
+    position: absolute;
+    right: -2em;
+
+    &,
+    button {
+        padding: 0;
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+    button {
+        display: grid;
+        place-content: center;
+    }
+}

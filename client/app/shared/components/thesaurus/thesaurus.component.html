@@ -2,19 +2,21 @@
     <mat-label>{{ placeholder }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         @for (item of items; track item) {
-            <mat-chip-row [removable]="!readonly" (removed)="removeTerm(item)">
-                <div class="nat-horizontal nat-center nat-gap-5">
-                    @if (previewComponent) {
-                        <mat-icon class="mat-mdc-chip-remove" fontIcon="remove_red_eye" (click)="openItem(item)" />
-                    }
-                    <div class="nat-expand thesaurus-chip-label">
-                        <span>{{ getLabel(item) }}</span>
-                    </div>
-                </div>
+            <mat-chip-row [removable]="!readonly" (removed)="removeTerm(item)" (click)="openItem(item)">
+                <span class="thesaurus-chip-label">{{ getLabel(item) }}</span>
+
                 @if (!readonly) {
                     <button matChipRemove>
                         <mat-icon fontIcon="cancel" />
                     </button>
+                }
+
+                @if (item.id && item.__typename) {
+                    <div matChipTrailingIcon class="search-wrapper">
+                        <button mat-icon-button (click)="search(item)">
+                            <mat-icon fontIcon="search" />
+                        </button>
+                    </div>
                 }
             </mat-chip-row>
         }
