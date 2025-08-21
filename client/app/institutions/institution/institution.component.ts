@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
+import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
 import {InstitutionService} from '../services/institution.service';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -21,6 +22,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         FormsModule,
         AddressComponent,
         DialogFooterComponent,
+        UniqueValidatorDirective,
     ],
 })
 export class InstitutionComponent extends AbstractDetailDirective<InstitutionService, ThesaurusDetailDialogExtraData> {

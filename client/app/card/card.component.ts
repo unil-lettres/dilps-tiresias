@@ -1,10 +1,35 @@
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
-import {Component, inject, Input, OnChanges, OnInit} from '@angular/core';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import {CommonModule} from '@angular/common';
+import {Component, inject, Input, OnChanges, OnInit, viewChild} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, NgModel} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {ThemePalette} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {ActivatedRoute, Router} from '@angular/router';
+import {
+    FileSelection,
+    NaturalFileDropDirective,
+    NaturalIconDirective,
+    NaturalLinkMutationService,
+    NaturalRelationsComponent,
+    NaturalTableButtonComponent,
+} from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'lodash-es';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {concatMap, first, from, last} from 'rxjs';
+import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 import {ArtistComponent} from '../artists/artist/artist.component';
@@ -14,11 +39,14 @@ import {DocumentTypeComponent} from '../document-types/document-type/document-ty
 import {DocumentTypeService} from '../document-types/services/document-type.service';
 import {DomainComponent} from '../domains/domain/domain.component';
 import {DomainService} from '../domains/services/domain.service';
+import {FilesComponent} from '../files/files/files.component';
 import {InstitutionComponent} from '../institutions/institution/institution.component';
+import {InstitutionSortedByUsageService} from '../institutions/services/institutionSortedByUsage.service';
 import {MaterialComponent} from '../materials/material/material.component';
 import {MaterialService} from '../materials/services/material.service';
 import {PeriodComponent} from '../periods/period/period.component';
 import {PeriodService} from '../periods/services/period.service';
+import {AddressComponent} from '../shared/components/address/address.component';
 import {AlertService} from '../shared/components/alert/alert.service';
 import {CardSelectorComponent} from '../shared/components/card-selector/card-selector.component';
 import {
@@ -26,8 +54,22 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
+import {ErrorService} from '../shared/components/error/error.service';
+import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
+import {
+    LinkRelatedCardsDialogComponent,
+    LinkRelatedCardsDialogData,
+    LinkRelatedCardsDialogResult,
+} from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
+import {LogoComponent} from '../shared/components/logo/logo.component';
+import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
+import {StampComponent, Stamped} from '../shared/components/stamp/stamp.component';
+import {ThesaurusComponent} from '../shared/components/thesaurus/thesaurus.component';
 import {quillConfig} from '../shared/config/quill.options';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
+import {UniqueValidatorDirective} from '../shared/directives/unique-validator.directive';
+import {UrlValidatorDirective} from '../shared/directives/url-validator.directive';
 import {
     Card,
     CardInput,
@@ -46,54 +88,14 @@ import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurati
 import {periodHierarchicConfig} from '../shared/hierarchic-configurations/PeriodConfiguration';
 import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
+import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {getBase64Url} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
-import {CardService} from './services/card.service';
-import {
-    FileSelection,
-    NaturalFileDropDirective,
-    NaturalIconDirective,
-    NaturalLinkMutationService,
-    NaturalRelationsComponent,
-    NaturalTableButtonComponent,
-} from '@ecodev/natural';
-import {ThemePalette} from '@angular/material/core';
-import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
-import {StampComponent, Stamped} from '../shared/components/stamp/stamp.component';
-import {FilesComponent} from '../files/files/files.component';
-import {AddressComponent} from '../shared/components/address/address.component';
-import {TextFieldModule} from '@angular/cdk/text-field';
-import {ThesaurusComponent} from '../shared/components/thesaurus/thesaurus.component';
-import {UniqueCodeValidatorDirective} from '../shared/directives/unique-code-validator.directive';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSliderModule} from '@angular/material/slider';
-import {NgScrollbar} from 'ngx-scrollbar';
-import {MatIconModule} from '@angular/material/icon';
-import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {LogoComponent} from '../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {CommonModule} from '@angular/common';
-import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
-import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
-import {
-    LinkRelatedCardsDialogComponent,
-    LinkRelatedCardsDialogData,
-    LinkRelatedCardsDialogResult,
-} from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
-import {concatMap, from, last} from 'rxjs';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ErrorService} from '../shared/components/error/error.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
-import {MatListModule} from '@angular/material/list';
-import {InstitutionSortedByUsageService} from '../institutions/services/institutionSortedByUsage.service';
+import {CardService} from './services/card.service';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -141,7 +143,6 @@ type InitialCardValues = {
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
-        UniqueCodeValidatorDirective,
         QuillEditorComponent,
         ThesaurusComponent,
         TextFieldModule,
@@ -158,6 +159,8 @@ type InitialCardValues = {
         CardSkeletonComponent,
         MatListModule,
         HistoricIconComponent,
+        UniqueValidatorDirective,
+        UrlValidatorDirective,
     ],
     animations: [
         trigger('showHideRelatedCards', [
@@ -454,7 +457,8 @@ export class CardComponent implements OnInit, OnChanges {
     public sortedCollections: Card['card']['collections'] = [];
 
     public formIsValid = true;
-    public codeModel: NgModel | null = null;
+    public readonly code = viewChild<NgModel>('code');
+    public readonly url = viewChild<NgModel>('code');
     public urlModel: NgModel | null = null;
     public collectionCopyrights = '';
     public isDilps = true;
@@ -485,9 +489,19 @@ export class CardComponent implements OnInit, OnChanges {
         this.edit = val;
     }
 
+    protected codeChange(): void {
+        this.code()
+            ?.statusChanges?.pipe(
+                filter(status => status !== 'PENDING'),
+                first(),
+            )
+            .subscribe(() => {
+                this.updateFormValidity();
+            });
+    }
+
     public updateFormValidity(): void {
-        this.formIsValid =
-            ((!this.urlModel || this.urlModel.valid) && (!this.codeModel || this.codeModel.valid)) ?? false;
+        this.formIsValid = ((!this.urlModel || this.urlModel.valid) && (!this.code() || this.code()?.valid)) ?? false;
     }
 
     public ngOnChanges(): void {

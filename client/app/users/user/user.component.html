@@ -4,7 +4,19 @@
             <div class="nat-padding-vertical nat-gap-10 nat-vertical">
                 <mat-form-field class="width-auto">
                     <mat-label>Login</mat-label>
-                    <input matInput name="login" [disabled]="!!data.item.id" [(ngModel)]="data.item.login" />
+                    <input
+                        #login="ngModel"
+                        matInput
+                        name="login"
+                        fieldName="login"
+                        [appUnique]="data.item"
+                        [service]="service"
+                        [disabled]="!!data.item.id"
+                        [(ngModel)]="data.item.login"
+                    />
+                    @if (login.invalid && (login?.dirty || login?.touched)) {
+                        <mat-error>Ce login est déjà attribué</mat-error>
+                    }
                 </mat-form-field>
 
                 <mat-form-field class="width-auto">
@@ -15,7 +27,19 @@
                 @if (!isShibbolethUser()) {
                     <mat-form-field>
                         <mat-label>Email</mat-label>
-                        <input matInput name="email" type="email" [(ngModel)]="data.item.email" />
+                        <input
+                            #email="ngModel"
+                            matInput
+                            name="email"
+                            type="email"
+                            fieldName="email"
+                            [appUnique]="data.item"
+                            [service]="service"
+                            [(ngModel)]="data.item.email"
+                        />
+                        @if (email.invalid && (email?.dirty || email?.touched)) {
+                            <mat-error>Cet email est déjà attribué</mat-error>
+                        }
                     </mat-form-field>
                 }
 
@@ -129,6 +153,7 @@
         [canCreate]="user?.globalPermissions?.user?.create"
         [canDelete]="true"
         [formCtrl]="passwordConfirmationCtrl"
+        [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"
         [item]="data.item"
         (create)="create()"
         (delete)="delete()"

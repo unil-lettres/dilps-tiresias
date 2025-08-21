@@ -28,6 +28,7 @@
                         #url="ngModel"
                         matInput
                         maxlength="255"
+                        appUrl
                         type="url"
                         [readonly]="isUpdatePage() && !data.item.permissions.update"
                         [(ngModel)]="data.item.url"

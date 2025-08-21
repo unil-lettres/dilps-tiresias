@@ -135,17 +135,20 @@
                                 #code="ngModel"
                                 matInput
                                 maxlength="30"
+                                fieldName="code"
+                                [appUnique]="model"
+                                [service]="cardService"
                                 [readonly]="!edit || !canUpdateCode()"
-                                [appUniqueCode]="model"
                                 [(ngModel)]="model.code"
-                                (change)="codeModel = code; updateFormValidity()"
+                                (change)="codeChange()"
                             />
+
                             @if (showSuggestedCode()) {
                                 <button
                                     mat-icon-button
                                     matIconSuffix
                                     [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
-                                    (click)="codeModel = code; useSuggestedCode($event)"
+                                    (click)="useSuggestedCode($event)"
                                 >
                                     <mat-icon naturalIcon="refresh" />
                                 </button>
@@ -842,7 +845,7 @@
                                 #url="ngModel"
                                 matInput
                                 maxlength="255"
-                                type="url"
+                                appUrl
                                 [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"

@@ -1,4 +1,4 @@
-import {Component, Input, output} from '@angular/core';
+import {Component, input, Input, output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {StampComponent, Stamped} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,6 +27,7 @@ type Model = Stamped & {
     imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
 })
 export class DialogFooterComponent {
+    public readonly disableCreateAndUpdate = input<boolean>(false);
     @Input() public canCreate = false;
     @Input() public canDelete: boolean | undefined = false;
     @Input({required: true}) public item!: Model;
