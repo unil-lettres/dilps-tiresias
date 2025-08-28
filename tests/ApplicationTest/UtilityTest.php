@@ -75,4 +75,27 @@ class UtilityTest extends TestCase
         ];
         yield ['&amp;&gt;&lt;&quot;&nbsp;' . html_entity_decode('&nbsp;') . '&#8364;&#x20AC;', '&><"  €€'];
     }
+
+    /**
+     * @dataProvider providerFormatMetric
+     */
+    public function testFormatMetric(int $input, string $expected): void
+    {
+        self::assertSame($expected, Utility::formatMetric($input));
+    }
+
+    public static function providerFormatMetric(): iterable
+    {
+        yield [0, '0'];
+        yield [10, '10'];
+        yield [999, '999'];
+        yield [1000, '1k'];
+        yield [1000000, '1M'];
+        yield [1000000000, '1G'];
+        yield [1000000000000, '1T'];
+        yield [2000, '2k'];
+        yield [2500, '2.5k'];
+        yield [2560, '2.56k'];
+        yield [2567, '2.567k'];
+    }
 }

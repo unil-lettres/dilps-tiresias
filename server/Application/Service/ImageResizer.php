@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Service;
 
+use Application\FriendlyException;
 use Ecodev\Felix\Model\Image;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
@@ -31,7 +32,8 @@ class ImageResizer
         }
 
         $image = $this->imagine->open($image->getPath());
-        $image->thumbnail(new Box(1_000_000, $maxHeight))->save($path);
+        $image = $image->thumbnail(new Box(1_000_000, $maxHeight));
+        FriendlyException::try(fn () => $image->save($path));
 
         return $path;
     }
@@ -41,23 +43,6 @@ class ImageResizer
         $path = $this->getPath($image, $maxHeight, $useWebp);
 
         return !file_exists($path);
-    }
-
-    /**
-     * Assumes the image is WebP, converts it to JPG, and return path to JPG version.
-     */
-    public function webpToJpg(Image $image): string
-    {
-        $path = $this->getCachePath($image, '.jpg');
-
-        if (file_exists($path)) {
-            return $path;
-        }
-
-        $image = $this->imagine->open($image->getPath());
-        $image->save($path);
-
-        return $path;
     }
 
     public function getCachePath(Image $image, string $suffix): string

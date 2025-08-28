@@ -60,4 +60,25 @@ abstract class Utility
             $string,
         )))));
     }
+
+    public static function formatMetric(int|float $value): string
+    {
+        foreach ([
+            'T' => 1_000_000_000_000,
+            'G' => 1_000_000_000,
+            'M' => 1_000_000,
+            'k' => 1_000,
+        ] as $metric => $limit) {
+            if ($value >= $limit) {
+                $string = (string) ($value / $limit);
+                if (str_contains($string, '.')) {
+                    $string = rtrim($string, '0');
+                }
+
+                return $string . $metric;
+            }
+        }
+
+        return (string) $value;
+    }
 }

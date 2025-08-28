@@ -15,6 +15,7 @@ use Application\Api\Input\Sorting\Domains;
 use Application\Api\Input\Sorting\InstitutionLocality;
 use Application\Enum\CardVisibility;
 use Application\Enum\Site;
+use Application\FriendlyException;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Service\ImageResizer;
@@ -657,7 +658,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         try {
             /** @var ImagineInterface $imagine */
             $imagine = $container->get(ImagineInterface::class);
-            $image = $imagine->open($this->getPath());
+            $image = FriendlyException::try(fn () => $imagine->open($this->getPath()));
 
             $this->autorotate($image);
             $this->readFileInfo($image);
@@ -707,7 +708,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
             // Save the rotate image to a temporary file to check its size.
             $tempFile = tempnam('data/tmp/', 'rotated-image');
-            $image->save($tempFile);
+            FriendlyException::try(fn () => $image->save($tempFile));
             $maxSize = ini_parse_quantity(ini_get('upload_max_filesize'));
             $newSize = filesize($tempFile);
             unlink($tempFile);
@@ -715,7 +716,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             // We only rotate if the size of the rotated file do not exceed the
             // authorized upload filesize configured for the server.
             if ($newSize < $maxSize) {
-                $image->save($this->getPath());
+                FriendlyException::try(fn () => $image->save($this->getPath()));
             }
         }
     }
