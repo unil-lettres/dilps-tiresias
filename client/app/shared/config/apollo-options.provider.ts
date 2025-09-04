@@ -8,7 +8,7 @@ import {
 } from '@apollo/client/core';
 import {onError} from '@apollo/client/link/error';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
-import {createHttpLink, NetworkActivityService} from '@ecodev/natural';
+import {createHttpLink, hasFilesAndProcessDate, NetworkActivityService} from '@ecodev/natural';
 import {AlertService} from '../components/alert/alert.service';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
 import {inject, Provider} from '@angular/core';
@@ -64,6 +64,15 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
             ) {
                 alertService.error(networkError.error.message, 5000);
                 networkActivityService.addErrors([networkError.error]);
+            } else if (
+                networkError instanceof HttpErrorResponse &&
+                networkError.status === 502 &&
+                hasFilesAndProcessDate(errorResponse.operation.variables)
+            ) {
+                // Trying our best to rescue a total crash of PHP because of a total crash of ImageMagick
+                const message = `Il est possible que l'image uploadée ait entrainé une erreur sur le serveur. Modifiez l'image avant de l'uploader ou transmettez la par email à un responsable.`;
+                alertService.error(message, 5000);
+                networkActivityService.addErrors([{message: message}]);
             } else {
                 alertService.error('Une erreur est survenue sur le réseau');
             }
