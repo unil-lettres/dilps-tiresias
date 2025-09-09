@@ -1,7 +1,7 @@
 <!-- Because directives can't be applied conditionally (routerLink, mat-button and mat-icon-button), we have to use different elements -->
 
 <!-- App without navigation -->
-@if (!navigate && label && !disable) {
+@if (label && !disable) {
     <a mat-button>
         @if (icon) {
             <mat-icon [naturalIcon]="icon" />
@@ -11,46 +11,8 @@
 }
 
 <!-- ... and disabled -->
-@if (!navigate && label && disable) {
+@if (label && disable) {
     <div>
         <span>{{ label }}</span>
     </div>
-}
-
-<!-- App routed link with label... -->
-@if (navigate && label) {
-    <a mat-button [queryParams]="queryParams" [routerLink]="navigate">
-        @if (icon) {
-            <mat-icon [naturalIcon]="icon" />
-        }
-        <span>{{ label }}</span>
-    </a>
-}
-
-<!-- ... and without label -->
-@if (navigate && !label) {
-    <a mat-icon-button [queryParamsHandling]="queryParamsHandling" [queryParams]="queryParams" [routerLink]="navigate">
-        @if (icon) {
-            <mat-icon [naturalIcon]="icon" />
-        }
-    </a>
-}
-
-<!-- External link with label... -->
-@if (href && label) {
-    <a mat-button [attr.href]="href">
-        @if (icon) {
-            <mat-icon [naturalIcon]="icon" />
-        }
-        <span>{{ label }}</span>
-    </a>
-}
-
-<!-- ... and without label -->
-@if (href && !label) {
-    <a mat-icon-button [attr.href]="href">
-        @if (icon) {
-            <mat-icon [naturalIcon]="icon" />
-        }
-    </a>
 }

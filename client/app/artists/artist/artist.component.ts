@@ -12,7 +12,6 @@ import {ArtistService} from '../services/artist.service';
 
 @Component({
     selector: 'app-artist',
-    templateUrl: './artist.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -22,6 +21,7 @@ import {ArtistService} from '../services/artist.service';
         DialogFooterComponent,
         UniqueValidatorDirective,
     ],
+    templateUrl: './artist.component.html',
 })
 export class ArtistComponent extends AbstractDetailDirective<ArtistService, ThesaurusDetailDialogExtraData> {
     public constructor() {

@@ -14,7 +14,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-tag',
-    templateUrl: './tag.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -24,6 +23,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         DialogFooterComponent,
         NaturalSelectHierarchicComponent,
     ],
+    templateUrl: './tag.component.html',
 })
 export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = tagHierarchicConfig;

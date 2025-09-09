@@ -44,8 +44,6 @@ export type ThesaurusModel = {
 
 @Component({
     selector: 'app-thesaurus',
-    templateUrl: './thesaurus.component.html',
-    styleUrl: './thesaurus.component.scss',
     imports: [
         MatFormFieldModule,
         MatChipsModule,
@@ -56,6 +54,8 @@ export type ThesaurusModel = {
         MatOptionModule,
         MatIconButton,
     ],
+    templateUrl: './thesaurus.component.html',
+    styleUrl: './thesaurus.component.scss',
 })
 export class ThesaurusComponent<
     TService extends NaturalAbstractModelService<

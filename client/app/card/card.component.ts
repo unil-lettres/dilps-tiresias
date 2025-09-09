@@ -126,8 +126,6 @@ type InitialCardValues = {
 
 @Component({
     selector: 'app-card',
-    templateUrl: './card.component.html',
-    styleUrl: './card.component.scss',
     imports: [
         CommonModule,
         NaturalFileDropDirective,
@@ -162,6 +160,8 @@ type InitialCardValues = {
         UniqueValidatorDirective,
         UrlValidatorDirective,
     ],
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss',
     animations: [
         trigger('showHideRelatedCards', [
             state(

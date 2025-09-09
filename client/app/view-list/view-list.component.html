@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 <div class="scrollable">
     @if (dataSource) {
         <div class="scrolled" [style.marginTop]="scrolledMarginTop()">
@@ -17,7 +18,7 @@
                         <a
                             class="image"
                             [routerLink]="['/card', item.id]"
-                            [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 300) + ')'}"
+                            [style.backgroundImage]="`url(${CardService.getImageLink(item, 300)})`"
                         ></a>
 
                         @if (item.showHistoric) {

@@ -9,11 +9,7 @@
     >
         @for (news of newses; track news) {
             <swiper-slide>
-                <a
-                    class="carousel-news"
-                    [attr.href]="news.url"
-                    [ngStyle]="{'background-image': 'url(' + news.imageUrl + ')'}"
-                >
+                <a class="carousel-news" [attr.href]="news.url" [style.backgroundImage]="`url(${news.imageUrl})`">
                     <div class="carousel-label">
                         <div class="name mat-headline-6">{{ news.name }}</div>
                         <div class="description mat-subtitle-2">{{ news.description }}</div>

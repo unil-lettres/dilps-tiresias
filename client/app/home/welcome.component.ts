@@ -6,8 +6,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-welcome',
-    templateUrl: './welcome.component.html',
     imports: [MatDialogModule, MatButtonModule],
+    templateUrl: './welcome.component.html',
 })
 export class WelcomeComponent {
     public readonly site = inject(SITE);

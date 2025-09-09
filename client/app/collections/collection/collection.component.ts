@@ -31,8 +31,6 @@ import {CollectionService} from '../services/collection.service';
 
 @Component({
     selector: 'app-collection',
-    templateUrl: './collection.component.html',
-    styleUrl: './collection.component.scss',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -46,6 +44,8 @@ import {CollectionService} from '../services/collection.service';
         NaturalSelectHierarchicComponent,
         MatCheckbox,
     ],
+    templateUrl: './collection.component.html',
+    styleUrl: './collection.component.scss',
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);

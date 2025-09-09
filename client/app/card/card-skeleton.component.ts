@@ -6,6 +6,34 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
 @Component({
     selector: 'app-card-skeleton',
     imports: [CommonModule, MatProgressSpinnerModule, LogoComponent],
+    template: `
+        <div class="skeleton-screen">
+            <div class="left-pane">
+                <div>
+                    <div class="skeleton-menu">
+                        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
+                        <div class="block-button"></div>
+                        <div class="block-button bg-pulse"></div>
+                        <div class="block-button bg-pulse"></div>
+                        <div class="block-button bg-pulse"></div>
+                        <div class="block-button bg-pulse"></div>
+                    </div>
+                    <div class="background-fade"></div>
+
+                    <div class="block-input block-input-xs bg-pulse"></div>
+                    <div class="block-input block-input-sm bg-pulse"></div>
+                    <div class="block-input block-input-xl bg-pulse"></div>
+                    <div class="block-input block-input-xl bg-pulse"></div>
+                    <div class="block-input block-input-xl bg-pulse"></div>
+                    <div class="block-input block-input-xl bg-pulse"></div>
+                    <div class="block-input block-input-xl bg-pulse"></div>
+                </div>
+            </div>
+            <div class="image">
+                <mat-spinner />
+            </div>
+        </div>
+    `,
     styles: `
         :host {
             width: 100%;
@@ -75,34 +103,6 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
             display: flex;
             height: 100vh;
         }
-    `,
-    template: `
-        <div class="skeleton-screen">
-            <div class="left-pane">
-                <div>
-                    <div class="skeleton-menu">
-                        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-                        <div class="block-button"></div>
-                        <div class="block-button bg-pulse"></div>
-                        <div class="block-button bg-pulse"></div>
-                        <div class="block-button bg-pulse"></div>
-                        <div class="block-button bg-pulse"></div>
-                    </div>
-                    <div class="background-fade"></div>
-
-                    <div class="block-input block-input-xs bg-pulse"></div>
-                    <div class="block-input block-input-sm bg-pulse"></div>
-                    <div class="block-input block-input-xl bg-pulse"></div>
-                    <div class="block-input block-input-xl bg-pulse"></div>
-                    <div class="block-input block-input-xl bg-pulse"></div>
-                    <div class="block-input block-input-xl bg-pulse"></div>
-                    <div class="block-input block-input-xl bg-pulse"></div>
-                </div>
-            </div>
-            <div class="image">
-                <mat-spinner />
-            </div>
-        </div>
     `,
 })
 export class CardSkeletonComponent {}

@@ -23,9 +23,6 @@ import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
-    templateUrl: './address.component.html',
-    styleUrl: './address.component.scss',
-    providers: [AddressService, CountryService],
     imports: [
         CommonModule,
         MatFormFieldModule,
@@ -39,6 +36,9 @@ import {tap} from 'rxjs/operators';
         GoogleMapsModule,
         NaturalIconDirective,
     ],
+    templateUrl: './address.component.html',
+    styleUrl: './address.component.scss',
+    providers: [AddressService, CountryService],
 })
 export class AddressComponent implements OnInit, OnChanges {
     private readonly mapApiService = inject(MapApiService);
@@ -276,8 +276,8 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public ngOnChanges(): void {
         if (this.model) {
-            this.latitude = +this.model.latitude!;
-            this.longitude = +this.model.longitude!;
+            this.latitude = this.model.latitude!;
+            this.longitude = this.model.longitude!;
         }
     }
 
@@ -288,8 +288,8 @@ export class AddressComponent implements OnInit, OnChanges {
         this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
 
         if (this.model?.latitude && this.model.longitude) {
-            this.latitude = +this.model.latitude;
-            this.longitude = +this.model.longitude;
+            this.latitude = this.model.latitude;
+            this.longitude = this.model.longitude;
             this.zoom = 12;
         }
     }
@@ -372,7 +372,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
 
     public recenter(): void {
-        this.latitude = +this.model!.latitude!;
-        this.longitude = +this.model!.longitude!;
+        this.latitude = this.model!.latitude!;
+        this.longitude = this.model!.longitude!;
     }
 }

@@ -13,7 +13,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-institution',
-    templateUrl: './institution.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -24,6 +23,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         DialogFooterComponent,
         UniqueValidatorDirective,
     ],
+    templateUrl: './institution.component.html',
 })
 export class InstitutionComponent extends AbstractDetailDirective<InstitutionService, ThesaurusDetailDialogExtraData> {
     public constructor() {

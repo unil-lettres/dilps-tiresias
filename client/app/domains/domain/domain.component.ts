@@ -14,7 +14,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-domain',
-    templateUrl: './domain.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -24,6 +23,7 @@ import {MatTabsModule} from '@angular/material/tabs';
         DialogFooterComponent,
         NaturalSelectHierarchicComponent,
     ],
+    templateUrl: './domain.component.html',
 })
 export class DomainComponent extends AbstractDetailDirective<DomainService, ThesaurusDetailDialogExtraData> {
     public hierarchicConfig = domainHierarchicConfig;
