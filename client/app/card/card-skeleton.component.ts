@@ -1,11 +1,10 @@
-import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 
 @Component({
     selector: 'app-card-skeleton',
-    imports: [CommonModule, MatProgressSpinnerModule, LogoComponent],
+    imports: [MatProgressSpinnerModule, LogoComponent],
     template: `
         <div class="skeleton-screen">
             <div class="left-pane">

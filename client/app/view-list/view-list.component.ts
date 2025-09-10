@@ -12,13 +12,12 @@ import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
     imports: [
-        CommonModule,
         MatPaginatorModule,
         RouterLink,
         MatCheckboxModule,

@@ -11,7 +11,6 @@ import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
-import {CommonModule} from '@angular/common';
 
 export enum ExportTheme {
     dark = 'dark',
@@ -20,7 +19,7 @@ export enum ExportTheme {
 
 @Component({
     selector: 'app-export-menu',
-    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
 })
