@@ -1,5 +1,5 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
-@if (!onlyMap) {
+@if (!onlyMap()) {
     <div class="nat-vertical nat-gap-horizontal-10">
         @if (!readonly || !!model?.street) {
             <mat-form-field>
@@ -18,8 +18,8 @@
                 }
             </mat-form-field>
         }
-        <div class="nat-gap-horizontal-10 nat-vertical nat-wrap" [class.nat-md-horizontal]="!vertical">
-            @if (isDilps && (!readonly || !!model?.postcode)) {
+        <div class="nat-gap-horizontal-10 nat-vertical nat-wrap" [class.nat-md-horizontal]="!vertical()">
+            @if (isDilps() && (!readonly || !!model?.postcode)) {
                 <mat-form-field>
                     <mat-label>NPA</mat-label>
                     <input
@@ -37,7 +37,7 @@
                 </mat-form-field>
             }
             @if (!readonly || !!model?.locality) {
-                <mat-form-field [class.nat-expand]="!vertical">
+                <mat-form-field [class.nat-expand]="!vertical()">
                     <mat-label>Localité</mat-label>
                     <input
                         matInput
@@ -72,10 +72,10 @@
         #accordionItem="cdkAccordionItem"
         role="button"
         tabindex="0"
-        [expanded]="!allowExpandableMap || !readonly"
+        [expanded]="!allowExpandableMap() || !readonly"
         [attr.aria-expanded]="accordionItem.expanded"
     >
-        @if (allowExpandableMap && readonly && !!model?.latitude && !!model?.longitude) {
+        @if (allowExpandableMap() && readonly && !!model?.latitude && !!model?.longitude) {
             <div class="map-accordion-header nat-horizontal nat-right nat-center" (click)="accordionItem.toggle()">
                 <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte</span>
                 <mat-icon
@@ -131,7 +131,7 @@
     </cdk-accordion-item>
 </cdk-accordion>
 
-@if (!isDilps) {
+@if (!isDilps()) {
     <div class="nat-horizontal double-fields nat-gap-10">
         @if (!readonly || !!model?.latitude) {
             <mat-form-field>
@@ -160,7 +160,7 @@
     </div>
 }
 
-@if (!isDilps && (!readonly || !!model?.precision)) {
+@if (!isDilps() && (!readonly || !!model?.precision)) {
     <natural-select-enum
         enumName="Precision"
         placeholder="Précision"

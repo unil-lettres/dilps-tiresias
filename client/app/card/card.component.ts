@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {CommonModule} from '@angular/common';
-import {Component, inject, Input, OnChanges, OnInit, viewChild} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, viewChild, input, model} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -226,27 +226,27 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
      */
-    @Input() public showCode = true;
+    public readonly showCode = input(true);
 
     /**
      * Show/Hide toolbar
      */
-    @Input() public showToolbar = true;
+    public readonly showToolbar = input(true);
 
     /**
      * Show/Hide the right side of the card (image and actions in toolbar)
      */
-    @Input() public showImage = true;
+    public readonly showImage = input(true);
 
     /**
      * Hide related cards
      */
-    @Input() public showCards = true;
+    public readonly showCards = input(true);
 
     /**
      * Hide some toolbar actions
      */
-    @Input() public showTools = true;
+    public readonly showTools = input(true);
 
     /**
      * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if card is source or suggestion
@@ -256,7 +256,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Show logo on top of the page if true
      */
-    @Input() public showLogo = false;
+    public readonly showLogo = model(false);
 
     /**
      * Base 64 image data for display usage before effective upload
@@ -266,7 +266,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Display or not the slideshow of related cards.
      */
-    @Input() public showSlideshowRelatedCards = false;
+    public readonly showSlideshowRelatedCards = model(false);
 
     /**
      * Url of resized images (2000px) to be displayed
@@ -514,9 +514,10 @@ export class CardComponent implements OnInit, OnChanges {
             this.user = user;
         });
 
-        this.routeData$.subscribe(
-            data => ({showLogo: this.showLogo, showSlideshowRelatedCards: this.showSlideshowRelatedCards} = data),
-        );
+        this.routeData$.subscribe(data => {
+            this.showLogo.set(data.showLogo);
+            this.showSlideshowRelatedCards.set(data.showSlideshowRelatedCards);
+        });
 
         if (this.model && !this.fetchedModel) {
             // When mass editing, show a form with an empty model (without any fetched model)
@@ -572,8 +573,8 @@ export class CardComponent implements OnInit, OnChanges {
         return (
             !this.isRelatedCardsClosed &&
             !this.isRelatedCardsReduced &&
-            this.showCards &&
-            this.showSlideshowRelatedCards &&
+            this.showCards() &&
+            this.showSlideshowRelatedCards() &&
             !!this.fetchedModel &&
             !!this.fetchedModel.cards.length
         );

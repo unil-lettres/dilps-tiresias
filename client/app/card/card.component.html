@@ -9,10 +9,10 @@
         (filesChange)="dropImage($event)"
     >
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar, borderRight: showImage}">
-            @if (showToolbar) {
+        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar(), borderRight: showImage()}">
+            @if (showToolbar()) {
                 <mat-toolbar class="nat-horizontal nat-align" [ngClass]="edit ? 'edition' : ''">
-                    @if (showLogo) {
+                    @if (showLogo()) {
                         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
                     @if (title) {
@@ -32,7 +32,7 @@
                             </button>
                         }
                     </mat-menu>
-                    @if (showTools) {
+                    @if (showTools()) {
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button mat-icon-button matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
@@ -129,7 +129,7 @@
                             <div>{{ collection.hierarchicName }}</div>
                         }
                     </div>
-                    @if (showCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)) {
+                    @if (showCode() && !isDilps && ((edit && canUpdateCode()) || !!model.code)) {
                         <mat-form-field>
                             <mat-label>Référence</mat-label>
                             <input
@@ -878,7 +878,7 @@
                         </div>
                     }
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
-                    @if (showCards && fetchedModel && edit) {
+                    @if (showCards() && fetchedModel && edit) {
                         <div>
                             <div class="mat-headline-6">Fiches associées</div>
                             <natural-relations
@@ -959,7 +959,7 @@
                 </div>
             }
         </div>
-        @if (showImage) {
+        @if (showImage()) {
             <div
                 class="image-container nat-vertical nat-expand"
                 [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
@@ -987,7 +987,7 @@
                 @if (imageData) {
                     <div class="image nat-expand" [style.backgroundImage]="imageData"></div>
                 }
-                @if (showCards && showSlideshowRelatedCards && fetchedModel) {
+                @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
                     <app-related-cards
                         [card]="fetchedModel"
                         [isReduced]="isRelatedCardsReduced"

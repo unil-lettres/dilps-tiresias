@@ -91,27 +91,27 @@ export class ThesaurusComponent<
     /**
      * If true, manipulations are forbidden
      */
-    @Input() public readonly = false;
+    public readonly readonly = input(false);
 
     /**
      * Service used as data source
      */
-    @Input({required: true}) public service!: TService;
+    public readonly service = input.required<TService>();
 
     /**
      * Input label name
      */
-    @Input({required: true}) public placeholder!: string;
+    public readonly placeholder = input.required<string>();
 
     /**
      * If multi selection is allowed
      */
-    @Input() public multiple = true;
+    public readonly multiple = input(true);
 
     /**
      * If multi selection is allowed
      */
-    @Input() public allowFreeText = true;
+    public readonly allowFreeText = input(true);
 
     /**
      * Component that renders the detail view of an entry
@@ -123,14 +123,14 @@ export class ThesaurusComponent<
      * the name (like name%) if true, otherwise will search anywhere in the
      * name.
      */
-    @Input() public matchFromStartAutocomplete = false;
+    public readonly matchFromStartAutocomplete = input(false);
 
     /**
      * The maximum length of the search query for the autocomplete list
      * when matchFromStartAutocomplete is true. When max length is reached,
      * the search will revert to its default behavior.
      */
-    @Input() public matchFromStartAutocompleteMaxLength = 2;
+    public readonly matchFromStartAutocompleteMaxLength = input(2);
 
     /**
      * Emits when a selection is done
@@ -140,7 +140,7 @@ export class ThesaurusComponent<
     /**
      * Configuration for hierarchic relations
      */
-    @Input() public hierarchicSelectorConfig: NaturalHierarchicConfiguration[] | undefined;
+    public readonly hierarchicSelectorConfig = input<NaturalHierarchicConfiguration[]>();
 
     /**
      * Number of items not shown in result list
@@ -204,7 +204,7 @@ export class ThesaurusComponent<
         this.variablesManager.set('pagination', {pagination: {pageIndex: 0, pageSize: this.pageSize}});
 
         this.formChange$.subscribe(val => {
-            if (this.matchFromStartAutocomplete && val.length <= this.matchFromStartAutocompleteMaxLength) {
+            if (this.matchFromStartAutocomplete() && val.length <= this.matchFromStartAutocompleteMaxLength()) {
                 this.variablesManager.set('search', {
                     filter: {groups: [{conditions: [{name: {like: {value: `${val}%`}}}]}]},
                 });
@@ -235,7 +235,7 @@ export class ThesaurusComponent<
     }
 
     public focus(): void {
-        if (!this.hierarchicSelectorConfig) {
+        if (!this.hierarchicSelectorConfig()) {
             this.startSearch();
         } else {
             this.openDialog();
@@ -253,7 +253,7 @@ export class ThesaurusComponent<
             return;
         }
 
-        this.resultsCache = this.service.watchAll(this.variablesManager).pipe(takeUntilDestroyed(this.destroyRef));
+        this.resultsCache = this.service().watchAll(this.variablesManager).pipe(takeUntilDestroyed(this.destroyRef));
 
         this.resultsCache.subscribe(data => {
             const nbTotal = data.length;
@@ -272,7 +272,8 @@ export class ThesaurusComponent<
 
         this.lockOpenDialog = true;
 
-        if (this.readonly || !this.hierarchicSelectorConfig) {
+        const hierarchicSelectorConfig = this.hierarchicSelectorConfig();
+        if (this.readonly() || !hierarchicSelectorConfig) {
             return;
         }
 
@@ -289,9 +290,9 @@ export class ThesaurusComponent<
         }
 
         const hierarchicConfig: HierarchicDialogConfig = {
-            hierarchicConfig: this.hierarchicSelectorConfig,
+            hierarchicConfig: hierarchicSelectorConfig,
             hierarchicSelection: selected,
-            multiple: this.multiple,
+            multiple: this.multiple(),
         };
 
         const dialogFocus: MatDialogConfig = {
@@ -310,7 +311,7 @@ export class ThesaurusComponent<
                     );
                     const selection = keyWithSelection ? result.hierarchicSelection[keyWithSelection] : [];
 
-                    if (this.multiple) {
+                    if (this.multiple()) {
                         this.items = selection;
                         this.notifyModel();
                     } else {
@@ -335,7 +336,7 @@ export class ThesaurusComponent<
      */
     public onEnter(): void {
         const inputValue = this.thesaurusInput().nativeElement.value;
-        if (inputValue && this.allowFreeText) {
+        if (inputValue && this.allowFreeText()) {
             this.addTerm({name: inputValue});
         }
     }
@@ -348,11 +349,12 @@ export class ThesaurusComponent<
     }
 
     private getSelectKey(): string {
-        if (!this.hierarchicSelectorConfig) {
+        const hierarchicSelectorConfig = this.hierarchicSelectorConfig();
+        if (!hierarchicSelectorConfig) {
             return '';
         }
 
-        return this.hierarchicSelectorConfig.find(c => !!c.selectableAtKey)!.selectableAtKey!;
+        return hierarchicSelectorConfig.find(c => !!c.selectableAtKey)!.selectableAtKey!;
     }
 
     /**
@@ -364,7 +366,7 @@ export class ThesaurusComponent<
         this.autocomplete().closePanel();
         const indexOf = this.items.findIndex(item => item.name === term.name);
         if (term && indexOf === -1) {
-            if (!this.multiple) {
+            if (!this.multiple()) {
                 this.items.length = 0;
             }
             this.items.push(clone(term)); // clone to get rid of readonly
@@ -374,13 +376,15 @@ export class ThesaurusComponent<
     }
 
     private notifyModel(): void {
-        if (this.multiple && this.allowFreeText) {
+        const multiple = this.multiple();
+        const allowFreeText = this.allowFreeText();
+        if (multiple && allowFreeText) {
             this.modelChange.emit(this.items.map(v => v.name));
-        } else if (!this.multiple && this.allowFreeText) {
+        } else if (!multiple && allowFreeText) {
             this.modelChange.emit(this.items[0] ? this.items[0].name : null);
-        } else if (this.multiple && !this.allowFreeText) {
+        } else if (multiple && !allowFreeText) {
             this.modelChange.emit(this.items);
-        } else if (!this.multiple && !this.allowFreeText) {
+        } else if (!multiple && !allowFreeText) {
             this.modelChange.emit(this.items[0] || null);
         }
     }
@@ -390,10 +394,11 @@ export class ThesaurusComponent<
      * Affects the original object
      */
     private convertModel(): void {
-        if (!this.multiple && isObject(this._model)) {
+        const multiple = this.multiple();
+        if (!multiple && isObject(this._model)) {
             this.items = [this._model as ThesaurusModel];
             this.notifyModel();
-        } else if (this.multiple && Array.isArray(this._model)) {
+        } else if (multiple && Array.isArray(this._model)) {
             this.items = clone(this._model); // clone to get rid of readonly
             this.notifyModel();
         }
@@ -402,7 +407,7 @@ export class ThesaurusComponent<
     public getLabel(item: ThesaurusModel): string {
         let result = item.hierarchicName || item.name;
 
-        if (!this.readonly && item.__typename === 'Period') {
+        if (!this.readonly() && item.__typename === 'Period') {
             result += formatYearRange(item.from!, item.to!);
         }
 
@@ -415,7 +420,7 @@ export class ThesaurusComponent<
         }
 
         // Converts AntiqueName to antiqueName, etc... to match facets fields.
-        let field = this.multiple ? makePlural(item.__typename) : item.__typename;
+        let field = this.multiple() ? makePlural(item.__typename) : item.__typename;
         field = field.charAt(0).toLowerCase() + field.slice(1);
 
         const naturalSearchSelections: NaturalSearchSelections = [[{field, condition: {have: {values: [item.id]}}}]];

@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild} from '@angular/core';
+import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild, input} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -65,7 +65,7 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * If true, layouts vertically some side by side elements
      */
-    @Input() public vertical = false;
+    public readonly vertical = input(false);
 
     /**
      * Prevents fields edition
@@ -75,17 +75,17 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * If Dilps mode, show everything, otherwise hide some stuff for Tiresias
      */
-    @Input() public isDilps = true;
+    public readonly isDilps = input(true);
 
     /**
      * Only display map and not adresse informations.
      */
-    @Input() public onlyMap = false;
+    public readonly onlyMap = input(false);
 
     /**
      * Use an accordion to allow to expand or close the map.
      */
-    @Input() public allowExpandableMap = false;
+    public readonly allowExpandableMap = input(false);
 
     /**
      * Object reference is directly modified

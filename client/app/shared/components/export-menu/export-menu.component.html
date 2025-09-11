@@ -11,7 +11,7 @@
     <button mat-menu-item (click)="export(ExportFormat.Zip)">
         {{ optionZipLabel }}
     </button>
-    @if (showExcelExportation) {
+    @if (showExcelExportation()) {
         <button mat-menu-item (click)="export(ExportFormat.Csv)">Exporter en Excel</button>
     }
     <button

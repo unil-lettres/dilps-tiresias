@@ -28,10 +28,10 @@ type Model = Stamped & {
 })
 export class DialogFooterComponent {
     public readonly disableCreateAndUpdate = input<boolean>(false);
-    @Input() public canCreate = false;
-    @Input() public canDelete: boolean | undefined = false;
+    public readonly canCreate = input(false);
+    public readonly canDelete = input<boolean | undefined>(false);
     @Input({required: true}) public item!: Model;
-    @Input() public formCtrl: FormControl | null = null;
+    public readonly formCtrl = input<FormControl | null>(null);
     public readonly create = output<Model>();
     public readonly update = output<Model>();
     public readonly delete = output<Model>();
