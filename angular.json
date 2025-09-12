@@ -119,7 +119,6 @@
                 "test": {
                     "builder": "@angular/build:karma",
                     "options": {
-                        "main": "client/test.ts",
                         "karmaConfig": "./karma.conf.js",
                         "polyfills": ["zone.js", "zone.js/testing", "@angular/localize/init"],
                         "tsConfig": "client/tsconfig.spec.json",
