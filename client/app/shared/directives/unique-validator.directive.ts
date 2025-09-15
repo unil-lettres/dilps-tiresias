@@ -5,7 +5,6 @@ import {Observable, of} from 'rxjs';
 
 @Directive({
     selector: '[appUnique]',
-    standalone: true,
     providers: [
         {
             provide: NG_ASYNC_VALIDATORS,

@@ -3,7 +3,6 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 
 @Directive({
     selector: '[appUrl]',
-    standalone: true,
     providers: [{provide: NG_VALIDATORS, useExisting: UrlValidatorDirective, multi: true}],
 })
 export class UrlValidatorDirective implements Validator {

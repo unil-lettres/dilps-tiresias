@@ -20,7 +20,7 @@ type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
 };
 
-@Directive({standalone: true})
+@Directive()
 export class AbstractDetailDirective<
     TService extends NaturalAbstractModelService<
         unknown,
