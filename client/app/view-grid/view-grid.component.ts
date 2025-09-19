@@ -5,7 +5,6 @@ import {
     ElementRef,
     inject,
     input,
-    Input,
     OnInit,
     output,
     viewChild,
@@ -60,11 +59,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * DataSource containing cards
      */
-    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
+    public readonly dataSource = input.required<NaturalDataSource<Cards['cards']>>();
     /**
      *
      */
-    @Input() public selected: Cards['cards']['items'][0][] = [];
+    public readonly selected = input<Cards['cards']['items'][0][]>([]);
 
     /**
      * Emits when data is required
@@ -187,22 +186,24 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     }
 
     public ngOnInit(): void {
-        this.dataSource.internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(result => {
-            const gallery = this.gallery();
-            if (!gallery || !result) {
-                return;
-            }
-
-            gallery.gallery.then(gallery => {
-                if (!result.offset && gallery.collection.length) {
-                    gallery.clear(); // fires new loadMore() call
-                } else {
-                    gallery.addItems(this.formatImages(result.items));
+        this.dataSource()
+            .internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(result => {
+                const gallery = this.gallery();
+                if (!gallery || !result) {
+                    return;
                 }
-            });
 
-            this.contentChange.emit({total: result.length});
-        });
+                gallery.gallery.then(gallery => {
+                    if (!result.offset && gallery.collection.length) {
+                        gallery.clear(); // fires new loadMore() call
+                    } else {
+                        gallery.addItems(this.formatImages(result.items));
+                    }
+                });
+
+                this.contentChange.emit({total: result.length});
+            });
 
         // Cache scroll when user... scrolls
         this.scrollable()?.nativeElement.addEventListener('scroll', () => {
@@ -254,7 +255,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     }
 
     private formatImages(cards: Cards['cards']['items'][0][]): GalleryModel[] {
-        const selected = this.selected.map(c => c.id);
+        const selected = this.selected().map(c => c.id);
 
         return cards.map(card => {
             const cardWithThumb = CardService.formatImage(card, this.thumbnailHeight);

@@ -33,7 +33,6 @@ class TooltipCollector {
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[matTooltip]',
-    standalone: true,
 })
 export class HideTooltipDirective implements OnInit, OnDestroy {
     private readonly matToolTip = inject(MatTooltip);

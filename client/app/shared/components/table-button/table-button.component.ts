@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, input, ViewEncapsulation} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {NaturalIconDirective} from '@ecodev/natural';
@@ -12,7 +12,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     encapsulation: ViewEncapsulation.None,
 })
 export class TableButtonComponent {
-    @Input({required: true}) public label!: string;
-    @Input() public icon?: string | null;
-    @Input() public disable = false;
+    public readonly label = input.required<string>();
+    public readonly icon = input<string | null>(null);
+    public readonly disable = input(false);
 }

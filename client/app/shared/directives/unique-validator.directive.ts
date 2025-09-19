@@ -12,7 +12,6 @@ import {Observable, of} from 'rxjs';
             multi: true,
         },
     ],
-    standalone: true,
 })
 export class UniqueValidatorDirective implements AsyncValidator {
     public readonly model = input.required<any>({alias: 'appUnique'});

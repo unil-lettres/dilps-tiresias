@@ -43,6 +43,7 @@ bootstrapApplication(AppComponent, {
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         provideAnimationsAsync(disableAnimations || prefersReducedMotion ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),

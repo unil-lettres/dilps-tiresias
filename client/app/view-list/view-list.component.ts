@@ -12,13 +12,12 @@ import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
     imports: [
-        CommonModule,
         MatPaginatorModule,
         RouterLink,
         MatCheckboxModule,
@@ -47,7 +46,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
      * Emits when some cards are selected
      */
     public readonly selectionChange = output<Cards['cards']['items'][0][]>();
-    @Input() public selected: Cards['cards']['items'][0][] = [];
+    public readonly selected = input<Cards['cards']['items'][0][]>([]);
     public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
     public cards: Cards['cards']['items'][0][] = [];
 
@@ -69,7 +68,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
             .subscribe(cards => {
                 this.cards = cards;
                 this.selectionModel.clear();
-                this.selectionModel.select(...intersectionBy(cards, this.selected, 'id'));
+                this.selectionModel.select(...intersectionBy(cards, this.selected(), 'id'));
             });
 
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));

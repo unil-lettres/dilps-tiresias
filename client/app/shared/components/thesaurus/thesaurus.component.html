@@ -1,11 +1,11 @@
 <mat-form-field>
-    <mat-label>{{ placeholder }}</mat-label>
+    <mat-label>{{ placeholder() }}</mat-label>
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         @for (item of items; track item) {
-            <mat-chip-row [removable]="!readonly" (removed)="removeTerm(item)" (click)="openItem(item)">
+            <mat-chip-row [removable]="!readonly()" (removed)="removeTerm(item)" (click)="openItem(item)">
                 <span class="thesaurus-chip-label">{{ getLabel(item) }}</span>
 
-                @if (!readonly) {
+                @if (!readonly()) {
                     <button matChipRemove>
                         <mat-icon fontIcon="cancel" />
                     </button>
@@ -24,10 +24,10 @@
         <input
             #thesaurusInput
             [formControl]="formControl"
-            [class.show]="!readonly || items.length === 0"
+            [class.show]="!readonly() || items.length === 0"
             [matAutocomplete]="autocomplete"
             [matChipInputFor]="chipList"
-            [readonly]="readonly"
+            [readonly]="readonly()"
             (focus)="focus()"
             (keydown.enter)="onEnter()"
         />

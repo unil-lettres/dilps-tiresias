@@ -13,7 +13,6 @@ export function onlyLeaves<T extends Hierarchic>(value: T[]): T[] | null {
 
 @Pipe({
     name: 'onlyLeaves',
-    standalone: true,
 })
 export class OnlyLeavesPipe implements PipeTransform {
     /**

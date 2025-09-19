@@ -3,13 +3,13 @@ import {
     Component,
     ElementRef,
     inject,
-    Input,
     OnChanges,
     OnDestroy,
     OnInit,
     SimpleChanges,
     viewChild,
     output,
+    input,
 } from '@angular/core';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {CardService} from 'client/app/card/services/card.service';
@@ -44,14 +44,12 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private static readonly SCROLL_OFFSET = 200;
 
-    @Input({required: true})
-    public card!: Card['card'];
+    public readonly card = input.required<Card['card']>();
 
     /**
      * Whether the slideshow is reduced or not.
      */
-    @Input()
-    public isReduced = false;
+    public readonly isReduced = input(false);
 
     public readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
@@ -122,7 +120,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
                             joins: {
                                 cards: {
                                     type: JoinType.innerJoin,
-                                    conditions: [{id: {equal: {value: this.card.id}}}],
+                                    conditions: [{id: {equal: {value: this.card().id}}}],
                                 },
                             },
                         },

@@ -1,5 +1,6 @@
 const {writeFile} = require('node:fs');
-const {argv} = require('yargs');
+const yargs = require('yargs');
+const {hideBin} = require('yargs/helpers');
 
 // Read environment variables from .env file
 require('dotenv').config();
@@ -22,6 +23,7 @@ function createEnvironmentFile(path: string, env: string): void {
 }
 
 // Read the command line arguments passed with yargs
+const argv = yargs(hideBin(process.argv)).argv;
 const configuration = argv.configuration;
 let targetPath = './client/environments/environment.ts';
 let environment = 'development';
