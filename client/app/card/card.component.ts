@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {CommonModule} from '@angular/common';
-import {Component, inject, Input, OnChanges, OnInit, viewChild, input, model} from '@angular/core';
+import {Component, inject, Input, input, model, OnChanges, OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, NgModel} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -28,7 +28,6 @@ import {
 } from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
-import {NgScrollbar} from 'ngx-scrollbar';
 import {concatMap, first, from, last} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
@@ -137,7 +136,6 @@ type InitialCardValues = {
         MatTooltipModule,
         HideTooltipDirective,
         MatIconModule,
-        NgScrollbar,
         MatSliderModule,
         FormsModule,
         MatFormFieldModule,

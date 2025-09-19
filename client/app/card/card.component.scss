@@ -1,24 +1,98 @@
 @use '../../styles/utils';
-
+@use '@ecodev/natural-layout' as nat;
 :host {
     display: flex;
     flex: auto;
     @include utils.fixedToolbar();
 }
 
-.image {
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
+// Small screens
+@include nat.media(null, 450px) {
+    app-logo {
+        display: none;
+    }
+    .mat-toolbar {
+        justify-content: end;
+    }
+}
+
+@include nat.media(null, sm) {
+    .body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .containerWithToolbar .scrolled {
+            margin-top: 0;
+        }
+
+        app-related-cards {
+            display: none !important;
+            border: 2px solid red;
+        }
+    }
+}
+
+// Bigger screens
+@include nat.media(sm, null) {
+    .body {
+        display: grid;
+        grid-template-rows: 0 1fr;
+        grid-template-columns: 400px 1fr;
+
+        .image-container {
+            display: flex;
+            grid-row: span 2;
+        }
+
+        .left-pane {
+            .scroll {
+                overflow: auto;
+            }
+        }
+    }
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+
+    .download-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    app-historic-icon {
+        position: absolute;
+        top: 8px;
+        right: 60px;
+        height: 44px;
+    }
+
+    .image {
+        background-color: rgba(0, 0, 0, 0.33);
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        object-fit: contain;
+        object-position: center;
+    }
+
+    app-related-cards {
+        display: block;
+    }
+}
+
+.mat-toolbar {
+    position: relative;
+    z-index: 999;
 }
 
 .left-pane {
     display: flex;
-    flex: 1 1 400px;
     flex-direction: column;
     box-sizing: border-box;
-    min-width: 400px;
-    max-width: 400px;
 }
 
 .from-to-fields {
@@ -46,24 +120,6 @@ mat-slider {
 .double-fields > * {
     width: calc(((399px - 2 * 12px) - 10px) / 2);
     min-width: 0;
-}
-
-.image-container {
-    position: relative;
-    overflow: hidden;
-
-    .download-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
-
-    app-historic-icon {
-        position: absolute;
-        top: 8px;
-        right: 60px;
-        height: 44px;
-    }
 }
 
 .btn-link-related-cards {

@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+@use '@ecodev/natural-layout' as nat;
 @use '../../styles/typography';
 @mixin card($theme) {
     $primary: map.get($theme, primary);
@@ -179,10 +180,12 @@
         }
 
         .borderRight {
-            border-right: $border;
+            @include nat.media(md) {
+                border-right: $border;
+            }
         }
 
-        .image {
+        .image-zone {
             background-color: if($is-dark-theme, rgb(26, 26, 26), rgb(235, 235, 235));
         }
     }

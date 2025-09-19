@@ -2,37 +2,34 @@
 @if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
-    <div
-        naturalFileDrop
-        class="nat-expand nat-horizontal"
-        [fileSelectionDisabled]="!edit"
-        (filesChange)="dropImage($event)"
-    >
+    <mat-menu #changeMenu="matMenu" [overlapTrigger]="false">
+        @if (canSuggestUpdate()) {
+            <button mat-menu-item (click)="suggestUpdate()">Suggérer une modification</button>
+        }
+        @if (canSuggestDelete()) {
+            <button mat-menu-item (click)="suggestDeletion()">Suggérer la suppression</button>
+        }
+        @if (canSuggestCreate()) {
+            <button mat-menu-item (click)="suggestCreation()">
+                {{ getSuggestAddLabel() }}
+            </button>
+        }
+    </mat-menu>
+
+    <div naturalFileDrop class="body nat-expand" [fileSelectionDisabled]="!edit" (filesChange)="dropImage($event)">
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar(), borderRight: showImage()}">
-            @if (showToolbar()) {
-                <mat-toolbar class="nat-horizontal nat-align" [ngClass]="edit ? 'edition' : ''">
-                    @if (showLogo()) {
-                        <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-                    }
-                    @if (title) {
-                        <div>{{ title }}</div>
-                    }
-                    <div class="nat-expand"></div>
-                    <mat-menu #changeMenu="matMenu" [overlapTrigger]="false">
-                        @if (canSuggestUpdate()) {
-                            <button mat-menu-item (click)="suggestUpdate()">Suggérer une modification</button>
-                        }
-                        @if (canSuggestDelete()) {
-                            <button mat-menu-item (click)="suggestDeletion()">Suggérer la suppression</button>
-                        }
-                        @if (canSuggestCreate()) {
-                            <button mat-menu-item (click)="suggestCreation()">
-                                {{ getSuggestAddLabel() }}
-                            </button>
-                        }
-                    </mat-menu>
-                    @if (showTools()) {
+
+        @if (showToolbar()) {
+            <mat-toolbar class="nat-horizontal nat-align nat-distribute borderRight" [ngClass]="edit ? 'edition' : ''">
+                @if (showLogo()) {
+                    <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
+                }
+                @if (title) {
+                    <div>{{ title }}</div>
+                }
+
+                @if (showTools()) {
+                    <div class="tools nat-horizontal">
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button mat-icon-button matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
@@ -99,10 +96,54 @@
                                 <mat-icon naturalIcon="delete_forever" />
                             </button>
                         }
-                    }
-                </mat-toolbar>
-            }
-            <ng-scrollbar class="nat-expand ng-scroll-max-width">
+                    </div>
+                }
+            </mat-toolbar>
+        }
+
+        @if (showImage()) {
+            <div
+                class="image-container"
+                [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
+                [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
+            >
+                @if (fetchedModel?.showHistoric) {
+                    <app-historic-icon />
+                }
+
+                @if (imageSrcFull && !imageData) {
+                    <a
+                        download
+                        mat-mini-fab
+                        class="download-button"
+                        matTooltip="Télécharger l'image"
+                        matTooltipPosition="left"
+                        [attr.href]="imageSrcFull"
+                    >
+                        <mat-icon naturalIcon="file_download" />
+                    </a>
+                }
+
+                @if (imageSrc && !imageData) {
+                    <img class="image" [attr.src]="imageSrc" />
+                }
+                @if (imageData) {
+                    <img class="image" [attr.src]="imageData" />
+                }
+
+                @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
+                    <app-related-cards
+                        [card]="fetchedModel"
+                        [isReduced]="isRelatedCardsReduced"
+                        (reduced)="isRelatedCardsReduced = $event"
+                        (closed)="isRelatedCardsClosed = $event"
+                    />
+                }
+            </div>
+        }
+
+        <div class="left-pane" [ngClass]="{containerWithToolbar: showToolbar(), borderRight: showImage()}">
+            <div class="scroll nat-expand ng-scroll-max-width">
                 <div class="padding-scrollbar scrolled nat-vertical">
                     @if (user?.role === UserRole.administrator) {
                         <div class="nat-vertical">
@@ -952,50 +993,12 @@
                         </div>
                     }
                 </div>
-            </ng-scrollbar>
+            </div>
             @if (fetchedModel) {
                 <div class="nat-padding">
                     <app-stamp [item]="stamp" />
                 </div>
             }
         </div>
-        @if (showImage()) {
-            <div
-                class="image-container nat-vertical nat-expand"
-                [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
-                [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
-            >
-                @if (fetchedModel?.showHistoric) {
-                    <app-historic-icon />
-                }
-
-                @if (imageSrcFull && !imageData) {
-                    <a
-                        download
-                        mat-mini-fab
-                        class="download-button"
-                        matTooltip="Télécharger l'image"
-                        matTooltipPosition="left"
-                        [attr.href]="imageSrcFull"
-                    >
-                        <mat-icon naturalIcon="file_download" />
-                    </a>
-                }
-                @if (imageSrc && !imageData) {
-                    <div class="image nat-expand" [style.backgroundImage]="`url(${imageSrc})`"></div>
-                }
-                @if (imageData) {
-                    <div class="image nat-expand" [style.backgroundImage]="imageData"></div>
-                }
-                @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
-                    <app-related-cards
-                        [card]="fetchedModel"
-                        [isReduced]="isRelatedCardsReduced"
-                        (reduced)="isRelatedCardsReduced = $event"
-                        (closed)="isRelatedCardsClosed = $event"
-                    />
-                }
-            </div>
-        }
     </div>
 }
