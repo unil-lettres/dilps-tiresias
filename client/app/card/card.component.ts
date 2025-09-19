@@ -596,9 +596,9 @@ export class CardComponent implements OnInit, OnChanges {
             this.isDilps = this.model.site === Site.Dilps;
 
             // Init visibility
-            this.visibility = +findKey(this.visibilities, s => {
+            this.visibility = findKey(this.visibilities, s => {
                 return s.value === this.model.visibility;
-            })! as keyof CardVisibilities;
+            })!;
 
             this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
             this.artists = this.fetchedModel?.artists ?? []; // cache, see attribute docs

@@ -119,10 +119,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     protected override postQuery(): void {
         // Init visibility
-        this.visibility = +findKey(
-            this.visibilities,
-            s => s.value === this.data.item.visibility,
-        )! as keyof CollectionVisibilities;
+        this.visibility = findKey(this.visibilities, s => s.value === this.data.item.visibility)!;
 
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
