@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {merge} from 'lodash-es';
+import {merge} from 'es-toolkit';
 import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {Card, CardInput, CardVisibility, Change, UserRole, Viewer} from '../../shared/generated-types';
@@ -66,7 +66,7 @@ export class ChangeComponent implements OnInit {
             // Create a new change from an existing card
             this.cardService.getOne(this.route.snapshot.params.cardId).subscribe(card => {
                 this.original = merge({}, card);
-                this.fetchedSuggestion = merge({}, card, {
+                this.fetchedSuggestion = merge(merge({}, card), {
                     original: card,
                     visibility: CardVisibility.Private,
                 });

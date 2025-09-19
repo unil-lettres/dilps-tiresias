@@ -19,7 +19,8 @@ import {
     Sorting,
     WithId,
 } from '@ecodev/natural';
-import {clone, defaults, isArray, isNumber, isObject, isString, merge, pick, pickBy} from 'lodash-es';
+import {defaults, isObject} from 'es-toolkit/compat';
+import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {concatMap, finalize, from, Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
@@ -491,10 +492,10 @@ export class ListComponent
                  */
                 const changeAttributes = pickBy(model, value => {
                     return (
-                        (isObject(value) && !isArray(value) && !isString(value)) ||
-                        isNumber(value) ||
+                        (isObject(value) && !Array.isArray(value) && !isString(value)) ||
+                        Number.isFinite(value) ||
                         (isString(value) && value !== '') ||
-                        (isArray(value) && value.length > 0)
+                        (Array.isArray(value) && value.length > 0)
                     );
                 });
 
@@ -508,7 +509,7 @@ export class ListComponent
                 if (createSuggestions) {
                     changeable.forEach(changeableCard => {
                         const destination = applyChanges(changeableCard, changeAttributes);
-                        const fetchedSuggestion = merge({}, destination, {
+                        const fetchedSuggestion = merge(destination, {
                             original: changeableCard.id,
                             visibility: CardVisibility.Private,
                         });

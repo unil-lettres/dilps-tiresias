@@ -1,4 +1,4 @@
-import {uniq} from 'lodash-es';
+import {uniq} from 'es-toolkit';
 import {Card} from '../shared/generated-types';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 
@@ -55,7 +55,7 @@ function testMultipleThesaurus(words: string[], attributeValue: ThesaurusModel[]
 }
 
 function testDate(formValue: string, datings: Card['card']['datings']): boolean {
-    const years: string[] = uniq(/(-?\d+)/.exec(formValue));
+    const years: string[] = uniq(/(-?\d+)/.exec(formValue) ?? []);
     if (years) {
         for (const year of years) {
             const searched = new Date(year).getFullYear();

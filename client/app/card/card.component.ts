@@ -26,7 +26,7 @@ import {
     NaturalRelationsComponent,
     NaturalTableButtonComponent,
 } from '@ecodev/natural';
-import {findKey, identity, sortBy} from 'lodash-es';
+import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {concatMap, first, from, last} from 'rxjs';
@@ -596,9 +596,9 @@ export class CardComponent implements OnInit, OnChanges {
             this.isDilps = this.model.site === Site.Dilps;
 
             // Init visibility
-            this.visibility = +findKey(this.visibilities, s => {
+            this.visibility = findKey(this.visibilities, s => {
                 return s.value === this.model.visibility;
-            })! as keyof CardVisibilities;
+            })!;
 
             this.institution = this.fetchedModel?.institution ?? null; // cache, see attribute docs
             this.artists = this.fetchedModel?.artists ?? []; // cache, see attribute docs
@@ -724,7 +724,7 @@ export class CardComponent implements OnInit, OnChanges {
         title: string,
         help: string,
         cardsInput: (cards: Card['card']['cards']) => Card['card']['cards'] = identity,
-        checkCards: (cards: Card['card']['cards']) => boolean = identity,
+        checkCards: (cards: Card['card']['cards']) => Card['card']['cards'] | boolean = identity,
     ): void {
         if (this.fetchedModel) {
             let cardsData: Card['card']['cards'] = [];
@@ -771,7 +771,7 @@ export class CardComponent implements OnInit, OnChanges {
         const visibleCollections = this.fetchedModel.collections.filter(
             c => c.visibility !== CollectionVisibility.Private,
         );
-        this.sortedCollections = sortBy(visibleCollections, 'hierarchicName');
+        this.sortedCollections = sortBy(visibleCollections, [c => c.hierarchicName]);
 
         this.cardService.getCollectionCopyrights(this.fetchedModel).subscribe(v => (this.collectionCopyrights = v));
 

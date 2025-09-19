@@ -2,7 +2,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {Component, DestroyRef, inject, Input, OnInit, output, input} from '@angular/core';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {NaturalDataSource} from '@ecodev/natural';
-import {intersectionBy} from 'lodash-es';
+import {intersectionBy} from 'es-toolkit';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
@@ -68,7 +68,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
             .subscribe(cards => {
                 this.cards = cards;
                 this.selectionModel.clear();
-                this.selectionModel.select(...intersectionBy(cards, this.selected(), 'id'));
+                this.selectionModel.select(...intersectionBy(cards, this.selected(), c => c.id));
             });
 
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));

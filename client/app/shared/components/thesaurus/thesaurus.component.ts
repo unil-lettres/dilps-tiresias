@@ -27,7 +27,8 @@ import {
     QueryVariables,
     toUrl,
 } from '@ecodev/natural';
-import {clone, isObject, merge} from 'lodash-es';
+import {isObject} from 'es-toolkit/compat';
+import {clone, merge} from 'es-toolkit';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';

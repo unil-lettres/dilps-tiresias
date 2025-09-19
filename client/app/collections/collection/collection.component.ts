@@ -11,7 +11,7 @@ import {
     NaturalRelationsComponent,
     NaturalSelectHierarchicComponent,
 } from '@ecodev/natural';
-import {findKey} from 'lodash-es';
+import {findKey} from 'es-toolkit';
 import {CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
@@ -119,10 +119,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
 
     protected override postQuery(): void {
         // Init visibility
-        this.visibility = +findKey(
-            this.visibilities,
-            s => s.value === this.data.item.visibility,
-        )! as keyof CollectionVisibilities;
+        this.visibility = findKey(this.visibilities, s => s.value === this.data.item.visibility)!;
 
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;

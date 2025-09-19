@@ -20,7 +20,6 @@ import {
     ModelAttributes,
     NaturalGalleryOptions,
 } from '@ecodev/natural-gallery-js';
-import {merge} from 'lodash-es';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
@@ -291,7 +290,12 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 selected: selected.includes(card.id),
             };
 
-            return merge({}, card, thumb, big, fields);
+            return {
+                ...card,
+                ...thumb,
+                ...big,
+                ...fields,
+            };
         });
     }
 
