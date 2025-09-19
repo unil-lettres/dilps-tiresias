@@ -1,14 +1,29 @@
+@use '@ecodev/natural-layout' as nat;
+
 :host {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
 }
 
+.body {
+    min-height: 0;
+}
+
+@include nat.media(sm) {
+    .body {
+        display: flex;
+        min-height: 0;
+    }
+}
+
 .image {
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.33);
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
 }
 
 .instructions {
@@ -20,8 +35,6 @@
 }
 
 .attribute {
-    margin: 0 10px 10px 10px;
-
     & > div {
         padding: 10px;
     }
@@ -34,11 +47,17 @@
 
 .card {
     display: flex;
-    flex: 1 1 400px;
+    flex: 1 1 320px;
     flex-direction: column;
     box-sizing: border-box;
-    min-width: 400px;
-    max-width: 400px;
+    margin-inline: auto;
+    padding-inline: 10px;
+    min-width: 320px;
+    max-width: 320px;
+
+    @include nat.media(null, sm) {
+        padding-top: 10px;
+    }
 }
 
 .title {
