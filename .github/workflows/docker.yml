@@ -5,6 +5,7 @@ on:
             - 'develop'
             - 'master'
 permissions: read-all
+
 jobs:
     build:
         name: Build
@@ -19,7 +20,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Prepare
               run: |
@@ -70,6 +71,7 @@ jobs:
         name: Merge
         runs-on: ubuntu-latest
         needs: [build]
+
         steps:
             - name: Download digests
               uses: actions/download-artifact@v4
@@ -115,7 +117,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Update description
               uses: peter-evans/dockerhub-description@v4
