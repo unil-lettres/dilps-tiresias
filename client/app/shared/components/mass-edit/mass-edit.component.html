@@ -4,10 +4,7 @@
         @for (item of items; track item) {
             <div class="nat-horizontal nat-align nat-gap-10">
                 <div class="image-wrapper">
-                    <a
-                        class="image"
-                        [ngStyle]="{'background-image': 'url(' + CardService.getImageLink(item, 300) + ')'}"
-                    ></a>
+                    <a class="image" [style.backgroundImage]="`url(${CardService.getImageLink(item, 300)})`"></a>
                 </div>
                 <div>
                     @if (item.code && item.site === Site.Tiresias) {

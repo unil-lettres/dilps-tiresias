@@ -11,6 +11,7 @@ use Application\Model\Collection;
 use Application\Service\Importer;
 use Ecodev\Felix\Api\Field\FieldInterface;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Upload\UploadType;
 
 class CreateCards implements FieldInterface
 {
@@ -20,8 +21,8 @@ class CreateCards implements FieldInterface
             'type' => Type::nonNull(Type::listOf(Type::nonNull(_types()->getOutput(Card::class)))),
             'description' => 'Create multiple cards from an excel files and several images',
             'args' => [
-                'excel' => Type::nonNull(_types()->get('Upload')),
-                'images' => Type::nonNull(Type::listOf(Type::nonNull(_types()->get('Upload')))),
+                'excel' => Type::nonNull(_types()->get(UploadType::class)),
+                'images' => Type::nonNull(Type::listOf(Type::nonNull(_types()->get(UploadType::class)))),
                 'collection' => _types()->getId(Collection::class),
             ],
             'resolve' => function ($root, array $args): array {

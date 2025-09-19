@@ -15,6 +15,7 @@ use Application\Api\Input\Sorting\Domains;
 use Application\Api\Input\Sorting\InstitutionLocality;
 use Application\Enum\CardVisibility;
 use Application\Enum\Site;
+use Application\FriendlyException;
 use Application\Repository\CardRepository;
 use Application\Service\DatingRule;
 use Application\Service\ImageResizer;
@@ -50,24 +51,20 @@ use Throwable;
 #[ORM\Index(name: 'card_plain_name_idx', columns: ['plain_name'])]
 #[ORM\Index(name: 'card_locality_idx', columns: ['locality'])]
 #[ORM\Index(name: 'card_area_idx', columns: ['area'])]
-#[ORM\Index(
-    name: 'FULLTEXT__CARD_CUSTOM_SEARCH',
-    flags: ['fulltext'],
-    fields: [
-        'dating',
-        'cachedArtistNames',
-        'addition',
-        'expandedName',
-        'material',
-        'techniqueAuthor',
-        'objectReference',
-        'corpus',
-        'street',
-        'locality',
-        'code',
-        'name',
-    ],
-)]
+#[ORM\Index(name: 'FULLTEXT__CARD_CUSTOM_SEARCH', flags: ['fulltext'], fields: [
+    'dating',
+    'cachedArtistNames',
+    'addition',
+    'expandedName',
+    'material',
+    'techniqueAuthor',
+    'objectReference',
+    'corpus',
+    'street',
+    'locality',
+    'code',
+    'name',
+], )]
 #[ORM\Index(name: 'FULLTEXT__CARD_LOCALITY', flags: ['fulltext'], fields: ['locality'])]
 #[ORM\Index(name: 'FULLTEXT__CARD_NAMES', flags: ['fulltext'], fields: ['name', 'expandedName'])]
 #[ORM\UniqueConstraint(name: 'unique_code', columns: ['code', 'site'])]
@@ -661,7 +658,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         try {
             /** @var ImagineInterface $imagine */
             $imagine = $container->get(ImagineInterface::class);
-            $image = $imagine->open($this->getPath());
+            $image = FriendlyException::try(fn () => $imagine->open($this->getPath()));
 
             $this->autorotate($image);
             $this->readFileInfo($image);
@@ -711,7 +708,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
             // Save the rotate image to a temporary file to check its size.
             $tempFile = tempnam('data/tmp/', 'rotated-image');
-            $image->save($tempFile);
+            FriendlyException::try(fn () => $image->save($tempFile));
             $maxSize = ini_parse_quantity(ini_get('upload_max_filesize'));
             $newSize = filesize($tempFile);
             unlink($tempFile);
@@ -719,7 +716,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             // We only rotate if the size of the rotated file do not exceed the
             // authorized upload filesize configured for the server.
             if ($newSize < $maxSize) {
-                $image->save($this->getPath());
+                FriendlyException::try(fn () => $image->save($this->getPath()));
             }
         }
     }
@@ -914,5 +911,21 @@ class Card extends AbstractModel implements HasSiteInterface, Image
                 }
             }
         }
+    }
+
+    /**
+     * Return whether this card belongs to at least one historic collection.
+     */
+    public function getShowHistoric(): bool
+    {
+        return _em()->getRepository(self::class)->getAclFilter()->runWithoutAcl(function () {
+            foreach ($this->collections as $collection) {
+                if ($collection->isHistoric() && $collection->isSource()) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
     }
 }

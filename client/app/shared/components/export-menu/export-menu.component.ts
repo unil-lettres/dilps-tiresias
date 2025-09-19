@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -11,7 +11,6 @@ import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
-import {CommonModule} from '@angular/common';
 
 export enum ExportTheme {
     dark = 'dark',
@@ -20,23 +19,20 @@ export enum ExportTheme {
 
 @Component({
     selector: 'app-export-menu',
+    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
-    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule, CommonModule],
 })
 export class ExportMenuComponent {
     private readonly exportService = inject(ExportService);
     private readonly alertService = inject(AlertService);
     private readonly apollo = inject(Apollo);
 
-    @Input()
-    public showExcelExportation = true;
+    public readonly showExcelExportation = input(true);
 
-    @Input()
-    public selectedCards: Cards['cards']['items'][0][] = [];
+    public readonly selectedCards = input<Cards['cards']['items'][0][]>([]);
 
-    @Input()
-    public collection: FakeCollection | null | undefined = null;
+    public readonly collection = input<FakeCollection | null | undefined>(null);
 
     public ExportFormat = ExportFormat;
     public ExportTheme = ExportTheme;
@@ -46,11 +42,11 @@ export class ExportMenuComponent {
     private menuClosed$ = new Subject<void>();
 
     public get hasCards(): boolean {
-        return this.selectedCards.length > 0;
+        return this.selectedCards().length > 0;
     }
 
     public get hasCollection(): boolean {
-        return !!this.collection;
+        return !!this.collection();
     }
 
     public get tooltip(): string {
@@ -63,7 +59,7 @@ export class ExportMenuComponent {
 
     public get optionZipLabel(): string {
         if (this.hasCards && !this.hasCollection) {
-            if (this.selectedCards.length > 1) {
+            if (this.selectedCards().length > 1) {
                 return 'Exporter les fiches';
             } else {
                 return 'Exporter la fiche';
@@ -79,9 +75,10 @@ export class ExportMenuComponent {
         this.pptValidationMessage = 'Validation...';
 
         const input = this.exportService.getDefaultForServer();
-        input.cards = [...this.selectedCards.map(card => card.id)];
-        if (this.collection?.id) {
-            input.collections = [this.collection.id];
+        input.cards = [...this.selectedCards().map(card => card.id)];
+        const collection = this.collection();
+        if (collection?.id) {
+            input.collections = [collection.id];
         }
         input.format = ExportFormat.Pptx;
 
@@ -100,9 +97,10 @@ export class ExportMenuComponent {
 
     public export(format: ExportFormat, theme: ExportTheme = ExportTheme.dark): void {
         const input = this.exportService.getDefaultForServer();
-        input.cards.push(...this.selectedCards.map(card => card.id));
-        if (this.collection?.id) {
-            input.collections = [this.collection.id];
+        input.cards.push(...this.selectedCards().map(card => card.id));
+        const collection = this.collection();
+        if (collection?.id) {
+            input.collections = [collection.id];
         }
         input.format = format;
 

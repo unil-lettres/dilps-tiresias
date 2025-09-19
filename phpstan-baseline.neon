@@ -13,6 +13,18 @@ parameters:
 			path: server/Application/Api/Schema.php
 
 		-
+			message: '#^Access to undefined constant Imagick\:\:RESOURCETYPE_HEIGHT\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: server/Application/FriendlyException.php
+
+		-
+			message: '#^Access to undefined constant Imagick\:\:RESOURCETYPE_WIDTH\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: server/Application/FriendlyException.php
+
+		-
 			message: '#^Argument of an invalid type \$this\(Application\\Model\\Card\) supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1

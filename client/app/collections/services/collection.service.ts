@@ -55,6 +55,7 @@ export class CollectionService extends AbstractContextualizedService<
             name: '',
             description: '',
             isSource: false,
+            isHistoric: false,
             sorting: 0,
             visibility: CollectionVisibility.Private,
             institution: null,

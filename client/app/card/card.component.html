@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 @if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
@@ -8,10 +9,10 @@
         (filesChange)="dropImage($event)"
     >
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
-        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar, borderRight: showImage}">
-            @if (showToolbar) {
+        <div class="left-pane nat-vertical" [ngClass]="{containerWithToolbar: showToolbar(), borderRight: showImage()}">
+            @if (showToolbar()) {
                 <mat-toolbar class="nat-horizontal nat-align" [ngClass]="edit ? 'edition' : ''">
-                    @if (showLogo) {
+                    @if (showLogo()) {
                         <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                     }
                     @if (title) {
@@ -31,7 +32,7 @@
                             </button>
                         }
                     </mat-menu>
-                    @if (showTools) {
+                    @if (showTools()) {
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button mat-icon-button matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
@@ -108,7 +109,7 @@
                             <div class="nat-horizontal">
                                 {{
                                     visibilities[visibility]
-                                        ? 'Visible ' + visibilities[visibility].text
+                                        ? `Visible ${visibilities[visibility].text}`
                                         : 'Visibilité inchangée'
                                 }}
                             </div>
@@ -128,24 +129,27 @@
                             <div>{{ collection.hierarchicName }}</div>
                         }
                     </div>
-                    @if (showCode && !isDilps && ((edit && canUpdateCode()) || !!model.code)) {
+                    @if (showCode() && !isDilps && ((edit && canUpdateCode()) || !!model.code)) {
                         <mat-form-field>
                             <mat-label>Référence</mat-label>
                             <input
                                 #code="ngModel"
                                 matInput
                                 maxlength="30"
+                                fieldName="code"
+                                [appUnique]="model"
+                                [service]="cardService"
                                 [readonly]="!edit || !canUpdateCode()"
-                                [appUniqueCode]="model"
                                 [(ngModel)]="model.code"
-                                (change)="codeModel = code; updateFormValidity()"
+                                (change)="codeChange()"
                             />
+
                             @if (showSuggestedCode()) {
                                 <button
                                     mat-icon-button
                                     matIconSuffix
-                                    [matTooltip]="'Utiliser la référénce automatique &quot;' + suggestedCode + '&quot;'"
-                                    (click)="codeModel = code; useSuggestedCode($event)"
+                                    [matTooltip]="`Utiliser la référénce automatique &quot;${suggestedCode}&quot;`"
+                                    (click)="useSuggestedCode($event)"
                                 >
                                     <mat-icon naturalIcon="refresh" />
                                 </button>
@@ -842,7 +846,7 @@
                                 #url="ngModel"
                                 matInput
                                 maxlength="255"
-                                type="url"
+                                appUrl
                                 [readonly]="!edit"
                                 [cdkAutosizeMinRows]="1"
                                 [cdkTextareaAutosize]="true"
@@ -874,7 +878,7 @@
                         </div>
                     }
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
-                    @if (showCards && fetchedModel && edit) {
+                    @if (showCards() && fetchedModel && edit) {
                         <div>
                             <div class="mat-headline-6">Fiches associées</div>
                             <natural-relations
@@ -955,12 +959,16 @@
                 </div>
             }
         </div>
-        @if (showImage) {
+        @if (showImage()) {
             <div
                 class="image-container nat-vertical nat-expand"
                 [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
                 [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
             >
+                @if (fetchedModel?.showHistoric) {
+                    <app-historic-icon />
+                }
+
                 @if (imageSrcFull && !imageData) {
                     <a
                         download
@@ -974,12 +982,12 @@
                     </a>
                 }
                 @if (imageSrc && !imageData) {
-                    <div class="image nat-expand" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}"></div>
+                    <div class="image nat-expand" [style.backgroundImage]="`url(${imageSrc})`"></div>
                 }
                 @if (imageData) {
                     <div class="image nat-expand" [style.backgroundImage]="imageData"></div>
                 }
-                @if (showCards && showSlideshowRelatedCards && fetchedModel) {
+                @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
                     <app-related-cards
                         [card]="fetchedModel"
                         [isReduced]="isRelatedCardsReduced"

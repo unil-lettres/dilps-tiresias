@@ -17,10 +17,6 @@ export class LoginPage {
         return this.page.click('[type="submit"]');
     }
 
-    public acceptLicense(): Promise<void> {
-        return this.page.click('[ng-reflect-dialog-result="true"]');
-    }
-
     public getParagraphText(): Promise<string> {
         return this.page.innerText('app-root .login-info');
     }

@@ -4,7 +4,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-terms-agreement',
-    templateUrl: './terms-agreement.component.html',
     imports: [MatDialogModule, MatButtonModule],
+    templateUrl: './terms-agreement.component.html',
 })
 export class TermsAgreementComponent {}

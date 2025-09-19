@@ -5,28 +5,29 @@ import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'es-toolkit';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards, Site} from '../shared/generated-types';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
+
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
-    templateUrl: './view-list.component.html',
-    styleUrl: './view-list.component.scss',
     imports: [
-        CommonModule,
         MatPaginatorModule,
         RouterLink,
         MatCheckboxModule,
         StripTagsPipe,
         OnlyLeavesPipe,
         TruncatePipe,
+        HistoricIconComponent,
     ],
+    templateUrl: './view-list.component.html',
+    styleUrl: './view-list.component.scss',
 })
 export class ViewListComponent implements OnInit, ViewInterface {
     private readonly destroyRef = inject(DestroyRef);
@@ -45,7 +46,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
      * Emits when some cards are selected
      */
     public readonly selectionChange = output<Cards['cards']['items'][0][]>();
-    @Input() public selected: Cards['cards']['items'][0][] = [];
+    public readonly selected = input<Cards['cards']['items'][0][]>([]);
     public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
     public cards: Cards['cards']['items'][0][] = [];
 
@@ -67,7 +68,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
             .subscribe(cards => {
                 this.cards = cards;
                 this.selectionModel.clear();
-                this.selectionModel.select(...intersectionBy(cards, this.selected, c => c.id));
+                this.selectionModel.select(...intersectionBy(cards, this.selected(), c => c.id));
             });
 
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));

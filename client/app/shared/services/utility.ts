@@ -72,6 +72,7 @@ export function formatItemNameWithRoot(item: {name: string; hierarchicName: stri
  */
 export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T> {
     const observableQueries = apollo.client.getObservableQueries();
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const promises = Array.from(observableQueries.values()).map(q => q.result());
     return forkJoin(promises).pipe(
         map(() => result),

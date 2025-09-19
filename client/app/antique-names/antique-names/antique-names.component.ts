@@ -15,8 +15,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-antique-names',
-    templateUrl: './antique-names.component.html',
-    styleUrl: './antique-names.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -30,6 +28,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
     ],
+    templateUrl: './antique-names.component.html',
+    styleUrl: './antique-names.component.scss',
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
     public constructor() {

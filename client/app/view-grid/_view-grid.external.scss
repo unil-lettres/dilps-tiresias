@@ -3,4 +3,25 @@
         padding: 5px !important;
         line-height: 1.4em !important;
     }
+
+    figcaption button.historic {
+        display: grid !important;
+        grid-template-columns: 30px 1fr;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .historic-icon {
+        display: inline;
+        position: relative;
+        vertical-align: center;
+        float: left;
+        height: 30px;
+    }
+}
+
+.pswp__historic-icon {
+    display: grid;
+    place-items: center;
 }

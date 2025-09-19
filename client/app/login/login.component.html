@@ -17,12 +17,7 @@
                         mat-raised-button
                         class="shib-link"
                         [href]="
-                            baseUrl +
-                            '/Shibboleth.sso/Login?target=' +
-                            encodeUrl(baseUrl) +
-                            '%2Fauth?returnUrl=' +
-                            encodeUrl(returnUrl) +
-                            '&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth'
+                            `${baseUrl}/Shibboleth.sso/Login?target=${encodeUrl(baseUrl)}%2Fauth?returnUrl=${encodeUrl(returnUrl)}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth`
                         "
                     >
                         <img src="assets/images/logo-unil.svg" width="130" />
@@ -33,12 +28,7 @@
                         mat-raised-button
                         class="shib-link"
                         [href]="
-                            baseUrl +
-                            '/Shibboleth.sso/Login?target=' +
-                            encodeUrl(baseUrl) +
-                            '%2Fauth?returnUrl=' +
-                            encodeUrl(returnUrl) +
-                            '&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth'
+                            `${baseUrl}/Shibboleth.sso/Login?target=${encodeUrl(baseUrl)}%2Fauth?returnUrl=${encodeUrl(returnUrl)}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth`
                         "
                     >
                         @if (themeService.isDarkMode()) {

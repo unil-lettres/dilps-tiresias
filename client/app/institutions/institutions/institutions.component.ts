@@ -15,8 +15,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-institutions',
-    templateUrl: './institutions.component.html',
-    styleUrl: './institutions.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -30,6 +28,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
     ],
+    templateUrl: './institutions.component.html',
+    styleUrl: './institutions.component.scss',
 })
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];

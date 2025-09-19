@@ -1,22 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, input} from '@angular/core';
 import {Collections} from '../../generated-types';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-collection-hierarchy',
+    imports: [MatTooltipModule],
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
-    imports: [MatTooltipModule],
 })
 export class CollectionHierarchyComponent implements OnInit {
-    @Input({required: true})
-    public collection!: Collections['collections']['items'][0];
+    public readonly collection = input.required<Collections['collections']['items'][0]>();
 
     public parents: string[] = [];
 
     public ngOnInit(): void {
-        this.parents = this.collection.hierarchicName
-            .split('>')
+        this.parents = this.collection()
+            .hierarchicName.split('>')
             .map(parent => parent.trim())
             .filter(parent => parent.length > 0);
     }

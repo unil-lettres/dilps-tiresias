@@ -40,7 +40,7 @@
                     [config]="hierarchicConfig"
                     [filters]="ancestorsHierarchicFilters"
                     [showIcon]="false"
-                    [displayWith]="displayWith"
+                    [disabled]="isUpdatePage() && !data.item.permissions.update"
                     [(ngModel)]="data.item.parent"
                 />
             </div>

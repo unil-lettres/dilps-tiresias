@@ -5,10 +5,17 @@
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
                     <input
+                        #name="ngModel"
                         matInput
+                        fieldName="name"
+                        [appUnique]="data.item"
+                        [service]="service"
                         [readonly]="isUpdatePage() && !data.item.permissions.update"
                         [(ngModel)]="data.item.name"
                     />
+                    @if (name.invalid && (name?.dirty || name?.touched)) {
+                        <mat-error>Ce nom est déjà attribué</mat-error>
+                    }
                 </mat-form-field>
             </div>
         </mat-tab>
@@ -20,6 +27,7 @@
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.artist?.create"
         [canDelete]="data.item.canDelete"
+        [disableCreateAndUpdate]="!!name.invalid"
         [item]="data.item"
         (create)="create()"
         (delete)="delete()"

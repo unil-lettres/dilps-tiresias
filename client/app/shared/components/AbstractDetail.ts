@@ -20,7 +20,7 @@ type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
 };
 
-@Directive({standalone: true})
+@Directive()
 export class AbstractDetailDirective<
     TService extends NaturalAbstractModelService<
         unknown,
@@ -54,6 +54,7 @@ export class AbstractDetailDirective<
         item: {},
     } as Data<TService, Extra>;
 
+    // eslint-disable-next-line @angular-eslint/prefer-inject
     public constructor(public readonly service: TService) {
         const data = inject<{item: ExtractTallOne<TService> & Extra} | undefined>(MAT_DIALOG_DATA);
         this.data = merge({item: this.service.getDefaultForServer()}, data ?? {});

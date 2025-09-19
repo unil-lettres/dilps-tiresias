@@ -24,8 +24,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
 
 @Component({
     selector: 'app-domains',
-    templateUrl: './domains.component.html',
-    styleUrl: './domains.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -45,6 +43,8 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
+    templateUrl: './domains.component.html',
+    styleUrl: './domains.component.scss',
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
     public constructor() {

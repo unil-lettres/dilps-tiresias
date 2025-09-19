@@ -22,9 +22,9 @@ type Marker = {
 
 @Component({
     selector: 'app-view-map',
+    imports: [GoogleMapsModule, RouterLink, MatButtonModule],
     templateUrl: './view-map.component.html',
     styleUrl: './view-map.component.scss',
-    imports: [GoogleMapsModule, RouterLink, MatButtonModule],
 })
 export class ViewMapComponent {
     public readonly mapApiService = inject(MapApiService);

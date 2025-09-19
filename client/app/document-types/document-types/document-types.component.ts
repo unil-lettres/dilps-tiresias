@@ -15,8 +15,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-document-types',
-    templateUrl: './document-types.component.html',
-    styleUrl: './document-types.component.scss',
     imports: [
         MatToolbarModule,
         LogoComponent,
@@ -30,6 +28,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         MatPaginatorModule,
         NaturalFixedButtonComponent,
     ],
+    templateUrl: './document-types.component.html',
+    styleUrl: './document-types.component.scss',
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
     public constructor() {

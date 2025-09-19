@@ -22,8 +22,6 @@ import {ThemeService} from '../shared/services/theme.service';
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.scss',
     imports: [
         LogoComponent,
         MatDividerModule,
@@ -35,6 +33,8 @@ import {ThemeService} from '../shared/services/theme.service';
         MatInputModule,
         CarouselComponent,
     ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
     private readonly route = inject(ActivatedRoute);

@@ -3,7 +3,7 @@
 
     <button mat-button mat-dialog-close>Annuler</button>
 
-    @if (canDelete && item.id && item.permissions?.delete) {
+    @if (canDelete() && item.id && item.permissions?.delete) {
         <button color="warn" mat-raised-button (click)="delete.emit(item)">
             <mat-icon naturalIcon="delete_forever" />
             Supprimer
@@ -11,14 +11,24 @@
     }
 
     @if (item.id && item.permissions?.update) {
-        <button color="primary" mat-raised-button [disabled]="!!formCtrl?.errors" (click)="update.emit(item)">
+        <button
+            color="primary"
+            mat-raised-button
+            [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
+            (click)="update.emit(item)"
+        >
             <mat-icon naturalIcon="save" />
             Enregistrer
         </button>
     }
 
-    @if (!item.id && canCreate) {
-        <button color="primary" mat-raised-button [disabled]="!!formCtrl?.errors" (click)="create.emit(item)">
+    @if (!item.id && canCreate()) {
+        <button
+            color="primary"
+            mat-raised-button
+            [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
+            (click)="create.emit(item)"
+        >
             <mat-icon naturalIcon="add" />
             Ajouter
         </button>

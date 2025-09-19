@@ -102,8 +102,6 @@ enum ViewMode {
 
 @Component({
     selector: 'app-list',
-    templateUrl: './list.component.html',
-    styleUrl: './list.component.scss',
     imports: [
         MatMenuModule,
         MatToolbarModule,
@@ -121,6 +119,8 @@ enum ViewMode {
         ExportMenuComponent,
         NgScrollbar,
     ],
+    templateUrl: './list.component.html',
+    styleUrl: './list.component.scss',
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>

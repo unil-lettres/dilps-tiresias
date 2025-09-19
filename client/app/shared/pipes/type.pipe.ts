@@ -4,7 +4,6 @@ import {UserType} from '../generated-types';
 
 @Pipe({
     name: 'type',
-    standalone: true,
 })
 export class TypePipe implements PipeTransform {
     private readonly userService = inject(UserService);

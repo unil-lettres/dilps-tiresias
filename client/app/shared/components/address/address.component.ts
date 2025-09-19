@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild} from '@angular/core';
+import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild, input} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -23,9 +23,6 @@ import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
-    templateUrl: './address.component.html',
-    styleUrl: './address.component.scss',
-    providers: [AddressService, CountryService],
     imports: [
         CommonModule,
         MatFormFieldModule,
@@ -39,6 +36,9 @@ import {tap} from 'rxjs/operators';
         GoogleMapsModule,
         NaturalIconDirective,
     ],
+    templateUrl: './address.component.html',
+    styleUrl: './address.component.scss',
+    providers: [AddressService, CountryService],
 })
 export class AddressComponent implements OnInit, OnChanges {
     private readonly mapApiService = inject(MapApiService);
@@ -65,7 +65,7 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * If true, layouts vertically some side by side elements
      */
-    @Input() public vertical = false;
+    public readonly vertical = input(false);
 
     /**
      * Prevents fields edition
@@ -75,17 +75,17 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * If Dilps mode, show everything, otherwise hide some stuff for Tiresias
      */
-    @Input() public isDilps = true;
+    public readonly isDilps = input(true);
 
     /**
      * Only display map and not adresse informations.
      */
-    @Input() public onlyMap = false;
+    public readonly onlyMap = input(false);
 
     /**
      * Use an accordion to allow to expand or close the map.
      */
-    @Input() public allowExpandableMap = false;
+    public readonly allowExpandableMap = input(false);
 
     /**
      * Object reference is directly modified
@@ -276,8 +276,8 @@ export class AddressComponent implements OnInit, OnChanges {
 
     public ngOnChanges(): void {
         if (this.model) {
-            this.latitude = +this.model.latitude!;
-            this.longitude = +this.model.longitude!;
+            this.latitude = this.model.latitude!;
+            this.longitude = this.model.longitude!;
         }
     }
 
@@ -288,8 +288,8 @@ export class AddressComponent implements OnInit, OnChanges {
         this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));
 
         if (this.model?.latitude && this.model.longitude) {
-            this.latitude = +this.model.latitude;
-            this.longitude = +this.model.longitude;
+            this.latitude = this.model.latitude;
+            this.longitude = this.model.longitude;
             this.zoom = 12;
         }
     }
@@ -372,7 +372,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
 
     public recenter(): void {
-        this.latitude = +this.model!.latitude!;
-        this.longitude = +this.model!.longitude!;
+        this.latitude = this.model!.latitude!;
+        this.longitude = this.model!.longitude!;
     }
 }

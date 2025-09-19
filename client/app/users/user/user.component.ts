@@ -1,15 +1,17 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, viewChild} from '@angular/core';
 import {
     AbstractControl,
     FormControl,
     FormGroup,
     FormsModule,
+    NgModel,
     ReactiveFormsModule,
     ValidationErrors,
 } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
+import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
 import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
@@ -39,7 +41,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
 
 @Component({
     selector: 'app-profile',
-    templateUrl: './user.component.html',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -54,9 +55,12 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         NaturalRelationsComponent,
         DialogFooterComponent,
         TypePipe,
+        UniqueValidatorDirective,
     ],
+    templateUrl: './user.component.html',
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
+    public readonly emailRef = viewChild<NgModel>('email');
     public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     public readonly collectionService = inject(CollectionService);
 

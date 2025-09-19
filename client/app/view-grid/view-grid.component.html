@@ -1,3 +1,4 @@
+<app-historic-icon id="original-historic-icon" class="historic-icon" />
 <div #scrollable class="scrollable">
     <div [style]="{width: '100%', marginTop: scrolledMarginTop()}">
         <natural-gallery
@@ -6,9 +7,10 @@
             [options]="options"
             [scrollable]="scrollable"
             [items]="emptyItemsList"
-            (activate)="activate($event)"
+            (activate)="activate($event.item.model)"
             (pagination)="loadMore($event)"
-            (select)="selectionChange.emit($event)"
+            (select)="selectionChange.emit(bindModel($event))"
+            (itemAddedToDom)="itemAddedToDom($event)"
         />
     </div>
 </div>

@@ -16,8 +16,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-quizz',
-    templateUrl: './quizz.component.html',
-    styleUrl: './quizz.component.scss',
     imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -29,6 +27,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         MatTooltipModule,
         HideTooltipDirective,
     ],
+    templateUrl: './quizz.component.html',
+    styleUrl: './quizz.component.scss',
 })
 export class QuizzComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

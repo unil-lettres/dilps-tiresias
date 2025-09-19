@@ -7,9 +7,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @Component({
     selector: 'app-number-selector',
+    imports: [MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
     templateUrl: './number-selector.component.html',
     styleUrl: './number-selector.component.scss',
-    imports: [MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
 })
 export class NumberSelectorComponent {
     public number = 5;

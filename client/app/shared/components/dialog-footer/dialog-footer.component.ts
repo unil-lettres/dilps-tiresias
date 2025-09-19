@@ -1,4 +1,4 @@
-import {Component, Input, output} from '@angular/core';
+import {Component, input, Input, output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {StampComponent, Stamped} from '../stamp/stamp.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -22,15 +22,16 @@ type Model = Stamped & {
 
 @Component({
     selector: 'app-dialog-footer',
+    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
-    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
 })
 export class DialogFooterComponent {
-    @Input() public canCreate = false;
-    @Input() public canDelete: boolean | undefined = false;
+    public readonly disableCreateAndUpdate = input<boolean>(false);
+    public readonly canCreate = input(false);
+    public readonly canDelete = input<boolean | undefined>(false);
     @Input({required: true}) public item!: Model;
-    @Input() public formCtrl: FormControl | null = null;
+    public readonly formCtrl = input<FormControl | null>(null);
     public readonly create = output<Model>();
     public readonly update = output<Model>();
     public readonly delete = output<Model>();

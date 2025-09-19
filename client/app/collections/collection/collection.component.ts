@@ -1,7 +1,23 @@
 import {Component, inject, OnInit} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs';
+import {
+    HierarchicFiltersConfiguration,
+    NaturalRelationsComponent,
+    NaturalSelectHierarchicComponent,
+} from '@ecodev/natural';
 import {findKey} from 'es-toolkit';
+import {CollectionVisibilities} from '../../card/card.component';
+import {DomainService} from '../../domains/services/domain.service';
+import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
+import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {
     Collection,
     CollectionFilter,
@@ -12,27 +28,9 @@ import {
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';
-import {CollectionVisibilities} from '../../card/card.component';
-import {DomainService} from '../../domains/services/domain.service';
-import {
-    HierarchicFiltersConfiguration,
-    NaturalRelationsComponent,
-    NaturalSelectHierarchicComponent,
-} from '@ecodev/natural';
-import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatTabsModule} from '@angular/material/tabs';
-import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
 @Component({
     selector: 'app-collection',
-    templateUrl: './collection.component.html',
-    styleUrl: './collection.component.scss',
     imports: [
         MatDialogModule,
         MatTabsModule,
@@ -41,11 +39,13 @@ import {InstitutionSortedByUsageService} from '../../institutions/services/insti
         MatFormFieldModule,
         MatInputModule,
         ThesaurusComponent,
-        MatSlideToggleModule,
         NaturalRelationsComponent,
         DialogFooterComponent,
         NaturalSelectHierarchicComponent,
+        MatCheckbox,
     ],
+    templateUrl: './collection.component.html',
+    styleUrl: './collection.component.scss',
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);

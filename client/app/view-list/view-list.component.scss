@@ -71,6 +71,7 @@ mat-paginator {
 
     .image-wrapper {
         display: flex;
+        position: relative;
         flex-direction: row;
         justify-content: center;
         align-items: center;
@@ -87,6 +88,13 @@ mat-paginator {
             background-repeat: no-repeat;
             width: 300px;
             height: 200px;
+        }
+
+        app-historic-icon {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: 30px;
         }
     }
 }

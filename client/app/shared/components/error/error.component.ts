@@ -7,9 +7,9 @@ import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-error',
+    imports: [MatIconModule, MatButtonModule, RouterLink, NaturalIconDirective],
     templateUrl: './error.component.html',
     styleUrl: './error.component.scss',
-    imports: [MatIconModule, MatButtonModule, RouterLink, NaturalIconDirective],
 })
 export class ErrorComponent {
     public readonly error: Error | null = null;

@@ -5,33 +5,39 @@ import {
     ElementRef,
     inject,
     input,
-    Input,
     OnInit,
     output,
     viewChild,
 } from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
 import {NaturalDataSource, PaginationInput} from '@ecodev/natural';
-import {CustomEventDetailMap, ModelAttributes, NaturalGalleryOptions} from '@ecodev/natural-gallery-js';
+import {
+    CustomEventDetailMap,
+    Item,
+    LabelVisibility,
+    ModelAttributes,
+    NaturalGalleryOptions,
+} from '@ecodev/natural-gallery-js';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards} from '../shared/generated-types';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type ContentChange = {
     visible?: number;
     total?: number;
 };
 
-type GalleryItem = Cards['cards']['items'][0] & ModelAttributes;
+type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
+    imports: [NaturalGalleryComponent, HistoricIconComponent],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
-    imports: [NaturalGalleryComponent],
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private readonly router = inject(Router);
@@ -42,21 +48,21 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Only used to help typescript understand the generic type of <natural-gallery>
      */
-    public readonly emptyItemsList: GalleryItem[] = [];
+    public readonly emptyItemsList: GalleryModel[] = [];
 
     /**
      * Reference to gallery
      */
-    public readonly gallery = viewChild<NaturalGalleryComponent<GalleryItem>>('gallery');
+    public readonly gallery = viewChild<NaturalGalleryComponent<GalleryModel>>('gallery');
 
     /**
      * DataSource containing cards
      */
-    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
+    public readonly dataSource = input.required<NaturalDataSource<Cards['cards']>>();
     /**
      *
      */
-    @Input() public selected: Cards['cards']['items'][0][] = [];
+    public readonly selected = input<Cards['cards']['items'][0][]>([]);
 
     /**
      * Emits when data is required
@@ -89,7 +95,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private scrollTop = 0;
 
     /**
-     * Row height of thumbails in grid
+     * Row height of thumbnails in grid
      */
     private thumbnailHeight = 300;
 
@@ -97,6 +103,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * Lightbox image dimension
      */
     private enlargedHeight = 2000;
+    private originalHistoricIcon: HTMLElement | null = null;
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -105,13 +112,13 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
     public options: NaturalGalleryOptions = {
         gap: 5,
-        showLabels: 'always',
+        labelVisibility: LabelVisibility.ALWAYS,
         rowHeight: this.thumbnailHeight,
         activable: true,
         selectable: true,
         lightbox: true,
         photoSwipePluginsInitFn: lightbox => {
-            lightbox.on('uiRegister', function () {
+            lightbox.on('uiRegister', () => {
                 // Link to card button
                 // https://photoswipe.com/adding-ui-elements/#adding-a-button-to-the-toolbar
                 lightbox.pswp.ui.registerElement({
@@ -120,11 +127,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     order: 5,
                     isButton: true,
                     html: 'Voir la fiche',
-
                     onClick: () => {
-                        // Since we have no way to access the card id from PhotoSwipe,
-                        // we simulate a click on the thumbnail's button.
-                        lightbox.pswp.currSlide.data.element.querySelector('.button.activable').click();
+                        this.activate(lightbox.pswp.currSlide.data.item.model);
                         lightbox.pswp.destroy();
                     },
                 });
@@ -136,22 +140,32 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     order: 8,
                     isButton: true,
                     tagName: 'a',
-
-                    // SVG with outline
                     html: {
                         isCustomSVG: true,
                         inner: '<path d="M20.5 14.3 17.1 18V10h-2.2v7.9l-3.4-3.6L10 16l6 6.1 6-6.1ZM23 23H9v2h14Z" id="pswp__icn-download"/>',
                         outlineID: 'pswp__icn-download',
                     },
-
                     onInit: (el: any, pswp: any) => {
                         el.setAttribute('download', '');
                         el.setAttribute('target', '_blank');
                         el.setAttribute('rel', 'noopener');
+                        pswp.on('change', () => (el.href = pswp.currSlide.data.src));
+                    },
+                });
 
-                        pswp.on('change', () => {
-                            el.href = pswp.currSlide.data.src;
-                        });
+                // Historic icon
+                lightbox.pswp.ui.registerElement({
+                    name: 'historic-icon',
+                    order: 7,
+                    isButton: false,
+                    html: this.getHistoricIcon(35)?.outerHTML || '',
+                    onInit: (el: HTMLElement, pswp: any) => {
+                        const updateVisibility = (): void => {
+                            const card = pswp.currSlide?.data.item.model;
+                            el.style.opacity = card?.showHistoric ? '1' : '0';
+                        };
+                        updateVisibility();
+                        pswp.on('change', updateVisibility);
                     },
                 });
             });
@@ -166,26 +180,29 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private lastCollectionId = 0;
 
     public constructor() {
-        this.options.showLabels = sessionStorage.getItem('showLabels') === 'false' ? 'hover' : 'always';
+        this.options.labelVisibility =
+            sessionStorage.getItem('showLabels') === 'false' ? LabelVisibility.HOVER : LabelVisibility.ALWAYS;
     }
 
     public ngOnInit(): void {
-        this.dataSource.internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(result => {
-            const gallery = this.gallery();
-            if (!gallery || !result) {
-                return;
-            }
-
-            gallery.gallery.then(gallery => {
-                if (!result.offset && gallery.collection.length) {
-                    gallery.clear(); // fires new loadMore() call
-                } else {
-                    gallery.addItems(this.formatImages(result.items));
+        this.dataSource()
+            .internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(result => {
+                const gallery = this.gallery();
+                if (!gallery || !result) {
+                    return;
                 }
-            });
 
-            this.contentChange.emit({total: result.length});
-        });
+                gallery.gallery.then(gallery => {
+                    if (!result.offset && gallery.collection.length) {
+                        gallery.clear(); // fires new loadMore() call
+                    } else {
+                        gallery.addItems(this.formatImages(result.items));
+                    }
+                });
+
+                this.contentChange.emit({total: result.length});
+            });
 
         // Cache scroll when user... scrolls
         this.scrollable()?.nativeElement.addEventListener('scroll', () => {
@@ -217,24 +234,27 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         );
     }
 
-    public loadMore(ev: CustomEventDetailMap<GalleryItem>['pagination']): void {
+    public loadMore(ev: CustomEventDetailMap<GalleryModel>['pagination']): void {
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(event: CustomEventDetailMap<GalleryItem>['activate']): void {
-        this.router.navigate(['card', event.model.id]);
+    public activate(item: GalleryModel): void {
+        this.router.navigate(['card', item.id]);
     }
 
-    public selectAll(): Promise<Cards['cards']['items'][0][]> {
-        return this.gallery()?.gallery.then(gallery => gallery.selectVisibleItems()) ?? Promise.resolve([]);
+    public selectAll(): Promise<GalleryModel[]> {
+        return (
+            this.gallery()?.gallery.then(gallery => gallery.selectDomCollection().map(i => i.model)) ??
+            Promise.resolve([])
+        );
     }
 
     public unselectAll(): void {
         this.gallery()?.gallery.then(gallery => gallery.unselectAllItems());
     }
 
-    private formatImages(cards: Cards['cards']['items'][0][]): GalleryItem[] {
-        const selected = this.selected.map(c => c.id);
+    private formatImages(cards: Cards['cards']['items'][0][]): GalleryModel[] {
+        const selected = this.selected().map(c => c.id);
 
         return cards.map(card => {
             const cardWithThumb = CardService.formatImage(card, this.thumbnailHeight);
@@ -277,5 +297,41 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 ...fields,
             };
         });
+    }
+
+    protected bindModel(event: Item<GalleryModel>[]): GalleryModel[] {
+        return event.map(i => i.model);
+    }
+
+    protected itemAddedToDom(item: Item<GalleryModel>): void {
+        if (!item.model.showHistoric) {
+            return;
+        }
+
+        const icon = this.getHistoricIcon();
+        if (icon) {
+            const caption = item.rootElement?.querySelector('figcaption button');
+            caption?.classList.add('historic');
+            caption?.prepend(icon);
+        }
+    }
+
+    private getHistoricIcon(heightPx?: number): HTMLElement | null {
+        if (!this.originalHistoricIcon) {
+            this.originalHistoricIcon = document.querySelector('#original-historic-icon');
+        }
+
+        if (!this.originalHistoricIcon) {
+            return null;
+        }
+
+        const duplicatedIcon = this.originalHistoricIcon.cloneNode(true) as HTMLElement;
+        duplicatedIcon.removeAttribute('id');
+
+        if (heightPx) {
+            duplicatedIcon.style.height = `${heightPx}px`;
+        }
+
+        return duplicatedIcon;
     }
 }

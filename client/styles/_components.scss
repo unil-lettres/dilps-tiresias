@@ -9,6 +9,7 @@
 @use '../app/shared/components/boot-loader/boot-loader.theme';
 @use '../app/shared/components/thesaurus/thesaurus.theme';
 @use '../app/view-grid/view-grid.theme';
+@use '../app/shared/components/historic-icon/historic-icon.theme';
 @use '@angular/material' as mat;
 @use '@ecodev/angular-natural-gallery';
 @use '@ecodev/natural';
@@ -37,4 +38,5 @@
     @include view-grid.view-grid($theme);
     @include thesaurus.thesaurus($theme);
     @include change.change($theme);
+    @include historic-icon.historic-icon($theme);
 }
