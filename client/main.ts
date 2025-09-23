@@ -2,7 +2,6 @@ import {ErrorHandler, inject, provideAppInitializer} from '@angular/core';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {routes} from './app/app-routing.module';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
@@ -30,21 +29,11 @@ const matTooltipCustomConfig: MatTooltipDefaultOptions = {
     touchGestures: 'off',
 };
 
-// Disable animations if not supported (on iPhone 6 / Safari 13, or SSR)
-const disableAnimations =
-    typeof document === 'undefined' ||
-    !('animate' in document.documentElement) ||
-    (navigator && /iPhone OS (8|9|10|11|12|13)_/.test(navigator.userAgent));
-
-const prefersReducedMotion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion)').matches : false;
-
 bootstrapApplication(AppComponent, {
     providers: [
         provideQuillConfig(quillConfig),
         provideNativeDateAdapter(),
         Apollo,
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        provideAnimationsAsync(disableAnimations || prefersReducedMotion ? 'noop' : 'animations'),
         naturalProviders,
         provideIcons({}),
         {
