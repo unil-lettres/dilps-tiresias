@@ -102,11 +102,7 @@
         }
 
         @if (showImage()) {
-            <div
-                class="image-container"
-                [style.padding-bottom]="shouldDisplaySlideShowRelatedCards() ? '120px' : '0'"
-                [@showHideRelatedCards]="shouldDisplaySlideShowRelatedCards() ? 'show' : 'hide'"
-            >
+            <div class="image-container">
                 @if (fetchedModel?.showHistoric) {
                     <app-historic-icon />
                 }
@@ -132,12 +128,7 @@
                 }
 
                 @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
-                    <app-related-cards
-                        [card]="fetchedModel"
-                        [isReduced]="isRelatedCardsReduced"
-                        (reduced)="isRelatedCardsReduced = $event"
-                        (closed)="isRelatedCardsClosed = $event"
-                    />
+                    <app-related-cards [card]="fetchedModel" />
                 }
             </div>
         }

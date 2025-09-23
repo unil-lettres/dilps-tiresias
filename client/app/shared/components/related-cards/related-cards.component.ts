@@ -1,26 +1,26 @@
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {
     AfterViewInit,
     Component,
     ElementRef,
     inject,
+    input,
     OnChanges,
     OnDestroy,
     OnInit,
+    signal,
     SimpleChanges,
     viewChild,
-    output,
-    input,
 } from '@angular/core';
-import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
-import {CardService} from 'client/app/card/services/card.service';
-import {RouterLink} from '@angular/router';
-import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
-import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {RouterLink} from '@angular/router';
+import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {CardService} from 'client/app/card/services/card.service';
+import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
 
 @Component({
     selector: 'app-related-cards',
@@ -46,16 +46,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     public readonly card = input.required<Card['card']>();
 
-    /**
-     * Whether the slideshow is reduced or not.
-     */
-    public readonly isReduced = input(false);
-
     public readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
-    public readonly reduced = output<boolean>();
-
-    public readonly closed = output<boolean>();
+    protected readonly isReduced = signal<boolean>(localStorage.getItem('isRelatedCardsReduced') === 'true');
 
     public readonly CardService = CardService;
 
@@ -133,7 +126,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     public ngOnInit(): void {
         this.cardService$.subscribe(result => {
             this.cards = result.items;
-            this.closed.emit(this.cards.length === 0);
         });
     }
 
@@ -165,7 +157,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
         this.hasScrollbar = slideshow.scrollWidth > slideshow.clientWidth;
     }
 
-    public reduce(isReduced: boolean): void {
-        this.reduced.emit(isReduced);
+    protected toggleReduce(): void {
+        const newValue = !this.isReduced();
+        this.isReduced.set(newValue);
+        localStorage.setItem('isRelatedCardsReduced', newValue.toString());
     }
 }

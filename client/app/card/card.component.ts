@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {CommonModule} from '@angular/common';
@@ -161,23 +159,6 @@ type InitialCardValues = {
     ],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
-    animations: [
-        trigger('showHideRelatedCards', [
-            state(
-                'show',
-                style({
-                    paddingBottom: '120px',
-                }),
-            ),
-            state(
-                'hide',
-                style({
-                    paddingBottom: '0',
-                }),
-            ),
-            transition('* => *', [animate('400ms ease-in-out')]),
-        ]),
-    ],
 })
 export class CardComponent implements OnInit, OnChanges {
     private readonly route = inject(ActivatedRoute);
@@ -557,25 +538,6 @@ export class CardComponent implements OnInit, OnChanges {
         }
 
         this.statisticService.recordDetail();
-    }
-
-    public get isRelatedCardsReduced(): boolean {
-        return localStorage.getItem('isRelatedCardsReduced') === 'true';
-    }
-
-    public set isRelatedCardsReduced(value: boolean) {
-        localStorage.setItem('isRelatedCardsReduced', value.toString());
-    }
-
-    public shouldDisplaySlideShowRelatedCards(): boolean {
-        return (
-            !this.isRelatedCardsClosed &&
-            !this.isRelatedCardsReduced &&
-            this.showCards() &&
-            this.showSlideshowRelatedCards() &&
-            !!this.fetchedModel &&
-            !!this.fetchedModel.cards.length
-        );
     }
 
     public toggleEdit(): void {

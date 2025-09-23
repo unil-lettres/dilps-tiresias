@@ -1,15 +1,30 @@
-.wrapper {
-    --animation-duration: 200ms;
-    --slideshow-height: 120px;
-    display: flex;
-    position: absolute;
+:host {
+    display: block;
+    position: relative;
+}
 
+.root {
+    transition: height 400ms ease-in-out;
+    height: 120px;
+    &.reduced {
+        height: 0;
+        .btn-reduce {
+            bottom: 10px;
+            mat-icon {
+                transform: rotate(180deg) translateY(2px);
+            }
+        }
+    }
+}
+
+.wrapper {
+    display: flex;
     bottom: 0;
     left: 0;
     justify-content: center;
-    transition: bottom 400ms ease-in-out;
+
     width: 100%;
-    height: var(--slideshow-height);
+    height: 120px;
 
     &:hover {
         bottom: 0;
@@ -21,10 +36,6 @@
         .ghost {
             visibility: hidden !important;
         }
-    }
-
-    &.reduced {
-        bottom: calc((var(--slideshow-height) * -1) - 10px);
     }
 
     button {
@@ -50,14 +61,6 @@
     transition:
         bottom 400ms ease-in-out,
         transform 300ms linear;
-
-    &.reduced {
-        bottom: 10px;
-
-        mat-icon {
-            transform: rotate(180deg) translateY(2px);
-        }
-    }
 }
 
 .slideshow {

@@ -6,7 +6,7 @@
     @include utils.fixedToolbar();
 }
 
-// Small screens
+// Very small screens
 @include nat.media(null, 450px) {
     app-logo {
         display: none;
@@ -16,6 +16,7 @@
     }
 }
 
+// Small screens
 @include nat.media(null, sm) {
     .body {
         display: flex;
@@ -28,7 +29,10 @@
 
         app-related-cards {
             display: none !important;
-            border: 2px solid red;
+        }
+
+        .left-pane {
+            width: 100%;
         }
     }
 }
@@ -43,6 +47,11 @@
         .image-container {
             display: flex;
             grid-row: span 2;
+            flex-direction: column;
+
+            img {
+                flex: 1;
+            }
         }
 
         .left-pane {
@@ -77,10 +86,6 @@
         min-height: 0;
         object-fit: contain;
         object-position: center;
-    }
-
-    app-related-cards {
-        display: block;
     }
 }
 
