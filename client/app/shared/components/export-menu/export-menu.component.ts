@@ -1,7 +1,7 @@
 import {Component, inject, input} from '@angular/core';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
 import {Cards, ExportFormat} from '../../generated-types';
 import {ExportService} from 'client/app/exports/services/export.service';
@@ -9,7 +9,7 @@ import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
 import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTooltip} from '@angular/material/tooltip';
 import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
 
 export enum ExportTheme {
@@ -19,7 +19,7 @@ export enum ExportTheme {
 
 @Component({
     selector: 'app-export-menu',
-    imports: [MatMenuModule, MatButtonModule, MatIconModule, NaturalIconDirective, MatTooltipModule],
+    imports: [MatMenu, MatMenuItem, MatMenuTrigger, MatIconButton, MatIcon, NaturalIconDirective, MatTooltip],
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
 })

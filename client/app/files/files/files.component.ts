@@ -10,13 +10,13 @@ import {
 import {FileService} from '../services/file.service';
 import {map} from 'rxjs/operators';
 import {AlertService} from '../../shared/components/alert/alert.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTableModule} from '@angular/material/table';
-import {CommonModule} from '@angular/common';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatCell, MatCellDef, MatColumnDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
+import {NgClass} from '@angular/common';
 
 type Tuple = {
     file?: FileMinimal;
@@ -26,13 +26,19 @@ type Tuple = {
 @Component({
     selector: 'app-files',
     imports: [
-        CommonModule,
-        MatTableModule,
-        MatButtonModule,
-        MatTooltipModule,
+        NgClass,
+        MatTable,
+        MatColumnDef,
+        MatCellDef,
+        MatRowDef,
+        MatCell,
+        MatRow,
+        MatButton,
+        MatIconButton,
+        MatTooltip,
         HideTooltipDirective,
-        MatIconModule,
-        MatProgressSpinnerModule,
+        MatIcon,
+        MatProgressSpinner,
         NaturalFileSelectDirective,
     ],
     templateUrl: './files.component.html',

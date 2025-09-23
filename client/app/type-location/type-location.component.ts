@@ -9,11 +9,11 @@ import {
     NaturalDropdownRef,
 } from '@ecodev/natural';
 import {LocationOperatorString} from '../shared/generated-types';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 
 @Component({
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatError, MatSuffix, MatInput],
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
 })

@@ -14,9 +14,9 @@ import {
     viewChild,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
 import {RouterLink} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {CardService} from 'client/app/card/services/card.service';
@@ -24,7 +24,7 @@ import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
 
 @Component({
     selector: 'app-related-cards',
-    imports: [RouterLink, MatTooltipModule, MatIconModule, NaturalIconDirective, MatButtonModule, NgOptimizedImage],
+    imports: [RouterLink, MatTooltip, MatIcon, NaturalIconDirective, MatMiniFabButton, NgOptimizedImage],
     templateUrl: './related-cards.component.html',
     styleUrl: './related-cards.component.scss',
     providers: [

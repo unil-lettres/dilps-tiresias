@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, Input, NgZone, OnChanges, OnInit, viewChild, input} from '@angular/core';
+import {Component, ElementRef, inject, Input, input, NgZone, OnChanges, OnInit, viewChild} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -13,27 +13,32 @@ import {Card, CardInput, Countries, CountriesVariables, Institution, Site} from 
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
 import {MapApiService} from '../../../view-map/map-api.service';
-import {GoogleMapsModule} from '@angular/google-maps';
-import {MatIconModule} from '@angular/material/icon';
-import {CdkAccordionModule} from '@angular/cdk/accordion';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {CommonModule} from '@angular/common';
+import {GoogleMap, MapMarker} from '@angular/google-maps';
+import {MatIcon} from '@angular/material/icon';
+import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
+import {MatInput} from '@angular/material/input';
+import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
+import {AsyncPipe, NgClass} from '@angular/common';
 import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
     imports: [
-        CommonModule,
-        MatFormFieldModule,
-        MatInputModule,
+        NgClass,
+        AsyncPipe,
+        MatFormField,
+        MatLabel,
+        MatHint,
+        MatInput,
         FormsModule,
         NaturalSelectComponent,
         NaturalSelectEnumComponent,
-        CdkAccordionModule,
-        MatIconModule,
+        CdkAccordion,
+        CdkAccordionItem,
+        MatIcon,
         ReactiveFormsModule,
-        GoogleMapsModule,
+        GoogleMap,
+        MapMarker,
         NaturalIconDirective,
     ],
     templateUrl: './address.component.html',

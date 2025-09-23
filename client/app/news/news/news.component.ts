@@ -5,25 +5,29 @@ import {getBase64Url} from '../../shared/services/utility';
 import {NewsService} from '../services/news.service';
 import {NewsInput} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
-import {CommonModule} from '@angular/common';
+import {NgClass} from '@angular/common';
 import {UrlValidatorDirective} from '../../shared/directives/url-validator.directive';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-news',
     imports: [
         MatDialogModule,
-        MatTabsModule,
-        MatCheckboxModule,
+        MatTab,
+        MatTabGroup,
+        MatCheckbox,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatHint,
+        MatInput,
         UrlValidatorDirective,
-        CommonModule,
+        NgClass,
         DialogFooterComponent,
     ],
     templateUrl: './news.component.html',

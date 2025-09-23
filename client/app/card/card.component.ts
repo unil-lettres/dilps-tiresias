@@ -1,20 +1,20 @@
-import {CdkAccordionModule} from '@angular/cdk/accordion';
-import {TextFieldModule} from '@angular/cdk/text-field';
-import {CommonModule} from '@angular/common';
+import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
+import {NgClass} from '@angular/common';
 import {Component, inject, Input, input, model, OnChanges, OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, NgModel} from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
+import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {ThemePalette} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
+import {MatInput} from '@angular/material/input';
+import {MatList, MatListItem} from '@angular/material/list';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatSlider, MatSliderThumb} from '@angular/material/slider';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatTooltip} from '@angular/material/tooltip';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
     FileSelection,
@@ -125,24 +125,34 @@ type InitialCardValues = {
 @Component({
     selector: 'app-card',
     imports: [
-        CommonModule,
+        NgClass,
         NaturalFileDropDirective,
-        MatToolbarModule,
+        MatToolbar,
         LogoComponent,
-        MatMenuModule,
-        MatButtonModule,
-        MatTooltipModule,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
+        MatButton,
+        MatMiniFabButton,
+        MatIconButton,
+        MatTooltip,
         HideTooltipDirective,
-        MatIconModule,
-        MatSliderModule,
+        MatIcon,
+        MatSlider,
+        MatSliderThumb,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatHint,
+        MatSuffix,
+        MatInput,
         QuillEditorComponent,
         ThesaurusComponent,
-        TextFieldModule,
+        CdkTextareaAutosize,
         AddressComponent,
-        CdkAccordionModule,
+        CdkAccordion,
+        CdkAccordionItem,
         NaturalRelationsComponent,
         NaturalTableButtonComponent,
         FilesComponent,
@@ -152,7 +162,8 @@ type InitialCardValues = {
         RelatedCardsComponent,
         ExportMenuComponent,
         CardSkeletonComponent,
-        MatListModule,
+        MatList,
+        MatListItem,
         HistoricIconComponent,
         UniqueValidatorDirective,
         UrlValidatorDirective,

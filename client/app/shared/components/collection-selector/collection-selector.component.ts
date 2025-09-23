@@ -6,14 +6,14 @@ import {Cards, CollectionFilter, Collections, CreateCollection, LogicalOperator,
 import {AlertService} from '../alert/alert.service';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIcon} from '@angular/material/icon';
+import {MatInput} from '@angular/material/input';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-hierarchy.component';
 
 /**
@@ -42,14 +42,17 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     selector: 'app-collection-selector',
     imports: [
         MatDialogModule,
-        MatTabsModule,
+        MatTab,
+        MatTabGroup,
         NaturalSelectComponent,
         FormsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        MatTooltipModule,
+        MatButton,
+        MatIconButton,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        MatIcon,
+        MatTooltip,
         HideTooltipDirective,
         NaturalIconDirective,
         CollectionHierarchyComponent,

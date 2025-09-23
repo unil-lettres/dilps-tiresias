@@ -2,8 +2,9 @@ import {Apollo} from 'apollo-angular';
 import {Component, inject} from '@angular/core';
 import {
     MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MatFormField,
     MatFormFieldDefaultOptions,
-    MatFormFieldModule,
+    MatLabel,
 } from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
 import {
@@ -25,10 +26,10 @@ import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule} from '@angular/forms';
-import {MatOptionModule} from '@angular/material/core';
-import {CommonModule} from '@angular/common';
-import {MatSelectModule} from '@angular/material/select';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatOption} from '@angular/material/core';
+import {KeyValuePipe} from '@angular/common';
+import {MatSelect} from '@angular/material/select';
+import {MatTab, MatTabContent, MatTabGroup} from '@angular/material/tabs';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 
 function formatDate(date: Date): string {
@@ -79,11 +80,14 @@ type SerieData = {
     selector: 'app-statistics',
     imports: [
         LogoComponent,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        CommonModule,
-        MatOptionModule,
+        MatTabContent,
+        MatTab,
+        MatTabGroup,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        KeyValuePipe,
+        MatOption,
         StatisticComponent,
         NaturalSelectComponent,
         FormsModule,

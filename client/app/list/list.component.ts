@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, computed, inject, OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {MatButtonModule} from '@angular/material/button';
-import {MatChipsModule} from '@angular/material/chips';
+import {MatIconButton} from '@angular/material/button';
+import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
+import {MatIcon} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {PageEvent} from '@angular/material/paginator';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatTooltip} from '@angular/material/tooltip';
 import {
     NaturalAbstractList,
     NaturalIconDirective,
@@ -103,15 +103,20 @@ enum ViewMode {
 @Component({
     selector: 'app-list',
     imports: [
-        MatMenuModule,
-        MatToolbarModule,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
+        MatToolbar,
         LogoComponent,
-        MatButtonModule,
-        MatTooltipModule,
+        MatIconButton,
+        MatTooltip,
         HideTooltipDirective,
-        MatIconModule,
+        MatIcon,
         NaturalSearchComponent,
-        MatChipsModule,
+        MatChip,
+        MatChipListbox,
+        MatChipOption,
+        MatChipSet,
         ViewGridComponent,
         ViewListComponent,
         ViewMapComponent,

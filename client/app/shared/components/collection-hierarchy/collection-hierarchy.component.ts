@@ -1,10 +1,10 @@
-import {Component, OnInit, input} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 import {Collections} from '../../generated-types';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-collection-hierarchy',
-    imports: [MatTooltipModule],
+    imports: [MatTooltip],
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
 })

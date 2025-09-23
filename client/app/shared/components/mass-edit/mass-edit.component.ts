@@ -4,23 +4,15 @@ import {Literal} from '@ecodev/natural';
 import {CardService} from '../../../card/services/card.service';
 import {CardInput, Site} from '../../generated-types';
 import {TruncatePipe} from '../../pipes/truncate.pipe';
-import {MatButtonModule} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {CardComponent} from '../../../card/card.component';
-import {CommonModule} from '@angular/common';
+import {NgTemplateOutlet} from '@angular/common';
 
 @Component({
     selector: 'app-mass-edit',
-    imports: [
-        CommonModule,
-        MatDialogModule,
-        CardComponent,
-        MatCheckboxModule,
-        FormsModule,
-        MatButtonModule,
-        TruncatePipe,
-    ],
+    imports: [NgTemplateOutlet, MatDialogModule, CardComponent, MatCheckbox, FormsModule, MatButton, TruncatePipe],
     templateUrl: './mass-edit.component.html',
     styleUrl: './mass-edit.component.scss',
 })

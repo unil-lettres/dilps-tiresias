@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -14,9 +14,12 @@ import {ArtistService} from '../services/artist.service';
     selector: 'app-artist',
     imports: [
         MatDialogModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatTab,
+        MatTabGroup,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatInput,
         FormsModule,
         DialogFooterComponent,
         UniqueValidatorDirective,

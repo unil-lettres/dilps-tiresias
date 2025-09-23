@@ -6,25 +6,28 @@ import {CardService} from '../card/services/card.service';
 import {Card} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {CommonModule} from '@angular/common';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
+import {NgClass} from '@angular/common';
+import {MatButton} from '@angular/material/button';
+import {MatInput} from '@angular/material/input';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-quizz',
     imports: [
-        MatFormFieldModule,
-        MatInputModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
         FormsModule,
         ReactiveFormsModule,
-        MatButtonModule,
-        CommonModule,
-        MatExpansionModule,
-        MatTooltipModule,
+        MatButton,
+        NgClass,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        MatTooltip,
         HideTooltipDirective,
     ],
     templateUrl: './quizz.component.html',

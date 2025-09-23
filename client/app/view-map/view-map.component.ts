@@ -1,10 +1,10 @@
-import {Component, inject, Input, NgZone, viewChild, output} from '@angular/core';
+import {Component, inject, Input, NgZone, output, viewChild} from '@angular/core';
 import {Cards, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
-import {GoogleMap, GoogleMapsModule, MapInfoWindow, MapMarker} from '@angular/google-maps';
-import {MatButtonModule} from '@angular/material/button';
+import {GoogleMap, MapInfoWindow, MapMarker} from '@angular/google-maps';
+import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import Icon = google.maps.Icon;
 
@@ -22,7 +22,7 @@ type Marker = {
 
 @Component({
     selector: 'app-view-map',
-    imports: [GoogleMapsModule, RouterLink, MatButtonModule],
+    imports: [GoogleMap, MapInfoWindow, MapMarker, RouterLink, MatButton],
     templateUrl: './view-map.component.html',
     styleUrl: './view-map.component.scss',
 })

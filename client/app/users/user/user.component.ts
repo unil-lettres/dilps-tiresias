@@ -18,13 +18,13 @@ import {UserService} from '../services/user.service';
 import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
-import {MatOptionModule} from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatInput} from '@angular/material/input';
+import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
@@ -43,15 +43,21 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     selector: 'app-profile',
     imports: [
         MatDialogModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatTab,
+        MatTabGroup,
+        MatFormField,
+        MatLabel,
+        MatError,
+        MatSuffix,
+        MatInput,
         FormsModule,
         ReactiveFormsModule,
         ThesaurusComponent,
-        MatDatepickerModule,
-        MatSelectModule,
-        MatOptionModule,
+        MatDatepicker,
+        MatDatepickerInput,
+        MatDatepickerToggle,
+        MatSelect,
+        MatOption,
         NaturalRelationsComponent,
         DialogFooterComponent,
         TypePipe,

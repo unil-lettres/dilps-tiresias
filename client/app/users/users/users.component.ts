@@ -4,28 +4,50 @@ import {Users, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {UserComponent} from '../user/user.component';
 import {TypePipe} from '../../shared/pipes/type.pipe';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
-import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {CommonModule} from '@angular/common';
+import {MatSort, MatSortHeader} from '@angular/material/sort';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatTable,
+} from '@angular/material/table';
+import {AsyncPipe, DatePipe} from '@angular/common';
 import {NaturalEnumPipe, NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatToolbar} from '@angular/material/toolbar';
 
 @Component({
     selector: 'app-users',
     imports: [
-        MatToolbarModule,
+        MatToolbar,
         LogoComponent,
         NaturalSearchComponent,
-        CommonModule,
-        MatTableModule,
-        MatSortModule,
+        AsyncPipe,
+        DatePipe,
+        MatTable,
+        MatHeaderCellDef,
+        MatHeaderRowDef,
+        MatColumnDef,
+        MatCellDef,
+        MatRowDef,
+        MatHeaderCell,
+        MatCell,
+        MatHeaderRow,
+        MatRow,
+        MatSort,
+        MatSortHeader,
         TableButtonComponent,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
+        MatProgressSpinner,
+        MatPaginator,
         NaturalFixedButtonComponent,
         NaturalEnumPipe,
         TypePipe,

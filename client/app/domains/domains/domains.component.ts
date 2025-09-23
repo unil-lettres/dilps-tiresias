@@ -2,15 +2,26 @@ import {Component, inject} from '@angular/core';
 import {DomainComponent} from '../domain/domain.component';
 import {DomainService} from '../services/domain.service';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatSort, MatSortHeader} from '@angular/material/sort';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatTable,
+} from '@angular/material/table';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {
     NaturalFixedButtonComponent,
@@ -19,26 +30,36 @@ import {
     NaturalTableButtonComponent,
 } from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatToolbar} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
 
 @Component({
     selector: 'app-domains',
     imports: [
-        MatToolbarModule,
+        MatToolbar,
         LogoComponent,
         NaturalSearchComponent,
         RouterLink,
-        MatButtonModule,
-        MatIconModule,
-        MatTableModule,
-        MatSortModule,
+        MatButton,
+        MatIcon,
+        MatTable,
+        MatHeaderCellDef,
+        MatHeaderRowDef,
+        MatColumnDef,
+        MatCellDef,
+        MatRowDef,
+        MatHeaderCell,
+        MatCell,
+        MatHeaderRow,
+        MatRow,
+        MatSort,
+        MatSortHeader,
         NaturalTableButtonComponent,
-        MatTooltipModule,
+        MatTooltip,
         HideTooltipDirective,
         TableButtonComponent,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
+        MatProgressSpinner,
+        MatPaginator,
         NaturalFixedButtonComponent,
         NaturalIconDirective,
         CollectionHierarchyComponent,

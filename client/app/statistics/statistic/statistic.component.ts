@@ -1,6 +1,18 @@
 import {Component, Input} from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {CommonModule} from '@angular/common';
+import {
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatTable,
+    MatTableDataSource,
+} from '@angular/material/table';
+import {PercentPipe} from '@angular/common';
 import {HighchartsChartComponent} from 'highcharts-angular';
 
 type Row = {
@@ -43,7 +55,20 @@ function percent(count: number, total: number): number {
 
 @Component({
     selector: 'app-statistic',
-    imports: [CommonModule, MatTableModule, HighchartsChartComponent],
+    imports: [
+        PercentPipe,
+        MatTable,
+        MatHeaderCellDef,
+        MatHeaderRowDef,
+        MatColumnDef,
+        MatCellDef,
+        MatRowDef,
+        MatHeaderCell,
+        MatCell,
+        MatHeaderRow,
+        MatRow,
+        HighchartsChartComponent,
+    ],
     templateUrl: './statistic.component.html',
     styleUrl: './statistic.component.scss',
 })

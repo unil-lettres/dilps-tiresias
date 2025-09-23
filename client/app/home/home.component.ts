@@ -27,16 +27,16 @@ import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
 import {WelcomeComponent} from './welcome.component';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconButton} from '@angular/material/button';
+import {MatDivider} from '@angular/material/divider';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIcon} from '@angular/material/icon';
+import {MatListItem, MatListItemIcon, MatNavList} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 function isExcel(file: File): boolean {
@@ -46,19 +46,24 @@ function isExcel(file: File): boolean {
 @Component({
     selector: 'app-home',
     imports: [
-        MatMenuModule,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
         RouterLink,
         RouterLinkActive,
-        MatSidenavModule,
+        MatSidenav,
+        MatSidenavContainer,
         NgScrollbar,
-        MatListModule,
-        MatIconModule,
-        MatTooltipModule,
+        MatNavList,
+        MatListItem,
+        MatListItemIcon,
+        MatIcon,
+        MatTooltip,
         HideTooltipDirective,
         NaturalFileSelectDirective,
-        MatProgressSpinnerModule,
-        MatDividerModule,
-        MatButtonModule,
+        MatProgressSpinner,
+        MatDivider,
+        MatIconButton,
         RouterOutlet,
         NaturalIconDirective,
     ],

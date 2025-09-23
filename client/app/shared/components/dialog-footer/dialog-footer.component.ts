@@ -1,9 +1,9 @@
 import {Component, input, Input, output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {StampComponent, Stamped} from '../stamp/stamp.component';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIcon} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 type Model = Stamped & {
@@ -22,7 +22,7 @@ type Model = Stamped & {
 
 @Component({
     selector: 'app-dialog-footer',
-    imports: [StampComponent, MatButtonModule, MatDialogModule, MatIconModule, NaturalIconDirective],
+    imports: [StampComponent, MatButton, MatDialogModule, MatIcon, NaturalIconDirective],
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
 })

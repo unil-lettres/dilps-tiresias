@@ -2,10 +2,10 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatTabsModule} from '@angular/material/tabs';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatSlider, MatSliderThumb} from '@angular/material/slider';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {
     HierarchicFiltersConfiguration,
     NaturalRelationsComponent,
@@ -33,11 +33,14 @@ import {CollectionService} from '../services/collection.service';
     selector: 'app-collection',
     imports: [
         MatDialogModule,
-        MatTabsModule,
-        MatSliderModule,
+        MatTab,
+        MatTabGroup,
+        MatSlider,
+        MatSliderThumb,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
         ThesaurusComponent,
         NaturalRelationsComponent,
         DialogFooterComponent,

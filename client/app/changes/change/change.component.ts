@@ -6,23 +6,23 @@ import {CardService} from '../../card/services/card.service';
 import {Card, CardInput, CardVisibility, Change, UserRole, Viewer} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIconButton} from '@angular/material/button';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatToolbar} from '@angular/material/toolbar';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-change',
     imports: [
-        MatToolbarModule,
+        MatToolbar,
         LogoComponent,
-        MatButtonModule,
-        MatTooltipModule,
+        MatIconButton,
+        MatTooltip,
         HideTooltipDirective,
-        MatIconModule,
+        MatIcon,
         CardComponent,
         NaturalIconDirective,
     ],

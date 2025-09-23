@@ -20,8 +20,8 @@ import {
     NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatError, MatFormField} from '@angular/material/form-field';
 
 export type TypeNumericRangeConfiguration = {
     min?: number | null;
@@ -59,7 +59,7 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
 }
 
 @Component({
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatError, MatInput],
     templateUrl: './type-numeric-range.component.html',
     styleUrl: './type-numeric-range.component.scss',
 })

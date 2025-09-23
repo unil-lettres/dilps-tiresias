@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {InstitutionSortingField, InstitutionsVariables, SortingOrder} from '../../shared/generated-types';
 import {InstitutionService} from './institution.service';
-import {Observable, map} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',

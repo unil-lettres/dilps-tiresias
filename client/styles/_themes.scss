@@ -39,6 +39,7 @@
     @include mat.menu-color($theme);
     @include mat.paginator-color($theme);
     @include mat.progress-spinner-color($theme);
+    @include mat.radio-color($theme);
     @include mat.select-color($theme);
     @include mat.sidenav-color($theme);
     @include mat.slide-toggle-color($theme);
@@ -87,6 +88,7 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.menu-base($fake-material-v2-theme);
 @include mat.paginator-base($fake-material-v2-theme);
 @include mat.progress-spinner-base($fake-material-v2-theme);
+@include mat.radio-base($fake-material-v2-theme);
 @include mat.select-base($fake-material-v2-theme);
 @include mat.sidenav-base($fake-material-v2-theme);
 @include mat.slide-toggle-base($fake-material-v2-theme);
@@ -119,6 +121,7 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.menu-density(0);
 @include mat.paginator-density(0);
 @include mat.progress-spinner-density(0);
+@include mat.radio-density(0);
 @include mat.select-density(0);
 @include mat.sidenav-density(0);
 @include mat.slide-toggle-density(0);
@@ -152,6 +155,7 @@ $fake-material-v2-theme: mat.m2-define-light-theme(
 @include mat.menu-typography(typography.$custom-typography-gt-sm);
 @include mat.paginator-typography(typography.$custom-typography-gt-sm);
 @include mat.progress-spinner-typography(typography.$custom-typography-gt-sm);
+@include mat.radio-typography(typography.$custom-typography-gt-sm);
 @include mat.select-typography(typography.$custom-typography-gt-sm);
 @include mat.sidenav-typography(typography.$custom-typography-gt-sm);
 @include mat.slide-toggle-typography(typography.$custom-typography-gt-sm);

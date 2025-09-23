@@ -13,33 +13,37 @@ import {
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import {MatDivider} from '@angular/material/divider';
+import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatButtonModule} from '@angular/material/button';
-import {CommonModule} from '@angular/common';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIconButton} from '@angular/material/button';
+import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatToolbar} from '@angular/material/toolbar';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-collections',
     imports: [
-        MatToolbarModule,
+        MatToolbar,
         LogoComponent,
-        CommonModule,
-        MatButtonModule,
-        MatTooltipModule,
+        NgTemplateOutlet,
+        MatIconButton,
+        MatTooltip,
         HideTooltipDirective,
-        MatIconModule,
+        MatIcon,
         NgScrollbar,
-        MatListModule,
+        MatNavList,
+        MatListItem,
+        MatListItemIcon,
+        MatListItemTitle,
+        MatListItemMeta,
         RouterLinkActive,
         RouterLink,
-        MatDividerModule,
+        MatDivider,
         RouterOutlet,
         NaturalIconDirective,
         HistoricIconComponent,

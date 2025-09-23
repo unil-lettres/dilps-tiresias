@@ -1,6 +1,6 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, inject, Input, OnInit, output, input} from '@angular/core';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {Component, DestroyRef, inject, Input, input, OnInit, output} from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'es-toolkit';
 import {ViewInterface} from '../list/list.component';
@@ -10,17 +10,16 @@ import {Cards, Site} from '../shared/generated-types';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {RouterLink} from '@angular/router';
-
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-view-list',
     imports: [
-        MatPaginatorModule,
+        MatPaginator,
         RouterLink,
-        MatCheckboxModule,
+        MatCheckbox,
         StripTagsPipe,
         OnlyLeavesPipe,
         TruncatePipe,

@@ -10,13 +10,13 @@ import {SITE} from '../app.config';
 import {Site, Viewer} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatButtonModule} from '@angular/material/button';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
+import {MatButton} from '@angular/material/button';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatDivider} from '@angular/material/divider';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {ThemeService} from '../shared/services/theme.service';
 
@@ -24,13 +24,17 @@ import {ThemeService} from '../shared/services/theme.service';
     selector: 'app-login',
     imports: [
         LogoComponent,
-        MatDividerModule,
-        MatGridListModule,
-        MatButtonModule,
-        MatExpansionModule,
+        MatDivider,
+        MatGridList,
+        MatGridTile,
+        MatButton,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
         FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
+        MatFormField,
+        MatLabel,
+        MatInput,
         CarouselComponent,
     ],
     templateUrl: './login.component.html',

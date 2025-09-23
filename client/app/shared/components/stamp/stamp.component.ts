@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 type User = {login: string};
 
@@ -12,7 +12,7 @@ export type Stamped = {
 
 @Component({
     selector: 'app-stamp',
-    imports: [CommonModule],
+    imports: [DatePipe],
     templateUrl: './stamp.component.html',
     styleUrl: './stamp.component.scss',
 })

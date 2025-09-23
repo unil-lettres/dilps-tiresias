@@ -2,17 +2,13 @@ import {ComponentType} from '@angular/cdk/overlay';
 import {Component, DestroyRef, ElementRef, inject, input, Input, OnInit, output, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {
-    MatAutocompleteModule,
-    MatAutocompleteSelectedEvent,
-    MatAutocompleteTrigger,
-} from '@angular/material/autocomplete';
+import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {MatIconButton} from '@angular/material/button';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatOptionModule} from '@angular/material/core';
+import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow, MatChipTrailingIcon} from '@angular/material/chips';
+import {MatOption} from '@angular/material/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {
     HierarchicDialogConfig,
@@ -46,13 +42,19 @@ export type ThesaurusModel = {
 @Component({
     selector: 'app-thesaurus',
     imports: [
-        MatFormFieldModule,
-        MatChipsModule,
-        MatIconModule,
+        MatFormField,
+        MatLabel,
+        MatChipGrid,
+        MatChipInput,
+        MatChipRemove,
+        MatChipRow,
+        MatChipTrailingIcon,
+        MatIcon,
         FormsModule,
-        MatAutocompleteModule,
+        MatAutocomplete,
+        MatAutocompleteTrigger,
         ReactiveFormsModule,
-        MatOptionModule,
+        MatOption,
         MatIconButton,
     ],
     templateUrl: './thesaurus.component.html',

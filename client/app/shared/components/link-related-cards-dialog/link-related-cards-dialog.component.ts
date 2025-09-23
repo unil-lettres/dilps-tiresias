@@ -1,9 +1,8 @@
 import {Component, inject} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 import {Card} from '../../generated-types';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 
 type Checkable = {checked: boolean};
@@ -20,7 +19,7 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 
 @Component({
     selector: 'app-link-related-cards-dialog',
-    imports: [MatButtonModule, MatIconModule, MatDialogModule, MatCheckboxModule, FormsModule],
+    imports: [MatButton, MatDialogModule, MatCheckbox, FormsModule],
     templateUrl: './link-related-cards-dialog.component.html',
     styleUrl: './link-related-cards-dialog.component.scss',
 })

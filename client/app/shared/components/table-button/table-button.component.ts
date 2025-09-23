@@ -1,11 +1,11 @@
 import {Component, input, ViewEncapsulation} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-table-button',
-    imports: [MatButtonModule, MatIconModule, NaturalIconDirective],
+    imports: [MatButton, MatIcon, NaturalIconDirective],
     templateUrl: './table-button.component.html',
     styleUrl: './table-button.component.scss',
     // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
