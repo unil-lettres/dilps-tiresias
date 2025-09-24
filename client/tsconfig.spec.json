@@ -2,8 +2,7 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "../out-tsc/spec",
-        "types": ["jasmine", "node", "googlemaps", "@angular/localize"],
-        "skipLibCheck": true
+        "types": ["jasmine"]
     },
-    "include": ["**/*.spec.ts", "**/*.d.ts"]
+    "include": ["./**/*.ts"]
 }

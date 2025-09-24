@@ -32,5 +32,14 @@
         }
     },
     // Otherwise, eslint parses our temp files and crashes, see https://github.com/typescript-eslint/typescript-eslint/issues/1192
-    "exclude": ["data/", "htdocs/"]
+    "exclude": ["data/", "htdocs/"],
+    "files": [],
+    "references": [
+        {
+            "path": "./client/tsconfig.app.json"
+        },
+        {
+            "path": "./client/tsconfig.spec.json"
+        }
+    ]
 }
