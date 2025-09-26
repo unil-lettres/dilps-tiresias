@@ -47,7 +47,7 @@
         "ext-json": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.5",
-        "ecodev/felix": "^16.2",
+        "ecodev/felix": "^16.3",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^8.0",
         "laminas/laminas-config-aggregator": "^1.15",
