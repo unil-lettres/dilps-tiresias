@@ -8,6 +8,7 @@
     height: 120px;
     &.reduced {
         height: 0;
+        overflow: hidden;
         .btn-reduce {
             bottom: 10px;
             mat-icon {

@@ -42,7 +42,7 @@
     .body {
         display: grid;
         grid-template-rows: 0 1fr;
-        grid-template-columns: 400px 1fr;
+        grid-template-columns: 400px minmax(0, 1fr);
 
         .image-container {
             display: flex;
