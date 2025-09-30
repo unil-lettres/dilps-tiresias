@@ -3,6 +3,7 @@ import {PlaywrightTestConfig} from '@playwright/test';
 const config: PlaywrightTestConfig = {
     testDir: './e2e/',
     outputDir: __dirname + '/logs/tests/e2e/',
+    retries: 2,
     use: {
         baseURL: process.env.E2E_BASE_URL ?? 'http://dilps.lan:4400/',
         headless: true,
@@ -16,6 +17,7 @@ const config: PlaywrightTestConfig = {
                 height: 720,
             },
         },
+        trace: 'on-all-retries',
     },
 };
 
