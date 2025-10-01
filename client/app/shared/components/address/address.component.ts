@@ -313,7 +313,7 @@ export class AddressComponent implements OnInit, OnChanges {
         const place: google.maps.places.PlaceResult = this.autocomplete!.getPlace();
 
         // verify result
-        if (place.geometry === undefined || place.geometry === null) {
+        if (!place?.geometry) {
             return;
         }
 
