@@ -280,9 +280,9 @@ export class AddressComponent implements OnInit, OnChanges {
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public ngOnChanges(): void {
-        if (this.model) {
-            this.latitude = this.model.latitude!;
-            this.longitude = this.model.longitude!;
+        if (this.model?.latitude && this.model.longitude) {
+            this.latitude = this.model.latitude;
+            this.longitude = this.model.longitude;
         }
     }
 
