@@ -8,7 +8,7 @@ export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta 
         if (op.insert && typeof op.insert === 'string') {
             ops.push({
                 insert: op.insert,
-                attributes: pick(op.attributes, ['bold', 'italic', 'underline']),
+                attributes: op.attributes ? pick(op.attributes, ['bold', 'italic', 'underline']) : undefined,
             });
         }
     });
