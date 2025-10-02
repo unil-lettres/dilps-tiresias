@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
@@ -6,5 +6,6 @@ import {MatTooltip} from '@angular/material/tooltip';
     imports: [MatTooltip],
     templateUrl: './historic-icon.component.html',
     styleUrl: './historic-icon.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HistoricIconComponent {}
