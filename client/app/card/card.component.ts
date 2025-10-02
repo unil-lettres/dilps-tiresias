@@ -239,6 +239,11 @@ export class CardComponent implements OnInit, OnChanges {
     public readonly showTools = input(true);
 
     /**
+     * Force vertical display
+     */
+    public readonly vertical = input(false);
+
+    /**
      * Show a string on the right of the logo, for "human" contextualisation purposes, like informing if card is source or suggestion
      */
     @Input() public title = '';

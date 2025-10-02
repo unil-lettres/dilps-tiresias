@@ -16,7 +16,13 @@
         }
     </mat-menu>
 
-    <div naturalFileDrop class="body nat-expand" [fileSelectionDisabled]="!edit" (filesChange)="dropImage($event)">
+    <div
+        naturalFileDrop
+        class="body nat-expand"
+        [class.vertical]="vertical()"
+        [fileSelectionDisabled]="!edit"
+        (filesChange)="dropImage($event)"
+    >
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
 
         @if (showToolbar()) {

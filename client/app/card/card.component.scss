@@ -17,32 +17,36 @@
 }
 
 // Small screens
-@include nat.media(null, sm) {
-    .body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    &.vertical {
         .containerWithToolbar .scrolled {
             margin-top: 0;
         }
-
         app-related-cards {
             display: none !important;
         }
 
-        .left-pane {
-            width: 100%;
+        .padding-scrollbar {
+            padding: 0 !important;
         }
+    }
+
+    .left-pane {
+        width: 100%;
     }
 }
 
 // Bigger screens
 @include nat.media(sm, null) {
-    .body {
+    .body:not(.vertical) {
         display: grid;
         grid-template-rows: 0 1fr;
         grid-template-columns: 400px minmax(0, 1fr);
+        align-items: initial;
 
         .image-container {
             display: flex;
