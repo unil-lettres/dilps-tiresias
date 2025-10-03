@@ -15,7 +15,7 @@
 /dist/
 /htdocs/export/
 /htdocs/news-images/
-/htdocs/*.ico
+/htdocs/*.svg
 /htdocs/*.html
 /htdocs/*.js
 /htdocs/*.map
