@@ -22,6 +22,6 @@ export class LoginPage {
     }
 
     public getErrorMessage(): Promise<string> {
-        return this.page.innerText('simple-snack-bar');
+        return this.page.innerText('[matsnackbarlabel]');
     }
 }
