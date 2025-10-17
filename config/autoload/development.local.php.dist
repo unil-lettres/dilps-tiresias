@@ -13,4 +13,11 @@ declare(strict_types=1);
  */
 
 return [
+    'doctrine' => [
+        'configuration' => [
+            'orm_default' => [
+                'auto_generate_proxy_classes' => Doctrine\ORM\Proxy\ProxyFactory::AUTOGENERATE_EVAL,
+            ],
+        ],
+    ],
 ];
