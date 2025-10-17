@@ -22,6 +22,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 
 /**
  * Serve XLSX template file.
@@ -218,9 +219,14 @@ class TemplateHandler implements RequestHandlerInterface
         $writer = new Xlsx($spreadsheet);
         $writer->save($tempFile);
 
+        $fileSize = filesize($tempFile);
+        if ($fileSize === false) {
+            throw new RuntimeException('Unable to get file size for ' . $tempFile);
+        }
+
         $headers = [
             'content-type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'content-length' => filesize($tempFile),
+            'content-length' => (string) $fileSize,
             'content-disposition' => 'inline; filename="' . $spreadsheet->getProperties()->getTitle() . '.xlsx"',
         ];
 
