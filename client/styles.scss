@@ -78,19 +78,16 @@ natural-gallery {
     .natural-gallery-js .figure {
         --marge: 5px;
 
-        &.selected .selectBtn {
-            top: var(--marge);
-            left: var(--marge);
-
+        &.selected .select-btn {
             .marker {
                 border-color: transparent;
             }
         }
 
-        .selectBtn {
+        .select-btn {
             display: flex;
-            top: var(--marge);
-            left: var(--marge);
+            top: var(--marge) !important;
+            left: var(--marge) !important;
             justify-content: center;
             align-items: center;
             transition: none;
