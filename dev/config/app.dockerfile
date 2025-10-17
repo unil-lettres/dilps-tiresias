@@ -30,14 +30,8 @@ RUN apt-get update &&\
 RUN docker-php-ext-configure gd --with-jpeg && \
     apt-get clean && \
     docker-php-ext-install pdo pdo_mysql mysqli gettext zip gd calendar bcmath && \
-    pecl install xdebug-3.4.4 && \
-    docker-php-ext-enable xdebug
-
-# Install and enable Imagick
-# We need to install imagick through install-php-extensions to use the master
-# branch because of a bug still not resolved: https://github.com/Imagick/imagick/issues/640
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN install-php-extensions imagick/imagick@master
+    pecl install xdebug-3.4.4 imagick-3.8.0 && \
+    docker-php-ext-enable xdebug imagick
 
 # Install specific version of Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- \
