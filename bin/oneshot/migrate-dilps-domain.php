@@ -33,7 +33,7 @@ if (!is_numeric($creatorId)) {
 $domainMap = [];
 if (($handle = fopen($csvFile, 'rb')) !== false) {
     while (($data = fgetcsv($handle, null, ';')) !== false) {
-        $finalName = trim($data[0]);
+        $finalName = mb_trim($data[0]);
         $aliases = array_map('trim', explode(',', $data[1]));
         foreach ($aliases as $alias) {
             $domainMap[$alias] = $finalName;

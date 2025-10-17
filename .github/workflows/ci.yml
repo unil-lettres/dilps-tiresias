@@ -87,7 +87,7 @@ jobs:
               run: ./bin/load-test-data.php --no-interaction
 
             - name: PHP CS Fixer
-              run: ./vendor/bin/php-cs-fixer fix --format=checkstyle | cs2pr
+              run: ./vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
 
             - name: PHPStan
               run: ./vendor/bin/phpstan analyse

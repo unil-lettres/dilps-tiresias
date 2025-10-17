@@ -17,7 +17,7 @@ class InstitutionRepository extends AbstractRepository
      */
     public function getOrCreateByName(?string $name, Site $site): ?Institution
     {
-        $name = trim($name ?? '');
+        $name = mb_trim($name ?? '');
 
         if (!$name) {
             return null;

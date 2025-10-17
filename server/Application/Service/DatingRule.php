@@ -33,7 +33,7 @@ class DatingRule
     public function compute(string $input): array
     {
         $romanReplaced = $this->replaceRoman($input);
-        $replaced = trim(preg_replace(array_keys($this->replace), array_values($this->replace), mb_strtolower($romanReplaced)));
+        $replaced = mb_trim(preg_replace(array_keys($this->replace), array_values($this->replace), mb_strtolower($romanReplaced)));
         $dates = explode(';', $replaced);
         $result = [];
         foreach ($dates as $date) {

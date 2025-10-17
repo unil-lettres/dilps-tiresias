@@ -26,7 +26,7 @@ class ArtistRepository extends AbstractRepository
         }
 
         // Dedup and trim whitespaces
-        $names = array_unique(array_map(fn ($value) => trim($value), $names));
+        $names = array_unique(array_map(fn ($value) => mb_trim($value), $names));
 
         $artists = $this->findBy([
             'name' => $names,
@@ -41,7 +41,7 @@ class ArtistRepository extends AbstractRepository
             // comparison (affecting UNIQUE constraint and SELECT queries).
             // So we must be sure to handle whitespaces in the same way as
             // MariaDB when doing comparisons.
-            $found[] = trim($artist->getName());
+            $found[] = mb_trim($artist->getName());
         }
 
         $notFound = array_diff($names, $found);
