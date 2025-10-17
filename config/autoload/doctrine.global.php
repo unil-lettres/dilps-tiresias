@@ -37,6 +37,7 @@ return [
         'configuration' => [
             'orm_default' => [
                 'naming_strategy' => Doctrine\ORM\Mapping\UnderscoreNamingStrategy::class,
+                'enable_native_lazy_objects' => false,
                 'proxy_dir' => getcwd() . '/data/cache/DoctrineORMModule/Proxy',
                 'auto_generate_proxy_classes' => Doctrine\ORM\Proxy\ProxyFactory::AUTOGENERATE_NEVER,
                 'filters' => [
