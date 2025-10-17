@@ -48,7 +48,7 @@ class Csv implements Writer
 
     private function writeRow(array $row): void
     {
-        fputcsv($this->file, $row);
+        fputcsv($this->file, $row, escape: '\\');
     }
 
     private function headers(): void

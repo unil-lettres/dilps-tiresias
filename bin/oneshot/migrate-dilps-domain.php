@@ -32,7 +32,7 @@ if (!is_numeric($creatorId)) {
 // Load external CSV for domain transformations.
 $domainMap = [];
 if (($handle = fopen($csvFile, 'rb')) !== false) {
-    while (($data = fgetcsv($handle, null, ';')) !== false) {
+    while (($data = fgetcsv($handle, null, ';', escape: '\\')) !== false) {
         $finalName = mb_trim($data[0]);
         $aliases = array_map('trim', explode(',', $data[1]));
         foreach ($aliases as $alias) {
