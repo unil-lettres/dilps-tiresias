@@ -22,7 +22,7 @@
 
 <h2 mat-dialog-title>Edition de masse</h2>
 
-<mat-dialog-content>
+<mat-dialog-content [style.overflow-y]="step === 2 ? 'scroll' : null">
     @if (step === 1) {
         <div class="nat-vertical nat-gap-10">
             <p class="mat-body">
