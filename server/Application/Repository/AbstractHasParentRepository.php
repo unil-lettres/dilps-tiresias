@@ -34,7 +34,7 @@ abstract class AbstractHasParentRepository extends AbstractRepository
                 )
             SELECT id FROM parent ORDER BY id";
 
-        return trim($entireHierarchySql);
+        return mb_trim($entireHierarchySql);
     }
 
     /**

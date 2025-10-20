@@ -44,7 +44,7 @@ abstract class Utility
 
     public static function richTextToPlainText(string $string): string
     {
-        return trim(self::noUnbreakableSpaces(html_entity_decode(strip_tags(preg_replace(
+        return mb_trim(self::noUnbreakableSpaces(html_entity_decode(strip_tags(preg_replace(
             [
                 '~<br\s*/?>~i',
                 '~<p\s*>~i',
@@ -72,7 +72,7 @@ abstract class Utility
             if ($value >= $limit) {
                 $string = (string) ($value / $limit);
                 if (str_contains($string, '.')) {
-                    $string = rtrim($string, '0');
+                    $string = mb_rtrim($string, '0');
                 }
 
                 return $string . $metric;

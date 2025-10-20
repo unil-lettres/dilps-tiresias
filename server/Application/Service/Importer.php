@@ -209,7 +209,7 @@ class Importer
 
     private function readString(Worksheet $sheet, int $col, int $row): string
     {
-        return trim((string) $sheet->getCell([$col, $row])->getValue());
+        return mb_trim((string) $sheet->getCell([$col, $row])->getValue());
     }
 
     private function readDomain(Worksheet $sheet, int $col, int $row): ?Domain

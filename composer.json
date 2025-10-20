@@ -38,13 +38,14 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-PDO": "*",
         "ext-calendar": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-imagick": "*",
         "ext-json": "*",
+        "ext-mbstring": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.5",
         "ecodev/felix": "^16.3",

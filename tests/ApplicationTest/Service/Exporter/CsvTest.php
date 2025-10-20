@@ -22,9 +22,9 @@ class CsvTest extends AbstractWriter
         $this->export($writer, $tempFile);
 
         $file = fopen($tempFile, 'rb');
-        $line1 = fgetcsv($file);
-        $line2 = fgetcsv($file);
-        $line3 = fgetcsv($file);
+        $line1 = fgetcsv($file, escape: '\\');
+        $line2 = fgetcsv($file, escape: '\\');
+        $line3 = fgetcsv($file, escape: '\\');
         fclose($file);
         unlink($tempFile);
 
