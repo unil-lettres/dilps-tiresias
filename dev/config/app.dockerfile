@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-bookworm
+FROM php:8.4-fpm-trixie
 
 ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
