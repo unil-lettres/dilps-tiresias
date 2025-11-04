@@ -204,7 +204,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Return whether this card belongs to at least one historic collection.
+     * Return whether this collections is an historic collection.
      */
     public function getShowHistoric(): bool
     {
