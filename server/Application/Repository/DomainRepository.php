@@ -6,16 +6,21 @@ namespace Application\Repository;
 
 use Application\Model\Card;
 use Application\Model\Domain;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends AbstractHasParentRepository<Domain>
  */
 class DomainRepository extends AbstractHasParentRepository
 {
-    public function getByCards(QueryBuilder $cardQb): array
+    public function getByCards(array $filter): array
     {
-        $cardIds = array_map(fn ($card) => $card->getId(), $cardQb->getQuery()->getResult());
+        // Create filtered query builder and select only IDs to minimize memory usage
+        $cardQb = _types()->createFilteredQueryBuilder(Card::class, $filter, []);
+        $cardAlias = $cardQb->getRootAliases()[0];
+        $cardQb->select($cardAlias . '.id');
+
+        $result = $cardQb->getQuery()->getScalarResult();
+        $cardIds = array_column($result, 'id');
 
         if (count($cardIds) === 0) {
             return [];

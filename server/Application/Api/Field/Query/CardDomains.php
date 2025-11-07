@@ -22,11 +22,7 @@ abstract class CardDomains implements FieldInterface
                 ],
             ],
             'description' => 'List domains sorted by usage on cards filtered by given variables',
-            'resolve' => function ($root, array $args): array {
-                $qb = _types()->createFilteredQueryBuilder(Card::class, $args['filter'], []);
-
-                return _em()->getRepository(Domain::class)->getByCards($qb);
-            },
+            'resolve' => fn ($root, array $args): array => _em()->getRepository(Domain::class)->getByCards($args['filter'] ?? []),
         ];
     }
 }
