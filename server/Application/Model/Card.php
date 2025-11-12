@@ -918,21 +918,20 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      */
     public function getShowHistoric(): bool
     {
-        $repository = _em()->getRepository(self::class);
-
-        return $repository->getAclFilter()->runWithoutAcl(function () use ($repository) {
-            $qb = $repository->createQueryBuilder('card');
-            $qb->select('1')
-                ->innerJoin('card.collections', 'collection')
-                ->andWhere('card.id = :cardId')
-                ->andWhere('collection.isHistoric = :isHistoric')
-                ->andWhere('collection.isSource = :isSource')
-                ->setParameter('cardId', $this->getId())
-                ->setParameter('isHistoric', true)
-                ->setParameter('isSource', true)
-                ->setMaxResults(1);
-
-            return (bool) $qb->getQuery()->getOneOrNullResult();
-        });
+        return (bool) _em()->getConnection()->fetchOne(
+            <<<SQL
+                SELECT EXISTS (
+                    SELECT * FROM card_collection
+                      INNER JOIN collection ON card_collection.collection_id = collection.id
+                    WHERE TRUE
+                      AND collection.is_historic
+                      AND collection.is_source
+                      AND card_collection.card_id = :cardId
+                )
+                SQL,
+            [
+                'cardId' => $this->getId(),
+            ],
+        );
     }
 }
