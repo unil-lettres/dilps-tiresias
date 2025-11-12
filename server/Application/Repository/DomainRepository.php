@@ -14,25 +14,20 @@ class DomainRepository extends AbstractHasParentRepository
 {
     public function getByCards(array $filter): array
     {
-        // Create filtered query builder and select only IDs to minimize memory usage
+        // Create filtered query builder for the subquery
         $cardQb = _types()->createFilteredQueryBuilder(Card::class, $filter, []);
         $cardAlias = $cardQb->getRootAliases()[0];
         $cardQb->select($cardAlias . '.id');
-
-        $result = $cardQb->getQuery()->getScalarResult();
-        $cardIds = array_column($result, 'id');
-
-        if (count($cardIds) === 0) {
-            return [];
-        }
 
         $qb = $this
             ->createQueryBuilder('d')
             ->innerJoin(Card::class, 'c')
             ->innerJoin('c.domains', 'd2', 'WITH', 'd2.id = d.id')
-            ->where('c.id in (' . implode(',', $cardIds) . ')')
+            ->where('c.id IN (' . $cardQb->getDQL() . ')')
             ->groupBy('d.id')
-            ->orderBy('COUNT(c.id)', 'DESC');
+            ->orderBy('COUNT(c.id)', 'DESC')
+            ->addOrderBy('d.id', 'ASC')
+            ->setParameters($cardQb->getParameters());
 
         return $qb->getQuery()->getResult();
     }
