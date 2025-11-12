@@ -90,14 +90,10 @@ REPLACE INTO `domain` (`id`, `name`, `site`) VALUES
 
 REPLACE INTO `card_domain` (`domain_id`, `card_id`) VALUES
 	(9000, 6007),
-	(9000, 6007),
 	(9001, 6008),
-	(9001, 6008),
-	(9002, 6001),
 	(9002, 6001),
 	(9002, 6002),
 	(9002, 6006),
-	(9003, 6002),
 	(9003, 6002);
 
 REPLACE INTO `document_type` (`id`, `name`, `site`) VALUES
