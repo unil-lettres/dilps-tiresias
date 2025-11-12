@@ -43,19 +43,19 @@ class FriendlyExceptionTest extends TestCase
         yield [
             $this->createImagickException("width or height exceeds limit `/sites/dilps.lan/data/cache/images/68b051784b5ba-5.webp' @ error/webp.c/WriteWEBPImage/1147"),
             Exception::class,
-            '~^Maximum image dimension is .+ x .+ pixels, but it was exceeded$~',
+            '~^La dimension maximale de l\'image est de .+ x .+ pixels, mais elle a été dépassée\.$~',
         ];
 
         yield [
             $this->createImagickException("cache resources exhausted `white' @ error/cache.c/OpenPixelCache/4119."),
             Exception::class,
-            '~^Maximum cache size is .+iB, but it was exceeded$~',
+            '~^La taille maximale du cache est de .+iB, mais elle a été dépassée\.$~',
         ];
 
         yield [
             $this->createImagickException("Unable to open image /sites/dilps.lan/data/images/68b054ec8f219.JPGtime limit exceeded `/sites/dilps.lan/data/images/68b054ec8f219.JPG' @ fatal/cache.c/GetImagePixelCache/1867"),
             Exception::class,
-            '~^Maximum image processing time is .+ seconds, but it was exceeded$~',
+            '~^Le temps maximum de traitement d\'image est de .+ secondes, mais il a été dépassé\.$~',
         ];
 
         yield [

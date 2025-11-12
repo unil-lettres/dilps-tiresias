@@ -38,13 +38,13 @@ abstract class FriendlyException
                 // see https://github.com/Imagick/imagick/blob/45adfb7b1e322eaa6174e88f7d5e27ef20e0596e/imagick_helpers.c#L1672-L1675
                 $maxWidth = Utility::formatMetric(Imagick::getResourceLimit(Imagick::RESOURCETYPE_WIDTH));
                 $maxHeight = Utility::formatMetric(Imagick::getResourceLimit(Imagick::RESOURCETYPE_HEIGHT));
-                self::throw("Maximum image dimension is $maxWidth x $maxHeight pixels, but it was exceeded", $e);
+                self::throw("La dimension maximale de l'image est de $maxWidth x $maxHeight pixels, mais elle a été dépassée.", $e);
             } elseif (str_starts_with($message, 'cache resources exhausted')) {
                 $maxCache = Utility::formatMetric(Imagick::getResourceLimit(Imagick::RESOURCETYPE_DISK));
-                self::throw("Maximum cache size is {$maxCache}iB, but it was exceeded", $e);
+                self::throw("La taille maximale du cache est de {$maxCache}iB, mais elle a été dépassée.", $e);
             } elseif (str_contains($message, 'time limit exceeded')) {
                 $maxTime = Imagick::getResourceLimit(Imagick::RESOURCETYPE_TIME);
-                self::throw("Maximum image processing time is $maxTime seconds, but it was exceeded", $e);
+                self::throw("Le temps maximum de traitement d'image est de $maxTime secondes, mais il a été dépassé.", $e);
             }
 
             throw $e;
