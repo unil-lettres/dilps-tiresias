@@ -71,7 +71,7 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
                 hasFilesAndProcessDate(errorResponse.operation.variables)
             ) {
                 // Trying our best to rescue a total crash of PHP because of a total crash of ImageMagick
-                const message = `Il est possible que l'image uploadée ait entrainé une erreur sur le serveur. Modifiez l'image avant de l'uploader ou transmettez la par email à un responsable.`;
+                const message = `L'image n'a pas pu être traitée par le serveur. Essayez de convertir l'image dans un autre format.`;
                 alertService.error(message, 5000);
                 networkActivityService.addErrors([{message: message}]);
             } else {
