@@ -1,4 +1,4 @@
-import {Directive, input} from '@angular/core';
+import {Directive, forwardRef, input} from '@angular/core';
 import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors} from '@angular/forms';
 import {NaturalAbstractModelService, unique} from '@ecodev/natural';
 import {Observable, of} from 'rxjs';
@@ -8,7 +8,7 @@ import {Observable, of} from 'rxjs';
     providers: [
         {
             provide: NG_ASYNC_VALIDATORS,
-            useExisting: UniqueValidatorDirective,
+            useExisting: forwardRef(() => UniqueValidatorDirective),
             multi: true,
         },
     ],
