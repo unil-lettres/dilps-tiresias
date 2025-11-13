@@ -564,6 +564,11 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public dropImage(selection: FileSelection): void {
+        if (selection.valid.length + selection.invalid.length > 1) {
+            this.alertService.info("Veuillez déposer un seul fichier pour l'image de la fiche.", 5000);
+            return;
+        }
+
         if (handleFileSizeErrors(selection, this.alertService)) {
             return;
         }
@@ -573,7 +578,7 @@ export class CardComponent implements OnInit, OnChanges {
             return;
         }
 
-        const file = files[files.length - 1];
+        const file = files[0];
         this.model.file = file;
         this.getBase64(file);
     }
