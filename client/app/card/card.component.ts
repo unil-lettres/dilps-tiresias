@@ -94,6 +94,8 @@ import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardSkeletonComponent} from './card-skeleton.component';
 import {CardService} from './services/card.service';
+import {UPLOAD_CONFIG} from '../shared/config/upload.config';
+import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -455,6 +457,7 @@ export class CardComponent implements OnInit, OnChanges {
     public formIsValid = true;
     public readonly code = viewChild<NgModel>('code');
     public readonly url = viewChild<NgModel>('code');
+    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
     public urlModel: NgModel | null = null;
     public collectionCopyrights = '';
     public isDilps = true;
@@ -561,7 +564,15 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     public dropImage(selection: FileSelection): void {
+        if (handleFileSizeErrors(selection, this.alertService)) {
+            return;
+        }
+
         const files = selection.valid;
+        if (files.length === 0) {
+            return;
+        }
+
         const file = files[files.length - 1];
         this.model.file = file;
         this.getBase64(file);

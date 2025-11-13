@@ -94,6 +94,7 @@
                                         matTooltipPosition="after"
                                         naturalFileSelect
                                         [multiple]="true"
+                                        [maxSize]="maxFileSize"
                                         (filesChange)="uploadImages($event)"
                                     >
                                         <mat-icon matListItemIcon naturalIcon="file_upload" />

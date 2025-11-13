@@ -38,6 +38,8 @@ import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {UPLOAD_CONFIG} from '../shared/config/upload.config';
+import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -90,6 +92,7 @@ export class HomeComponent implements OnInit {
     public nav = 1;
     public progress: number | null = null;
     private uploaded = 0;
+    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -127,6 +130,8 @@ export class HomeComponent implements OnInit {
     }
 
     public uploadImages(selection: FileSelection): void {
+        handleFileSizeErrors(selection, this.alertService);
+
         const files = selection.valid;
         const excel = files.find(isExcel);
         if (excel) {

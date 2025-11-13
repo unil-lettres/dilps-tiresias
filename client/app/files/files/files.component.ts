@@ -17,6 +17,8 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCell, MatCellDef, MatColumnDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
 import {NgClass} from '@angular/common';
+import {UPLOAD_CONFIG} from '../../shared/config/upload.config';
+import {handleFileSizeErrors} from '../../shared/utils/file-selection.utils';
 
 type Tuple = {
     file?: FileMinimal;
@@ -68,6 +70,7 @@ export class FilesComponent implements OnInit {
      * This list should be kept in sync with \Application\Model\File::getAcceptedMimeTypes
      */
     public readonly accept = '.pdf, .doc, .docx, .xls, .xlsx, .odt, .ods';
+    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
     public get card(): Card['card'] {
         return this._card;
@@ -111,6 +114,8 @@ export class FilesComponent implements OnInit {
     }
 
     public uploadFiles(selection: FileSelection): void {
+        handleFileSizeErrors(selection, this.alertService);
+
         selection.valid.forEach(file => {
             const input: FileInput = {
                 card: this._card,
