@@ -44,8 +44,6 @@
         />
         <span matTextSuffix>m</span>
 
-        @if (distanceCtrl.hasError('min')) {
-            <mat-error>Le rayon doit être positif</mat-error>
-        }
+        <mat-error>{{ distanceCtrl.errors | errorMessage }}</mat-error>
     </mat-form-field>
 </form>

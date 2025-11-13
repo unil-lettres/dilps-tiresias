@@ -1,3 +1,4 @@
+import {NaturalErrorMessagePipe} from '@ecodev/natural';
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
@@ -13,7 +14,16 @@ import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 
 @Component({
-    imports: [FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatError, MatSuffix, MatInput],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormField,
+        MatLabel,
+        MatError,
+        NaturalErrorMessagePipe,
+        MatSuffix,
+        MatInput,
+    ],
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
 })

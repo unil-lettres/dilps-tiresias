@@ -1,3 +1,4 @@
+import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
 import {Component, inject, viewChild} from '@angular/core';
 import {
     AbstractControl,
@@ -15,7 +16,6 @@ import {UniqueValidatorDirective} from '../../shared/directives/unique-validator
 import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
-import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {MatOption} from '@angular/material/core';

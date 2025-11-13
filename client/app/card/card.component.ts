@@ -1,3 +1,11 @@
+import {
+    FileSelection,
+    NaturalFileDropDirective,
+    NaturalIconDirective,
+    NaturalLinkMutationService,
+    NaturalRelationsComponent,
+    NaturalTableButtonComponent,
+} from '@ecodev/natural';
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {NgClass} from '@angular/common';
@@ -16,14 +24,6 @@ import {MatSlider, MatSliderThumb} from '@angular/material/slider';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-    FileSelection,
-    NaturalFileDropDirective,
-    NaturalIconDirective,
-    NaturalLinkMutationService,
-    NaturalRelationsComponent,
-    NaturalTableButtonComponent,
-} from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
 import {concatMap, first, from, last} from 'rxjs';

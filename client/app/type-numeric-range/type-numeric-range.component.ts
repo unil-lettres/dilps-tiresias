@@ -1,3 +1,10 @@
+import {
+    DropdownComponent,
+    FilterGroupConditionField,
+    NATURAL_DROPDOWN_DATA,
+    NaturalDropdownData,
+    NaturalDropdownRef,
+} from '@ecodev/natural';
 import {Component, inject} from '@angular/core';
 import {
     AbstractControl,
@@ -13,13 +20,6 @@ import {
 } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {BehaviorSubject} from 'rxjs';
-import {
-    DropdownComponent,
-    FilterGroupConditionField,
-    NATURAL_DROPDOWN_DATA,
-    NaturalDropdownData,
-    NaturalDropdownRef,
-} from '@ecodev/natural';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField} from '@angular/material/form-field';
 
