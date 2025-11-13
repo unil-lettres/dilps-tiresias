@@ -45,6 +45,33 @@ export const cacheConfig: InMemoryCacheConfig = {
 };
 
 /**
+ * Translate PHP configuration error messages to French
+ *
+ * Errors handled:
+ * - upload_max_filesize
+ * - post_max_size
+ * - max_execution_time
+ *
+ * @param message The original error message
+ * @returns Translated error message
+ */
+function translatePhpConfigurationError(message: string): string {
+    if (message.includes('upload_max_filesize')) {
+        return 'Le fichier dépasse la limite de taille autorisée.';
+    }
+
+    if (message.includes('post_max_size')) {
+        return 'La taille totale des données envoyées dépasse la limite autorisée.';
+    }
+
+    if (message.includes('max_execution_time') || message.includes('Maximum execution time')) {
+        return "L'opération a pris trop de temps à s'exécuter.";
+    }
+
+    return message;
+}
+
+/**
  * Create an Apollo link to show alert in case of error, and message if network is down
  */
 function createErrorLink(networkActivityService: NetworkActivityService, alertService: AlertService): ApolloLink {
@@ -63,8 +90,9 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
                 [413, 500].includes(networkError.status) &&
                 typeof networkError.error?.message === 'string'
             ) {
-                alertService.error(networkError.error.message, 5000);
-                networkActivityService.addErrors([networkError.error]);
+                const translatedMessage = translatePhpConfigurationError(networkError.error.message);
+                alertService.error(translatedMessage, 5000);
+                networkActivityService.addErrors([{...networkError.error, message: translatedMessage}]);
             } else if (
                 networkError instanceof HttpErrorResponse &&
                 networkError.status === 502 &&
@@ -84,17 +112,18 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
         if (errorResponse.graphQLErrors) {
             // eslint-disable-next-line @typescript-eslint/no-deprecated
             errorResponse.graphQLErrors.forEach(error => {
+                const translatedMessage = translatePhpConfigurationError(error.message);
+
                 if ('extensions' in error && error.extensions?.showSnack) {
                     // Show whatever server prepared for end-user, with a bit more time to read
-                    alertService.error(error.message, 5000);
+                    alertService.error(translatedMessage, 5000);
                 } else {
                     // Use a generic message for internal error not to frighten end-user too much
                     alertService.error('Une erreur est survenue du côté du serveur');
                 }
-            });
 
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            networkActivityService.addErrors(errorResponse.graphQLErrors);
+                networkActivityService.addErrors([{...error, message: translatedMessage}]);
+            });
         }
     });
 }
