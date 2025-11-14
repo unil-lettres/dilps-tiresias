@@ -66,10 +66,7 @@ export class FilesComponent implements OnInit {
 
     private _disabled = false;
 
-    /**
-     * This list should be kept in sync with \Application\Model\File::getAcceptedMimeTypes
-     */
-    public readonly accept = '.pdf, .doc, .docx, .xls, .xlsx, .odt, .ods';
+    public readonly accept = UPLOAD_CONFIG.ACCEPTED_CARD_FILES_TYPES;
     public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
     public get card(): Card['card'] {
