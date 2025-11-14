@@ -219,7 +219,7 @@ export class ThesaurusComponent<
         });
     }
 
-    public openItem(item: ThesaurusModel): void {
+    protected openItem(item: ThesaurusModel): void {
         const previewComponent = this.previewComponent();
         if (!previewComponent) {
             return;
@@ -237,7 +237,7 @@ export class ThesaurusComponent<
             });
     }
 
-    public focus(): void {
+    protected focus(): void {
         if (!this.hierarchicSelectorConfig()) {
             this.startSearch();
         } else {
@@ -248,7 +248,7 @@ export class ThesaurusComponent<
     /**
      * Start search only when focusing on the input
      */
-    public startSearch(): void {
+    protected startSearch(): void {
         /**
          * Start search only once
          */
@@ -268,7 +268,7 @@ export class ThesaurusComponent<
         });
     }
 
-    public openDialog(): void {
+    protected openDialog(): void {
         if (this.lockOpenDialog) {
             return;
         }
@@ -324,7 +324,7 @@ export class ThesaurusComponent<
             });
     }
 
-    public removeTerm(term: ThesaurusModel): void {
+    protected removeTerm(term: ThesaurusModel): void {
         const index = this.items.findIndex(item => item.name === term.name);
         if (index >= 0) {
             this.items.splice(index, 1);
@@ -337,7 +337,7 @@ export class ThesaurusComponent<
      * On enter key, find if there is an active (focused) option in the mat-select).
      * If not add the term as is. If it does, add the selected option.
      */
-    public onEnter(): void {
+    protected onEnter(): void {
         const inputValue = this.thesaurusInput().nativeElement.value;
         if (inputValue && this.allowFreeText()) {
             this.addTerm({name: inputValue});
@@ -347,7 +347,7 @@ export class ThesaurusComponent<
     /**
      * When click or keypress enter on a suggestion
      */
-    public selectSuggestion(event: MatAutocompleteSelectedEvent): void {
+    protected selectSuggestion(event: MatAutocompleteSelectedEvent): void {
         this.addTerm(event.option.value);
     }
 
@@ -407,7 +407,7 @@ export class ThesaurusComponent<
         }
     }
 
-    public getLabel(item: ThesaurusModel): string {
+    protected getLabel(item: ThesaurusModel): string {
         let result = item.hierarchicName || item.name;
 
         if (!this.readonly() && item.__typename === 'Period') {

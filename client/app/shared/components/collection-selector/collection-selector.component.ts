@@ -97,11 +97,14 @@ export class CollectionSelectorComponent implements OnInit {
         }
     }
 
-    public link(): void {
+    protected link(): void {
         this.linkInternal(this.collection!);
     }
 
-    public unlink(image: Cards['cards']['items'][0], collection: Cards['cards']['items'][0]['collections'][0]): void {
+    protected unlink(
+        image: Cards['cards']['items'][0],
+        collection: Cards['cards']['items'][0]['collections'][0],
+    ): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
             const splicedCollection = [...image.collections];
@@ -114,7 +117,7 @@ export class CollectionSelectorComponent implements OnInit {
         });
     }
 
-    public createAndLink(): void {
+    protected createAndLink(): void {
         this.collectionService.create(this.newCollection).subscribe(collection => {
             this.linkInternal(collection);
         });

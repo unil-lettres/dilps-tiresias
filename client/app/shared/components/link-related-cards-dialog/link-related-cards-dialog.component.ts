@@ -39,7 +39,7 @@ export class LinkRelatedCardsDialogComponent {
         this.help = data.help;
     }
 
-    public filterCheckedCards(): CheckablCards {
+    protected filterCheckedCards(): CheckablCards {
         return this.cards.filter(card => card.checked);
     }
 }

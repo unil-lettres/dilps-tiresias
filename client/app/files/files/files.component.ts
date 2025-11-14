@@ -110,7 +110,7 @@ export class FilesComponent implements OnInit {
         );
     }
 
-    public uploadFiles(selection: FileSelection): void {
+    protected uploadFiles(selection: FileSelection): void {
         handleFileSizeErrors(selection, this.alertService);
 
         selection.valid.forEach(file => {
@@ -130,7 +130,7 @@ export class FilesComponent implements OnInit {
         });
     }
 
-    public delete(tuple: Tuple): void {
+    protected delete(tuple: Tuple): void {
         this.alertService
             .confirm(`Suppression`, `Voulez-vous supprimer définitivement le fichier ?`, `Supprimer définitivement`)
             .subscribe(confirmed => {

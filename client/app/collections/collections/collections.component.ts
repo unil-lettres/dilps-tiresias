@@ -134,7 +134,7 @@ export class CollectionsComponent implements OnInit {
         });
     }
 
-    public toggle(collection: Collections['collections']['items'][0]): void {
+    protected toggle(collection: Collections['collections']['items'][0]): void {
         if (this.children.has(collection.id)) {
             this.children.delete(collection.id);
         } else {
@@ -154,16 +154,16 @@ export class CollectionsComponent implements OnInit {
             });
     }
 
-    public search(term: SearchOperatorString): void {
+    protected search(term: SearchOperatorString): void {
         this.queryVariables.set('search', {filter: {groups: [{conditions: [{custom: {search: term}}]}]}});
     }
 
-    public more(): void {
+    protected more(): void {
         const nextPage = this.queryVariables.variables.value!.pagination!.pageIndex! + 1;
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    public edit(event: MouseEvent, collection: Collections['collections']['items'][0]): void {
+    protected edit(event: MouseEvent, collection: Collections['collections']['items'][0]): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -180,7 +180,7 @@ export class CollectionsComponent implements OnInit {
         });
     }
 
-    public add(): void {
+    protected add(): void {
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 

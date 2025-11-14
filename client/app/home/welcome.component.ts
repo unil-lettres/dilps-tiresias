@@ -12,7 +12,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 export class WelcomeComponent {
     public readonly site = inject(SITE);
 
-    public getTitle(): string {
+    protected getTitle(): string {
         switch (this.site) {
             case Site.Tiresias:
                 return 'Bienvenue sur Tirésias';
@@ -22,7 +22,7 @@ export class WelcomeComponent {
         }
     }
 
-    public getContent(): string {
+    protected getContent(): string {
         switch (this.site) {
             case Site.Tiresias:
                 return "La banque d'images de l'Institut d'archéologie et des sciences de l'Antiquité de l'Université de Lausanne.";

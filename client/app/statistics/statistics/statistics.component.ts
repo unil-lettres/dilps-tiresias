@@ -340,14 +340,14 @@ export class StatisticsComponent {
         }
     }
 
-    public update(): void {
+    protected update(): void {
         const period = this.availablePeriods.find(p => p.key === this.period);
         this.frequentationQvm.set('filter', {filter: period!.filter});
         this.applyFrequentationTypeSelection();
         this.fetchCardAndUser();
     }
 
-    public applyFrequentationTypeSelection(): void {
+    protected applyFrequentationTypeSelection(): void {
         this.frequentation = {
             tables: [
                 {
@@ -367,7 +367,7 @@ export class StatisticsComponent {
         };
     }
 
-    public applyCardAndUserTypeSelection(): void {
+    protected applyCardAndUserTypeSelection(): void {
         this.cards = this.raw[this.cardType];
         this.users = this.raw[this.userType];
     }
@@ -387,7 +387,7 @@ export class StatisticsComponent {
             });
     }
 
-    public displayFn(item: Users['users']['items'][0] | string | null): string {
+    protected displayFn(item: Users['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 }

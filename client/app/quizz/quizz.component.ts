@@ -66,13 +66,13 @@ export class QuizzComponent implements OnInit {
         });
     }
 
-    public goToNext(): void {
+    protected goToNext(): void {
         this.formCtrl.setValue('');
         const index = this.cards.findIndex(c => c === this.card?.id);
         this.getCard(this.cards[index + 1]);
     }
 
-    public getArtistsNames(artists: Card['card']['artists']): string {
+    protected getArtistsNames(artists: Card['card']['artists']): string {
         return artists.map(a => a.name).join(', ');
     }
 

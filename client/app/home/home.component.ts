@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    public uploadImages(selection: FileSelection): void {
+    protected uploadImages(selection: FileSelection): void {
         handleFileSizeErrors(selection, this.alertService);
 
         const files = selection.valid;
@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    public uploadImagesOnly(files: File[]): void {
+    protected uploadImagesOnly(files: File[]): void {
         const inputs = files.map(file => {
             const card = this.cardService.getDefaultForServer();
             card.file = file;
@@ -217,7 +217,7 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    public uploadImagesAndExcel(excel: File, images: File[]): void {
+    protected uploadImagesAndExcel(excel: File, images: File[]): void {
         this.selectCollection().subscribe(collection => {
             this.cardService.createWithExcel(excel, images, collection!).subscribe(() => {
                 this.redirectAfterCreation(collection);
@@ -246,7 +246,7 @@ export class HomeComponent implements OnInit {
             .afterClosed();
     }
 
-    public editUser(): void {
+    protected editUser(): void {
         this.userService.getCurrentUser().subscribe(user => {
             this.dialog.open(UserComponent, {
                 width: '800px',
@@ -255,11 +255,11 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    public showNavigationMenu(): boolean {
+    protected showNavigationMenu(): boolean {
         return !!this.nav;
     }
 
-    public showThesaurusMenu(): boolean {
+    protected showThesaurusMenu(): boolean {
         const dilpsRoles = [UserRole.administrator, UserRole.senior, UserRole.major, UserRole.junior];
         const tiresiasRoles = [UserRole.administrator];
         const applicableRoles = this.site === Site.Dilps ? dilpsRoles : tiresiasRoles;
@@ -280,11 +280,11 @@ export class HomeComponent implements OnInit {
             });
     }
 
-    public mailto(): void {
+    protected mailto(): void {
         document.location.href = 'mailto:' + this.contact();
     }
 
-    public contact(): string {
+    protected contact(): string {
         switch (this.site) {
             case Site.Tiresias:
                 return 'tiresias@unil.ch';

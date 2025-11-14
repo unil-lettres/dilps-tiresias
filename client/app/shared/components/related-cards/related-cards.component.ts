@@ -137,11 +137,11 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
         this.resizeObserver.disconnect();
     }
 
-    public scrollLeft(): void {
+    protected scrollLeft(): void {
         this.slideshow().nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
     }
 
-    public scrollRight(): void {
+    protected scrollRight(): void {
         this.slideshow().nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
     }
 
@@ -149,7 +149,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      * Update the state of the scroll buttons (left and right) according to the
      * current scroll position and the size of the slideshow.
      */
-    public updateButtonsState(): void {
+    protected updateButtonsState(): void {
         const slideshow = this.slideshow().nativeElement;
 
         this.scrollBarAtLeft = slideshow.scrollLeft == 0;

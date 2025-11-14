@@ -299,17 +299,17 @@ export class AddressComponent implements OnInit, OnChanges {
         }
     }
 
-    public updateSearch(): void {
+    protected updateSearch(): void {
         const address = this.getAddressAsString();
         this.formCtrl.setValue(address);
     }
 
-    public search(): void {
+    protected search(): void {
         this.updateSearch();
         this.inputRef().nativeElement.focus(); // focus in input to open google suggestions
     }
 
-    public onPlaceChange(): void {
+    protected onPlaceChange(): void {
         const place: google.maps.places.PlaceResult = this.autocomplete!.getPlace();
 
         // verify result
@@ -325,7 +325,7 @@ export class AddressComponent implements OnInit, OnChanges {
         merge(this.model!, this.addressService.buildAddress(place));
     }
 
-    public onMarkerDrag(ev: google.maps.MapMouseEvent): void {
+    protected onMarkerDrag(ev: google.maps.MapMouseEvent): void {
         this.latitude = ev.latLng!.lat();
         this.longitude = ev.latLng!.lng();
 
@@ -376,7 +376,7 @@ export class AddressComponent implements OnInit, OnChanges {
         return address.filter(v => !!v).join(', ');
     }
 
-    public recenter(): void {
+    protected recenter(): void {
         this.latitude = this.model!.latitude!;
         this.longitude = this.model!.longitude!;
     }

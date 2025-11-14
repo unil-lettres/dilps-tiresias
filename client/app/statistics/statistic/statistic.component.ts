@@ -108,7 +108,7 @@ export class StatisticComponent {
     };
     public chartUpdated = false;
 
-    public update(chart: SimpleChart): void {
+    protected update(chart: SimpleChart): void {
         this.chartOptions = {
             chart: {
                 type: 'column',

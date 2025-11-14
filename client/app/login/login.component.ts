@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Send mutation to log the user and redirect to home.
      */
-    public login(): void {
+    protected login(): void {
         this.snackBar.dismiss();
         this.loading = true;
         this.userService
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     /**
      * Serializes and parses an URL to encode it.
      */
-    public encodeUrl(url: string): string {
+    protected encodeUrl(url: string): string {
         return encodeURIComponent(url);
     }
 }

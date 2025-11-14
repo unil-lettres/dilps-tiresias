@@ -12,7 +12,7 @@ export class LogoComponent {
 
     public readonly data = input({type: 'main', class: 'logo-main'});
 
-    public path(): string {
+    protected path(): string {
         switch (this.site) {
             case Site.Tiresias:
                 if (this.data().type === 'main') {

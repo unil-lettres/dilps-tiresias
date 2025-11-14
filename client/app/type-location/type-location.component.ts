@@ -72,7 +72,7 @@ export class TypeLocationComponent implements DropdownComponent {
         return this.form.dirty;
     }
 
-    public close(): void {
+    protected close(): void {
         if (this.isValid()) {
             this.dropdownRef.close({condition: this.getCondition()});
         } else {

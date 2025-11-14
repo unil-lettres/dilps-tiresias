@@ -71,7 +71,7 @@ export class ViewMapComponent {
         };
     }
 
-    public convertIntoMarkers(cards: Cards['cards']['items'][0][]): Marker[] {
+    protected convertIntoMarkers(cards: Cards['cards']['items'][0][]): Marker[] {
         return cards
             .filter(c => c.latitude && c.longitude)
             .map(c => {
@@ -86,7 +86,7 @@ export class ViewMapComponent {
             });
     }
 
-    public forwardSearch(marker: Marker | null): void {
+    protected forwardSearch(marker: Marker | null): void {
         if (!marker) {
             return;
         }
@@ -117,7 +117,7 @@ export class ViewMapComponent {
         );
     }
 
-    public openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
+    protected openInfoWindow(mapMarker: MapMarker, marker: Marker): void {
         this.selectedMarker = marker;
         this.infoWindow()?.open(mapMarker);
     }

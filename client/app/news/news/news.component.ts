@@ -40,7 +40,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
         super(inject(NewsService));
     }
 
-    public upload(event: Event): void {
+    protected upload(event: Event): void {
         const target: HTMLInputElement = event.target as HTMLInputElement;
         const file = target.files![0];
         (this.data.item as unknown as NewsInput).file = file;

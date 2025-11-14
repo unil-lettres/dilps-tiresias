@@ -344,7 +344,7 @@ export class ListComponent
         );
     }
 
-    public toggleLabels(): void {
+    protected toggleLabels(): void {
         this.showLabels = !this.showLabels;
         this.gridComponent()
             ?.gallery()
@@ -365,7 +365,7 @@ export class ListComponent
         }
     }
 
-    public gridContentChange(event: ContentChange): void {
+    protected gridContentChange(event: ContentChange): void {
         if (event.visible != null) {
             this.gridNumberVisibleItems = event.visible;
         }
@@ -378,7 +378,7 @@ export class ListComponent
     /**
      * Persist list rendering in session storage.
      */
-    public setViewMode(mode: ViewMode): void {
+    protected setViewMode(mode: ViewMode): void {
         this.viewMode = mode;
 
         if (mode !== ViewMode.map) {
@@ -390,31 +390,31 @@ export class ListComponent
     /**
      * Show a button to download a collection, considering permissions
      */
-    public updateShowDownloadCollection(): void {
+    protected updateShowDownloadCollection(): void {
         const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
         const roleIsAllowed = this.user?.role && (!roles || roles?.includes(this.user.role));
         const hasCollection = this.collection?.id;
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
 
-    public select(cards: Cards['cards']['items'][0][]): void {
+    protected select(cards: Cards['cards']['items'][0][]): void {
         this.selected = cards;
     }
 
-    public reset(): void {
+    protected reset(): void {
         this.selected = [];
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
-    public linkSelectionToCollection(selection: Cards['cards']['items'][0][]): void {
+    protected linkSelectionToCollection(selection: Cards['cards']['items'][0][]): void {
         this.linkToCollection({images: selection});
     }
 
-    public linkCollectionToCollection(collection: FakeCollection): void {
+    protected linkCollectionToCollection(collection: FakeCollection): void {
         this.linkToCollection({collection});
     }
 
-    public unlinkFromCollection(selection: Cards['cards']['items'][0][]): void {
+    protected unlinkFromCollection(selection: Cards['cards']['items'][0][]): void {
         if (!this.collection) {
             return;
         }
@@ -425,7 +425,7 @@ export class ListComponent
         });
     }
 
-    public delete(selection: Cards['cards']['items'][0][]): void {
+    protected delete(selection: Cards['cards']['items'][0][]): void {
         this.alertService
             .confirm(
                 'Suppression',
@@ -442,7 +442,7 @@ export class ListComponent
             });
     }
 
-    public goToQuizz(selected: Cards['cards']['items'][0][] | null = null): void {
+    protected goToQuizz(selected: Cards['cards']['items'][0][] | null = null): void {
         if (selected) {
             const selectedIds = shuffleArray(selected.map(e => e.id)).join(',');
             this.router.navigateByUrl('/quizz;cards=' + selectedIds);
@@ -470,7 +470,7 @@ export class ListComponent
         }
     }
 
-    public edit(selected: Cards['cards']['items'][0][]): void {
+    protected edit(selected: Cards['cards']['items'][0][]): void {
         const forbidden = selected.filter(card => !card.permissions.update);
         const changeable = forbidden.filter(card => UserService.canSuggestUpdate(this.user, card));
         const unchangeable = forbidden.filter(card => !UserService.canSuggestUpdate(this.user, card));
@@ -547,13 +547,13 @@ export class ListComponent
             });
     }
 
-    public selectAll(): void {
+    protected selectAll(): void {
         this.getViewComponent()
             .selectAll()
             .then(number => (this.selected = number));
     }
 
-    public unselectAll(): void {
+    protected unselectAll(): void {
         this.selected = [];
         this.getViewComponent().unselectAll();
     }
@@ -563,7 +563,7 @@ export class ListComponent
         this.statisticService.recordSearch();
     }
 
-    public fetchDomains(): Observable<SelectableDomains[]> {
+    protected fetchDomains(): Observable<SelectableDomains[]> {
         const variables = this.variablesManager.variables.value; // card variables
         if (this.site === Site.Dilps && this.hasActiveSearch()) {
             return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
@@ -578,7 +578,7 @@ export class ListComponent
         }
     }
 
-    public domainSelectionChange(): void {
+    protected domainSelectionChange(): void {
         this.variablesManager.merge('pagination', {
             pagination: pick(this.defaultPagination, ['offset', 'pageIndex']),
         });
@@ -593,7 +593,7 @@ export class ListComponent
         }
     }
 
-    public searchByLocation($event: Location): void {
+    protected searchByLocation($event: Location): void {
         this.viewMode = ViewMode.grid;
         this.naturalSearchSelections = [
             [
@@ -613,7 +613,7 @@ export class ListComponent
         this.search(this.naturalSearchSelections);
     }
 
-    public canMassEdit(): boolean {
+    protected canMassEdit(): boolean {
         return (
             !!this.user?.role &&
             [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)

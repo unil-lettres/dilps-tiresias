@@ -499,7 +499,7 @@ export class CardComponent implements OnInit, OnChanges {
             });
     }
 
-    public updateFormValidity(): void {
+    protected updateFormValidity(): void {
         this.formIsValid = ((!this.urlModel || this.urlModel.valid) && (!this.code() || this.code()?.valid)) ?? false;
     }
 
@@ -559,11 +559,11 @@ export class CardComponent implements OnInit, OnChanges {
         this.statisticService.recordDetail();
     }
 
-    public toggleEdit(): void {
+    protected toggleEdit(): void {
         this.edit = !this.edit;
     }
 
-    public dropImage(selection: FileSelection): void {
+    protected dropImage(selection: FileSelection): void {
         if (selection.valid.length + selection.invalid.length > 1) {
             this.alertService.info("Veuillez déposer un seul fichier pour l'image de la fiche.", 5000);
             return;
@@ -585,7 +585,7 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public initCard(): void {
+    protected initCard(): void {
         if (this.model) {
             this.isDilps = this.model.site === Site.Dilps;
 
@@ -623,7 +623,7 @@ export class CardComponent implements OnInit, OnChanges {
         }
     }
 
-    public openCopyRelatedCardsDialog(card: Card['card']): void {
+    protected openCopyRelatedCardsDialog(card: Card['card']): void {
         this.assertFetchedCard(this.fetchedModel);
         let otherCards: Card['card']['cards'] = [];
 
@@ -670,7 +670,7 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public openLinkRelatedCardsDialog(): void {
+    protected openLinkRelatedCardsDialog(): void {
         this.openRelatedCardsDialog(
             cards => {
                 // Link all cards to each others (cards already link will not be affected).
@@ -713,7 +713,7 @@ export class CardComponent implements OnInit, OnChanges {
      * @param checkCards Cancel the dialog if the returned value is false.
      * Receive the cards returned by cardsInput.
      */
-    public openRelatedCardsDialog(
+    protected openRelatedCardsDialog(
         process: (cards: Card['card']['cards']) => void,
         title: string,
         help: string,
@@ -777,19 +777,19 @@ export class CardComponent implements OnInit, OnChanges {
         }
     }
 
-    public canUpdateCode(): boolean {
+    protected canUpdateCode(): boolean {
         return !!this.user && [UserRole.major, UserRole.administrator].includes(this.user.role);
     }
 
-    public showSuggestedCode(): boolean {
+    protected showSuggestedCode(): boolean {
         return this.edit && this.canUpdateCode() && !!this.suggestedCode && this.suggestedCode !== this.model.code;
     }
 
-    public updateVisibility(): void {
+    protected updateVisibility(): void {
         this.model.visibility = this.visibilities[this.visibility].value;
     }
 
-    public update(): void {
+    protected update(): void {
         if (!this.isFetchedCard(this.model)) {
             return;
         }
@@ -813,14 +813,14 @@ export class CardComponent implements OnInit, OnChanges {
         });
     }
 
-    public create(): void {
+    protected create(): void {
         this.cardService.create(this.model).subscribe(card => {
             this.alertService.info('Créé');
             this.router.navigate(['..', card.id], {relativeTo: this.route});
         });
     }
 
-    public confirmDelete(): void {
+    protected confirmDelete(): void {
         this.alertService
             .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
             .subscribe(confirmed => {
@@ -835,26 +835,26 @@ export class CardComponent implements OnInit, OnChanges {
             });
     }
 
-    public suggestUpdate(): void {
+    protected suggestUpdate(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.router.navigateByUrl('notification/new/' + this.fetchedModel.id);
     }
 
-    public suggestDeletion(): void {
+    protected suggestDeletion(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.changeService.suggestDeletion(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
-    public suggestCreation(): void {
+    protected suggestCreation(): void {
         this.assertFetchedCard(this.fetchedModel);
         this.changeService.suggestCreation(this.fetchedModel).subscribe(() => {
             this.router.navigateByUrl('notification');
         });
     }
 
-    public linkToCollection(): void {
+    protected linkToCollection(): void {
         this.assertFetchedCard(this.fetchedModel);
 
         this.dialog
@@ -886,7 +886,7 @@ export class CardComponent implements OnInit, OnChanges {
             });
     }
 
-    public complete(): void {
+    protected complete(): void {
         this.dialog
             .open<CardSelectorComponent, never, Cards['cards']['items'][0]>(CardSelectorComponent, {
                 width: '400px',
@@ -914,7 +914,7 @@ export class CardComponent implements OnInit, OnChanges {
             });
     }
 
-    public getSuggestAddLabel(): string {
+    protected getSuggestAddLabel(): string {
         if (this.user?.role === UserRole.junior || this.user?.role === UserRole.senior) {
             return 'Soumettre';
         }
@@ -922,7 +922,7 @@ export class CardComponent implements OnInit, OnChanges {
         return "Suggérer l'ajout";
     }
 
-    public canSuggestCreate(): boolean {
+    protected canSuggestCreate(): boolean {
         return (
             !!this.user &&
             !!this.fetchedModel &&
@@ -934,15 +934,15 @@ export class CardComponent implements OnInit, OnChanges {
         );
     }
 
-    public canSuggestUpdate(): boolean {
+    protected canSuggestUpdate(): boolean {
         return UserService.canSuggestUpdate(this.user, this.fetchedModel);
     }
 
-    public canSuggestDelete(): boolean {
+    protected canSuggestDelete(): boolean {
         return this.canSuggestUpdate();
     }
 
-    public displayWith(item: Cards['cards']['items'][0] | null): string {
+    protected displayWith(item: Cards['cards']['items'][0] | null): string {
         if (!item) {
             return '';
         }
@@ -955,7 +955,7 @@ export class CardComponent implements OnInit, OnChanges {
         return namePlainText + ' (' + item.id + ')';
     }
 
-    public useSuggestedCode(event: Event): void {
+    protected useSuggestedCode(event: Event): void {
         event.preventDefault();
         this.model.code = this.suggestedCode;
 
@@ -977,7 +977,7 @@ export class CardComponent implements OnInit, OnChanges {
         }
     }
 
-    public refreshInitialCardValues(): void {
+    protected refreshInitialCardValues(): void {
         const {page, figure, table, isbn} = this.model;
         this.initialCardValues = {page, figure, table, isbn};
     }

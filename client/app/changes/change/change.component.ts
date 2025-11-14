@@ -80,7 +80,7 @@ export class ChangeComponent implements OnInit {
         }
     }
 
-    public accept(): void {
+    protected accept(): void {
         this.changeService.acceptChange(this.change).subscribe(card => {
             if (card) {
                 this.router.navigateByUrl('card/' + card.id);
@@ -90,13 +90,13 @@ export class ChangeComponent implements OnInit {
         });
     }
 
-    public reject(): void {
+    protected reject(): void {
         this.changeService.rejectChange(this.change).subscribe(() => {
             this.router.navigate(['..', 'notification']);
         });
     }
 
-    public update(): void {
+    protected update(): void {
         this.cardService.create(this.suggestionInput!).subscribe(card => {
             this.changeService.suggestUpdate(card).subscribe(() => {
                 this.router.navigateByUrl('notification');
@@ -104,7 +104,7 @@ export class ChangeComponent implements OnInit {
         });
     }
 
-    public create(): void {
+    protected create(): void {
         this.cardService.create(this.suggestionInput!).subscribe(card => {
             this.changeService.suggestCreation(card).subscribe(() => {
                 this.router.navigateByUrl('notification');

@@ -73,7 +73,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));
     }
 
-    public loadMore(event: PageEvent): void {
+    protected loadMore(event: PageEvent): void {
         this.selectionModel.clear();
         this.pagination.emit(event);
     }
@@ -90,7 +90,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
         this.selectionModel.clear();
     }
 
-    public getCardAddress(card: Cards['cards']['items'][0]): string {
+    protected getCardAddress(card: Cards['cards']['items'][0]): string {
         return [card.street, card.postcode, card.locality, card.country?.name].filter(v => !!v).join(', ');
     }
 }

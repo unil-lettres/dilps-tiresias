@@ -234,11 +234,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         );
     }
 
-    public loadMore(ev: CustomEventDetailMap<GalleryModel>['pagination']): void {
+    protected loadMore(ev: CustomEventDetailMap<GalleryModel>['pagination']): void {
         this.pagination.emit({offset: ev.offset, pageSize: ev.limit});
     }
 
-    public activate(item: GalleryModel): void {
+    protected activate(item: GalleryModel): void {
         this.router.navigate(['card', item.id]);
     }
 

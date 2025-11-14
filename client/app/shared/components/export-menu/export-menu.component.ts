@@ -71,7 +71,7 @@ export class ExportMenuComponent {
         }
     }
 
-    public menuOpened(): void {
+    protected menuOpened(): void {
         this.pptValidationMessage = 'Validation...';
 
         const input = this.exportService.getDefaultForServer();
@@ -90,12 +90,12 @@ export class ExportMenuComponent {
             });
     }
 
-    public menuClosed(): void {
+    protected menuClosed(): void {
         this.menuClosed$.next();
         this.menuClosed$.complete();
     }
 
-    public export(format: ExportFormat, theme: ExportTheme = ExportTheme.dark): void {
+    protected export(format: ExportFormat, theme: ExportTheme = ExportTheme.dark): void {
         const input = this.exportService.getDefaultForServer();
         input.cards.push(...this.selectedCards().map(card => card.id));
         const collection = this.collection();

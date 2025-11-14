@@ -104,7 +104,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         );
     }
 
-    public isShibbolethUser(): boolean {
+    protected isShibbolethUser(): boolean {
         return this.data.item.type === UserType.Aai;
     }
 
@@ -122,7 +122,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
         this.institution = model.institution;
     }
 
-    public roleDisabled(role: string): boolean {
+    protected roleDisabled(role: string): boolean {
         return !this.userRolesAvailable.includes(role as UserRole);
     }
 }

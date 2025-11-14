@@ -17,7 +17,7 @@ export class CardSelectorComponent {
 
     public card: Cards['cards']['items'][0] | null = null;
 
-    public displayWith(item: Cards['cards']['items'][0] | string | null): string {
+    protected displayWith(item: Cards['cards']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';
     }
 }

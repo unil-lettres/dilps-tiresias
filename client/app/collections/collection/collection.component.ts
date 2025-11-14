@@ -87,14 +87,14 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         super(inject(CollectionService));
     }
 
-    public updateVisibility(): void {
+    protected updateVisibility(): void {
         this.data.item.visibility = this.visibilities[this.visibility].value;
     }
 
     /**
      * Visibility is seen by >=seniors if they are the creator, or by admins if visibility is set to admin.
      */
-    public computeShowVisibility(): boolean {
+    protected computeShowVisibility(): boolean {
         // While no user loaded
         if (!this.user) {
             return false;
@@ -116,7 +116,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    public displayFn(item: Users['users']['items'][0] | string | null): string {
+    protected displayFn(item: Users['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 

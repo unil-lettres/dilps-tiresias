@@ -62,7 +62,7 @@ export class UsersComponent extends AbstractList<UserService> {
         super(inject(UserService), UserComponent);
     }
 
-    public isLegacyUser(user: Users['users']['items'][0]): boolean {
+    protected isLegacyUser(user: Users['users']['items'][0]): boolean {
         return user.type === UserType.Legacy;
     }
 }
