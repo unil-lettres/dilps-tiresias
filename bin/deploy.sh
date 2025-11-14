@@ -22,9 +22,10 @@ upload_file() {
         curl --http1.1 "$BUGSNAG_API_URL" \
             -F apiKey="$BUGSNAG_API_KEY" \
             -F minifiedUrl="https://$host/$file*.js" \
-            -F sourceMap="@$PWD/js-sources-map/$file.js.map" \
-            -F minifiedFile="@$PWD/js-sources-map/$file.js" \
+            -F sourceMap="@$PWD/data/tmp/js-sources-map/$file.js.map" \
+            -F minifiedFile="@$PWD/data/tmp/js-sources-map/$file.js" \
             -F overwrite=true
+        echo
     done
 }
 
@@ -48,13 +49,13 @@ if [[ -n "$BUGSNAG_API_KEY" && -n "$REPO_OWNER" && -n "$REPO_NAME" ]]; then
     echo "********************* Download latest available sources map artifact..."
 
     # Clean previous downloaded artifact
-    rm $PWD/js-sources-map.zip
-    rm -r $PWD/js-sources-map
+    rm $PWD/data/tmp/js-sources-map.zip
+    rm -r $PWD/data/tmp/js-sources-map
 
     URL=https://nightly.link/$REPO_OWNER/$REPO_NAME/workflows/ci/${GIT_BRANCH:-master}/js-sources-map.zip
     echo "********************* Download url : $URL..."
-    curl -L $URL -o $PWD/js-sources-map.zip
-    unzip $PWD/js-sources-map.zip -d $PWD/js-sources-map/
+    curl -L $URL -o $PWD/data/tmp/js-sources-map.zip
+    unzip $PWD/data/tmp/js-sources-map.zip -d $PWD/data/tmp/js-sources-map/
 
     files=(main)
     for file in "${files[@]}"; do
