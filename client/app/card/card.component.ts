@@ -87,7 +87,7 @@ import {periodHierarchicConfig} from '../shared/hierarchic-configurations/Period
 import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
-import {loadAsDataUrl} from '../shared/services/utility';
+import {loadImageAsDataUrl} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
@@ -580,7 +580,7 @@ export class CardComponent implements OnInit, OnChanges {
 
         const file = files[0];
         this.model.file = file;
-        loadAsDataUrl(file).then(result => {
+        loadImageAsDataUrl(file).then(result => {
             this.imageData = result;
         });
     }
@@ -807,6 +807,9 @@ export class CardComponent implements OnInit, OnChanges {
 
             this.refreshInitialCardValues();
             this.edit = false;
+
+            // Clear preview to show server image
+            this.imageData = '';
         });
     }
 

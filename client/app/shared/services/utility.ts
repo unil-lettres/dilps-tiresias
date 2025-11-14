@@ -9,7 +9,18 @@ export function shuffleArray(a: any[]): any[] {
     return a;
 }
 
-export function loadAsDataUrl(file: File | null): Promise<string> {
+/**
+ * Load an image file and return a promise that resolves with a data URL
+ * representing the image.
+ *
+ * If the image format is not supported by the browser, a placeholder data URL
+ * is returned instead.
+ *
+ * @param file The image file to load.
+ * @returns A promise that resolves with a data URL representing the image,
+ * or a placeholder data URL if the image format is not supported.
+ */
+export function loadImageAsDataUrl(file: File | null): Promise<string> {
     return new Promise((resolve, reject) => {
         if (!file) {
             reject(new Error('There is no file'));
@@ -18,7 +29,30 @@ export function loadAsDataUrl(file: File | null): Promise<string> {
 
         const reader = new FileReader();
         reader.addEventListener('load', (ev: any) => {
-            resolve(ev.target.result);
+            const dataUrl = ev.target.result;
+
+            // Test if browser can decode this image format
+            const img = new Image();
+            img.onload = () => {
+                // Image successfully decoded
+                resolve(dataUrl);
+            };
+            img.onerror = () => {
+                // Browser cannot decode this format, return placeholder
+                const placeholder = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+                        <rect width="400" height="300" fill="#f5f5f5"/>
+                        <text x="200" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#666">
+                            Aperçu non disponible
+                        </text>
+                        <text x="200" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#999">
+                            L'image sera visible après enregistrement
+                        </text>
+                    </svg>
+                `)}`;
+                resolve(placeholder);
+            };
+            img.src = dataUrl;
         });
         reader.readAsDataURL(file);
     });
