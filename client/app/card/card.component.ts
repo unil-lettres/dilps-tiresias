@@ -87,7 +87,7 @@ import {periodHierarchicConfig} from '../shared/hierarchic-configurations/Period
 import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/TagConfiguration';
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
-import {getBase64Url} from '../shared/services/utility';
+import {loadAsDataUrl} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
@@ -580,7 +580,9 @@ export class CardComponent implements OnInit, OnChanges {
 
         const file = files[0];
         this.model.file = file;
-        this.getBase64(file);
+        loadAsDataUrl(file).then(result => {
+            this.imageData = result;
+        });
     }
 
     public initCard(): void {
@@ -935,12 +937,6 @@ export class CardComponent implements OnInit, OnChanges {
 
     public canSuggestDelete(): boolean {
         return this.canSuggestUpdate();
-    }
-
-    private getBase64(file: File | null): void {
-        getBase64Url(file).then(result => {
-            this.imageData = result;
-        });
     }
 
     public displayWith(item: Cards['cards']['items'][0] | null): string {

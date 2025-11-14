@@ -55,7 +55,7 @@
                     <img [attr.src]="data.item.imageUrl" />
                 }
                 @if (imageData) {
-                    <div class="image" [style.backgroundImage]="imageData"></div>
+                    <img class="image" [attr.src]="imageData" />
                 }
             </div>
         </mat-tab>

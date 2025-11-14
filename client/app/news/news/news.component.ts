@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
-import {getBase64Url} from '../../shared/services/utility';
+import {loadAsDataUrl} from '../../shared/services/utility';
 import {NewsService} from '../services/news.service';
 import {NewsInput} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -44,7 +44,7 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
         const target: HTMLInputElement = event.target as HTMLInputElement;
         const file = target.files![0];
         (this.data.item as unknown as NewsInput).file = file;
-        getBase64Url(file).then(result => {
+        loadAsDataUrl(file).then(result => {
             this.imageData = result;
         });
     }
