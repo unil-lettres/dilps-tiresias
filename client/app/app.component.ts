@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
     /**
      * Bind theme at root-app level
      */
-    @HostBinding('class') public theme = '';
+    @HostBinding('class') protected theme = '';
 
     /**
      * When first route is loaded, hide the app-bootloader component
      */
-    public initialized = false;
+    protected initialized = false;
 
     private lastTheme = '';
 

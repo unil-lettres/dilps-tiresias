@@ -37,7 +37,7 @@ import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
     ],
 })
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-    public readonly cardService = inject(CardService);
+    protected readonly cardService = inject(CardService);
 
     /**
      * Offset to scroll when clicking on the scroll buttons.
@@ -46,37 +46,37 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
 
     public readonly card = input.required<Card['card']>();
 
-    public readonly slideshow = viewChild.required<ElementRef>('slideshow');
+    protected readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
     protected readonly isReduced = signal<boolean>(localStorage.getItem('isRelatedCardsReduced') === 'true');
 
-    public readonly CardService = CardService;
+    protected readonly CardService = CardService;
 
     /**
      * Whether the scrollbar could not scroll left anymore.
      */
-    public scrollBarAtLeft = true;
+    protected scrollBarAtLeft = true;
 
     /**
      * Whether the scrollbar could not scroll right anymore.
      */
-    public scrollBarAtRight = false;
+    protected scrollBarAtRight = false;
 
     /**
      * If the breakpoint is smaller or equal to XSmall.
      */
-    public breakpointXSmall = false;
+    protected breakpointXSmall = false;
 
     /**
      * Related cards of the given card input.
      */
-    public cards: Cards['cards']['items'][0][] = [];
+    protected cards: Cards['cards']['items'][0][] = [];
 
     /**
      * Whether the slideshow has a scrollbar (too much images for the viewport)
      * or not.
      */
-    public hasScrollbar = false;
+    protected hasScrollbar = false;
 
     /**
      * Query variables for retrieve related cards.

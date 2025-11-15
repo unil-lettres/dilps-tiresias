@@ -138,7 +138,7 @@ export class ListComponent
     private readonly changeService = inject(ChangeService);
     private readonly domainService = inject(DomainService);
 
-    public readonly site = inject(SITE);
+    protected readonly site = inject(SITE);
 
     /**
      * Reference to natural search
@@ -154,75 +154,75 @@ export class ListComponent
     /**
      * Reference to grid component
      */
-    public readonly gridComponent = viewChild(ViewGridComponent);
+    protected readonly gridComponent = viewChild(ViewGridComponent);
 
     /**
      * Reference to list component
      */
-    public readonly listComponent = viewChild(ViewListComponent);
+    protected readonly listComponent = viewChild(ViewListComponent);
 
     /**
      * Expose enum for template
      */
-    public ViewMode = ViewMode;
+    protected ViewMode = ViewMode;
 
     /**
      * Expose enum for template
      */
-    public SortingOrder = SortingOrder;
+    protected SortingOrder = SortingOrder;
 
     /**
      * Checked content for selection
      */
-    public selected: Cards['cards']['items'][0][] = [];
+    protected selected: Cards['cards']['items'][0][] = [];
 
     /**
      * Show logo on top left corner
      */
-    public showLogo = true;
+    protected showLogo = true;
 
     /**
      * Contextual collection
      * Used to link
      * Before component initialization it is undefined, then it is either null or FakeCollection
      */
-    public collection: FakeCollection | undefined | null;
+    protected collection: FakeCollection | undefined | null;
 
     /**
      * Current user
      */
-    public user!: Viewer['viewer'];
+    protected user!: Viewer['viewer'];
 
     /**
      * True if button for archive download has permissions to be displayed
      */
-    public showDownloadCollection = true;
+    protected showDownloadCollection = true;
 
     /**
      * Number of items added to dom from the gallery (grid view)
      */
-    public gridNumberVisibleItems = 0;
+    protected gridNumberVisibleItems = 0;
 
     /**
      * Total number of items matching with search
      */
-    public gridNumberTotalItems = 0;
+    protected gridNumberTotalItems = 0;
 
     /**
      * Enum that specified the displayed list
      */
-    public viewMode: ViewMode = ViewMode.grid;
-    public domains: SelectableDomains[] = [];
+    protected viewMode: ViewMode = ViewMode.grid;
+    protected domains: SelectableDomains[] = [];
 
     /**
      * Specifies if labels must be always displayed or only on hover
      */
-    public showLabels = false;
+    protected showLabels = false;
     public routeReuseStatus: RouteReuseStatus = RouteReuseStatus.default;
 
-    public Site = Site;
-    public UserRole = UserRole;
-    public CardSortingField = CardSortingField;
+    protected Site = Site;
+    protected UserRole = UserRole;
+    protected CardSortingField = CardSortingField;
 
     /**
      * Sorting applied when none is asked

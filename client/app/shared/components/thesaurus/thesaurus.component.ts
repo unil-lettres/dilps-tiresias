@@ -84,12 +84,12 @@ export class ThesaurusComponent<
     /**
      * Reference to autocomplete
      */
-    public readonly autocomplete = viewChild.required(MatAutocompleteTrigger);
+    protected readonly autocomplete = viewChild.required(MatAutocompleteTrigger);
 
     /**
      * Reference to input field for add a thesaurus.
      */
-    public readonly thesaurusInput = viewChild.required<ElementRef<HTMLInputElement>>('thesaurusInput');
+    protected readonly thesaurusInput = viewChild.required<ElementRef<HTMLInputElement>>('thesaurusInput');
 
     /**
      * If true, manipulations are forbidden
@@ -138,7 +138,7 @@ export class ThesaurusComponent<
     /**
      * Emits when a selection is done
      */
-    public readonly modelChange = output<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
+    protected readonly modelChange = output<string | string[] | ThesaurusModel | ThesaurusModel[] | null>();
 
     /**
      * Configuration for hierarchic relations
@@ -149,22 +149,22 @@ export class ThesaurusComponent<
      * Number of items not shown in result list
      * Shows a message after list if positive
      */
-    public moreNbItems = 0;
+    protected moreNbItems = 0;
 
     /**
      * List of suggestions for autocomplete dropdown
      */
-    public suggestions!: ThesaurusModel[];
+    protected suggestions!: ThesaurusModel[];
 
     /**
      * List of selected items
      */
-    public items: ThesaurusModel[] = [];
+    protected items: ThesaurusModel[] = [];
 
     /**
      * <input> controller
      */
-    public formControl: FormControl = new FormControl();
+    protected formControl: FormControl = new FormControl();
 
     /**
      * Cache to init search watching only once

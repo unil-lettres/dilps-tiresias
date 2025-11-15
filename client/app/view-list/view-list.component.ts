@@ -39,15 +39,15 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Emits when data is required
      */
-    public readonly pagination = output<PageEvent>();
+    protected readonly pagination = output<PageEvent>();
 
     /**
      * Emits when some cards are selected
      */
-    public readonly selectionChange = output<Cards['cards']['items'][0][]>();
+    protected readonly selectionChange = output<Cards['cards']['items'][0][]>();
     public readonly selected = input<Cards['cards']['items'][0][]>([]);
-    public selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
-    public cards: Cards['cards']['items'][0][] = [];
+    protected selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
+    protected cards: Cards['cards']['items'][0][] = [];
 
     /**
      * The margin-top size in px for the scrollable area.
@@ -57,8 +57,8 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Template exposed variable
      */
-    public Site = Site;
-    public readonly CardService = CardService;
+    protected Site = Site;
+    protected readonly CardService = CardService;
 
     public ngOnInit(): void {
         this.dataSource

@@ -25,11 +25,11 @@ export type LinkRelatedCardsDialogResult = Card['card']['cards'];
 })
 export class LinkRelatedCardsDialogComponent {
     private readonly dialogRef = inject<MatDialogRef<LinkRelatedCardsDialogComponent>>(MatDialogRef);
-    public readonly data = inject<LinkRelatedCardsDialogData>(MAT_DIALOG_DATA);
+    protected readonly data = inject<LinkRelatedCardsDialogData>(MAT_DIALOG_DATA);
 
-    public readonly cards: CheckablCards;
-    public readonly title: string;
-    public readonly help: string;
+    protected readonly cards: CheckablCards;
+    protected readonly title: string;
+    protected readonly help: string;
 
     public constructor() {
         const data = this.data;

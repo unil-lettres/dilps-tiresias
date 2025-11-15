@@ -29,8 +29,8 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
     templateUrl: './period.component.html',
 })
 export class PeriodComponent extends AbstractDetailDirective<PeriodService, ThesaurusDetailDialogExtraData> {
-    public hierarchicConfig = periodHierarchicConfig;
-    public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<PeriodFilter> = [];
+    protected hierarchicConfig = periodHierarchicConfig;
+    protected ancestorsHierarchicFilters: HierarchicFiltersConfiguration<PeriodFilter> = [];
 
     protected displayWith(item: Literal | null): string {
         return item ? item.name + formatYearRange(item.from, item.to) : '';

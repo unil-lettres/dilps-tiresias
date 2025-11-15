@@ -34,10 +34,10 @@ export class ExportMenuComponent {
 
     public readonly collection = input<FakeCollection | null | undefined>(null);
 
-    public ExportFormat = ExportFormat;
-    public ExportTheme = ExportTheme;
+    protected ExportFormat = ExportFormat;
+    protected ExportTheme = ExportTheme;
 
-    public pptValidationMessage = '';
+    protected pptValidationMessage = '';
 
     private menuClosed$ = new Subject<void>();
 

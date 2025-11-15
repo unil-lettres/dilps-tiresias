@@ -73,26 +73,26 @@ function isExcel(file: File): boolean {
     styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-    public readonly themeService = inject(ThemeService);
-    public readonly route = inject(ActivatedRoute);
-    public readonly router = inject(Router);
-    public readonly userService = inject(UserService);
-    public readonly networkActivityService = inject(NetworkActivityService);
+    protected readonly themeService = inject(ThemeService);
+    protected readonly route = inject(ActivatedRoute);
+    protected readonly router = inject(Router);
+    protected readonly userService = inject(UserService);
+    protected readonly networkActivityService = inject(NetworkActivityService);
     private readonly snackBar = inject(MatSnackBar);
     private readonly alertService = inject(AlertService);
     private readonly dialog = inject(MatDialog);
     private readonly cardService = inject(CardService);
-    public readonly site = inject(SITE);
+    protected readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy);
 
-    public Site = Site;
-    public readonly UserRole = UserRole;
+    protected Site = Site;
+    protected readonly UserRole = UserRole;
 
-    public user: Viewer['viewer'] | null = null;
-    public nav = 1;
-    public progress: number | null = null;
+    protected user: Viewer['viewer'] | null = null;
+    protected nav = 1;
+    protected progress: number | null = null;
     private uploaded = 0;
-    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
+    protected readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),

@@ -51,11 +51,11 @@ import {CollectionService} from '../services/collection.service';
     styleUrl: './collection.component.scss',
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
-    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
-    public readonly UserRole = UserRole;
+    protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
+    protected readonly UserRole = UserRole;
 
-    public visibility: keyof CollectionVisibilities = 1;
-    public visibilities: CollectionVisibilities = {
+    protected visibility: keyof CollectionVisibilities = 1;
+    protected visibilities: CollectionVisibilities = {
         1: {
             value: CollectionVisibility.Private,
             text: 'par moi et les abonnés',
@@ -78,10 +78,10 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         | UpdateCollection['updateCollection']['institution']
         | null = null;
 
-    public hierarchicConfig = collectionsHierarchicConfig;
-    public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
+    protected hierarchicConfig = collectionsHierarchicConfig;
+    protected ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
 
-    public showVisibility = true;
+    protected showVisibility = true;
 
     public constructor() {
         super(inject(CollectionService));

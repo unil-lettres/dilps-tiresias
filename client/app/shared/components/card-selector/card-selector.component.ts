@@ -13,9 +13,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     styleUrl: './card-selector.component.scss',
 })
 export class CardSelectorComponent {
-    public readonly cardService = inject(CardService);
+    protected readonly cardService = inject(CardService);
 
-    public card: Cards['cards']['items'][0] | null = null;
+    protected card: Cards['cards']['items'][0] | null = null;
 
     protected displayWith(item: Cards['cards']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';

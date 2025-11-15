@@ -47,7 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     styleUrl: './changes.component.scss',
 })
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
-    public displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
+    protected displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];
 
     public constructor() {
         super(inject(ChangeService));

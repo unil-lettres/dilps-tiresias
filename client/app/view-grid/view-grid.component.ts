@@ -48,7 +48,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Only used to help typescript understand the generic type of <natural-gallery>
      */
-    public readonly emptyItemsList: GalleryModel[] = [];
+    protected readonly emptyItemsList: GalleryModel[] = [];
 
     /**
      * Reference to gallery
@@ -67,17 +67,17 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Emits when data is required
      */
-    public readonly pagination = output<PaginationInput>();
+    protected readonly pagination = output<PaginationInput>();
 
     /**
      * Emits number of visible items in dom and number of total items
      */
-    public readonly contentChange = output<ContentChange>();
+    protected readonly contentChange = output<ContentChange>();
 
     /**
      * Emits when some cards are selected
      */
-    public readonly selectionChange = output<Cards['cards']['items'][0][]>();
+    protected readonly selectionChange = output<Cards['cards']['items'][0][]>();
 
     /**
      * The margin-top size in px for the scrollable area.
@@ -110,7 +110,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         filter(event => event instanceof NavigationEnd),
     );
 
-    public options: NaturalGalleryOptions = {
+    protected options: NaturalGalleryOptions = {
         gap: 5,
         labelVisibility: LabelVisibility.ALWAYS,
         rowHeight: this.thumbnailHeight,

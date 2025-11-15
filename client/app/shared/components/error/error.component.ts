@@ -12,7 +12,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     styleUrl: './error.component.scss',
 })
 export class ErrorComponent {
-    public readonly error: Error | null = null;
+    protected readonly error: Error | null = null;
 
     public constructor() {
         const errorService = inject(ErrorService);

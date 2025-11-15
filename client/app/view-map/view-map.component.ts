@@ -27,11 +27,11 @@ type Marker = {
     styleUrl: './view-map.component.scss',
 })
 export class ViewMapComponent {
-    public readonly mapApiService = inject(MapApiService);
+    protected readonly mapApiService = inject(MapApiService);
     private readonly ngZone = inject(NgZone);
     private readonly site = inject(SITE);
 
-    public selectedMarker: Marker | null = null;
+    protected selectedMarker: Marker | null = null;
 
     @Input({required: true})
     public set cards(cards: Cards['cards']['items'][0][]) {
@@ -41,14 +41,14 @@ export class ViewMapComponent {
         });
     }
 
-    public readonly searchByLocation = output<Location>();
+    protected readonly searchByLocation = output<Location>();
     private readonly map = viewChild(GoogleMap);
     private readonly infoWindow = viewChild(MapInfoWindow);
-    public readonly infoWindowOption: google.maps.InfoWindowOptions = {
+    protected readonly infoWindowOption: google.maps.InfoWindowOptions = {
         maxWidth: 400,
     };
-    public markers: Marker[] | null = null;
-    public readonly mapOptions: google.maps.MapOptions = {
+    protected markers: Marker[] | null = null;
+    protected readonly mapOptions: google.maps.MapOptions = {
         mapTypeId: this.site === Site.Dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,

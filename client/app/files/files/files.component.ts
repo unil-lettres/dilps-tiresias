@@ -61,13 +61,13 @@ export class FilesComponent implements OnInit {
         this.columns = this._disabled ? ['name'] : ['name', 'delete'];
     }
 
-    public columns: string[] = [];
+    protected columns: string[] = [];
     private _card!: Card['card'];
 
     private _disabled = false;
 
-    public readonly accept = UPLOAD_CONFIG.ACCEPTED_CARD_FILES_TYPES;
-    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
+    protected readonly accept = UPLOAD_CONFIG.ACCEPTED_CARD_FILES_TYPES;
+    protected readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
     public get card(): Card['card'] {
         return this._card;
@@ -86,7 +86,7 @@ export class FilesComponent implements OnInit {
         }
     }
 
-    public dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
+    protected dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
     private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
 
     public constructor() {

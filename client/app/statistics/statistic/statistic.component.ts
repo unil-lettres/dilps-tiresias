@@ -101,12 +101,12 @@ export class StatisticComponent {
         });
     }
 
-    public displayedColumns = ['name', 'absolute', 'percent'];
-    public tables: TableSource[] = [];
-    public chartOptions: Highcharts.Options = {
+    protected displayedColumns = ['name', 'absolute', 'percent'];
+    protected tables: TableSource[] = [];
+    protected chartOptions: Highcharts.Options = {
         series: [],
     };
-    public chartUpdated = false;
+    protected chartUpdated = false;
 
     protected update(chart: SimpleChart): void {
         this.chartOptions = {

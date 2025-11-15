@@ -28,8 +28,8 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
     templateUrl: './tag.component.html',
 })
 export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusDetailDialogExtraData> {
-    public hierarchicConfig = tagHierarchicConfig;
-    public ancestorsHierarchicFilters: HierarchicFiltersConfiguration<TagFilter> = [];
+    protected hierarchicConfig = tagHierarchicConfig;
+    protected ancestorsHierarchicFilters: HierarchicFiltersConfiguration<TagFilter> = [];
 
     public constructor() {
         super(inject(TagService));

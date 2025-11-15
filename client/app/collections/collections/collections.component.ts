@@ -59,29 +59,29 @@ export class CollectionsComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    public rootCollections: Collections['collections']['items'][0][] = [];
+    protected rootCollections: Collections['collections']['items'][0][] = [];
 
     /**
      * Children by parent ID
      */
-    public readonly children = new Map<string, Collections['collections']['items'][0][]>();
+    protected readonly children = new Map<string, Collections['collections']['items'][0][]>();
 
     /**
      * Show "unclassified" category on the top of the page
      */
-    public showUnclassified = false;
+    protected showUnclassified = false;
 
     /**
      * Show "my cards" category on the top of the page
      */
-    public showMyCards = false;
+    protected showMyCards = false;
 
     /**
      * Can create permissions
      */
-    public canCreate = false;
-    public user: Viewer['viewer'] | null = null;
-    public hasMore = false;
+    protected canCreate = false;
+    protected user: Viewer['viewer'] | null = null;
+    protected hasMore = false;
     private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
     private pageSize = 50;
 

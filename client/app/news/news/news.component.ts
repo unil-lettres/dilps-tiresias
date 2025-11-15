@@ -34,7 +34,7 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
     styleUrl: './news.component.scss',
 })
 export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File; imageUrl: string}> {
-    public imageData: string | null = null;
+    protected imageData: string | null = null;
 
     public constructor() {
         super(inject(NewsService));

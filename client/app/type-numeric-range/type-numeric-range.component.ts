@@ -67,11 +67,11 @@ export class TypeNumericRangeComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);
 
     public renderedValue = new BehaviorSubject<string>('');
-    public configuration: TypeNumericRangeConfiguration;
-    public matcher = new InvalidWithValueStateMatcher();
-    public fromCtrl = new FormControl();
-    public toCtrl = new FormControl();
-    public form: FormGroup;
+    protected configuration: TypeNumericRangeConfiguration;
+    protected matcher = new InvalidWithValueStateMatcher();
+    protected fromCtrl = new FormControl();
+    protected toCtrl = new FormControl();
+    protected form: FormGroup;
 
     private readonly defaults: TypeNumericRangeConfiguration = {
         min: null,

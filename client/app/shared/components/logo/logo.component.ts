@@ -8,7 +8,7 @@ import {Site} from '../../generated-types';
     styleUrl: './logo.component.scss',
 })
 export class LogoComponent {
-    public readonly site = inject(SITE);
+    protected readonly site = inject(SITE);
 
     public readonly data = input({type: 'main', class: 'logo-main'});
 

@@ -66,19 +66,19 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     templateUrl: './user.component.html',
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
-    public readonly emailRef = viewChild<NgModel>('email');
-    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
-    public readonly collectionService = inject(CollectionService);
+    protected readonly emailRef = viewChild<NgModel>('email');
+    protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
+    protected readonly collectionService = inject(CollectionService);
 
-    public collectionsHierarchicConfig = collectionsHierarchicConfig;
-    public roles: IEnum[] = [];
+    protected collectionsHierarchicConfig = collectionsHierarchicConfig;
+    protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 
-    public passwordGroupCtrl: FormGroup;
-    public passwordCtrl: FormControl;
-    public passwordConfirmationCtrl: FormControl;
+    protected passwordGroupCtrl: FormGroup;
+    protected passwordCtrl: FormControl;
+    protected passwordConfirmationCtrl: FormControl;
 
-    public institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
+    protected institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
 
     public constructor() {
         super(inject(UserService));

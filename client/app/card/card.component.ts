@@ -177,17 +177,17 @@ export class CardComponent implements OnInit, OnChanges {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly changeService = inject(ChangeService);
-    public readonly cardService = inject(CardService);
-    public readonly errorService = inject(ErrorService);
+    protected readonly cardService = inject(CardService);
+    protected readonly errorService = inject(ErrorService);
     private readonly alertService = inject(AlertService);
-    public readonly artistService = inject(ArtistService);
-    public readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
-    public readonly materialService = inject(MaterialService);
-    public readonly tagService = inject(TagService);
-    public readonly documentTypeService = inject(DocumentTypeService);
-    public readonly domainService = inject(DomainService);
-    public readonly antiqueNameService = inject(AntiqueNameService);
-    public readonly periodService = inject(PeriodService);
+    protected readonly artistService = inject(ArtistService);
+    protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
+    protected readonly materialService = inject(MaterialService);
+    protected readonly tagService = inject(TagService);
+    protected readonly documentTypeService = inject(DocumentTypeService);
+    protected readonly domainService = inject(DomainService);
+    protected readonly antiqueNameService = inject(AntiqueNameService);
+    protected readonly periodService = inject(PeriodService);
     private readonly dialog = inject(MatDialog);
     private readonly userService = inject(UserService);
     private readonly statisticService = inject(StatisticService);
@@ -268,22 +268,22 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Url of resized images (2000px) to be displayed
      */
-    public imageSrc!: string;
+    protected imageSrc!: string;
 
     /**
      * Url of full sized image (for download purpose)
      */
-    public imageSrcFull!: string;
+    protected imageSrcFull!: string;
 
     /**
      * Default visibility
      */
-    public visibility: keyof CardVisibilities = 1;
+    protected visibility: keyof CardVisibilities = 1;
 
     /**
      * List of visibilities
      */
-    public visibilities: CardVisibilities = {
+    protected visibilities: CardVisibilities = {
         1: {
             value: CardVisibility.Private,
             text: 'par moi, les admins et les abonnés',
@@ -304,20 +304,20 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Currently logged user
      */
-    public user!: Viewer['viewer'];
-    public readonly UserRole = UserRole;
+    protected user!: Viewer['viewer'];
+    protected readonly UserRole = UserRole;
 
     /**
      * Allow to use TAB to go to next field (as is standard)
      */
-    public readonly tabToNextFields = {
+    protected readonly tabToNextFields = {
         tab: {
             key: 9,
             handler: (): true => true,
         },
     };
 
-    public readonly multiLines: QuillModules = {
+    protected readonly multiLines: QuillModules = {
         ...quillConfig.modules,
         keyboard: {
             bindings: {
@@ -326,7 +326,7 @@ export class CardComponent implements OnInit, OnChanges {
         },
     };
 
-    public readonly singleLine: QuillModules = {
+    protected readonly singleLine: QuillModules = {
         ...quillConfig.modules,
         keyboard: {
             bindings: {
@@ -348,18 +348,18 @@ export class CardComponent implements OnInit, OnChanges {
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    public institution!: Card['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
+    protected institution!: Card['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    public artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
+    protected artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
 
     /**
      * Cache stamped data from server.
      */
-    public stamp: Stamped = {};
+    protected stamp: Stamped = {};
 
     /**
      * Used to display a loading placeholder while the modal is loading.
@@ -367,7 +367,7 @@ export class CardComponent implements OnInit, OnChanges {
      * on a related card, modal is not set back to null. So the placeholder will
      * not show.
      */
-    public loadingIndicator = false;
+    protected loadingIndicator = false;
 
     /**
      * Used to set a minimum time the placeholder should be displayed to avoid
@@ -378,96 +378,96 @@ export class CardComponent implements OnInit, OnChanges {
      * the placeholder when we click on a related card to show again the loading
      * state.
      */
-    public minimalLoadingWait = false;
+    protected minimalLoadingWait = false;
 
     /**
      * Template exposed variable
      */
-    public InstitutionComponent = InstitutionComponent;
+    protected InstitutionComponent = InstitutionComponent;
 
     /**
      * Template exposed variable
      */
-    public ArtistComponent = ArtistComponent;
+    protected ArtistComponent = ArtistComponent;
 
     /**
      * Template exposed variable
      */
-    public MaterialComponent = MaterialComponent;
+    protected MaterialComponent = MaterialComponent;
     /**
      * Template exposed variable
      */
-    public PeriodComponent = PeriodComponent;
+    protected PeriodComponent = PeriodComponent;
 
     /**
      * Template exposed variable
      */
-    public TagComponent = TagComponent;
+    protected TagComponent = TagComponent;
 
     /**
      * Template exposed variable
      */
-    public DocumentTypeComponent = DocumentTypeComponent;
+    protected DocumentTypeComponent = DocumentTypeComponent;
 
     /**
      * Template exposed variable
      */
-    public DomainComponent = DomainComponent;
+    protected DomainComponent = DomainComponent;
 
     /**
      * Template exposed variable
      */
-    public AntiqueNameComponent = AntiqueNameComponent;
+    protected AntiqueNameComponent = AntiqueNameComponent;
 
     /**
      * Template exposed variable
      */
-    public domainHierarchicConfig = domainHierarchicConfig;
+    protected domainHierarchicConfig = domainHierarchicConfig;
 
     /**
      * Template exposed variable
      */
-    public tagHierarchicConfig = onlyLeafTagHierarchicConfig;
+    protected tagHierarchicConfig = onlyLeafTagHierarchicConfig;
 
     /**
      * Template exposed variable
      */
-    public periodHierarchicConfig = periodHierarchicConfig;
+    protected periodHierarchicConfig = periodHierarchicConfig;
 
     /**
      * Template exposed variable
      */
-    public materialHierarchicConfig = onlyLeafMaterialHierarchicConfig;
+    protected materialHierarchicConfig = onlyLeafMaterialHierarchicConfig;
 
     /**
      * Template exposed variable
      */
-    public JoinType = JoinType;
+    protected JoinType = JoinType;
 
     /**
      * Edition mode if true
      */
-    public edit = false;
+    protected edit = false;
 
     /**
      * Sorted list collections by their hierarchicNames
      */
-    public sortedCollections: Card['card']['collections'] = [];
+    protected sortedCollections: Card['card']['collections'] = [];
 
-    public formIsValid = true;
-    public readonly code = viewChild<NgModel>('code');
-    public readonly url = viewChild<NgModel>('code');
-    public readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
-    public urlModel: NgModel | null = null;
-    public collectionCopyrights = '';
-    public isDilps = true;
-    public suggestedCode: string | null = null;
+    protected formIsValid = true;
+    protected readonly code = viewChild<NgModel>('code');
+    protected readonly url = viewChild<NgModel>('code');
+    protected readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
+    protected urlModel: NgModel | null = null;
+    protected collectionCopyrights = '';
+    protected isDilps = true;
+    protected suggestedCode: string | null = null;
 
     /**
      * Contains some initial values of the card model. These values are
      * refreshed when the model is persisted.
      */
-    public initialCardValues: InitialCardValues = {
+    protected initialCardValues: InitialCardValues = {
         page: '',
         figure: '',
         table: '',
@@ -478,7 +478,7 @@ export class CardComponent implements OnInit, OnChanges {
      * Whether the related cards are closed or not.
      * Closed means the related cards are not showing at all, not even reduced.
      */
-    public isRelatedCardsClosed = false;
+    protected isRelatedCardsClosed = false;
 
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
     private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());

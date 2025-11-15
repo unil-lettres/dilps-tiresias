@@ -11,7 +11,7 @@ import {MatTooltip} from '@angular/material/tooltip';
 export class CollectionHierarchyComponent implements OnInit {
     public readonly collection = input.required<Collections['collections']['items'][0]>();
 
-    public parents: string[] = [];
+    protected parents: string[] = [];
 
     public ngOnInit(): void {
         this.parents = this.collection()

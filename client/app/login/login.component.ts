@@ -43,24 +43,24 @@ import {ThemeService} from '../shared/services/theme.service';
 export class LoginComponent implements OnInit, OnDestroy {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
-    public readonly userService = inject(UserService);
-    public readonly dialog = inject(MatDialog);
-    public readonly snackBar = inject(MatSnackBar);
-    public readonly site = inject(SITE);
-    public readonly themeService = inject(ThemeService);
+    protected readonly userService = inject(UserService);
+    protected readonly dialog = inject(MatDialog);
+    protected readonly snackBar = inject(MatSnackBar);
+    protected readonly site = inject(SITE);
+    protected readonly themeService = inject(ThemeService);
 
-    public Site = Site;
+    protected Site = Site;
 
-    public loading = false;
+    protected loading = false;
 
-    public baseUrl = window.location.origin;
+    protected baseUrl = window.location.origin;
 
     /**
      * Stores the received redirect URL until we need to use it (when login is successfull)
      */
-    public returnUrl = '/';
+    protected returnUrl = '/';
 
-    public loginForm = {
+    protected loginForm = {
         login: '',
         password: '',
     };

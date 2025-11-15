@@ -8,5 +8,5 @@ import {MatButton} from '@angular/material/button';
     templateUrl: './confirm.component.html',
 })
 export class ConfirmComponent {
-    public readonly data = inject(MAT_DIALOG_DATA);
+    protected readonly data = inject(MAT_DIALOG_DATA);
 }

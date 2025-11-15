@@ -32,7 +32,7 @@ export class DialogFooterComponent {
     public readonly canDelete = input<boolean | undefined>(false);
     @Input({required: true}) public item!: Model;
     public readonly formCtrl = input<FormControl | null>(null);
-    public readonly create = output<Model>();
-    public readonly update = output<Model>();
-    public readonly delete = output<Model>();
+    protected readonly create = output<Model>();
+    protected readonly update = output<Model>();
+    protected readonly delete = output<Model>();
 }

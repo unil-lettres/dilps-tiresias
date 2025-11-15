@@ -12,5 +12,5 @@ import {MatDialogModule} from '@angular/material/dialog';
     styleUrl: './number-selector.component.scss',
 })
 export class NumberSelectorComponent {
-    public number = 5;
+    protected number = 5;
 }

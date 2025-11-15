@@ -18,18 +18,18 @@ import {NgTemplateOutlet} from '@angular/common';
 })
 export class MassEditComponent {
     private readonly cardService = inject(CardService);
-    public readonly data = inject<Literal>(MAT_DIALOG_DATA);
+    protected readonly data = inject<Literal>(MAT_DIALOG_DATA);
 
-    public readonly card: CardInput;
-    public Site = Site;
-    public step = 2;
+    protected readonly card: CardInput;
+    protected Site = Site;
+    protected step = 2;
 
-    public createSuggestions = false;
+    protected createSuggestions = false;
 
     /**
      * Template exposed variable
      */
-    public readonly CardService = CardService;
+    protected readonly CardService = CardService;
 
     public constructor() {
         const cardService = this.cardService;

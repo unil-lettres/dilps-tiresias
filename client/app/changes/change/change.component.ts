@@ -35,15 +35,15 @@ export class ChangeComponent implements OnInit {
     private readonly changeService = inject(ChangeService);
     private readonly cardService = inject(CardService);
     private readonly userService = inject(UserService);
-    public readonly UserRole = UserRole;
+    protected readonly UserRole = UserRole;
 
-    public change!: Change['change'];
-    public original: Card['card'] | null = null;
-    public fetchedSuggestion: Card['card'] | null = null;
-    public suggestionInput: CardInput | null = null;
-    public loaded = false;
-    public user!: Viewer['viewer'];
-    public showTools = false;
+    protected change!: Change['change'];
+    protected original: Card['card'] | null = null;
+    protected fetchedSuggestion: Card['card'] | null = null;
+    protected suggestionInput: CardInput | null = null;
+    protected loaded = false;
+    protected user!: Viewer['viewer'];
+    protected showTools = false;
 
     public ngOnInit(): void {
         this.userService.getCurrentUser().subscribe(user => (this.user = user));

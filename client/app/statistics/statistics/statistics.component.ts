@@ -107,40 +107,40 @@ type SerieData = {
 })
 export class StatisticsComponent {
     private readonly apollo = inject(Apollo);
-    public readonly userService = inject(UserService);
+    protected readonly userService = inject(UserService);
 
-    public frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
-    public data!: Data;
-    public statType: keyof Values = 'pageCount';
-    public cardType = 'cardCreation';
-    public userType = 'userCreation';
+    protected frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
+    protected data!: Data;
+    protected statType: keyof Values = 'pageCount';
+    protected cardType = 'cardCreation';
+    protected userType = 'userCreation';
     private series = new Map<keyof Values, any>();
 
-    public availableTypes = {
+    protected availableTypes = {
         pageCount: 'Visites de page',
         detailCount: 'Visites de détail de fiche',
         searchCount: 'Recherches',
         uniqueLoginCount: 'Login uniques',
     };
 
-    public availableCardTypes = {
+    protected availableCardTypes = {
         cardCreation: 'Création de fiche',
         cardUpdate: 'Modification de fiche',
     };
 
-    public availableUserTypes = {
+    protected availableUserTypes = {
         userCreation: "Création d'utilisateur",
         userUpdate: "Modification d'utilisateur",
     };
 
-    public availablePeriods: Period[] = [];
-    public period: string;
+    protected availablePeriods: Period[] = [];
+    protected period: string;
     private categories: string[] = [];
-    public frequentation!: StatisticInput;
-    public cards!: StatisticInput;
-    public users!: StatisticInput;
+    protected frequentation!: StatisticInput;
+    protected cards!: StatisticInput;
+    protected users!: StatisticInput;
     private raw!: Literal;
-    public user: Users['users']['items'][0] | null = null;
+    protected user: Users['users']['items'][0] | null = null;
 
     // public usersFilter: UserFilter;
 

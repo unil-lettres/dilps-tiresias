@@ -49,10 +49,10 @@ export class AddressComponent implements OnInit, OnChanges {
     private readonly mapApiService = inject(MapApiService);
     private readonly ngZone = inject(NgZone);
     private readonly addressService = inject(AddressService);
-    public readonly countryService = inject(CountryService);
+    protected readonly countryService = inject(CountryService);
     private readonly site = inject(SITE);
 
-    public readonly googleMapLoaded = this.mapApiService.loaded.pipe(
+    protected readonly googleMapLoaded = this.mapApiService.loaded.pipe(
         tap(() => {
             // load Places Autocomplete
             this.icon = this.getIcon();
@@ -65,7 +65,7 @@ export class AddressComponent implements OnInit, OnChanges {
         }),
     );
 
-    public readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
+    protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
 
     /**
      * If true, layouts vertically some side by side elements
@@ -98,14 +98,14 @@ export class AddressComponent implements OnInit, OnChanges {
     @Input() public model: Card['card'] | Institution['institution'] | Card['card']['institution'] | CardInput | null =
         null;
 
-    public formCtrl = new FormControl();
+    protected formCtrl = new FormControl();
 
-    public latitude = 44.5918711;
-    public longitude = 4.7176318;
-    public zoom = 2;
+    protected latitude = 44.5918711;
+    protected longitude = 4.7176318;
+    protected zoom = 2;
 
-    public icon: google.maps.Symbol | null = null;
-    public readonly mapOptions: google.maps.MapOptions = {
+    protected icon: google.maps.Symbol | null = null;
+    protected readonly mapOptions: google.maps.MapOptions = {
         mapTypeId: this.site === Site.Dilps ? 'roadmap' : 'satellite',
         disableDefaultUI: true,
         zoomControl: true,
@@ -276,7 +276,7 @@ export class AddressComponent implements OnInit, OnChanges {
             },
         ],
     };
-    public countries: Countries['countries']['items'][0][] = [];
+    protected countries: Countries['countries']['items'][0][] = [];
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public ngOnChanges(): void {

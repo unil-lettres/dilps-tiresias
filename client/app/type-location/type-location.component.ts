@@ -31,11 +31,11 @@ export class TypeLocationComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);
 
     public renderedValue = new BehaviorSubject<string>('');
-    public form: FormGroup;
+    protected form: FormGroup;
 
-    public longitudeCtrl = new FormControl();
-    public latitudeCtrl = new FormControl();
-    public distanceCtrl = new FormControl();
+    protected longitudeCtrl = new FormControl();
+    protected latitudeCtrl = new FormControl();
+    protected distanceCtrl = new FormControl();
 
     public constructor() {
         const data = inject<NaturalDropdownData<never>>(NATURAL_DROPDOWN_DATA);

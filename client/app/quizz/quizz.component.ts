@@ -37,17 +37,17 @@ export class QuizzComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);
     private readonly cardService = inject(CardService);
 
-    public cards: string[] = [];
-    public card: Card['card'] | null = null;
-    public imageSrc: string | null = null;
-    public currentIndex = 0;
-    public attributes: Result = {
+    protected cards: string[] = [];
+    protected card: Card['card'] | null = null;
+    protected imageSrc: string | null = null;
+    protected currentIndex = 0;
+    protected attributes: Result = {
         name: false,
         artists: false,
         institution: false,
         dating: false,
     };
-    public formCtrl: FormControl = new FormControl();
+    protected formCtrl: FormControl = new FormControl();
     private routeParams$ = this.route.params.pipe(takeUntilDestroyed());
     private formChange$ = this.formCtrl.valueChanges.pipe(takeUntilDestroyed(), debounceTime(500));
 

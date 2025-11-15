@@ -61,17 +61,17 @@ export type CollectionSelectorResult = Collections['collections']['items'][0] | 
     styleUrl: './collection-selector.component.scss',
 })
 export class CollectionSelectorComponent implements OnInit {
-    public readonly collectionService = inject(CollectionService);
+    protected readonly collectionService = inject(CollectionService);
     private readonly dialogRef =
         inject<MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>>(MatDialogRef);
     private readonly userService = inject(UserService);
     private readonly alertService = inject(AlertService);
-    public readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
+    protected readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
 
-    public listFilter!: CollectionFilter;
-    public collection: Collections['collections']['items'][0] | null = null;
-    public image: Cards['cards']['items'][0] | undefined;
-    public newCollection: any = {
+    protected listFilter!: CollectionFilter;
+    protected collection: Collections['collections']['items'][0] | null = null;
+    protected image: Cards['cards']['items'][0] | undefined;
+    protected newCollection: any = {
         name: '',
         description: '',
         parent: null,

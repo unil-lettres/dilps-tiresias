@@ -17,9 +17,9 @@ register();
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CarouselComponent implements OnInit {
-    public readonly newsService = inject(NewsService);
+    protected readonly newsService = inject(NewsService);
 
-    public newses: Newses['newses']['items'][0][] = [];
+    protected newses: Newses['newses']['items'][0][] = [];
 
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<NewsesVariables>();

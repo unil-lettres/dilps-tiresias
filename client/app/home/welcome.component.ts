@@ -10,7 +10,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     templateUrl: './welcome.component.html',
 })
 export class WelcomeComponent {
-    public readonly site = inject(SITE);
+    protected readonly site = inject(SITE);
 
     protected getTitle(): string {
         switch (this.site) {
