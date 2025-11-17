@@ -474,12 +474,6 @@ export class CardComponent implements OnInit, OnChanges {
         isbn: '',
     };
 
-    /**
-     * Whether the related cards are closed or not.
-     * Closed means the related cards are not showing at all, not even reduced.
-     */
-    protected isRelatedCardsClosed = false;
-
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
     private readonly routeParams$ = this.route.params.pipe(takeUntilDestroyed());
 
