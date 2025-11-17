@@ -103,7 +103,7 @@ class News extends AbstractModel implements HasSiteInterface
             }
 
             // Delete original file
-            unlink($$this->getPath());
+            unlink($this->getPath());
 
             // Save as WebP
             $this->setFilename(pathinfo($this->getFilename(), PATHINFO_FILENAME) . '.webp');
