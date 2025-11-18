@@ -6,9 +6,17 @@
     $background: map.get($theme, background);
     $foreground: map.get($theme, foreground);
 
+    $config: mat.m2-get-color-config($theme);
+    $is-dark-theme: map.get($config, is-dark);
+
     .mat-toolbar,
     #domains-chips {
         background: mat.m2-get-color-from-palette($background, background, 0.7);
         color: mat.m2-get-color-from-palette($foreground, text);
+
+        // Remove transparency on background chips for better readability (because toolbar is transparent too)
+        .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled):not(.mdc-evolution-chip--selected) {
+            background-color: if($is-dark-theme, #4f4c50, #d4d2d5);
+        }
     }
 }
