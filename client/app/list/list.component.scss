@@ -25,3 +25,12 @@ app-view-grid {
     padding-right: 10px;
     padding-left: 10px;
 }
+
+.chip-infos {
+    display: flex;
+    gap: 8px;
+
+    app-historic-icon {
+        height: 20px;
+    }
+}

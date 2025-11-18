@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
@@ -8,4 +8,9 @@ import {MatTooltip} from '@angular/material/tooltip';
     styleUrl: './historic-icon.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistoricIconComponent {}
+export class HistoricIconComponent {
+    public readonly tooltip = input<string>(
+        "Photographie issue d'un fonds spécial ou historique. Elle a vocation d'archives, indépendamment de sa qualité.",
+    );
+    public readonly color = input<string>('currentColor');
+}

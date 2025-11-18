@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, computed, inject, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatIconButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
@@ -38,6 +38,7 @@ import {
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
@@ -123,6 +124,7 @@ enum ViewMode {
         NaturalIconDirective,
         ExportMenuComponent,
         NgScrollbar,
+        HistoricIconComponent,
     ],
     templateUrl: './list.component.html',
     styleUrl: './list.component.scss',
@@ -207,6 +209,11 @@ export class ListComponent
      * Total number of items matching with search
      */
     protected gridNumberTotalItems = 0;
+
+    /**
+     * Indicates if at least one historic image is present in the list
+     */
+    protected readonly hasHistoricImages = signal(false);
 
     /**
      * Enum that specified the displayed list
@@ -372,6 +379,10 @@ export class ListComponent
 
         if (event.total != null) {
             this.gridNumberTotalItems = event.total;
+        }
+
+        if (event.hasHistoric != null) {
+            this.hasHistoricImages.set(event.hasHistoric);
         }
     }
 

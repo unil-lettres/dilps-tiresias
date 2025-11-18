@@ -18,5 +18,10 @@
         .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled):not(.mdc-evolution-chip--selected) {
             background-color: if($is-dark-theme, #4f4c50, #d4d2d5);
         }
+
+        // Historic icon in chip should match toolbar icon color
+        app-historic-icon svg {
+            color: mat.m2-get-color-from-palette($foreground, text);
+        }
     }
 }

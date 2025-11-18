@@ -29,6 +29,7 @@ import {Cards} from '../shared/generated-types';
 export type ContentChange = {
     visible?: number;
     total?: number;
+    hasHistoric?: boolean;
 };
 
 type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
@@ -104,6 +105,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      */
     private enlargedHeight = 2000;
     private originalHistoricIcon: HTMLElement | null = null;
+    private currentHasHistoricImages = false;
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -195,13 +197,18 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
                 gallery.gallery.then(gallery => {
                     if (!result.offset && gallery.collection.length) {
+                        this.currentHasHistoricImages = false;
                         gallery.clear(); // fires new loadMore() call
                     } else {
+                        const hasHistoric = result.items.some(card => card.showHistoric);
+                        if (hasHistoric) {
+                            this.currentHasHistoricImages = true;
+                        }
                         gallery.addItems(this.formatImages(result.items));
                     }
                 });
 
-                this.contentChange.emit({total: result.length});
+                this.contentChange.emit({total: result.length, hasHistoric: this.currentHasHistoricImages});
             });
 
         // Cache scroll when user... scrolls

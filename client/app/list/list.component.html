@@ -181,7 +181,17 @@
             @if (viewMode === ViewMode.grid) {
                 <div>
                     <mat-chip-set>
-                        <mat-chip>{{ gridNumberVisibleItems }}/{{ gridNumberTotalItems }}</mat-chip>
+                        <mat-chip>
+                            <div class="chip-infos">
+                                <span>{{ gridNumberVisibleItems }} / {{ gridNumberTotalItems }}</span>
+                                @if (hasHistoricImages()) {
+                                    <span>•</span>
+                                    <app-historic-icon
+                                        tooltip="Les résultats contiennent des photographies issues de fonds spéciaux ou historiques. Elles ont vocation d'archives, indépendamment de leur qualité."
+                                    />
+                                }
+                            </div>
+                        </mat-chip>
                     </mat-chip-set>
                 </div>
             }
