@@ -1,4 +1,4 @@
-<ng-progress [trickleSpeed]="1000" />
+<ng-progress [trickleSpeed]="100" />
 <router-outlet (activate)="initialized = true" />
 @if (!initialized) {
     <app-boot-loader />
