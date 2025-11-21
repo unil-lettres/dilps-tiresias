@@ -7,6 +7,7 @@ import {
     input,
     OnInit,
     output,
+    signal,
     viewChild,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -25,6 +26,7 @@ import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards} from '../shared/generated-types';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 export type ContentChange = {
     visible?: number;
@@ -36,7 +38,7 @@ type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
-    imports: [NaturalGalleryComponent, HistoricIconComponent],
+    imports: [NaturalGalleryComponent, HistoricIconComponent, MatProgressSpinner],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
 })
@@ -84,6 +86,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * The margin-top size in px for the scrollable area.
      */
     public readonly scrolledMarginTop = input<string>();
+
+    /**
+     * Indicates if there are more items to load
+     */
+    protected readonly hasMoreItems = signal(true);
 
     /**
      * Reference to scrollable element
@@ -198,6 +205,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 gallery.gallery.then(gallery => {
                     if (!result.offset && gallery.collection.length) {
                         this.currentHasHistoricImages = false;
+                        this.hasMoreItems.set(true);
                         gallery.clear(); // fires new loadMore() call
                     } else {
                         const hasHistoric = result.items.some(card => card.showHistoric);
@@ -205,6 +213,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                             this.currentHasHistoricImages = true;
                         }
                         gallery.addItems(this.formatImages(result.items));
+
+                        this.hasMoreItems.set(gallery.collection.length < result.length);
                     }
                 });
 

@@ -12,5 +12,10 @@
             (select)="selectionChange.emit(bindModel($event))"
             (itemAddedToDom)="itemAddedToDom($event)"
         />
+        @if (hasMoreItems()) {
+            <div class="spinner-container">
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
+            </div>
+        }
     </div>
 </div>
