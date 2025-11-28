@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     Component,
+    computed,
     DestroyRef,
     effect,
     ElementRef,
@@ -119,6 +120,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private enlargedHeight = 2000;
     private originalHistoricIcon: HTMLElement | null = null;
     private currentHasHistoricImages = false;
+
+    /**
+     * Signal indicating that we are clearing the gallery and results are not yet loaded
+     */
+    protected readonly isClearing = computed(() => this.paginationOffset() === 0);
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
