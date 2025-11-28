@@ -110,6 +110,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private scrollTop = 0;
 
     /**
+     * Flag to prevent scroll restoration after gallery clear
+     */
+    private preventScrollRestoration = false;
+
+    /**
      * Row height of thumbnails in grid
      */
     private thumbnailHeight = 300;
@@ -214,6 +219,14 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                         if (g.collection.length > 0) {
                             this.currentHasHistoricImages = false;
                             g.clear();
+
+                            // Scroll to top and prevent restoration
+                            const scrollable = this.scrollable();
+                            if (scrollable) {
+                                scrollable.nativeElement.scrollTop = 0;
+                            }
+                            this.preventScrollRestoration = true;
+                            this.scrollTop = 0;
                         }
                     });
                 }
@@ -239,6 +252,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                         gallery.addItems(this.formatImages(result.items));
 
                         this.hasMoreItems.set(gallery.collection.length < result.length);
+
+                        // Allow scroll restoration after items are added
+                        setTimeout(() => {
+                            this.preventScrollRestoration = false;
+                        }, 200);
                     }
                 });
 
@@ -260,7 +278,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
             setTimeout(() => {
                 const scrollable = this.scrollable();
-                if (restoreScroll && scrollable) {
+                if (restoreScroll && scrollable && !this.preventScrollRestoration) {
                     scrollable.nativeElement.scrollTop = this.scrollTop;
                 }
             }, 200);
