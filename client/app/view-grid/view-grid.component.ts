@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     Component,
     DestroyRef,
+    effect,
     ElementRef,
     inject,
     input,
@@ -86,6 +87,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * The margin-top size in px for the scrollable area.
      */
     public readonly scrolledMarginTop = input<string>();
+
+    /**
+     * Current pagination offset from parent.
+     */
+    public readonly paginationOffset = input<number | null>(null);
 
     /**
      * Indicates if there are more items to load
@@ -191,6 +197,22 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     public constructor() {
         this.options.labelVisibility =
             sessionStorage.getItem('showLabels') === 'false' ? LabelVisibility.HOVER : LabelVisibility.ALWAYS;
+
+        // Clear gallery when pagination is reset (offset becomes null)
+        effect(() => {
+            const offset = this.paginationOffset();
+            if (offset === null) {
+                const gallery = this.gallery();
+                if (gallery) {
+                    gallery.gallery.then(g => {
+                        if (g.collection.length > 0) {
+                            this.currentHasHistoricImages = false;
+                            g.clear();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public ngOnInit(): void {
@@ -203,11 +225,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 }
 
                 gallery.gallery.then(gallery => {
-                    if (!result.offset && gallery.collection.length) {
-                        this.currentHasHistoricImages = false;
-                        this.hasMoreItems.set(true);
-                        gallery.clear(); // fires new loadMore() call
-                    } else {
+                    if (result.items.length > 0) {
                         const hasHistoric = result.items.some(card => card.showHistoric);
                         if (hasHistoric) {
                             this.currentHasHistoricImages = true;

@@ -238,6 +238,7 @@
                     [style.height]="'100%'"
                     [selected]="selected"
                     [scrolledMarginTop]="domains.length ? '108px' : '64px'"
+                    [paginationOffset]="paginationOffset()"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                     (contentChange)="gridContentChange($event)"
