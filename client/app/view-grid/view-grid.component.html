@@ -1,5 +1,10 @@
 <app-historic-icon id="original-historic-icon" class="historic-icon" />
 <div #scrollable class="scrollable">
+    @if (isClearing()) {
+        <div class="clearing-overlay">
+            <mat-progress-spinner mode="indeterminate" [diameter]="60" />
+        </div>
+    }
     <div [style]="{width: '100%', marginTop: scrolledMarginTop()}">
         <natural-gallery
             #gallery
@@ -12,5 +17,10 @@
             (select)="selectionChange.emit(bindModel($event))"
             (itemAddedToDom)="itemAddedToDom($event)"
         />
+        @if (hasMoreItems()) {
+            <div class="spinner-container">
+                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
+            </div>
+        }
     </div>
 </div>

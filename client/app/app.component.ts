@@ -12,6 +12,52 @@ import {MatIconRegistry} from '@angular/material/icon';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NetworkActivityService} from '@ecodev/natural';
 
+class DelayedProgressBar {
+    private isVisible = false;
+    private progressTimeout: ReturnType<typeof setTimeout> | null = null;
+    private hideTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    public constructor(private progressRef: NgProgressRef) {}
+
+    public start(): void {
+        if (this.hideTimeout) {
+            clearTimeout(this.hideTimeout);
+            this.hideTimeout = null;
+        }
+
+        if (this.isVisible) {
+            return;
+        }
+
+        if (this.progressTimeout) {
+            clearTimeout(this.progressTimeout);
+        }
+
+        this.progressTimeout = setTimeout(() => {
+            this.isVisible = true;
+            this.progressRef?.start();
+            this.progressTimeout = null;
+        }, 600);
+    }
+
+    public complete(): void {
+        if (this.progressTimeout) {
+            clearTimeout(this.progressTimeout);
+            this.progressTimeout = null;
+        }
+
+        if (!this.isVisible) {
+            return;
+        }
+
+        this.hideTimeout = setTimeout(() => {
+            this.isVisible = false;
+            this.progressRef?.complete();
+            this.hideTimeout = null;
+        }, 300);
+    }
+}
+
 @Component({
     selector: 'app-root',
     imports: [NgProgressbar, RouterOutlet, BootLoaderComponent],
@@ -44,7 +90,9 @@ export class AppComponent implements OnInit {
     private readonly themeService$ = this.themeService.theme.pipe(takeUntilDestroyed());
 
     public constructor() {
-        effect(() => this.networkActivityService.setProgressRef(this.ngProgressRef()));
+        effect(() => {
+            this.networkActivityService.setProgressRef(new DelayedProgressBar(this.ngProgressRef()));
+        });
 
         const themeService = this.themeService;
         const matIconRegistry = this.matIconRegistry;

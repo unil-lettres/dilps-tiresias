@@ -1,12 +1,15 @@
 import {
     AfterViewInit,
     Component,
+    computed,
     DestroyRef,
+    effect,
     ElementRef,
     inject,
     input,
     OnInit,
     output,
+    signal,
     viewChild,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -25,6 +28,7 @@ import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {Cards} from '../shared/generated-types';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 export type ContentChange = {
     visible?: number;
@@ -36,7 +40,7 @@ type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
-    imports: [NaturalGalleryComponent, HistoricIconComponent],
+    imports: [NaturalGalleryComponent, HistoricIconComponent, MatProgressSpinner],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
 })
@@ -86,6 +90,16 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     public readonly scrolledMarginTop = input<string>();
 
     /**
+     * Current pagination offset from parent.
+     */
+    public readonly paginationOffset = input<number | null>(null);
+
+    /**
+     * Indicates if there are more items to load
+     */
+    protected readonly hasMoreItems = signal(true);
+
+    /**
      * Reference to scrollable element
      */
     private readonly scrollable = viewChild<ElementRef<HTMLElement>>('scrollable');
@@ -94,6 +108,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * Vertical scroll position cache
      */
     private scrollTop = 0;
+
+    /**
+     * Flag to prevent scroll restoration after gallery clear
+     */
+    private preventScrollRestoration = false;
 
     /**
      * Row height of thumbnails in grid
@@ -106,6 +125,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private enlargedHeight = 2000;
     private originalHistoricIcon: HTMLElement | null = null;
     private currentHasHistoricImages = false;
+
+    /**
+     * Signal indicating that we are clearing the gallery and results are not yet loaded
+     */
+    protected readonly isClearing = computed(() => this.paginationOffset() === 0);
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -184,6 +208,30 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     public constructor() {
         this.options.labelVisibility =
             sessionStorage.getItem('showLabels') === 'false' ? LabelVisibility.HOVER : LabelVisibility.ALWAYS;
+
+        // Clear gallery when pagination is reset (offset becomes null)
+        effect(() => {
+            const offset = this.paginationOffset();
+            if (offset === null) {
+                const gallery = this.gallery();
+                if (gallery) {
+                    gallery.gallery.then(g => {
+                        if (g.collection.length > 0) {
+                            this.currentHasHistoricImages = false;
+                            g.clear();
+
+                            // Scroll to top and prevent restoration
+                            const scrollable = this.scrollable();
+                            if (scrollable) {
+                                scrollable.nativeElement.scrollTop = 0;
+                            }
+                            this.preventScrollRestoration = true;
+                            this.scrollTop = 0;
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public ngOnInit(): void {
@@ -196,15 +244,19 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 }
 
                 gallery.gallery.then(gallery => {
-                    if (!result.offset && gallery.collection.length) {
-                        this.currentHasHistoricImages = false;
-                        gallery.clear(); // fires new loadMore() call
-                    } else {
+                    if (result.items.length > 0) {
                         const hasHistoric = result.items.some(card => card.showHistoric);
                         if (hasHistoric) {
                             this.currentHasHistoricImages = true;
                         }
                         gallery.addItems(this.formatImages(result.items));
+
+                        this.hasMoreItems.set(gallery.collection.length < result.length);
+
+                        // Allow scroll restoration after items are added
+                        setTimeout(() => {
+                            this.preventScrollRestoration = false;
+                        }, 200);
                     }
                 });
 
@@ -226,7 +278,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
 
             setTimeout(() => {
                 const scrollable = this.scrollable();
-                if (restoreScroll && scrollable) {
+                if (restoreScroll && scrollable && !this.preventScrollRestoration) {
                     scrollable.nativeElement.scrollTop = this.scrollTop;
                 }
             }, 200);

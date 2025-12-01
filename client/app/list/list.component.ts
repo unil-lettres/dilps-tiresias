@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
@@ -227,6 +227,11 @@ export class ListComponent
     protected showLabels = false;
     public routeReuseStatus: RouteReuseStatus = RouteReuseStatus.default;
 
+    /**
+     * Current pagination offset
+     */
+    protected readonly paginationOffset = computed(() => this.variablesSignal()?.pagination?.offset ?? null);
+
     protected Site = Site;
     protected UserRole = UserRole;
     protected CardSortingField = CardSortingField;
@@ -253,6 +258,8 @@ export class ListComponent
     private readonly routeData$ = this.route.data.pipe(takeUntilDestroyed());
 
     private readonly service$ = this.service.watchAll(this.variablesManager, 'network-only').pipe(takeUntilDestroyed());
+
+    private readonly variablesSignal = toSignal(this.variablesManager.variables);
 
     public constructor() {
         super(inject(CardService));

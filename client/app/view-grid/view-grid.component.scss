@@ -14,3 +14,26 @@ natural-gallery {
 #original-historic-icon {
     display: none;
 }
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.clearing-overlay {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    // Hide the next button of natural-gallery during clearing
+    & ~ div ::ng-deep .natural-gallery-next {
+        display: none !important;
+    }
+}
