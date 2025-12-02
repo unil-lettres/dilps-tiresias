@@ -27,6 +27,33 @@ app-view-grid {
     padding-bottom: 7px;
     padding-left: 10px;
 
+    // Fade effect on edges
+    &::before,
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 7px;
+        opacity: 0;
+        z-index: 2;
+        transition: opacity 0.2s ease-in-out;
+        width: 40px;
+        pointer-events: none;
+        content: '';
+    }
+
+    &::before {
+        left: 10px;
+    }
+
+    &::after {
+        right: 10px;
+    }
+
+    &.fade-left::before,
+    &.fade-right::after {
+        opacity: 1;
+    }
+
     &:hover {
         .scroll-arrow {
             transition-duration: 1s;

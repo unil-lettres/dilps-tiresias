@@ -213,7 +213,11 @@
             </div>
         } @else {
             @if (domains.length) {
-                <div id="domains-chips">
+                <div
+                    id="domains-chips"
+                    [class.fade-left]="hasScrollbar && !scrollBarAtLeft"
+                    [class.fade-right]="hasScrollbar && !scrollBarAtRight"
+                >
                     <div #chipsContainer class="chips-container" (scroll)="updateScrollArrows()">
                         <mat-chip-listbox
                             aria-label="Domaines des fiches"
