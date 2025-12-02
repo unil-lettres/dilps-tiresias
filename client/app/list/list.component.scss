@@ -26,6 +26,51 @@ app-view-grid {
     padding-right: 10px;
     padding-bottom: 7px;
     padding-left: 10px;
+
+    &:hover {
+        .scroll-arrow {
+            transition-duration: 1s;
+
+            &:not(.is-hidden) {
+                opacity: 1;
+                transition-duration: 0s;
+            }
+        }
+    }
+
+    .scroll-arrow {
+        position: absolute;
+        top: 0;
+        opacity: 0;
+        z-index: 3;
+        transition-duration: 0s;
+        transition-property: opacity;
+        transition-timing-function: ease-in;
+
+        &.is-hidden {
+            opacity: 0;
+        }
+
+        &.left {
+            left: 4px;
+        }
+
+        &.right {
+            right: 4px;
+        }
+    }
+
+    .chips-container {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none; // IE/Edge
+
+        &::-webkit-scrollbar {
+            display: none; // Chrome/Safari
+        }
+    }
 }
 
 .chip-infos {

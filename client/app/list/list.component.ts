@@ -1,6 +1,16 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    computed,
+    ElementRef,
+    inject,
+    OnDestroy,
+    OnInit,
+    signal,
+    viewChild,
+} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {MatIconButton} from '@angular/material/button';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
@@ -21,7 +31,7 @@ import {
 } from '@ecodev/natural';
 import {defaults, isObject} from 'es-toolkit/compat';
 import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
-import {NgScrollbar} from 'ngx-scrollbar';
+
 import {concatMap, finalize, from, Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
 import {ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
@@ -118,12 +128,12 @@ enum ViewMode {
         MatChipListbox,
         MatChipOption,
         MatChipSet,
+        MatMiniFabButton,
         ViewGridComponent,
         ViewListComponent,
         ViewMapComponent,
         NaturalIconDirective,
         ExportMenuComponent,
-        NgScrollbar,
         HistoricIconComponent,
     ],
     templateUrl: './list.component.html',
@@ -131,7 +141,7 @@ enum ViewMode {
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
-    implements OnInit, AfterViewInit, ReusableRouteStatus
+    implements OnInit, AfterViewInit, OnDestroy, ReusableRouteStatus
 {
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
@@ -162,6 +172,31 @@ export class ListComponent
      * Reference to list component
      */
     protected readonly listComponent = viewChild(ViewListComponent);
+
+    /**
+     * Reference to chips container for scroll
+     */
+    protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
+
+    /**
+     * Whether the scrollbar could not scroll left anymore.
+     */
+    protected scrollBarAtLeft = true;
+
+    /**
+     * Whether the scrollbar could not scroll right anymore.
+     */
+    protected scrollBarAtRight = false;
+
+    /**
+     * Whether the chips container has a scrollbar (too many chips for the viewport).
+     */
+    protected hasScrollbar = false;
+
+    /**
+     * Resize observer to update buttons state when the component is resized.
+     */
+    private resizeObserver: ResizeObserver | null = null;
 
     /**
      * Expose enum for template
@@ -341,7 +376,23 @@ export class ListComponent
     public ngAfterViewInit(): void {
         this.fetchDomains().subscribe(() => {
             this.domainSelectionChange();
+            this.initResizeObserver();
         });
+    }
+
+    public ngOnDestroy(): void {
+        this.resizeObserver?.disconnect();
+    }
+
+    /**
+     * Initialize resize observer to update scroll buttons state.
+     */
+    private initResizeObserver(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (container && !this.resizeObserver) {
+            this.resizeObserver = new ResizeObserver(() => this.updateScrollArrows());
+            this.resizeObserver.observe(container);
+        }
     }
 
     protected override handleHistoryNavigation(): void {
@@ -587,12 +638,55 @@ export class ListComponent
             return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
                 tap(result => {
                     this.domains = result.map(d => ({...d}));
+                    // Wait for Angular to render the chips before initializing the observer
+                    setTimeout(() => {
+                        this.initResizeObserver();
+                        this.updateScrollArrows();
+                    }, 0);
                 }),
             );
         } else {
             this.domains = [];
             this.variablesManager.set('domains', null);
             return of(this.domains);
+        }
+    }
+
+    /**
+     * Update the state of the scroll buttons (left and right) according to the
+     * current scroll position and the size of the chips container.
+     */
+    protected updateScrollArrows(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (!container) {
+            this.scrollBarAtLeft = true;
+            this.scrollBarAtRight = false;
+            this.hasScrollbar = false;
+            return;
+        }
+
+        this.scrollBarAtLeft = container.scrollLeft === 0;
+        this.scrollBarAtRight = container.scrollWidth - container.scrollLeft === container.clientWidth;
+        this.hasScrollbar = container.scrollWidth > container.clientWidth;
+    }
+
+    /**
+     * Scroll chips container to the left.
+     */
+    protected scrollLeft(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (container) {
+            container.scrollLeft -= 500;
+        }
+    }
+
+    /**
+     * Scroll chips container to the right.
+     */
+    protected scrollRight(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (container) {
+            container.scrollLeft += 500;
         }
     }
 

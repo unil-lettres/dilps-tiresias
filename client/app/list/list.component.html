@@ -214,7 +214,7 @@
         } @else {
             @if (domains.length) {
                 <div id="domains-chips">
-                    <ng-scrollbar orientation="horizontal" appearance="native" visibility="visible">
+                    <div #chipsContainer class="chips-container" (scroll)="updateScrollArrows()">
                         <mat-chip-listbox
                             aria-label="Domaines des fiches"
                             aria-orientation="horizontal"
@@ -229,7 +229,25 @@
                                 </mat-chip-option>
                             }
                         </mat-chip-listbox>
-                    </ng-scrollbar>
+                    </div>
+                    <button
+                        class="scroll-arrow left"
+                        mat-mini-fab
+                        color="accent"
+                        [class.is-hidden]="!hasScrollbar || scrollBarAtLeft"
+                        (click)="scrollLeft()"
+                    >
+                        <mat-icon naturalIcon="navigate_before" />
+                    </button>
+                    <button
+                        class="scroll-arrow right"
+                        mat-mini-fab
+                        color="accent"
+                        [class.is-hidden]="!hasScrollbar || scrollBarAtRight"
+                        (click)="scrollRight()"
+                    >
+                        <mat-icon naturalIcon="navigate_next" />
+                    </button>
                 </div>
             }
 
