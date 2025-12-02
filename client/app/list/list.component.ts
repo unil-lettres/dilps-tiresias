@@ -658,7 +658,7 @@ export class ListComponent
             {
                 width: '400px',
                 position: {
-                    top: '64px',
+                    top: '66px',
                     left: '160px',
                 },
                 data: data,

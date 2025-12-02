@@ -112,6 +112,7 @@
                 }
             }
             <natural-search
+                id="main-natural-search"
                 dropdownTitle="Recherche approfondie"
                 class="nat-expand"
                 [facets]="naturalSearchFacets"
@@ -237,7 +238,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
-                    [scrolledMarginTop]="domains.length ? '108px' : '64px'"
+                    [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     [paginationOffset]="paginationOffset()"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
@@ -249,7 +250,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
-                    [scrolledMarginTop]="domains.length ? '117px' : '64px'"
+                    [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                 />
