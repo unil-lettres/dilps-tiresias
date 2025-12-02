@@ -26,3 +26,8 @@
     display: grid;
     place-items: center;
 }
+
+// Hide the next button of natural-gallery during clearing
+.clearing-overlay ~ div .natural-gallery-next {
+    display: none !important;
+}

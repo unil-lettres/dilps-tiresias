@@ -31,9 +31,4 @@ natural-gallery {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-
-    // Hide the next button of natural-gallery during clearing
-    & ~ div ::ng-deep .natural-gallery-next {
-        display: none !important;
-    }
 }
