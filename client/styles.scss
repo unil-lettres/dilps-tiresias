@@ -47,16 +47,25 @@ body {
 }
 
 natural-search {
-    margin: 0 20px;
-
-    natural-input:last-of-type {
-        margin-right: 5px !important;
-    }
-}
-
-natural-search {
     align-self: flex-start;
+    margin: 6px 20px 0 20px;
     font-size: 16px;
+
+    // Disable ripple effect on form fields to prevent overflow:hidden which truncates the floating label in outline appearance
+
+    // Hide the ripple completely so we can use overflow:visible without visual glitch
+    .mat-mdc-form-field.mat-ripple .mat-ripple-element {
+        display: none !important;
+    }
+
+    natural-input {
+        margin-right: 5px !important;
+        overflow: visible !important;
+    }
+
+    .mat-mdc-form-field.mat-ripple {
+        overflow: visible !important;
+    }
 }
 
 // Allow newline in tooltips

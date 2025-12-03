@@ -24,6 +24,7 @@ import {AsyncPipe, DatePipe} from '@angular/common';
 import {NaturalEnumPipe, NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
     selector: 'app-users',
@@ -54,6 +55,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',
+    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
 })
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];

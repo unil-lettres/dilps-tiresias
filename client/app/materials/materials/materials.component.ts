@@ -32,6 +32,7 @@ import {
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
     selector: 'app-materials',
@@ -66,6 +67,7 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
     ],
     templateUrl: './materials.component.html',
     styleUrl: './materials.component.scss',
+    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {

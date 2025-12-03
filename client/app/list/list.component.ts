@@ -13,6 +13,7 @@ import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {PageEvent} from '@angular/material/paginator';
@@ -139,6 +140,7 @@ enum ViewMode {
     ],
     templateUrl: './list.component.html',
     styleUrl: './list.component.scss',
+    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
