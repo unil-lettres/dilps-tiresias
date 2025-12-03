@@ -682,8 +682,9 @@ export class ListComponent
             return;
         }
 
-        this.scrollBarAtLeft = container.scrollLeft === 0;
-        this.scrollBarAtRight = container.scrollWidth - container.scrollLeft === container.clientWidth;
+        // Use a tolerance of 1px to handle floating point precision issues
+        this.scrollBarAtLeft = container.scrollLeft <= 1;
+        this.scrollBarAtRight = container.scrollWidth - container.scrollLeft - container.clientWidth <= 1;
         this.hasScrollbar = container.scrollWidth > container.clientWidth;
     }
 

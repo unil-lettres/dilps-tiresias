@@ -67,7 +67,7 @@ app-view-grid {
 
     .scroll-arrow {
         position: absolute;
-        top: 0;
+        top: -2px;
         opacity: 0;
         z-index: 3;
         transition-duration: 0s;
