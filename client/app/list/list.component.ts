@@ -72,6 +72,7 @@ import {UserService} from '../users/services/user.service';
 import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
+import {ProgressService} from '../shared/services/progress.service';
 
 function applyChanges(
     destination: Cards['cards']['items'][0],
@@ -149,6 +150,7 @@ export class ListComponent
     private readonly statisticService = inject(StatisticService);
     private readonly changeService = inject(ChangeService);
     private readonly domainService = inject(DomainService);
+    private readonly progressService = inject(ProgressService);
 
     protected readonly site = inject(SITE);
 
@@ -591,10 +593,24 @@ export class ListComponent
                     });
                 }
 
+                const totalOperations = observables.length + suggestionsObservables.length * 2; // *2 because suggestions also trigger suggestUpdate
+                let completedOperations = 0;
+
+                const updateProgress = (): void => {
+                    completedOperations++;
+                    this.progressService.set((completedOperations / totalOperations) * 100);
+                };
+
+                this.progressService.startManual();
+
                 // Last api call
                 const finish = (): void => {
                     from(observables)
-                        .pipe(concatMap(observable => observable))
+                        .pipe(
+                            concatMap(observable => observable),
+                            tap(() => updateProgress()),
+                            finalize(() => this.progressService.completeManual()),
+                        )
                         .subscribe({
                             complete: () => {
                                 this.alertService.info('Mis à jour');
@@ -607,6 +623,7 @@ export class ListComponent
                     from(suggestionsObservables)
                         .pipe(
                             concatMap(observable => observable),
+                            tap(() => updateProgress()),
                             finalize(() => finish()),
                         )
                         .subscribe(card => observables.push(this.changeService.suggestUpdate(card)));
