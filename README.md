@@ -57,7 +57,7 @@ Run the following docker commands from the project root directory.
 
 Build & run all the containers for this project:
 
-`docker-compose up` (add -d if you want to run in the background and silence the logs)
+`docker compose up` (add -d if you want to run in the background and silence the logs)
 
 The project is compiled each time the containers are started. You'll get a **Build at** log message as soon as everything is ready to be used.
 
