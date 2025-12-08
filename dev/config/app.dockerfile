@@ -5,7 +5,7 @@ ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
-ENV COMPOSER_VERSION=2.6
+ENV COMPOSER_VERSION=2.8.12
 
 # Install additional packages
 RUN apt-get update &&\
@@ -35,7 +35,7 @@ RUN docker-php-ext-configure gd --with-jpeg && \
 
 # Install specific version of Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- \
-    --$COMPOSER_VERSION \
+    --version=$COMPOSER_VERSION \
     --install-dir=/usr/local/bin --filename=composer
 
 # Install specific version of Node & Yarn
