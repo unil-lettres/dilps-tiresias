@@ -2,7 +2,7 @@ import {ErrorHandler, inject, provideAppInitializer} from '@angular/core';
 import {AppComponent} from './app/app.component';
 import {quillConfig} from './app/shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
-import {routes} from './app/app-routing.module';
+import {routes} from './app/app.routes';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {Apollo} from 'apollo-angular';
 import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
