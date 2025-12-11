@@ -383,46 +383,46 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Template exposed variable
      */
-    protected InstitutionComponent = InstitutionComponent;
+    protected readonly InstitutionComponent = InstitutionComponent;
 
     /**
      * Template exposed variable
      */
-    protected ArtistComponent = ArtistComponent;
+    protected readonly ArtistComponent = ArtistComponent;
 
     /**
      * Template exposed variable
      */
-    protected MaterialComponent = MaterialComponent;
+    protected readonly MaterialComponent = MaterialComponent;
     /**
      * Template exposed variable
      */
-    protected PeriodComponent = PeriodComponent;
+    protected readonly PeriodComponent = PeriodComponent;
 
     /**
      * Template exposed variable
      */
-    protected TagComponent = TagComponent;
+    protected readonly TagComponent = TagComponent;
 
     /**
      * Template exposed variable
      */
-    protected DocumentTypeComponent = DocumentTypeComponent;
+    protected readonly DocumentTypeComponent = DocumentTypeComponent;
 
     /**
      * Template exposed variable
      */
-    protected DomainComponent = DomainComponent;
+    protected readonly DomainComponent = DomainComponent;
 
     /**
      * Template exposed variable
      */
-    protected AntiqueNameComponent = AntiqueNameComponent;
+    protected readonly AntiqueNameComponent = AntiqueNameComponent;
 
     /**
      * Template exposed variable
      */
-    protected domainHierarchicConfig = domainHierarchicConfig;
+    protected readonly domainHierarchicConfig = domainHierarchicConfig;
 
     /**
      * Template exposed variable
@@ -432,7 +432,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Template exposed variable
      */
-    protected periodHierarchicConfig = periodHierarchicConfig;
+    protected readonly periodHierarchicConfig = periodHierarchicConfig;
 
     /**
      * Template exposed variable
@@ -442,7 +442,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Template exposed variable
      */
-    protected JoinType = JoinType;
+    protected readonly JoinType = JoinType;
 
     /**
      * Edition mode if true

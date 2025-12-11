@@ -166,12 +166,12 @@ export class ListComponent
     /**
      * Expose enum for template
      */
-    protected ViewMode = ViewMode;
+    protected readonly ViewMode = ViewMode;
 
     /**
      * Expose enum for template
      */
-    protected SortingOrder = SortingOrder;
+    protected readonly SortingOrder = SortingOrder;
 
     /**
      * Checked content for selection
@@ -232,9 +232,9 @@ export class ListComponent
      */
     protected readonly paginationOffset = computed(() => this.variablesSignal()?.pagination?.offset ?? null);
 
-    protected Site = Site;
-    protected UserRole = UserRole;
-    protected CardSortingField = CardSortingField;
+    protected readonly Site = Site;
+    protected readonly UserRole = UserRole;
+    protected readonly CardSortingField = CardSortingField;
 
     /**
      * Sorting applied when none is asked

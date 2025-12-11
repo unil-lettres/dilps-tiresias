@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
     protected readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy);
 
-    protected Site = Site;
+    protected readonly Site = Site;
     protected readonly UserRole = UserRole;
 
     protected user: Viewer['viewer'] | null = null;

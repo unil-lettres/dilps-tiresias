@@ -70,7 +70,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
 
-    protected collectionsHierarchicConfig = collectionsHierarchicConfig;
+    protected readonly collectionsHierarchicConfig = collectionsHierarchicConfig;
     protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 

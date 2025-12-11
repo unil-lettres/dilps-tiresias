@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected readonly site = inject(SITE);
     protected readonly themeService = inject(ThemeService);
 
-    protected Site = Site;
+    protected readonly Site = Site;
 
     protected loading = false;
 

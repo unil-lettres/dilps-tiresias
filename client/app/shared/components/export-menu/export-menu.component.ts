@@ -34,8 +34,8 @@ export class ExportMenuComponent {
 
     public readonly collection = input<FakeCollection | null | undefined>(null);
 
-    protected ExportFormat = ExportFormat;
-    protected ExportTheme = ExportTheme;
+    protected readonly ExportFormat = ExportFormat;
+    protected readonly ExportTheme = ExportTheme;
 
     protected pptValidationMessage = '';
 

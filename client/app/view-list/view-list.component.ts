@@ -57,7 +57,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Template exposed variable
      */
-    protected Site = Site;
+    protected readonly Site = Site;
     protected readonly CardService = CardService;
 
     public ngOnInit(): void {
