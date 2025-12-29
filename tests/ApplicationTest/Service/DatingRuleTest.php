@@ -6,13 +6,12 @@ namespace ApplicationTest\Service;
 
 use Application\Model\Dating;
 use Application\Service\DatingRule;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DatingRuleTest extends TestCase
 {
-    /**
-     * @dataProvider providerCompute
-     */
+    #[DataProvider('providerCompute')]
     public function testCompute(string $input, array $expected): void
     {
         $datingRule = new DatingRule();

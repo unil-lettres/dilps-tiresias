@@ -7,7 +7,7 @@ namespace ApplicationTest\Repository;
 use Application\Model\Material;
 use Application\Repository\MaterialRepository;
 
-class MaterialRepositoryTest extends AbstractRepositoryTest
+class MaterialRepositoryTest extends AbstractRepository
 {
     private MaterialRepository $repository;
 

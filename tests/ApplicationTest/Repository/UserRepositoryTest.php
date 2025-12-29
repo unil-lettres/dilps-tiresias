@@ -8,7 +8,7 @@ use Application\Enum\Site;
 use Application\Model\User;
 use Application\Repository\UserRepository;
 
-class UserRepositoryTest extends AbstractRepositoryTest
+class UserRepositoryTest extends AbstractRepository
 {
     private UserRepository $repository;
 

@@ -6,13 +6,12 @@ namespace ApplicationTest\Service;
 
 use Application\Enum\Site;
 use Application\Service\SiteFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class SiteFactoryTest extends TestCase
 {
-    /**
-     * @dataProvider providerGetSite
-     */
+    #[DataProvider('providerGetSite')]
     public function testGetSite(string $input, Site $expected): void
     {
         self::assertSame($expected, SiteFactory::getSite($input));

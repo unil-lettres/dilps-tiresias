@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace ApplicationTest;
 
 use Application\Utility;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class UtilityTest extends TestCase
 {
-    /**
-     * @dataProvider providerSanitizeRichText
-     */
+    #[DataProvider('providerSanitizeRichText')]
     public function testSanitizeRichText(string $input, string $expected): void
     {
         self::assertSame($expected, Utility::sanitizeRichText($input));
@@ -26,9 +25,7 @@ class UtilityTest extends TestCase
         yield ['&nbsp;' . html_entity_decode('&nbsp;'), chr(32) . chr(32)];
     }
 
-    /**
-     * @dataProvider providerSanitizeSingleLineRichText
-     */
+    #[DataProvider('providerSanitizeSingleLineRichText')]
     public function testSanitizeSingleLineRichText(string $input, string $expected): void
     {
         self::assertSame($expected, Utility::sanitizeSingleLineRichText($input));
@@ -43,9 +40,7 @@ class UtilityTest extends TestCase
         yield ['&nbsp;' . html_entity_decode('&nbsp;'), chr(32) . chr(32)];
     }
 
-    /**
-     * @dataProvider providerRichTextToPlainText
-     */
+    #[DataProvider('providerRichTextToPlainText')]
     public function testRichTextToPlainText(string $input, string $expected): void
     {
         self::assertSame($expected, Utility::richTextToPlainText($input));
@@ -76,9 +71,7 @@ class UtilityTest extends TestCase
         yield ['&amp;&gt;&lt;&quot;&nbsp;' . html_entity_decode('&nbsp;') . '&#8364;&#x20AC;', '&><"  €€'];
     }
 
-    /**
-     * @dataProvider providerFormatMetric
-     */
+    #[DataProvider('providerFormatMetric')]
     public function testFormatMetric(int $input, string $expected): void
     {
         self::assertSame($expected, Utility::formatMetric($input));

@@ -12,7 +12,7 @@ use Application\Model\User;
 use Application\Repository\ChangeRepository;
 use Application\Repository\UserRepository;
 
-class ChangeRepositoryTest extends AbstractRepositoryTest
+class ChangeRepositoryTest extends AbstractRepository
 {
     private ChangeRepository $repository;
 

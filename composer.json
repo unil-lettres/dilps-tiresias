@@ -48,7 +48,7 @@
         "ext-mbstring": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.5",
-        "ecodev/felix": "^16.3",
+        "ecodev/felix": "dev-php85",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^8.0",
         "laminas/laminas-config-aggregator": "^1.15",
@@ -66,6 +66,6 @@
         "friendsofphp/php-cs-fixer": "@stable",
         "laminas/laminas-development-mode": "^3.12",
         "phpstan/phpstan-doctrine": "@stable",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^11.5"
     }
 }

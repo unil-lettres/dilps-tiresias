@@ -8,7 +8,7 @@ use Application\Model\File;
 use Application\Repository\FileRepository;
 use ApplicationTest\Repository\Traits\LimitedAccessSubQuery;
 
-class FileRepositoryTest extends AbstractRepositoryTest
+class FileRepositoryTest extends AbstractRepository
 {
     use LimitedAccessSubQuery;
 
@@ -20,7 +20,7 @@ class FileRepositoryTest extends AbstractRepositoryTest
         $this->repository = _em()->getRepository(File::class);
     }
 
-    public function providerGetAccessibleSubQuery(): iterable
+    public static function providerGetAccessibleSubQuery(): iterable
     {
         yield ['anonymous', []];
         yield ['student', [13000]];

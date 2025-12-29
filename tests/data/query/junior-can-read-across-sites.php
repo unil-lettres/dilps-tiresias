@@ -22,7 +22,8 @@ return [
             user_dilps: user(id: 1003) { id }
             user_tiresias: user(id: 1007) { id }
         }',
-    ],    [
+    ],
+    [
         'data' => [
             'antiqueName_tiresias' => ['id' => 12000],
             'artist_dilps' => ['id' => 3000],

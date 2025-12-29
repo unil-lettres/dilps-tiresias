@@ -9,8 +9,9 @@ use Application\Model\Statistic;
 use Application\Model\User;
 use Application\Repository\StatisticRepository;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-class StatisticRepositoryTest extends AbstractRepositoryTest
+class StatisticRepositoryTest extends AbstractRepository
 {
     private StatisticRepository $repository;
 
@@ -20,9 +21,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         $this->repository = _em()->getRepository(Statistic::class);
     }
 
-    /**
-     * @dataProvider providerGetExtraStatistics
-     */
+    #[DataProvider('providerGetExtraStatistics')]
     public function testGetExtraStatistics(Site $site, string $poeriod, ?int $userId): void
     {
         $user = $userId ? $this->getEntityManager()->getRepository(User::class)->getOneById($userId) : null;
@@ -60,9 +59,7 @@ class StatisticRepositoryTest extends AbstractRepositoryTest
         yield [Site::Tiresias, '2019', 1000];
     }
 
-    /**
-     * @dataProvider providerGetExtraStatisticsException
-     */
+    #[DataProvider('providerGetExtraStatisticsException')]
     public function testGetExtraStatisticsException(Site $site, string $period, ?int $userId): void
     {
         $this->expectException(InvalidArgumentException::class);

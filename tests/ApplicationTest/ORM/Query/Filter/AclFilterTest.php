@@ -17,13 +17,12 @@ use Application\Model\User;
 use Application\Repository\UserRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Ecodev\Felix\ORM\Query\Filter\AclFilter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class AclFilterTest extends TestCase
 {
-    /**
-     * @dataProvider providerFilter
-     */
+    #[DataProvider('providerFilter')]
     public function testFilter(?string $login, string $class, string $expected): void
     {
         /** @var UserRepository $userRepository */

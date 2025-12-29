@@ -8,7 +8,7 @@ use Application\Enum\Site;
 use Application\Model\Artist;
 use Application\Repository\ArtistRepository;
 
-class ArtistRepositoryTest extends AbstractRepositoryTest
+class ArtistRepositoryTest extends AbstractRepository
 {
     private ArtistRepository $repository;
 

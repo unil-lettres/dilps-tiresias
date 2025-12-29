@@ -8,8 +8,9 @@ use Application\Api\Input\Operator\LocalityOrInstitutionLocalityOperatorType;
 use Application\Model\Card;
 use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Type\Definition\Type;
+use PHPUnit\Framework\TestCase;
 
-class LocalityOrInstitutionLocalityOperatorTypeTest extends \PHPUnit\Framework\TestCase
+class LocalityOrInstitutionLocalityOperatorTypeTest extends TestCase
 {
     public function testSearch(): void
     {

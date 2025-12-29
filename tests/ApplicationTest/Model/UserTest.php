@@ -6,6 +6,7 @@ namespace ApplicationTest\Model;
 
 use Application\Enum\Site;
 use Application\Model\User;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -130,9 +131,7 @@ class UserTest extends TestCase
         self::assertNotEquals($expectedForAdmin, $expected);
     }
 
-    /**
-     * @dataProvider providerSetRole
-     */
+    #[DataProvider('providerSetRole')]
     public function testSetRole(string $currentRole, string $oldRole, string $newRole, ?string $exception): void
     {
         if ($currentRole !== User::ROLE_ANONYMOUS) {

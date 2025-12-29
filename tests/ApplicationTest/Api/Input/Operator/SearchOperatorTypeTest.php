@@ -10,12 +10,12 @@ use Application\Model\DocumentType;
 use Application\Model\User;
 use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Type\Definition\Type;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-class SearchOperatorTypeTest extends \PHPUnit\Framework\TestCase
+class SearchOperatorTypeTest extends TestCase
 {
-    /**
-     * @dataProvider providerSearch
-     */
+    #[DataProvider('providerSearch')]
     public function testSearch(string $class, string $term, string $expected): void
     {
         $operator = new SearchOperatorType(_types(), Type::string());

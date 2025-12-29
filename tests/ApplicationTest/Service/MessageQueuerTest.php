@@ -12,8 +12,9 @@ use Application\Service\MessageQueuer;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\MessageRenderer;
 use Laminas\View\Renderer\RendererInterface;
+use PHPUnit\Framework\TestCase;
 
-class MessageQueuerTest extends \PHPUnit\Framework\TestCase
+class MessageQueuerTest extends TestCase
 {
     private function createMockMessageQueuer(): MessageQueuer
     {

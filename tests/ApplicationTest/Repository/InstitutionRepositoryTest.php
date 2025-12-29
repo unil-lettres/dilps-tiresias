@@ -8,7 +8,7 @@ use Application\Enum\Site;
 use Application\Model\Institution;
 use Application\Repository\InstitutionRepository;
 
-class InstitutionRepositoryTest extends AbstractRepositoryTest
+class InstitutionRepositoryTest extends AbstractRepository
 {
     private InstitutionRepository $repository;
 
