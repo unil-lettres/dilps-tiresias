@@ -51,20 +51,20 @@
         "ecodev/felix": "dev-php85",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^8.0",
-        "laminas/laminas-config-aggregator": "^1.15",
-        "laminas/laminas-servicemanager": "^3.22",
+        "laminas/laminas-config-aggregator": "^1.19",
+        "laminas/laminas-servicemanager": "^3.24",
         "longitude-one/doctrine-spatial": "^5.0",
-        "mezzio/mezzio": "^3.19",
-        "mezzio/mezzio-fastroute": "^3.11",
-        "mezzio/mezzio-helpers": "^5.16",
-        "mezzio/mezzio-laminasviewrenderer": "^2.15",
-        "mezzio/mezzio-session-ext": "^1.19",
-        "phpoffice/phppresentation": "dev-master",
-        "phpoffice/phpspreadsheet": "^1.29"
+        "mezzio/mezzio": "^3.26",
+        "mezzio/mezzio-fastroute": "^3.14",
+        "mezzio/mezzio-helpers": "^5.20",
+        "mezzio/mezzio-laminasviewrenderer": "^2.19",
+        "mezzio/mezzio-session-ext": "^1.21",
+        "phpoffice/phppresentation": "^1.2",
+        "phpoffice/phpspreadsheet": "^3.10"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
-        "laminas/laminas-development-mode": "^3.12",
+        "laminas/laminas-development-mode": "^3.15",
         "phpstan/phpstan-doctrine": "@stable",
         "phpunit/phpunit": "^11.5"
     }
