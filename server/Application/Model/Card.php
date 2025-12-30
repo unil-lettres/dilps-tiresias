@@ -93,7 +93,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
     use HasSite;
     use HasYearRange;
 
-    private const IMAGE_PATH = 'data/images/';
+    private const string IMAGE_PATH = 'data/images/';
 
     #[ORM\Column(type: 'enum', options: ['default' => CardVisibility::Private])]
     private CardVisibility $visibility = CardVisibility::Private;

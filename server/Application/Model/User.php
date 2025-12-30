@@ -36,12 +36,12 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     use HasName;
     use HasSite;
 
-    final public const ROLE_ANONYMOUS = 'anonymous';
-    final public const ROLE_STUDENT = 'student';
-    final public const ROLE_JUNIOR = 'junior';
-    final public const ROLE_SENIOR = 'senior';
-    final public const ROLE_MAJOR = 'major';
-    final public const ROLE_ADMINISTRATOR = 'administrator';
+    final public const string ROLE_ANONYMOUS = 'anonymous';
+    final public const string ROLE_STUDENT = 'student';
+    final public const string ROLE_JUNIOR = 'junior';
+    final public const string ROLE_SENIOR = 'senior';
+    final public const string ROLE_MAJOR = 'major';
+    final public const string ROLE_ADMINISTRATOR = 'administrator';
 
     private static ?User $currentUser = null;
 

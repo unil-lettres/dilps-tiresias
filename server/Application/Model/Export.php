@@ -24,7 +24,7 @@ use Throwable;
 #[ORM\Entity(ExportRepository::class)]
 class Export extends AbstractModel implements HasSiteInterface
 {
-    private const EXPORT_PATH = 'htdocs/export/';
+    private const string EXPORT_PATH = 'htdocs/export/';
 
     use HasFileSize;
     use HasSite;
