@@ -66,6 +66,6 @@
         "friendsofphp/php-cs-fixer": "@stable",
         "laminas/laminas-development-mode": "^3.15",
         "phpstan/phpstan-doctrine": "@stable",
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "@stable"
     }
 }

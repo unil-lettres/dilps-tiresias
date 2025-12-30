@@ -20,7 +20,7 @@ class RefreshSessionTimestampMiddlewareTest extends TestCase
         $request = new ServerRequest()->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $session);
         $middleware = new RefreshSessionTimestampMiddleware();
 
-        $handler = $this->createMock(RequestHandlerInterface::class);
+        $handler = self::createStub(RequestHandlerInterface::class);
 
         $middleware->process($request, $handler);
 

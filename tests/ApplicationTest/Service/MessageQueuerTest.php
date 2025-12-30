@@ -54,10 +54,8 @@ class MessageQueuerTest extends TestCase
 
     private function createMockUserMinimal(): User
     {
-        $user = $this->createMock(User::class);
-        $user->expects(self::any())
-            ->method('getEmail')
-            ->willReturn('minimal@example.com');
+        $user = self::createStub(User::class);
+        $user->method('getEmail')->willReturn('minimal@example.com');
 
         return $user;
     }

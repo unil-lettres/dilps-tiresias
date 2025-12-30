@@ -114,8 +114,8 @@ class TriggersTest extends TestCase
 
     public static function providerGetUsageCountManyToOne(): iterable
     {
-        yield ['institution', 5000, 5001, true];
-        yield ['document_type', 11000, 11001, true];
+        yield ['institution', 5000, 5001];
+        yield ['document_type', 11000, 11001];
     }
 
     private function update(string $table, int $cardId, ?int $id): void
