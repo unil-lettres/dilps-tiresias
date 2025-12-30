@@ -44,7 +44,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
-                  coverage: pcov
+                  coverage: none
                   tools: cs2pr, composer:${{ matrix.composer-version }}
                   extensions: imagick
 
@@ -102,16 +102,11 @@ jobs:
 
             - name: Test PHP
               id: app-test-php
-              run: ./vendor/bin/phpunit --coverage-clover coverage-clover.xml
+              run: ./vendor/bin/phpunit
 
             - name: Test Angular
               id: app-test-ng
               run: ./node_modules/.bin/ng test --progress false --watch=false --browsers ChromeHeadlessCustom
-
-            - name: Upload code coverage
-              run: |
-                  composer global require scrutinizer/ocular
-                  ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage-clover.xml
 
             - name: Upload sources map artifact
               id: upload-artifact
