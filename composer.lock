@@ -1266,12 +1266,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "34fa9519538c344134b39cb47efcda29a91f31bb"
+                "reference": "88ce69335a3a942e846e713ddf38c8fba4758f13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/34fa9519538c344134b39cb47efcda29a91f31bb",
-                "reference": "34fa9519538c344134b39cb47efcda29a91f31bb",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/88ce69335a3a942e846e713ddf38c8fba4758f13",
+                "reference": "88ce69335a3a942e846e713ddf38c8fba4758f13",
                 "shasum": ""
             },
             "require": {
@@ -1306,7 +1306,7 @@
                 "mikey179/vfsstream": "@stable",
                 "phpstan/phpstan": "@stable",
                 "phpstan/phpstan-phpunit": "@stable",
-                "phpunit/phpunit": "^11.5"
+                "phpunit/phpunit": "@stable"
             },
             "type": "library",
             "extra": {
@@ -1331,7 +1331,7 @@
                 "issues": "https://github.com/Ecodev/felix/issues",
                 "source": "https://github.com/Ecodev/felix/tree/php85"
             },
-            "time": "2025-12-30T02:46:45+00:00"
+            "time": "2025-12-30T10:13:45+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
