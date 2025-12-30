@@ -759,7 +759,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
      */
     public function copyInto(self $original): void
     {
-        // Trigger loading of proxy
+        // Trigger lazy loading
         $original->getName();
 
         $blacklist = [

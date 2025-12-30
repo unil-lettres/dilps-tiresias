@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8434825431a241001611395ea9827d39",
+    "content-hash": "cc2a1fded99ba87eb631f9499f8f16e7",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1266,17 +1266,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "ebddf8633121d95de88bc89d6eb6f16323a2a052"
+                "reference": "34fa9519538c344134b39cb47efcda29a91f31bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/ebddf8633121d95de88bc89d6eb6f16323a2a052",
-                "reference": "ebddf8633121d95de88bc89d6eb6f16323a2a052",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/34fa9519538c344134b39cb47efcda29a91f31bb",
+                "reference": "34fa9519538c344134b39cb47efcda29a91f31bb",
                 "shasum": ""
             },
             "require": {
                 "cakephp/chronos": "^3.3",
-                "doctrine/dbal": "^4.4",
+                "doctrine/dbal": "^4.3",
                 "doctrine/migrations": "^3.9",
                 "ecodev/graphql-doctrine": "^11.0",
                 "ext-bcmath": "*",
@@ -1293,11 +1293,11 @@
                 "mezzio/mezzio-session": "^1.17",
                 "moneyphp/money": "^4.8",
                 "monolog/monolog": "^3.9",
-                "php": "^8.2",
-                "roave/psr-container-doctrine": "^5.2",
+                "php": "^8.4",
+                "roave/psr-container-doctrine": "^6.1",
                 "spomky-labs/otphp": "^11.3",
-                "symfony/cache": "^7.4",
-                "symfony/mailer": "^7.4"
+                "symfony/cache": "^8.0",
+                "symfony/mailer": "^8.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "@stable",
@@ -1306,7 +1306,7 @@
                 "mikey179/vfsstream": "@stable",
                 "phpstan/phpstan": "@stable",
                 "phpstan/phpstan-phpunit": "@stable",
-                "phpunit/phpunit": "@stable"
+                "phpunit/phpunit": "^11.5"
             },
             "type": "library",
             "extra": {
@@ -1331,7 +1331,7 @@
                 "issues": "https://github.com/Ecodev/felix/issues",
                 "source": "https://github.com/Ecodev/felix/tree/php85"
             },
-            "time": "2025-12-29T10:12:55+00:00"
+            "time": "2025-12-30T02:46:45+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
@@ -4803,35 +4803,35 @@
         },
         {
             "name": "roave/psr-container-doctrine",
-            "version": "5.8.0",
+            "version": "6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/psr-container-doctrine.git",
-                "reference": "f9552b3df346d8118556c1147d4a71b5a83e4f5b"
+                "reference": "fee8378c681942f994a2d042ffe084b7cf51de5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/psr-container-doctrine/zipball/f9552b3df346d8118556c1147d4a71b5a83e4f5b",
-                "reference": "f9552b3df346d8118556c1147d4a71b5a83e4f5b",
+                "url": "https://api.github.com/repos/Roave/psr-container-doctrine/zipball/fee8378c681942f994a2d042ffe084b7cf51de5e",
+                "reference": "fee8378c681942f994a2d042ffe084b7cf51de5e",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "^3.5.0",
-                "doctrine/dbal": "^4.2.4",
+                "doctrine/dbal": "^4.3.4",
                 "doctrine/event-manager": "^2.0.1",
-                "doctrine/migrations": "^3.9.1",
-                "doctrine/orm": "^3.5.0",
-                "doctrine/persistence": "^3.4.0 || ^4.0.0",
-                "php": "~8.3.0 || ~8.4.0",
+                "doctrine/migrations": "^3.9.4",
+                "doctrine/orm": "^3.5.2",
+                "doctrine/persistence": "^3.4.0 || ^4.1.1",
+                "php": "~8.4.0 || ~8.5.0",
                 "psr/cache": "^2.0.0 || ^3.0.0",
                 "psr/container": "^1.1.2 || ^2.0.2"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^13.0.1",
-                "phpunit/phpunit": "^12.2.6",
+                "doctrine/coding-standard": "^14.0.0",
+                "phpunit/phpunit": "^12.4.1",
                 "psalm/plugin-phpunit": "^0.19.5",
-                "symfony/yaml": "^7.3.1",
-                "vimeo/psalm": "^6.12.1"
+                "symfony/yaml": "^7.3.3",
+                "vimeo/psalm": "^6.13.1"
             },
             "type": "library",
             "autoload": {
@@ -4858,9 +4858,9 @@
             "homepage": "https://github.com/Roave/psr-container-doctrine",
             "support": {
                 "issues": "https://github.com/Roave/psr-container-doctrine/issues",
-                "source": "https://github.com/Roave/psr-container-doctrine/tree/5.8.0"
+                "source": "https://github.com/Roave/psr-container-doctrine/tree/6.1.0"
             },
-            "time": "2025-07-09T10:10:27+00:00"
+            "time": "2025-10-23T13:28:05+00:00"
         },
         {
             "name": "spomky-labs/otphp",
@@ -4946,34 +4946,30 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v7.4.1",
+            "version": "v8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "21e0755783bbbab58f2bb6a7a57896d21d27a366"
+                "reference": "0e67dc8145810d4e1c0d13c0e1d29ceb930b1c8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/21e0755783bbbab58f2bb6a7a57896d21d27a366",
-                "reference": "21e0755783bbbab58f2bb6a7a57896d21d27a366",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/0e67dc8145810d4e1c0d13c0e1d29ceb930b1c8e",
+                "reference": "0e67dc8145810d4e1c0d13c0e1d29ceb930b1c8e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
+                "php": ">=8.4",
                 "psr/cache": "^2.0|^3.0",
                 "psr/log": "^1.1|^2|^3",
                 "symfony/cache-contracts": "^3.6",
-                "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/service-contracts": "^2.5|^3",
-                "symfony/var-exporter": "^6.4|^7.0|^8.0"
+                "symfony/var-exporter": "^7.4|^8.0"
             },
             "conflict": {
-                "doctrine/dbal": "<3.6",
+                "doctrine/dbal": "<4.3",
                 "ext-redis": "<6.1",
-                "ext-relay": "<0.12.1",
-                "symfony/dependency-injection": "<6.4",
-                "symfony/http-kernel": "<6.4",
-                "symfony/var-dumper": "<6.4"
+                "ext-relay": "<0.12.1"
             },
             "provide": {
                 "psr/cache-implementation": "2.0|3.0",
@@ -4982,16 +4978,16 @@
             },
             "require-dev": {
                 "cache/integration-tests": "dev-master",
-                "doctrine/dbal": "^3.6|^4",
+                "doctrine/dbal": "^4.3",
                 "predis/predis": "^1.1|^2.0",
                 "psr/simple-cache": "^1.0|^2.0|^3.0",
-                "symfony/clock": "^6.4|^7.0|^8.0",
-                "symfony/config": "^6.4|^7.0|^8.0",
-                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
-                "symfony/filesystem": "^6.4|^7.0|^8.0",
-                "symfony/http-kernel": "^6.4|^7.0|^8.0",
-                "symfony/messenger": "^6.4|^7.0|^8.0",
-                "symfony/var-dumper": "^6.4|^7.0|^8.0"
+                "symfony/clock": "^7.4|^8.0",
+                "symfony/config": "^7.4|^8.0",
+                "symfony/dependency-injection": "^7.4|^8.0",
+                "symfony/filesystem": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/messenger": "^7.4|^8.0",
+                "symfony/var-dumper": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -5026,7 +5022,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v7.4.1"
+                "source": "https://github.com/symfony/cache/tree/v8.0.1"
             },
             "funding": [
                 {
@@ -5046,7 +5042,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-12-04T18:11:45+00:00"
+            "time": "2025-12-04T18:17:06+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -5444,39 +5440,35 @@
         },
         {
             "name": "symfony/mailer",
-            "version": "v7.4.0",
+            "version": "v8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailer.git",
-                "reference": "a3d9eea8cfa467ece41f0f54ba28185d74bd53fd"
+                "reference": "f9b546f0e28cbd08fd5d03f2472aad913a9398f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailer/zipball/a3d9eea8cfa467ece41f0f54ba28185d74bd53fd",
-                "reference": "a3d9eea8cfa467ece41f0f54ba28185d74bd53fd",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/f9b546f0e28cbd08fd5d03f2472aad913a9398f9",
+                "reference": "f9b546f0e28cbd08fd5d03f2472aad913a9398f9",
                 "shasum": ""
             },
             "require": {
                 "egulias/email-validator": "^2.1.10|^3|^4",
-                "php": ">=8.2",
+                "php": ">=8.4",
                 "psr/event-dispatcher": "^1",
                 "psr/log": "^1|^2|^3",
-                "symfony/event-dispatcher": "^6.4|^7.0|^8.0",
-                "symfony/mime": "^7.2|^8.0",
+                "symfony/event-dispatcher": "^7.4|^8.0",
+                "symfony/mime": "^7.4|^8.0",
                 "symfony/service-contracts": "^2.5|^3"
             },
             "conflict": {
-                "symfony/http-client-contracts": "<2.5",
-                "symfony/http-kernel": "<6.4",
-                "symfony/messenger": "<6.4",
-                "symfony/mime": "<6.4",
-                "symfony/twig-bridge": "<6.4"
+                "symfony/http-client-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/console": "^6.4|^7.0|^8.0",
-                "symfony/http-client": "^6.4|^7.0|^8.0",
-                "symfony/messenger": "^6.4|^7.0|^8.0",
-                "symfony/twig-bridge": "^6.4|^7.0|^8.0"
+                "symfony/console": "^7.4|^8.0",
+                "symfony/http-client": "^7.4|^8.0",
+                "symfony/messenger": "^7.4|^8.0",
+                "symfony/twig-bridge": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -5504,7 +5496,7 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailer/tree/v7.4.0"
+                "source": "https://github.com/symfony/mailer/tree/v8.0.0"
             },
             "funding": [
                 {
@@ -5524,7 +5516,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-21T15:26:00+00:00"
+            "time": "2025-11-27T08:09:45+00:00"
         },
         {
             "name": "symfony/mime",
@@ -6359,26 +6351,25 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v7.4.0",
+            "version": "v8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "03a60f169c79a28513a78c967316fbc8bf17816f"
+                "reference": "7345f46c251f2eb27c7b3ebdb5bb076b3ffcae04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/03a60f169c79a28513a78c967316fbc8bf17816f",
-                "reference": "03a60f169c79a28513a78c967316fbc8bf17816f",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/7345f46c251f2eb27c7b3ebdb5bb076b3ffcae04",
+                "reference": "7345f46c251f2eb27c7b3ebdb5bb076b3ffcae04",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2",
-                "symfony/deprecation-contracts": "^2.5|^3"
+                "php": ">=8.4"
             },
             "require-dev": {
-                "symfony/property-access": "^6.4|^7.0|^8.0",
-                "symfony/serializer": "^6.4|^7.0|^8.0",
-                "symfony/var-dumper": "^6.4|^7.0|^8.0"
+                "symfony/property-access": "^7.4|^8.0",
+                "symfony/serializer": "^7.4|^8.0",
+                "symfony/var-dumper": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -6416,7 +6407,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v7.4.0"
+                "source": "https://github.com/symfony/var-exporter/tree/v8.0.0"
             },
             "funding": [
                 {
@@ -6436,7 +6427,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T10:15:23+00:00"
+            "time": "2025-11-05T18:53:00+00:00"
         },
         {
             "name": "webimpress/safe-writer",
@@ -6557,16 +6548,16 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v15.29.2",
+            "version": "v15.29.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "05035db49460462f7d41476a7d5634989531d671"
+                "reference": "abe7cf760fd7d322e3e685b0b2fe14cedb73fafe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/05035db49460462f7d41476a7d5634989531d671",
-                "reference": "05035db49460462f7d41476a7d5634989531d671",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/abe7cf760fd7d322e3e685b0b2fe14cedb73fafe",
+                "reference": "abe7cf760fd7d322e3e685b0b2fe14cedb73fafe",
                 "shasum": ""
             },
             "require": {
@@ -6620,7 +6611,7 @@
             ],
             "support": {
                 "issues": "https://github.com/webonyx/graphql-php/issues",
-                "source": "https://github.com/webonyx/graphql-php/tree/v15.29.2"
+                "source": "https://github.com/webonyx/graphql-php/tree/v15.29.3"
             },
             "funding": [
                 {
@@ -6628,7 +6619,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2025-12-29T08:46:30+00:00"
+            "time": "2025-12-29T13:48:44+00:00"
         }
     ],
     "packages-dev": [

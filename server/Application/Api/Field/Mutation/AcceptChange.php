@@ -49,7 +49,7 @@ class AcceptChange implements FieldInterface
                     case ChangeType::Delete:
                         $original = $change->getOriginal();
 
-                        // Trigger proxy loading, so the image on disk will be able to be deleted after the flush
+                        // Trigger lazy loading, so the image on disk will be able to be deleted after the flush
                         $original->getPath();
 
                         _em()->remove($original);

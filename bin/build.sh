@@ -52,7 +52,6 @@ SERVER_NAME=tiresias composer clear-config-cache --no-interaction --no-plugins
 
 echo "********************* Updating database..."
 ./bin/doctrine migrations:migrate --no-interaction
-./bin/doctrine orm:generate-proxies
 
 # In a docker environment the Angular build is managed by a supervisor process
 if [ ! -n "$DOCKER_RUNNING" ]; then

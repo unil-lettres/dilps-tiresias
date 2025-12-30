@@ -60,8 +60,7 @@
         "mezzio/mezzio-laminasviewrenderer": "^2.19",
         "mezzio/mezzio-session-ext": "^1.21",
         "phpoffice/phppresentation": "^1.2",
-        "phpoffice/phpspreadsheet": "^3.10",
-        "symfony/var-exporter": "^7"
+        "phpoffice/phpspreadsheet": "^3.10"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "@stable",
