@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64c975e174f11537fd87e66bdd6f721a",
+    "content-hash": "923ef352194c9773db1dd75dc70ac450",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1262,16 +1262,16 @@
         },
         {
             "name": "ecodev/felix",
-            "version": "dev-php85",
+            "version": "17.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/felix.git",
-                "reference": "88ce69335a3a942e846e713ddf38c8fba4758f13"
+                "reference": "57cc66b803fb7755d621f78cf33125196f74ee17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/felix/zipball/88ce69335a3a942e846e713ddf38c8fba4758f13",
-                "reference": "88ce69335a3a942e846e713ddf38c8fba4758f13",
+                "url": "https://api.github.com/repos/Ecodev/felix/zipball/57cc66b803fb7755d621f78cf33125196f74ee17",
+                "reference": "57cc66b803fb7755d621f78cf33125196f74ee17",
                 "shasum": ""
             },
             "require": {
@@ -1329,29 +1329,29 @@
             "description": "Various utilities tailored for our ecosystem",
             "support": {
                 "issues": "https://github.com/Ecodev/felix/issues",
-                "source": "https://github.com/Ecodev/felix/tree/php85"
+                "source": "https://github.com/Ecodev/felix/tree/17.0.0"
             },
-            "time": "2025-12-30T10:13:45+00:00"
+            "time": "2025-12-30T12:59:22+00:00"
         },
         {
             "name": "ecodev/graphql-doctrine",
-            "version": "11.0.0",
+            "version": "11.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/graphql-doctrine.git",
-                "reference": "9ce071d70edb37b0119c12c1c8c1d1e8cf58c3b2"
+                "reference": "e72eac0b72e1db87fe9da3a5dc6f776293d6dcb4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/9ce071d70edb37b0119c12c1c8c1d1e8cf58c3b2",
-                "reference": "9ce071d70edb37b0119c12c1c8c1d1e8cf58c3b2",
+                "url": "https://api.github.com/repos/Ecodev/graphql-doctrine/zipball/e72eac0b72e1db87fe9da3a5dc6f776293d6dcb4",
+                "reference": "e72eac0b72e1db87fe9da3a5dc6f776293d6dcb4",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "^3.3",
-                "php": "^8.2",
+                "doctrine/orm": "^3.6",
+                "php": "^8.4",
                 "psr/container": "^1.1 || ^2.0",
-                "webonyx/graphql-php": "^15.20"
+                "webonyx/graphql-php": "^15.29"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "@stable",
@@ -1379,30 +1379,30 @@
             ],
             "support": {
                 "issues": "https://github.com/Ecodev/graphql-doctrine/issues",
-                "source": "https://github.com/Ecodev/graphql-doctrine/tree/11.0.0"
+                "source": "https://github.com/Ecodev/graphql-doctrine/tree/11.0.1"
             },
-            "time": "2025-04-24T09:22:42+00:00"
+            "time": "2025-12-30T11:29:49+00:00"
         },
         {
             "name": "ecodev/graphql-upload",
-            "version": "8.0.0",
+            "version": "8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ecodev/graphql-upload.git",
-                "reference": "793b2f76856eb3d727f061847cc7984d8fd4b417"
+                "reference": "c8f64d971125f1fe53acd67f944af1bfea9459e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ecodev/graphql-upload/zipball/793b2f76856eb3d727f061847cc7984d8fd4b417",
-                "reference": "793b2f76856eb3d727f061847cc7984d8fd4b417",
+                "url": "https://api.github.com/repos/Ecodev/graphql-upload/zipball/c8f64d971125f1fe53acd67f944af1bfea9459e5",
+                "reference": "c8f64d971125f1fe53acd67f944af1bfea9459e5",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laminas/laminas-diactoros": "^3.6",
-                "php": "^8.2",
+                "laminas/laminas-diactoros": "^3.8",
+                "php": "^8.4",
                 "psr/http-server-middleware": "^1.0",
-                "webonyx/graphql-php": "^15.0"
+                "webonyx/graphql-php": "^15.29"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "@stable",
@@ -1429,9 +1429,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Ecodev/graphql-upload/issues",
-                "source": "https://github.com/Ecodev/graphql-upload/tree/8.0.0"
+                "source": "https://github.com/Ecodev/graphql-upload/tree/8.0.1"
             },
-            "time": "2025-08-28T14:13:52+00:00"
+            "time": "2025-12-30T11:29:53+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -9813,7 +9813,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ecodev/felix": 20,
         "friendsofphp/php-cs-fixer": 0,
         "phpstan/phpstan-doctrine": 0,
         "phpunit/phpunit": 0

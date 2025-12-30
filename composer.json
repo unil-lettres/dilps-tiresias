@@ -48,7 +48,7 @@
         "ext-mbstring": "*",
         "ext-zip": "*",
         "beberlei/doctrineextensions": "^1.5",
-        "ecodev/felix": "dev-php85",
+        "ecodev/felix": "^17.0",
         "ecodev/graphql-doctrine": "^11.0",
         "ecodev/graphql-upload": "^8.0",
         "laminas/laminas-config-aggregator": "^1.19",
