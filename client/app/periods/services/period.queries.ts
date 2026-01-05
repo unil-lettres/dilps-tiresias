@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const periodsQuery = gql`
-    query Periods($filter: PeriodFilter, $sorting: [PeriodSorting!], $pagination: PaginationInput) {
+    query PeriodsQuery($filter: PeriodFilter, $sorting: [PeriodSorting!], $pagination: PaginationInput) {
         periods(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -20,7 +20,7 @@ export const periodsQuery = gql`
 `;
 
 export const periodQuery = gql`
-    query Period($id: PeriodID!) {
+    query PeriodQuery($id: PeriodID!) {
         period(id: $id) {
             id
             name

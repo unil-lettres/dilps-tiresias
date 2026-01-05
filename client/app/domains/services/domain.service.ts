@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    CardDomains,
-    CardsVariables,
+    CardDomainsQuery,
+    CardsQueryVariables,
     CreateDomain,
     CreateDomainVariables,
     DeleteDomains,
-    Domain,
+    DomainQuery,
     DomainInput,
-    Domains,
-    DomainsVariables,
-    DomainVariables,
+    DomainsQuery,
+    DomainsQueryVariables,
+    DomainQueryVariables,
     UpdateDomain,
     UpdateDomainVariables,
 } from '../../shared/generated-types';
@@ -22,10 +22,10 @@ import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery
     providedIn: 'root',
 })
 export class DomainService extends AbstractContextualizedService<
-    Domain['domain'],
-    DomainVariables,
-    Domains['domains'],
-    DomainsVariables,
+    DomainQuery['domain'],
+    DomainQueryVariables,
+    DomainsQuery['domains'],
+    DomainsQueryVariables,
     CreateDomain['createDomain'],
     CreateDomainVariables,
     UpdateDomain['updateDomain'],
@@ -45,9 +45,9 @@ export class DomainService extends AbstractContextualizedService<
         };
     }
 
-    public getForCards(variables: CardsVariables): Observable<CardDomains['cardDomains']> {
+    public getForCards(variables: CardsQueryVariables): Observable<CardDomainsQuery['cardDomains']> {
         return this.apollo
-            .query<CardDomains, CardsVariables>({
+            .query<CardDomainsQuery, CardsQueryVariables>({
                 query: cardDomainsQuery,
                 variables: variables,
             })

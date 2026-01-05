@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const newsesQuery = gql`
-    query Newses($filter: NewsFilter, $sorting: [NewsSorting!], $pagination: PaginationInput) {
+    query NewsesQuery($filter: NewsFilter, $sorting: [NewsSorting!], $pagination: PaginationInput) {
         newses(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -21,7 +21,7 @@ export const newsesQuery = gql`
 `;
 
 export const newsQuery = gql`
-    query News($id: NewsID!) {
+    query NewsQuery($id: NewsID!) {
         news(id: $id) {
             id
             name

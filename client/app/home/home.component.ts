@@ -21,7 +21,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {Site, UserRole, Viewer} from '../shared/generated-types';
+import {Site, UserRole, ViewerQuery} from '../shared/generated-types';
 import {FileSelection, NaturalFileSelectDirective, NaturalIconDirective, NetworkActivityService} from '@ecodev/natural';
 import {ThemeService} from '../shared/services/theme.service';
 import {UserService} from '../users/services/user.service';
@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
     protected readonly Site = Site;
     protected readonly UserRole = UserRole;
 
-    protected user: Viewer['viewer'] | null = null;
+    protected user: ViewerQuery['viewer'] | null = null;
     protected nav = 1;
     protected progress: number | null = null;
     private uploaded = 0;

@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const domainsQuery = gql`
-    query Domains($filter: DomainFilter, $sorting: [DomainSorting!], $pagination: PaginationInput) {
+    query DomainsQuery($filter: DomainFilter, $sorting: [DomainSorting!], $pagination: PaginationInput) {
         domains(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -18,7 +18,7 @@ export const domainsQuery = gql`
 `;
 
 export const cardDomainsQuery = gql`
-    query CardDomains($filter: CardFilter) {
+    query CardDomainsQuery($filter: CardFilter) {
         cardDomains(filter: $filter) {
             id
             name
@@ -27,7 +27,7 @@ export const cardDomainsQuery = gql`
 `;
 
 export const domainQuery = gql`
-    query Domain($id: DomainID!) {
+    query DomainQuery($id: DomainID!) {
         domain(id: $id) {
             id
             name

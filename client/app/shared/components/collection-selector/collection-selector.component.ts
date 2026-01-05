@@ -2,7 +2,14 @@ import {Component, inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
-import {Cards, CollectionFilter, Collections, CreateCollection, LogicalOperator, UserRole} from '../../generated-types';
+import {
+    CardsQuery,
+    CollectionFilter,
+    CollectionsQuery,
+    CreateCollection,
+    LogicalOperator,
+    UserRole,
+} from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
 import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
@@ -24,7 +31,7 @@ import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-h
  */
 export type CollectionSelectorData =
     | {
-          images: Cards['cards']['items'][0][];
+          images: CardsQuery['cards']['items'][0][];
           collection?: never;
       }
     | {
@@ -36,7 +43,9 @@ export type CollectionSelectorData =
           collection?: never;
       };
 
-export type CollectionSelectorResult = Collections['collections']['items'][0] | CreateCollection['createCollection'];
+export type CollectionSelectorResult =
+    | CollectionsQuery['collections']['items'][0]
+    | CreateCollection['createCollection'];
 
 @Component({
     selector: 'app-collection-selector',
@@ -69,8 +78,8 @@ export class CollectionSelectorComponent implements OnInit {
     protected readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
 
     protected listFilter!: CollectionFilter;
-    protected collection: Collections['collections']['items'][0] | null = null;
-    protected image: Cards['cards']['items'][0] | undefined;
+    protected collection: CollectionsQuery['collections']['items'][0] | null = null;
+    protected image: CardsQuery['cards']['items'][0] | undefined;
     protected newCollection: any = {
         name: '',
         description: '',
@@ -102,8 +111,8 @@ export class CollectionSelectorComponent implements OnInit {
     }
 
     protected unlink(
-        image: Cards['cards']['items'][0],
-        collection: Cards['cards']['items'][0]['collections'][0],
+        image: CardsQuery['cards']['items'][0],
+        collection: CardsQuery['cards']['items'][0]['collections'][0],
     ): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
             const index = image.collections.findIndex(c => c.id === collection.id);
@@ -124,7 +133,7 @@ export class CollectionSelectorComponent implements OnInit {
     }
 
     private linkInternal(
-        collection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
+        collection: CollectionsQuery['collections']['items'][0] | CreateCollection['createCollection'],
     ): void {
         let observable;
         if (this.data.images) {

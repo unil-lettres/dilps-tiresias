@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const antiqueNamesQuery = gql`
-    query AntiqueNames($filter: AntiqueNameFilter, $sorting: [AntiqueNameSorting!], $pagination: PaginationInput) {
+    query AntiqueNamesQuery($filter: AntiqueNameFilter, $sorting: [AntiqueNameSorting!], $pagination: PaginationInput) {
         antiqueNames(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -17,7 +17,7 @@ export const antiqueNamesQuery = gql`
 `;
 
 export const antiqueNameQuery = gql`
-    query AntiqueName($id: AntiqueNameID!) {
+    query AntiqueNameQuery($id: AntiqueNameID!) {
         antiqueName(id: $id) {
             id
             name

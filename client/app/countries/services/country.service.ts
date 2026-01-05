@@ -1,16 +1,21 @@
 import {Injectable} from '@angular/core';
 import {NaturalAbstractModelService} from '@ecodev/natural';
-import {Countries, CountriesVariables, Country, CountryVariables} from '../../shared/generated-types';
+import {
+    CountriesQuery,
+    CountriesQueryVariables,
+    CountryQuery,
+    CountryQueryVariables,
+} from '../../shared/generated-types';
 import {countriesQuery, countryQuery} from './country.queries';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CountryService extends NaturalAbstractModelService<
-    Country['country'],
-    CountryVariables,
-    Countries['countries'],
-    CountriesVariables,
+    CountryQuery['country'],
+    CountryQueryVariables,
+    CountriesQuery['countries'],
+    CountriesQueryVariables,
     null,
     never,
     null,

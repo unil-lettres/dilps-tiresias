@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {CardService} from '../../../card/services/card.service';
-import {Cards} from '../../generated-types';
+import {CardsQuery} from '../../generated-types';
 import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalSelectComponent} from '@ecodev/natural';
@@ -15,9 +15,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 export class CardSelectorComponent {
     protected readonly cardService = inject(CardService);
 
-    protected card: Cards['cards']['items'][0] | null = null;
+    protected card: CardsQuery['cards']['items'][0] | null = null;
 
-    protected displayWith(item: Cards['cards']['items'][0] | string | null): string {
+    protected displayWith(item: CardsQuery['cards']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.name + ' (' + item.id + ')' : '';
     }
 }

@@ -20,7 +20,7 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {RouterLink} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {CardService} from 'client/app/card/services/card.service';
-import {Card, Cards, CardsVariables, JoinType} from '../../generated-types';
+import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../generated-types';
 
 @Component({
     selector: 'app-related-cards',
@@ -44,7 +44,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private static readonly SCROLL_OFFSET = 200;
 
-    public readonly card = input.required<Card['card']>();
+    public readonly card = input.required<CardQuery['card']>();
 
     protected readonly slideshow = viewChild.required<ElementRef>('slideshow');
 
@@ -70,7 +70,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     /**
      * Related cards of the given card input.
      */
-    protected cards: Cards['cards']['items'][0][] = [];
+    protected cards: CardsQuery['cards']['items'][0][] = [];
 
     /**
      * Whether the slideshow has a scrollbar (too much images for the viewport)
@@ -81,7 +81,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     /**
      * Query variables for retrieve related cards.
      */
-    private readonly cardsQueryVariables = new NaturalQueryVariablesManager<CardsVariables>();
+    private readonly cardsQueryVariables = new NaturalQueryVariablesManager<CardsQueryVariables>();
 
     /**
      * Resize observer to update buttons (scroll left and right) state when the

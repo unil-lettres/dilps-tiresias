@@ -12,7 +12,7 @@ export const fileMinimalFragment = gql`
 `;
 
 export const filesQuery = gql`
-    query Files($filter: FileFilter, $sorting: [FileSorting!], $pagination: PaginationInput) {
+    query FilesQuery($filter: FileFilter, $sorting: [FileSorting!], $pagination: PaginationInput) {
         files(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 ...FileMinimal

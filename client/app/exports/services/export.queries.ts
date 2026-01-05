@@ -21,7 +21,7 @@ const exportMinimalFragment = gql`
 `;
 
 export const exportsQuery = gql`
-    query Exports($filter: ExportFilter, $sorting: [ExportSorting!], $pagination: PaginationInput) {
+    query ExportsQuery($filter: ExportFilter, $sorting: [ExportSorting!], $pagination: PaginationInput) {
         exports(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 ...ExportMinimal
@@ -35,7 +35,7 @@ export const exportsQuery = gql`
 `;
 
 export const exportQuery = gql`
-    query Export($id: ExportID!) {
+    query ExportQuery($id: ExportID!) {
         export(id: $id) {
             ...ExportMinimal
         }
@@ -53,7 +53,7 @@ export const createExport = gql`
 `;
 
 export const validateExportQuery = gql`
-    query ValidateExport($input: CreateExportInput!) {
+    query ValidateExportQuery($input: CreateExportInput!) {
         validateExport(input: $input)
     }
 `;

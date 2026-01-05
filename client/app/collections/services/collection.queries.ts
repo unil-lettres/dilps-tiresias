@@ -3,7 +3,7 @@ import {institutionDetails} from '../../institutions/services/institution.querie
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const collectionsQuery = gql`
-    query Collections($filter: CollectionFilter, $pagination: PaginationInput) {
+    query CollectionsQuery($filter: CollectionFilter, $pagination: PaginationInput) {
         collections(filter: $filter, pagination: $pagination) {
             items {
                 id
@@ -28,7 +28,7 @@ export const collectionsQuery = gql`
 `;
 
 export const collectionQuery = gql`
-    query Collection($id: CollectionID!) {
+    query CollectionQuery($id: CollectionID!) {
         collection(id: $id) {
             id
             name

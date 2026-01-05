@@ -14,12 +14,12 @@ import {
     NaturalSelectComponent,
 } from '@ecodev/natural';
 import {
-    ExtraStatistics,
+    ExtraStatisticsQuery,
     SortingOrder,
     StatisticFilter,
     StatisticSortingField,
-    StatisticsVariables,
-    Users,
+    StatisticsQueryVariables,
+    UsersQuery,
 } from '../../shared/generated-types';
 import {StatisticComponent, StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
@@ -109,7 +109,7 @@ export class StatisticsComponent {
     private readonly apollo = inject(Apollo);
     protected readonly userService = inject(UserService);
 
-    protected frequentationQvm = new NaturalQueryVariablesManager<StatisticsVariables>();
+    protected frequentationQvm = new NaturalQueryVariablesManager<StatisticsQueryVariables>();
     protected data!: Data;
     protected statType: keyof Values = 'pageCount';
     protected cardType = 'cardCreation';
@@ -140,7 +140,7 @@ export class StatisticsComponent {
     protected cards!: StatisticInput;
     protected users!: StatisticInput;
     private raw!: Literal;
-    protected user: Users['users']['items'][0] | null = null;
+    protected user: UsersQuery['users']['items'][0] | null = null;
 
     // public usersFilter: UserFilter;
 
@@ -374,7 +374,7 @@ export class StatisticsComponent {
 
     private fetchCardAndUser(): void {
         this.apollo
-            .query<ExtraStatistics>({
+            .query<ExtraStatisticsQuery>({
                 query: extraStatisticsQuery,
                 variables: {
                     period: this.period,
@@ -387,7 +387,7 @@ export class StatisticsComponent {
             });
     }
 
-    protected displayFn(item: Users['users']['items'][0] | string | null): string {
+    protected displayFn(item: UsersQuery['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 }

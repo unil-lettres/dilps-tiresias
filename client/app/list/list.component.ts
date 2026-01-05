@@ -46,14 +46,14 @@ import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive'
 import {
     CardFilter,
     CardInput,
-    Cards,
+    CardsQuery,
     CardSortingField,
     CardVisibility,
     CreateCard,
     Site,
     SortingOrder,
     UserRole,
-    Viewer,
+    ViewerQuery,
 } from '../shared/generated-types';
 import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets';
 import {shuffleArray} from '../shared/services/utility';
@@ -64,7 +64,7 @@ import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 
 function applyChanges(
-    destination: Cards['cards']['items'][0],
+    destination: CardsQuery['cards']['items'][0],
     changes: Partial<CardInput>,
 ): WithId<Partial<CardInput>> {
     const result = {
@@ -85,7 +85,7 @@ function applyChanges(
 }
 
 export type ViewInterface = {
-    selectAll: () => Promise<Cards['cards']['items'][0][]>;
+    selectAll: () => Promise<CardsQuery['cards']['items'][0][]>;
     unselectAll: () => void;
 };
 
@@ -176,7 +176,7 @@ export class ListComponent
     /**
      * Checked content for selection
      */
-    protected selected: Cards['cards']['items'][0][] = [];
+    protected selected: CardsQuery['cards']['items'][0][] = [];
 
     /**
      * Show logo on top left corner
@@ -193,7 +193,7 @@ export class ListComponent
     /**
      * Current user
      */
-    protected user!: Viewer['viewer'];
+    protected user!: ViewerQuery['viewer'];
 
     /**
      * True if button for archive download has permissions to be displayed
@@ -415,7 +415,7 @@ export class ListComponent
         this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
     }
 
-    protected select(cards: Cards['cards']['items'][0][]): void {
+    protected select(cards: CardsQuery['cards']['items'][0][]): void {
         this.selected = cards;
     }
 
@@ -424,7 +424,7 @@ export class ListComponent
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
-    protected linkSelectionToCollection(selection: Cards['cards']['items'][0][]): void {
+    protected linkSelectionToCollection(selection: CardsQuery['cards']['items'][0][]): void {
         this.linkToCollection({images: selection});
     }
 
@@ -432,7 +432,7 @@ export class ListComponent
         this.linkToCollection({collection});
     }
 
-    protected unlinkFromCollection(selection: Cards['cards']['items'][0][]): void {
+    protected unlinkFromCollection(selection: CardsQuery['cards']['items'][0][]): void {
         if (!this.collection) {
             return;
         }
@@ -443,7 +443,7 @@ export class ListComponent
         });
     }
 
-    protected delete(selection: Cards['cards']['items'][0][]): void {
+    protected delete(selection: CardsQuery['cards']['items'][0][]): void {
         this.alertService
             .confirm(
                 'Suppression',
@@ -460,7 +460,7 @@ export class ListComponent
             });
     }
 
-    protected goToQuizz(selected: Cards['cards']['items'][0][] | null = null): void {
+    protected goToQuizz(selected: CardsQuery['cards']['items'][0][] | null = null): void {
         if (selected) {
             const selectedIds = shuffleArray(selected.map(e => e.id)).join(',');
             this.router.navigateByUrl('/quizz;cards=' + selectedIds);
@@ -488,7 +488,7 @@ export class ListComponent
         }
     }
 
-    protected edit(selected: Cards['cards']['items'][0][]): void {
+    protected edit(selected: CardsQuery['cards']['items'][0][]): void {
         const forbidden = selected.filter(card => !card.permissions.update);
         const changeable = forbidden.filter(card => UserService.canSuggestUpdate(this.user, card));
         const unchangeable = forbidden.filter(card => !UserService.canSuggestUpdate(this.user, card));
@@ -641,7 +641,7 @@ export class ListComponent
     /**
      * Override to never use cache
      */
-    protected override getDataObservable(): Observable<Cards['cards']> {
+    protected override getDataObservable(): Observable<CardsQuery['cards']> {
         return this.service$;
     }
 

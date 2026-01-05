@@ -1,5 +1,5 @@
 import {Component, input, OnInit} from '@angular/core';
-import {Collections} from '../../generated-types';
+import {CollectionsQuery} from '../../generated-types';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
@@ -9,7 +9,7 @@ import {MatTooltip} from '@angular/material/tooltip';
     styleUrl: './collection-hierarchy.component.scss',
 })
 export class CollectionHierarchyComponent implements OnInit {
-    public readonly collection = input.required<Collections['collections']['items'][0]>();
+    public readonly collection = input.required<CollectionsQuery['collections']['items'][0]>();
 
     protected parents: string[] = [];
 

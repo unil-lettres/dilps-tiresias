@@ -3,13 +3,13 @@ import {
     CreateExport,
     CreateExportInput,
     CreateExportVariables,
-    Export,
+    ExportQuery,
     ExportFormat,
-    Exports,
-    ExportsVariables,
-    ExportVariables,
-    ValidateExport,
-    ValidateExportVariables,
+    ExportsQuery,
+    ExportsQueryVariables,
+    ExportQueryVariables,
+    ValidateExportQuery,
+    ValidateExportQueryVariables,
 } from '../../shared/generated-types';
 import {createExport, exportQuery, exportsQuery, validateExportQuery} from './export.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -20,10 +20,10 @@ import {map} from 'rxjs/operators';
     providedIn: 'root',
 })
 export class ExportService extends AbstractContextualizedService<
-    Export['export'],
-    ExportVariables,
-    Exports['exports'],
-    ExportsVariables,
+    ExportQuery['export'],
+    ExportQueryVariables,
+    ExportsQuery['exports'],
+    ExportsQueryVariables,
     CreateExport['createExport'],
     CreateExportVariables,
     never,
@@ -48,14 +48,14 @@ export class ExportService extends AbstractContextualizedService<
         };
     }
 
-    public validate(object: ValidateExportVariables['input']): Observable<ValidateExport['validateExport']> {
+    public validate(object: ValidateExportQueryVariables['input']): Observable<ValidateExportQuery['validateExport']> {
         const variables = {
             input: this.getInput(object, true),
             ...this.getPartialVariablesForCreation(object),
         };
 
         return this.apollo
-            .query<ValidateExport, ValidateExportVariables>({
+            .query<ValidateExportQuery, ValidateExportQueryVariables>({
                 query: validateExportQuery,
                 variables: variables,
             })

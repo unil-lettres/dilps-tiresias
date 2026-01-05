@@ -69,9 +69,9 @@ import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive'
 import {UniqueValidatorDirective} from '../shared/directives/unique-validator.directive';
 import {UrlValidatorDirective} from '../shared/directives/url-validator.directive';
 import {
-    Card,
+    CardQuery,
     CardInput,
-    Cards,
+    CardsQuery,
     CardVisibility,
     CollectionVisibility,
     InputMaybe,
@@ -79,7 +79,7 @@ import {
     Site,
     UpdateCard,
     UserRole,
-    Viewer,
+    ViewerQuery,
 } from '../shared/generated-types';
 import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
 import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';
@@ -99,7 +99,7 @@ import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 
 export type CardInputWithId = CardInput & {id?: string};
 
-export function cardToCardInput(fetchedModel: Card['card']): CardInputWithId {
+export function cardToCardInput(fetchedModel: CardQuery['card']): CardInputWithId {
     return {
         ...fetchedModel,
         artists: fetchedModel.artists.map(a => a.name),
@@ -213,7 +213,7 @@ export class CardComponent implements OnInit, OnChanges {
      *
      * eg: it will be null if we are mass editing
      */
-    @Input() public fetchedModel: Card['card'] | null = null;
+    @Input() public fetchedModel: CardQuery['card'] | null = null;
 
     /**
      * For mass edit usage, reference should be hidden/ignored because it is a unique field, and incompatible with mass edit
@@ -304,7 +304,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Currently logged user
      */
-    protected user!: Viewer['viewer'];
+    protected user!: ViewerQuery['viewer'];
     protected readonly UserRole = UserRole;
 
     /**
@@ -348,13 +348,13 @@ export class CardComponent implements OnInit, OnChanges {
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    protected institution!: Card['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
+    protected institution!: CardQuery['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    protected artists: Card['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
+    protected artists: CardQuery['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
 
     /**
      * Cache stamped data from server.
@@ -452,7 +452,7 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Sorted list collections by their hierarchicNames
      */
-    protected sortedCollections: Card['card']['collections'] = [];
+    protected sortedCollections: CardQuery['card']['collections'] = [];
 
     protected formIsValid = true;
     protected readonly code = viewChild<NgModel>('code');
@@ -617,9 +617,9 @@ export class CardComponent implements OnInit, OnChanges {
         }
     }
 
-    protected openCopyRelatedCardsDialog(card: Card['card']): void {
+    protected openCopyRelatedCardsDialog(card: CardQuery['card']): void {
         this.assertFetchedCard(this.fetchedModel);
-        let otherCards: Card['card']['cards'] = [];
+        let otherCards: CardQuery['card']['cards'] = [];
 
         this.cardService.getOne(card.id).subscribe({
             next: _card => {
@@ -708,14 +708,14 @@ export class CardComponent implements OnInit, OnChanges {
      * Receive the cards returned by cardsInput.
      */
     protected openRelatedCardsDialog(
-        process: (cards: Card['card']['cards']) => void,
+        process: (cards: CardQuery['card']['cards']) => void,
         title: string,
         help: string,
-        cardsInput: (cards: Card['card']['cards']) => Card['card']['cards'] = identity,
-        checkCards: (cards: Card['card']['cards']) => Card['card']['cards'] | boolean = identity,
+        cardsInput: (cards: CardQuery['card']['cards']) => CardQuery['card']['cards'] = identity,
+        checkCards: (cards: CardQuery['card']['cards']) => CardQuery['card']['cards'] | boolean = identity,
     ): void {
         if (this.fetchedModel) {
-            let cardsData: Card['card']['cards'] = [];
+            let cardsData: CardQuery['card']['cards'] = [];
 
             // Getting related cards from database since fetchModel is not
             // updated when we link cards.
@@ -882,7 +882,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     protected complete(): void {
         this.dialog
-            .open<CardSelectorComponent, never, Cards['cards']['items'][0]>(CardSelectorComponent, {
+            .open<CardSelectorComponent, never, CardsQuery['cards']['items'][0]>(CardSelectorComponent, {
                 width: '400px',
                 position: {
                     top: '74px',
@@ -936,7 +936,7 @@ export class CardComponent implements OnInit, OnChanges {
         return this.canSuggestUpdate();
     }
 
-    protected displayWith(item: Cards['cards']['items'][0] | null): string {
+    protected displayWith(item: CardsQuery['cards']['items'][0] | null): string {
         if (!item) {
             return '';
         }
@@ -959,11 +959,11 @@ export class CardComponent implements OnInit, OnChanges {
         }, 1);
     }
 
-    private isFetchedCard(card: Card['card'] | CardInput): card is Card['card'] {
+    private isFetchedCard(card: CardQuery['card'] | CardInput): card is CardQuery['card'] {
         return '__typename' in card;
     }
 
-    private assertFetchedCard(card: Card['card'] | null): asserts card is Card['card'] {
+    private assertFetchedCard(card: CardQuery['card'] | null): asserts card is CardQuery['card'] {
         if (!card) {
             throw new Error(
                 'This should only be called with card fetched from DB. There is a logic error that allow user to try to do something that is impossible. A button should be hidden ?',

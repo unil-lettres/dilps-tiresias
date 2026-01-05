@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    Cards,
+    CardsQuery,
     CardVisibility,
     CreateUser,
     CreateUserVariables,
@@ -13,16 +13,16 @@ import {
     Logout,
     UpdateUser,
     UpdateUserVariables,
-    User,
+    UserQuery,
     UserInput,
     UserRole,
-    UserRolesAvailables,
-    UserRolesAvailablesVariables,
-    Users,
-    UsersVariables,
+    UserRolesAvailablesQuery,
+    UserRolesAvailablesQueryVariables,
+    UsersQuery,
+    UsersQueryVariables,
     UserType,
-    UserVariables,
-    Viewer,
+    UserQueryVariables,
+    ViewerQuery,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -43,10 +43,10 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     providedIn: 'root',
 })
 export class UserService extends AbstractContextualizedService<
-    User['user'],
-    UserVariables,
-    Users['users'],
-    UsersVariables,
+    UserQuery['user'],
+    UserQueryVariables,
+    UsersQuery['users'],
+    UsersQueryVariables,
     CreateUser['createUser'],
     CreateUserVariables,
     UpdateUser['updateUser'],
@@ -69,7 +69,10 @@ export class UserService extends AbstractContextualizedService<
         this.keepViewerSyncedAcrossBrowserTabs();
     }
 
-    public static canSuggestUpdate(user: Viewer['viewer'] | null, card: Cards['cards']['items'][0] | null): boolean {
+    public static canSuggestUpdate(
+        user: ViewerQuery['viewer'] | null,
+        card: CardsQuery['cards']['items'][0] | null,
+    ): boolean {
         return (
             !!user &&
             !!card &&
@@ -92,18 +95,18 @@ export class UserService extends AbstractContextualizedService<
         };
     }
 
-    public getCurrentUser(): Observable<Viewer['viewer']> {
+    public getCurrentUser(): Observable<ViewerQuery['viewer']> {
         return this.apollo
-            .query<Viewer, never>({
+            .query<ViewerQuery, never>({
                 query: viewerQuery,
                 fetchPolicy: 'cache-first',
             })
             .pipe(map(result => result.data.viewer));
     }
 
-    public getUserRolesAvailable(user: User['user'] | null): Observable<UserRole[]> {
+    public getUserRolesAvailable(user: UserQuery['user'] | null): Observable<UserRole[]> {
         return this.apollo
-            .query<UserRolesAvailables, UserRolesAvailablesVariables>({
+            .query<UserRolesAvailablesQuery, UserRolesAvailablesQueryVariables>({
                 query: userRolesAvailableQuery,
                 variables: {
                     user: user?.id,
@@ -156,7 +159,7 @@ export class UserService extends AbstractContextualizedService<
                 }
 
                 this.apollo
-                    .query<Viewer, never>({
+                    .query<ViewerQuery, never>({
                         query: viewerQuery,
                         fetchPolicy: 'network-only',
                     })
@@ -200,10 +203,10 @@ export class UserService extends AbstractContextualizedService<
         return subject;
     }
 
-    private postLogin(viewer: NonNullable<Viewer['viewer']>): void {
+    private postLogin(viewer: NonNullable<ViewerQuery['viewer']>): void {
         // Inject the freshly logged in user as the current user into Apollo data store
         const data = {viewer: viewer};
-        this.apollo.client.writeQuery<Viewer, never>({
+        this.apollo.client.writeQuery<ViewerQuery, never>({
             query: viewerQuery,
             data,
         });

@@ -7,8 +7,8 @@ import {
     DeleteFile,
     DeleteFileVariables,
     FileInput,
-    Files,
-    FilesVariables,
+    FilesQuery,
+    FilesQueryVariables,
 } from '../../shared/generated-types';
 
 @Injectable({
@@ -17,8 +17,8 @@ import {
 export class FileService extends NaturalAbstractModelService<
     never,
     never,
-    Files['files'],
-    FilesVariables,
+    FilesQuery['files'],
+    FilesQueryVariables,
     CreateFile['createFile'],
     CreateFileVariables,
     never,

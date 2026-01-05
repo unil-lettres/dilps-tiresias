@@ -1,6 +1,6 @@
 import {Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {NaturalQueryVariablesManager} from '@ecodev/natural';
-import {Newses, NewsesVariables} from '../../shared/generated-types';
+import {NewsesQuery, NewsesQueryVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
 import {register} from 'swiper/element/bundle';
 
@@ -19,10 +19,10 @@ register();
 export class CarouselComponent implements OnInit {
     protected readonly newsService = inject(NewsService);
 
-    protected newses: Newses['newses']['items'][0][] = [];
+    protected newses: NewsesQuery['newses']['items'][0][] = [];
 
     public ngOnInit(): void {
-        const qvm = new NaturalQueryVariablesManager<NewsesVariables>();
+        const qvm = new NaturalQueryVariablesManager<NewsesQueryVariables>();
         qvm.set('search', {filter: {groups: [{conditions: [{isActive: {equal: {value: true}}}]}]}});
 
         this.newsService.getAll(qvm).subscribe(result => {

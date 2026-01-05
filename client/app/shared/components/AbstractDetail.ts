@@ -14,7 +14,7 @@ import {
     QueryVariables,
     WithId,
 } from '@ecodev/natural';
-import {Viewer} from '../generated-types';
+import {ViewerQuery} from '../generated-types';
 
 type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
@@ -48,7 +48,7 @@ export class AbstractDetailDirective<
      */
     private _isUpdatePage = false;
 
-    public user: Viewer['viewer'] | null = null;
+    public user: ViewerQuery['viewer'] | null = null;
 
     public data: Data<TService, Extra> = {
         item: {},

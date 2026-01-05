@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {
-    Artist,
+    ArtistQuery,
     ArtistInput,
-    Artists,
-    ArtistsVariables,
-    ArtistVariables,
+    ArtistsQuery,
+    ArtistsQueryVariables,
+    ArtistQueryVariables,
     CreateArtist,
     CreateArtistVariables,
     DeleteArtists,
@@ -18,10 +18,10 @@ import {AbstractContextualizedService} from '../../shared/services/AbstractConte
     providedIn: 'root',
 })
 export class ArtistService extends AbstractContextualizedService<
-    Artist['artist'],
-    ArtistVariables,
-    Artists['artists'],
-    ArtistsVariables,
+    ArtistQuery['artist'],
+    ArtistQueryVariables,
+    ArtistsQuery['artists'],
+    ArtistsQueryVariables,
     CreateArtist['createArtist'],
     CreateArtistVariables,
     UpdateArtist['updateArtist'],

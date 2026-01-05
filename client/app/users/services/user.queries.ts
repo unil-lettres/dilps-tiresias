@@ -84,7 +84,7 @@ const viewerFragment = gql`
 `;
 
 export const usersQuery = gql`
-    query Users($filter: UserFilter, $sorting: [UserSorting!], $pagination: PaginationInput) {
+    query UsersQuery($filter: UserFilter, $sorting: [UserSorting!], $pagination: PaginationInput) {
         users(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -104,7 +104,7 @@ export const usersQuery = gql`
 `;
 
 export const userQuery = gql`
-    query User($id: UserID!) {
+    query UserQuery($id: UserID!) {
         user(id: $id) {
             ...UserDetails
         }
@@ -166,7 +166,7 @@ export const logoutMutation = gql`
 `;
 
 export const viewerQuery = gql`
-    query Viewer {
+    query ViewerQuery {
         viewer {
             ...ViewerFragment
         }
@@ -175,7 +175,7 @@ export const viewerQuery = gql`
 `;
 
 export const userRolesAvailableQuery = gql`
-    query UserRolesAvailables($user: UserID) {
+    query UserRolesAvailablesQuery($user: UserID) {
         userRolesAvailable(user: $user)
     }
 `;

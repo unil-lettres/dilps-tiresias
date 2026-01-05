@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {
-    AntiqueName,
+    AntiqueNameQuery,
     AntiqueNameInput,
-    AntiqueNames,
-    AntiqueNamesVariables,
-    AntiqueNameVariables,
+    AntiqueNamesQuery,
+    AntiqueNamesQueryVariables,
+    AntiqueNameQueryVariables,
     CreateAntiqueName,
     CreateAntiqueNameVariables,
     DeleteAntiqueNames,
@@ -24,10 +24,10 @@ import {AbstractContextualizedService} from '../../shared/services/AbstractConte
     providedIn: 'root',
 })
 export class AntiqueNameService extends AbstractContextualizedService<
-    AntiqueName['antiqueName'],
-    AntiqueNameVariables,
-    AntiqueNames['antiqueNames'],
-    AntiqueNamesVariables,
+    AntiqueNameQuery['antiqueName'],
+    AntiqueNameQueryVariables,
+    AntiqueNamesQuery['antiqueNames'],
+    AntiqueNamesQueryVariables,
     CreateAntiqueName['createAntiqueName'],
     CreateAntiqueNameVariables,
     UpdateAntiqueName['updateAntiqueName'],

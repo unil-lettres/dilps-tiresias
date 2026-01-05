@@ -4,12 +4,12 @@ import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {HistoricIconComponent} from '../../shared/components/historic-icon/historic-icon.component';
 import {
-    Collections,
-    CollectionsVariables,
+    CollectionsQuery,
+    CollectionsQueryVariables,
     LogicalOperator,
     SearchOperatorString,
     UserRole,
-    Viewer,
+    ViewerQuery,
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
@@ -59,12 +59,12 @@ export class CollectionsComponent implements OnInit {
 
     private readonly destroyRef = inject(DestroyRef);
 
-    protected rootCollections: Collections['collections']['items'][0][] = [];
+    protected rootCollections: CollectionsQuery['collections']['items'][0][] = [];
 
     /**
      * Children by parent ID
      */
-    protected readonly children = new Map<string, Collections['collections']['items'][0][]>();
+    protected readonly children = new Map<string, CollectionsQuery['collections']['items'][0][]>();
 
     /**
      * Show "unclassified" category on the top of the page
@@ -80,12 +80,12 @@ export class CollectionsComponent implements OnInit {
      * Can create permissions
      */
     protected canCreate = false;
-    protected user: Viewer['viewer'] | null = null;
+    protected user: ViewerQuery['viewer'] | null = null;
     protected hasMore = false;
-    private queryVariables = new NaturalQueryVariablesManager<CollectionsVariables>();
+    private queryVariables = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
     private pageSize = 50;
 
-    private defaultVariables: CollectionsVariables = {
+    private defaultVariables: CollectionsQueryVariables = {
         filter: {groups: [{conditions: [{parent: {empty: {}}}]}]},
     };
 
@@ -134,7 +134,7 @@ export class CollectionsComponent implements OnInit {
         });
     }
 
-    protected toggle(collection: Collections['collections']['items'][0]): void {
+    protected toggle(collection: CollectionsQuery['collections']['items'][0]): void {
         if (this.children.has(collection.id)) {
             this.children.delete(collection.id);
         } else {
@@ -142,8 +142,8 @@ export class CollectionsComponent implements OnInit {
         }
     }
 
-    private getChildren(collection: Collections['collections']['items'][0]): void {
-        const qvm = new NaturalQueryVariablesManager<CollectionsVariables>();
+    private getChildren(collection: CollectionsQuery['collections']['items'][0]): void {
+        const qvm = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
 
         this.collectionsService
@@ -163,7 +163,7 @@ export class CollectionsComponent implements OnInit {
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    protected edit(event: MouseEvent, collection: Collections['collections']['items'][0]): void {
+    protected edit(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -184,7 +184,7 @@ export class CollectionsComponent implements OnInit {
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
-    private showCreateButton(allowedRoles: boolean | UserRole[], user: Viewer['viewer'] | null): boolean {
+    private showCreateButton(allowedRoles: boolean | UserRole[], user: ViewerQuery['viewer'] | null): boolean {
         if (!allowedRoles || !user) {
             return false;
         }

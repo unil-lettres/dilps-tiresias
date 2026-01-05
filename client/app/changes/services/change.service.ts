@@ -4,11 +4,11 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
     AcceptChange,
-    Card,
-    Change,
-    Changes,
-    ChangesVariables,
-    ChangeVariables,
+    CardQuery,
+    ChangeQuery,
+    ChangesQuery,
+    ChangesQueryVariables,
+    ChangeQueryVariables,
     CreateCard,
     JoinType,
     RejectChange,
@@ -31,10 +31,10 @@ import {
     providedIn: 'root',
 })
 export class ChangeService extends AbstractContextualizedService<
-    Change['change'],
-    ChangeVariables,
-    Changes['changes'],
-    ChangesVariables,
+    ChangeQuery['change'],
+    ChangeQueryVariables,
+    ChangesQuery['changes'],
+    ChangesQueryVariables,
     null,
     never,
     null,
@@ -80,7 +80,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public suggestDeletion(card: Card['card']): Observable<SuggestDeletion['suggestDeletion']> {
+    public suggestDeletion(card: CardQuery['card']): Observable<SuggestDeletion['suggestDeletion']> {
         return this.apollo
             .mutate<SuggestDeletion>({
                 mutation: suggestDeletion,
@@ -131,7 +131,7 @@ export class ChangeService extends AbstractContextualizedService<
             );
     }
 
-    public override getPartialVariablesForAll(): Observable<Partial<ChangesVariables>> {
+    public override getPartialVariablesForAll(): Observable<Partial<ChangesQueryVariables>> {
         return super.getPartialVariablesForAll().pipe(
             map(partialVariables => {
                 const join = {

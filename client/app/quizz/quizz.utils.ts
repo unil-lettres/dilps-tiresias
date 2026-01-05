@@ -1,10 +1,10 @@
 import {uniq} from 'es-toolkit';
-import {Card} from '../shared/generated-types';
+import {CardQuery} from '../shared/generated-types';
 import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 
-export type Result = Record<keyof Pick<Card['card'], 'name' | 'artists' | 'institution' | 'dating'>, boolean>;
+export type Result = Record<keyof Pick<CardQuery['card'], 'name' | 'artists' | 'institution' | 'dating'>, boolean>;
 
-export function test(formValue: string, card: Card['card']): Result {
+export function test(formValue: string, card: CardQuery['card']): Result {
     const commonPlaces = /(eglise|chapelle|musee)/g;
     const words = sanitize(formValue)
         .replace(commonPlaces, '')
@@ -54,7 +54,7 @@ function testMultipleThesaurus(words: string[], attributeValue: ThesaurusModel[]
     return false;
 }
 
-function testDate(formValue: string, datings: Card['card']['datings']): boolean {
+function testDate(formValue: string, datings: CardQuery['card']['datings']): boolean {
     const years: string[] = uniq(/(-?\d+)/.exec(formValue) ?? []);
     if (years) {
         for (const year of years) {

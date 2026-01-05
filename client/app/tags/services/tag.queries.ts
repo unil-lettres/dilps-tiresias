@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const tagsQuery = gql`
-    query Tags($filter: TagFilter, $sorting: [TagSorting!], $pagination: PaginationInput) {
+    query TagsQuery($filter: TagFilter, $sorting: [TagSorting!], $pagination: PaginationInput) {
         tags(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -19,7 +19,7 @@ export const tagsQuery = gql`
 `;
 
 export const tagQuery = gql`
-    query Tag($id: TagID!) {
+    query TagQuery($id: TagID!) {
         tag(id: $id) {
             id
             name

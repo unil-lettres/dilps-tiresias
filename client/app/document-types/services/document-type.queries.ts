@@ -2,7 +2,11 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const documentTypesQuery = gql`
-    query DocumentTypes($filter: DocumentTypeFilter, $sorting: [DocumentTypeSorting!], $pagination: PaginationInput) {
+    query DocumentTypesQuery(
+        $filter: DocumentTypeFilter
+        $sorting: [DocumentTypeSorting!]
+        $pagination: PaginationInput
+    ) {
         documentTypes(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -17,7 +21,7 @@ export const documentTypesQuery = gql`
 `;
 
 export const documentTypeQuery = gql`
-    query DocumentType($id: DocumentTypeID!) {
+    query DocumentTypeQuery($id: DocumentTypeID!) {
         documentType(id: $id) {
             id
             name

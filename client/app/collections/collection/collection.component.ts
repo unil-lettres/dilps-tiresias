@@ -19,12 +19,12 @@ import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {
-    Collection,
+    CollectionQuery,
     CollectionFilter,
     CollectionVisibility,
     UpdateCollection,
     UserRole,
-    Users,
+    UsersQuery,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';
@@ -74,7 +74,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     };
 
     public institution:
-        | Collection['collection']['institution']
+        | CollectionQuery['collection']['institution']
         | UpdateCollection['updateCollection']['institution']
         | null = null;
 
@@ -116,7 +116,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
-    protected displayFn(item: Users['users']['items'][0] | string | null): string {
+    protected displayFn(item: UsersQuery['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
 

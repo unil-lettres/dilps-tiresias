@@ -27,7 +27,7 @@ import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {ViewInterface} from '../list/list.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
-import {Cards} from '../shared/generated-types';
+import {CardsQuery} from '../shared/generated-types';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 export type ContentChange = {
@@ -36,7 +36,7 @@ export type ContentChange = {
     hasHistoric?: boolean;
 };
 
-type GalleryModel = Cards['cards']['items'][0] & ModelAttributes;
+type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
 
 @Component({
     selector: 'app-view-grid',
@@ -63,11 +63,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * DataSource containing cards
      */
-    public readonly dataSource = input.required<NaturalDataSource<Cards['cards']>>();
+    public readonly dataSource = input.required<NaturalDataSource<CardsQuery['cards']>>();
     /**
      *
      */
-    public readonly selected = input<Cards['cards']['items'][0][]>([]);
+    public readonly selected = input<CardsQuery['cards']['items'][0][]>([]);
 
     /**
      * Emits when data is required
@@ -82,7 +82,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Emits when some cards are selected
      */
-    protected readonly selectionChange = output<Cards['cards']['items'][0][]>();
+    protected readonly selectionChange = output<CardsQuery['cards']['items'][0][]>();
 
     /**
      * The margin-top size in px for the scrollable area.
@@ -312,7 +312,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         this.gallery()?.gallery.then(gallery => gallery.unselectAllItems());
     }
 
-    private formatImages(cards: Cards['cards']['items'][0][]): GalleryModel[] {
+    private formatImages(cards: CardsQuery['cards']['items'][0][]): GalleryModel[] {
         const selected = this.selected().map(c => c.id);
 
         return cards.map(card => {

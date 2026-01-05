@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {merge} from 'es-toolkit';
 import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
-import {Card, CardInput, CardVisibility, Change, UserRole, Viewer} from '../../shared/generated-types';
+import {CardQuery, CardInput, CardVisibility, ChangeQuery, UserRole, ViewerQuery} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
 import {MatIcon} from '@angular/material/icon';
@@ -37,12 +37,12 @@ export class ChangeComponent implements OnInit {
     private readonly userService = inject(UserService);
     protected readonly UserRole = UserRole;
 
-    protected change!: Change['change'];
-    protected original: Card['card'] | null = null;
-    protected fetchedSuggestion: Card['card'] | null = null;
+    protected change!: ChangeQuery['change'];
+    protected original: CardQuery['card'] | null = null;
+    protected fetchedSuggestion: CardQuery['card'] | null = null;
     protected suggestionInput: CardInput | null = null;
     protected loaded = false;
-    protected user!: Viewer['viewer'];
+    protected user!: ViewerQuery['viewer'];
     protected showTools = false;
 
     public ngOnInit(): void {

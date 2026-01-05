@@ -1,4 +1,4 @@
-import {Card} from '../shared/generated-types';
+import {CardQuery} from '../shared/generated-types';
 import {test} from './quizz.utils';
 
 describe('Quizz tester', () => {
@@ -15,7 +15,7 @@ describe('Quizz tester', () => {
                 to: '1700-12-31T00:00:00+00:00',
             },
         ],
-    } as Card['card'];
+    } as CardQuery['card'];
 
     const cardShortSpan = {
         name: 'balloon',
@@ -30,7 +30,7 @@ describe('Quizz tester', () => {
                 to: '1603-01-01T00:00:00+00:00',
             },
         ],
-    } as Card['card'];
+    } as CardQuery['card'];
 
     const cardWithoutDatings = {
         name: 'balloon',
@@ -40,7 +40,7 @@ describe('Quizz tester', () => {
         },
         dating: 'Dès 1603',
         datings: [],
-    } as unknown as Card['card'];
+    } as unknown as CardQuery['card'];
 
     it('simple match', () => {
         expect(test('', card)).withContext('empty string should match nothing').toEqual({

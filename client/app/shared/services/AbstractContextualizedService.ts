@@ -3,7 +3,7 @@ import {DocumentNode} from 'graphql';
 import {Observable, of} from 'rxjs';
 import {inject} from '@angular/core';
 import {SITE} from '../../app.config';
-import {UsersVariables} from '../generated-types';
+import {UsersQueryVariables} from '../generated-types';
 
 export class AbstractContextualizedService<
     Tone,
@@ -41,7 +41,7 @@ export class AbstractContextualizedService<
         if (this.site) {
             return of({
                 filter: {groups: [{conditions: [{site: {in: {values: [this.site]}}}]}]},
-            } satisfies UsersVariables as Partial<Vall>); // use `UsersVariables` to validate typing against a real filter, then blindly cast to `Partial<Vall>` because as human we know that all objects have a filter for site
+            } satisfies UsersQueryVariables as Partial<Vall>); // use `UsersQueryVariables` to validate typing against a real filter, then blindly cast to `Partial<Vall>` because as human we know that all objects have a filter for site
         }
 
         return of({});
