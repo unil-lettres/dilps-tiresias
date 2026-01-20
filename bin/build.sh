@@ -23,6 +23,9 @@ if id "$DEPLOY_USER" >/dev/null 2>&1; then
     export HOME="$TMP_DIR/home-$DEPLOY_USER"
 fi
 
+# Never let Angular block the build with an interactive prompt to enable autocomplete
+export NG_FORCE_AUTOCOMPLETE=0
+
 # Exit script on any error
 set -e
 
