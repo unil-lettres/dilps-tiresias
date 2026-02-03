@@ -17,19 +17,19 @@ type BreadcrumbItem = {
 };
 
 export class AbstractNavigableList<
-        TService extends NaturalAbstractModelService<
-            any,
-            any,
-            PaginatedData<BreadcrumbItem>,
-            QueryVariables,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any
-        >,
-    >
+    TService extends NaturalAbstractModelService<
+        any,
+        any,
+        PaginatedData<BreadcrumbItem>,
+        QueryVariables,
+        any,
+        any,
+        any,
+        any,
+        any,
+        any
+    >,
+>
     extends NaturalAbstractNavigableList<TService>
     implements OnInit
 {
