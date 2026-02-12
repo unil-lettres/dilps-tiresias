@@ -238,6 +238,7 @@
                         class="scroll-arrow left"
                         mat-mini-fab
                         color="accent"
+                        aria-label="Défiler vers la gauche"
                         [class.is-hidden]="!hasScrollbar || scrollBarAtLeft"
                         (click)="scrollLeft()"
                     >
@@ -247,6 +248,7 @@
                         class="scroll-arrow right"
                         mat-mini-fab
                         color="accent"
+                        aria-label="Défiler vers la droite"
                         [class.is-hidden]="!hasScrollbar || scrollBarAtRight"
                         (click)="scrollRight()"
                     >
