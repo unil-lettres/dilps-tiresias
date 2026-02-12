@@ -696,7 +696,7 @@ export class ListComponent
     protected scrollLeft(): void {
         const container = this.chipsContainer()?.nativeElement;
         if (container) {
-            container.scrollLeft -= 500;
+            container.scrollLeft -= container.clientWidth * 0.8;
         }
     }
 
@@ -706,7 +706,7 @@ export class ListComponent
     protected scrollRight(): void {
         const container = this.chipsContainer()?.nativeElement;
         if (container) {
-            container.scrollLeft += 500;
+            container.scrollLeft += container.clientWidth * 0.8;
         }
     }
 

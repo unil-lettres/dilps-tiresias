@@ -39,11 +39,6 @@ import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../genera
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     protected readonly cardService = inject(CardService);
 
-    /**
-     * Offset to scroll when clicking on the scroll buttons.
-     */
-    private static readonly SCROLL_OFFSET = 200;
-
     public readonly card = input.required<CardQuery['card']>();
 
     protected readonly slideshow = viewChild.required<ElementRef>('slideshow');
@@ -138,11 +133,13 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     protected scrollLeft(): void {
-        this.slideshow().nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
+        const container = this.slideshow().nativeElement;
+        container.scrollLeft -= container.clientWidth * 0.8;
     }
 
     protected scrollRight(): void {
-        this.slideshow().nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
+        const container = this.slideshow().nativeElement;
+        container.scrollLeft += container.clientWidth * 0.8;
     }
 
     /**
