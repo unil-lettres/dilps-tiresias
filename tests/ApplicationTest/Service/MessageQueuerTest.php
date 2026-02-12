@@ -12,8 +12,9 @@ use Application\Service\MessageQueuer;
 use Doctrine\ORM\EntityManager;
 use Ecodev\Felix\Service\MessageRenderer;
 use Laminas\View\Renderer\RendererInterface;
+use PHPUnit\Framework\TestCase;
 
-class MessageQueuerTest extends \PHPUnit\Framework\TestCase
+class MessageQueuerTest extends TestCase
 {
     private function createMockMessageQueuer(): MessageQueuer
     {
@@ -53,10 +54,8 @@ class MessageQueuerTest extends \PHPUnit\Framework\TestCase
 
     private function createMockUserMinimal(): User
     {
-        $user = $this->createMock(User::class);
-        $user->expects(self::any())
-            ->method('getEmail')
-            ->willReturn('minimal@example.com');
+        $user = self::createStub(User::class);
+        $user->method('getEmail')->willReturn('minimal@example.com');
 
         return $user;
     }

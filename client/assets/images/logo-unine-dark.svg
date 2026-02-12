@@ -2,8 +2,7 @@
 <!-- Generator: Adobe Illustrator 25.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 753 225" style="enable-background:new 0 0 753 225;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#000000;}
-    .st1{fill:#0000aa;}
+	.st0{fill:#FFFFFF;}
 </style>
 <g id="Repères">
 	<path class="st0" d="M17.5,205.3v-26.2h9v26.2c0,4.8,3.4,8.3,7.9,8.3s7.9-3.5,7.9-8.3v-26.2h9v26.2c0,9.8-7.2,17.1-16.9,17.1
@@ -57,7 +56,7 @@
 		c0,0.1,0,0.1,0,0.2C662.7,206.9,662.6,207.9,662.5,208.9z M653.7,203.4c-0.4-3.1-3.1-5.3-6.2-5.2c-3.3-0.2-6.2,2-6.9,5.2
 		L653.7,203.4z"/>
 	<path class="st0" d="M675.9,179.1v42.8h-8.6v-42.8H675.9z"/>
-	<circle class="st1" cx="719.2" cy="28" r="25.4"/>
+	<circle class="st0" cx="719.2" cy="28" r="25.4"/>
 	<path class="st0" d="M148.3,5.5v144.3h-41.4v-19.1c-8.8,14.1-22.3,22-39.1,22c-37,0-59.4-25-59.4-65.8V5.5h41.4v76.1
 		c0,19.1,11.2,31.4,28.5,31.4c17.1,0,28.5-12.3,28.5-31.4V5.5H148.3z"/>
 	<path class="st0" d="M307,68.1v81.7h-41.4V73.4c0-18.8-11.5-31.1-28.5-31.1c-17.3,0-28.5,12.3-28.5,31.1v76.4h-41.4V5.5h41.4v18.8

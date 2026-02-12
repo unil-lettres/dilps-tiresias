@@ -7,7 +7,7 @@ import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
-import {Site, Viewer} from '../shared/generated-types';
+import {Site, ViewerQuery} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
 import {MatInput} from '@angular/material/input';
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected readonly site = inject(SITE);
     protected readonly themeService = inject(ThemeService);
 
-    protected Site = Site;
+    protected readonly Site = Site;
 
     protected loading = false;
 
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             });
     }
 
-    private showTerms(user: NonNullable<Viewer['viewer']>): void {
+    private showTerms(user: NonNullable<ViewerQuery['viewer']>): void {
         this.dialog
             .open(TermsAgreementComponent, {maxWidth: 700})
             .afterClosed()

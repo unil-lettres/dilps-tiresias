@@ -3,7 +3,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
-import {Card} from '../shared/generated-types';
+import {CardQuery} from '../shared/generated-types';
 import {Result, test} from './quizz.utils';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
@@ -38,7 +38,7 @@ export class QuizzComponent implements OnInit {
     private readonly cardService = inject(CardService);
 
     protected cards: string[] = [];
-    protected card: Card['card'] | null = null;
+    protected card: CardQuery['card'] | null = null;
     protected imageSrc: string | null = null;
     protected currentIndex = 0;
     protected attributes: Result = {
@@ -72,7 +72,7 @@ export class QuizzComponent implements OnInit {
         this.getCard(this.cards[index + 1]);
     }
 
-    protected getArtistsNames(artists: Card['card']['artists']): string {
+    protected getArtistsNames(artists: CardQuery['card']['artists']): string {
         return artists.map(a => a.name).join(', ');
     }
 
@@ -88,7 +88,7 @@ export class QuizzComponent implements OnInit {
         });
     }
 
-    private selectCard(card: Card['card']): void {
+    private selectCard(card: CardQuery['card']): void {
         this.card = card;
         this.imageSrc = CardService.getImageLink(card, 2000);
         this.attributes = {

@@ -8,8 +8,9 @@ use Application\Api\Input\Operator\NameOrExpandedNameOperatorType;
 use Application\Model\Card;
 use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Type\Definition\Type;
+use PHPUnit\Framework\TestCase;
 
-class NameOrExpandedNameOperatorTypeTest extends \PHPUnit\Framework\TestCase
+class NameOrExpandedNameOperatorTypeTest extends TestCase
 {
     public function testSearch(): void
     {

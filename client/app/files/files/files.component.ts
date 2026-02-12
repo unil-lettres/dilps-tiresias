@@ -1,5 +1,5 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
-import {Card, FileInput, FileMinimal, FilesVariables} from '../../shared/generated-types';
+import {CardQuery, FileInput, FileMinimal, FilesQueryVariables} from '../../shared/generated-types';
 import {
     FileSelection,
     NaturalDataSource,
@@ -62,23 +62,23 @@ export class FilesComponent implements OnInit {
     }
 
     protected columns: string[] = [];
-    private _card!: Card['card'];
+    private _card!: CardQuery['card'];
 
     private _disabled = false;
 
     protected readonly accept = UPLOAD_CONFIG.ACCEPTED_CARD_FILES_TYPES;
     protected readonly maxFileSize = UPLOAD_CONFIG.MAX_FILE_SIZE;
 
-    public get card(): Card['card'] {
+    public get card(): CardQuery['card'] {
         return this._card;
     }
 
     @Input({required: true})
-    public set card(card: Card['card']) {
+    public set card(card: CardQuery['card']) {
         this._card = card;
 
         if (this._card?.id) {
-            const filter: FilesVariables = {
+            const filter: FilesQueryVariables = {
                 filter: {groups: [{conditions: [{card: {equal: {value: this._card.id}}}]}]},
             };
 
@@ -87,7 +87,7 @@ export class FilesComponent implements OnInit {
     }
 
     protected dataSource!: NaturalDataSource<PaginatedData<Tuple>>;
-    private readonly filesQvm = new NaturalQueryVariablesManager<FilesVariables>();
+    private readonly filesQvm = new NaturalQueryVariablesManager<FilesQueryVariables>();
 
     public constructor() {
         // Trigger column selection

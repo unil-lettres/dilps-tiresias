@@ -2,11 +2,9 @@
 
 Master:
 [![ci](https://github.com/unil-lettres/dilps-tiresias/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/unil-lettres/dilps-tiresias/actions/workflows/ci.yml)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=master)
 
 Development:
 [![ci](https://github.com/unil-lettres/dilps-tiresias/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/unil-lettres/dilps-tiresias/actions/workflows/ci.yml)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/unil-lettres/dilps-tiresias/?branch=develop)
 
 ## Introduction
 
@@ -57,7 +55,7 @@ Run the following docker commands from the project root directory.
 
 Build & run all the containers for this project:
 
-`docker-compose up` (add -d if you want to run in the background and silence the logs)
+`docker compose up` (add -d if you want to run in the background and silence the logs)
 
 The project is compiled each time the containers are started. You'll get a **Build at** log message as soon as everything is ready to be used.
 

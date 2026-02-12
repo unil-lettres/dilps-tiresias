@@ -3,7 +3,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
-import {Cards, ExportFormat} from '../../generated-types';
+import {CardsQuery, ExportFormat} from '../../generated-types';
 import {ExportService} from 'client/app/exports/services/export.service';
 import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
@@ -30,12 +30,12 @@ export class ExportMenuComponent {
 
     public readonly showExcelExportation = input(true);
 
-    public readonly selectedCards = input<Cards['cards']['items'][0][]>([]);
+    public readonly selectedCards = input<CardsQuery['cards']['items'][0][]>([]);
 
     public readonly collection = input<FakeCollection | null | undefined>(null);
 
-    protected ExportFormat = ExportFormat;
-    protected ExportTheme = ExportTheme;
+    protected readonly ExportFormat = ExportFormat;
+    protected readonly ExportTheme = ExportTheme;
 
     protected pptValidationMessage = '';
 

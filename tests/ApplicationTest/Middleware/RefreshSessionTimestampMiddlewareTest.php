@@ -9,6 +9,7 @@ use Laminas\Diactoros\ServerRequest;
 use Mezzio\Session\Session;
 use Mezzio\Session\SessionMiddleware;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class RefreshSessionTimestampMiddlewareTest extends TestCase
 {
@@ -16,10 +17,10 @@ class RefreshSessionTimestampMiddlewareTest extends TestCase
     {
         $session = new Session(['user' => '1234']);
 
-        $request = (new ServerRequest())->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $session);
+        $request = new ServerRequest()->withAttribute(SessionMiddleware::SESSION_ATTRIBUTE, $session);
         $middleware = new RefreshSessionTimestampMiddleware();
 
-        $handler = $this->createMock(\Psr\Http\Server\RequestHandlerInterface::class);
+        $handler = self::createStub(RequestHandlerInterface::class);
 
         $middleware->process($request, $handler);
 

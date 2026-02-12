@@ -21,7 +21,7 @@ export class MassEditComponent {
     protected readonly data = inject<Literal>(MAT_DIALOG_DATA);
 
     protected readonly card: CardInput;
-    protected Site = Site;
+    protected readonly Site = Site;
     protected step = 2;
 
     protected createSuggestions = false;

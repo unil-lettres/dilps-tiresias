@@ -11,7 +11,7 @@ $finder = PhpCsFixer\Finder::create()
     ->name('*.php.dist')
     ->in(__DIR__);
 
-return (new PhpCsFixer\Config())
+return new PhpCsFixer\Config()
     ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRiskyAllowed(true)
     ->setFinder($finder)
@@ -121,7 +121,7 @@ return (new PhpCsFixer\Config())
         'native_function_invocation' => false, // I suppose this would be best, but I am still unconvinced about the visual aspect of it
         'native_function_type_declaration_casing' => false, // Deprecated
         'native_type_declaration_casing' => true,
-        'new_expression_parentheses' => false, // Requires PHP 8.4
+        'new_expression_parentheses' => true,
         'new_with_braces' => false, // Deprecated
         'new_with_parentheses' => true,
         'no_alias_functions' => true,
@@ -192,7 +192,7 @@ return (new PhpCsFixer\Config())
         'ordered_traits' => true,
         'ordered_types' => false, // We prefer to keep some freedom
         'php_unit_assert_new_names' => true,
-        'php_unit_attributes' => false, // Requires PHPUnit 10
+        'php_unit_attributes' => true,
         'php_unit_construct' => true,
         'php_unit_data_provider_method_order' => true,
         'php_unit_data_provider_name' => ['prefix' => 'provider', 'suffix' => ''],

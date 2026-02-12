@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const materialsQuery = gql`
-    query Materials($filter: MaterialFilter, $sorting: [MaterialSorting!], $pagination: PaginationInput) {
+    query MaterialsQuery($filter: MaterialFilter, $sorting: [MaterialSorting!], $pagination: PaginationInput) {
         materials(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -19,7 +19,7 @@ export const materialsQuery = gql`
 `;
 
 export const materialQuery = gql`
-    query Material($id: MaterialID!) {
+    query MaterialQuery($id: MaterialID!) {
         material(id: $id) {
             id
             name

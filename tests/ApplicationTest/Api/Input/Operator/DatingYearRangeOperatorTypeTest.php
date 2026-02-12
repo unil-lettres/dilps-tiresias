@@ -8,8 +8,9 @@ use Application\Api\Input\Operator\DatingYearRangeOperatorType;
 use Application\Model\Card;
 use GraphQL\Doctrine\Factory\UniqueNameFactory;
 use GraphQL\Type\Definition\Type;
+use PHPUnit\Framework\TestCase;
 
-class DatingYearRangeOperatorTypeTest extends \PHPUnit\Framework\TestCase
+class DatingYearRangeOperatorTypeTest extends TestCase
 {
     public function testSearch(): void
     {

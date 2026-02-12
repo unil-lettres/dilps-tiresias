@@ -21,7 +21,7 @@ export const statisticDetails = gql`
 `;
 
 export const statisticsQuery = gql`
-    query Statistics($filter: StatisticFilter, $pagination: PaginationInput, $sorting: [StatisticSorting!]) {
+    query StatisticsQuery($filter: StatisticFilter, $pagination: PaginationInput, $sorting: [StatisticSorting!]) {
         statistics(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
                 ...StatisticDetails
@@ -35,7 +35,7 @@ export const statisticsQuery = gql`
 `;
 
 export const statisticQuery = gql`
-    query Statistic($id: StatisticID!) {
+    query StatisticQuery($id: StatisticID!) {
         statistic(id: $id) {
             ...StatisticDetails
         }
@@ -62,7 +62,7 @@ export const recordSearch = gql`
 `;
 
 export const extraStatisticsQuery = gql`
-    query ExtraStatistics($period: String!, $user: UserID) {
+    query ExtraStatisticsQuery($period: String!, $user: UserID) {
         extraStatistics(period: $period, user: $user)
     }
 `;

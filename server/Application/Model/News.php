@@ -25,7 +25,7 @@ use Throwable;
 #[ORM\Entity(NewsRepository::class)]
 class News extends AbstractModel implements HasSiteInterface
 {
-    private const IMAGE_PATH = 'htdocs/news-images/';
+    private const string IMAGE_PATH = 'htdocs/news-images/';
 
     use HasImage {
         setFile as traitSetFile;

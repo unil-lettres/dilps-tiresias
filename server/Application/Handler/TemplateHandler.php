@@ -29,7 +29,7 @@ use RuntimeException;
  */
 class TemplateHandler implements RequestHandlerInterface
 {
-    final public const HEADERS = [
+    final public const array HEADERS = [
         'Fichier image (avec ou sans extension)',
         'Titre',
         'Titre étendu',

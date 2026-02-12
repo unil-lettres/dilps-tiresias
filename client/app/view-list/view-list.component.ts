@@ -6,7 +6,7 @@ import {intersectionBy} from 'es-toolkit';
 import {ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
-import {Cards, Site} from '../shared/generated-types';
+import {CardsQuery, Site} from '../shared/generated-types';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
@@ -34,7 +34,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * DataSource containing cards
      */
-    @Input({required: true}) public dataSource!: NaturalDataSource<Cards['cards']>;
+    @Input({required: true}) public dataSource!: NaturalDataSource<CardsQuery['cards']>;
 
     /**
      * Emits when data is required
@@ -44,10 +44,10 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Emits when some cards are selected
      */
-    protected readonly selectionChange = output<Cards['cards']['items'][0][]>();
-    public readonly selected = input<Cards['cards']['items'][0][]>([]);
-    protected selectionModel = new SelectionModel<Cards['cards']['items'][0]>(true);
-    protected cards: Cards['cards']['items'][0][] = [];
+    protected readonly selectionChange = output<CardsQuery['cards']['items'][0][]>();
+    public readonly selected = input<CardsQuery['cards']['items'][0][]>([]);
+    protected selectionModel = new SelectionModel<CardsQuery['cards']['items'][0]>(true);
+    protected cards: CardsQuery['cards']['items'][0][] = [];
 
     /**
      * The margin-top size in px for the scrollable area.
@@ -57,7 +57,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
     /**
      * Template exposed variable
      */
-    protected Site = Site;
+    protected readonly Site = Site;
     protected readonly CardService = CardService;
 
     public ngOnInit(): void {
@@ -78,7 +78,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
         this.pagination.emit(event);
     }
 
-    public selectAll(): Promise<Cards['cards']['items'][0][]> {
+    public selectAll(): Promise<CardsQuery['cards']['items'][0][]> {
         if (this.dataSource.data) {
             this.selectionModel.select(...this.dataSource.data.items);
         }
@@ -90,7 +90,7 @@ export class ViewListComponent implements OnInit, ViewInterface {
         this.selectionModel.clear();
     }
 
-    protected getCardAddress(card: Cards['cards']['items'][0]): string {
+    protected getCardAddress(card: CardsQuery['cards']['items'][0]): string {
         return [card.street, card.postcode, card.locality, card.country?.name].filter(v => !!v).join(', ');
     }
 }

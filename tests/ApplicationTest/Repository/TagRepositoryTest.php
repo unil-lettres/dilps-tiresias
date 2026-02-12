@@ -7,7 +7,7 @@ namespace ApplicationTest\Repository;
 use Application\Model\Tag;
 use Application\Repository\TagRepository;
 
-class TagRepositoryTest extends AbstractRepositoryTest
+class TagRepositoryTest extends AbstractRepository
 {
     private TagRepository $repository;
 

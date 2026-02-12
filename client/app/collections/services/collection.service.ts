@@ -2,12 +2,12 @@ import {inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, Observable} from 'rxjs';
 import {
-    Cards,
-    Collection,
+    CardsQuery,
+    CollectionQuery,
     CollectionInput,
-    Collections,
-    CollectionsVariables,
-    CollectionVariables,
+    CollectionsQuery,
+    CollectionsQueryVariables,
+    CollectionQueryVariables,
     CollectionVisibility,
     CreateCollection,
     CreateCollectionVariables,
@@ -32,10 +32,10 @@ import {FakeCollection} from './fake-collection.resolver';
     providedIn: 'root',
 })
 export class CollectionService extends AbstractContextualizedService<
-    Collection['collection'],
-    CollectionVariables,
-    Collections['collections'],
-    CollectionsVariables,
+    CollectionQuery['collection'],
+    CollectionQueryVariables,
+    CollectionsQuery['collections'],
+    CollectionsQueryVariables,
     CreateCollection['createCollection'],
     CreateCollectionVariables,
     UpdateCollection['updateCollection'],
@@ -66,8 +66,8 @@ export class CollectionService extends AbstractContextualizedService<
     }
 
     public link(
-        collection: CreateCollection['createCollection'] | Collections['collections']['items'][0],
-        cards: Cards['cards']['items'][0][],
+        collection: CreateCollection['createCollection'] | CollectionsQuery['collections']['items'][0],
+        cards: CardsQuery['cards']['items'][0][],
     ): Observable<unknown> {
         const observables: Observable<unknown>[] = [];
         cards.forEach(image => {
@@ -77,7 +77,7 @@ export class CollectionService extends AbstractContextualizedService<
         return forkJoin(observables);
     }
 
-    public unlink(collection: FakeCollection, images: Cards['cards']['items'][0][]): Observable<unknown> {
+    public unlink(collection: FakeCollection, images: CardsQuery['cards']['items'][0][]): Observable<unknown> {
         const observables: Observable<unknown>[] = [];
         images.forEach(image => {
             observables.push(this.linkService.unlink(collection, image));
@@ -88,7 +88,7 @@ export class CollectionService extends AbstractContextualizedService<
 
     public linkCollectionToCollection(
         sourceCollection: FakeCollection,
-        targetCollection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
+        targetCollection: CollectionsQuery['collections']['items'][0] | CreateCollection['createCollection'],
     ): Observable<unknown> {
         return this.apollo.mutate<LinkCollectionToCollection, LinkCollectionToCollectionVariables>({
             mutation: linkCollectionToCollection,

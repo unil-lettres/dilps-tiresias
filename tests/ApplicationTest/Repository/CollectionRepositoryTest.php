@@ -8,8 +8,9 @@ use Application\Model\Card;
 use Application\Model\Collection;
 use Application\Repository\CollectionRepository;
 use ApplicationTest\Repository\Traits\LimitedAccessSubQuery;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-class CollectionRepositoryTest extends AbstractRepositoryTest
+class CollectionRepositoryTest extends AbstractRepository
 {
     use LimitedAccessSubQuery;
 
@@ -21,7 +22,7 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         $this->repository = _em()->getRepository(Collection::class);
     }
 
-    public function providerGetAccessibleSubQuery(): iterable
+    public static function providerGetAccessibleSubQuery(): iterable
     {
         yield ['anonymous', []];
         yield ['student', [2000, 2001, 2002, 2004, 2005, 2006, 2007, 2008]];
@@ -30,9 +31,7 @@ class CollectionRepositoryTest extends AbstractRepositoryTest
         yield ['administrator', [2001, 2002, 2004, 2005, 2007]];
     }
 
-    /**
-     * @dataProvider providerGetCopyrights
-     */
+    #[DataProvider('providerGetCopyrights')]
     public function testGetCopyrights(int $input, string $expected): void
     {
         $card = $this->createMock(Card::class);

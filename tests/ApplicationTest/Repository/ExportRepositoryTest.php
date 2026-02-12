@@ -10,7 +10,7 @@ use Application\Model\User;
 use Application\Repository\ExportRepository;
 use Application\Repository\UserRepository;
 
-class ExportRepositoryTest extends AbstractRepositoryTest
+class ExportRepositoryTest extends AbstractRepository
 {
     private ExportRepository $repository;
 

@@ -133,7 +133,7 @@ export const cardDetailsFragment = gql`
 `;
 
 export const cardsQuery = gql`
-    query Cards($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
+    query CardsQuery($filter: CardFilter, $pagination: PaginationInput, $sorting: [CardSorting!]) {
         cards(filter: $filter, pagination: $pagination, sorting: $sorting) {
             items {
                 ...CardDetails
@@ -148,7 +148,7 @@ export const cardsQuery = gql`
 `;
 
 export const cardQuery = gql`
-    query Card($id: CardID!) {
+    query CardQuery($id: CardID!) {
         card(id: $id) {
             ...CardDetails
         }
@@ -206,7 +206,7 @@ export const deleteCards = gql`
 `;
 
 export const collectionCopyrightsQuery = gql`
-    query CollectionCopyrights($card: CardID!) {
+    query CollectionCopyrightsQuery($card: CardID!) {
         collectionCopyrights(card: $card)
     }
 `;

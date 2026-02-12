@@ -51,13 +51,11 @@ class AbstractWriter extends TestCase
 
     protected function createMockCards(): array
     {
-        $card1 = $this->getMockBuilder(Card::class)
+        $card1 = self::getStubBuilder(Card::class)
             ->onlyMethods(['getId'])
-            ->getMock();
+            ->getStub();
 
-        $card1->expects(self::any())
-            ->method('getId')
-            ->willReturn(111);
+        $card1->method('getId')->willReturn(111);
 
         $card1->setName('test with nothing');
 
@@ -70,13 +68,11 @@ class AbstractWriter extends TestCase
         $country = new Country();
         $country->setName('country');
 
-        $card2 = $this->getMockBuilder(Card::class)
+        $card2 = self::getStubBuilder(Card::class)
             ->onlyMethods(['getId'])
-            ->getMock();
+            ->getStub();
 
-        $card2->expects(self::any())
-            ->method('getId')
-            ->willReturn(222);
+        $card2->method('getId')->willReturn(222);
 
         $card2->setName('test with stuff');
         $card2->setExpandedName('expanded');

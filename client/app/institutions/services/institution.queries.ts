@@ -22,7 +22,7 @@ export const institutionDetails = gql`
 `;
 
 export const institutionsQuery = gql`
-    query Institutions($filter: InstitutionFilter, $sorting: [InstitutionSorting!], $pagination: PaginationInput) {
+    query InstitutionsQuery($filter: InstitutionFilter, $sorting: [InstitutionSorting!], $pagination: PaginationInput) {
         institutions(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -38,7 +38,7 @@ export const institutionsQuery = gql`
 `;
 
 export const institutionQuery = gql`
-    query Institution($id: InstitutionID!) {
+    query InstitutionQuery($id: InstitutionID!) {
         institution(id: $id) {
             ...InstitutionDetails
             creator {

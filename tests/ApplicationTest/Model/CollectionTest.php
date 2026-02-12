@@ -6,8 +6,9 @@ namespace ApplicationTest\Model;
 
 use Application\Model\Collection;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class CollectionTest extends \PHPUnit\Framework\TestCase
+class CollectionTest extends TestCase
 {
     public function testChildCollectionsRelation(): void
     {

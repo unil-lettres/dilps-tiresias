@@ -13,6 +13,7 @@ use Application\Model\Country;
 use Application\Model\Tag;
 use Application\Model\User;
 use Cake\Chronos\Chronos;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CardTest extends TestCase
@@ -204,9 +205,7 @@ class CardTest extends TestCase
         self::assertNull($card->getChange());
     }
 
-    /**
-     * @dataProvider providerSetVisibility
-     */
+    #[DataProvider('providerSetVisibility')]
     public function testSetVisibility(string $role, CardVisibility $previous, CardVisibility $next, bool $shouldThrow): void
     {
         $admin = new User(User::ROLE_ADMINISTRATOR);

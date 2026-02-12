@@ -9,14 +9,13 @@ use Ecodev\Felix\Api\Exception;
 use ImagickException;
 use Imagine\Exception\RuntimeException;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
 class FriendlyExceptionTest extends TestCase
 {
-    /**
-     * @dataProvider providerTry
-     */
+    #[DataProvider('providerTry')]
     public function testTry(?Throwable $thrown, ?string $expectedClass, ?string $expectedMessage): void
     {
         $rethrown = null;
@@ -38,22 +37,22 @@ class FriendlyExceptionTest extends TestCase
         }
     }
 
-    public function providerTry(): iterable
+    public static function providerTry(): iterable
     {
         yield [
-            $this->createImagickException("width or height exceeds limit `/sites/dilps.lan/data/cache/images/68b051784b5ba-5.webp' @ error/webp.c/WriteWEBPImage/1147"),
+            self::createImagickException("width or height exceeds limit `/sites/dilps.lan/data/cache/images/68b051784b5ba-5.webp' @ error/webp.c/WriteWEBPImage/1147"),
             Exception::class,
             '~^La dimension maximale de l\'image est de .+ x .+ pixels, mais elle a été dépassée\.$~',
         ];
 
         yield [
-            $this->createImagickException("cache resources exhausted `white' @ error/cache.c/OpenPixelCache/4119."),
+            self::createImagickException("cache resources exhausted `white' @ error/cache.c/OpenPixelCache/4119."),
             Exception::class,
             '~^La taille maximale du cache est de .+iB, mais elle a été dépassée\.$~',
         ];
 
         yield [
-            $this->createImagickException("Unable to open image /sites/dilps.lan/data/images/68b054ec8f219.JPGtime limit exceeded `/sites/dilps.lan/data/images/68b054ec8f219.JPG' @ fatal/cache.c/GetImagePixelCache/1867"),
+            self::createImagickException("Unable to open image /sites/dilps.lan/data/images/68b054ec8f219.JPGtime limit exceeded `/sites/dilps.lan/data/images/68b054ec8f219.JPG' @ fatal/cache.c/GetImagePixelCache/1867"),
             Exception::class,
             '~^Le temps maximum de traitement d\'image est de .+ secondes, mais il a été dépassé\.$~',
         ];
@@ -71,7 +70,7 @@ class FriendlyExceptionTest extends TestCase
         ];
     }
 
-    private function createImagickException(string $message): RuntimeException
+    private static function createImagickException(string $message): RuntimeException
     {
         return new RuntimeException('test exception', 123, new ImagickException($message, 123));
     }

@@ -11,19 +11,19 @@ import {
 } from '@ecodev/natural';
 
 export class AbstractList<
-        TService extends NaturalAbstractModelService<
-            any,
-            any,
-            PaginatedData<Literal>,
-            QueryVariables,
-            any,
-            any,
-            any,
-            any,
-            any,
-            any
-        >,
-    >
+    TService extends NaturalAbstractModelService<
+        any,
+        any,
+        PaginatedData<Literal>,
+        QueryVariables,
+        any,
+        any,
+        any,
+        any,
+        any,
+        any
+    >,
+>
     extends NaturalAbstractList<TService>
     implements OnInit
 {

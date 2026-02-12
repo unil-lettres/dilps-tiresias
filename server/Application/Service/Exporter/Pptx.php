@@ -25,8 +25,8 @@ use PhpOffice\PhpPresentation\Writer\PowerPoint2007;
  */
 class Pptx implements Writer
 {
-    private const MARGIN = 10;
-    private const LEGEND_HEIGHT = 75;
+    private const int MARGIN = 10;
+    private const int LEGEND_HEIGHT = 75;
 
     private bool $needSeparator = false;
 

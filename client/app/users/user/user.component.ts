@@ -13,7 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
-import {UpdateUser, User, UserRole, UserType} from '../../shared/generated-types';
+import {UpdateUser, UserQuery, UserRole, UserType} from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {UserService} from '../services/user.service';
 import {TypePipe} from '../../shared/pipes/type.pipe';
@@ -70,7 +70,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
 
-    protected collectionsHierarchicConfig = collectionsHierarchicConfig;
+    protected readonly collectionsHierarchicConfig = collectionsHierarchicConfig;
     protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 
@@ -78,7 +78,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected passwordCtrl: FormControl;
     protected passwordConfirmationCtrl: FormControl;
 
-    protected institution: UpdateUser['updateUser']['institution'] | User['user']['institution'] | null = null;
+    protected institution: UpdateUser['updateUser']['institution'] | UserQuery['user']['institution'] | null = null;
 
     public constructor() {
         super(inject(UserService));

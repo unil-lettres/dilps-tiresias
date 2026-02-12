@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace ApplicationTest;
 
 use ApplicationTest\Traits\TestWithTransaction;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TriggersTest extends TestCase
 {
     use TestWithTransaction;
 
-    /**
-     * @dataProvider providerGetUsageCountManyToMany
-     */
+    #[DataProvider('providerGetUsageCountManyToMany')]
     public function testGetUsageCountManyToMany(string $table, int $id1, int $id2): void
     {
         $initial1 = $this->getUsageCount($table, $id1);
@@ -79,9 +78,7 @@ class TriggersTest extends TestCase
         return $this->getEntityManager()->getConnection()->fetchOne("SELECT usage_count FROM `$table` WHERE id = $id");
     }
 
-    /**
-     * @dataProvider providerGetUsageCountManyToOne
-     */
+    #[DataProvider('providerGetUsageCountManyToOne')]
     public function testGetUsageCountManyToOne(string $table, int $id1, int $id2): void
     {
         $initial1 = $this->getUsageCount($table, $id1);
@@ -117,8 +114,8 @@ class TriggersTest extends TestCase
 
     public static function providerGetUsageCountManyToOne(): iterable
     {
-        yield ['institution', 5000, 5001, true];
-        yield ['document_type', 11000, 11001, true];
+        yield ['institution', 5000, 5001];
+        yield ['document_type', 11000, 11001];
     }
 
     private function update(string $table, int $cardId, ?int $id): void

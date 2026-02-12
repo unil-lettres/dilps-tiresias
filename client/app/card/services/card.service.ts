@@ -4,16 +4,16 @@ import {merge} from 'es-toolkit';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
-    Card,
+    CardQuery,
     CardInput,
     CardPartialInput,
-    Cards,
-    CardsVariables,
-    CardVariables,
+    CardsQuery,
+    CardsQueryVariables,
+    CardQueryVariables,
     CardVisibility,
-    CollectionCopyrights,
-    CollectionCopyrightsVariables,
-    Collections,
+    CollectionCopyrightsQuery,
+    CollectionCopyrightsQueryVariables,
+    CollectionsQuery,
     CreateCard,
     CreateCards,
     CreateCardsVariables,
@@ -49,10 +49,10 @@ type CardWithImage = {
     providedIn: 'root',
 })
 export class CardService extends AbstractContextualizedService<
-    Card['card'],
-    CardVariables,
-    Cards['cards'],
-    CardsVariables,
+    CardQuery['card'],
+    CardQueryVariables,
+    CardsQuery['cards'],
+    CardsQueryVariables,
     CreateCard['createCard'],
     CreateCardVariables,
     UpdateCard['updateCard'],
@@ -100,13 +100,13 @@ export class CardService extends AbstractContextualizedService<
      * Merge image src on src attribute of given gard
      */
     public static formatImage(
-        card: Cards['cards']['items'][0],
+        card: CardsQuery['cards']['items'][0],
         height: number,
-    ): Cards['cards']['items'][0] & {src: string | null};
+    ): CardsQuery['cards']['items'][0] & {src: string | null};
     public static formatImage(
-        card: Cards['cards']['items'][0] | null,
+        card: CardsQuery['cards']['items'][0] | null,
         height: number,
-    ): (Cards['cards']['items'][0] & {src: string | null}) | null {
+    ): (CardsQuery['cards']['items'][0] & {src: string | null}) | null {
         if (!card) {
             return null;
         }
@@ -179,7 +179,7 @@ export class CardService extends AbstractContextualizedService<
     }
 
     // In Card specific case, don't context lists
-    public override getPartialVariablesForAll(): Observable<Partial<CardsVariables>> {
+    public override getPartialVariablesForAll(): Observable<Partial<CardsQueryVariables>> {
         return of({});
     }
 
@@ -202,7 +202,7 @@ export class CardService extends AbstractContextualizedService<
     public createWithExcel(
         excel: File,
         images: File[],
-        collection: Collections['collections']['items'][0] | CreateCollection['createCollection'],
+        collection: CollectionsQuery['collections']['items'][0] | CreateCollection['createCollection'],
     ): Observable<CreateCards['createCards']> {
         return this.apollo
             .mutate<CreateCards, CreateCardsVariables>({
@@ -232,9 +232,9 @@ export class CardService extends AbstractContextualizedService<
             .pipe(map(result => result.data!.createCard));
     }
 
-    public getCollectionCopyrights(card: Card['card']): Observable<string> {
+    public getCollectionCopyrights(card: CardQuery['card']): Observable<string> {
         return this.apollo
-            .query<CollectionCopyrights, CollectionCopyrightsVariables>({
+            .query<CollectionCopyrightsQuery, CollectionCopyrightsQueryVariables>({
                 query: collectionCopyrightsQuery,
                 variables: {card: card.id},
             })

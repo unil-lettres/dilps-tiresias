@@ -73,8 +73,7 @@ export class ThesaurusComponent<
         any,
         any
     >,
-> implements OnInit
-{
+> implements OnInit {
     private readonly dialog = inject(MatDialog);
     private readonly router = inject(Router);
     private readonly hierarchicSelectorDialogService = inject(NaturalHierarchicSelectorDialogService);

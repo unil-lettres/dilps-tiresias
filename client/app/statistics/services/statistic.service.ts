@@ -1,5 +1,10 @@
 import {assertInInjectionContext, Injectable} from '@angular/core';
-import {Statistic, Statistics, StatisticsVariables, StatisticVariables} from '../../shared/generated-types';
+import {
+    StatisticQuery,
+    StatisticsQuery,
+    StatisticsQueryVariables,
+    StatisticQueryVariables,
+} from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
 import {Observable, Subject, switchMap} from 'rxjs';
@@ -11,10 +16,10 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     providedIn: 'root',
 })
 export class StatisticService extends AbstractContextualizedService<
-    Statistic['statistic'],
-    StatisticVariables,
-    Statistics['statistics'],
-    StatisticsVariables,
+    StatisticQuery['statistic'],
+    StatisticQueryVariables,
+    StatisticsQuery['statistics'],
+    StatisticsQueryVariables,
     never,
     never,
     never,

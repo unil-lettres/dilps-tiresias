@@ -8,8 +8,9 @@ use Application\Enum\Site;
 use Application\Model\Domain;
 use Application\Model\User;
 use Application\Repository\DomainRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-class DomainRepositoryTest extends AbstractRepositoryTest
+class DomainRepositoryTest extends AbstractRepository
 {
     private DomainRepository $repository;
 
@@ -47,9 +48,7 @@ class DomainRepositoryTest extends AbstractRepositoryTest
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider providerGetByCards
-     */
+    #[DataProvider('providerGetByCards')]
     public function testGetByCards(?string $userLogin, array $filter, array $expectedDomainIds, string $message): void
     {
         if ($userLogin) {

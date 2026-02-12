@@ -9,7 +9,14 @@ import {
 // Format can remove following line, that is required to prevent warnings in console
 import {merge} from 'es-toolkit';
 import {CountryService} from '../../../countries/services/country.service';
-import {Card, CardInput, Countries, CountriesVariables, Institution, Site} from '../../generated-types';
+import {
+    CardQuery,
+    CardInput,
+    CountriesQuery,
+    CountriesQueryVariables,
+    InstitutionQuery,
+    Site,
+} from '../../generated-types';
 import {AddressService} from './address.service';
 import {SITE} from '../../../app.config';
 import {MapApiService} from '../../../view-map/map-api.service';
@@ -95,8 +102,12 @@ export class AddressComponent implements OnInit, OnChanges {
     /**
      * Object reference is directly modified
      */
-    @Input() public model: Card['card'] | Institution['institution'] | Card['card']['institution'] | CardInput | null =
-        null;
+    @Input() public model:
+        | CardQuery['card']
+        | InstitutionQuery['institution']
+        | CardQuery['card']['institution']
+        | CardInput
+        | null = null;
 
     protected formCtrl = new FormControl();
 
@@ -276,7 +287,7 @@ export class AddressComponent implements OnInit, OnChanges {
             },
         ],
     };
-    protected countries: Countries['countries']['items'][0][] = [];
+    protected countries: CountriesQuery['countries']['items'][0][] = [];
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public ngOnChanges(): void {
@@ -287,7 +298,7 @@ export class AddressComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        const qvm = new NaturalQueryVariablesManager<CountriesVariables>();
+        const qvm = new NaturalQueryVariablesManager<CountriesQueryVariables>();
         qvm.set('pagination', {pagination: {pageSize: 9999}});
 
         this.countryService.getAll(qvm).subscribe(countries => (this.countries = countries.items));

@@ -2,7 +2,7 @@ import {gql} from '@apollo/client/core';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const artistsQuery = gql`
-    query Artists($filter: ArtistFilter, $sorting: [ArtistSorting!], $pagination: PaginationInput) {
+    query ArtistsQuery($filter: ArtistFilter, $sorting: [ArtistSorting!], $pagination: PaginationInput) {
         artists(filter: $filter, sorting: $sorting, pagination: $pagination) {
             items {
                 id
@@ -17,7 +17,7 @@ export const artistsQuery = gql`
 `;
 
 export const artistQuery = gql`
-    query Artist($id: ArtistID!) {
+    query ArtistQuery($id: ArtistID!) {
         artist(id: $id) {
             id
             name

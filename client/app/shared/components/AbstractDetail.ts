@@ -14,7 +14,7 @@ import {
     QueryVariables,
     WithId,
 } from '@ecodev/natural';
-import {Viewer} from '../generated-types';
+import {ViewerQuery} from '../generated-types';
 
 type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
@@ -35,8 +35,7 @@ export class AbstractDetailDirective<
         any
     >,
     Extra extends Record<string, any> = Record<never, any>,
-> implements OnInit
-{
+> implements OnInit {
     private readonly alertService = inject(AlertService);
     public readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
     public readonly userService = inject(UserService);
@@ -48,7 +47,7 @@ export class AbstractDetailDirective<
      */
     private _isUpdatePage = false;
 
-    public user: Viewer['viewer'] | null = null;
+    public user: ViewerQuery['viewer'] | null = null;
 
     public data: Data<TService, Extra> = {
         item: {},

@@ -7,7 +7,7 @@ namespace ApplicationTest\Repository;
 use Application\Model\Period;
 use Application\Repository\PeriodRepository;
 
-class PeriodRepositoryTest extends AbstractRepositoryTest
+class PeriodRepositoryTest extends AbstractRepository
 {
     private PeriodRepository $repository;
 

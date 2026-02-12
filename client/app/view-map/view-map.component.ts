@@ -1,5 +1,5 @@
 import {Component, inject, Input, NgZone, output, viewChild} from '@angular/core';
-import {Cards, Precision, Site} from '../shared/generated-types';
+import {CardsQuery, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';
@@ -34,7 +34,7 @@ export class ViewMapComponent {
     protected selectedMarker: Marker | null = null;
 
     @Input({required: true})
-    public set cards(cards: Cards['cards']['items'][0][]) {
+    public set cards(cards: CardsQuery['cards']['items'][0][]) {
         this.mapApiService.loaded.subscribe(() => {
             this.markers = this.convertIntoMarkers(cards);
             this.updateBounds(this.markers);
@@ -71,7 +71,7 @@ export class ViewMapComponent {
         };
     }
 
-    protected convertIntoMarkers(cards: Cards['cards']['items'][0][]): Marker[] {
+    protected convertIntoMarkers(cards: CardsQuery['cards']['items'][0][]): Marker[] {
         return cards
             .filter(c => c.latitude && c.longitude)
             .map(c => {
