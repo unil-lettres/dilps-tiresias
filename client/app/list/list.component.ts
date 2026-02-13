@@ -185,17 +185,17 @@ export class ListComponent
     /**
      * Whether the scrollbar could not scroll left anymore.
      */
-    protected scrollBarAtLeft = true;
+    protected readonly scrollBarAtLeft = signal(true);
 
     /**
      * Whether the scrollbar could not scroll right anymore.
      */
-    protected scrollBarAtRight = false;
+    protected readonly scrollBarAtRight = signal(false);
 
     /**
      * Whether the chips container has a scrollbar (too many chips for the viewport).
      */
-    protected hasScrollbar = false;
+    protected readonly hasScrollbar = signal(false);
 
     /**
      * Resize observer to update buttons state when the component is resized.
@@ -678,16 +678,16 @@ export class ListComponent
     protected updateScrollArrows(): void {
         const container = this.chipsContainer()?.nativeElement;
         if (!container) {
-            this.scrollBarAtLeft = true;
-            this.scrollBarAtRight = false;
-            this.hasScrollbar = false;
+            this.scrollBarAtLeft.set(true);
+            this.scrollBarAtRight.set(false);
+            this.hasScrollbar.set(false);
             return;
         }
 
         // Use a tolerance of 1px to handle floating point precision issues
-        this.scrollBarAtLeft = container.scrollLeft <= 1;
-        this.scrollBarAtRight = container.scrollWidth - container.scrollLeft - container.clientWidth <= 1;
-        this.hasScrollbar = container.scrollWidth > container.clientWidth;
+        this.scrollBarAtLeft.set(container.scrollLeft <= 1);
+        this.scrollBarAtRight.set(container.scrollWidth - container.scrollLeft - container.clientWidth <= 1);
+        this.hasScrollbar.set(container.scrollWidth > container.clientWidth);
     }
 
     /**

@@ -215,8 +215,8 @@
             @if (domains.length) {
                 <div
                     id="domains-chips"
-                    [class.fade-left]="hasScrollbar && !scrollBarAtLeft"
-                    [class.fade-right]="hasScrollbar && !scrollBarAtRight"
+                    [class.fade-left]="hasScrollbar() && !scrollBarAtLeft()"
+                    [class.fade-right]="hasScrollbar() && !scrollBarAtRight()"
                 >
                     <div #chipsContainer class="chips-container" (scroll)="updateScrollArrows()">
                         <mat-chip-listbox
@@ -239,7 +239,7 @@
                         mat-mini-fab
                         color="accent"
                         aria-label="Défiler vers la gauche"
-                        [class.is-hidden]="!hasScrollbar || scrollBarAtLeft"
+                        [class.is-hidden]="!hasScrollbar() || scrollBarAtLeft()"
                         (click)="scrollLeft()"
                     >
                         <mat-icon naturalIcon="navigate_before" />
@@ -249,7 +249,7 @@
                         mat-mini-fab
                         color="accent"
                         aria-label="Défiler vers la droite"
-                        [class.is-hidden]="!hasScrollbar || scrollBarAtRight"
+                        [class.is-hidden]="!hasScrollbar() || scrollBarAtRight()"
                         (click)="scrollRight()"
                     >
                         <mat-icon naturalIcon="navigate_next" />

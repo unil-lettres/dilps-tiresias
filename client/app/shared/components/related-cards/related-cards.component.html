@@ -13,8 +13,8 @@
             class="left"
             mat-mini-fab
             color="primary"
-            [disabled]="scrollBarAtLeft"
-            [hidden]="!hasScrollbar"
+            [disabled]="scrollBarAtLeft()"
+            [hidden]="!hasScrollbar()"
             (click)="scrollLeft()"
         >
             <mat-icon naturalIcon="navigate_before" />
@@ -23,8 +23,8 @@
             class="right"
             mat-mini-fab
             color="primary"
-            [disabled]="scrollBarAtRight"
-            [hidden]="!hasScrollbar"
+            [disabled]="scrollBarAtRight()"
+            [hidden]="!hasScrollbar()"
             (click)="scrollRight()"
         >
             <mat-icon naturalIcon="navigate_next" />
