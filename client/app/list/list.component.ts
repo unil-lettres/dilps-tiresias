@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     Component,
     computed,
+    effect,
     ElementRef,
     inject,
     OnDestroy,
@@ -304,6 +305,18 @@ export class ListComponent
         super(inject(CardService));
 
         this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
+
+        // Initialize ResizeObserver when chips container becomes available
+        effect(() => {
+            const container = this.chipsContainer()?.nativeElement;
+            if (container) {
+                this.resizeObserver?.disconnect();
+                this.resizeObserver = new ResizeObserver(() => {
+                    this.updateScrollArrows();
+                });
+                this.resizeObserver.observe(container);
+            }
+        });
     }
 
     public override ngOnInit(): void {
@@ -380,23 +393,11 @@ export class ListComponent
     public ngAfterViewInit(): void {
         this.fetchDomains().subscribe(() => {
             this.domainSelectionChange();
-            this.initResizeObserver();
         });
     }
 
     public ngOnDestroy(): void {
         this.resizeObserver?.disconnect();
-    }
-
-    /**
-     * Initialize resize observer to update scroll buttons state.
-     */
-    private initResizeObserver(): void {
-        const container = this.chipsContainer()?.nativeElement;
-        if (container && !this.resizeObserver) {
-            this.resizeObserver = new ResizeObserver(() => this.updateScrollArrows());
-            this.resizeObserver.observe(container);
-        }
     }
 
     protected override handleHistoryNavigation(): void {
@@ -659,7 +660,6 @@ export class ListComponent
                     this.domains = result.map(d => ({...d}));
                     // Wait for Angular to render the chips before initializing the observer
                     setTimeout(() => {
-                        this.initResizeObserver();
                         this.updateScrollArrows();
                     }, 0);
                 }),
