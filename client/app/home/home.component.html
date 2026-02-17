@@ -68,7 +68,11 @@
                                     routerLink="/source"
                                     routerLinkActive="active"
                                 >
-                                    <mat-icon matListItemIcon naturalIcon="folder_special" />
+                                    @if (site === Site.Dilps) {
+                                        <app-historic-icon tooltip="" />
+                                    } @else {
+                                        <mat-icon matListItemIcon naturalIcon="folder_special" />
+                                    }
                                 </a>
                                 <!-- Notifications -->
                                 <a

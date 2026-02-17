@@ -40,6 +40,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -68,6 +69,7 @@ function isExcel(file: File): boolean {
         MatIconButton,
         RouterOutlet,
         NaturalIconDirective,
+        HistoricIconComponent,
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
