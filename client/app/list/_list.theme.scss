@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@mixin list($theme) {
+    $bg: map.get($theme, background);
+
+    $background-color: mat.m2-get-color-from-palette($bg, background);
+
+    app-list {
+        #domains-chips {
+            &::before {
+                background: linear-gradient(to right, $background-color, transparent);
+            }
+
+            &::after {
+                background: linear-gradient(to left, $background-color, transparent);
+            }
+        }
+    }
+}

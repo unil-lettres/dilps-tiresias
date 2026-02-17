@@ -2,6 +2,7 @@
 @use '../app/card/card.theme';
 @use '../app/collections/collections/collections.theme';
 @use '../app/home/home.theme';
+@use '../app/list/list.theme';
 @use '../app/quizz/quizz.theme';
 @use '../app/changes/change/change.theme';
 @use '../app/shared/components/address/address.theme';
@@ -35,6 +36,7 @@
     @include card.card($theme);
     @include quizz.quizz($theme);
     @include hint.hint($theme);
+    @include list.list($theme);
     @include view-grid.view-grid($theme);
     @include thesaurus.thesaurus($theme);
     @include change.change($theme);

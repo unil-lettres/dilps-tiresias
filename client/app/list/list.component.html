@@ -112,6 +112,7 @@
                 }
             }
             <natural-search
+                id="main-natural-search"
                 dropdownTitle="Recherche approfondie"
                 class="nat-expand"
                 [facets]="naturalSearchFacets"
@@ -212,8 +213,12 @@
             </div>
         } @else {
             @if (domains.length) {
-                <div id="domains-chips">
-                    <ng-scrollbar orientation="horizontal" appearance="native" visibility="visible">
+                <div
+                    id="domains-chips"
+                    [class.fade-left]="hasScrollbar() && !scrollBarAtLeft()"
+                    [class.fade-right]="hasScrollbar() && !scrollBarAtRight()"
+                >
+                    <div #chipsContainer class="chips-container" (scroll)="updateScrollArrows()">
                         <mat-chip-listbox
                             aria-label="Domaines des fiches"
                             aria-orientation="horizontal"
@@ -228,7 +233,27 @@
                                 </mat-chip-option>
                             }
                         </mat-chip-listbox>
-                    </ng-scrollbar>
+                    </div>
+                    <button
+                        class="scroll-arrow left"
+                        mat-mini-fab
+                        color="accent"
+                        aria-label="Défiler vers la gauche"
+                        [class.is-hidden]="!hasScrollbar() || scrollBarAtLeft()"
+                        (click)="scrollLeft()"
+                    >
+                        <mat-icon naturalIcon="navigate_before" />
+                    </button>
+                    <button
+                        class="scroll-arrow right"
+                        mat-mini-fab
+                        color="accent"
+                        aria-label="Défiler vers la droite"
+                        [class.is-hidden]="!hasScrollbar() || scrollBarAtRight()"
+                        (click)="scrollRight()"
+                    >
+                        <mat-icon naturalIcon="navigate_next" />
+                    </button>
                 </div>
             }
 
@@ -237,7 +262,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
-                    [scrolledMarginTop]="domains.length ? '108px' : '64px'"
+                    [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     [paginationOffset]="paginationOffset()"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
@@ -249,7 +274,7 @@
                     [dataSource]="dataSource"
                     [style.height]="'100%'"
                     [selected]="selected"
-                    [scrolledMarginTop]="domains.length ? '117px' : '64px'"
+                    [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                 />

@@ -11,15 +11,22 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material/icon';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {NetworkActivityService} from '@ecodev/natural';
+import {ProgressService} from './shared/services/progress.service';
 
 class DelayedProgressBar {
     private isVisible = false;
+    private isManualMode = false;
     private progressTimeout: ReturnType<typeof setTimeout> | null = null;
     private hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
     public constructor(private progressRef: NgProgressRef) {}
 
     public start(): void {
+        // If in manual mode, network activity should not interfere
+        if (this.isManualMode) {
+            return;
+        }
+
         if (this.hideTimeout) {
             clearTimeout(this.hideTimeout);
             this.hideTimeout = null;
@@ -34,13 +41,21 @@ class DelayedProgressBar {
         }
 
         this.progressTimeout = setTimeout(() => {
-            this.isVisible = true;
-            this.progressRef?.start();
+            // Check again in case manual mode was activated during timeout
+            if (!this.isManualMode) {
+                this.isVisible = true;
+                this.progressRef?.start();
+            }
             this.progressTimeout = null;
         }, 600);
     }
 
     public complete(): void {
+        // If in manual mode, network activity should not interfere
+        if (this.isManualMode) {
+            return;
+        }
+
         if (this.progressTimeout) {
             clearTimeout(this.progressTimeout);
             this.progressTimeout = null;
@@ -56,6 +71,32 @@ class DelayedProgressBar {
             this.hideTimeout = null;
         }, 300);
     }
+
+    public startManual(): void {
+        this.isManualMode = true;
+
+        if (this.progressTimeout) {
+            clearTimeout(this.progressTimeout);
+            this.progressTimeout = null;
+        }
+        if (this.hideTimeout) {
+            clearTimeout(this.hideTimeout);
+            this.hideTimeout = null;
+        }
+
+        this.isVisible = true;
+        this.progressRef?.set(1);
+    }
+
+    public set(value: number): void {
+        this.progressRef?.set(value);
+    }
+
+    public completeManual(): void {
+        this.isManualMode = false;
+        this.isVisible = false;
+        this.progressRef?.complete();
+    }
 }
 
 @Component({
@@ -66,6 +107,7 @@ class DelayedProgressBar {
 })
 export class AppComponent implements OnInit {
     private readonly networkActivityService = inject(NetworkActivityService);
+    private readonly progressService = inject(ProgressService);
     private readonly ngProgressRef = viewChild.required(NgProgressRef);
     private readonly themeService = inject(ThemeService);
     private readonly overlayContainer = inject(OverlayContainer);
@@ -91,7 +133,10 @@ export class AppComponent implements OnInit {
 
     public constructor() {
         effect(() => {
-            this.networkActivityService.setProgressRef(new DelayedProgressBar(this.ngProgressRef()));
+            const progressRef = this.ngProgressRef();
+            const delayedProgressBar = new DelayedProgressBar(progressRef);
+            this.progressService.setProgressBar(delayedProgressBar);
+            this.networkActivityService.setProgressRef(delayedProgressBar);
         });
 
         const themeService = this.themeService;

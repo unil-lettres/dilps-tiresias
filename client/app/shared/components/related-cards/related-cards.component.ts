@@ -39,11 +39,6 @@ import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../genera
 export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     protected readonly cardService = inject(CardService);
 
-    /**
-     * Offset to scroll when clicking on the scroll buttons.
-     */
-    private static readonly SCROLL_OFFSET = 200;
-
     public readonly card = input.required<CardQuery['card']>();
 
     protected readonly slideshow = viewChild.required<ElementRef>('slideshow');
@@ -55,12 +50,12 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     /**
      * Whether the scrollbar could not scroll left anymore.
      */
-    protected scrollBarAtLeft = true;
+    protected readonly scrollBarAtLeft = signal(true);
 
     /**
      * Whether the scrollbar could not scroll right anymore.
      */
-    protected scrollBarAtRight = false;
+    protected readonly scrollBarAtRight = signal(false);
 
     /**
      * If the breakpoint is smaller or equal to XSmall.
@@ -76,7 +71,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      * Whether the slideshow has a scrollbar (too much images for the viewport)
      * or not.
      */
-    protected hasScrollbar = false;
+    protected readonly hasScrollbar = signal(false);
 
     /**
      * Query variables for retrieve related cards.
@@ -138,11 +133,13 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     protected scrollLeft(): void {
-        this.slideshow().nativeElement.scrollLeft -= RelatedCardsComponent.SCROLL_OFFSET;
+        const container = this.slideshow().nativeElement;
+        container.scrollLeft -= container.clientWidth * 0.8;
     }
 
     protected scrollRight(): void {
-        this.slideshow().nativeElement.scrollLeft += RelatedCardsComponent.SCROLL_OFFSET;
+        const container = this.slideshow().nativeElement;
+        container.scrollLeft += container.clientWidth * 0.8;
     }
 
     /**
@@ -152,9 +149,9 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
     protected updateButtonsState(): void {
         const slideshow = this.slideshow().nativeElement;
 
-        this.scrollBarAtLeft = slideshow.scrollLeft == 0;
-        this.scrollBarAtRight = slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth;
-        this.hasScrollbar = slideshow.scrollWidth > slideshow.clientWidth;
+        this.scrollBarAtLeft.set(slideshow.scrollLeft == 0);
+        this.scrollBarAtRight.set(slideshow.scrollWidth - slideshow.scrollLeft == slideshow.clientWidth);
+        this.hasScrollbar.set(slideshow.scrollWidth > slideshow.clientWidth);
     }
 
     protected toggleReduce(): void {

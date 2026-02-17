@@ -1,6 +1,7 @@
 @use '../../styles/utils';
 
 :host {
+    --mat-toolbar-standard-height: 69px;
     display: flex;
     flex-direction: column;
     @include utils.fixedToolbar();
@@ -18,12 +19,85 @@ app-view-grid {
 #domains-chips {
     display: block;
     position: absolute;
-    top: 64px;
+    top: 69px;
     right: 15px; // Keep a space for the gallery scrollbar.
     left: 0;
     z-index: 10;
     padding-right: 10px;
+    padding-bottom: 7px;
     padding-left: 10px;
+
+    // Fade effect on edges
+    &::before,
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 7px;
+        opacity: 0;
+        z-index: 2;
+        transition: opacity 0.2s ease-in-out;
+        width: 40px;
+        pointer-events: none;
+        content: '';
+    }
+
+    &::before {
+        left: 10px;
+    }
+
+    &::after {
+        right: 10px;
+    }
+
+    &.fade-left::before,
+    &.fade-right::after {
+        opacity: 1;
+    }
+
+    &:hover {
+        .scroll-arrow {
+            transition-duration: 1s;
+
+            &:not(.is-hidden) {
+                opacity: 1;
+                transition-duration: 0s;
+            }
+        }
+    }
+
+    .scroll-arrow {
+        position: absolute;
+        top: -2px;
+        opacity: 0;
+        z-index: 3;
+        transition-duration: 0s;
+        transition-property: opacity;
+        transition-timing-function: ease-in;
+
+        &.is-hidden {
+            opacity: 0;
+        }
+
+        &.left {
+            left: 4px;
+        }
+
+        &.right {
+            right: 4px;
+        }
+    }
+
+    .chips-container {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none; // IE/Edge
+
+        &::-webkit-scrollbar {
+            display: none; // Chrome/Safari
+        }
+    }
 }
 
 .chip-infos {
@@ -33,4 +107,8 @@ app-view-grid {
     app-historic-icon {
         height: 20px;
     }
+}
+
+natural-search {
+    margin-top: 6px;
 }

@@ -1,6 +1,17 @@
-import {AfterViewInit, Component, computed, inject, OnInit, signal, viewChild} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    computed,
+    effect,
+    ElementRef,
+    inject,
+    OnDestroy,
+    OnInit,
+    signal,
+    viewChild,
+} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {MatIconButton} from '@angular/material/button';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
@@ -21,7 +32,7 @@ import {
 } from '@ecodev/natural';
 import {defaults, isObject} from 'es-toolkit/compat';
 import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
-import {NgScrollbar} from 'ngx-scrollbar';
+
 import {concatMap, finalize, from, Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
 import {ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
@@ -62,6 +73,7 @@ import {UserService} from '../users/services/user.service';
 import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
+import {ProgressService} from '../shared/services/progress.service';
 
 function applyChanges(
     destination: CardsQuery['cards']['items'][0],
@@ -118,12 +130,12 @@ enum ViewMode {
         MatChipListbox,
         MatChipOption,
         MatChipSet,
+        MatMiniFabButton,
         ViewGridComponent,
         ViewListComponent,
         ViewMapComponent,
         NaturalIconDirective,
         ExportMenuComponent,
-        NgScrollbar,
         HistoricIconComponent,
     ],
     templateUrl: './list.component.html',
@@ -131,7 +143,7 @@ enum ViewMode {
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
-    implements OnInit, AfterViewInit, ReusableRouteStatus
+    implements OnInit, AfterViewInit, OnDestroy, ReusableRouteStatus
 {
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
@@ -139,6 +151,7 @@ export class ListComponent
     private readonly statisticService = inject(StatisticService);
     private readonly changeService = inject(ChangeService);
     private readonly domainService = inject(DomainService);
+    private readonly progressService = inject(ProgressService);
 
     protected readonly site = inject(SITE);
 
@@ -162,6 +175,31 @@ export class ListComponent
      * Reference to list component
      */
     protected readonly listComponent = viewChild(ViewListComponent);
+
+    /**
+     * Reference to chips container for scroll
+     */
+    protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
+
+    /**
+     * Whether the scrollbar could not scroll left anymore.
+     */
+    protected readonly scrollBarAtLeft = signal(true);
+
+    /**
+     * Whether the scrollbar could not scroll right anymore.
+     */
+    protected readonly scrollBarAtRight = signal(false);
+
+    /**
+     * Whether the chips container has a scrollbar (too many chips for the viewport).
+     */
+    protected readonly hasScrollbar = signal(false);
+
+    /**
+     * Resize observer to update buttons state when the component is resized.
+     */
+    private resizeObserver: ResizeObserver | null = null;
 
     /**
      * Expose enum for template
@@ -265,6 +303,18 @@ export class ListComponent
         super(inject(CardService));
 
         this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
+
+        // Initialize ResizeObserver when chips container becomes available
+        effect(() => {
+            const container = this.chipsContainer()?.nativeElement;
+            if (container) {
+                this.resizeObserver?.disconnect();
+                this.resizeObserver = new ResizeObserver(() => {
+                    this.updateScrollArrows();
+                });
+                this.resizeObserver.observe(container);
+            }
+        });
     }
 
     public override ngOnInit(): void {
@@ -342,6 +392,10 @@ export class ListComponent
         this.fetchDomains().subscribe(() => {
             this.domainSelectionChange();
         });
+    }
+
+    public ngOnDestroy(): void {
+        this.resizeObserver?.disconnect();
     }
 
     protected override handleHistoryNavigation(): void {
@@ -540,10 +594,24 @@ export class ListComponent
                     });
                 }
 
+                const totalOperations = observables.length + suggestionsObservables.length * 2; // *2 because suggestions also trigger suggestUpdate
+                let completedOperations = 0;
+
+                const updateProgress = (): void => {
+                    completedOperations++;
+                    this.progressService.set((completedOperations / totalOperations) * 100);
+                };
+
+                this.progressService.startManual();
+
                 // Last api call
                 const finish = (): void => {
                     from(observables)
-                        .pipe(concatMap(observable => observable))
+                        .pipe(
+                            concatMap(observable => observable),
+                            tap(() => updateProgress()),
+                            finalize(() => this.progressService.completeManual()),
+                        )
                         .subscribe({
                             complete: () => {
                                 this.alertService.info('Mis à jour');
@@ -556,6 +624,7 @@ export class ListComponent
                     from(suggestionsObservables)
                         .pipe(
                             concatMap(observable => observable),
+                            tap(() => updateProgress()),
                             finalize(() => finish()),
                         )
                         .subscribe(card => observables.push(this.changeService.suggestUpdate(card)));
@@ -587,12 +656,55 @@ export class ListComponent
             return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
                 tap(result => {
                     this.domains = result.map(d => ({...d}));
+                    // Wait for Angular to render the chips before initializing the observer
+                    setTimeout(() => {
+                        this.updateScrollArrows();
+                    }, 0);
                 }),
             );
         } else {
             this.domains = [];
             this.variablesManager.set('domains', null);
             return of(this.domains);
+        }
+    }
+
+    /**
+     * Update the state of the scroll buttons (left and right) according to the
+     * current scroll position and the size of the chips container.
+     */
+    protected updateScrollArrows(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (!container) {
+            this.scrollBarAtLeft.set(true);
+            this.scrollBarAtRight.set(false);
+            this.hasScrollbar.set(false);
+            return;
+        }
+
+        // Use a tolerance of 1px to handle floating point precision issues
+        this.scrollBarAtLeft.set(container.scrollLeft <= 1);
+        this.scrollBarAtRight.set(container.scrollWidth - container.scrollLeft - container.clientWidth <= 1);
+        this.hasScrollbar.set(container.scrollWidth > container.clientWidth);
+    }
+
+    /**
+     * Scroll chips container to the left.
+     */
+    protected scrollLeft(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (container) {
+            container.scrollLeft -= container.clientWidth * 0.8;
+        }
+    }
+
+    /**
+     * Scroll chips container to the right.
+     */
+    protected scrollRight(): void {
+        const container = this.chipsContainer()?.nativeElement;
+        if (container) {
+            container.scrollLeft += container.clientWidth * 0.8;
         }
     }
 
@@ -658,7 +770,7 @@ export class ListComponent
             {
                 width: '400px',
                 position: {
-                    top: '64px',
+                    top: '66px',
                     left: '160px',
                 },
                 data: data,
