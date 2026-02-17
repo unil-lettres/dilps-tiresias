@@ -47,23 +47,16 @@ body {
 }
 
 natural-search {
-    align-self: flex-start;
-    margin: 6px 20px 0 20px;
-    font-size: 16px;
+    margin: 0 20px;
 
-    // Hide the ripple completely so we can use overflow:visible without visual glitch
-    .mat-mdc-form-field.mat-ripple .mat-ripple-element {
-        display: none !important;
-    }
-
-    natural-input {
+    natural-input:last-of-type {
         margin-right: 5px !important;
-        overflow: visible !important;
     }
+}
 
-    .mat-mdc-form-field.mat-ripple {
-        overflow: visible !important;
-    }
+natural-search {
+    align-self: flex-start;
+    font-size: 16px;
 }
 
 // Allow newline in tooltips

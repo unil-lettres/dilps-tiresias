@@ -32,7 +32,6 @@ import {
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
     selector: 'app-tags',
@@ -67,7 +66,6 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
     ],
     templateUrl: './tags.component.html',
     styleUrl: './tags.component.scss',
-    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
     public constructor() {

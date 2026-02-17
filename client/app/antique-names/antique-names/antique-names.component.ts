@@ -23,7 +23,6 @@ import {
 import {NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 @Component({
     selector: 'app-antique-names',
@@ -52,7 +51,6 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
     ],
     templateUrl: './antique-names.component.html',
     styleUrl: './antique-names.component.scss',
-    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}],
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
     public constructor() {

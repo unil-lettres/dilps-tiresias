@@ -17,9 +17,4 @@
             }
         }
     }
-
-    .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined {
-        border-radius: var(--mat-form-field-outlined-container-shape, 4px);
-        background: mat.m2-get-color-from-palette($bg, background, 0.9);
-    }
 }
