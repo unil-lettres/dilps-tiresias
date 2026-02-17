@@ -96,6 +96,7 @@ import {CardSkeletonComponent} from './card-skeleton.component';
 import {CardService} from './services/card.service';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -172,6 +173,7 @@ type InitialCardValues = {
     ],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
+    providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}],
 })
 export class CardComponent implements OnInit, OnChanges {
     private readonly route = inject(ActivatedRoute);
