@@ -11,16 +11,12 @@ use InvalidArgumentException;
  * Trait for all objects with a parent.
  *
  * ORM mapping must be defined in using class.
+ * The using class must define:
+ * - private ?self $parent = null;
+ * - private Collection $children;
  */
 trait HasParent
 {
-    private ?self $parent = null;
-
-    /**
-     * @var Collection<int, self>
-     */
-    private Collection $children;
-
     /**
      * Get the parent containing this object.
      *

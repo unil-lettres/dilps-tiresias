@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-24.04
         strategy:
             matrix:
-                php-versions: ['8.4']
+                php-versions: ['8.5']
                 composer-version: ['2.8']
                 mariadb-version: ['11.4']
                 node-version: ['22']
@@ -111,7 +111,7 @@ jobs:
             - name: Upload sources map artifact
               id: upload-artifact
               uses: actions/upload-artifact@v4
-              if: ${{ matrix.php-versions == '8.4' }}
+              if: ${{ matrix.php-versions == '8.5' }}
               with:
                   name: js-sources-map
                   path: ${{ github.workspace }}/htdocs
