@@ -17,7 +17,7 @@ global $container;
 /** @var ImagineInterface $imagine */
 $imagine = $container->get(ImagineInterface::class);
 
-if ($argc > 1) {
+if (isset($argc, $argv) && $argc > 1) {
     parse_str(implode('&', array_slice($argv, 1)), $_GET);
 }
 
