@@ -34,12 +34,10 @@ class AbstractWriter extends TestCase
             ->onlyMethods(['getId', 'getSite', 'getPath'])
             ->getMock();
 
-        $export->expects(self::any())
-            ->method('getId')
+        $export->method('getId')
             ->willReturn(333);
 
-        $export->expects(self::any())
-            ->method('getSite')
+        $export->method('getSite')
             ->willReturn(Site::Dilps);
 
         $export->expects(self::once())

@@ -12,7 +12,7 @@ require_once 'server/cli.php';
 $connection = _em()->getConnection();
 
 // Check for CSV transformation file argument.
-if ($argc < 3) {
+if (!isset($argc, $argv) || $argc < 3) {
     echo "Usage: php bin/oneshot/migrate-dilps-domain.php <path_to_csv_transformation_file> <creator_id>\n";
     exit(1);
 }

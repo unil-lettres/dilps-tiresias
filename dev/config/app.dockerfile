@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-trixie
+FROM php:8.5-fpm-trixie
 
 ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
@@ -30,7 +30,7 @@ RUN apt-get update &&\
 RUN docker-php-ext-configure gd --with-jpeg && \
     apt-get clean && \
     docker-php-ext-install pdo pdo_mysql mysqli gettext zip gd calendar bcmath && \
-    pecl install xdebug-3.4.4 imagick-3.8.0 && \
+    pecl install xdebug-3.5.0 imagick-3.8.1 && \
     docker-php-ext-enable xdebug imagick
 
 # Install specific version of Composer
