@@ -89,7 +89,12 @@ class Pptx implements Writer
         // Create slide
         $slide = $this->presentation->createSlide();
 
-        $this->insertImage($slide, $card);
+        if ($card->getMime() === 'image/svg+xml') {
+            $this->insertSvgWarning($slide, $card);
+        } else {
+            $this->insertImage($slide, $card);
+        }
+
         $this->insertLegend($slide, $card);
     }
 
@@ -128,6 +133,47 @@ class Pptx implements Writer
             $shape->setOffsetX((int) (($availableWidth - $shape->getWidth()) / 2 + self::MARGIN));
             $shape->setOffsetY(self::MARGIN);
         }
+    }
+
+    private function insertSvgWarning(Slide $slide, Card $card): void
+    {
+        // Create a text box in the center of the slide
+        $shape = $slide->createRichTextShape();
+        $shape->setHeight(200);
+        $shape->setWidth(600);
+
+        // Center the text box on the slide
+        $availableWidth = $slide->getParent()->getLayout()->getCX(DocumentLayout::UNIT_PIXEL);
+        $availableHeight = $slide->getParent()->getLayout()->getCY(DocumentLayout::UNIT_PIXEL) - self::LEGEND_HEIGHT;
+
+        $shape->setOffsetX((int) (($availableWidth - 600) / 2));
+        $shape->setOffsetY((int) (($availableHeight - 200) / 2));
+
+        $shape->getActiveParagraph()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $shape->getActiveParagraph()->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+
+        // Add warning text
+        $textRun = $shape->createTextRun('Image SVG');
+        $font = $textRun->getFont();
+        $font->setSize(24);
+        $font->setBold(true);
+        $font->setColor(new Color($this->textColor));
+
+        $shape->createBreak();
+        $shape->createBreak();
+
+        $textRun2 = $shape->createTextRun("Ce format n'est pas supporté dans les exports PowerPoint");
+        $font2 = $textRun2->getFont();
+        $font2->setSize(16);
+        $font2->setColor(new Color($this->textColor));
+
+        $shape->createBreak();
+        $shape->createBreak();
+
+        $textRun3 = $shape->createTextRun('Fiche ID ' . $card->getId());
+        $font3 = $textRun3->getFont();
+        $font3->setSize(12);
+        $font3->setColor(new Color($this->textColor));
     }
 
     private function insertLegend(Slide $slide, Card $card): void
