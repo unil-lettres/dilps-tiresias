@@ -550,7 +550,8 @@ export class ListComponent
 
         this.dialog
             .open(MassEditComponent, {
-                maxWidth: '500px',
+                minWidth: '400px',
+                maxWidth: 'min(600px, 90vw)',
                 height: '75vh',
                 minHeight: '300px',
                 data: {changeable, unchangeable},

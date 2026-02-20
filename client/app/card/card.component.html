@@ -554,9 +554,9 @@
                         />
                     }
                     @if (!isDilps) {
-                        <div class="nat-horizontal double-fields nat-gap-10">
+                        <div class="nat-horizontal nat-gap-10">
                             @if (edit || !!model.from) {
-                                <mat-form-field class="from-to-fields">
+                                <mat-form-field>
                                     <mat-label>A partir de</mat-label>
                                     <input
                                         matInput
@@ -568,7 +568,7 @@
                                 </mat-form-field>
                             }
                             @if (edit || !!model.to) {
-                                <mat-form-field class="from-to-fields">
+                                <mat-form-field>
                                     <mat-label>Jusqu'à</mat-label>
                                     <input matInput type="number" step="1" [readonly]="!edit" [(ngModel)]="model.to" />
                                 </mat-form-field>
