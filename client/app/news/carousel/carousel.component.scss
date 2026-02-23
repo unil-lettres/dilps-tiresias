@@ -1,56 +1,93 @@
-swiper-container {
-    width: 800px;
-    height: 450px;
-}
-
-swiper-slide {
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    background: #fff;
-    font-size: 18px;
-    text-align: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 :host {
     display: flex;
     flex-direction: column;
 }
 
-.carousel-news {
+.carousel-container {
+    position: relative;
+    width: 800px;
+    height: 450px;
+    overflow: hidden;
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 500ms ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    display: flex;
+    position: relative;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
-    text-align: center;
+    color: inherit;
+    text-decoration: none;
 }
 
 .carousel-label {
     position: absolute;
-    bottom: 20px;
+    bottom: 30px;
     left: 20px;
     background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     max-width: calc(100% - 80px);
     color: white;
     text-align: left;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+
+    &.carousel-nav-prev {
+        left: 10px;
+    }
+
+    &.carousel-nav-next {
+        right: 10px;
+    }
+}
+
+.carousel-indicators {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    gap: 8px;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.carousel-indicator {
+    transition: background 0.3s ease;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    width: 12px;
+    height: 12px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    &.active {
+        background: white;
+    }
+
+    &:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
 }

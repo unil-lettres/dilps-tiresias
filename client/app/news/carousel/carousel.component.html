@@ -1,21 +1,57 @@
 @if (newses.length) {
-    <swiper-container
-        direction="horizontal"
-        autoplay="true"
-        speed="1000"
-        a11y-enabled="true"
-        slidesPerView="1"
-        navigation="true"
-    >
-        @for (news of newses; track news) {
-            <swiper-slide>
-                <a class="carousel-news" [attr.href]="news.url" [style.backgroundImage]="`url(${news.imageUrl})`">
+    <div class="carousel-container">
+        <div class="carousel-slides" [style.transform]="`translateX(-${currentIndex() * 100}%)`">
+            @for (news of newses; track news) {
+                <a
+                    class="carousel-slide"
+                    target="_blank"
+                    [attr.href]="news.url"
+                    [style.backgroundImage]="`url(${news.imageUrl})`"
+                    [attr.aria-hidden]="currentIndex() !== $index"
+                    [attr.tabindex]="currentIndex() === $index ? 0 : -1"
+                >
                     <div class="carousel-label">
                         <div class="name mat-headline-6">{{ news.name }}</div>
                         <div class="description mat-subtitle-2">{{ news.description }}</div>
                     </div>
                 </a>
-            </swiper-slide>
+            }
+        </div>
+
+        @if (newses.length > 1) {
+            <button
+                matIconButton
+                color="primary"
+                class="carousel-nav carousel-nav-prev"
+                type="button"
+                aria-label="Actualité précédente"
+                (click)="previous()"
+            >
+                <mat-icon naturalIcon="navigate_before" />
+            </button>
+            <button
+                matIconButton
+                color="primary"
+                class="carousel-nav carousel-nav-next"
+                type="button"
+                aria-label="Actualité suivante"
+                (click)="next()"
+            >
+                <mat-icon naturalIcon="navigate_next" />
+            </button>
+
+            <div class="carousel-indicators">
+                @for (news of newses; track news) {
+                    <button
+                        class="carousel-indicator"
+                        type="button"
+                        [class.active]="currentIndex() === $index"
+                        [attr.aria-label]="`Aller à l'actualité ${$index + 1}`"
+                        [attr.aria-current]="currentIndex() === $index ? 'true' : null"
+                        (click)="goToSlide($index)"
+                    ></button>
+                }
+            </div>
         }
-    </swiper-container>
+    </div>
 }

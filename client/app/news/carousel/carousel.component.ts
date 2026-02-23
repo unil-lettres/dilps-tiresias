@@ -1,25 +1,22 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {NaturalQueryVariablesManager} from '@ecodev/natural';
+import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {NewsesQuery, NewsesQueryVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
-import {register} from 'swiper/element/bundle';
-
-// register Swiper custom elements
-register();
 
 @Component({
     selector: 'app-carousel',
-    imports: [],
+    imports: [MatButtonModule, MatIconModule, NaturalIconDirective],
     templateUrl: './carousel.component.html',
     styleUrl: './carousel.component.scss',
-    // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
-    encapsulation: ViewEncapsulation.None,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
     protected readonly newsService = inject(NewsService);
 
     protected newses: NewsesQuery['newses']['items'][0][] = [];
+    protected readonly currentIndex = signal(0);
+    private autoplayInterval?: ReturnType<typeof setInterval>;
 
     public ngOnInit(): void {
         const qvm = new NaturalQueryVariablesManager<NewsesQueryVariables>();
@@ -27,6 +24,45 @@ export class CarouselComponent implements OnInit {
 
         this.newsService.getAll(qvm).subscribe(result => {
             this.newses = result.items;
+            if (this.newses.length > 0) {
+                this.startAutoplay();
+            }
         });
+    }
+
+    public ngOnDestroy(): void {
+        this.stopAutoplay();
+    }
+
+    protected next(): void {
+        this.currentIndex.update(index => (index + 1) % this.newses.length);
+        this.resetAutoplay();
+    }
+
+    protected previous(): void {
+        this.currentIndex.update(index => (index - 1 + this.newses.length) % this.newses.length);
+        this.resetAutoplay();
+    }
+
+    protected goToSlide(index: number): void {
+        this.currentIndex.set(index);
+        this.resetAutoplay();
+    }
+
+    private resetAutoplay(): void {
+        this.stopAutoplay();
+        this.startAutoplay();
+    }
+
+    private startAutoplay(): void {
+        this.autoplayInterval = setInterval(() => {
+            this.next();
+        }, 5000);
+    }
+
+    private stopAutoplay(): void {
+        if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+        }
     }
 }
