@@ -8,6 +8,7 @@ export type ConfirmData = {
     confirmText: string;
     cancelText: string;
     confirmButtonColor?: 'primary' | 'accent' | 'warn';
+    confirmButtonType?: 'elevated' | 'outlined' | 'filled';
 };
 
 @Component({

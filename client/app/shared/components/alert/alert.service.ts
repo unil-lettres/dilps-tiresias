@@ -34,6 +34,7 @@ export class AlertService {
         confirmText: string,
         cancelText = 'Annuler',
         confirmButtonColor?: 'primary' | 'accent' | 'warn',
+        confirmButtonType?: 'elevated' | 'outlined' | 'filled',
     ): Observable<any> {
         const dialog = this.dialog.open<ConfirmComponent, ConfirmData>(ConfirmComponent, {
             data: {
@@ -42,6 +43,7 @@ export class AlertService {
                 confirmText: confirmText,
                 cancelText: cancelText,
                 confirmButtonColor: confirmButtonColor,
+                confirmButtonType: confirmButtonType,
             },
         });
 
