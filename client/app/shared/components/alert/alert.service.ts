@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
-import {ConfirmComponent} from './confirm.component';
+import {ConfirmComponent, ConfirmData} from './confirm.component';
 
 @Injectable({
     providedIn: 'root',
@@ -28,13 +28,20 @@ export class AlertService {
         });
     }
 
-    public confirm(title: string, message: string, confirmText: string, cancelText = 'Annuler'): Observable<any> {
-        const dialog = this.dialog.open(ConfirmComponent, {
+    public confirm(
+        title: string,
+        message: string,
+        confirmText: string,
+        cancelText = 'Annuler',
+        confirmButtonColor?: 'primary' | 'accent' | 'warn',
+    ): Observable<any> {
+        const dialog = this.dialog.open<ConfirmComponent, ConfirmData>(ConfirmComponent, {
             data: {
                 title: title,
                 message: message,
                 confirmText: confirmText,
                 cancelText: cancelText,
+                confirmButtonColor: confirmButtonColor,
             },
         });
 
