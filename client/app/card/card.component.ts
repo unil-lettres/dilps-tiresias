@@ -816,7 +816,14 @@ export class CardComponent implements OnInit, OnChanges {
 
     protected confirmDelete(): void {
         this.alertService
-            .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+            .confirm(
+                'Suppression',
+                'Voulez-vous supprimer définitivement cette fiche ?',
+                'Supprimer définitivement',
+                undefined,
+                'warn',
+                'filled',
+            )
             .subscribe(confirmed => {
                 this.assertFetchedCard(this.fetchedModel);
 

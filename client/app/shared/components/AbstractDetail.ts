@@ -98,7 +98,14 @@ export class AbstractDetailDirective<
 
     public delete(): void {
         this.alertService
-            .confirm('Suppression', 'Voulez-vous supprimer définitivement cet élément ?', 'Supprimer définitivement')
+            .confirm(
+                'Suppression',
+                'Voulez-vous supprimer définitivement cet élément ?',
+                'Supprimer définitivement',
+                undefined,
+                'warn',
+                'filled',
+            )
             .subscribe(confirmed => {
                 if (!confirmed || !this.isUpdatePage()) {
                     return;

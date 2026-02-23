@@ -43,6 +43,7 @@ import {CollectionService} from '../collections/services/collection.service';
 import {FakeCollection} from '../collections/services/fake-collection.resolver';
 import {DomainService} from '../domains/services/domain.service';
 import {NumberSelectorComponent} from '../quizz/shared/number-selector/number-selector.component';
+import {AlertService} from '../shared/components/alert/alert.service';
 import {
     CollectionSelectorComponent,
     CollectionSelectorData,
@@ -152,6 +153,7 @@ export class ListComponent
     private readonly changeService = inject(ChangeService);
     private readonly domainService = inject(DomainService);
     private readonly progressService = inject(ProgressService);
+    private readonly alert = inject(AlertService);
 
     protected readonly site = inject(SITE);
 
@@ -492,22 +494,25 @@ export class ListComponent
         }
 
         this.collectionService.unlink(this.collection, selection).subscribe(() => {
-            this.alertService.info('Les images ont été retirées');
+            this.alert.info('Les images ont été retirées');
             this.reset();
         });
     }
 
     protected delete(selection: CardsQuery['cards']['items'][0][]): void {
-        this.alertService
+        this.alert
             .confirm(
                 'Suppression',
-                'Voulez-vous supprimer définitivement cet/ces élément(s) ?',
+                'Voulez-vous supprimer définitivement cette/ces fiche(s) ?',
                 'Supprimer définitivement',
+                undefined,
+                'warn',
+                'filled',
             )
             .subscribe(confirmed => {
                 if (confirmed) {
                     this.service.delete(selection, false).subscribe(() => {
-                        this.alertService.info('Supprimé');
+                        this.alert.info('Supprimé');
                         this.reset();
                     });
                 }
@@ -615,7 +620,7 @@ export class ListComponent
                         )
                         .subscribe({
                             complete: () => {
-                                this.alertService.info('Mis à jour');
+                                this.alert.info('Mis à jour');
                                 this.reset();
                             },
                         });

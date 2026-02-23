@@ -132,7 +132,14 @@ export class FilesComponent implements OnInit {
 
     protected delete(tuple: Tuple): void {
         this.alertService
-            .confirm(`Suppression`, `Voulez-vous supprimer définitivement le fichier ?`, `Supprimer définitivement`)
+            .confirm(
+                `Suppression`,
+                `Voulez-vous supprimer définitivement ce fichier ?`,
+                `Supprimer définitivement`,
+                undefined,
+                'warn',
+                'filled',
+            )
             .subscribe(confirmed => {
                 if (confirmed) {
                     this.fileService.delete([tuple.file!]).subscribe(() => this.dataSource.remove(tuple));
