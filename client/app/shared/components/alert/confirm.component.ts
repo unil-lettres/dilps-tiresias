@@ -15,6 +15,7 @@ export type ConfirmData = {
     selector: 'app-confirm',
     imports: [MatDialogModule, MatButton],
     templateUrl: './confirm.component.html',
+    styleUrl: './confirm.component.scss',
 })
 export class ConfirmComponent {
     protected readonly data = inject<ConfirmData>(MAT_DIALOG_DATA);
