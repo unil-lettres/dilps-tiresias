@@ -11,14 +11,11 @@ import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-news',
     imports: [
         MatDialogModule,
-        MatTab,
-        MatTabGroup,
         MatCheckbox,
         FormsModule,
         MatFormField,

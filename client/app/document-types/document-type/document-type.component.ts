@@ -7,20 +7,10 @@ import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialo
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-document-type',
-    imports: [
-        MatDialogModule,
-        MatTab,
-        MatTabGroup,
-        MatFormField,
-        MatLabel,
-        MatInput,
-        FormsModule,
-        DialogFooterComponent,
-    ],
+    imports: [MatDialogModule, MatFormField, MatLabel, MatInput, FormsModule, DialogFooterComponent],
     templateUrl: './document-type.component.html',
 })
 export class DocumentTypeComponent extends AbstractDetailDirective<
