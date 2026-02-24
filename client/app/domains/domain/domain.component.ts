@@ -48,4 +48,12 @@ export class DomainComponent extends AbstractDetailDirective<DomainService, Thes
             ];
         }
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer le domaine « ${this.data.item.name} » ?`;
+    }
+
+    protected override getDeleteMessage(): string {
+        return `<strong>Tous ses enfants</strong> seront également supprimés.<br><br><strong>Cette action est irréversible.</strong>`;
+    }
 }

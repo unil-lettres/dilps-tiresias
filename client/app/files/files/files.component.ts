@@ -133,8 +133,8 @@ export class FilesComponent implements OnInit {
     protected delete(tuple: Tuple): void {
         this.alertService
             .confirm(
-                `Suppression`,
-                `Voulez-vous supprimer définitivement ce fichier ?`,
+                `Supprimer le fichier « ${tuple.file?.name} » ?`,
+                `<strong>Cette action est irréversible.</strong>`,
                 `Supprimer définitivement`,
                 undefined,
                 'warn',

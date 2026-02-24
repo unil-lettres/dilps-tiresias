@@ -99,8 +99,8 @@ export class AbstractDetailDirective<
     public delete(): void {
         this.alertService
             .confirm(
-                'Suppression',
-                'Voulez-vous supprimer définitivement cet élément ?',
+                this.getTitleDeleteMessage(),
+                this.getDeleteMessage(),
                 'Supprimer définitivement',
                 undefined,
                 'warn',
@@ -115,6 +115,14 @@ export class AbstractDetailDirective<
                     this.dialogRef.close(null);
                 });
             });
+    }
+
+    protected getDeleteMessage(): string {
+        return `<strong>Cette action est irréversible.</strong>`;
+    }
+
+    protected getTitleDeleteMessage(): string {
+        return 'Supprimer cet élément ?';
     }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function

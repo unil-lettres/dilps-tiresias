@@ -48,4 +48,8 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
             this.imageData = result;
         });
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer cette actualité ?`;
+    }
 }

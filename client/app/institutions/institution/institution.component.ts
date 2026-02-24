@@ -32,4 +32,8 @@ export class InstitutionComponent extends AbstractDetailDirective<InstitutionSer
     public constructor() {
         super(inject(InstitutionService));
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer l'institution « ${this.data.item.name} » ?`;
+    }
 }

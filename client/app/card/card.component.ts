@@ -817,8 +817,8 @@ export class CardComponent implements OnInit, OnChanges {
     protected confirmDelete(): void {
         this.alertService
             .confirm(
-                'Suppression',
-                'Voulez-vous supprimer définitivement cette fiche ?',
+                'Supprimer cette fiche ?',
+                '<strong>Cette action est irréversible.</strong>',
                 'Supprimer définitivement',
                 undefined,
                 'warn',

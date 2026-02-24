@@ -125,4 +125,8 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected roleDisabled(role: string): boolean {
         return !this.userRolesAvailable.includes(role as UserRole);
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer l'utilisateur « ${this.data.item.login} » ?`;
+    }
 }

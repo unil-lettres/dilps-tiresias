@@ -30,4 +30,8 @@ export class DocumentTypeComponent extends AbstractDetailDirective<
     public constructor() {
         super(inject(DocumentTypeService));
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer le type de document « ${this.data.item.name} » ?`;
+    }
 }

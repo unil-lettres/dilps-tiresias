@@ -502,8 +502,8 @@ export class ListComponent
     protected delete(selection: CardsQuery['cards']['items'][0][]): void {
         this.alert
             .confirm(
-                'Suppression',
-                'Voulez-vous supprimer définitivement cette/ces fiche(s) ?',
+                'Supprimer les fiches sélectionnées ?',
+                `Vous allez supprimer <strong>${selection.length} fiche(s)</strong>.<br><br><strong>Cette action est irréversible.</strong>`,
                 'Supprimer définitivement',
                 undefined,
                 'warn',

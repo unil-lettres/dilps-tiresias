@@ -48,4 +48,12 @@ export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusD
             ];
         }
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer le mot-clé « ${this.data.item.name} » ?`;
+    }
+
+    protected override getDeleteMessage(): string {
+        return `<strong>Tous ses enfants</strong> seront également supprimés.<br><br><strong>Cette action est irréversible.</strong>`;
+    }
 }

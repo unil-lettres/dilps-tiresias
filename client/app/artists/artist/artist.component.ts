@@ -30,4 +30,8 @@ export class ArtistComponent extends AbstractDetailDirective<ArtistService, Thes
     public constructor() {
         super(inject(ArtistService));
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer l'artiste « ${this.data.item.name} » ?`;
+    }
 }

@@ -27,4 +27,8 @@ export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameSer
     public constructor() {
         super(inject(AntiqueNameService));
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer le nom antique « ${this.data.item.name} » ?`;
+    }
 }

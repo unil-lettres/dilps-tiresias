@@ -53,4 +53,12 @@ export class PeriodComponent extends AbstractDetailDirective<PeriodService, Thes
             ];
         }
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer la période « ${this.data.item.name} » ?`;
+    }
+
+    protected override getDeleteMessage(): string {
+        return `<strong>Tous ses enfants</strong> seront également supprimés.<br><br><strong>Cette action est irréversible.</strong>`;
+    }
 }

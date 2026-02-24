@@ -146,4 +146,12 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     protected override postUpdate(model: UpdateCollection['updateCollection']): void {
         this.institution = model.institution;
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer la collection « ${this.data.item.name} » pour tout le monde ?`;
+    }
+
+    protected override getDeleteMessage(): string {
+        return `Cette collection sera supprimée pour <strong>tous les utilisateurs</strong> et ne sera plus accessible.<br><br><strong>Cette action est irréversible.</strong><br><br>Les fiches qu'elle contient ne seront pas supprimées.`;
+    }
 }

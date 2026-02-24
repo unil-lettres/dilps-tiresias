@@ -48,4 +48,12 @@ export class MaterialComponent extends AbstractDetailDirective<MaterialService, 
             ];
         }
     }
+
+    protected override getTitleDeleteMessage(): string {
+        return `Supprimer le matériau « ${this.data.item.name} » ?`;
+    }
+
+    protected override getDeleteMessage(): string {
+        return `<strong>Tous ses enfants</strong> seront également supprimés.<br><br><strong>Cette action est irréversible.</strong>`;
+    }
 }
