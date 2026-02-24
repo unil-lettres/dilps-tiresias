@@ -1,36 +1,38 @@
 <div class="nat-horizontal nat-align">
     <app-stamp class="nat-expand" [item]="item" />
 
-    <button mat-button mat-dialog-close>Annuler</button>
+    <button mat-button mat-dialog-close>{{ readOnly() ? 'Fermer' : 'Annuler' }}</button>
 
-    @if (canDelete() && item.id && item.permissions?.delete) {
-        <button color="warn" mat-raised-button (click)="delete.emit(item)">
-            <mat-icon naturalIcon="delete_forever" />
-            Supprimer
-        </button>
-    }
+    @if (!readOnly()) {
+        @if (item.id && item.permissions?.delete) {
+            <button color="warn" mat-raised-button (click)="delete.emit(item)">
+                <mat-icon naturalIcon="delete_forever" />
+                Supprimer
+            </button>
+        }
 
-    @if (item.id && item.permissions?.update) {
-        <button
-            color="primary"
-            mat-raised-button
-            [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
-            (click)="update.emit(item)"
-        >
-            <mat-icon naturalIcon="save" />
-            Enregistrer
-        </button>
-    }
+        @if (item.id && item.permissions?.update) {
+            <button
+                color="primary"
+                mat-raised-button
+                [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
+                (click)="update.emit(item)"
+            >
+                <mat-icon naturalIcon="save" />
+                Enregistrer
+            </button>
+        }
 
-    @if (!item.id && canCreate()) {
-        <button
-            color="primary"
-            mat-raised-button
-            [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
-            (click)="create.emit(item)"
-        >
-            <mat-icon naturalIcon="add" />
-            Ajouter
-        </button>
+        @if (!item.id && canCreate()) {
+            <button
+                color="primary"
+                mat-raised-button
+                [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
+                (click)="create.emit(item)"
+            >
+                <mat-icon naturalIcon="add" />
+                Ajouter
+            </button>
+        }
     }
 </div>

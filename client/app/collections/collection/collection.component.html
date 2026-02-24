@@ -87,7 +87,7 @@
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.collection?.create"
-        [canDelete]="true"
+        [readOnly]="false"
         [item]="data.item"
         (create)="create()"
         (delete)="delete()"

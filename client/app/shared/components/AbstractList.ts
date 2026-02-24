@@ -41,13 +41,14 @@ export class AbstractList<
     public edit(item: ExtractTallOne<TService>): void {
         this.dialog.open(this.component, {
             width: '800px',
-            data: {item: {canDelete: true, ...item}},
+            data: {item: {readOnly: false, ...item}},
         });
     }
 
     public add(): void {
         this.dialog.open(this.component, {
             width: '800px',
+            data: {item: {readOnly: false}},
         });
     }
 }

@@ -1,4 +1,6 @@
-<h2 mat-dialog-title>{{ isUpdatePage() ? "Modifier l'artiste" : 'Créer un artiste' }}</h2>
+<h2 mat-dialog-title>
+    {{ data.item.readOnly ? "Détails de l'artiste" : isUpdatePage() ? "Modifier l'artiste" : 'Créer un artiste' }}
+</h2>
 
 <mat-dialog-content>
     <div class="nat-padding-vertical nat-gap-10 nat-vertical">
@@ -10,7 +12,7 @@
                 fieldName="name"
                 [appUnique]="data.item"
                 [service]="service"
-                [readonly]="isUpdatePage() && !data.item.permissions.update"
+                [readonly]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
                 [(ngModel)]="data.item.name"
             />
             @if (name.invalid && (name?.dirty || name?.touched)) {
@@ -24,7 +26,7 @@
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.artist?.create"
-        [canDelete]="data.item.canDelete"
+        [readOnly]="data.item.readOnly"
         [disableCreateAndUpdate]="!!name.invalid"
         [item]="data.item"
         (create)="create()"

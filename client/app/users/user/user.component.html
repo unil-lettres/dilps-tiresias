@@ -151,7 +151,7 @@
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.user?.create"
-        [canDelete]="true"
+        [readOnly]="false"
         [formCtrl]="passwordConfirmationCtrl"
         [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"
         [item]="data.item"
