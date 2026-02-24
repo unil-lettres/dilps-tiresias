@@ -1,6 +1,10 @@
-<h2 mat-dialog-title>
-    {{ data.item.readOnly ? 'Détails du mot-clé' : isUpdatePage() ? 'Modifier le mot-clé' : 'Créer un mot-clé' }}
-</h2>
+@if (data.item.readOnly) {
+    <h2 mat-dialog-title>Détails du mot-clé</h2>
+} @else if (isUpdatePage()) {
+    <h2 mat-dialog-title>Modifier le mot-clé</h2>
+} @else {
+    <h2 mat-dialog-title>Créer un mot-clé</h2>
+}
 
 <mat-dialog-content>
     <div class="nat-padding-vertical nat-gap-10 nat-vertical">

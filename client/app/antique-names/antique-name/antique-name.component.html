@@ -1,12 +1,10 @@
-<h2 mat-dialog-title>
-    {{
-        data.item.readOnly
-            ? 'Détails du nom antique'
-            : isUpdatePage()
-              ? 'Modifier le nom antique'
-              : 'Créer un nom antique'
-    }}
-</h2>
+@if (data.item.readOnly) {
+    <h2 mat-dialog-title>Détails du nom antique</h2>
+} @else if (isUpdatePage()) {
+    <h2 mat-dialog-title>Modifier le nom antique</h2>
+} @else {
+    <h2 mat-dialog-title>Créer un nom antique</h2>
+}
 
 <mat-dialog-content>
     <div class="nat-padding-vertical nat-gap-10 nat-vertical">
