@@ -921,10 +921,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@ecodev/angular-natural-gallery@^24.0.0":
-  version "24.0.1"
-  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-24.0.1.tgz#ed4afa5cebd2a9c0765a05046bd61b396c976137"
-  integrity sha512-1+XSzoMdosv8puJL+FcVnR+f2qodXSBs7pjYh3eFDcAPExVVnD96gFkjS+7DLCZeHMuXmG+vSmGwam2avboVGQ==
+"@ecodev/angular-natural-gallery@^25.0.0":
+  version "25.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/angular-natural-gallery/-/angular-natural-gallery-25.0.0.tgz#89e9e2a97be3fc822361ef0be2d9517bccdc440a"
+  integrity sha512-kC1+QlG2dfYBt6+8ppMiKWntPKbFCl2m5bonXsM17cY9jJ+Skycps1El1b72V68hJP6wXQlgkISZim2mqH4k7Q==
   dependencies:
     "@ecodev/natural-gallery-js" "^11.1.1"
     tslib "^2.8.1"
@@ -939,10 +939,10 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.5.tgz#18d426156171aa9e27f571c238af9712ab3fb495"
   integrity sha512-PcMT248B/XVOTdYUcpPhCdL2BbxwoxZghATnPSew4TMVMlLgk65bfMi2uY05Ywb+hPdbjwIJWZ7zepFlr/vDKw==
 
-"@ecodev/natural@^65.0.5":
-  version "65.0.8"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-65.0.8.tgz#88e545f3ae5cc43417f2d9f09c28707406ea8c84"
-  integrity sha512-Yrghc/2Yrv2PNQSa7xFd7YaxTC6t+0Vt9sK8kPSdHfz+dsnUfTF9wbygOJmaHOcT1cabudTzMDKctV9dlGsuDQ==
+"@ecodev/natural@^69.0.0":
+  version "69.0.0"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-69.0.0.tgz#27e5345dca7cfbbb97f5335decef8e6e8071e7dd"
+  integrity sha512-I3DeYCTtxkqSl+V8CiMOZMDGSWGE/NLPr1vaOeM90q38CV5ffcRa5T9pYbbOgaEKNyydeEQaeHe6jvnz+DcT2A==
   dependencies:
     extract-files "^13.0.0"
     tslib "^2.8.1"
