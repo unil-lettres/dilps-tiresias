@@ -1,5 +1,5 @@
 @if (!disabled || dataSource.data?.items.length > 0) {
-    <div [ngClass]="{'margin-bottom-hint': disabled}">
+    <div [class.margin-bottom-hint]="disabled">
         <div class="mat-headline-6">Fichiers joints</div>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">

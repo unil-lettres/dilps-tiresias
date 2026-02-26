@@ -25,13 +25,12 @@ import {MatIcon} from '@angular/material/icon';
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
-import {AsyncPipe, NgClass} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
     imports: [
-        NgClass,
         AsyncPipe,
         MatFormField,
         MatLabel,

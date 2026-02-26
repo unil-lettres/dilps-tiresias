@@ -27,7 +27,7 @@
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
 
         @if (showToolbar()) {
-            <mat-toolbar class="nat-horizontal nat-align nat-distribute borderRight" [ngClass]="edit ? 'edition' : ''">
+            <mat-toolbar class="nat-horizontal nat-align nat-distribute borderRight" [class.edition]="edit">
                 @if (showLogo()) {
                     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                 }
@@ -140,7 +140,7 @@
             </div>
         }
 
-        <div class="left-pane" [ngClass]="{containerWithToolbar: showToolbar(), borderRight: showImage()}">
+        <div class="left-pane" [class.containerWithToolbar]="showToolbar()" [class.borderRight]="showImage()">
             <div class="scroll nat-expand ng-scroll-max-width">
                 <div class="padding-scrollbar scrolled nat-vertical">
                     @if (user?.role === UserRole.administrator) {
@@ -197,14 +197,14 @@
                                 <mat-error>Cette référence est déjà attribuée à une fiche</mat-error>
                             }
                             @if (edit && model.code?.length > 23) {
-                                <mat-hint align="end" [ngClass]="{strong: model.code?.length >= 30}">
+                                <mat-hint align="end" [class.strong]="model.code?.length >= 30">
                                     {{ model.code!.length }} / 30
                                 </mat-hint>
                             }
                         </mat-form-field>
                     }
                     @if (edit || !!model.name) {
-                        <div tabindex="-1" [ngClass]="{filled: !!model.name, 'rich-text': true}">
+                        <div tabindex="-1" [class]="{filled: !!model.name, 'rich-text': true}">
                             <div class="label">Titre</div>
                             @if (edit || !!model.name) {
                                 <quill-editor
@@ -222,7 +222,7 @@
                                 />
                             }
                             @if (edit && (model.name | stripTags)?.length > 187) {
-                                <mat-hint [ngClass]="{strong: (model.name | stripTags)?.length >= 191}">
+                                <mat-hint [class.strong]="(model.name | stripTags)?.length >= 191">
                                     {{ (model.name | stripTags).length }} / 191
                                 </mat-hint>
                             }
@@ -242,7 +242,7 @@
                         />
                     }
                     @if (edit || (!!model.expandedName && model.expandedName !== model.name)) {
-                        <div tabindex="-1" [ngClass]="{filled: !!model.expandedName, 'rich-text': true}">
+                        <div tabindex="-1" [class]="{filled: !!model.expandedName, 'rich-text': true}">
                             <div class="label">{{ isDilps ? 'Titre étendu' : 'Description' }}</div>
                             @if (edit || !!model.expandedName) {
                                 <quill-editor
@@ -262,7 +262,7 @@
                         </div>
                     }
                     @if (!isDilps && (edit || !!model.corpus)) {
-                        <div tabindex="-1" [ngClass]="{filled: !!model.corpus, 'rich-text': true}">
+                        <div tabindex="-1" [class]="{filled: !!model.corpus, 'rich-text': true}">
                             <div class="label">Corpus</div>
                             @if (edit || !!model.corpus) {
                                 <quill-editor
@@ -304,7 +304,7 @@
                                 [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.techniqueAuthor?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.techniqueAuthor?.length >= 255">
                                     {{ model.techniqueAuthor!.length }} / 255
                                 </mat-hint>
                             }
@@ -348,7 +348,7 @@
                                 [(ngModel)]="model.dating"
                             ></textarea>
                             @if (edit && model.dating?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.dating?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.dating?.length >= 255">
                                     {{ model.dating!.length }} / 255
                                 </mat-hint>
                             }
@@ -388,7 +388,7 @@
                                 [(ngModel)]="model.material"
                             ></textarea>
                             @if (edit && model.material?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.material?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.material?.length >= 255">
                                     {{ model.material!.length }} / 255
                                 </mat-hint>
                             }
@@ -413,7 +413,7 @@
                                 [(ngModel)]="model.format"
                             ></textarea>
                             @if (edit && model.format?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.format?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.format?.length >= 255">
                                     {{ model.format!.length }} / 255
                                 </mat-hint>
                             }
@@ -437,7 +437,7 @@
                             <mat-label>Lieu de production</mat-label>
                             <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.productionPlace" />
                             @if (edit && model.productionPlace?.length > 47) {
-                                <mat-hint align="end" [ngClass]="{strong: model.productionPlace?.length >= 60}">
+                                <mat-hint align="end" [class.strong]="model.productionPlace?.length >= 60">
                                     {{ model.productionPlace!.length }} / 60
                                 </mat-hint>
                             }
@@ -639,7 +639,7 @@
                                 [(ngModel)]="model.documentSize"
                             ></textarea>
                             @if (edit && model.documentSize?.length > 150) {
-                                <mat-hint align="end" [ngClass]="{strong: model.documentSize?.length >= 191}">
+                                <mat-hint align="end" [class.strong]="model.documentSize?.length >= 191">
                                     {{ model.documentSize!.length }} / 191
                                 </mat-hint>
                             }
@@ -657,7 +657,7 @@
                                 [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.techniqueAuthor?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.techniqueAuthor?.length >= 255">
                                     {{ model.techniqueAuthor!.length }} / 255
                                 </mat-hint>
                             }
@@ -668,7 +668,7 @@
                             <mat-label>Date ou année</mat-label>
                             <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.techniqueDate" />
                             @if (edit && model.techniqueDate?.length > 47) {
-                                <mat-hint align="end" [ngClass]="{strong: model.techniqueDate?.length >= 60}">
+                                <mat-hint align="end" [class.strong]="model.techniqueDate?.length >= 60">
                                     {{ model.techniqueDate!.length }} / 60
                                 </mat-hint>
                             }
@@ -690,7 +690,7 @@
                         <div class="mat-headline-6">Référence de l'image</div>
                     }
                     @if (edit || !!model.literature) {
-                        <div tabindex="-1" [ngClass]="{filled: !!model.literature, 'rich-text': true}">
+                        <div tabindex="-1" [class]="{filled: !!model.literature, 'rich-text': true}">
                             <div class="label">Source</div>
                             @if (edit || !!model.literature) {
                                 <quill-editor
@@ -831,7 +831,7 @@
                             <mat-label>ISBN / ISSN</mat-label>
                             <input matInput maxlength="30" [readonly]="!edit" [(ngModel)]="model.isbn" />
                             @if (edit && model.isbn?.length > 23) {
-                                <mat-hint align="end" [ngClass]="{strong: model.isbn?.length >= 30}">
+                                <mat-hint align="end" [class.strong]="model.isbn?.length >= 30">
                                     {{ model.isbn!.length }} / 30
                                 </mat-hint>
                             }
@@ -849,7 +849,7 @@
                                 [(ngModel)]="model.rights"
                             ></textarea>
                             @if (edit && model.rights?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.rights?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.rights?.length >= 255">
                                     {{ model.rights!.length }} / 255
                                 </mat-hint>
                             }
@@ -896,14 +896,14 @@
                                 <mat-error>URL invalide</mat-error>
                             }
                             @if (edit && model.url?.length > 200) {
-                                <mat-hint align="end" [ngClass]="{strong: model.url?.length >= 255}">
+                                <mat-hint align="end" [class.strong]="model.url?.length >= 255">
                                     {{ model.url!.length }} / 255
                                 </mat-hint>
                             }
                         </mat-form-field>
                     }
                     @if (!isDilps && edit) {
-                        <div tabindex="-1" [ngClass]="{filled: !!model.urlDescription, 'rich-text': true}">
+                        <div tabindex="-1" [class]="{filled: !!model.urlDescription, 'rich-text': true}">
                             <div class="label">Description</div>
                             @if (edit || !!model.urlDescription) {
                                 <quill-editor
@@ -949,10 +949,10 @@
                                 [main]="fetchedModel"
                                 [service]="cardService"
                                 [displayWith]="displayWith"
-                                [ngClass]="{'margin-bottom-hint': !edit}"
+                                [class.margin-bottom-hint]="!edit"
                             >
                                 <ng-template let-item="item">
-                                    <div [ngClass]="{'related-card-template': true}">
+                                    <div [class.related-card-template]="true">
                                         <natural-table-button
                                             icon="image"
                                             [label]="displayWith(item)"

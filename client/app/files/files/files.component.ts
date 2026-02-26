@@ -16,7 +16,7 @@ import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directi
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCell, MatCellDef, MatColumnDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
-import {NgClass} from '@angular/common';
+
 import {UPLOAD_CONFIG} from '../../shared/config/upload.config';
 import {handleFileSizeErrors} from '../../shared/utils/file-selection.utils';
 
@@ -28,7 +28,6 @@ type Tuple = {
 @Component({
     selector: 'app-files',
     imports: [
-        NgClass,
         MatTable,
         MatColumnDef,
         MatCellDef,

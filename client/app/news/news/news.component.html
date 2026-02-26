@@ -37,7 +37,7 @@
                         <mat-error>URL invalide</mat-error>
                     }
                     @if (data.item.url?.length > 200) {
-                        <mat-hint align="end" [ngClass]="{strong: data.item.url?.length >= 255}">
+                        <mat-hint align="end" [class.strong]="data.item.url?.length >= 255">
                             {{ data.item.url?.length }} / 255
                         </mat-hint>
                     }

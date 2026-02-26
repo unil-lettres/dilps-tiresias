@@ -37,25 +37,25 @@
                     </div>
                 </mat-expansion-panel>
                 @if (card.name) {
-                    <div class="attribute" [ngClass]="{valid: attributes.name}">
+                    <div class="attribute" [class.valid]="attributes.name">
                         <div class="attributeName">Titre</div>
                         <div class="attributeAnswer" [matTooltip]="card.plainName">Voir réponse</div>
                     </div>
                 }
                 @if (card.artists.length) {
-                    <div class="attribute" [ngClass]="{valid: attributes.artists}">
+                    <div class="attribute" [class.valid]="attributes.artists">
                         <div class="attributeName">Artistes</div>
                         <div class="attributeAnswer" [matTooltip]="getArtistsNames(card.artists)">Voir réponse</div>
                     </div>
                 }
                 @if (card.dating) {
-                    <div class="attribute" [ngClass]="{valid: attributes.dating}">
+                    <div class="attribute" [class.valid]="attributes.dating">
                         <div class="attributeName">Datation</div>
                         <div class="attributeAnswer" [matTooltip]="card.dating">Voir réponse</div>
                     </div>
                 }
                 @if (card.institution) {
-                    <div class="attribute" [ngClass]="{valid: attributes.institution}">
+                    <div class="attribute" [class.valid]="attributes.institution">
                         <div class="attributeName">Lieu</div>
                         <div class="attributeAnswer" [matTooltip]="card.institution.name">Voir réponse</div>
                     </div>
