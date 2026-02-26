@@ -1,9 +1,9 @@
-import {assertInInjectionContext, Injectable} from '@angular/core';
+import {DestroyRef, inject, Injectable} from '@angular/core';
 import {
     StatisticQuery,
+    StatisticQueryVariables,
     StatisticsQuery,
     StatisticsQueryVariables,
-    StatisticQueryVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
@@ -27,6 +27,7 @@ export class StatisticService extends AbstractContextualizedService<
     never,
     never
 > {
+    private readonly destroyRef = inject(DestroyRef);
     private readonly page = new Subject<void>();
     private readonly detail = new Subject<void>();
     private readonly search = new Subject<void>();
@@ -45,11 +46,9 @@ export class StatisticService extends AbstractContextualizedService<
      * This method must only be called from an injection context.
      */
     private createSub(subject: Observable<void>, mutation: DocumentNode): void {
-        assertInInjectionContext(this.createSub);
-
         subject
             .pipe(
-                takeUntilDestroyed(),
+                takeUntilDestroyed(this.destroyRef),
                 debounceTime(800),
                 switchMap(() =>
                     this.apollo.mutate<unknown, never>({
