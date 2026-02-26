@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {
     MatCell,
-    MatCellDef,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
@@ -14,6 +13,7 @@ import {
 } from '@angular/material/table';
 import {PercentPipe} from '@angular/common';
 import {HighchartsChartComponent} from 'highcharts-angular';
+import {TypedMatCellDef} from '@ecodev/natural';
 
 type Row = {
     name: string;
@@ -61,7 +61,7 @@ function percent(count: number, total: number): number {
         MatHeaderCellDef,
         MatHeaderRowDef,
         MatColumnDef,
-        MatCellDef,
+        TypedMatCellDef,
         MatRowDef,
         MatHeaderCell,
         MatCell,

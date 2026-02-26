@@ -1,16 +1,16 @@
 @if (collection().hierarchicName !== collection().name) {
     <div class="mat-caption">
-        @if (immedateAncestor !== lastAncestor) {
+        @if (immediateAncestor() !== lastAncestor()) {
             <span>
-                {{ lastAncestor }}
-                @if (!tooltipContent) {
+                {{ lastAncestor() }}
+                @if (!tooltipContent()) {
                     <span> > </span>
                 }
             </span>
         }
-        @if (tooltipContent) {
-            <span [matTooltip]="tooltipContent"> > ... > </span>
+        @if (tooltipContent()) {
+            <span [matTooltip]="tooltipContent()"> > ... > </span>
         }
-        <span>{{ immedateAncestor }}</span>
+        <span>{{ immediateAncestor() }}</span>
     </div>
 }

@@ -6,6 +6,7 @@ import {
     NaturalFileSelectDirective,
     NaturalQueryVariablesManager,
     PaginatedData,
+    TypedMatCellDef,
 } from '@ecodev/natural';
 import {FileService} from '../services/file.service';
 import {map} from 'rxjs/operators';
@@ -15,7 +16,7 @@ import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatCell, MatCellDef, MatColumnDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
+import {MatCell, MatColumnDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
 
 import {UPLOAD_CONFIG} from '../../shared/config/upload.config';
 import {handleFileSizeErrors} from '../../shared/utils/file-selection.utils';
@@ -30,7 +31,7 @@ type Tuple = {
     imports: [
         MatTable,
         MatColumnDef,
-        MatCellDef,
+        TypedMatCellDef,
         MatRowDef,
         MatCell,
         MatRow,

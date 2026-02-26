@@ -10,7 +10,6 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
-    MatCellDef,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
@@ -28,6 +27,7 @@ import {
     NaturalIconDirective,
     NaturalSearchComponent,
     NaturalTableButtonComponent,
+    TypedMatCellDef,
 } from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -46,7 +46,7 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         MatHeaderCellDef,
         MatHeaderRowDef,
         MatColumnDef,
-        MatCellDef,
+        TypedMatCellDef,
         MatRowDef,
         MatHeaderCell,
         MatCell,
