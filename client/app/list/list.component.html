@@ -149,8 +149,7 @@
                 >
                     @if (!showLabels) {
                         <mat-icon naturalIcon="font_download" />
-                    }
-                    @if (showLabels) {
+                    } @else {
                         <mat-icon naturalIcon="font_download_off" />
                     }
                 </button>
@@ -159,8 +158,7 @@
                 <button mat-icon-button matTooltip="Désélectionner tout" (click)="unselectAll()">
                     <mat-icon naturalIcon="deselect" />
                 </button>
-            }
-            @if (!selected.length) {
+            } @else {
                 <button mat-icon-button matTooltip="Sélectionner les images visibles" (click)="selectAll()">
                     <mat-icon svgIcon="select_all_mark" />
                 </button>
