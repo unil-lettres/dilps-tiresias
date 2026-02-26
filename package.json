@@ -50,7 +50,7 @@
         "highcharts": "^12.4.0",
         "highcharts-angular": "^5.1.0",
         "ngx-progressbar": "^14.0.0",
-        "ngx-quill": "^28.0.1",
+        "ngx-quill": "^30.0.1",
         "ngx-scrollbar": "^18.0.0",
         "quill": "^2.0.3",
         "rxjs": "^7.8.2",

@@ -5808,10 +5808,10 @@ ngx-progressbar@^14.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ngx-quill@^28.0.1:
-  version "28.0.2"
-  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-28.0.2.tgz#f0abc6b80292d5d1455e611a2681993460787ccc"
-  integrity sha512-NL7YzZNoT8G5qWZKXHCIMQff2uVoi8cK3VwFM8RCpFXkc8nMp2moIDMJrF5k9e/xTkQkAQtGgfvbCxRc7su7EA==
+ngx-quill@^30.0.1:
+  version "30.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-quill/-/ngx-quill-30.0.1.tgz#60c1af6d29b6e5b3db3ddbcce53bb542827b99af"
+  integrity sha512-erxZ0urRZLHL4+HqU0M9fVgzMNNmzRy4e+le3RIM34oRumGisPbKWdHYYF3tQZqLM2++SdJfYAKHlaXbvij7lg==
   dependencies:
     tslib "^2.3.0"
 
