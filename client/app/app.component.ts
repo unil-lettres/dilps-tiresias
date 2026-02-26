@@ -1,5 +1,5 @@
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Component, effect, HostBinding, inject, OnInit, viewChild} from '@angular/core';
+import {Component, effect, inject, OnInit, viewChild} from '@angular/core';
 import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {Site} from './shared/generated-types';
@@ -104,6 +104,9 @@ class DelayedProgressBar {
     imports: [NgProgressbar, RouterOutlet, BootLoaderComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
+    host: {
+        '[class]': 'theme',
+    },
 })
 export class AppComponent implements OnInit {
     private readonly networkActivityService = inject(NetworkActivityService);
@@ -118,7 +121,7 @@ export class AppComponent implements OnInit {
     /**
      * Bind theme at root-app level
      */
-    @HostBinding('class') protected theme = '';
+    protected theme = '';
 
     /**
      * When first route is loaded, hide the app-bootloader component

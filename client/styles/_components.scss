@@ -13,7 +13,6 @@
 @use '../app/shared/components/historic-icon/historic-icon.theme';
 @use '@angular/material' as mat;
 @use '@ecodev/angular-natural-gallery';
-@use '@ecodev/natural';
 @use 'hint';
 @use 'sass:meta';
 @use 'scroll';
@@ -22,7 +21,6 @@
 
 // Include components themes
 @mixin components-theme($theme) {
-    @include natural.natural($theme);
     @include app.app($theme);
     @include boot-loader.boot-loader($theme);
     @include scroll.scroll($theme);

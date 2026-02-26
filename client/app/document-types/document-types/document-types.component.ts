@@ -10,7 +10,6 @@ import {TableButtonComponent} from '../../shared/components/table-button/table-b
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
-    MatCellDef,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
@@ -20,7 +19,7 @@ import {
     MatRowDef,
     MatTable,
 } from '@angular/material/table';
-import {NaturalFixedButtonComponent, NaturalSearchComponent} from '@ecodev/natural';
+import {NaturalFixedButtonComponent, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 
@@ -34,7 +33,7 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatHeaderCellDef,
         MatHeaderRowDef,
         MatColumnDef,
-        MatCellDef,
+        TypedMatCellDef,
         MatRowDef,
         MatHeaderCell,
         MatCell,

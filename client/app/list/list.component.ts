@@ -335,7 +335,7 @@ export class ListComponent
             this.user = user;
             this.updateShowDownloadCollection();
 
-            if (this.user && this.user.role === UserRole.administrator) {
+            if (this.user?.role === UserRole.administrator) {
                 this.pushAdminConfig();
             }
         });

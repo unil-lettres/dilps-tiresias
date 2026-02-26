@@ -97,7 +97,7 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
             });
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges<this>): void {
         if (changes.card) {
             // Update the query variables to retrieve related cards of the new
             // card.

@@ -1,4 +1,4 @@
-import {assertInInjectionContext, inject, Injectable} from '@angular/core';
+import {DestroyRef, inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -13,15 +13,15 @@ import {
     Logout,
     UpdateUser,
     UpdateUserVariables,
-    UserQuery,
     UserInput,
+    UserQuery,
+    UserQueryVariables,
     UserRole,
     UserRolesAvailablesQuery,
     UserRolesAvailablesQueryVariables,
     UsersQuery,
     UsersQueryVariables,
     UserType,
-    UserQueryVariables,
     ViewerQuery,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -54,6 +54,7 @@ export class UserService extends AbstractContextualizedService<
     DeleteUsers['deleteUsers'],
     never
 > {
+    private readonly destroyRef = inject(DestroyRef);
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly storage = inject(LOCAL_STORAGE);
@@ -144,10 +145,8 @@ export class UserService extends AbstractContextualizedService<
      * Do not call this method outside injection context.
      */
     private keepViewerSyncedAcrossBrowserTabs(): void {
-        assertInInjectionContext(this.keepViewerSyncedAcrossBrowserTabs);
-
         fromEvent<StorageEvent>(window, 'storage')
-            .pipe(takeUntilDestroyed())
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(event => {
                 if (event.key !== this.storageKey) {
                     return;

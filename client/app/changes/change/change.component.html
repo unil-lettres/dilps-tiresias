@@ -55,8 +55,7 @@
                 <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Nouvelle fiche</div>
                 </div>
-            }
-            @if (original) {
+            } @else {
                 <div class="card-original nat-vertical nat-expand">
                     <app-card class="nat-expand" title="Original" [fetchedModel]="original" />
                 </div>
@@ -66,8 +65,7 @@
                 <div class="nat-expand nat-vertical nat-center">
                     <div class="mat-headline-4">Suppression de la fiche</div>
                 </div>
-            }
-            @if (suggestionInput) {
+            } @else {
                 <div class="card-suggestion nat-vertical nat-expand">
                     <app-card
                         class="nat-expand"

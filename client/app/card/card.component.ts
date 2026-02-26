@@ -8,7 +8,7 @@ import {
 } from '@ecodev/natural';
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
-import {NgClass} from '@angular/common';
+
 import {Component, inject, Input, input, model, OnChanges, OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, NgModel} from '@angular/forms';
@@ -69,8 +69,8 @@ import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive'
 import {UniqueValidatorDirective} from '../shared/directives/unique-validator.directive';
 import {UrlValidatorDirective} from '../shared/directives/url-validator.directive';
 import {
-    CardQuery,
     CardInput,
+    CardQuery,
     CardsQuery,
     CardVisibility,
     CollectionVisibility,
@@ -127,7 +127,6 @@ type InitialCardValues = {
 @Component({
     selector: 'app-card',
     imports: [
-        NgClass,
         NaturalFileDropDirective,
         MatToolbar,
         LogoComponent,

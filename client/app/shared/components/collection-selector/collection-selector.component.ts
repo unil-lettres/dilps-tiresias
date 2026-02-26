@@ -101,7 +101,7 @@ export class CollectionSelectorComponent implements OnInit {
             }
         });
 
-        if (this.data.images && this.data.images.length === 1) {
+        if (this.data.images?.length === 1) {
             this.image = this.data.images[0];
         }
     }
@@ -147,7 +147,7 @@ export class CollectionSelectorComponent implements OnInit {
         }
 
         observable.subscribe(() => {
-            if (this.data.images && this.data.images.length === 1 && this.data.images[0].collections) {
+            if (this.data.images?.length === 1 && this.data.images[0].collections) {
                 this.data.images[0] = {
                     ...this.data.images[0],
                     collections: [...this.data.images[0].collections, collection as any],

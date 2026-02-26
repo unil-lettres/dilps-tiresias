@@ -1,13 +1,12 @@
 import {Component, inject} from '@angular/core';
 import {ChangeService} from '../services/change.service';
-import {NaturalAbstractList} from '@ecodev/natural';
+import {NaturalAbstractList, TypedMatCellDef} from '@ecodev/natural';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {RouterLink} from '@angular/router';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
-    MatCellDef,
     MatColumnDef,
     MatHeaderCell,
     MatHeaderCellDef,
@@ -31,7 +30,7 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatHeaderCellDef,
         MatHeaderRowDef,
         MatColumnDef,
-        MatCellDef,
+        TypedMatCellDef,
         MatRowDef,
         MatHeaderCell,
         MatCell,
