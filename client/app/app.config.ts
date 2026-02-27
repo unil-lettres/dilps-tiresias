@@ -8,6 +8,7 @@ import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
 import {provideHttpClient, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {activityInterceptor} from './shared/interceptors/activity.interceptor';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material/tooltip';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
 import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
@@ -41,7 +42,7 @@ export const appConfig: ApplicationConfig = {
             // See https://github.com/angular/components/issues/26580
             provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
             useValue: {
-                formFieldAppearance: 'fill',
+                formFieldAppearance: 'outline',
             } satisfies MatPaginatorDefaultOptions,
         },
         {
@@ -55,6 +56,7 @@ export const appConfig: ApplicationConfig = {
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
+        {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
         provideHttpClient(withInterceptors([activityInterceptor]), withJsonpSupport()),
         provideRouter(
             routes,
