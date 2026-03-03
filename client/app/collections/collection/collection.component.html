@@ -68,13 +68,21 @@
                 }
             </div>
         </mat-tab>
-        @if (isUpdatePage()) {
+        @if (isUpdatePage() && !!user) {
             <mat-tab label="Abonnés">
                 <natural-relations
                     class="nat-margin"
                     placeholder="Ajouter un abonné"
                     [displayWith]="displayFn"
-                    [filter]="{groups: [{conditions: [{collections: {have: {values: [data.item.id]}}}]}]}"
+                    [filter]="{
+                        groups: [
+                            {conditions: [{collections: {have: {values: [data.item.id]}}}]},
+                            {conditions: [{id: {equal: {value: user.id, not: true}}}]},
+                        ],
+                    }"
+                    [autocompleteSelectorFilter]="{
+                        groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
+                    }"
                     [main]="data.item"
                     [service]="userService"
                 />
