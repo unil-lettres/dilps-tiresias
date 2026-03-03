@@ -1,5 +1,5 @@
-import {IEnum, NaturalEnumService, NaturalRelationsComponent} from '@ecodev/natural';
-import {Component, inject, viewChild} from '@angular/core';
+import {IEnum, NaturalEnumService, NaturalRelationsComponent, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {Component, inject, viewChild, signal} from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -24,7 +24,7 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {MatButton} from '@angular/material/button';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
@@ -43,8 +43,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     selector: 'app-profile',
     imports: [
         MatDialogModule,
-        MatTab,
-        MatTabGroup,
+        MatButton,
         MatFormField,
         MatLabel,
         MatError,
@@ -64,11 +63,15 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         UniqueValidatorDirective,
     ],
     templateUrl: './user.component.html',
+    styleUrl: './user.component.scss',
 })
 export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
     protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
+
+    protected readonly currentView = signal<'properties' | 'collections'>('properties');
+    protected readonly collectionsCount = signal<number>(0);
 
     protected readonly collectionsHierarchicConfig = collectionsHierarchicConfig;
     protected roles: IEnum[] = [];
@@ -111,6 +114,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected override postQuery(): void {
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
+            this.loadCollectionsCount();
         }
 
         this.userService.getUserRolesAvailable(this.isUpdatePage() ? this.data.item : null).subscribe(userRoles => {
@@ -124,6 +128,31 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
     protected roleDisabled(role: string): boolean {
         return !this.userRolesAvailable.includes(role as UserRole);
+    }
+
+    protected showCollectionsView(): void {
+        this.currentView.set('collections');
+    }
+
+    protected showPropertiesView(): void {
+        this.currentView.set('properties');
+        if (this.isUpdatePage()) {
+            this.loadCollectionsCount();
+        }
+    }
+
+    private loadCollectionsCount(): void {
+        const qvm = new NaturalQueryVariablesManager();
+        qvm.set('variables', {
+            filter: {
+                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
+            },
+            pagination: {pageSize: 1, pageIndex: 0},
+        });
+
+        this.collectionService.getAll(qvm).subscribe(result => {
+            this.collectionsCount.set(result.length);
+        });
     }
 
     protected override getTitleDeleteMessage(): string {
