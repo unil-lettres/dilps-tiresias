@@ -36,7 +36,7 @@ export class AbstractDetailDirective<
     >,
     Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit {
-    private readonly alertService = inject(AlertService);
+    protected readonly alertService = inject(AlertService);
     public readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
     public readonly userService = inject(UserService);
 

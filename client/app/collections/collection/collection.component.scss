@@ -6,3 +6,17 @@ mat-slide-toggle {
 mat-slider {
     margin-left: 25px;
 }
+
+mat-dialog-content,
+mat-dialog-actions {
+    animation: fadeIn 300ms ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
