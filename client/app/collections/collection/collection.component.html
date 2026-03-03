@@ -26,20 +26,6 @@
                     <input matInput [(ngModel)]="data.item.description" />
                 </mat-form-field>
 
-                @if (data.item.isSource) {
-                    <mat-form-field>
-                        <mat-label>Droits d'utilisation</mat-label>
-                        <input matInput [(ngModel)]="data.item.usageRights" />
-                    </mat-form-field>
-                }
-
-                @if (data.item.isSource) {
-                    <mat-form-field>
-                        <mat-label>Copyrights</mat-label>
-                        <input matInput [(ngModel)]="data.item.copyrights" />
-                    </mat-form-field>
-                }
-
                 <app-thesaurus
                     placeholder="Institution"
                     [model]="institution"
@@ -66,6 +52,20 @@
                         <mat-checkbox [(ngModel)]="data.item.isHistoric">Est historique</mat-checkbox>
                     }
                 </div>
+
+                @if (data.item.isSource) {
+                    <mat-form-field>
+                        <mat-label>Droits d'utilisation</mat-label>
+                        <input matInput [(ngModel)]="data.item.usageRights" />
+                    </mat-form-field>
+                }
+
+                @if (data.item.isSource) {
+                    <mat-form-field>
+                        <mat-label>Copyrights</mat-label>
+                        <input matInput [(ngModel)]="data.item.copyrights" />
+                    </mat-form-field>
+                }
             </div>
         </mat-tab>
         @if (isUpdatePage()) {
