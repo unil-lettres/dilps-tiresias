@@ -9,7 +9,7 @@
         }
     </div>
     <div>
-        <button mat-button mat-dialog-close>{{ readOnly() ? 'Fermer' : 'Annuler' }}</button>
+        <button mat-button mat-dialog-close cdkFocusInitial>{{ readOnly() ? 'Fermer' : 'Annuler' }}</button>
         @if (!readOnly()) {
             @if (item.id && item.permissions?.update) {
                 <button
