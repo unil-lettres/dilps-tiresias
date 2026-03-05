@@ -203,7 +203,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         }
 
         const title = 'Se désabonner de cette collection ?';
-        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Vous ne pourrez pas vous réabonner vous-même.<br><br>Voulez-vous vraiment vous désabonner ?`;
+        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Seul un responsable de la collection pourra vous réabonner.<br><br>Voulez-vous vraiment vous désabonner ?`;
 
         this.alertService.confirm(title, message, 'Me désabonner', undefined, 'warn', 'filled').subscribe(confirmed => {
             if (!confirmed) {

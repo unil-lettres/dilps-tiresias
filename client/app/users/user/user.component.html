@@ -10,13 +10,9 @@
             @if (isUpdatePage()) {
                 <div class="nat-horizontal nat-distribute nat-center">
                     @if (collectionsCount() === 0) {
-                        <span>Vous n'êtes abonné à aucune collection</span>
+                        <span>Abonné à aucune collection</span>
                     } @else {
-                        <span
-                            >Vous êtes abonné à {{ collectionsCount() }} collection{{
-                                collectionsCount() > 1 ? 's' : ''
-                            }}</span
-                        >
+                        <span>Abonné à {{ collectionsCount() }} collection{{ collectionsCount() > 1 ? 's' : '' }}</span>
                     }
                     <button mat-button color="primary" (click)="showCollectionsView()">Gérer les collections</button>
                 </div>
@@ -162,20 +158,32 @@
 }
 
 @if (currentView() === 'collections') {
-    <h2 mat-dialog-title>Gérer les collections de l'utilisateur « {{ data.item.login }} »</h2>
+    <h2 mat-dialog-title>Collections de l'utilisateur « {{ data.item.login }} »</h2>
     <mat-dialog-content>
         <p class="hint">
-            Les collections sont ajoutées ou retirées immédiatement. Aucune sauvegarde supplémentaire n'est nécessaire.
+            Les abonnements d'une collection sont gérés par ses responsables via les détails de la collection.
         </p>
-        <div class="nat-vertical nat-gap-10">
-            <natural-relations
-                placeholder="Ajouter une collection"
-                [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
-                [hierarchicSelectorConfig]="collectionsHierarchicConfig"
-                [main]="$any(data.item)"
-                [service]="collectionService"
-            />
-        </div>
+        @if (collections().length === 0) {
+            <p class="no-collections">Abonné à aucune collection</p>
+        } @else {
+            <mat-list>
+                @for (collection of collections(); track collection.id) {
+                    <mat-list-item>
+                        <span matListItemTitle>{{ collection.hierarchicName || collection.name }}</span>
+                        <button
+                            mat-icon-button
+                            color="warn"
+                            matListItemMeta
+                            matTooltip="Désabonner de la collection"
+                            aria-label="Se désabonner"
+                            (click)="unsubscribeFromCollection(collection)"
+                        >
+                            <mat-icon fontIcon="link_off" />
+                        </button>
+                    </mat-list-item>
+                }
+            </mat-list>
+        }
     </mat-dialog-content>
 
     <mat-dialog-actions>

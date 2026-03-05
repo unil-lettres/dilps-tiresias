@@ -1,4 +1,4 @@
-import {IEnum, NaturalEnumService, NaturalRelationsComponent, NaturalQueryVariablesManager} from '@ecodev/natural';
+import {IEnum, NaturalEnumService, NaturalQueryVariablesManager, NaturalLinkMutationService} from '@ecodev/natural';
 import {Component, inject, viewChild, signal} from '@angular/core';
 import {
     AbstractControl,
@@ -13,8 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
-import {UpdateUser, UserQuery, UserRole, UserType} from '../../shared/generated-types';
-import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
+import {UpdateUser, UserQuery, UserRole, UserType, CollectionsQuery} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -24,7 +23,10 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/m
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatList, MatListItem, MatListItemTitle} from '@angular/material/list';
+import {MatTooltip} from '@angular/material/tooltip';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 
@@ -44,6 +46,12 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     imports: [
         MatDialogModule,
         MatButton,
+        MatIconButton,
+        MatIcon,
+        MatList,
+        MatListItem,
+        MatListItemTitle,
+        MatTooltip,
         MatFormField,
         MatLabel,
         MatError,
@@ -57,7 +65,6 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         MatDatepickerToggle,
         MatSelect,
         MatOption,
-        NaturalRelationsComponent,
         DialogFooterComponent,
         TypePipe,
         UniqueValidatorDirective,
@@ -69,11 +76,12 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
+    private readonly linkService = inject(NaturalLinkMutationService);
 
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
+    protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);
 
-    protected readonly collectionsHierarchicConfig = collectionsHierarchicConfig;
     protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
 
@@ -132,6 +140,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
     protected showCollectionsView(): void {
         this.currentView.set('collections');
+        this.loadCollections();
     }
 
     protected showPropertiesView(): void {
@@ -152,6 +161,36 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
         this.collectionService.getAll(qvm).subscribe(result => {
             this.collectionsCount.set(result.length);
+        });
+    }
+
+    private loadCollections(): void {
+        const qvm = new NaturalQueryVariablesManager();
+        qvm.set('variables', {
+            filter: {
+                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
+            },
+        });
+
+        this.collectionService.getAll(qvm).subscribe(result => {
+            this.collections.set(result.items);
+        });
+    }
+
+    protected unsubscribeFromCollection(collection: CollectionsQuery['collections']['items'][0]): void {
+        const title = 'Désabonner de cette collection ?';
+        const message = `Cette collection <strong>ne sera plus visible</strong> si elle n'est pas publique et <strong>ne pourra plus être modifiée</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+
+        this.alertService.confirm(title, message, 'Désabonner', undefined, 'warn', 'filled').subscribe(confirmed => {
+            if (!confirmed) {
+                return;
+            }
+
+            this.linkService.unlink(collection as any, this.data.item as any).subscribe(() => {
+                this.alertService.info(`Désabonnement de la collection « ${collection.name} » effectué`);
+                this.loadCollections();
+                this.loadCollectionsCount();
+            });
         });
     }
 
