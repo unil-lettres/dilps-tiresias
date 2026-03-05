@@ -11,10 +11,6 @@
     $is-dark-theme: map.get($config, is-dark);
     $border-color: if($is-dark-theme, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.12));
 
-    .mat-mdc-list-item.active {
-        background: mat.m2-get-color-from-palette($bg, card);
-    }
-
     .hierarchy-indicator {
         &.expanded::after {
             border-left: 2px solid $border-color;

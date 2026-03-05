@@ -16,10 +16,12 @@
                 @if (showUnclassified) {
                     <mat-nav-list>
                         <a
+                            #rla="routerLinkActive"
                             mat-list-item
-                            routerLinkActive="active"
+                            routerLinkActive
                             [routerLinkActiveOptions]="{exact: true}"
-                            [routerLink]="['.']"
+                            [activated]="rla.isActive"
+                            [routerLink]="['unclassified']"
                         >
                             <span>Non classé</span>
                         </a>
@@ -29,9 +31,11 @@
                 @if (showMyCards) {
                     <mat-nav-list>
                         <a
+                            #rla="routerLinkActive"
                             mat-list-item
-                            routerLinkActive="active"
+                            routerLinkActive
                             [routerLinkActiveOptions]="{exact: true}"
+                            [activated]="rla.isActive"
                             [routerLink]="['my-cards']"
                         >
                             <span>Mes images</span>
@@ -46,9 +50,11 @@
                 <ng-template #recursiveList let-collections>
                     @for (collection of collections; track collection) {
                         <a
+                            #rla="routerLinkActive"
                             mat-list-item
-                            routerLinkActive="active"
+                            routerLinkActive
                             class="mat-mdc-list-item-interactive"
+                            [activated]="rla.isActive"
                             [routerLink]="collection.id"
                             (click)="toggle(collection)"
                         >
