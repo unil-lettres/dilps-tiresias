@@ -72,7 +72,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
 })
-export class UserComponent extends AbstractDetailDirective<UserService, {password?: string}> {
+export class UserComponent extends AbstractDetailDirective<UserService, {password?: string; isSelf?: boolean}> {
     protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
@@ -81,6 +81,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
     protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);
+    protected isSelf = false;
 
     protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
@@ -117,6 +118,11 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
 
     protected isShibbolethUser(): boolean {
         return this.data.item.type === UserType.Aai;
+    }
+
+    public override ngOnInit(): void {
+        super.ngOnInit();
+        this.isSelf = !!this.data.item.isSelf;
     }
 
     protected override postQuery(): void {
@@ -178,16 +184,30 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     }
 
     protected unsubscribeFromCollection(collection: CollectionsQuery['collections']['items'][0]): void {
-        const title = 'Désabonner de cette collection ?';
-        const message = `Cette collection <strong>ne sera plus visible</strong> si elle n'est pas publique et <strong>ne pourra plus être modifiée</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+        let title: string;
+        let message: string;
+        let buttonLabel: string;
+        let successMessage: string;
 
-        this.alertService.confirm(title, message, 'Désabonner', undefined, 'warn', 'filled').subscribe(confirmed => {
+        if (this.isSelf) {
+            title = `Se désabonner de la collection « ${collection.name} » ?`;
+            message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+            buttonLabel = 'Me désabonner';
+            successMessage = `Vous avez été désabonné de la collection « ${collection.name} »`;
+        } else {
+            title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
+            message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+            buttonLabel = 'Désabonner';
+            successMessage = `Désabonnement de la collection « ${collection.name} » effectué`;
+        }
+
+        this.alertService.confirm(title, message, buttonLabel, undefined, 'warn', 'filled').subscribe(confirmed => {
             if (!confirmed) {
                 return;
             }
 
             this.linkService.unlink(collection as any, this.data.item as any).subscribe(() => {
-                this.alertService.info(`Désabonnement de la collection « ${collection.name} » effectué`);
+                this.alertService.info(successMessage);
                 this.loadCollections();
                 this.loadCollectionsCount();
             });
