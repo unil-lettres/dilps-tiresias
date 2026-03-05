@@ -31,6 +31,7 @@ import {
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';
 import {MatIcon} from '@angular/material/icon';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
     selector: 'app-collection',
@@ -49,6 +50,7 @@ import {MatIcon} from '@angular/material/icon';
         MatCheckbox,
         MatButton,
         MatIcon,
+        MatDivider,
     ],
     templateUrl: './collection.component.html',
     styleUrl: './collection.component.scss',

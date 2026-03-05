@@ -25,7 +25,7 @@ import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {MatList, MatListItem, MatListItemTitle} from '@angular/material/list';
+import {MatList, MatListItem, MatListItemTitle, MatDivider} from '@angular/material/list';
 import {MatTooltip} from '@angular/material/tooltip';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
@@ -68,6 +68,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         DialogFooterComponent,
         TypePipe,
         UniqueValidatorDirective,
+        MatDivider,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
