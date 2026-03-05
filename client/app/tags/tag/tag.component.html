@@ -1,34 +1,38 @@
-<mat-dialog-content>
-    <mat-tab-group>
-        <mat-tab label="Mot-clé">
-            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
-                <mat-form-field>
-                    <mat-label>Nom</mat-label>
-                    <input
-                        matInput
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
-                        [(ngModel)]="data.item.name"
-                    />
-                </mat-form-field>
+@if (data.item.readOnly) {
+    <h2 mat-dialog-title>Détails du mot-clé</h2>
+} @else if (isUpdatePage()) {
+    <h2 mat-dialog-title>Modifier le mot-clé</h2>
+} @else {
+    <h2 mat-dialog-title>Créer un mot-clé</h2>
+}
 
-                <natural-select-hierarchic
-                    placeholder="Mot-clé parent"
-                    [config]="hierarchicConfig"
-                    [filters]="ancestorsHierarchicFilters"
-                    [showIcon]="false"
-                    [disabled]="isUpdatePage() && !data.item.permissions.update"
-                    [(ngModel)]="data.item.parent"
-                />
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+<mat-dialog-content>
+    <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+        <mat-form-field>
+            <mat-label>Nom</mat-label>
+            <input
+                matInput
+                [readonly]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
+                [(ngModel)]="data.item.name"
+            />
+        </mat-form-field>
+
+        <natural-select-hierarchic
+            placeholder="Mot-clé parent"
+            [config]="hierarchicConfig"
+            [filters]="ancestorsHierarchicFilters"
+            [showIcon]="false"
+            [disabled]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
+            [(ngModel)]="data.item.parent"
+        />
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.tag?.create"
-        [canDelete]="data.item.canDelete"
+        [readOnly]="data.item.readOnly"
         [item]="data.item"
         (create)="create()"
         (delete)="delete()"

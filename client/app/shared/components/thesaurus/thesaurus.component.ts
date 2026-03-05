@@ -24,7 +24,7 @@ import {
     toUrl,
 } from '@ecodev/natural';
 import {isObject} from 'es-toolkit/compat';
-import {clone, merge} from 'es-toolkit';
+import {clone} from 'es-toolkit';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
@@ -224,16 +224,10 @@ export class ThesaurusComponent<
             return;
         }
 
-        this.dialog
-            .open(previewComponent, {
-                width: '800px',
-                data: {item},
-            })
-            .afterClosed()
-            .subscribe(res => {
-                merge(item, res);
-                this.notifyModel();
-            });
+        this.dialog.open(previewComponent, {
+            width: '800px',
+            data: {item},
+        });
     }
 
     protected focus(): void {

@@ -252,7 +252,7 @@ export class HomeComponent implements OnInit {
         this.userService.getCurrentUser().subscribe(user => {
             this.dialog.open(UserComponent, {
                 width: '800px',
-                data: {item: user},
+                data: {item: {...user, isSelf: true}},
             });
         });
     }

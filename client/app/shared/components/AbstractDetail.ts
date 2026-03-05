@@ -36,7 +36,7 @@ export class AbstractDetailDirective<
     >,
     Extra extends Record<string, any> = Record<never, any>,
 > implements OnInit {
-    private readonly alertService = inject(AlertService);
+    protected readonly alertService = inject(AlertService);
     public readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
     public readonly userService = inject(UserService);
 
@@ -56,7 +56,7 @@ export class AbstractDetailDirective<
     // eslint-disable-next-line @angular-eslint/prefer-inject
     public constructor(public readonly service: TService) {
         const data = inject<{item: ExtractTallOne<TService> & Extra} | undefined>(MAT_DIALOG_DATA);
-        this.data = merge({item: this.service.getDefaultForServer()}, data ?? {});
+        this.data = merge({item: {...this.service.getDefaultForServer(), readOnly: true}}, data ?? {});
     }
 
     public ngOnInit(): void {

@@ -1,32 +1,36 @@
+@if (data.item.readOnly) {
+    <h2 mat-dialog-title>Détails de l'artiste</h2>
+} @else if (isUpdatePage()) {
+    <h2 mat-dialog-title>Modifier l'artiste</h2>
+} @else {
+    <h2 mat-dialog-title>Créer un artiste</h2>
+}
+
 <mat-dialog-content>
-    <mat-tab-group>
-        <mat-tab label="Artiste">
-            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
-                <mat-form-field>
-                    <mat-label>Nom</mat-label>
-                    <input
-                        #name="ngModel"
-                        matInput
-                        fieldName="name"
-                        [appUnique]="data.item"
-                        [service]="service"
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
-                        [(ngModel)]="data.item.name"
-                    />
-                    @if (name.invalid && (name?.dirty || name?.touched)) {
-                        <mat-error>Ce nom est déjà attribué</mat-error>
-                    }
-                </mat-form-field>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+    <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+        <mat-form-field>
+            <mat-label>Nom</mat-label>
+            <input
+                #name="ngModel"
+                matInput
+                fieldName="name"
+                [appUnique]="data.item"
+                [service]="service"
+                [readonly]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
+                [(ngModel)]="data.item.name"
+            />
+            @if (name.invalid && (name?.dirty || name?.touched)) {
+                <mat-error>Ce nom est déjà attribué</mat-error>
+            }
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.artist?.create"
-        [canDelete]="data.item.canDelete"
+        [readOnly]="data.item.readOnly"
         [disableCreateAndUpdate]="!!name.invalid"
         [item]="data.item"
         (create)="create()"

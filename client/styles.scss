@@ -156,3 +156,12 @@ app-card natural-relations natural-table-button .mat-mdc-button {
         opacity: 1;
     }
 }
+
+.hint {
+    margin: 0 0 16px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+}
