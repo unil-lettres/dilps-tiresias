@@ -29,3 +29,21 @@ mat-nav-list {
     min-width: 400px;
     max-width: 400px;
 }
+
+.hierarchy-indicator {
+    margin-right: 8px;
+    margin-left: 4px;
+
+    &.expanded::after {
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        width: 2px;
+        height: 15px;
+        content: '';
+    }
+}
+
+.hierarchy-depth-indicator {
+    margin-left: 15px;
+}

@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 <div class="nat-expand nat-horizontal">
     <div class="containerWithToolbar nat-vertical left-pane">
         <mat-toolbar class="nat-horizontal nat-align">
@@ -42,16 +43,30 @@
                     <mat-divider />
                 }
 
-                <ng-template #recursiveList let-collections let-padding="padding">
+                <ng-template #recursiveList let-collections>
                     @for (collection of collections; track collection) {
                         <a
                             mat-list-item
                             routerLinkActive="active"
                             class="mat-mdc-list-item-interactive"
                             [routerLink]="collection.id"
-                            [style.padding-left.px]="padding"
                             (click)="toggle(collection)"
                         >
+                            @if (collection.hasChildren) {
+                                <mat-icon
+                                    matListItemIcon
+                                    class="hierarchy-indicator"
+                                    [class.expanded]="children.has(collection.id)"
+                                >
+                                    @if (children.has(collection.id)) {
+                                        expand_more
+                                    } @else {
+                                        chevron_right
+                                    }
+                                </mat-icon>
+                            } @else {
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                            }
                             <span matListItemTitle>
                                 {{ collection.name }}
                                 @if (collection.hasUsers) {
@@ -69,19 +84,18 @@
                                 }
                             </div>
                         </a>
-                        <ng-container
-                            *ngTemplateOutlet="
-                                recursiveList;
-                                context: {$implicit: children.get(collection.id), padding: padding + 20}
-                            "
-                        />
+                        @if (children.has(collection.id)) {
+                            <div class="hierarchy-depth-indicator">
+                                <ng-container
+                                    *ngTemplateOutlet="recursiveList; context: {$implicit: children.get(collection.id)}"
+                                />
+                            </div>
+                        }
                     }
                 </ng-template>
 
                 <mat-nav-list>
-                    <ng-container
-                        *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
-                    />
+                    <ng-container *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections}" />
                     @if (hasMore) {
                         <a class="nat-vertical mat-mdc-list-item-interactive" mat-list-item (click)="more()">
                             <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
