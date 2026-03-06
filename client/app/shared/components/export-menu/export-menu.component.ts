@@ -53,7 +53,11 @@ export class ExportMenuComponent {
         if (this.hasCollection && !this.hasCards) {
             return 'Exporter la collection';
         } else {
-            return 'Exporter';
+            if (this.selectedCards().length > 1) {
+                return 'Exporter les fiches sélectionnées';
+            } else {
+                return 'Exporter la fiche';
+            }
         }
     }
 

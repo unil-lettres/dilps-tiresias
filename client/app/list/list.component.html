@@ -61,7 +61,7 @@
                 @if (!!user) {
                     <button
                         mat-icon-button
-                        matTooltip="Ajouter ou retirer d'une collection"
+                        matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
                         (click)="linkSelectionToCollection(selected)"
                     >
                         <mat-icon naturalIcon="library_add" />
@@ -70,19 +70,15 @@
                 @if (collection?.id) {
                     <button
                         mat-icon-button
-                        matTooltip="Supprimer de la collection"
+                        matTooltip="Retirer les fiches sélectionnées de la collection"
                         (click)="unlinkFromCollection(selected)"
                     >
                         <mat-icon svgIcon="library_remove" />
                     </button>
                 }
-                <app-export-menu
-                    matTooltip="Exporter"
-                    [selectedCards]="selected"
-                    [showExcelExportation]="site !== Site.Dilps"
-                />
+                <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
                 @if (canMassEdit()) {
-                    <button mat-icon-button matTooltip="Editer en masse" (click)="edit(selected)">
+                    <button mat-icon-button matTooltip="Editer en masse la sélection" (click)="edit(selected)">
                         <mat-icon naturalIcon="edit" />
                     </button>
                 }
@@ -90,7 +86,7 @@
                     <button
                         color="warn"
                         mat-icon-button
-                        matTooltip="Supprimer la fiche définitivement"
+                        matTooltip="Supprimer les fiches sélectionnées définitivement"
                         (click)="delete(selected)"
                     >
                         <mat-icon naturalIcon="delete_forever" />
