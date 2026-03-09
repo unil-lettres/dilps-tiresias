@@ -41,6 +41,7 @@ module.exports = tseslint.config(
             '@typescript-eslint/no-unsafe-return': 'off',
             '@typescript-eslint/prefer-nullish-coalescing': 'off', // Usually a good idea, but sometimes dangerous false-positive
             '@typescript-eslint/unbound-method': 'off',
+            '@angular-eslint/no-implicit-take-until-destroyed': 'off', // Would be nice, but implementation is too naive and have false-positive, see https://github.com/angular-eslint/angular-eslint/issues/2929
             '@angular-eslint/prefer-signals': [
                 'error',
                 {
