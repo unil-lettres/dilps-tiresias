@@ -1,9 +1,10 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 <div class="nat-expand nat-horizontal">
     <div class="containerWithToolbar nat-vertical left-pane">
-        <mat-toolbar class="nat-horizontal nat-align">
+        <mat-toolbar class="nat-horizontal nat-align nat-gap-10">
             <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             <div class="nat-expand"></div>
+            <span>{{ title }}</span>
             @if (canCreate) {
                 <button mat-icon-button matTooltip="Créer une collection" (click)="add()">
                     <mat-icon naturalIcon="add" />

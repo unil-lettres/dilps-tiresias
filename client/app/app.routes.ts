@@ -146,6 +146,7 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: false,
+                    title: 'Collections publiques',
                     filter: {
                         groups: [
                             {
@@ -189,6 +190,7 @@ export const routes: Routes = [
                     showLogo: false,
                     showUnclassified: true,
                     showMyCards: true,
+                    title: 'Mes collections',
                     filter: {
                         groups: [
                             {
@@ -234,6 +236,7 @@ export const routes: Routes = [
                 path: 'source',
                 component: CollectionsComponent,
                 data: {
+                    title: 'Fonds',
                     creationButtonForRoles: [UserRole.administrator],
                     filter: {
                         groups: [

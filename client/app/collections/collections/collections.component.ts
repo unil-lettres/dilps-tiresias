@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {HistoricIconComponent} from '../../shared/components/historic-icon/historic-icon.component';
 import {
@@ -24,6 +24,7 @@ import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'app-collections',
@@ -77,6 +78,11 @@ export class CollectionsComponent implements OnInit {
     protected showMyCards = false;
 
     /**
+     * Title for the page
+     */
+    protected title = '';
+
+    /**
      * Can create permissions
      */
     protected canCreate = false;
@@ -105,6 +111,7 @@ export class CollectionsComponent implements OnInit {
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, data.creator);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
+            this.title = data.title || '';
 
             this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
@@ -132,6 +139,41 @@ export class CollectionsComponent implements OnInit {
 
             this.hasMore = collections.length > this.rootCollections.length;
         });
+
+        // Watch route changes to expand parent collections when a child is active
+        this.router.events
+            .pipe(
+                takeUntilDestroyed(this.destroyRef),
+                filter(event => event instanceof NavigationEnd),
+            )
+            .subscribe(() => {
+                this.expandActiveCollection();
+            });
+
+        // Also check on initial load
+        this.expandActiveCollection();
+    }
+
+    private expandActiveCollection(): void {
+        const childRoute = this.route.firstChild;
+        if (!childRoute) {
+            return;
+        }
+
+        const collectionId = childRoute.snapshot.params.id;
+        if (!collectionId) {
+            return;
+        }
+
+        console.log('Expanding parents for collection:', collectionId);
+
+        this.collectionsService.getOne(collectionId).subscribe(collection => {
+            console.log('Collection loaded:', collection);
+            if (collection.parent) {
+                console.log('Has parent:', collection.parent);
+                this.expandParentsRecursively(collection.parent.id);
+            }
+        });
     }
 
     protected toggle(collection: CollectionsQuery['collections']['items'][0]): void {
@@ -152,6 +194,63 @@ export class CollectionsComponent implements OnInit {
             .subscribe(results => {
                 this.children.set(collection.id, results.items);
             });
+    }
+
+    /**
+     * Recursively expand all parent collections by loading them from the API
+     */
+    private expandParentsRecursively(parentId: string): void {
+        console.log('expandParentsRecursively called for:', parentId);
+
+        // Check if parent is already expanded
+        if (this.children.has(parentId)) {
+            console.log('Parent already expanded:', parentId);
+            return;
+        }
+
+        // Load the parent to get its information
+        this.collectionsService.getOne(parentId).subscribe(parent => {
+            console.log('Parent loaded:', parent);
+
+            // Load the children of this parent to display them
+            const qvm = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
+            qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: parentId}}}]}]}});
+
+            this.collectionsService
+                .watchAll(qvm)
+                .pipe(takeUntilDestroyed(this.destroyRef))
+                .subscribe(results => {
+                    console.log('Children loaded for parent:', parentId, results.items);
+                    this.children.set(parentId, results.items);
+                });
+
+            // If this parent has a parent too, expand it recursively
+            if (parent.parent) {
+                console.log('Parent has grandparent:', parent.parent);
+                this.expandParentsRecursively(parent.parent.id);
+            }
+        });
+    }
+
+    /**
+     * Find a collection by ID in rootCollections or children
+     */
+    private findCollection(id: string): CollectionsQuery['collections']['items'][0] | undefined {
+        // Search in root collections
+        const rootCollection = this.rootCollections.find(c => c.id === id);
+        if (rootCollection) {
+            return rootCollection;
+        }
+
+        // Search in all children
+        for (const childrenList of this.children.values()) {
+            const found = childrenList.find(c => c.id === id);
+            if (found) {
+                return found;
+            }
+        }
+
+        return undefined;
     }
 
     protected search(term: SearchOperatorString): void {
