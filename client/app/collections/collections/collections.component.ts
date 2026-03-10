@@ -17,7 +17,9 @@ import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatIconButton} from '@angular/material/button';
 import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -29,7 +31,9 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         MatToolbar,
         LogoComponent,
         NgTemplateOutlet,
-        MatButton,
+        MatIconButton,
+        MatTooltip,
+        HideTooltipDirective,
         MatIcon,
         NgScrollbar,
         MatNavList,
@@ -43,7 +47,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         RouterOutlet,
         NaturalIconDirective,
         HistoricIconComponent,
-        MatIconButton,
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
