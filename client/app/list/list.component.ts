@@ -104,12 +104,6 @@ enum ViewMode {
     map = 'map',
 }
 
-/**
- * Keep in sync with list.component.html whenever you add/remove buttons in toolbar.
- */
-export const SELECTION_ZONE_ICON_BUTTON_COUNT = 4 + 3; // +3 for selection count label
-export const TOOLS_ZONE_ICON_BUTTON_COUNT = 6 + 2; // +2 for cards count badge
-
 @Component({
     selector: 'app-list',
     imports: [
@@ -179,6 +173,8 @@ export class ListComponent
      */
     protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
     private readonly toolbarRef = viewChild('toolbar', {read: ElementRef});
+    private readonly toolbarSelectionRef = viewChild('toolbarSelection', {read: ElementRef});
+    private readonly toolbarOptionsRef = viewChild('toolbarOptions', {read: ElementRef});
 
     /**
      * Whether the scrollbar could not scroll left anymore.
@@ -200,16 +196,17 @@ export class ListComponent
      * True when the toolbar is too narrow to fit the selection zone + the search bar.
      */
     protected readonly showOverflowMenu = computed(() => {
-        const nbButtons = TOOLS_ZONE_ICON_BUTTON_COUNT + (this.hasSelection() ? SELECTION_ZONE_ICON_BUTTON_COUNT : 0);
-        const selectionWidth = nbButtons * 60;
-        const searchWidth = 250 + this.searchTermCount() * 200;
-        return this.toolbarWidth() < selectionWidth + searchWidth + 50;
+        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() : 0;
+        const searchWidth = 300 + this.searchTermCount() * 250;
+        return this.toolbarWidth() < this.toolbarOptionsWidth() + selectionWidth + searchWidth + 200;
     });
 
     /**
-     * Current offsetWidth of the toolbar element.
+     * Current offsetWidth of the toolbar elements.
      */
     private readonly toolbarWidth = fromResize(this.toolbarRef);
+    private readonly toolbarSelectionWidth = fromResize(this.toolbarSelectionRef);
+    private readonly toolbarOptionsWidth = fromResize(this.toolbarOptionsRef);
 
     /**
      * Expose enum for template
