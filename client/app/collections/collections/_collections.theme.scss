@@ -11,13 +11,15 @@
     $is-dark-theme: map.get($config, is-dark);
     $border-color: if($is-dark-theme, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.12));
 
-    .hierarchy-indicator {
-        &.expanded::after {
+    app-collections {
+        .hierarchy-indicator {
+            &.expanded::after {
+                border-left: 2px solid $border-color;
+            }
+        }
+
+        .hierarchy-depth-indicator {
             border-left: 2px solid $border-color;
         }
-    }
-
-    .hierarchy-depth-indicator {
-        border-left: 2px solid $border-color;
     }
 }
