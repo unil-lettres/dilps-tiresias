@@ -1,15 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    computed,
-    effect,
-    ElementRef,
-    inject,
-    OnDestroy,
-    OnInit,
-    signal,
-    viewChild,
-} from '@angular/core';
+import {AfterViewInit, Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
@@ -75,6 +64,7 @@ import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
+import {fromResize} from '../shared/utils/resize.utils';
 
 function applyChanges(
     destination: CardsQuery['cards']['items'][0],
@@ -150,7 +140,7 @@ export const TOOLS_ZONE_ICON_BUTTON_COUNT = 6 + 2; // +2 for cards count badge
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
-    implements OnInit, AfterViewInit, OnDestroy, ReusableRouteStatus
+    implements OnInit, AfterViewInit, ReusableRouteStatus
 {
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
@@ -217,19 +207,9 @@ export class ListComponent
     });
 
     /**
-     * Current offsetWidth of the toolbar element, updated by ResizeObserver.
+     * Current offsetWidth of the toolbar element.
      */
-    private readonly toolbarWidth = signal(0);
-
-    /**
-     * Resize observer to update scroll-arrow state when the chips container resizes.
-     */
-    private resizeObserver: ResizeObserver | null = null;
-
-    /**
-     * Resize observer on the toolbar to feed toolbarWidth.
-     */
-    private toolbarResizeObserver: ResizeObserver | null = null;
+    private readonly toolbarWidth = fromResize(this.toolbarRef);
 
     /**
      * Expose enum for template
@@ -335,26 +315,11 @@ export class ListComponent
 
         this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
 
-        // Feed toolbarWidth whenever the toolbar resizes.
+        // Update scroll arrows whenever the chips container resizes
+        const chipsWidth = fromResize(this.chipsContainer);
         effect(() => {
-            const el = this.toolbarRef()?.nativeElement;
-            if (el) {
-                this.toolbarResizeObserver?.disconnect();
-                this.toolbarResizeObserver = new ResizeObserver(() => this.toolbarWidth.set(el.offsetWidth));
-                this.toolbarResizeObserver.observe(el);
-            }
-        });
-
-        // Initialize ResizeObserver when chips container becomes available
-        effect(() => {
-            const container = this.chipsContainer()?.nativeElement;
-            if (container) {
-                this.resizeObserver?.disconnect();
-                this.resizeObserver = new ResizeObserver(() => {
-                    this.updateScrollArrows();
-                });
-                this.resizeObserver.observe(container);
-            }
+            chipsWidth();
+            this.updateScrollArrows();
         });
     }
 
@@ -433,11 +398,6 @@ export class ListComponent
         this.fetchDomains().subscribe(() => {
             this.domainSelectionChange();
         });
-    }
-
-    public ngOnDestroy(): void {
-        this.resizeObserver?.disconnect();
-        this.toolbarResizeObserver?.disconnect();
     }
 
     protected override handleHistoryNavigation(): void {
