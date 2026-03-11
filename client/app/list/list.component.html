@@ -53,45 +53,51 @@
 
 @if (dataSource) {
     <div class="containerWithToolbar nat-vertical nat-expand">
-        <mat-toolbar class="nat-horizontal nat-align nat-gap-10">
+        <mat-toolbar #toolbar class="nat-horizontal nat-align nat-gap-10">
             @if (showLogo) {
                 <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             }
             @if (selected.length) {
-                @if (!!user) {
-                    <button
-                        mat-icon-button
-                        matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
-                        (click)="linkSelectionToCollection(selected)"
+                <div class="background-selection nat-horizontal nat-align">
+                    <span class="mat-caption"
+                        >{{ selected.length }} fiche{{ selected.length > 1 ? 's' : '' }} sélectionnée{{
+                            selected.length > 1 ? 's' : ''
+                        }}</span
                     >
-                        <mat-icon naturalIcon="library_add" />
-                    </button>
-                }
-                @if (collection?.id) {
-                    <button
-                        mat-icon-button
-                        matTooltip="Retirer les fiches sélectionnées de la collection"
-                        (click)="unlinkFromCollection(selected)"
-                    >
-                        <mat-icon svgIcon="library_remove" />
-                    </button>
-                }
-                <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
-                @if (canMassEdit()) {
-                    <button mat-icon-button matTooltip="Editer en masse la sélection" (click)="edit(selected)">
-                        <mat-icon naturalIcon="edit" />
-                    </button>
-                }
-                @if (user?.role === UserRole.administrator) {
-                    <button
-                        color="warn"
-                        mat-icon-button
-                        matTooltip="Supprimer les fiches sélectionnées définitivement"
-                        (click)="delete(selected)"
-                    >
-                        <mat-icon naturalIcon="delete_forever" />
-                    </button>
-                }
+                    @if (!!user) {
+                        <button
+                            mat-icon-button
+                            matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
+                            (click)="linkSelectionToCollection(selected)"
+                        >
+                            <mat-icon naturalIcon="library_add" />
+                        </button>
+                    }
+                    @if (collection?.id) {
+                        <button
+                            mat-icon-button
+                            matTooltip="Retirer les fiches sélectionnées de la collection"
+                            (click)="unlinkFromCollection(selected)"
+                        >
+                            <mat-icon svgIcon="library_remove" />
+                        </button>
+                    }
+                    <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
+                    @if (canMassEdit()) {
+                        <button mat-icon-button matTooltip="Editer en masse la sélection" (click)="edit(selected)">
+                            <mat-icon naturalIcon="edit" />
+                        </button>
+                    }
+                    @if (user?.role === UserRole.administrator) {
+                        <button
+                            mat-icon-button
+                            matTooltip="Supprimer les fiches sélectionnées définitivement"
+                            (click)="delete(selected)"
+                        >
+                            <mat-icon naturalIcon="delete_forever" />
+                        </button>
+                    }
+                </div>
             }
             @if (!selected.length && user) {
                 @if (collection?.id) {
