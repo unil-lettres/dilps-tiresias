@@ -51,6 +51,74 @@
     </div>
 </mat-menu>
 
+<!-- Menu overflow pour les actions de la toolbar -->
+<mat-menu #toolbarActionsMenu="matMenu" [overlapTrigger]="false">
+    @if (viewMode !== ViewMode.grid) {
+        <div mat-menu-item (click)="setViewMode(ViewMode.grid)">
+            <mat-icon naturalIcon="view_compact" />
+            <span>Affichage Mosaïque</span>
+        </div>
+    }
+    @if (viewMode !== ViewMode.list) {
+        <div mat-menu-item (click)="setViewMode(ViewMode.list)">
+            <mat-icon naturalIcon="view_list" />
+            <span>Affichage Liste</span>
+        </div>
+    }
+    @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
+        <div mat-menu-item (click)="setViewMode(ViewMode.map)">
+            <mat-icon naturalIcon="map" />
+            <span>Affichage Carte</span>
+        </div>
+    }
+    <div mat-menu-item [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu">
+        <mat-icon svgIcon="sort_asc" />
+        <span>Trier</span>
+    </div>
+    @if (viewMode === ViewMode.grid) {
+        @if (!showLabels) {
+            <div mat-menu-item (click)="toggleLabels()">
+                <mat-icon naturalIcon="font_download" />
+                <span>Afficher les légendes</span>
+            </div>
+        }
+        @if (showLabels) {
+            <div mat-menu-item (click)="toggleLabels()">
+                <mat-icon naturalIcon="font_download_off" />
+                <span>Masquer les légendes</span>
+            </div>
+        }
+    }
+    @if (selected.length) {
+        <div mat-menu-item (click)="unselectAll()">
+            <mat-icon naturalIcon="deselect" />
+            <span>Désélectionner tout</span>
+        </div>
+    }
+    @if (!selected.length) {
+        <div mat-menu-item (click)="selectAll()">
+            <mat-icon svgIcon="select_all_mark" />
+            <span>Sélectionner les images visibles</span>
+        </div>
+    }
+    @if (selected.length) {
+        @if (!!user && site === Site.Dilps) {
+            <div mat-menu-item (click)="goToQuizz(selected)">
+                <mat-icon svgIcon="cards_game" />
+                <span>Lecture d'oeuvre</span>
+            </div>
+        }
+    }
+    @if (!selected.length && user) {
+        @if (site === Site.Dilps) {
+            <div mat-menu-item (click)="goToQuizz()">
+                <mat-icon svgIcon="cards_game" />
+                <span>Lecture d'oeuvre</span>
+            </div>
+        }
+    }
+</mat-menu>
+
 @if (dataSource) {
     <div class="containerWithToolbar nat-vertical nat-expand">
         <mat-toolbar #toolbar class="nat-horizontal nat-align nat-gap-10">
@@ -121,65 +189,72 @@
                 [selections]="naturalSearchSelections"
                 (selectionChange)="search($event); fetchDomains().subscribe()"
             />
-            @if (viewMode !== ViewMode.grid) {
-                <button mat-icon-button matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
-                    <mat-icon naturalIcon="view_compact" />
-                </button>
-            }
-            @if (viewMode !== ViewMode.list) {
-                <button mat-icon-button matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
-                    <mat-icon naturalIcon="view_list" />
-                </button>
-            }
-            @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
-                <button mat-icon-button matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
-                    <mat-icon naturalIcon="map" />
-                </button>
-            }
-            <button
-                mat-icon-button
-                matTooltip="Trier"
-                [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
-            >
-                <mat-icon svgIcon="sort_asc" />
-            </button>
-            @if (viewMode === ViewMode.grid) {
+            @if (!showOverflowMenu()) {
+                @if (viewMode !== ViewMode.grid) {
+                    <button mat-icon-button matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
+                        <mat-icon naturalIcon="view_compact" />
+                    </button>
+                }
+                @if (viewMode !== ViewMode.list) {
+                    <button mat-icon-button matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
+                        <mat-icon naturalIcon="view_list" />
+                    </button>
+                }
+                @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
+                    <button mat-icon-button matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
+                        <mat-icon naturalIcon="map" />
+                    </button>
+                }
                 <button
                     mat-icon-button
-                    [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
-                    (click)="toggleLabels()"
+                    matTooltip="Trier"
+                    [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                 >
-                    @if (!showLabels) {
-                        <mat-icon naturalIcon="font_download" />
-                    }
-                    @if (showLabels) {
-                        <mat-icon naturalIcon="font_download_off" />
-                    }
+                    <mat-icon svgIcon="sort_asc" />
                 </button>
-            }
-            @if (selected.length) {
-                <button mat-icon-button matTooltip="Désélectionner tout" (click)="unselectAll()">
-                    <mat-icon naturalIcon="deselect" />
-                </button>
-            }
-            @if (!selected.length) {
-                <button mat-icon-button matTooltip="Sélectionner les images visibles" (click)="selectAll()">
-                    <mat-icon svgIcon="select_all_mark" />
-                </button>
-            }
-            @if (selected.length) {
-                @if (!!user && site === Site.Dilps) {
-                    <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
-                        <mat-icon svgIcon="cards_game" />
+                @if (viewMode === ViewMode.grid) {
+                    <button
+                        mat-icon-button
+                        [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
+                        (click)="toggleLabels()"
+                    >
+                        @if (!showLabels) {
+                            <mat-icon naturalIcon="font_download" />
+                        }
+                        @if (showLabels) {
+                            <mat-icon naturalIcon="font_download_off" />
+                        }
                     </button>
                 }
-            }
-            @if (!selected.length && user) {
-                @if (site === Site.Dilps) {
-                    <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
-                        <mat-icon svgIcon="cards_game" />
+                @if (selected.length) {
+                    <button mat-icon-button matTooltip="Désélectionner tout" (click)="unselectAll()">
+                        <mat-icon naturalIcon="deselect" />
                     </button>
                 }
+                @if (!selected.length) {
+                    <button mat-icon-button matTooltip="Sélectionner les images visibles" (click)="selectAll()">
+                        <mat-icon svgIcon="select_all_mark" />
+                    </button>
+                }
+                @if (selected.length) {
+                    @if (!!user && site === Site.Dilps) {
+                        <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
+                            <mat-icon svgIcon="cards_game" />
+                        </button>
+                    }
+                }
+                @if (!selected.length && user) {
+                    @if (site === Site.Dilps) {
+                        <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
+                            <mat-icon svgIcon="cards_game" />
+                        </button>
+                    }
+                }
+            }
+            @if (showOverflowMenu()) {
+                <button mat-icon-button matTooltip="Plus d'options" [matMenuTriggerFor]="toolbarActionsMenu">
+                    <mat-icon naturalIcon="more_vert" />
+                </button>
             }
             @if (viewMode === ViewMode.grid) {
                 <div>

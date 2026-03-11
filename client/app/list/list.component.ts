@@ -114,6 +114,12 @@ enum ViewMode {
     map = 'map',
 }
 
+/**
+ * Keep in sync with list.component.html whenever you add/remove buttons in toolbar.
+ */
+export const SELECTION_ZONE_ICON_BUTTON_COUNT = 4 + 3; // +3 for selection count label
+export const TOOLS_ZONE_ICON_BUTTON_COUNT = 6 + 2; // +2 for cards count badge
+
 @Component({
     selector: 'app-list',
     imports: [
@@ -162,11 +168,11 @@ export class ListComponent
      */
     private readonly naturalSearchComponent = viewChild(NaturalSearchComponent);
 
-    private readonly hasActiveSearch = computed(() => {
-        const selections = this.naturalSearchComponent()?.innerSelections();
+    private readonly searchTermCount = computed(
+        () => (this.naturalSearchComponent()?.innerSelections() ?? []).reduce((acc, val) => acc.concat(val), []).length,
+    );
 
-        return !!selections && selections.reduce((acc, val) => acc.concat(val), []).length > 0;
-    });
+    private readonly hasActiveSearch = computed(() => this.searchTermCount() > 0);
 
     /**
      * Reference to grid component
@@ -182,6 +188,7 @@ export class ListComponent
      * Reference to chips container for scroll
      */
     protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
+    private readonly toolbarRef = viewChild('toolbar', {read: ElementRef});
 
     /**
      * Whether the scrollbar could not scroll left anymore.
@@ -199,9 +206,30 @@ export class ListComponent
     protected readonly hasScrollbar = signal(false);
 
     /**
-     * Resize observer to update buttons state when the component is resized.
+     * Whether toolbar actions should be displayed in an overflow menu.
+     * True when the toolbar is too narrow to fit the selection zone + the search bar.
+     */
+    protected readonly showOverflowMenu = computed(() => {
+        const nbButtons = TOOLS_ZONE_ICON_BUTTON_COUNT + (this.hasSelection() ? SELECTION_ZONE_ICON_BUTTON_COUNT : 0);
+        const selectionWidth = nbButtons * 60;
+        const searchWidth = 250 + this.searchTermCount() * 200;
+        return this.toolbarWidth() < selectionWidth + searchWidth + 50;
+    });
+
+    /**
+     * Current offsetWidth of the toolbar element, updated by ResizeObserver.
+     */
+    private readonly toolbarWidth = signal(0);
+
+    /**
+     * Resize observer to update scroll-arrow state when the chips container resizes.
      */
     private resizeObserver: ResizeObserver | null = null;
+
+    /**
+     * Resize observer on the toolbar to feed toolbarWidth.
+     */
+    private toolbarResizeObserver: ResizeObserver | null = null;
 
     /**
      * Expose enum for template
@@ -217,6 +245,7 @@ export class ListComponent
      * Checked content for selection
      */
     protected selected: CardsQuery['cards']['items'][0][] = [];
+    private readonly hasSelection = signal(false);
 
     /**
      * Show logo on top left corner
@@ -305,6 +334,16 @@ export class ListComponent
         super(inject(CardService));
 
         this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
+
+        // Feed toolbarWidth whenever the toolbar resizes.
+        effect(() => {
+            const el = this.toolbarRef()?.nativeElement;
+            if (el) {
+                this.toolbarResizeObserver?.disconnect();
+                this.toolbarResizeObserver = new ResizeObserver(() => this.toolbarWidth.set(el.offsetWidth));
+                this.toolbarResizeObserver.observe(el);
+            }
+        });
 
         // Initialize ResizeObserver when chips container becomes available
         effect(() => {
@@ -398,6 +437,7 @@ export class ListComponent
 
     public ngOnDestroy(): void {
         this.resizeObserver?.disconnect();
+        this.toolbarResizeObserver?.disconnect();
     }
 
     protected override handleHistoryNavigation(): void {
@@ -473,10 +513,12 @@ export class ListComponent
 
     protected select(cards: CardsQuery['cards']['items'][0][]): void {
         this.selected = cards;
+        this.hasSelection.set(cards.length > 0);
     }
 
     protected reset(): void {
         this.selected = [];
+        this.hasSelection.set(false);
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
@@ -648,6 +690,7 @@ export class ListComponent
 
     protected unselectAll(): void {
         this.selected = [];
+        this.hasSelection.set(false);
         this.getViewComponent().unselectAll();
     }
 
