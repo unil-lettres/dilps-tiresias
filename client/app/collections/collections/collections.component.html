@@ -50,27 +50,29 @@
 
                 <ng-template #recursiveList let-collections>
                     @for (collection of collections; track collection) {
-                        <a
+                        <mat-list-item
                             #rla="routerLinkActive"
-                            mat-list-item
                             routerLinkActive
                             class="mat-mdc-list-item-interactive"
                             [activated]="rla.isActive"
                             [routerLink]="collection.id"
-                            (click)="toggle(collection)"
                         >
                             @if (collection.hasChildren) {
-                                <mat-icon
+                                <button
+                                    mat-icon-button
                                     matListItemIcon
                                     class="hierarchy-indicator"
                                     [class.expanded]="children.has(collection.id)"
+                                    (click)="toggle($event, collection)"
                                 >
-                                    @if (children.has(collection.id)) {
-                                        expand_more
-                                    } @else {
-                                        chevron_right
-                                    }
-                                </mat-icon>
+                                    <mat-icon>
+                                        @if (children.has(collection.id)) {
+                                            expand_more
+                                        } @else {
+                                            chevron_right
+                                        }
+                                    </mat-icon>
+                                </button>
                             } @else {
                                 <mat-icon matListItemIcon class="hierarchy-indicator" />
                             }
@@ -90,7 +92,7 @@
                                     </button>
                                 }
                             </div>
-                        </a>
+                        </mat-list-item>
                         @if (children.has(collection.id)) {
                             <div class="hierarchy-depth-indicator">
                                 <ng-container

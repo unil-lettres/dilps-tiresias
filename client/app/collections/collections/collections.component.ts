@@ -176,7 +176,8 @@ export class CollectionsComponent implements OnInit {
         });
     }
 
-    protected toggle(collection: CollectionsQuery['collections']['items'][0]): void {
+    protected toggle(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
+        event.stopPropagation();
         if (this.children.has(collection.id)) {
             this.children.delete(collection.id);
         } else {

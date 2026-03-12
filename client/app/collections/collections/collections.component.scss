@@ -29,11 +29,12 @@ mat-nav-list {
 .hierarchy-indicator {
     margin-right: 8px;
     margin-left: 4px;
+    padding: 0;
 
     &.expanded::after {
         position: absolute;
-        bottom: 0;
-        left: 15px;
+        bottom: -16px;
+        left: 11px;
         width: 2px;
         height: 15px;
         content: '';
