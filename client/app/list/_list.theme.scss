@@ -10,10 +10,9 @@
 
     app-list {
         .background-selection {
-            border-radius: 33px;
+            border-radius: 24px;
             background-color: color.change(mat.m2-get-color-from-palette($accent), $alpha: 1);
-            padding-right: 6px;
-            padding-left: 21px;
+            padding-left: 16px;
             color: mat.m2-get-color-from-palette($accent, default-contrast);
         }
 
