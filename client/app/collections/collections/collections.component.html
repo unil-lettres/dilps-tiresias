@@ -64,6 +64,12 @@
                                     matListItemIcon
                                     class="hierarchy-indicator"
                                     [class.expanded]="children.has(collection.id)"
+                                    [attr.aria-label]="
+                                        children.has(collection.id)
+                                            ? 'Réduire la collection'
+                                            : 'Développer la collection'
+                                    "
+                                    [attr.aria-expanded]="children.has(collection.id)"
                                     (click)="toggle($event, collection)"
                                 >
                                     <mat-icon>
@@ -87,6 +93,7 @@
                                 <button
                                     mat-icon-button
                                     class="actions-trigger"
+                                    aria-label="Actions de la collection"
                                     [matMenuTriggerFor]="actionsMenu"
                                     (click)="$event.stopPropagation()"
                                 >
@@ -94,7 +101,7 @@
                                 </button>
                                 <mat-menu #actionsMenu>
                                     @if (collection.permissions.update || collection.permissions.delete) {
-                                        <button mat-menu-item (click)="edit($event, collection)">
+                                        <button mat-menu-item (click)="edit(collection)">
                                             <mat-icon naturalIcon="edit" />
                                             <span>Modifier</span>
                                         </button>
@@ -108,7 +115,7 @@
                                             [collection]="collection"
                                         />
                                     }
-                                    <button mat-menu-item (click)="linkCollectionToCollection($event, collection)">
+                                    <button mat-menu-item (click)="linkCollectionToCollection(collection)">
                                         <mat-icon naturalIcon="library_add" />
                                         <span>Ajouter à une autre collection</span>
                                     </button>

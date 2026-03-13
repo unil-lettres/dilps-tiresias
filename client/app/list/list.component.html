@@ -240,7 +240,12 @@
                 </div>
             }
             @if (showOverflowMenu()) {
-                <button mat-icon-button matTooltip="Plus d'options" [matMenuTriggerFor]="toolbarActionsMenu">
+                <button
+                    mat-icon-button
+                    matTooltip="Plus d'options"
+                    aria-label="Options de la galerie"
+                    [matMenuTriggerFor]="toolbarActionsMenu"
+                >
                     <mat-icon naturalIcon="more_vert" />
                 </button>
             }
