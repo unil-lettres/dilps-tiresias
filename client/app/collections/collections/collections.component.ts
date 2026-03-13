@@ -24,6 +24,12 @@ import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {ExportMenuComponent} from '../../shared/components/export-menu/export-menu.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+} from '../../shared/components/collection-selector/collection-selector.component';
 
 @Component({
     selector: 'app-collections',
@@ -47,6 +53,10 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         RouterOutlet,
         NaturalIconDirective,
         HistoricIconComponent,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
+        ExportMenuComponent,
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
@@ -171,9 +181,6 @@ export class CollectionsComponent implements OnInit {
     }
 
     protected edit(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
-        event.preventDefault();
-        event.stopPropagation();
-
         const dialogRef = this.dialog.open(CollectionComponent, {
             width: '800px',
             data: {item: collection},
@@ -189,6 +196,16 @@ export class CollectionsComponent implements OnInit {
 
     protected add(): void {
         this.dialog.open(CollectionComponent, {width: '800px'});
+    }
+
+    protected linkCollectionToCollection(
+        event: MouseEvent,
+        collection: CollectionsQuery['collections']['items'][0],
+    ): void {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
+            width: '400px',
+            data: {collection},
+        });
     }
 
     private showCreateButton(allowedRoles: boolean | UserRole[], user: ViewerQuery['viewer'] | null): boolean {

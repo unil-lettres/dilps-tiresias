@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, viewChild} from '@angular/core';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -29,6 +29,8 @@ export class ExportMenuComponent {
     private readonly apollo = inject(Apollo);
 
     public readonly showExcelExportation = input(true);
+    public readonly showTrigger = input(true);
+    public readonly matMenu = viewChild.required<MatMenu>('menu');
 
     public readonly selectedCards = input<CardsQuery['cards']['items'][0][]>([]);
 

@@ -44,3 +44,12 @@ mat-nav-list {
 .hierarchy-depth-indicator {
     margin-left: 15px;
 }
+
+.actions-trigger {
+    visibility: hidden;
+}
+
+mat-list-item:hover .actions-trigger,
+.actions-trigger[aria-expanded='true'] {
+    visibility: visible;
+}

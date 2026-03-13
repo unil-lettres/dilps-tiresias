@@ -167,20 +167,6 @@
                     }
                 </div>
             }
-            @if (!selected.length && user) {
-                @if (collection?.id) {
-                    <button
-                        mat-icon-button
-                        matTooltip="Ajouter la collection à une autre collection"
-                        (click)="linkCollectionToCollection(collection!)"
-                    >
-                        <mat-icon naturalIcon="library_add" />
-                    </button>
-                }
-                @if (showDownloadCollection) {
-                    <app-export-menu [collection]="collection" [showExcelExportation]="site !== Site.Dilps" />
-                }
-            }
             <natural-search
                 id="main-natural-search"
                 dropdownTitle="Recherche approfondie"

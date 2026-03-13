@@ -242,11 +242,6 @@ export class ListComponent
     protected user!: ViewerQuery['viewer'];
 
     /**
-     * True if button for archive download has permissions to be displayed
-     */
-    protected showDownloadCollection = true;
-
-    /**
      * Number of items added to dom from the gallery (grid view)
      */
     protected gridNumberVisibleItems = 0;
@@ -334,7 +329,6 @@ export class ListComponent
         // Setup admin features
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
-            this.updateShowDownloadCollection();
 
             if (this.user && this.user.role === UserRole.administrator) {
                 this.pushAdminConfig();
@@ -357,7 +351,6 @@ export class ListComponent
         // Required because when /:id change, the route stays the same, and component is not re-initialized
         this.routeData$.subscribe(data => {
             this.showLogo = data.showLogo;
-            this.updateShowDownloadCollection();
 
             if (data.collection) {
                 const collectionFilter: CardFilter = {
@@ -458,16 +451,6 @@ export class ListComponent
         }
     }
 
-    /**
-     * Show a button to download a collection, considering permissions
-     */
-    protected updateShowDownloadCollection(): void {
-        const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user?.role && (!roles || roles?.includes(this.user.role));
-        const hasCollection = this.collection?.id;
-        this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
-    }
-
     protected select(cards: CardsQuery['cards']['items'][0][]): void {
         this.selected = cards;
         this.hasSelection.set(cards.length > 0);
@@ -480,11 +463,17 @@ export class ListComponent
     }
 
     protected linkSelectionToCollection(selection: CardsQuery['cards']['items'][0][]): void {
-        this.linkToCollection({images: selection});
-    }
-
-    protected linkCollectionToCollection(collection: FakeCollection): void {
-        this.linkToCollection({collection});
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+            CollectionSelectorComponent,
+            {
+                width: '400px',
+                position: {
+                    top: '66px',
+                    left: '160px',
+                },
+                data: {images: selection},
+            },
+        );
     }
 
     protected unlinkFromCollection(selection: CardsQuery['cards']['items'][0][]): void {
@@ -768,20 +757,6 @@ export class ListComponent
      */
     private getViewComponent(): ViewInterface {
         return (this.gridComponent() || this.listComponent())!;
-    }
-
-    private linkToCollection(data: CollectionSelectorData): void {
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
-            CollectionSelectorComponent,
-            {
-                width: '400px',
-                position: {
-                    top: '66px',
-                    left: '160px',
-                },
-                data: data,
-            },
-        );
     }
 
     /**

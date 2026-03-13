@@ -173,7 +173,6 @@ export const routes: Routes = [
                         component: ListComponent,
                         data: {
                             showLogo: false,
-                            showDownloadCollectionForRoles: [UserRole.administrator],
                         },
                         resolve: {
                             collection: resolveFakeCollection,
@@ -249,7 +248,6 @@ export const routes: Routes = [
                         path: ':collectionId',
                         component: ListComponent,
                         data: {
-                            showDownloadCollectionForRoles: [UserRole.administrator],
                             showLogo: false,
                             filter: {}, // overrides parent
                         },

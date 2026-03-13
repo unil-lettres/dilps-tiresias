@@ -83,13 +83,37 @@
                                 }
                             </span>
                             <div matListItemMeta class="nat-horizontal nat-gap nat-align">
+                                <button
+                                    mat-icon-button
+                                    class="actions-trigger"
+                                    [matMenuTriggerFor]="actionsMenu"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #actionsMenu>
+                                    @if (collection.permissions.update || collection.permissions.delete) {
+                                        <button mat-menu-item (click)="edit($event, collection)">
+                                            <mat-icon naturalIcon="edit" />
+                                            <span>Modifier</span>
+                                        </button>
+                                        <button mat-menu-item [matMenuTriggerFor]="exportMenuComp.matMenu()">
+                                            <mat-icon naturalIcon="share_windows" />
+                                            <span>Exporter</span>
+                                        </button>
+                                        <app-export-menu
+                                            #exportMenuComp
+                                            [showTrigger]="false"
+                                            [collection]="collection"
+                                        />
+                                    }
+                                    <button mat-menu-item (click)="linkCollectionToCollection($event, collection)">
+                                        <mat-icon naturalIcon="library_add" />
+                                        <span>Ajouter à une autre collection</span>
+                                    </button>
+                                </mat-menu>
                                 @if (collection.isSource && collection.isHistoric) {
                                     <app-historic-icon style="height: 30px" />
-                                }
-                                @if (collection.permissions.update || collection.permissions.delete) {
-                                    <button mat-icon-button (click)="edit($event, collection)">
-                                        <mat-icon naturalIcon="edit" />
-                                    </button>
                                 }
                             </div>
                         </mat-list-item>
