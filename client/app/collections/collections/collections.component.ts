@@ -180,7 +180,7 @@ export class CollectionsComponent implements OnInit {
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    protected edit(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
+    protected edit(collection: CollectionsQuery['collections']['items'][0]): void {
         const dialogRef = this.dialog.open(CollectionComponent, {
             width: '800px',
             data: {item: collection},
@@ -198,10 +198,7 @@ export class CollectionsComponent implements OnInit {
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
-    protected linkCollectionToCollection(
-        event: MouseEvent,
-        collection: CollectionsQuery['collections']['items'][0],
-    ): void {
+    protected linkCollectionToCollection(collection: CollectionsQuery['collections']['items'][0]): void {
         this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
             width: '400px',
             data: {collection},
