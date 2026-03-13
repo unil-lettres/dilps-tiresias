@@ -12,6 +12,7 @@ import {
     NaturalSelectHierarchicComponent,
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
+    LinkableObject,
 } from '@ecodev/natural';
 import {findKey} from 'es-toolkit';
 import {CollectionVisibilities} from '../../card/card.component';
@@ -212,7 +213,7 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
                 return;
             }
 
-            this.linkService.unlink(this.data.item as any, this.user as any).subscribe(() => {
+            this.linkService.unlink(this.data.item as LinkableObject, this.user as LinkableObject).subscribe(() => {
                 this.alertService.info('Vous avez été désabonné de cette collection');
                 this.dialogRef.close();
             });

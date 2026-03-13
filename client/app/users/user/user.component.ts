@@ -1,4 +1,10 @@
-import {IEnum, NaturalEnumService, NaturalQueryVariablesManager, NaturalLinkMutationService} from '@ecodev/natural';
+import {
+    IEnum,
+    LinkableObject,
+    NaturalEnumService,
+    NaturalQueryVariablesManager,
+    NaturalLinkMutationService,
+} from '@ecodev/natural';
 import {Component, inject, viewChild, signal} from '@angular/core';
 import {
     AbstractControl,
@@ -207,7 +213,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
                 return;
             }
 
-            this.linkService.unlink(collection as any, this.data.item as any).subscribe(() => {
+            this.linkService.unlink(collection, this.user as LinkableObject).subscribe(() => {
                 this.alertService.info(successMessage);
                 this.loadCollections();
                 this.loadCollectionsCount();
