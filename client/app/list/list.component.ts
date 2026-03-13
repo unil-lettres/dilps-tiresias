@@ -244,12 +244,12 @@ export class ListComponent
     /**
      * Number of items added to dom from the gallery (grid view)
      */
-    protected gridNumberVisibleItems = 0;
+    protected readonly gridNumberVisibleItems = signal(0);
 
     /**
      * Total number of items matching with search
      */
-    protected gridNumberTotalItems = 0;
+    protected readonly gridNumberTotalItems = signal(0);
 
     /**
      * Indicates if at least one historic image is present in the list
@@ -427,11 +427,11 @@ export class ListComponent
 
     protected gridContentChange(event: ContentChange): void {
         if (event.visible != null) {
-            this.gridNumberVisibleItems = event.visible;
+            this.gridNumberVisibleItems.set(event.visible);
         }
 
         if (event.total != null) {
-            this.gridNumberTotalItems = event.total;
+            this.gridNumberTotalItems.set(event.total);
         }
 
         if (event.hasHistoric != null) {
