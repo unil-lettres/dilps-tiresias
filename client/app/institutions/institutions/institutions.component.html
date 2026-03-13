@@ -46,9 +46,7 @@
             <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
         </table>
         @if (dataSource.data?.length === 0) {
-            <div class="nat-margin nat-vertical nat-center">
-                <div>Pas de résultats</div>
-            </div>
+            <div class="nat-vertical nat-center nat-margin">Pas de résultats</div>
         }
         @if (!dataSource.data) {
             <div class="nat-margin nat-vertical nat-center">
