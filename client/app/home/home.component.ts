@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {
@@ -11,7 +11,7 @@ import {
     RouterOutlet,
 } from '@angular/router';
 import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, concatMap, filter, finalize, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -37,7 +37,7 @@ import {MatListItem, MatListItemIcon, MatNavList} from '@angular/material/list';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
@@ -100,6 +100,34 @@ export class HomeComponent implements OnInit {
         takeUntilDestroyed(),
         filter(event => event instanceof NavigationEnd),
     );
+
+    private readonly currentUrl = toSignal(
+        this.router.events.pipe(
+            takeUntilDestroyed(),
+            filter(event => event instanceof NavigationEnd),
+            map(() => this.router.url),
+            startWith(this.router.url),
+        ),
+    );
+
+    protected readonly isThesaurusActive = computed(() => {
+        const url = this.currentUrl() ?? '';
+        return [
+            '/institution',
+            '/artist',
+            '/domain',
+            '/period',
+            '/material',
+            '/antique-name',
+            '/document-type',
+            '/tag',
+        ].some(path => url.startsWith(path));
+    });
+
+    protected readonly isAdminActive = computed(() => {
+        const url = this.currentUrl() ?? '';
+        return ['/user', '/news', '/statistic'].some(path => url.startsWith(path));
+    });
 
     private readonly routeFirstChildParams$ = this.route.firstChild?.params.pipe(takeUntilDestroyed());
 
