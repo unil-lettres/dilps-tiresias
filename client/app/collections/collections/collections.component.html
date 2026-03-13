@@ -14,33 +14,34 @@
 
         <ng-scrollbar class="nat-expand ng-scroll-max-width">
             <div class="scrolled nat-vertical">
-                @if (showUnclassified) {
+                @if (showUnclassified || showMyCards) {
                     <mat-nav-list>
-                        <a
-                            #rla="routerLinkActive"
-                            mat-list-item
-                            routerLinkActive
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [activated]="rla.isActive"
-                            [routerLink]="['unclassified']"
-                        >
-                            <span>Non classé</span>
-                        </a>
-                    </mat-nav-list>
-                }
-
-                @if (showMyCards) {
-                    <mat-nav-list>
-                        <a
-                            #rla="routerLinkActive"
-                            mat-list-item
-                            routerLinkActive
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [activated]="rla.isActive"
-                            [routerLink]="['my-cards']"
-                        >
-                            <span>Mes images</span>
-                        </a>
+                        @if (showUnclassified) {
+                            <a
+                                #rla="routerLinkActive"
+                                mat-list-item
+                                routerLinkActive
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [activated]="rla.isActive"
+                                [routerLink]="['unclassified']"
+                            >
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                                <span>Non classé</span>
+                            </a>
+                        }
+                        @if (showMyCards) {
+                            <a
+                                #rla="routerLinkActive"
+                                mat-list-item
+                                routerLinkActive
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [activated]="rla.isActive"
+                                [routerLink]="['my-cards']"
+                            >
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                                <span>Mes images</span>
+                            </a>
+                        }
                     </mat-nav-list>
                 }
 
