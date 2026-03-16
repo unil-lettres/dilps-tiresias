@@ -25,48 +25,57 @@
 <div class="nat-expand nat-vertical">
     <mat-sidenav-container class="nat-expand nat-vertical">
         @if (showNavigationMenu()) {
-            <mat-sidenav class="menuMinimized" id="menu" mode="side" opened="true" position="start">
+            <mat-sidenav class="menuMinimized" id="menu" mode="side" opened position="start">
                 <ng-scrollbar class="ng-scroll-max-width">
                     <div class="nat-vertical nat-fill">
                         @if (user) {
                             <mat-nav-list>
                                 <!-- Dashboard -->
                                 <a
+                                    #homeRla="routerLinkActive"
                                     mat-list-item
-                                    routerLink="/"
-                                    routerLinkActive="active"
+                                    routerLink="/home"
+                                    routerLinkActive
+                                    [activated]="homeRla.isActive"
                                     [queryParams]="null"
                                     [routerLinkActiveOptions]="{exact: true}"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="home" />
+                                    <span>Non classé</span>
                                 </a>
                                 <!-- Mes collections privées -->
                                 <a
+                                    #myColRla="routerLinkActive"
                                     mat-list-item
                                     matTooltip="Mes collections"
                                     matTooltipPosition="after"
                                     routerLink="/my-collection"
-                                    routerLinkActive="active"
+                                    routerLinkActive
+                                    [activated]="myColRla.isActive"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="collections_bookmark" />
                                 </a>
                                 <!-- Collections publiques -->
                                 <a
+                                    #colRla="routerLinkActive"
                                     mat-list-item
                                     matTooltip="Collections publiques"
                                     matTooltipPosition="after"
                                     routerLink="/collection"
-                                    routerLinkActive="active"
+                                    routerLinkActive
+                                    [activated]="colRla.isActive"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="collections" />
                                 </a>
                                 <!-- Fonds -->
                                 <a
+                                    #sourceRla="routerLinkActive"
                                     mat-list-item
                                     matTooltip="Fonds"
                                     matTooltipPosition="after"
                                     routerLink="/source"
-                                    routerLinkActive="active"
+                                    routerLinkActive
+                                    [activated]="sourceRla.isActive"
                                 >
                                     @if (site === Site.Dilps) {
                                         <app-historic-icon tooltip="" />
@@ -76,11 +85,13 @@
                                 </a>
                                 <!-- Notifications -->
                                 <a
+                                    #notifRla="routerLinkActive"
                                     mat-list-item
                                     matTooltip="Notifications"
                                     matTooltipPosition="after"
                                     routerLink="/notification"
-                                    routerLinkActive="active"
+                                    routerLinkActive
+                                    [activated]="notifRla.isActive"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="notifications" />
                                 </a>
@@ -140,6 +151,7 @@
                                         mat-list-item
                                         matTooltip="Thésaurus"
                                         matTooltipPosition="after"
+                                        [activated]="isThesaurusActive()"
                                         [matMenuTriggerFor]="thesaurusMenu"
                                     >
                                         <mat-icon matListItemIcon naturalIcon="book" />
@@ -154,6 +166,7 @@
                                         mat-list-item
                                         matTooltip="Gestion"
                                         matTooltipPosition="after"
+                                        [activated]="isAdminActive()"
                                         [matMenuTriggerFor]="adminMenu"
                                     >
                                         <mat-icon matListItemIcon naturalIcon="build" />
@@ -185,9 +198,11 @@
                             <mat-nav-list class="nat-expand">
                                 <!-- Dashboard -->
                                 <a
+                                    #homeGuestRla="routerLinkActive"
                                     mat-list-item
                                     routerLink="/"
-                                    routerLinkActive="active"
+                                    routerLinkActive
+                                    [activated]="homeGuestRla.isActive"
                                     [routerLinkActiveOptions]="{exact: true}"
                                 >
                                     <mat-icon matListItemIcon naturalIcon="home" />

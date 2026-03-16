@@ -1,25 +1,29 @@
+@if (data.item.readOnly) {
+    <h2 mat-dialog-title>Détails du type de document</h2>
+} @else if (isUpdatePage()) {
+    <h2 mat-dialog-title>Modifier le type de document</h2>
+} @else {
+    <h2 mat-dialog-title>Créer un type de document</h2>
+}
+
 <mat-dialog-content>
-    <mat-tab-group>
-        <mat-tab label="Type de document">
-            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
-                <mat-form-field>
-                    <mat-label>Nom</mat-label>
-                    <input
-                        matInput
-                        [readonly]="isUpdatePage() && !data.item.permissions.update"
-                        [(ngModel)]="data.item.name"
-                    />
-                </mat-form-field>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+    <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+        <mat-form-field>
+            <mat-label>Nom</mat-label>
+            <input
+                matInput
+                [readonly]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
+                [(ngModel)]="data.item.name"
+            />
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
         [canCreate]="user?.globalPermissions?.documentType?.create"
-        [canDelete]="data.item.canDelete"
+        [readOnly]="data.item.readOnly"
         [item]="data.item"
         (create)="create()"
         (delete)="delete()"

@@ -9,14 +9,11 @@ import {AddressComponent} from '../../shared/components/address/address.componen
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-institution',
     imports: [
         MatDialogModule,
-        MatTab,
-        MatTabGroup,
         MatFormField,
         MatLabel,
         MatError,

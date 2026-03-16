@@ -1,8 +1,10 @@
+<!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 <div class="nat-expand nat-horizontal">
     <div class="containerWithToolbar nat-vertical left-pane">
-        <mat-toolbar class="nat-horizontal nat-align">
+        <mat-toolbar class="nat-horizontal nat-align nat-gap-10">
             <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             <div class="nat-expand"></div>
+            <span>{{ title }}</span>
             @if (canCreate) {
                 <button mat-icon-button matTooltip="Créer une collection" (click)="add()">
                     <mat-icon naturalIcon="add" />
@@ -12,29 +14,34 @@
 
         <ng-scrollbar class="nat-expand ng-scroll-max-width">
             <div class="scrolled nat-vertical">
-                @if (showUnclassified) {
+                @if (showUnclassified || showMyCards) {
                     <mat-nav-list>
-                        <a
-                            mat-list-item
-                            routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [routerLink]="['.']"
-                        >
-                            <span>Non classé</span>
-                        </a>
-                    </mat-nav-list>
-                }
-
-                @if (showMyCards) {
-                    <mat-nav-list>
-                        <a
-                            mat-list-item
-                            routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}"
-                            [routerLink]="['my-cards']"
-                        >
-                            <span>Mes images</span>
-                        </a>
+                        @if (showUnclassified) {
+                            <a
+                                #rla="routerLinkActive"
+                                mat-list-item
+                                routerLinkActive
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [activated]="rla.isActive"
+                                [routerLink]="['unclassified']"
+                            >
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                                <span>Non classé</span>
+                            </a>
+                        }
+                        @if (showMyCards) {
+                            <a
+                                #rla="routerLinkActive"
+                                mat-list-item
+                                routerLinkActive
+                                [routerLinkActiveOptions]="{exact: true}"
+                                [activated]="rla.isActive"
+                                [routerLink]="['my-cards']"
+                            >
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                                <span>Mes images</span>
+                            </a>
+                        }
                     </mat-nav-list>
                 }
 
@@ -42,16 +49,40 @@
                     <mat-divider />
                 }
 
-                <ng-template #recursiveList let-collections let-padding="padding">
+                <ng-template #recursiveList let-collections>
                     @for (collection of collections; track collection) {
-                        <a
-                            mat-list-item
-                            routerLinkActive="active"
+                        <mat-list-item
+                            #rla="routerLinkActive"
+                            routerLinkActive
                             class="mat-mdc-list-item-interactive"
+                            [activated]="rla.isActive"
                             [routerLink]="collection.id"
-                            [style.padding-left.px]="padding"
-                            (click)="toggle(collection)"
                         >
+                            @if (collection.hasChildren) {
+                                <button
+                                    mat-icon-button
+                                    matListItemIcon
+                                    class="hierarchy-indicator"
+                                    [class.expanded]="children.has(collection.id)"
+                                    [attr.aria-label]="
+                                        children.has(collection.id)
+                                            ? 'Réduire la collection'
+                                            : 'Développer la collection'
+                                    "
+                                    [attr.aria-expanded]="children.has(collection.id)"
+                                    (click)="toggle($event, collection)"
+                                >
+                                    <mat-icon>
+                                        @if (children.has(collection.id)) {
+                                            expand_more
+                                        } @else {
+                                            chevron_right
+                                        }
+                                    </mat-icon>
+                                </button>
+                            } @else {
+                                <mat-icon matListItemIcon class="hierarchy-indicator" />
+                            }
                             <span matListItemTitle>
                                 {{ collection.name }}
                                 @if (collection.hasUsers) {
@@ -59,29 +90,53 @@
                                 }
                             </span>
                             <div matListItemMeta class="nat-horizontal nat-gap nat-align">
+                                <button
+                                    mat-icon-button
+                                    class="actions-trigger"
+                                    aria-label="Actions de la collection"
+                                    [matMenuTriggerFor]="actionsMenu"
+                                    (click)="$event.stopPropagation()"
+                                >
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #actionsMenu>
+                                    @if (collection.permissions.update || collection.permissions.delete) {
+                                        <button mat-menu-item (click)="edit(collection)">
+                                            <mat-icon naturalIcon="edit" />
+                                            <span>Modifier</span>
+                                        </button>
+                                        <button mat-menu-item [matMenuTriggerFor]="exportMenuComp.matMenu()">
+                                            <mat-icon naturalIcon="share_windows" />
+                                            <span>Exporter</span>
+                                        </button>
+                                        <app-export-menu
+                                            #exportMenuComp
+                                            [showTrigger]="false"
+                                            [collection]="collection"
+                                        />
+                                    }
+                                    <button mat-menu-item (click)="linkCollectionToCollection(collection)">
+                                        <mat-icon naturalIcon="library_add" />
+                                        <span>Ajouter à une autre collection</span>
+                                    </button>
+                                </mat-menu>
                                 @if (collection.isSource && collection.isHistoric) {
                                     <app-historic-icon style="height: 30px" />
                                 }
-                                @if (collection.permissions.update || collection.permissions.delete) {
-                                    <button mat-icon-button (click)="edit($event, collection)">
-                                        <mat-icon naturalIcon="edit" />
-                                    </button>
-                                }
                             </div>
-                        </a>
-                        <ng-container
-                            *ngTemplateOutlet="
-                                recursiveList;
-                                context: {$implicit: children.get(collection.id), padding: padding + 20}
-                            "
-                        />
+                        </mat-list-item>
+                        @if (children.has(collection.id)) {
+                            <div class="hierarchy-depth-indicator">
+                                <ng-container
+                                    *ngTemplateOutlet="recursiveList; context: {$implicit: children.get(collection.id)}"
+                                />
+                            </div>
+                        }
                     }
                 </ng-template>
 
                 <mat-nav-list>
-                    <ng-container
-                        *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections, padding: 20}"
-                    />
+                    <ng-container *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections}" />
                     @if (hasMore) {
                         <a class="nat-vertical mat-mdc-list-item-interactive" mat-list-item (click)="more()">
                             <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
@@ -92,6 +147,7 @@
             </div>
         </ng-scrollbar>
     </div>
+    <mat-divider vertical />
 
     <router-outlet />
 </div>

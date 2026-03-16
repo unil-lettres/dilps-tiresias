@@ -84,7 +84,7 @@
                         }
                         @if (fetchedModel) {
                             <app-export-menu
-                                matTooltip="Exporter"
+                                matTooltip="Exporter la fiche"
                                 [selectedCards]="[fetchedModel]"
                                 [showExcelExportation]="!isDilps"
                             />
@@ -92,14 +92,19 @@
                         @if (fetchedModel && user) {
                             <button
                                 mat-icon-button
-                                matTooltip="Ajouter ou retirer d'une collection"
+                                matTooltip="Ajouter ou retirer la fiche d'une collection"
                                 (click)="linkToCollection()"
                             >
                                 <mat-icon naturalIcon="library_add" />
                             </button>
                         }
                         @if (fetchedModel?.permissions?.delete) {
-                            <button color="warn" mat-icon-button matTooltip="Supprimer" (click)="confirmDelete()">
+                            <button
+                                color="warn"
+                                mat-icon-button
+                                matTooltip="Supprimer la fiche définitivement"
+                                (click)="confirmDelete()"
+                            >
                                 <mat-icon naturalIcon="delete_forever" />
                             </button>
                         }

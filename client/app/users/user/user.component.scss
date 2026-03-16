@@ -1,12 +1,3 @@
-mat-slide-toggle {
-    margin-bottom: 1em;
-    margin-left: 1em;
-}
-
-mat-slider {
-    margin-left: 25px;
-}
-
 mat-dialog-content,
 mat-dialog-actions {
     animation: fadeIn 300ms ease-in-out;
@@ -19,4 +10,10 @@ mat-dialog-actions {
     to {
         opacity: 1;
     }
+}
+
+.no-collections {
+    padding: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    text-align: center;
 }

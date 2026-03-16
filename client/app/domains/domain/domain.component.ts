@@ -10,14 +10,11 @@ import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialo
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
     selector: 'app-domain',
     imports: [
         MatDialogModule,
-        MatTab,
-        MatTabGroup,
         MatFormField,
         MatLabel,
         MatInput,

@@ -1,12 +1,14 @@
-<button
-    mat-icon-button
-    [matMenuTriggerFor]="menu"
-    [matTooltip]="tooltip"
-    (menuOpened)="menuOpened()"
-    (menuClosed)="menuClosed()"
->
-    <mat-icon naturalIcon="share_windows" />
-</button>
+@if (showTrigger()) {
+    <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        [matTooltip]="tooltip"
+        (menuOpened)="menuOpened()"
+        (menuClosed)="menuClosed()"
+    >
+        <mat-icon naturalIcon="share_windows" />
+    </button>
+}
 <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="export(ExportFormat.Zip)">
         {{ optionZipLabel }}

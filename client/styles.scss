@@ -47,8 +47,6 @@ body {
 }
 
 natural-search {
-    margin: 0 20px;
-
     natural-input:last-of-type {
         margin-right: 5px !important;
     }
@@ -155,4 +153,13 @@ app-card natural-relations natural-table-button .mat-mdc-button {
     100% {
         opacity: 1;
     }
+}
+
+.hint {
+    margin: 0 0 16px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
 }

@@ -7,6 +7,10 @@
     @include utils.fixedToolbar();
 }
 
+mat-toolbar {
+    overflow: hidden; // Clip items that would visually overflow the toolbar height
+}
+
 app-view-grid {
     position: relative;
     z-index: 9;
@@ -111,4 +115,5 @@ app-view-grid {
 
 natural-search {
     margin-top: 6px;
+    min-width: 0; // Allow flex shrink below content size so ResizeObserver can detect overflow
 }

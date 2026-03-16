@@ -34,12 +34,12 @@ const config: CodegenConfig = {
         omitOperationSuffix: true,
         scalars: {
             ID: {
-                output: 'string',
                 input: 'string | any',
+                output: 'string',
             },
             Chronos: {
-                output: 'string',
                 input: 'string | Date',
+                output: 'string',
             },
             Color: 'string',
             Email: 'string',
@@ -50,24 +50,78 @@ const config: CodegenConfig = {
             // All IDs
             // Ideally we should not use `any` at all, but we want to be able
             // to use either a string or an entire subobject.
-            AntiqueNameID: 'string | any',
-            ArtistID: 'string | any',
-            CardID: 'string | any',
-            ChangeID: 'string | any',
-            CollectionID: 'string | any',
-            CountryID: 'string | any',
-            DocumentTypeID: 'string | any',
-            DomainID: 'string | any',
-            ExportID: 'string | any',
-            FileID: 'string | any',
-            InstitutionID: 'string | any',
-            LogID: 'string | any',
-            MaterialID: 'string | any',
-            NewsID: 'string | any',
-            PeriodID: 'string | any',
-            StatisticID: 'string | any',
-            TagID: 'string | any',
-            UserID: 'string | any',
+            AntiqueNameID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            ArtistID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            CardID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            ChangeID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            CollectionID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            CountryID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            DocumentTypeID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            DomainID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            ExportID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            FileID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            InstitutionID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            LogID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            MaterialID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            NewsID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            PeriodID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            StatisticID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            TagID: {
+                input: 'string | any',
+                output: 'string',
+            },
+            UserID: {
+                input: 'string | any',
+                output: 'string',
+            },
         },
     },
 };

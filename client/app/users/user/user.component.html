@@ -1,162 +1,213 @@
-<mat-dialog-content>
-    <mat-tab-group>
-        <mat-tab label="Utilisateur">
-            <div class="nat-padding-vertical nat-gap-10 nat-vertical">
-                <mat-form-field class="width-auto">
-                    <mat-label>Login</mat-label>
+<!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
+@if (currentView() === 'properties') {
+    @if (isUpdatePage()) {
+        <h2 mat-dialog-title>{{ isSelf ? 'Modifier mon profil' : `Modifier l'utilisateur « ${data.item.login} »` }}</h2>
+    } @else {
+        <h2 mat-dialog-title>Créer un utilisateur</h2>
+    }
+    <mat-dialog-content>
+        <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+            @if (isUpdatePage()) {
+                <div class="nat-horizontal nat-distribute nat-center">
+                    @if (collectionsCount() === 0) {
+                        <span>{{
+                            isSelf ? "Vous n'êtes abonné à aucune collection" : 'Abonné à aucune collection'
+                        }}</span>
+                    } @else {
+                        <span>
+                            {{ isSelf ? 'Vous êtes abonné' : 'Abonné' }} à {{ collectionsCount() }} collection{{
+                                collectionsCount() > 1 ? 's' : ''
+                            }}
+                        </span>
+                    }
+                    <button mat-button color="primary" (click)="showCollectionsView()">
+                        {{ isSelf ? 'Gérer mes abonnements' : 'Gérer les abonnements' }}
+                    </button>
+                </div>
+                <mat-divider />
+            }
+
+            <mat-form-field class="width-auto">
+                <mat-label>Login</mat-label>
+                <input
+                    #login="ngModel"
+                    matInput
+                    name="login"
+                    fieldName="login"
+                    [appUnique]="data.item"
+                    [service]="service"
+                    [disabled]="!!data.item.id"
+                    [(ngModel)]="data.item.login"
+                />
+                @if (login.invalid && (login?.dirty || login?.touched)) {
+                    <mat-error>Ce login est déjà attribué</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field class="width-auto">
+                <mat-label>Nom</mat-label>
+                <input matInput name="name" [(ngModel)]="data.item.name" />
+            </mat-form-field>
+
+            @if (!isShibbolethUser()) {
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
                     <input
-                        #login="ngModel"
+                        #email="ngModel"
                         matInput
-                        name="login"
-                        fieldName="login"
+                        name="email"
+                        type="email"
+                        fieldName="email"
                         [appUnique]="data.item"
                         [service]="service"
-                        [disabled]="!!data.item.id"
-                        [(ngModel)]="data.item.login"
+                        [(ngModel)]="data.item.email"
                     />
-                    @if (login.invalid && (login?.dirty || login?.touched)) {
-                        <mat-error>Ce login est déjà attribué</mat-error>
+                    @if (email.invalid && (email?.dirty || email?.touched)) {
+                        <mat-error>Cet email est déjà attribué</mat-error>
                     }
                 </mat-form-field>
+            }
 
-                <mat-form-field class="width-auto">
-                    <mat-label>Nom</mat-label>
-                    <input matInput name="name" [(ngModel)]="data.item.name" />
-                </mat-form-field>
-
-                @if (!isShibbolethUser()) {
+            @if (
+                (user?.globalPermissions?.user?.create || (isUpdatePage() && data.item.permissions.update)) &&
+                !isShibbolethUser()
+            ) {
+                <div class="nat-vertical nat-gap-10" [formGroup]="passwordGroupCtrl">
                     <mat-form-field>
-                        <mat-label>Email</mat-label>
+                        <mat-label>Mot de passe</mat-label>
                         <input
-                            #email="ngModel"
                             matInput
-                            name="email"
-                            type="email"
-                            fieldName="email"
-                            [appUnique]="data.item"
-                            [service]="service"
-                            [(ngModel)]="data.item.email"
+                            type="password"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                            [formControl]="passwordCtrl"
                         />
-                        @if (email.invalid && (email?.dirty || email?.touched)) {
-                            <mat-error>Cet email est déjà attribué</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Confirmation du mot passe</mat-label>
+                        <input
+                            matInput
+                            type="password"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                            [formControl]="passwordConfirmationCtrl"
+                        />
+                        @if (passwordConfirmationCtrl.hasError('password')) {
+                            <mat-error>Les mots de passe ne sont pas identiques</mat-error>
                         }
                     </mat-form-field>
-                }
+                </div>
+            }
 
-                @if (
-                    (user?.globalPermissions?.user?.create || (isUpdatePage() && data.item.permissions.update)) &&
-                    !isShibbolethUser()
-                ) {
-                    <div class="nat-vertical nat-gap-10" [formGroup]="passwordGroupCtrl">
-                        <mat-form-field>
-                            <mat-label>Mot de passe</mat-label>
-                            <input
-                                matInput
-                                type="password"
-                                autocorrect="off"
-                                autocapitalize="off"
-                                spellcheck="false"
-                                [formControl]="passwordCtrl"
-                            />
-                        </mat-form-field>
-                        <mat-form-field>
-                            <mat-label>Confirmation du mot passe</mat-label>
-                            <input
-                                matInput
-                                type="password"
-                                autocorrect="off"
-                                autocapitalize="off"
-                                spellcheck="false"
-                                [formControl]="passwordConfirmationCtrl"
-                            />
-                            @if (passwordConfirmationCtrl.hasError('password')) {
-                                <mat-error>Les mots de passe ne sont pas identiques</mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
-                }
+            <app-thesaurus
+                placeholder="Institution"
+                [model]="institution"
+                [multiple]="false"
+                [service]="institutionSortedByUsageService"
+                (modelChange)="data.item.institution = $any($event)"
+            />
 
-                <app-thesaurus
-                    placeholder="Institution"
-                    [model]="institution"
-                    [multiple]="false"
-                    [service]="institutionSortedByUsageService"
-                    (modelChange)="data.item.institution = $any($event)"
-                />
+            <mat-form-field>
+                <mat-label>Active jusqu'au</mat-label>
+                <input matInput name="activeUntil" [matDatepicker]="picker" [(ngModel)]="data.item.activeUntil" />
+                <mat-datepicker-toggle matIconSuffix [for]="picker" />
+                <mat-datepicker #picker />
+            </mat-form-field>
 
+            @if (isUpdatePage()) {
                 <mat-form-field>
-                    <mat-label>Active jusqu'au</mat-label>
-                    <input matInput name="activeUntil" [matDatepicker]="picker" [(ngModel)]="data.item.activeUntil" />
-                    <mat-datepicker-toggle matIconSuffix [for]="picker" />
-                    <mat-datepicker #picker />
+                    <mat-label>Licence</mat-label>
+                    <input
+                        disabled
+                        matInput
+                        name="termsAgreement"
+                        [matDatepicker]="picker2"
+                        [(ngModel)]="data.item.termsAgreement"
+                    />
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2" />
+                    <mat-datepicker #picker2 />
                 </mat-form-field>
+            }
 
-                @if (isUpdatePage()) {
-                    <mat-form-field>
-                        <mat-label>Licence</mat-label>
-                        <input
-                            disabled
-                            matInput
-                            name="termsAgreement"
-                            [matDatepicker]="picker2"
-                            [(ngModel)]="data.item.termsAgreement"
-                        />
-                        <mat-datepicker-toggle matIconSuffix [for]="picker2" />
-                        <mat-datepicker #picker2 />
-                    </mat-form-field>
-                }
+            <mat-form-field>
+                <mat-label>Rôle</mat-label>
+                <mat-select [disabled]="user?.id === data.item.id" [(value)]="data.item.role">
+                    @for (role of roles; track role) {
+                        <mat-option [value]="role.value" [disabled]="roleDisabled(role.value)">
+                            {{ role.name }}</mat-option
+                        >
+                    }
+                </mat-select>
+            </mat-form-field>
 
+            @if (isUpdatePage()) {
                 <mat-form-field>
-                    <mat-label>Rôle</mat-label>
-                    <mat-select [disabled]="user?.id === data.item.id" [(value)]="data.item.role">
-                        @for (role of roles; track role) {
-                            <mat-option [value]="role.value" [disabled]="roleDisabled(role.value)">
-                                {{ role.name }}</mat-option
-                            >
-                        }
-                    </mat-select>
+                    <mat-label>Type d'utilisateur</mat-label>
+                    <input disabled matInput name="type" [value]="data.item.type | type" [(ngModel)]="data.item.type" />
                 </mat-form-field>
+            }
+        </div>
+    </mat-dialog-content>
 
-                @if (isUpdatePage()) {
-                    <mat-form-field>
-                        <mat-label>Type d'utilisateur</mat-label>
-                        <input
-                            disabled
-                            matInput
-                            name="type"
-                            [value]="data.item.type | type"
-                            [(ngModel)]="data.item.type"
-                        />
-                    </mat-form-field>
+    <mat-dialog-actions>
+        <app-dialog-footer
+            class="nat-expand"
+            [canCreate]="user?.globalPermissions?.user?.create"
+            [readOnly]="false"
+            [formCtrl]="passwordConfirmationCtrl"
+            [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"
+            [item]="data.item"
+            (create)="create()"
+            (delete)="delete()"
+            (update)="update()"
+        />
+    </mat-dialog-actions>
+}
+
+@if (currentView() === 'collections') {
+    <h2 mat-dialog-title>
+        {{
+            isSelf
+                ? 'Vos abonnements aux collections'
+                : `Abonnements aux collections de l'utilisateur « ${data.item.login} »`
+        }}
+    </h2>
+    <mat-dialog-content>
+        <p class="hint">
+            Les abonnements d'une collection sont gérés par ses responsables via les détails de la collection.
+        </p>
+        @if (collections().length === 0) {
+            <p class="no-collections">
+                {{ isSelf ? "Vous n'êtes abonné à aucune collection" : 'Abonné à aucune collection' }}
+            </p>
+        } @else {
+            <mat-list>
+                @for (collection of collections(); track collection.id) {
+                    <mat-list-item>
+                        <span matListItemTitle>{{ collection.hierarchicName || collection.name }}</span>
+                        <button
+                            mat-icon-button
+                            color="warn"
+                            matListItemMeta
+                            aria-label="Se désabonner"
+                            [matTooltip]="
+                                isSelf ? 'Se désabonner de cette collection' : 'Désabonner de cette collection'
+                            "
+                            (click)="unsubscribeFromCollection(collection)"
+                        >
+                            <mat-icon fontIcon="link_off" />
+                        </button>
+                    </mat-list-item>
                 }
-            </div>
-        </mat-tab>
-
-        @if (isUpdatePage()) {
-            <mat-tab label="Collections">
-                <natural-relations
-                    class="nat-margin"
-                    placeholder="Ajouter une collection"
-                    [filter]="{groups: [{conditions: [{users: {have: {values: [data.item.id]}}}]}]}"
-                    [hierarchicSelectorConfig]="collectionsHierarchicConfig"
-                    [main]="data.item"
-                    [service]="collectionService"
-                />
-            </mat-tab>
+            </mat-list>
         }
-    </mat-tab-group>
-</mat-dialog-content>
+    </mat-dialog-content>
 
-<mat-dialog-actions>
-    <app-dialog-footer
-        class="nat-expand"
-        [canCreate]="user?.globalPermissions?.user?.create"
-        [canDelete]="true"
-        [formCtrl]="passwordConfirmationCtrl"
-        [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"
-        [item]="data.item"
-        (create)="create()"
-        (delete)="delete()"
-        (update)="update()"
-    />
-</mat-dialog-actions>
+    <mat-dialog-actions>
+        <div class="nat-expand nat-horizontal nat-justify-end">
+            <button mat-button color="primary" (click)="showPropertiesView()">Terminé</button>
+        </div>
+    </mat-dialog-actions>
+}

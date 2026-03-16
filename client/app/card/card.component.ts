@@ -862,10 +862,6 @@ export class CardComponent implements OnInit, OnChanges {
                 CollectionSelectorComponent,
                 {
                     width: '400px',
-                    position: {
-                        top: '74px',
-                        left: '74px',
-                    },
                     data: {
                         images: [this.fetchedModel],
                     },
