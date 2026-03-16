@@ -467,10 +467,6 @@ export class ListComponent
             CollectionSelectorComponent,
             {
                 width: '400px',
-                position: {
-                    top: '66px',
-                    left: '160px',
-                },
                 data: {images: selection},
             },
         );
