@@ -1,13 +1,12 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {
-    AfterViewInit,
     Component,
     ElementRef,
+    effect,
     inject,
     input,
     OnChanges,
-    OnDestroy,
     OnInit,
     signal,
     SimpleChanges,
@@ -20,6 +19,7 @@ import {MatTooltip} from '@angular/material/tooltip';
 import {RouterLink} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {CardService} from 'client/app/card/services/card.service';
+import {fromResize} from '../../utils/resize.utils';
 import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../generated-types';
 
 @Component({
@@ -36,7 +36,7 @@ import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../genera
         },
     ],
 })
-export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class RelatedCardsComponent implements OnInit, OnChanges {
     protected readonly cardService = inject(CardService);
 
     public readonly card = input.required<CardQuery['card']>();
@@ -78,12 +78,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private readonly cardsQueryVariables = new NaturalQueryVariablesManager<CardsQueryVariables>();
 
-    /**
-     * Resize observer to update buttons (scroll left and right) state when the
-     * component is resized.
-     */
-    private readonly resizeObserver = new ResizeObserver(() => this.updateButtonsState());
-
     private readonly cardService$ = this.cardService.watchAll(this.cardsQueryVariables).pipe(takeUntilDestroyed());
 
     public constructor() {
@@ -95,6 +89,12 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
             .subscribe(result => {
                 this.breakpointXSmall = result.matches;
             });
+
+        const slideshowWidth = fromResize(this.slideshow);
+        effect(() => {
+            slideshowWidth();
+            this.updateButtonsState();
+        });
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -122,14 +122,6 @@ export class RelatedCardsComponent implements OnInit, OnChanges, AfterViewInit, 
         this.cardService$.subscribe(result => {
             this.cards = result.items;
         });
-    }
-
-    public ngAfterViewInit(): void {
-        this.resizeObserver.observe(this.slideshow().nativeElement);
-    }
-
-    public ngOnDestroy(): void {
-        this.resizeObserver.disconnect();
     }
 
     protected scrollLeft(): void {

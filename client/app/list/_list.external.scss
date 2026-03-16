@@ -7,3 +7,10 @@
 #main-natural-search .endOfRowButton {
     margin-bottom: 13px !important;
 }
+
+// Prevent natural-group from wrapping chips to a second row when the toolbar
+// is compressed.
+#main-natural-search natural-group {
+    flex-wrap: nowrap;
+    overflow: hidden;
+}

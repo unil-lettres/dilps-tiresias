@@ -146,6 +146,7 @@ export const routes: Routes = [
                 component: CollectionsComponent,
                 data: {
                     creationButtonForRoles: false,
+                    title: 'Collections publiques',
                     filter: {
                         groups: [
                             {
@@ -172,7 +173,6 @@ export const routes: Routes = [
                         component: ListComponent,
                         data: {
                             showLogo: false,
-                            showDownloadCollectionForRoles: [UserRole.administrator],
                         },
                         resolve: {
                             collection: resolveFakeCollection,
@@ -189,6 +189,7 @@ export const routes: Routes = [
                     showLogo: false,
                     showUnclassified: true,
                     showMyCards: true,
+                    title: 'Mes collections',
                     filter: {
                         groups: [
                             {
@@ -234,6 +235,7 @@ export const routes: Routes = [
                 path: 'source',
                 component: CollectionsComponent,
                 data: {
+                    title: 'Fonds',
                     creationButtonForRoles: [UserRole.administrator],
                     filter: {
                         groups: [
@@ -246,7 +248,6 @@ export const routes: Routes = [
                         path: ':collectionId',
                         component: ListComponent,
                         data: {
-                            showDownloadCollectionForRoles: [UserRole.administrator],
                             showLogo: false,
                             filter: {}, // overrides parent
                         },

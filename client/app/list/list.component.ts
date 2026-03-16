@@ -1,15 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    computed,
-    effect,
-    ElementRef,
-    inject,
-    OnDestroy,
-    OnInit,
-    signal,
-    viewChild,
-} from '@angular/core';
+import {AfterViewInit, Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
@@ -75,6 +64,7 @@ import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component
 import {ViewListComponent} from '../view-list/view-list.component';
 import {Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
+import {fromResize} from '../shared/utils/resize.utils';
 
 function applyChanges(
     destination: CardsQuery['cards']['items'][0],
@@ -144,7 +134,7 @@ enum ViewMode {
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
-    implements OnInit, AfterViewInit, OnDestroy, ReusableRouteStatus
+    implements OnInit, AfterViewInit, ReusableRouteStatus
 {
     private readonly collectionService = inject(CollectionService);
     private readonly userService = inject(UserService);
@@ -162,11 +152,11 @@ export class ListComponent
      */
     private readonly naturalSearchComponent = viewChild(NaturalSearchComponent);
 
-    private readonly hasActiveSearch = computed(() => {
-        const selections = this.naturalSearchComponent()?.innerSelections();
+    private readonly searchTermCount = computed(
+        () => (this.naturalSearchComponent()?.innerSelections() ?? []).reduce((acc, val) => acc.concat(val), []).length,
+    );
 
-        return !!selections && selections.reduce((acc, val) => acc.concat(val), []).length > 0;
-    });
+    private readonly hasActiveSearch = computed(() => this.searchTermCount() > 0);
 
     /**
      * Reference to grid component
@@ -182,6 +172,9 @@ export class ListComponent
      * Reference to chips container for scroll
      */
     protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
+    private readonly toolbarRef = viewChild('toolbar', {read: ElementRef});
+    private readonly toolbarSelectionRef = viewChild('toolbarSelection', {read: ElementRef});
+    private readonly toolbarOptionsRef = viewChild('toolbarOptions', {read: ElementRef});
 
     /**
      * Whether the scrollbar could not scroll left anymore.
@@ -199,9 +192,21 @@ export class ListComponent
     protected readonly hasScrollbar = signal(false);
 
     /**
-     * Resize observer to update buttons state when the component is resized.
+     * Whether toolbar actions should be displayed in an overflow menu.
+     * True when the toolbar is too narrow to fit the selection zone + the search bar.
      */
-    private resizeObserver: ResizeObserver | null = null;
+    protected readonly showOverflowMenu = computed(() => {
+        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() : 0;
+        const searchWidth = 300 + this.searchTermCount() * 250;
+        return this.toolbarWidth() < this.toolbarOptionsWidth() + selectionWidth + searchWidth + 200;
+    });
+
+    /**
+     * Current offsetWidth of the toolbar elements.
+     */
+    private readonly toolbarWidth = fromResize(this.toolbarRef);
+    private readonly toolbarSelectionWidth = fromResize(this.toolbarSelectionRef);
+    private readonly toolbarOptionsWidth = fromResize(this.toolbarOptionsRef);
 
     /**
      * Expose enum for template
@@ -217,6 +222,7 @@ export class ListComponent
      * Checked content for selection
      */
     protected selected: CardsQuery['cards']['items'][0][] = [];
+    private readonly hasSelection = signal(false);
 
     /**
      * Show logo on top left corner
@@ -236,19 +242,14 @@ export class ListComponent
     protected user!: ViewerQuery['viewer'];
 
     /**
-     * True if button for archive download has permissions to be displayed
-     */
-    protected showDownloadCollection = true;
-
-    /**
      * Number of items added to dom from the gallery (grid view)
      */
-    protected gridNumberVisibleItems = 0;
+    protected readonly gridNumberVisibleItems = signal(0);
 
     /**
      * Total number of items matching with search
      */
-    protected gridNumberTotalItems = 0;
+    protected readonly gridNumberTotalItems = signal(0);
 
     /**
      * Indicates if at least one historic image is present in the list
@@ -306,16 +307,11 @@ export class ListComponent
 
         this.naturalSearchFacets = this.site === Site.Dilps ? dilps() : tiresias();
 
-        // Initialize ResizeObserver when chips container becomes available
+        // Update scroll arrows whenever the chips container resizes
+        const chipsWidth = fromResize(this.chipsContainer);
         effect(() => {
-            const container = this.chipsContainer()?.nativeElement;
-            if (container) {
-                this.resizeObserver?.disconnect();
-                this.resizeObserver = new ResizeObserver(() => {
-                    this.updateScrollArrows();
-                });
-                this.resizeObserver.observe(container);
-            }
+            chipsWidth();
+            this.updateScrollArrows();
         });
     }
 
@@ -333,7 +329,6 @@ export class ListComponent
         // Setup admin features
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
-            this.updateShowDownloadCollection();
 
             if (this.user && this.user.role === UserRole.administrator) {
                 this.pushAdminConfig();
@@ -356,7 +351,6 @@ export class ListComponent
         // Required because when /:id change, the route stays the same, and component is not re-initialized
         this.routeData$.subscribe(data => {
             this.showLogo = data.showLogo;
-            this.updateShowDownloadCollection();
 
             if (data.collection) {
                 const collectionFilter: CardFilter = {
@@ -396,10 +390,6 @@ export class ListComponent
         });
     }
 
-    public ngOnDestroy(): void {
-        this.resizeObserver?.disconnect();
-    }
-
     protected override handleHistoryNavigation(): void {
         onHistoryEvent(this.router).pipe(
             takeUntilDestroyed(this.destroyRef),
@@ -437,11 +427,11 @@ export class ListComponent
 
     protected gridContentChange(event: ContentChange): void {
         if (event.visible != null) {
-            this.gridNumberVisibleItems = event.visible;
+            this.gridNumberVisibleItems.set(event.visible);
         }
 
         if (event.total != null) {
-            this.gridNumberTotalItems = event.total;
+            this.gridNumberTotalItems.set(event.total);
         }
 
         if (event.hasHistoric != null) {
@@ -461,31 +451,29 @@ export class ListComponent
         }
     }
 
-    /**
-     * Show a button to download a collection, considering permissions
-     */
-    protected updateShowDownloadCollection(): void {
-        const roles: UserRole[] = this.route.snapshot.data.showDownloadCollectionForRoles;
-        const roleIsAllowed = this.user?.role && (!roles || roles?.includes(this.user.role));
-        const hasCollection = this.collection?.id;
-        this.showDownloadCollection = !!hasCollection && !!roleIsAllowed;
-    }
-
     protected select(cards: CardsQuery['cards']['items'][0][]): void {
         this.selected = cards;
+        this.hasSelection.set(cards.length > 0);
     }
 
     protected reset(): void {
         this.selected = [];
+        this.hasSelection.set(false);
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
     protected linkSelectionToCollection(selection: CardsQuery['cards']['items'][0][]): void {
-        this.linkToCollection({images: selection});
-    }
-
-    protected linkCollectionToCollection(collection: FakeCollection): void {
-        this.linkToCollection({collection});
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+            CollectionSelectorComponent,
+            {
+                width: '400px',
+                position: {
+                    top: '66px',
+                    left: '160px',
+                },
+                data: {images: selection},
+            },
+        );
     }
 
     protected unlinkFromCollection(selection: CardsQuery['cards']['items'][0][]): void {
@@ -648,6 +636,7 @@ export class ListComponent
 
     protected unselectAll(): void {
         this.selected = [];
+        this.hasSelection.set(false);
         this.getViewComponent().unselectAll();
     }
 
@@ -768,20 +757,6 @@ export class ListComponent
      */
     private getViewComponent(): ViewInterface {
         return (this.gridComponent() || this.listComponent())!;
-    }
-
-    private linkToCollection(data: CollectionSelectorData): void {
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
-            CollectionSelectorComponent,
-            {
-                width: '400px',
-                position: {
-                    top: '66px',
-                    left: '160px',
-                },
-                data: data,
-            },
-        );
     }
 
     /**

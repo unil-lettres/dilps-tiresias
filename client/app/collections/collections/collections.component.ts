@@ -24,6 +24,12 @@ import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {ExportMenuComponent} from '../../shared/components/export-menu/export-menu.component';
+import {
+    CollectionSelectorComponent,
+    CollectionSelectorData,
+} from '../../shared/components/collection-selector/collection-selector.component';
 
 @Component({
     selector: 'app-collections',
@@ -47,6 +53,10 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         RouterOutlet,
         NaturalIconDirective,
         HistoricIconComponent,
+        MatMenu,
+        MatMenuItem,
+        MatMenuTrigger,
+        ExportMenuComponent,
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
@@ -77,6 +87,11 @@ export class CollectionsComponent implements OnInit {
     protected showMyCards = false;
 
     /**
+     * Title for the page
+     */
+    protected title = '';
+
+    /**
      * Can create permissions
      */
     protected canCreate = false;
@@ -105,6 +120,7 @@ export class CollectionsComponent implements OnInit {
             this.canCreate = this.showCreateButton(data.creationButtonForRoles, data.creator);
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
+            this.title = data.title || '';
 
             this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
@@ -134,7 +150,8 @@ export class CollectionsComponent implements OnInit {
         });
     }
 
-    protected toggle(collection: CollectionsQuery['collections']['items'][0]): void {
+    protected toggle(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
+        event.stopPropagation();
         if (this.children.has(collection.id)) {
             this.children.delete(collection.id);
         } else {
@@ -163,10 +180,7 @@ export class CollectionsComponent implements OnInit {
         this.queryVariables.merge('pagination', {pagination: {pageIndex: nextPage}});
     }
 
-    protected edit(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
-        event.preventDefault();
-        event.stopPropagation();
-
+    protected edit(collection: CollectionsQuery['collections']['items'][0]): void {
         const dialogRef = this.dialog.open(CollectionComponent, {
             width: '800px',
             data: {item: collection},
@@ -182,6 +196,13 @@ export class CollectionsComponent implements OnInit {
 
     protected add(): void {
         this.dialog.open(CollectionComponent, {width: '800px'});
+    }
+
+    protected linkCollectionToCollection(collection: CollectionsQuery['collections']['items'][0]): void {
+        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
+            width: '400px',
+            data: {collection},
+        });
     }
 
     private showCreateButton(allowedRoles: boolean | UserRole[], user: ViewerQuery['viewer'] | null): boolean {
