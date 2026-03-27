@@ -1,11 +1,3 @@
-import {
-    FileSelection,
-    NaturalFileDropDirective,
-    NaturalIconDirective,
-    NaturalLinkMutationService,
-    NaturalRelationsComponent,
-    NaturalTableButtonComponent,
-} from '@ecodev/natural';
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 
@@ -24,6 +16,14 @@ import {MatSlider, MatSliderThumb} from '@angular/material/slider';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
 import {ActivatedRoute, Router} from '@angular/router';
+import {
+    FileSelection,
+    NaturalFileDropDirective,
+    NaturalIconDirective,
+    NaturalLinkMutationService,
+    NaturalRelationsComponent,
+    NaturalTableButtonComponent,
+} from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
 import {concatMap, first, from, last} from 'rxjs';
@@ -32,6 +32,7 @@ import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.c
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
 import {ArtistComponent} from '../artists/artist/artist.component';
 import {ArtistService} from '../artists/services/artist.service';
+import {CardSkeletonComponent} from '../card-skeleton/card-skeleton.component';
 import {ChangeService} from '../changes/services/change.service';
 import {DocumentTypeComponent} from '../document-types/document-type/document-type.component';
 import {DocumentTypeService} from '../document-types/services/document-type.service';
@@ -65,6 +66,7 @@ import {RelatedCardsComponent} from '../shared/components/related-cards/related-
 import {StampComponent, Stamped} from '../shared/components/stamp/stamp.component';
 import {ThesaurusComponent} from '../shared/components/thesaurus/thesaurus.component';
 import {quillConfig} from '../shared/config/quill.options';
+import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {UniqueValidatorDirective} from '../shared/directives/unique-validator.directive';
 import {UrlValidatorDirective} from '../shared/directives/url-validator.directive';
@@ -88,14 +90,12 @@ import {onlyLeafTagHierarchicConfig} from '../shared/hierarchic-configurations/T
 import {onlyLeaves} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {loadImageAsDataUrl} from '../shared/services/utility';
+import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
-import {CardSkeletonComponent} from './card-skeleton.component';
 import {CardService} from './services/card.service';
-import {UPLOAD_CONFIG} from '../shared/config/upload.config';
-import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -162,12 +162,12 @@ type InitialCardValues = {
         NaturalIconDirective,
         RelatedCardsComponent,
         ExportMenuComponent,
-        CardSkeletonComponent,
         MatList,
         MatListItem,
         HistoricIconComponent,
         UniqueValidatorDirective,
         UrlValidatorDirective,
+        CardSkeletonComponent,
     ],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
@@ -820,7 +820,7 @@ export class CardComponent implements OnInit, OnChanges {
                 '<strong>Cette action est irréversible.</strong>',
                 'Supprimer définitivement',
                 undefined,
-                'warn',
+                'error',
                 'filled',
             )
             .subscribe(confirmed => {

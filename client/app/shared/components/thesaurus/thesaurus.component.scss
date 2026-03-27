@@ -1,3 +1,43 @@
+@use '@angular/material' as mat;
+
+:host {
+    --bg: var(--mat-sys-surface-variant);
+
+    ::ng-deep {
+        input.mat-mdc-chip-input {
+            flex: 1 0 auto;
+            width: calc(100% - 5px);
+        }
+
+        .mat-mdc-chip {
+            margin-right: 2em !important;
+        }
+
+        .search-wrapper {
+            padding: 0 !important;
+        }
+        .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__action--primary::before {
+            border: none;
+        }
+    }
+    @supports (background: color-mix(in srgb, blue, red)) {
+        --bg: color-mix(in srgb, var(--mat-sys-surface-variant) 90%, var(--mat-sys-on-surface));
+    }
+
+    @include mat.chips-overrides(
+        (
+            container-shape-radius: var(--mat-sys-corner-full),
+            elevated-container-color: var(--bg),
+        )
+    );
+}
+
+.search-wrapper {
+    button {
+        background: var(--bg);
+    }
+}
+
 .mat-mdc-form-field {
     width: 100%;
 }
@@ -13,10 +53,10 @@
 
 input {
     display: none;
-}
 
-input.show {
-    display: block;
+    &.show {
+        display: block;
+    }
 }
 
 .search-wrapper {
@@ -34,4 +74,8 @@ input.show {
         display: grid;
         place-content: center;
     }
+}
+
+.mat-mdc-chip-remove {
+    padding-left: 5px;
 }

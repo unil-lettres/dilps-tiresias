@@ -1,9 +1,0 @@
-@use 'sass:map';
-@use '@angular/material' as mat;
-
-@mixin scroll($theme) {
-    $foreground: map.get($theme, foreground);
-
-    --scrollbar-thumb-color: #{mat.m2-get-color-from-palette($foreground, base, 0.3)};
-    --scrollbar-thickness: 9;
-}

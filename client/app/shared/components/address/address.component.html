@@ -85,10 +85,11 @@
             </div>
         }
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
-            <div id="mapZone">
+            <div id="map-zone">
                 <mat-form-field
                     class="mat-elevation-z4"
                     id="search"
+                    subscriptSizing="dynamic"
                     [class.nat-hide]="!(!readonly && (googleMapLoaded | async))"
                 >
                     <mat-label>Chercher</mat-label>

@@ -1,0 +1,68 @@
+/*
+ * Theme 1 (light + dark):
+ *   Seed: #01BCD4
+ *   Core Colors:
+ *     Primary: #01BCD4
+ *     Tertiary: #FF9800
+ *     Neutral: #FFFFFF
+ *     Neutral Variant: #FFFFFF
+ *
+ * Theme 1 Builder Link:
+ *   http://material-foundation.github.io/material-theme-builder/?primary=01BCD4&tertiary=FF9800&neutral=FFFFFF&neutralVariant=FFFFFF&colorMatch=true
+ */
+
+@use '@angular/material' as mat;
+
+// Only light color for old browsers that don't support light-dark()
+/* prettier-ignore */
+
+[data-theme="dilps-development"] {
+    @include mat.theme-overrides((
+        primary: #006876,
+        primary-container: #01BCD4,
+        primary-fixed: #A1EFFF,
+        primary-fixed-dim: #45D8F1,
+        on-primary: #FFFFFF,
+        on-primary-container: #004650,
+        on-primary-fixed: #001F25,
+        on-primary-fixed-variant: #004E59,
+        inverse-primary: #45D8F1,
+
+        secondary: #37656E,
+        secondary-container: #BBEBF5,
+        secondary-fixed: #BBEBF5,
+        secondary-fixed-dim: #9FCED9,
+        on-secondary: #FFFFFF,
+        on-secondary-container: #3D6B74,
+        on-secondary-fixed: #001F25,
+        on-secondary-fixed-variant: #1C4D56,
+    ));
+}
+
+// Both colors for new browsers that support light-dark()
+@supports (color: light-dark(white, black)) {
+    /* prettier-ignore */
+
+    [data-theme="dilps-development"] {
+        @include mat.theme-overrides((
+            primary: light-dark(#006876, #45D8F1),
+            primary-container: light-dark(#01BCD4, #01BCD4),
+            primary-fixed: light-dark(#A1EFFF, #A1EFFF),
+            primary-fixed-dim: light-dark(#45D8F1, #45D8F1),
+            on-primary: light-dark(#FFFFFF, #00363E),
+            on-primary-container: light-dark(#004650, #004650),
+            on-primary-fixed: light-dark(#001F25, #001F25),
+            on-primary-fixed-variant: light-dark(#004E59, #004E59),
+            inverse-primary: light-dark(#45D8F1, #006876),
+
+            secondary: light-dark(#37656E, #9FCED9),
+            secondary-container: light-dark(#BBEBF5, #1C4D56),
+            secondary-fixed: light-dark(#BBEBF5, #BBEBF5),
+            secondary-fixed-dim: light-dark(#9FCED9, #9FCED9),
+            on-secondary: light-dark(#FFFFFF, #00363E),
+            on-secondary-container: light-dark(#3D6B74, #8EBDC7),
+            on-secondary-fixed: light-dark(#001F25, #001F25),
+            on-secondary-fixed-variant: light-dark(#1C4D56, #1C4D56),
+        ));
+    }
+}

@@ -785,15 +785,15 @@
   resolved "https://registry.yarnpkg.com/@ecodev/natural-gallery-js/-/natural-gallery-js-11.1.1.tgz#adcbac921ecc60b3df00337653dd5fd3a4f78126"
   integrity sha512-YhQfE0eFpEib5QreUNd3l0OPSLjt1iC1YF6hohlpsaIRrAopWqiqqR/Bw8UmRiFZs6tK5gMKRCNGP8FY94vP0g==
 
-"@ecodev/natural-layout@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.2.tgz#e2c64c2ddb3c60793a39236b52624fde323e610a"
-  integrity sha512-BV75kFQmpfuSBNQ1jyKu+IdGkFTMESjPrtKrEyc3MqcmVhV5IiYU0LXTaghLZozuZgCT9HfMOnEsh05aS2j9uQ==
+"@ecodev/natural-layout@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural-layout/-/natural-layout-2.0.5.tgz#18d426156171aa9e27f571c238af9712ab3fb495"
+  integrity sha512-PcMT248B/XVOTdYUcpPhCdL2BbxwoxZghATnPSew4TMVMlLgk65bfMi2uY05Ywb+hPdbjwIJWZ7zepFlr/vDKw==
 
-"@ecodev/natural@^69.0.0":
-  version "69.0.8"
-  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-69.0.8.tgz#dc49344e305b036742b77d5c948381cc0b5f8e65"
-  integrity sha512-jeqZg/Yuu6+fzGG7rLMrS9tdBXepaX+P6JNVJhaupF3o9VUr+HTPCTVBbX4j0vGOVlZ2Or3NJmOhFc70hP/6RA==
+"@ecodev/natural@^69.0.9":
+  version "69.0.9"
+  resolved "https://registry.yarnpkg.com/@ecodev/natural/-/natural-69.0.9.tgz#528d93cbf96147384cbed9e40b68028e958778d3"
+  integrity sha512-4P4C7XlpVk/U8FgzgeG16hwlIamYeIQ85ZKrF8a0/W5LGuLXkCnoHKRRqn/5KUVbkq53fMWzPaLknS9lAwtrag==
   dependencies:
     extract-files "^13.0.0"
     tslib "^2.8.1"

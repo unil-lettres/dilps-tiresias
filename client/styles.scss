@@ -1,40 +1,62 @@
-@use 'sass:meta';
-@use '@ecodev/angular-natural-gallery';
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1&icon_names=123,abc,account_circle,ad,add,add_alert,add_link,analytics,android,announcement,aq,arrow_drop_down,arrow_drop_up,artist,attachment,barefoot,book,box,bubble,build,business,call,camera,cancel,cards,casino,chat,check,chevron_right,church,circle,class,cleaning,clear,close,cloud,cloud_upload,code,coffee,collections,collections_bookmark,colors,compare,computer,construction,content_copy,cooking,create,crown,dark_mode,delete,delete_forever,description,deselect,discount,docs,domain,download,dvr,eco,edit,email,energy,engineering,equal,error,exit_to_app,expand_more,feedback,file_download,file_upload,files,filter,finance,folder_special,font_download,font_download_off,forum,foundation,function,games,get_app,grocery,group,height,help,hide,home,host,house,image,info,input,invert_colors,key,keyboard_arrow_down,kitchen,label,library_add,light,light_mode,link,link_off,list,living,login,logout,man,map,menu,message,mobile,mode,money,mood_bad,more_vert,movie,mp,museum,navigate_before,navigate_next,navigation,news,notifications,open_in_browser,padding,password,percent,phone,photo,pin,place,plumbing,post,radio,refresh,remove,report,restaurant,reviews,road,room,routine,rsvp,satellite,save,scale,school,science,script,sd,search,security,select,share_windows,shop,slideshow,source,spa,star,start,storage,store,stream,style,support,tab,tag,target,today,toolbar,tooltip,toys,travel,tv,undo,update,upload,uppercase,variables,view_column,view_compact,view_list,visibility,watch,water,window,work');
+@use '@angular/material' as mat;
+@use '@ecodev/natural-layout' as nat;
+@use '@ecodev/angular-natural-gallery' as natural-gallery;
+@use '@ecodev/natural';
+@use 'styles/upload.scss';
+@use 'styles/layout';
+@use 'app/shared/components/boot-loader/boot-loader.external';
+
 @import 'quill/dist/quill.bubble.css';
 
-@include meta.load-css('styles/themes');
-@include meta.load-css('app/shared/components/boot-loader/boot-loader.external');
-@include meta.load-css('app/shared/components/thesaurus/thesaurus.external');
-@include meta.load-css('styles/layout');
-@include meta.load-css('app/list/list.external');
-@include meta.load-css('app/view-grid/view-grid.external');
-@include meta.load-css('app/card/card.external');
-@include angular-natural-gallery.natural-gallery-base();
+@include natural-gallery.natural-gallery-base();
 
-body {
-    margin: 0;
+html {
+    @include mat.theme(
+        (
+            color: (),
+            typography: Quicksand,
+            density: 0,
+        )
+    );
+
+    --scrollbar-thumb-color: var(--mat-sys-on-surface);
+    @supports (background: color-mix(in srgb, blue, red)) {
+        --scrollbar-thumb-color: color-mix(in srgb, var(--scrollbar-thumb-color) 30%, transparent);
+    }
+
+    --scrollbar-thickness: 9;
 }
 
-html,
 body {
-    height: 100%;
     --natural-default-spacing: 10px;
 }
 
-.pac-container {
-    margin-top: 15px;
-    margin-left: -10px;
-}
-
-#appContent {
+mat-sidenav-content {
     height: 100vh;
 
     router-outlet + * {
-        flex: 1;
         height: 100vh;
         min-height: 0;
+    }
+}
+
+router-outlet + * {
+    flex: 1;
+}
+
+ng-progress {
+    .ng-bar {
+        box-shadow: var(--mat-sys-tertiary-container) 0 0 5px !important;
+        background-color: var(--mat-sys-tertiary-container) !important;
+        height: 3px !important;
+    }
+
+    .ng-meteor {
+        top: 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        box-shadow: var(--mat-sys-tertiary-container) 0 0 20px !important;
+        width: 25px !important;
     }
 }
 
@@ -162,4 +184,47 @@ app-card natural-relations natural-table-button .mat-mdc-button {
     padding: 12px;
     color: rgba(0, 0, 0, 0.6);
     font-size: 14px;
+}
+
+.natural-dropdown-container .dropdown-title {
+    opacity: 1;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    padding: 3px 20px 13px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.mat-toolbar,
+#domains-chips {
+    color: var(--mat-sys-on-surface);
+    --bg: var(--mat-sys-surface-container);
+    background: var(--bg);
+    @include mat.toolbar-overrides(
+        (
+            container-background-color: var(--bg),
+        )
+    );
+
+    @supports (background: color-mix(in srgb, blue, red)) {
+        --bgTransparent: color-mix(in srgb, var(--bg) 80%, transparent);
+        background: var(--bgTransparent);
+        @include mat.toolbar-overrides(
+            (
+                container-background-color: var(--bgTransparent),
+            )
+        );
+    }
+}
+
+mat-hint.strong {
+    color: var(--mat-sys-tertiary-container) !important;
+}
+
+.mat-mdc-snack-bar-container {
+    margin-top: 10px;
+}
+
+.snackbar-error {
+    background-color: var(--mat-sys-error-container) !important;
+    color: var(--mat-sys-on-error-container) !important;
 }

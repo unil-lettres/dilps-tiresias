@@ -1,17 +1,14 @@
 @if (!disabled || dataSource.data?.items.length > 0) {
     <div [class.margin-bottom-hint]="disabled">
-        <div class="mat-headline-6">Fichiers joints</div>
+        <h2 class="mat-font-title-lg">Fichiers joints</h2>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <td *matCellDef="let element; dataSource: dataSource" mat-cell>
                     @if (element.file) {
                         <div>
-                            <a
-                                mat-button
-                                color="primary"
-                                [href]="`/api/file/${element.file.id}/${element.file.name}`"
-                                >{{ element.file.name }}</a
-                            >
+                            <a matButton color="primary" [href]="`/api/file/${element.file.id}/${element.file.name}`">{{
+                                element.file.name
+                            }}</a>
                         </div>
                     }
                     @if (element.input) {
@@ -25,8 +22,8 @@
             <ng-container matColumnDef="delete">
                 <td *matCellDef="let element; dataSource: dataSource" mat-cell>
                     @if (element.file?.permissions?.delete) {
-                        <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="delete(element)">
-                            <mat-icon color="warn" fontIcon="delete_forever" />
+                        <button matIconButton color="error" matTooltip="Supprimer" (click)="delete(element)">
+                            <mat-icon color="error" fontIcon="delete_forever" />
                         </button>
                     }
                     @if (element.input) {
@@ -44,7 +41,7 @@
         <div class="nat-horizontal nat-right">
             @if (!disabled) {
                 <button
-                    mat-raised-button
+                    matButton="filled"
                     naturalFileSelect
                     [multiple]="true"
                     [accept]="accept"

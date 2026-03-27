@@ -12,5 +12,4 @@ export class HistoricIconComponent {
     public readonly tooltip = input<string>(
         "Photographie issue d'un fonds spécial ou historique. Elle a vocation d'archives, indépendamment de sa qualité.",
     );
-    public readonly color = input<string>('currentColor');
 }

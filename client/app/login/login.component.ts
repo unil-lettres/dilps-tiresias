@@ -8,7 +8,7 @@ import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {Site, ViewerQuery} from '../shared/generated-types';
-import {formatIsoDateTime} from '@ecodev/natural';
+import {ColorScheme, formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
@@ -141,4 +141,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected encodeUrl(url: string): string {
         return encodeURIComponent(url);
     }
+
+    protected readonly ColorScheme = ColorScheme;
 }

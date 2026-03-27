@@ -137,7 +137,7 @@ export class FilesComponent implements OnInit {
                 `<strong>Cette action est irréversible.</strong>`,
                 `Supprimer définitivement`,
                 undefined,
-                'warn',
+                'error',
                 'filled',
             )
             .subscribe(confirmed => {

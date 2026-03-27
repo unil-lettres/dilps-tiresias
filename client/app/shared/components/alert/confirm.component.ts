@@ -7,7 +7,7 @@ export type ConfirmData = {
     message: string;
     confirmText: string;
     cancelText: string;
-    confirmButtonColor?: 'primary' | 'accent' | 'warn';
+    confirmButtonColor?: 'primary' | 'tertiary' | 'error';
     confirmButtonType?: 'elevated' | 'outlined' | 'filled';
 };
 

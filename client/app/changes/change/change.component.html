@@ -5,19 +5,15 @@
 
         @if (user?.role === UserRole.administrator) {
             @if (change) {
-                <button
-                    mat-icon-button
-                    class="icon-button-circle-primary"
-                    matTooltip="Accepter suggestion"
-                    (click)="accept()"
-                >
+                <button matMiniFab class="nat-rounded" matTooltip="Accepter suggestion" (click)="accept()">
                     <mat-icon naturalIcon="check" />
                 </button>
             }
             @if (change) {
                 <button
-                    mat-icon-button
-                    class="icon-button-circle-warn"
+                    matMiniFab
+                    color="error"
+                    class="nat-rounded"
                     matTooltip="Refuser la suggestion"
                     (click)="reject()"
                 >
@@ -27,19 +23,14 @@
         }
 
         @if (!change && original) {
-            <button
-                mat-icon-button
-                class="icon-button-circle-primary"
-                matTooltip="Soumettre la suggestion à validation"
-                (click)="update()"
-            >
+            <button matMiniFab class="nat-rounded" matTooltip="Soumettre la suggestion à validation" (click)="update()">
                 <mat-icon naturalIcon="save" />
             </button>
         }
         @if (!change && !original) {
             <button
-                mat-icon-button
-                class="icon-button-circle-primary"
+                matMiniFab
+                class="nat-rounded"
                 matTooltip="Soumettre l'ajout de cette fiche à validation"
                 (click)="create()"
             >
@@ -53,7 +44,7 @@
             <!-- Original -->
             @if (!original) {
                 <div class="nat-expand nat-vertical nat-center">
-                    <div class="mat-headline-4">Nouvelle fiche</div>
+                    <div class="mat-font-headline-lg">Nouvelle fiche</div>
                 </div>
             } @else {
                 <div class="card-original nat-vertical nat-expand">
@@ -63,7 +54,7 @@
             <!-- Suggestion -->
             @if (!suggestionInput) {
                 <div class="nat-expand nat-vertical nat-center">
-                    <div class="mat-headline-4">Suppression de la fiche</div>
+                    <div class="mat-font-headline-lg">Suppression de la fiche</div>
                 </div>
             } @else {
                 <div class="card-suggestion nat-vertical nat-expand">

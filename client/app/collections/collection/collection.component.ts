@@ -208,16 +208,18 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         const title = 'Se désabonner de cette collection ?';
         const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Seul un responsable de la collection pourra vous réabonner.<br><br>Voulez-vous vraiment vous désabonner ?`;
 
-        this.alertService.confirm(title, message, 'Me désabonner', undefined, 'warn', 'filled').subscribe(confirmed => {
-            if (!confirmed) {
-                return;
-            }
+        this.alertService
+            .confirm(title, message, 'Me désabonner', undefined, 'error', 'filled')
+            .subscribe(confirmed => {
+                if (!confirmed) {
+                    return;
+                }
 
-            this.linkService.unlink(this.data.item as LinkableObject, this.user as LinkableObject).subscribe(() => {
-                this.alertService.info('Vous avez été désabonné de cette collection');
-                this.dialogRef.close();
+                this.linkService.unlink(this.data.item as LinkableObject, this.user as LinkableObject).subscribe(() => {
+                    this.alertService.info('Vous avez été désabonné de cette collection');
+                    this.dialogRef.close();
+                });
             });
-        });
     }
 
     protected showSubscribersView(): void {

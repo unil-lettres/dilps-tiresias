@@ -21,9 +21,9 @@
                         }
                     </div>
                     <div class="nat-horizontal nat-gap-10">
-                        <button mat-button color="primary" (click)="showSubscribersView()">Gérer les abonnés</button>
+                        <button matButton color="primary" (click)="showSubscribersView()">Gérer les abonnés</button>
                         @if (isCurrentUserSubscribed()) {
-                            <button mat-button color="warn" (click)="unsubscribeCurrentUser()">Me désabonner</button>
+                            <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
                         }
                     </div>
                 </div>
@@ -137,9 +137,7 @@
         </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions>
-        <div class="nat-expand nat-horizontal nat-justify-end">
-            <button mat-button color="primary" (click)="showPropertiesView()">Terminé</button>
-        </div>
+    <mat-dialog-actions align="end">
+        <button matButton="filled" color="primary" (click)="showPropertiesView()">Terminé</button>
     </mat-dialog-actions>
 }

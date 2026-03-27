@@ -10,8 +10,8 @@
             }
         </div>
         <button
-            class="left"
-            mat-mini-fab
+            class="left nat-rounded"
+            matMiniFab
             color="primary"
             [disabled]="scrollBarAtLeft()"
             [hidden]="!hasScrollbar()"
@@ -20,8 +20,8 @@
             <mat-icon naturalIcon="navigate_before" />
         </button>
         <button
-            class="right"
-            mat-mini-fab
+            class="right nat-rounded"
+            matMiniFab
             color="primary"
             [disabled]="scrollBarAtRight()"
             [hidden]="!hasScrollbar()"
@@ -31,8 +31,9 @@
         </button>
     </div>
     <button
-        class="btn-reduce"
-        mat-mini-fab
+        class="btn-reduce nat-rounded"
+        matMiniFab
+        color="tertiary"
         matTooltipPosition="left"
         [matTooltip]="`${isReduced() ? 'Ouvrir' : 'Fermer'} les images associées`"
         (click)="toggleReduce()"

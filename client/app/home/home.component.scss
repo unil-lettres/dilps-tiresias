@@ -1,24 +1,82 @@
-@use '../../styles/utils';
+@use '@angular/material' as mat;
+@use '../../styles/utils.scss';
 
-:host {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
+mat-sidenav-container {
+    width: 100vw;
+    height: 100vh;
 }
 
 #menu {
     @include utils.centerContent();
+    border: none;
+    background: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
 
-    &.menuMinimized {
-        &,
-        ng-scrollbar {
-            width: 0;
-            min-width: 64px;
+    @include mat.progress-spinner-overrides(
+        (
+            active-indicator-color: var(--mat-sys-on-primary-container),
+        )
+    );
+
+    mat-divider {
+        opacity: 0.33;
+    }
+
+    natural-compact-color-schemer,
+    a {
+        display: grid;
+        place-content: center;
+        padding: 18px 0;
+        color: inherit;
+
+        &:hover {
+            background: var(--mat-sys-primary-fixed-dim);
+            color: var(--mat-sys-on-primary-fixed-variant);
         }
+
+        &.active {
+            background: var(--mat-sys-primary-fixed);
+            color: var(--mat-sys-on-primary-fixed);
+        }
+
+        app-historic-icon,
+        .mat-icon {
+            width: 32px;
+            height: auto;
+            text-align: center;
+        }
+    }
+
+    natural-compact-color-schemer {
+        margin: auto;
+        padding: 0;
+    }
+
+    &,
+    ng-scrollbar {
+        width: 0;
+        min-width: 64px;
     }
 }
 
 // Center menu icons
 .mdc-list-item--with-leading-icon .mdc-list-item__start {
     margin-left: 20px;
+}
+
+.mat-mdc-menu-panel.error-menu {
+    width: auto !important;
+    max-width: none !important;
+
+    .error-message {
+        word-break: break-all;
+    }
+
+    .error:not(:last-child) {
+        padding-bottom: 20px;
+    }
+
+    .mat-mdc-menu-item {
+        height: auto;
+    }
 }

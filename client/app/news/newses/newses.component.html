@@ -12,7 +12,7 @@
 
 @if (dataSource) {
     <div class="nat-padding" style="padding-bottom: 120px !important">
-        <div class="mat-headline-5">Actualités</div>
+        <h2 class="mat-font-headline-sm nat-margin-standard nat-margin-standard">Actualités</h2>
         <div class="responsive-table">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

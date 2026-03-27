@@ -1,4 +1,5 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
+
 @if (!model || loadingIndicator || minimalLoadingWait) {
     <app-card-skeleton />
 } @else {
@@ -18,7 +19,7 @@
 
     <div
         naturalFileDrop
-        class="body nat-expand"
+        class="body nat-expand nat-margin-standard"
         [class.vertical]="vertical()"
         [fileSelectionDisabled]="!edit"
         [maxSize]="maxFileSize"
@@ -27,7 +28,7 @@
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
 
         @if (showToolbar()) {
-            <mat-toolbar class="nat-horizontal nat-align nat-distribute borderRight" [class.edition]="edit">
+            <mat-toolbar class="nat-horizontal nat-align nat-distribute border-right" [class.edition]="edit">
                 @if (showLogo()) {
                     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                 }
@@ -38,14 +39,14 @@
                 @if (showTools()) {
                     <div class="tools nat-horizontal">
                         @if (!edit && fetchedModel?.permissions?.update) {
-                            <button mat-icon-button matTooltip="Passer en mode édition" (click)="toggleEdit()">
+                            <button matIconButton matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
                             </button>
                         }
                         @if (edit && fetchedModel?.permissions?.update) {
                             <button
-                                mat-icon-button
-                                class="icon-button-circle-primary"
+                                matMiniFab
+                                class="nat-rounded"
                                 matTooltip="Enregistrer"
                                 [disabled]="!formIsValid"
                                 (click)="update()"
@@ -56,7 +57,7 @@
                         @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
                             <button
                                 color="primary"
-                                mat-icon-button
+                                matIconButton
                                 matTooltip="Soumettre"
                                 [matMenuTriggerFor]="changeMenu"
                             >
@@ -64,18 +65,18 @@
                             </button>
                         }
                         @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
-                            <button color="primary" mat-icon-button matTooltip="Soumettre" (click)="suggestCreation()">
+                            <button color="primary" matIconButton matTooltip="Soumettre" (click)="suggestCreation()">
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
-                            <button mat-icon-button matTooltip="Créer" (click)="create()">
+                            <button matIconButton matTooltip="Créer" (click)="create()">
                                 <mat-icon naturalIcon="add" />
                             </button>
                         }
                         @if (edit) {
                             <button
-                                mat-icon-button
+                                matIconButton
                                 matTooltip="Importer les données d'une autre fiche"
                                 (click)="complete()"
                             >
@@ -91,7 +92,7 @@
                         }
                         @if (fetchedModel && user) {
                             <button
-                                mat-icon-button
+                                matIconButton
                                 matTooltip="Ajouter ou retirer la fiche d'une collection"
                                 (click)="linkToCollection()"
                             >
@@ -100,8 +101,8 @@
                         }
                         @if (fetchedModel?.permissions?.delete) {
                             <button
-                                color="warn"
-                                mat-icon-button
+                                color="error"
+                                matIconButton
                                 matTooltip="Supprimer la fiche définitivement"
                                 (click)="confirmDelete()"
                             >
@@ -122,8 +123,9 @@
                 @if (imageSrcFull && !imageData) {
                     <a
                         download
-                        mat-mini-fab
-                        class="download-button"
+                        matMiniFab
+                        color="tertiary"
+                        class="download-button nat-rounded"
                         matTooltip="Télécharger l'image"
                         matTooltipPosition="left"
                         [attr.href]="imageSrcFull"
@@ -145,7 +147,7 @@
             </div>
         }
 
-        <div class="left-pane" [class.containerWithToolbar]="showToolbar()" [class.borderRight]="showImage()">
+        <div class="left-pane" [class.containerWithToolbar]="showToolbar()" [class.border-right]="showImage()">
             <div class="scroll nat-expand ng-scroll-max-width">
                 <div class="padding-scrollbar scrolled nat-vertical">
                     @if (user?.role === UserRole.administrator) {
@@ -168,7 +170,7 @@
                             </mat-slider>
                         </div>
                     }
-                    <div class="nat-padding mat-subtitle-2">
+                    <div class="collections mat-font-body-md">
                         @for (collection of sortedCollections; track collection) {
                             <div>{{ collection.hierarchicName }}</div>
                         }
@@ -190,7 +192,7 @@
 
                             @if (showSuggestedCode()) {
                                 <button
-                                    mat-icon-button
+                                    matIconButton
                                     matIconSuffix
                                     [matTooltip]="`Utiliser la référénce automatique &quot;${suggestedCode}&quot;`"
                                     (click)="useSuggestedCode($event)"
@@ -211,21 +213,20 @@
                     @if (edit || !!model.name) {
                         <div tabindex="-1" [class]="{filled: !!model.name, 'rich-text': true}">
                             <div class="label">Titre</div>
-                            @if (edit || !!model.name) {
-                                <quill-editor
-                                    bounds="self"
-                                    matTooltipPosition="after"
-                                    [ngModel]="model.name"
-                                    [disabled]="!edit"
-                                    [modules]="singleLine"
-                                    [matTooltip]="
-                                        !edit || !isDilps
-                                            ? ''
-                                            : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
-                                    "
-                                    (ngModelChange)="model.name = $event || ''"
-                                />
-                            }
+                            <quill-editor
+                                bounds="self"
+                                matTooltipPosition="after"
+                                [ngModel]="model.name"
+                                [disabled]="!edit"
+                                [modules]="singleLine"
+                                [matTooltip]="
+                                    !edit || !isDilps
+                                        ? ''
+                                        : 'Pour un objet simple (tableau, statue, etc.), le titre suffit (exemple : &quot;Les Demoiselles d\'Avignon&quot;)\n\nPour un objet lié à un lieu (une église, un monument, etc.), l\'annotation se présentera sous la forme suivante : &quot;Ville, monument, partie du monument : Sujet représenté&quot; (exemple : &quot;Chartres, Notre-Dame, façade sud : Sainte Cindy&quot;)\n\nDans le titre, le nom du lieu se met si possible en français.'
+                                "
+                                (ngModelChange)="model.name = $event || ''"
+                            />
+
                             @if (edit && (model.name | stripTags)?.length > 187) {
                                 <mat-hint [class.strong]="(model.name | stripTags)?.length >= 191">
                                     {{ (model.name | stripTags).length }} / 191
@@ -462,7 +463,7 @@
                         />
                     }
                     @if (isDilps && (edit || !!institution)) {
-                        <div class="mat-headline-6">Lieu</div>
+                        <h2 class="mat-font-title-lg">Lieu</h2>
                     }
                     @if (isDilps && (edit || !!institution)) {
                         <app-thesaurus
@@ -494,7 +495,7 @@
                     <!-- Card address, if given -->
                     @if ((model.locality || edit) && !isDilps) {
                         <div>
-                            <div class="mat-headline-6">Lieux de découverte</div>
+                            <h2 class="mat-font-title-lg">Lieux de découverte</h2>
                             <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps" />
                         </div>
                     }
@@ -509,7 +510,7 @@
                                 [attr.aria-expanded]="accordionItem.expanded"
                             >
                                 <div
-                                    class="address-title mat-headline-6 nat-horizontal"
+                                    class="address-title mat-font-title-lg nat-horizontal"
                                     (click)="accordionItem.toggle()"
                                 >
                                     <span>Adresse</span>
@@ -543,7 +544,7 @@
                         />
                     }
                     @if (!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)) {
-                        <div class="mat-headline-6">Datation</div>
+                        <h2 class="mat-font-title-lg">Datation</h2>
                     }
                     @if (!isDilps && (edit || model.periods?.length)) {
                         <app-thesaurus
@@ -581,7 +582,7 @@
                         </div>
                     }
                     @if (!isDilps && (edit || !!institution || !!model.objectReference)) {
-                        <div class="mat-headline-6">Lieu de conservation</div>
+                        <h2 class="mat-font-title-lg">Lieu de conservation</h2>
                     }
                     @if (!isDilps && (edit || !!institution)) {
                         <app-thesaurus
@@ -618,7 +619,7 @@
                             !!model.techniqueAuthor ||
                             !!model.techniqueDate)
                     ) {
-                        <div class="mat-headline-6">Référence du document</div>
+                        <h2 class="mat-font-title-lg">Référence du document</h2>
                     }
                     @if (!isDilps && (edit || !!model.documentType)) {
                         <app-thesaurus
@@ -680,7 +681,7 @@
                         </mat-form-field>
                     }
                     @if (!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)) {
-                        <div class="mat-headline-6">Référence de l'image</div>
+                        <h2 class="mat-font-title-lg">Référence de l'image</h2>
                     }
                     @if (
                         isDilps &&
@@ -692,7 +693,7 @@
                             !!model.rights ||
                             !!model.isbn)
                     ) {
-                        <div class="mat-headline-6">Référence de l'image</div>
+                        <h2 class="mat-font-title-lg">Référence de l'image</h2>
                     }
                     @if (edit || !!model.literature) {
                         <div tabindex="-1" [class]="{filled: !!model.literature, 'rich-text': true}">
@@ -723,7 +724,7 @@
                                     <button
                                         matSuffix
                                         matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.page = ''"
                                     >
@@ -734,7 +735,7 @@
                                     <button
                                         matTooltip="Annuler"
                                         matSuffix
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.page = initialCardValues.page"
                                     >
@@ -751,7 +752,7 @@
                                     <button
                                         matSuffix
                                         matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.figure = ''"
                                     >
@@ -762,7 +763,7 @@
                                     <button
                                         matTooltip="Annuler"
                                         matSuffix
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.figure = initialCardValues.figure"
                                     >
@@ -779,7 +780,7 @@
                                     <button
                                         matSuffix
                                         matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.table = ''"
                                     >
@@ -790,7 +791,7 @@
                                     <button
                                         matTooltip="Annuler"
                                         matSuffix
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.table = initialCardValues.table"
                                     >
@@ -810,7 +811,7 @@
                                     <button
                                         matSuffix
                                         matTooltip="Ce champ ne peut plus être modifié, mais il peut être effacé."
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.isbn = ''"
                                     >
@@ -821,7 +822,7 @@
                                     <button
                                         matTooltip="Annuler"
                                         matSuffix
-                                        mat-icon-button
+                                        matIconButton
                                         aria-label="Clear"
                                         (click)="model.isbn = initialCardValues.isbn"
                                     >
@@ -862,12 +863,12 @@
                     }
                     @if (!isDilps && collectionCopyrights) {
                         <div>
-                            <div class="mat-headline-6">Droits d'auteur</div>
+                            <h2 class="mat-font-title-lg">Droits d'auteur</h2>
                             <p>{{ collectionCopyrights }}</p>
                         </div>
                     }
                     @if (!isDilps && (edit || !!model.url)) {
-                        <div class="mat-headline-6">Référence web</div>
+                        <h2 class="mat-font-title-lg">Référence web</h2>
                     }
                     @if (!isDilps && !edit && model.url) {
                         <mat-list style="padding: 0">
@@ -876,7 +877,7 @@
                                     class="nat-margin-bottom-hint"
                                     color="primary"
                                     style="justify-content: flex-start"
-                                    mat-button
+                                    matButton
                                     [href]="model.url"
                                     [innerHTML]="model.urlDescription || model.url"
                                 ></a>
@@ -924,7 +925,7 @@
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                     @if (showCards() && fetchedModel && edit) {
                         <div>
-                            <div class="mat-headline-6">Fiches associées</div>
+                            <h2 class="mat-font-title-lg">Fiches associées</h2>
                             <natural-relations
                                 placeholder="Associer une fiche"
                                 id="fiches-additionnelles"
@@ -967,7 +968,7 @@
                                         />
                                         @if (edit) {
                                             <button
-                                                mat-icon-button
+                                                matIconButton
                                                 matTooltip="Copier les associations"
                                                 (click)="openCopyRelatedCardsDialog(item)"
                                             >
@@ -979,7 +980,7 @@
                             </natural-relations>
                             @if (edit) {
                                 <div class="nat-margin-bottom-hint btn-link-related-cards">
-                                    <button mat-raised-button (click)="openLinkRelatedCardsDialog()">
+                                    <button matButton="filled" (click)="openLinkRelatedCardsDialog()">
                                         Associer les fiches entre elles
                                     </button>
                                 </div>
@@ -991,7 +992,7 @@
                     }
                     @if (isDilps && collectionCopyrights) {
                         <div>
-                            <div class="mat-headline-6">Droits d’utilisation</div>
+                            <h2 class="mat-font-title-lg">Droits d’utilisation</h2>
                             <p>{{ collectionCopyrights }}</p>
                         </div>
                     }

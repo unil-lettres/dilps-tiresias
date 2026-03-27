@@ -490,7 +490,7 @@ export class ListComponent
                 `Vous allez supprimer <strong>${selection.length} fiche(s)</strong>.<br><br><strong>Cette action est irréversible.</strong>`,
                 'Supprimer définitivement',
                 undefined,
-                'warn',
+                'error',
                 'filled',
             )
             .subscribe(confirmed => {

@@ -8,3 +8,16 @@
 app-card {
     min-height: 0;
 }
+
+.main-toolbar {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.card-suggestion {
+    border-left: 1px solid var(--mat-sys-outline-variant);
+}
+
+.card-original {
+    margin-right: -1px;
+    border-right: 1px solid var(--mat-sys-outline-variant);
+}
