@@ -8,7 +8,7 @@ import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
 import {Site, ViewerQuery} from '../shared/generated-types';
-import {ColorScheme, formatIsoDateTime} from '@ecodev/natural';
+import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
@@ -18,7 +18,6 @@ import {MatButton} from '@angular/material/button';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatDivider} from '@angular/material/divider';
 import {LogoComponent} from '../shared/components/logo/logo.component';
-import {ThemeService} from '../shared/services/theme.service';
 
 @Component({
     selector: 'app-login',
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected readonly dialog = inject(MatDialog);
     protected readonly snackBar = inject(MatSnackBar);
     protected readonly site = inject(SITE);
-    protected readonly themeService = inject(ThemeService);
 
     protected readonly Site = Site;
 
@@ -141,6 +139,4 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected encodeUrl(url: string): string {
         return encodeURIComponent(url);
     }
-
-    protected readonly ColorScheme = ColorScheme;
 }

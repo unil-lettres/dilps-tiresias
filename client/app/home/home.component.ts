@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatFabButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
@@ -28,6 +28,7 @@ import {
 import {NgScrollbar} from 'ngx-scrollbar';
 import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -88,6 +89,7 @@ export class HomeComponent implements OnInit {
     private readonly cardService = inject(CardService);
     protected readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy);
+    public readonly menuTheme = signal('dilps-production');
 
     protected readonly Site = Site;
     protected readonly UserRole = UserRole;
@@ -135,6 +137,7 @@ export class HomeComponent implements OnInit {
 
     public constructor() {
         this.networkActivityService.clearErrors();
+        this.menuTheme.set((this.site + '-' + environment.environment).toLowerCase());
     }
 
     public ngOnInit(): void {

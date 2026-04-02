@@ -1,13 +1,11 @@
 import {Component, effect, inject, viewChild} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {NetworkActivityService} from '@ecodev/natural';
+import {NaturalThemeService, NetworkActivityService} from '@ecodev/natural';
 import {NgProgressbar, NgProgressRef} from 'ngx-progressbar';
-import {environment} from '../environments/environment';
 import {SITE} from './app.config';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
 import {Site} from './shared/generated-types';
 import {ProgressService} from './shared/services/progress.service';
-import {ThemeService} from './shared/services/theme.service';
 
 class DelayedProgressBar {
     private isVisible = false;
@@ -105,7 +103,7 @@ export class AppComponent {
     private readonly networkActivityService = inject(NetworkActivityService);
     private readonly progressService = inject(ProgressService);
     private readonly ngProgressRef = viewChild.required(NgProgressRef);
-    private readonly themeService = inject(ThemeService);
+    private readonly themeService = inject(NaturalThemeService);
     private readonly site = inject(SITE);
 
     /**
@@ -123,8 +121,7 @@ export class AppComponent {
             this.networkActivityService.setProgressRef(delayedProgressBar);
         });
 
-        console.log(' environment.environment', environment.environment);
-        this.themeService.setVariant(this.site, environment.environment);
+        this.themeService.setTheme((this.site + '-production').toLowerCase());
         this.favIcon.href = this.site === Site.Dilps ? 'favicon-dilps.svg' : 'favicon-tiresias.svg';
     }
 }

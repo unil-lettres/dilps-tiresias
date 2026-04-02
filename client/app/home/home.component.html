@@ -24,7 +24,7 @@
 
 <mat-sidenav-container class="nat-expand nat-vertical">
     @if (showNavigationMenu()) {
-        <mat-sidenav id="menu" mode="side" opened position="start">
+        <mat-sidenav id="menu" mode="side" opened position="start" [attr.data-theme]="menuTheme()">
             <ng-scrollbar>
                 @if (user) {
                     <!-- Dashboard -->
