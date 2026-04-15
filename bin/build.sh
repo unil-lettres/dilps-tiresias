@@ -44,7 +44,7 @@ echo "********************* Installing git hooks..."
 ln -fs ../../bin/pre-commit.sh .git/hooks/pre-commit
 
 echo "********************* Updating Node.js packages..."
-yarn install $NO_PROGRESS
+pnpm install
 
 echo "********************* Updating all PHP dependencies via composer..."
 composer install --classmap-authoritative --no-interaction --no-plugins $NO_PROGRESS
@@ -67,7 +67,7 @@ if [ ! -n "$DOCKER_RUNNING" ]; then
     RUN_CONFIG="${RUN_CONFIG}-map"
   fi
 
-  yarn run ${RUN_CONFIG}
+  pnpm run ${RUN_CONFIG}
 fi
 
 echo "***************************************************************"

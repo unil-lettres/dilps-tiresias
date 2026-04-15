@@ -4,7 +4,7 @@ ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV NODE_VERSION=22
-ENV YARN_VERSION=1.22
+ENV PNPM_VERSION=10.33.0
 ENV COMPOSER_VERSION=2.8.12
 
 # Install additional packages
@@ -38,7 +38,7 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php -- \
     --version=$COMPOSER_VERSION \
     --install-dir=/usr/local/bin --filename=composer
 
-# Install specific version of Node & Yarn
+# Install specific version of Node & pnpm
 RUN mkdir -p /etc/apt/keyrings; \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
@@ -47,8 +47,8 @@ RUN mkdir -p /etc/apt/keyrings; \
     apt-get update; \
     apt-get install -y --no-install-recommends nodejs && \
     corepack enable && \
-    corepack prepare yarn@$YARN_VERSION --activate && \
-    yarn --version
+    corepack prepare pnpm@$PNPM_VERSION --activate && \
+    pnpm --version
 
 # Replace default crontab
 ADD ./crontab /etc/crontab
