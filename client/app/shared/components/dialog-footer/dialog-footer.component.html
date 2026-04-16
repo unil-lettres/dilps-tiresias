@@ -8,7 +8,9 @@
     }
 
     <div class="nat-expand"></div>
-    <button matButton="outlined" mat-dialog-close cdkFocusInitial>{{ readOnly() ? 'Fermer' : 'Annuler' }}</button>
+    <button mat-dialog-close cdkFocusInitial [matButton]="readOnly() ? 'filled' : 'outlined'">
+        {{ readOnly() ? 'Fermer' : 'Annuler' }}
+    </button>
     @if (!readOnly()) {
         @if (item.id && item.permissions?.update) {
             <button
