@@ -12,7 +12,7 @@ import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/ma
 import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
 import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
-import {MAT_PAGINATOR_DEFAULT_OPTIONS, MatPaginatorDefaultOptions, MatPaginatorIntl} from '@angular/material/paginator';
+import {MatPaginatorIntl} from '@angular/material/paginator';
 import {apolloOptionsProvider} from './shared/config/apollo-options.provider';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './statistics/services/statistic.service';
@@ -51,13 +51,6 @@ export const appConfig: ApplicationConfig = {
                 svg: 'assets/icons/cards_game.svg',
             },
         }),
-        {
-            // See https://github.com/angular/components/issues/26580
-            provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
-            useValue: {
-                formFieldAppearance: 'fill',
-            } satisfies MatPaginatorDefaultOptions,
-        },
         {
             provide: MAT_TABS_CONFIG,
             useValue: {
