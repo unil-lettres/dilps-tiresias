@@ -12,18 +12,24 @@
 
 @if (dataSource) {
     <div class="nat-padding" style="padding-bottom: 120px !important">
-        <div class="nat-margin-bottom nat-horizontal nat-wrap">
-            <h1 class="nat-no-margin" [routerLink]="getChildLink(null)">Domaines</h1>
+        <div class="nat-horizontal nat-distribute nat-center">
             <div class="nat-horizontal nat-wrap">
-                @for (item of breadcrumbs; track item) {
-                    <a class="nat-no-padding" matButton [routerLink]="getChildLink(item)">
-                        <mat-icon naturalIcon="chevron_right" />
-                        <span>{{ item.name }}</span>
-                    </a>
-                }
+                <h1 class="nat-no-margin" [routerLink]="getChildLink(null)">Domaines</h1>
+                <div class="nat-horizontal nat-wrap">
+                    @for (item of breadcrumbs; track item) {
+                        <a class="nat-no-padding" matButton [routerLink]="getChildLink(item)">
+                            <mat-icon naturalIcon="chevron_right" />
+                            <span>{{ item.name }}</span>
+                        </a>
+                    }
+                </div>
             </div>
+            <button matButton="tonal" color="tertiary" (click)="add()">
+                <mat-icon>add</mat-icon>
+                Créer un domaine
+            </button>
         </div>
-        <div class="responsive-table">
+        <div class="responsive-table nat-margin-top">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
@@ -95,5 +101,3 @@
         }
     </div>
 }
-
-<natural-fixed-button icon="add" (click)="add()" />

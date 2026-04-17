@@ -4,6 +4,8 @@ import {InstitutionComponent} from '../institution/institution.component';
 import {InstitutionService} from '../services/institution.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
@@ -19,7 +21,7 @@ import {
     MatRowDef,
     MatTable,
 } from '@angular/material/table';
-import {NaturalFixedButtonComponent, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
+import {NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 
@@ -46,7 +48,8 @@ import {MatToolbar} from '@angular/material/toolbar';
         HideTooltipDirective,
         MatProgressSpinner,
         MatPaginator,
-        NaturalFixedButtonComponent,
+        MatButton,
+        MatIcon,
     ],
     templateUrl: './institutions.component.html',
     styleUrl: './institutions.component.scss',

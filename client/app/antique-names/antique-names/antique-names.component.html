@@ -12,8 +12,14 @@
 
 @if (dataSource) {
     <div class="nat-padding" style="padding-bottom: 120px !important">
-        <h2 class="mat-font-headline-sm nat-margin-standard">Noms antiques</h2>
-        <div class="responsive-table">
+        <div class="nat-horizontal nat-distribute nat-center">
+            <h2 class="mat-font-headline-sm">Noms antiques</h2>
+            <button matButton="tonal" color="tertiary" (click)="add()">
+                <mat-icon>add</mat-icon>
+                Créer un nom antique
+            </button>
+        </div>
+        <div class="responsive-table nat-margin-top">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
@@ -67,5 +73,3 @@
         }
     </div>
 }
-
-<natural-fixed-button icon="add" (click)="add()" />

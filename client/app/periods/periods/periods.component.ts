@@ -23,7 +23,6 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {
-    NaturalFixedButtonComponent,
     NaturalIconDirective,
     NaturalSearchComponent,
     NaturalTableButtonComponent,
@@ -60,7 +59,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         TableButtonComponent,
         MatProgressSpinner,
         MatPaginator,
-        NaturalFixedButtonComponent,
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],

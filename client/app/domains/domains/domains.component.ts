@@ -20,7 +20,6 @@ import {
     MatTable,
 } from '@angular/material/table';
 import {
-    NaturalFixedButtonComponent,
     NaturalIconDirective,
     NaturalSearchComponent,
     NaturalTableButtonComponent,
@@ -60,7 +59,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         TableButtonComponent,
         MatProgressSpinner,
         MatPaginator,
-        NaturalFixedButtonComponent,
         NaturalIconDirective,
         CollectionHierarchyComponent,
     ],
