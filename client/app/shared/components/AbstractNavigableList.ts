@@ -11,7 +11,7 @@ import {
 import {ComponentType} from '@angular/cdk/overlay';
 import {NavigationExtras} from '@angular/router';
 
-type BreadcrumbItem = {
+export type BreadcrumbItem = {
     id: string;
     name: string;
 };
@@ -65,6 +65,8 @@ export class AbstractNavigableList<
             data: {item: {readOnly: false}},
         });
     }
+
+    public readonly getBreadcrumbLink = this.getChildLink.bind(this);
 
     public override search(
         naturalSearchSelections: NaturalSearchSelections,

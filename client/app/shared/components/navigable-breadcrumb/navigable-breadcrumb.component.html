@@ -1,0 +1,29 @@
+<div class="nat-horizontal nat-center">
+    <div class="nat-vertical nat-center">
+        <div class="nat-horizontal nat-center">
+            @for (item of breadcrumbs(); track item) {
+                @if ($first) {
+                    <a matButton [routerLink]="linkForItem(null)">
+                        @if ($count === 1) {
+                            <mat-icon fontIcon="arrow_back" />
+                        }
+                        <span>{{ rootLabel() }}</span>
+                    </a>
+                }
+                @if (!$last) {
+                    <mat-icon naturalIcon="chevron_right" />
+                    <a matButton [routerLink]="linkForItem(item)">
+                        <span>{{ item.name }}</span>
+                    </a>
+                } @else {
+                    @if ($count > 1) {
+                        <mat-icon naturalIcon="chevron_right" />
+                    }
+                    <h1 class="mat-font-headline-sm nat-margin-left">{{ item.name }}</h1>
+                }
+            } @empty {
+                <h1 class="mat-font-headline-sm">{{ rootLabel() }}</h1>
+            }
+        </div>
+    </div>
+</div>

@@ -19,18 +19,13 @@ import {
     MatRowDef,
     MatTable,
 } from '@angular/material/table';
-import {
-    NaturalIconDirective,
-    NaturalSearchComponent,
-    NaturalTableButtonComponent,
-    TypedMatCellDef,
-} from '@ecodev/natural';
+import {NaturalSearchComponent, NaturalTableButtonComponent, TypedMatCellDef} from '@ecodev/natural';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
-import {RouterLink} from '@angular/router';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
+import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-breadcrumb/navigable-breadcrumb.component';
 
 @Component({
     selector: 'app-domains',
@@ -38,7 +33,6 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         MatToolbar,
         LogoComponent,
         NaturalSearchComponent,
-        RouterLink,
         MatButton,
         MatIcon,
         MatTable,
@@ -59,8 +53,8 @@ import {CollectionHierarchyComponent} from '../../shared/components/collection-h
         TableButtonComponent,
         MatProgressSpinner,
         MatPaginator,
-        NaturalIconDirective,
         CollectionHierarchyComponent,
+        NavigableBreadcrumbComponent,
     ],
     templateUrl: './domains.component.html',
     styleUrl: './domains.component.scss',
