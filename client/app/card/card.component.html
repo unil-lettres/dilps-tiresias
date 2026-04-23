@@ -463,7 +463,7 @@
                         />
                     }
                     @if (isDilps && (edit || !!institution)) {
-                        <h2 class="mat-font-title-lg">Lieu</h2>
+                        <h2>Lieu</h2>
                     }
                     @if (isDilps && (edit || !!institution)) {
                         <app-thesaurus
@@ -495,7 +495,7 @@
                     <!-- Card address, if given -->
                     @if ((model.locality || edit) && !isDilps) {
                         <div>
-                            <h2 class="mat-font-title-lg">Lieux de découverte</h2>
+                            <h2>Lieux de découverte</h2>
                             <app-address [model]="model" [readonly]="!edit" [vertical]="true" [isDilps]="isDilps" />
                         </div>
                     }
@@ -544,7 +544,7 @@
                         />
                     }
                     @if (!isDilps && (edit || model.periods?.length || !!model.from || !!model.to)) {
-                        <h2 class="mat-font-title-lg">Datation</h2>
+                        <h2>Datation</h2>
                     }
                     @if (!isDilps && (edit || model.periods?.length)) {
                         <app-thesaurus
@@ -582,7 +582,7 @@
                         </div>
                     }
                     @if (!isDilps && (edit || !!institution || !!model.objectReference)) {
-                        <h2 class="mat-font-title-lg">Lieu de conservation</h2>
+                        <h2>Lieu de conservation</h2>
                     }
                     @if (!isDilps && (edit || !!institution)) {
                         <app-thesaurus
@@ -619,7 +619,7 @@
                             !!model.techniqueAuthor ||
                             !!model.techniqueDate)
                     ) {
-                        <h2 class="mat-font-title-lg">Référence du document</h2>
+                        <h2>Référence du document</h2>
                     }
                     @if (!isDilps && (edit || !!model.documentType)) {
                         <app-thesaurus
@@ -681,7 +681,7 @@
                         </mat-form-field>
                     }
                     @if (!isDilps && (edit || !!model.literature || !!model.page || !!model.isbn)) {
-                        <h2 class="mat-font-title-lg">Référence de l'image</h2>
+                        <h2>Référence de l'image</h2>
                     }
                     @if (
                         isDilps &&
@@ -693,7 +693,7 @@
                             !!model.rights ||
                             !!model.isbn)
                     ) {
-                        <h2 class="mat-font-title-lg">Référence de l'image</h2>
+                        <h2>Référence de l'image</h2>
                     }
                     @if (edit || !!model.literature) {
                         <div tabindex="-1" [class]="{filled: !!model.literature, 'rich-text': true}">
@@ -863,12 +863,12 @@
                     }
                     @if (!isDilps && collectionCopyrights) {
                         <div>
-                            <h2 class="mat-font-title-lg">Droits d'auteur</h2>
+                            <h2>Droits d'auteur</h2>
                             <p>{{ collectionCopyrights }}</p>
                         </div>
                     }
                     @if (!isDilps && (edit || !!model.url)) {
-                        <h2 class="mat-font-title-lg">Référence web</h2>
+                        <h2>Référence web</h2>
                     }
                     @if (!isDilps && !edit && model.url) {
                         <mat-list style="padding: 0">
@@ -925,7 +925,7 @@
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                     @if (showCards() && fetchedModel && edit) {
                         <div>
-                            <h2 class="mat-font-title-lg">Fiches associées</h2>
+                            <h2>Fiches associées</h2>
                             <natural-relations
                                 placeholder="Associer une fiche"
                                 id="fiches-additionnelles"
@@ -992,7 +992,7 @@
                     }
                     @if (isDilps && collectionCopyrights) {
                         <div>
-                            <h2 class="mat-font-title-lg">Droits d’utilisation</h2>
+                            <h2>Droits d’utilisation</h2>
                             <p>{{ collectionCopyrights }}</p>
                         </div>
                     }
