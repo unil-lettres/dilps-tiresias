@@ -33,6 +33,7 @@
 /node_modules/
 /phpunit.xml
 /vendor/
+/.pnpm-store/
 /client/app/shared/generated-schema.graphql
 /client/app/shared/generated-types.ts
 /client/environments/*
