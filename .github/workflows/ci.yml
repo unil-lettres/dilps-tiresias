@@ -31,14 +31,17 @@ jobs:
                   sudo apt-get install mariadb-client
 
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
               with:
                   fetch-depth: 2
 
+            - uses: pnpm/action-setup@v6
+
             - name: Node Setup
-              uses: actions/setup-node@v5
+              uses: actions/setup-node@v6
               with:
                   node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
 
             - name: PHP Setup
               uses: shivammathur/setup-php@v2
@@ -57,13 +60,6 @@ jobs:
                   path: ~/.cache/composer
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
-
-            - name: Cache Yarn
-              uses: actions/cache@v5
-              with:
-                  path: ~/.cache/yarn
-                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: ${{ runner.os }}-yarn-
 
             - name: Setup problem matchers for PHP
               run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
@@ -94,7 +90,7 @@ jobs:
 
             - name: Lint
               id: app-lint
-              run: yarn lint
+              run: pnpm lint
 
             - name: Prettier
               id: app-prettier

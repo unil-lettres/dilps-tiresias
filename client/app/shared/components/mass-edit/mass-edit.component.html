@@ -32,7 +32,7 @@
             </p>
             <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}" />
             @if (data.unchangeable?.length) {
-                <h2 class="mat-font-title-lg">Ces fiches seront ignorées :</h2>
+                <h2>Ces fiches seront ignorées :</h2>
                 <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.unchangeable}" />
             }
         </div>

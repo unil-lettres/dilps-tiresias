@@ -18,7 +18,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
 
             - name: Build image
               uses: unil-lettres/actions/docker-build@main
@@ -38,7 +38,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
 
             - name: Download digests
               uses: actions/download-artifact@v8
@@ -64,7 +64,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
 
             - name: Update description
               uses: peter-evans/dockerhub-description@v5

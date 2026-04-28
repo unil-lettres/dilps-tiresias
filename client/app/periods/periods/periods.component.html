@@ -13,7 +13,7 @@
 @if (dataSource) {
     <div class="nat-padding" style="padding-bottom: 120px !important">
         <div class="nat-margin-bottom nat-horizontal nat-wrap">
-            <div class="mat-font-headline-sm nat-no-margin" [routerLink]="getChildLink(null)">Périodes</div>
+            <h1 class="nat-no-margin" [routerLink]="getChildLink(null)">Périodes</h1>
             <div class="nat-horizontal nat-wrap">
                 @for (item of breadcrumbs; track item) {
                     <a class="nat-no-padding" matButton [routerLink]="getChildLink(item)">

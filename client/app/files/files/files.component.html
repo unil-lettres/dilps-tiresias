@@ -1,6 +1,6 @@
 @if (!disabled || dataSource.data?.items.length > 0) {
     <div [class.margin-bottom-hint]="disabled">
-        <h2 class="mat-font-title-lg">Fichiers joints</h2>
+        <h2>Fichiers joints</h2>
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <td *matCellDef="let element; dataSource: dataSource" mat-cell>

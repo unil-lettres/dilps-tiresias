@@ -152,15 +152,15 @@ The docker compose must be up for these tests to be executed.
 
 ```bash
 # Karma
-docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tiresias_dilps-tiresias-net mcr.microsoft.com/playwright:v1.33.0-focal yarn ng test --watch false --browsers ChromeHeadlessCustom
+docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tiresias_dilps-tiresias-net mcr.microsoft.com/playwright:v1.33.0-focal pnpm ng test --watch false --browsers ChromeHeadlessCustom
 
 # e2e
-docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tiresias_dilps-tiresias-net mcr.microsoft.com/playwright:v1.33.0-focal yarn e2e
+docker run -it --rm -v $PWD:/var/www -w /var/www --ipc host --network dilps-tiresias_dilps-tiresias-net mcr.microsoft.com/playwright:v1.33.0-focal pnpm e2e
 ```
 
 ### End to end
 
-Run `yarn e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).
+Run `pnpm e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).
 
 ### Credits
 
