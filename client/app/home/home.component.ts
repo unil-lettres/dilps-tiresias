@@ -1,6 +1,14 @@
-import {Component, computed, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
+import {MatFabButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
+import {MatDivider} from '@angular/material/divider';
+import {MatIcon} from '@angular/material/icon';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatTooltip} from '@angular/material/tooltip';
 import {
     ActivatedRoute,
     NavigationEnd,
@@ -10,8 +18,17 @@ import {
     RouterLinkActive,
     RouterOutlet,
 } from '@angular/router';
+import {
+    FileSelection,
+    NaturalCompactColorSchemerComponent,
+    NaturalFileSelectDirective,
+    NaturalIconDirective,
+    NetworkActivityService,
+} from '@ecodev/natural';
+import {NgScrollbar} from 'ngx-scrollbar';
 import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -21,26 +38,14 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
+import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
+import {UPLOAD_CONFIG} from '../shared/config/upload.config';
+import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {Site, UserRole, ViewerQuery} from '../shared/generated-types';
-import {FileSelection, NaturalFileSelectDirective, NaturalIconDirective, NetworkActivityService} from '@ecodev/natural';
-import {ThemeService} from '../shared/services/theme.service';
+import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
 import {WelcomeComponent} from './welcome.component';
-import {MatIconButton} from '@angular/material/button';
-import {MatDivider} from '@angular/material/divider';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {MatTooltip} from '@angular/material/tooltip';
-import {MatIcon} from '@angular/material/icon';
-import {MatListItem, MatListItemIcon, MatNavList} from '@angular/material/list';
-import {NgScrollbar} from 'ngx-scrollbar';
-import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {UPLOAD_CONFIG} from '../shared/config/upload.config';
-import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
-import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -57,25 +62,23 @@ function isExcel(file: File): boolean {
         MatSidenav,
         MatSidenavContainer,
         NgScrollbar,
-        MatNavList,
-        MatListItem,
-        MatListItemIcon,
         MatIcon,
         MatTooltip,
         HideTooltipDirective,
         NaturalFileSelectDirective,
         MatProgressSpinner,
         MatDivider,
-        MatIconButton,
         RouterOutlet,
         NaturalIconDirective,
         HistoricIconComponent,
+        NaturalCompactColorSchemerComponent,
+        MatSidenavContent,
+        MatFabButton,
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-    protected readonly themeService = inject(ThemeService);
     protected readonly route = inject(ActivatedRoute);
     protected readonly router = inject(Router);
     protected readonly userService = inject(UserService);
@@ -86,6 +89,7 @@ export class HomeComponent implements OnInit {
     private readonly cardService = inject(CardService);
     protected readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy);
+    public readonly menuTheme = signal('dilps-production');
 
     protected readonly Site = Site;
     protected readonly UserRole = UserRole;
@@ -133,6 +137,7 @@ export class HomeComponent implements OnInit {
 
     public constructor() {
         this.networkActivityService.clearErrors();
+        this.menuTheme.set((this.site + '-' + environment.environment).toLowerCase());
     }
 
     public ngOnInit(): void {

@@ -32,6 +32,12 @@
                         "assets": ["client/assets", "client/favicon-dilps.svg", "client/favicon-tiresias.svg"],
                         "styles": [
                             "client/styles.scss",
+                            "client/styles/tokens/dilps-production.scss",
+                            "client/styles/tokens/dilps-staging.scss",
+                            "client/styles/tokens/dilps-development.scss",
+                            "client/styles/tokens/tiresias-production.scss",
+                            "client/styles/tokens/tiresias-staging.scss",
+                            "client/styles/tokens/tiresias-development.scss",
                             "node_modules/snazzy-info-window/dist/snazzy-info-window.css",
                             "node_modules/@ecodev/natural-layout/natural-layout.css"
                         ],

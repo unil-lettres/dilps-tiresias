@@ -13,10 +13,10 @@
 @if (dataSource) {
     <div class="nat-padding" style="padding-bottom: 120px !important">
         <div class="nat-margin-bottom nat-horizontal nat-wrap">
-            <div class="mat-headline-5 nat-no-margin" [routerLink]="getChildLink(null)">Domaines</div>
+            <div class="mat-font-headline-sm nat-no-margin" [routerLink]="getChildLink(null)">Domaines</div>
             <div class="nat-horizontal nat-wrap">
                 @for (item of breadcrumbs; track item) {
-                    <a class="nat-no-padding" mat-button [routerLink]="getChildLink(item)">
+                    <a class="nat-no-padding" matButton [routerLink]="getChildLink(item)">
                         <mat-icon naturalIcon="chevron_right" />
                         <span>{{ item.name }}</span>
                     </a>
@@ -30,7 +30,7 @@
 
                 <ng-container matColumnDef="navigation">
                     <th *matHeaderCellDef mat-header-cell class="natural-3em-column"></th>
-                    <td *matCellDef="let element" mat-cell>
+                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>
                         @if (element.hasNavigation) {
                             <natural-table-button
                                 icon="chevron_right"
@@ -44,7 +44,7 @@
 
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
-                    <td *matCellDef="let element" mat-cell>
+                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>
                         <div class="cell-content">
                             <app-table-button
                                 icon="edit"
@@ -69,7 +69,7 @@
                     >
                         Nombre de fiches
                     </th>
-                    <td *matCellDef="let element" mat-cell class="natural-align-right">
+                    <td *matCellDef="let element; dataSource: dataSource" mat-cell class="natural-align-right">
                         {{ element.item.usageCount }}
                     </td>
                 </ng-container>

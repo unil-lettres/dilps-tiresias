@@ -1,0 +1,27 @@
+[naturalFileDrop] {
+    position: relative;
+}
+
+.app-file-drag-n-drop-overlay {
+    display: none;
+}
+
+.natural-file-over > .app-file-drag-n-drop-overlay {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    background-color: var(--mat-sys-primary-container);
+    @supports (background-color: color-mix(in srgb, blue, transparent)) {
+        background-color: color-mix(in srgb, var(--mat-sys-primary-container) 90%, transparent);
+    }
+    color: var(--mat-sys-on-primary-container);
+    font-size: 5vw;
+    line-height: 1.3em;
+    text-align: center;
+}

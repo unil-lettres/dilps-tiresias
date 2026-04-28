@@ -1,5 +1,10 @@
-@use '../../styles/utils';
+@use '../../styles/utils.scss';
 @use '@ecodev/natural-layout' as nat;
+
+$transition-animation: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+$hint-height: 22.5px;
+$rich-text-padding-left: 16px;
+
 :host {
     display: flex;
     flex: auto;
@@ -26,6 +31,7 @@
         .containerWithToolbar .scrolled {
             margin-top: 0;
         }
+
         app-related-cards {
             display: none !important;
         }
@@ -66,10 +72,18 @@
     }
 }
 
+.collections {
+    padding: 10px;
+}
+
 .image-container {
     position: relative;
     width: 100%;
     overflow: hidden;
+
+    app-historic-icon {
+        color: var(--mat-sys-tertiary-container);
+    }
 
     .download-button {
         position: absolute;
@@ -128,5 +142,155 @@ mat-slider {
 
     > div:first-child {
         flex-grow: 1;
+    }
+}
+
+mat-toolbar.edition {
+    background: var(--mat-sys-tertiary-container);
+    @supports (background: color-mix(in srgb, blue, red)) {
+        background: color-mix(in srgb, var(--mat-sys-tertiary-container) 40%, transparent);
+    }
+}
+
+::ng-deep {
+    mat-chip-row {
+        // todo : required ? I dont see difference
+        font-size: var(--mat-sys-body-small-size);
+        font-family: inherit !important;
+    }
+}
+
+.margin-bottom-hint {
+    margin-bottom: $hint-height;
+}
+
+// Try to match official mat-form-field input component style.
+.rich-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    transition: color $transition-animation;
+    margin-bottom: $hint-height;
+    outline: none;
+    border-bottom: 1px solid var(--mat-sys-on-surface-variant);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background: var(--mat-sys-surface-variant);
+    padding: 24px 10px 0 $rich-text-padding-left;
+
+    &::after {
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        background-color: var(--mat-sys-primary-container);
+        width: 0;
+        height: 2px;
+        content: '';
+    }
+
+    .mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
+    }
+
+    &:hover {
+        @supports (background: color-mix(in srgb, blue, red)) {
+            background: color-mix(in srgb, var(--mat-sys-surface-variant) 90%, white);
+        }
+    }
+
+    &:focus-within {
+        background: var(--mat-sys-surface-variant); // neutralizes hover as original form fields
+
+        &::after {
+            transform: translateX(-50%);
+            transition:
+                width $transition-animation,
+                transform $transition-animation;
+            width: 100%;
+        }
+    }
+
+    &.filled,
+    &:focus-within {
+        .label {
+            left: auto;
+            transform: translateY(-106%) scale(0.75);
+        }
+    }
+
+    .label {
+        position: absolute;
+        top: 28px;
+        left: $rich-text-padding-left;
+        transform: translateY(-50%);
+        transform-origin: top left;
+        transition: transform $transition-animation;
+        color: var(--mat-sys-on-surface-variant);
+        font: var(--mat-sys-body-large);
+    }
+
+    quill-editor {
+        display: block;
+        caret-color: var(--mat-sys-primary-container);
+    }
+
+    ::ng-deep {
+        .ql-editor {
+            padding: 0 0 8px 0;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        .ql-container {
+            font: var(--mat-sys-body-large);
+        }
+    }
+
+    mat-hint {
+        position: absolute;
+        right: 16px;
+        bottom: -$hint-height;
+        border: 2px solid red; // todo : keep or remove mat-hint ? no red hightlight here
+        font-size: var(--mat-sys-body-small-size);
+    }
+}
+
+// Be sure that the toolbar stays one one line
+// It should not be necessary but it seems that something goes wrong in the computation of the width by QuillJs
+.ql-flip.ql-tooltip {
+    min-width: 170px;
+}
+
+#fiches-additionnelles {
+    table {
+        table-layout: fixed !important;
+
+        .mat-column-unlink {
+            width: 53px !important;
+        }
+    }
+
+    natural-table-button {
+        overflow: hidden;
+
+        span {
+            width: 100%;
+            overflow: hidden;
+            line-height: 1.5em;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+@include nat.media(md) {
+    .border-right {
+        border-right: 1px solid var(--mat-sys-outline-variant);
+    }
+}
+
+app-related-cards {
+    .wrapper {
+        border-top: 1px solid var(--mat-sys-outline-variant);
     }
 }

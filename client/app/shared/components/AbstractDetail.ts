@@ -103,7 +103,7 @@ export class AbstractDetailDirective<
                 this.getDeleteMessage(),
                 'Supprimer définitivement',
                 undefined,
-                'warn',
+                'error',
                 'filled',
             )
             .subscribe(confirmed => {

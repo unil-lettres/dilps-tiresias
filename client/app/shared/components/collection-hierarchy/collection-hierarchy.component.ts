@@ -1,5 +1,4 @@
-import {Component, input, OnInit} from '@angular/core';
-import {CollectionsQuery} from '../../generated-types';
+import {Component, computed, input} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
@@ -8,27 +7,25 @@ import {MatTooltip} from '@angular/material/tooltip';
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
 })
-export class CollectionHierarchyComponent implements OnInit {
-    public readonly collection = input.required<CollectionsQuery['collections']['items'][0]>();
+export class CollectionHierarchyComponent {
+    public readonly collection = input.required<{name: string; hierarchicName: string}>();
 
-    protected parents: string[] = [];
-
-    public ngOnInit(): void {
-        this.parents = this.collection()
+    protected readonly parents = computed(() =>
+        this.collection()
             .hierarchicName.split('>')
             .map(parent => parent.trim())
-            .filter(parent => parent.length > 0);
-    }
+            .filter(parent => parent.length > 0),
+    );
 
-    public get immedateAncestor(): string {
-        return this.parents[this.parents.length - 2];
-    }
+    protected readonly immediateAncestor = computed(() => {
+        const parents = this.parents();
+        return parents[parents.length - 2];
+    });
 
-    public get lastAncestor(): string {
-        return this.parents[0];
-    }
+    protected readonly lastAncestor = computed(() => this.parents()[0]);
 
-    public get tooltipContent(): string {
-        return this.parents.slice(1, this.parents.length - 2).join(' > ');
-    }
+    protected readonly tooltipContent = computed(() => {
+        const parents = this.parents();
+        return parents.slice(1, parents.length - 2).join(' > ');
+    });
 }

@@ -330,7 +330,7 @@ export class ListComponent
         this.userService.getCurrentUser().subscribe(user => {
             this.user = user;
 
-            if (this.user && this.user.role === UserRole.administrator) {
+            if (this.user?.role === UserRole.administrator) {
                 this.pushAdminConfig();
             }
         });
@@ -490,7 +490,7 @@ export class ListComponent
                 `Vous allez supprimer <strong>${selection.length} fiche(s)</strong>.<br><br><strong>Cette action est irréversible.</strong>`,
                 'Supprimer définitivement',
                 undefined,
-                'warn',
+                'error',
                 'filled',
             )
             .subscribe(confirmed => {

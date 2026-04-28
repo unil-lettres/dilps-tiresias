@@ -13,7 +13,7 @@
 
                 @if (item.id && item.__typename) {
                     <div matChipTrailingIcon class="search-wrapper">
-                        <button mat-icon-button (click)="search(item)">
+                        <button matIconButton (click)="search(item)">
                             <mat-icon fontIcon="search" />
                         </button>
                     </div>
@@ -40,13 +40,13 @@
                 <div class="nat-vertical nat-padding-vertical">
                     <div>{{ item.name }}</div>
                     @if (item?.locality) {
-                        <div class="mat-caption">{{ item.locality }}</div>
+                        <div class="mat-font-body-sm">{{ item.locality }}</div>
                     }
                 </div>
             </mat-option>
         }
         @if (moreNbItems > 0) {
-            <div class="mat-caption" style="padding: 5px 10px">{{ moreNbItems }} élément(s) supplémentaire(s)</div>
+            <div class="mat-font-body-sm" style="padding: 5px 10px">{{ moreNbItems }} élément(s) supplémentaire(s)</div>
         }
     </mat-autocomplete>
 </mat-form-field>

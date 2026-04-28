@@ -81,8 +81,7 @@
                 <mat-icon naturalIcon="font_download" />
                 <span>Afficher les légendes</span>
             </div>
-        }
-        @if (showLabels) {
+        } @else {
             <div mat-menu-item (click)="toggleLabels()">
                 <mat-icon naturalIcon="font_download_off" />
                 <span>Masquer les légendes</span>
@@ -94,8 +93,7 @@
             <mat-icon naturalIcon="deselect" />
             <span>Désélectionner tout</span>
         </div>
-    }
-    @if (!selected.length) {
+    } @else {
         <div mat-menu-item (click)="selectAll()">
             <mat-icon svgIcon="select_all_mark" />
             <span>Sélectionner les images visibles</span>
@@ -126,15 +124,15 @@
                 <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             }
             @if (selected.length) {
-                <div #toolbarSelection class="background-selection nat-horizontal nat-align nat-gap-5">
-                    <span class="mat-caption"
+                <div #toolbarSelection class="background-selection nat-horizontal nat-align">
+                    <span class="mat-font-body-md"
                         >{{ selected.length }} fiche{{ selected.length > 1 ? 's' : '' }} sélectionnée{{
                             selected.length > 1 ? 's' : ''
                         }}</span
                     >
                     @if (!!user) {
                         <button
-                            mat-icon-button
+                            matIconButton
                             matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
                             (click)="linkSelectionToCollection(selected)"
                         >
@@ -143,7 +141,7 @@
                     }
                     @if (collection?.id) {
                         <button
-                            mat-icon-button
+                            matIconButton
                             matTooltip="Retirer les fiches sélectionnées de la collection"
                             (click)="unlinkFromCollection(selected)"
                         >
@@ -152,13 +150,13 @@
                     }
                     <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
                     @if (canMassEdit()) {
-                        <button mat-icon-button matTooltip="Editer en masse la sélection" (click)="edit(selected)">
+                        <button matIconButton matTooltip="Editer en masse la sélection" (click)="edit(selected)">
                             <mat-icon naturalIcon="edit" />
                         </button>
                     }
                     @if (user?.role === UserRole.administrator) {
                         <button
-                            mat-icon-button
+                            matIconButton
                             matTooltip="Supprimer les fiches sélectionnées définitivement"
                             (click)="delete(selected)"
                         >
@@ -178,22 +176,22 @@
             @if (!showOverflowMenu()) {
                 <div #toolbarOptions class="nat-horizontal nat-align nat-gap-5">
                     @if (viewMode !== ViewMode.grid) {
-                        <button mat-icon-button matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
+                        <button matIconButton matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
                             <mat-icon naturalIcon="view_compact" />
                         </button>
                     }
                     @if (viewMode !== ViewMode.list) {
-                        <button mat-icon-button matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
+                        <button matIconButton matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
                             <mat-icon naturalIcon="view_list" />
                         </button>
                     }
                     @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
-                        <button mat-icon-button matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
+                        <button matIconButton matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
                             <mat-icon naturalIcon="map" />
                         </button>
                     }
                     <button
-                        mat-icon-button
+                        matIconButton
                         matTooltip="Trier"
                         [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                     >
@@ -201,47 +199,44 @@
                     </button>
                     @if (viewMode === ViewMode.grid) {
                         <button
-                            mat-icon-button
+                            matIconButton
                             [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
                             (click)="toggleLabels()"
                         >
                             @if (!showLabels) {
                                 <mat-icon naturalIcon="font_download" />
-                            }
-                            @if (showLabels) {
+                            } @else {
                                 <mat-icon naturalIcon="font_download_off" />
                             }
                         </button>
                     }
                     @if (selected.length) {
-                        <button mat-icon-button matTooltip="Désélectionner tout" (click)="unselectAll()">
+                        <button matIconButton matTooltip="Désélectionner tout" (click)="unselectAll()">
                             <mat-icon naturalIcon="deselect" />
                         </button>
-                    }
-                    @if (!selected.length) {
-                        <button mat-icon-button matTooltip="Sélectionner les images visibles" (click)="selectAll()">
+                    } @else {
+                        <button matIconButton matTooltip="Sélectionner les images visibles" (click)="selectAll()">
                             <mat-icon svgIcon="select_all_mark" />
                         </button>
                     }
                     @if (selected.length) {
                         @if (!!user && site === Site.Dilps) {
-                            <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
+                            <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
                                 <mat-icon svgIcon="cards_game" />
                             </button>
                         }
                     }
                     @if (!selected.length && user) {
                         @if (site === Site.Dilps) {
-                            <button mat-icon-button matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
+                            <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
                                 <mat-icon svgIcon="cards_game" />
                             </button>
                         }
                     }
                 </div>
-            }
-            @if (showOverflowMenu()) {
+            } @else {
                 <button
-                    mat-icon-button
+                    matIconButton
                     matTooltip="Plus d'options"
                     aria-label="Options de la galerie"
                     [matMenuTriggerFor]="toolbarActionsMenu"
@@ -305,9 +300,9 @@
                         </mat-chip-listbox>
                     </div>
                     <button
-                        class="scroll-arrow left"
-                        mat-mini-fab
-                        color="accent"
+                        class="scroll-arrow left nat-rounded"
+                        matMiniFab
+                        color="tertiary"
                         aria-label="Défiler vers la gauche"
                         [class.is-hidden]="!hasScrollbar() || scrollBarAtLeft()"
                         (click)="scrollLeft()"
@@ -315,9 +310,9 @@
                         <mat-icon naturalIcon="navigate_before" />
                     </button>
                     <button
-                        class="scroll-arrow right"
-                        mat-mini-fab
-                        color="accent"
+                        class="scroll-arrow right nat-rounded"
+                        matMiniFab
+                        color="tertiary"
                         aria-label="Défiler vers la droite"
                         [class.is-hidden]="!hasScrollbar() || scrollBarAtRight()"
                         (click)="scrollRight()"
@@ -330,7 +325,6 @@
             @if (viewMode === ViewMode.grid) {
                 <app-view-grid
                     [dataSource]="dataSource"
-                    [style.height]="'100%'"
                     [selected]="selected"
                     [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     [paginationOffset]="paginationOffset()"
@@ -342,7 +336,6 @@
             @if (viewMode === ViewMode.list) {
                 <app-view-list
                     [dataSource]="dataSource"
-                    [style.height]="'100%'"
                     [selected]="selected"
                     [scrolledMarginTop]="domains.length ? '115px' : '69px'"
                     (pagination)="pagination($event)"
@@ -350,11 +343,7 @@
                 />
             }
             @if (viewMode === ViewMode.map) {
-                <app-view-map
-                    [style.height]="'100%'"
-                    [cards]="selected"
-                    (searchByLocation)="searchByLocation($event)"
-                />
+                <app-view-map [cards]="selected" (searchByLocation)="searchByLocation($event)" />
             }
         }
     </div>

@@ -6,7 +6,7 @@
             <div class="nat-expand"></div>
             <span>{{ title }}</span>
             @if (canCreate) {
-                <button mat-icon-button matTooltip="Créer une collection" (click)="add()">
+                <button matIconButton matTooltip="Créer une collection" (click)="add()">
                     <mat-icon naturalIcon="add" />
                 </button>
             }
@@ -17,27 +17,13 @@
                 @if (showUnclassified || showMyCards) {
                     <mat-nav-list>
                         @if (showUnclassified) {
-                            <a
-                                #rla="routerLinkActive"
-                                mat-list-item
-                                routerLinkActive
-                                [routerLinkActiveOptions]="{exact: true}"
-                                [activated]="rla.isActive"
-                                [routerLink]="['unclassified']"
-                            >
+                            <a mat-list-item routerLinkActive="active" [routerLink]="['unclassified']">
                                 <mat-icon matListItemIcon class="hierarchy-indicator" />
                                 <span>Non classé</span>
                             </a>
                         }
                         @if (showMyCards) {
-                            <a
-                                #rla="routerLinkActive"
-                                mat-list-item
-                                routerLinkActive
-                                [routerLinkActiveOptions]="{exact: true}"
-                                [activated]="rla.isActive"
-                                [routerLink]="['my-cards']"
-                            >
+                            <a mat-list-item routerLinkActive="active" [routerLink]="['my-cards']">
                                 <mat-icon matListItemIcon class="hierarchy-indicator" />
                                 <span>Mes images</span>
                             </a>
@@ -51,16 +37,10 @@
 
                 <ng-template #recursiveList let-collections>
                     @for (collection of collections; track collection) {
-                        <mat-list-item
-                            #rla="routerLinkActive"
-                            routerLinkActive
-                            class="mat-mdc-list-item-interactive"
-                            [activated]="rla.isActive"
-                            [routerLink]="collection.id"
-                        >
+                        <mat-list-item routerLinkActive="active" [routerLink]="[collection.id]">
                             @if (collection.hasChildren) {
                                 <button
-                                    mat-icon-button
+                                    matIconButton
                                     matListItemIcon
                                     class="hierarchy-indicator"
                                     [class.expanded]="children.has(collection.id)"
@@ -91,7 +71,7 @@
                             </span>
                             <div matListItemMeta class="nat-horizontal nat-gap nat-align">
                                 <button
-                                    mat-icon-button
+                                    matIconButton
                                     class="actions-trigger"
                                     aria-label="Actions de la collection"
                                     [matMenuTriggerFor]="actionsMenu"
@@ -138,7 +118,7 @@
                 <mat-nav-list>
                     <ng-container *ngTemplateOutlet="recursiveList; context: {$implicit: rootCollections}" />
                     @if (hasMore) {
-                        <a class="nat-vertical mat-mdc-list-item-interactive" mat-list-item (click)="more()">
+                        <a class="nat-vertical" mat-list-item (click)="more()">
                             <mat-icon matListItemIcon naturalIcon="keyboard_arrow_down" />
                             <span>Afficher d'avantage</span>
                         </a>

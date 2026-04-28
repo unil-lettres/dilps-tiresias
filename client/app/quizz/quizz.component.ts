@@ -8,7 +8,7 @@ import {Result, test} from './quizz.utils';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
-import {NgClass} from '@angular/common';
+
 import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
@@ -23,7 +23,6 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         FormsModule,
         ReactiveFormsModule,
         MatButton,
-        NgClass,
         MatExpansionPanel,
         MatExpansionPanelHeader,
         MatExpansionPanelTitle,

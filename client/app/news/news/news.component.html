@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ isUpdatePage() ? "Modifier l'actualité" : 'Créer une actualité' }}</h2>
 
 <mat-dialog-content>
-    <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+    <div class="nat-padding-vertical nat-vertical">
         <mat-checkbox [(ngModel)]="data.item.isActive">Actif </mat-checkbox>
 
         <mat-form-field>
@@ -33,7 +33,7 @@
                 <mat-error>URL invalide</mat-error>
             }
             @if (data.item.url?.length > 200) {
-                <mat-hint align="end" [ngClass]="{strong: data.item.url?.length >= 255}">
+                <mat-hint align="end" [class.strong]="data.item.url?.length >= 255">
                     {{ data.item.url?.length }} / 255
                 </mat-hint>
             }

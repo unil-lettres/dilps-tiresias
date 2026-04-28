@@ -1,15 +1,19 @@
 :host {
-    display: flex;
+    ::ng-deep .natural-gallery-body {
+        justify-content: flex-start !important;
+        gap: 5px;
+    }
 }
 
 .scrollable {
-    flex: 1;
+    height: 100vh;
     overflow: auto;
 }
 
-natural-gallery {
-    display: block;
-    padding-top: 0px !important;
+.gallery-wrapper {
+    box-sizing: border-box;
+    padding: 0 5px 5px 5px;
+    width: 100%;
 }
 
 #original-historic-icon {
@@ -32,4 +36,70 @@ natural-gallery {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+
+.historic-icon {
+    color: var(--mat-sys-tertiary-container);
+}
+
+::ng-deep {
+    app-view-grid {
+        .natural-gallery-js {
+            a,
+            button {
+                display: block;
+                width: 100%;
+            }
+
+            .button.title {
+                padding: 5px !important;
+                line-height: 1.4em !important;
+            }
+
+            figcaption button.historic {
+                display: grid !important;
+                grid-template-columns: 30px 1fr;
+                align-items: center;
+                gap: 10px;
+                padding: 6px !important;
+                text-align: center;
+            }
+
+            .historic-icon {
+                display: inline;
+                position: relative;
+                vertical-align: center;
+                float: left;
+                height: 24px;
+            }
+
+            .figure {
+                --ngjs-figure-radius: 0;
+            }
+
+            .figure.selected {
+                --ngjs-selected-marker-color: var(--mat-sys-tertiary-container);
+                --ngjs-focus-outline: 3px solid var(--mat-sys-tertiary-container);
+
+                border: 3px solid var(--mat-sys-tertiary-container);
+                border-radius: 3px;
+
+                @supports (color: color-mix(in srgb, red, transparent)) {
+                    .select-btn {
+                        background: color-mix(in srgb, var(--mat-sys-tertiary-container) 30%, transparent);
+                    }
+                }
+            }
+        }
+    }
+
+    .pswp__historic-icon {
+        display: grid;
+        place-items: center;
+    }
+
+    // Hide the next button of natural-gallery during clearing
+    .clearing-overlay ~ div .natural-gallery-next {
+        display: none !important;
+    }
 }

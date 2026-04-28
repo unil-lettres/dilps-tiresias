@@ -1,30 +1,30 @@
 import {Component, inject, OnInit} from '@angular/core';
+import {MatMiniFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatTooltip} from '@angular/material/tooltip';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NaturalIconDirective} from '@ecodev/natural';
 import {merge} from 'es-toolkit';
 import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
-import {CardQuery, CardInput, CardVisibility, ChangeQuery, UserRole, ViewerQuery} from '../../shared/generated-types';
+import {LogoComponent} from '../../shared/components/logo/logo.component';
+import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
+import {CardInput, CardQuery, CardVisibility, ChangeQuery, UserRole, ViewerQuery} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
-import {MatIcon} from '@angular/material/icon';
-import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltip} from '@angular/material/tooltip';
-import {MatIconButton} from '@angular/material/button';
-import {LogoComponent} from '../../shared/components/logo/logo.component';
-import {MatToolbar} from '@angular/material/toolbar';
-import {NaturalIconDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-change',
     imports: [
         MatToolbar,
         LogoComponent,
-        MatIconButton,
         MatTooltip,
         HideTooltipDirective,
         MatIcon,
         CardComponent,
         NaturalIconDirective,
+        MatMiniFabButton,
     ],
     templateUrl: './change.component.html',
     styleUrl: './change.component.scss',

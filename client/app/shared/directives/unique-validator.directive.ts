@@ -23,7 +23,7 @@ export class UniqueValidatorDirective implements AsyncValidator {
         const model = this.model();
         const field = this.fieldName();
 
-        if (!model || model[field] === undefined) {
+        if (model?.[field] === undefined) {
             return of(null);
         }
 

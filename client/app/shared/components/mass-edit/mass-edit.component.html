@@ -22,24 +22,24 @@
 
 <h2 mat-dialog-title>Edition de masse</h2>
 
-<mat-dialog-content [style.overflow-y]="step === 2 ? 'scroll' : null">
+<mat-dialog-content class="nat-margin-standard" [style.overflow-y]="step === 2 ? 'scroll' : null">
     @if (step === 1) {
         <div class="nat-vertical nat-gap-10">
-            <p class="mat-body">
+            <p>
                 Vous n'avez pas les permissions pour éditer les fiches ci-dessous. Les modifications ne les affecteront
                 pas. Vous pouvez cependant créer des suggestions pour ces fiches, les modifications seront alors
                 soumises pour validation par un administrateur.
             </p>
             <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}" />
             @if (data.unchangeable?.length) {
-                <h2 class="mat-h2">Ces fiches seront ignorées :</h2>
+                <h2 class="mat-font-title-lg">Ces fiches seront ignorées :</h2>
                 <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.unchangeable}" />
             }
         </div>
     }
     @if (step === 2) {
         <div class="nat-vertical" style="height: 100%">
-            <p class="mat-body">Les champs vides sont ignorés.</p>
+            <p>Les champs vides sont ignorés.</p>
             <app-card
                 [model]="card"
                 [showCards]="false"
@@ -57,14 +57,14 @@
         <mat-checkbox [(ngModel)]="createSuggestions">Créer les suggestions</mat-checkbox>
     }
     <div class="nat-expand"></div>
-    <button mat-button mat-dialog-close>Annuler</button>
+    <button matButton="outlined" mat-dialog-close>Annuler</button>
     @if (step === 1) {
-        <button color="primary" mat-raised-button (click)="step = 2">J'ai compris, continuer.</button>
+        <button color="primary" matButton="filled" (click)="step = 2">J'ai compris, continuer.</button>
     }
     @if (step === 2) {
         <button
             color="primary"
-            mat-raised-button
+            matButton="filled"
             [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
         >
             Valider

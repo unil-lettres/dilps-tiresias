@@ -14,28 +14,22 @@
             <mat-grid-list cols="2" rowHeight="80px">
                 <mat-grid-tile>
                     <a
-                        mat-raised-button
+                        matButton="elevated"
                         class="shib-link"
                         [href]="`${baseUrl}/Shibboleth.sso/Login?target=${encodeUrl(baseUrl)}%2Fauth?returnUrl=${encodeUrl(returnUrl)}&entityID=https%3A%2F%2Faai.unil.ch%2Fidp%2Fshibboleth`"
                     >
-                        @if (themeService.isDarkMode()) {
-                            <img src="assets/images/logo-unil-dark.svg" width="130" />
-                        } @else {
-                            <img src="assets/images/logo-unil.svg" width="130" />
-                        }
+                        <img class="nat-for-dark" src="assets/images/logo-unil-dark.svg" width="130" />
+                        <img class="nat-for-light" src="assets/images/logo-unil.svg" width="130" />
                     </a>
                 </mat-grid-tile>
                 <mat-grid-tile>
                     <a
-                        mat-raised-button
+                        matButton="elevated"
                         class="shib-link"
                         [href]="`${baseUrl}/Shibboleth.sso/Login?target=${encodeUrl(baseUrl)}%2Fauth?returnUrl=${encodeUrl(returnUrl)}&entityID=https%3A%2F%2Faai-login.unine.ch%2Fidp%2Fshibboleth`"
                     >
-                        @if (themeService.isDarkMode()) {
-                            <img src="assets/images/logo-unine-dark.svg" width="100" />
-                        } @else {
-                            <img src="assets/images/logo-unine.svg" width="100" />
-                        }
+                        <img class="nat-for-dark" src="assets/images/logo-unine-dark.svg" width="100" />
+                        <img class="nat-for-light" src="assets/images/logo-unine.svg" width="100" />
                     </a>
                 </mat-grid-tile>
             </mat-grid-list>
@@ -47,58 +41,51 @@
                     <mat-panel-title> Utilisateur externe </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <form>
-                    <div class="nat-vertical nat-gap-10">
-                        <mat-form-field class="width-auto">
-                            <mat-label>Login</mat-label>
-                            <input
-                                autofocus
-                                matInput
-                                name="login"
-                                required="required"
-                                [disabled]="loading"
-                                [(ngModel)]="loginForm.login"
-                                (focus)="snackBar.dismiss()"
-                            />
-                        </mat-form-field>
-                    </div>
+                <form class="nat-vertical">
+                    <mat-form-field>
+                        <mat-label>Login</mat-label>
+                        <input
+                            autofocus
+                            matInput
+                            name="login"
+                            required="required"
+                            [disabled]="loading"
+                            [(ngModel)]="loginForm.login"
+                            (focus)="snackBar.dismiss()"
+                        />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input
+                            matInput
+                            name="password"
+                            required="required"
+                            type="password"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                            [disabled]="loading"
+                            [(ngModel)]="loginForm.password"
+                            (focus)="snackBar.dismiss()"
+                        />
+                    </mat-form-field>
 
-                    <div class="nat-vertical nat-gap-10">
-                        <mat-form-field class="width-auto">
-                            <mat-label>Password</mat-label>
-                            <input
-                                matInput
-                                name="password"
-                                required="required"
-                                type="password"
-                                autocorrect="off"
-                                autocapitalize="off"
-                                spellcheck="false"
-                                [disabled]="loading"
-                                [(ngModel)]="loginForm.password"
-                                (focus)="snackBar.dismiss()"
-                            />
-                        </mat-form-field>
-                    </div>
-
-                    <div class="nat-vertical nat-gap-10">
-                        <button
-                            color="primary"
-                            mat-raised-button
-                            type="submit"
-                            [disabled]="loading || !loginForm.login || !loginForm.password"
-                            (click)="login()"
-                        >
-                            Se connecter
-                        </button>
-                    </div>
+                    <button
+                        color="primary"
+                        matButton="filled"
+                        type="submit"
+                        [disabled]="loading || !loginForm.login || !loginForm.password"
+                        (click)="login()"
+                    >
+                        Se connecter
+                    </button>
                 </form>
             </mat-expansion-panel>
 
             @if (site === Site.Tiresias) {
                 <div class="nat-vertical nat-gap-15">
                     <mat-divider />
-                    <a mat-raised-button (click)="userService.startTempAccess()"> Accès public </a>
+                    <a matButton="filled" (click)="userService.startTempAccess()"> Accès public </a>
                 </div>
             }
         </div>

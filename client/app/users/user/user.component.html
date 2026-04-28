@@ -6,7 +6,7 @@
         <h2 mat-dialog-title>Créer un utilisateur</h2>
     }
     <mat-dialog-content>
-        <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+        <div class="nat-padding-vertical nat-vertical">
             @if (isUpdatePage()) {
                 <div class="nat-horizontal nat-distribute nat-center">
                     @if (collectionsCount() === 0) {
@@ -20,7 +20,7 @@
                             }}
                         </span>
                     }
-                    <button mat-button color="primary" (click)="showCollectionsView()">
+                    <button matButton color="primary" (click)="showCollectionsView()">
                         {{ isSelf ? 'Gérer mes abonnements' : 'Gérer les abonnements' }}
                     </button>
                 </div>
@@ -188,8 +188,8 @@
                     <mat-list-item>
                         <span matListItemTitle>{{ collection.hierarchicName || collection.name }}</span>
                         <button
-                            mat-icon-button
-                            color="warn"
+                            matIconButton
+                            color="error"
                             matListItemMeta
                             aria-label="Se désabonner"
                             [matTooltip]="
@@ -205,9 +205,7 @@
         }
     </mat-dialog-content>
 
-    <mat-dialog-actions>
-        <div class="nat-expand nat-horizontal nat-justify-end">
-            <button mat-button color="primary" (click)="showPropertiesView()">Terminé</button>
-        </div>
+    <mat-dialog-actions align="end">
+        <button matButton="filled" color="primary" (click)="showPropertiesView()">Terminé</button>
     </mat-dialog-actions>
 }

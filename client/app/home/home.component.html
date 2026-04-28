@@ -22,247 +22,189 @@
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
-<div class="nat-expand nat-vertical">
-    <mat-sidenav-container class="nat-expand nat-vertical">
-        @if (showNavigationMenu()) {
-            <mat-sidenav class="menuMinimized" id="menu" mode="side" opened position="start">
-                <ng-scrollbar class="ng-scroll-max-width">
-                    <div class="nat-vertical nat-fill">
-                        @if (user) {
-                            <mat-nav-list>
-                                <!-- Dashboard -->
-                                <a
-                                    #homeRla="routerLinkActive"
-                                    mat-list-item
-                                    routerLink="/home"
-                                    routerLinkActive
-                                    [activated]="homeRla.isActive"
-                                    [queryParams]="null"
-                                    [routerLinkActiveOptions]="{exact: true}"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="home" />
-                                    <span>Non classé</span>
-                                </a>
-                                <!-- Mes collections privées -->
-                                <a
-                                    #myColRla="routerLinkActive"
-                                    mat-list-item
-                                    matTooltip="Mes collections"
-                                    matTooltipPosition="after"
-                                    routerLink="/my-collection"
-                                    routerLinkActive
-                                    [activated]="myColRla.isActive"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="collections_bookmark" />
-                                </a>
-                                <!-- Collections publiques -->
-                                <a
-                                    #colRla="routerLinkActive"
-                                    mat-list-item
-                                    matTooltip="Collections publiques"
-                                    matTooltipPosition="after"
-                                    routerLink="/collection"
-                                    routerLinkActive
-                                    [activated]="colRla.isActive"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="collections" />
-                                </a>
-                                <!-- Fonds -->
-                                <a
-                                    #sourceRla="routerLinkActive"
-                                    mat-list-item
-                                    matTooltip="Fonds"
-                                    matTooltipPosition="after"
-                                    routerLink="/source"
-                                    routerLinkActive
-                                    [activated]="sourceRla.isActive"
-                                >
-                                    @if (site === Site.Dilps) {
-                                        <app-historic-icon tooltip="" />
-                                    } @else {
-                                        <mat-icon matListItemIcon naturalIcon="folder_special" />
-                                    }
-                                </a>
-                                <!-- Notifications -->
-                                <a
-                                    #notifRla="routerLinkActive"
-                                    mat-list-item
-                                    matTooltip="Notifications"
-                                    matTooltipPosition="after"
-                                    routerLink="/notification"
-                                    routerLinkActive
-                                    [activated]="notifRla.isActive"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="notifications" />
-                                </a>
-                                <!-- Add photos -->
-                                @if (
-                                    progress === null &&
-                                    (user.role === UserRole.administrator ||
-                                        user.role === UserRole.senior ||
-                                        user.role === UserRole.junior ||
-                                        user.role === UserRole.major)
-                                ) {
-                                    <a
-                                        mat-list-item
-                                        matTooltip="Ajouter une image"
-                                        matTooltipPosition="after"
-                                        naturalFileSelect
-                                        [multiple]="true"
-                                        [maxSize]="maxFileSize"
-                                        (filesChange)="uploadImages($event)"
-                                    >
-                                        <mat-icon matListItemIcon naturalIcon="file_upload" />
-                                    </a>
-                                }
-                                @if (progress !== null && progress > 0) {
-                                    <a mat-list-item>
-                                        <mat-progress-spinner
-                                            color="accent"
-                                            [value]="progress"
-                                            [diameter]="24"
-                                            [strokeWidth]="5"
-                                        />
-                                    </a>
-                                }
-                                <!-- Export template -->
-                                @if (site === Site.Tiresias) {
-                                    @if (
-                                        user.role === UserRole.administrator ||
-                                        user.role === UserRole.senior ||
-                                        user.role === UserRole.junior ||
-                                        user.role === UserRole.major
-                                    ) {
-                                        <a
-                                            href="/api/template"
-                                            mat-list-item
-                                            matTooltip="Télécharger le modèle pour import Excel"
-                                            matTooltipPosition="after"
-                                        >
-                                            <mat-icon matListItemIcon naturalIcon="file_download" />
-                                        </a>
-                                    }
-                                }</mat-nav-list
-                            ><!-- Thésaurus -->
-                            @if (showThesaurusMenu()) {
-                                <mat-divider />
-                                <mat-nav-list>
-                                    <a
-                                        mat-list-item
-                                        matTooltip="Thésaurus"
-                                        matTooltipPosition="after"
-                                        [activated]="isThesaurusActive()"
-                                        [matMenuTriggerFor]="thesaurusMenu"
-                                    >
-                                        <mat-icon matListItemIcon naturalIcon="book" />
-                                    </a>
-                                </mat-nav-list>
-                            }
-                            <!-- Administration -->
-                            @if (user.role === UserRole.administrator) {
-                                <mat-divider />
-                                <mat-nav-list>
-                                    <a
-                                        mat-list-item
-                                        matTooltip="Gestion"
-                                        matTooltipPosition="after"
-                                        [activated]="isAdminActive()"
-                                        [matMenuTriggerFor]="adminMenu"
-                                    >
-                                        <mat-icon matListItemIcon naturalIcon="build" />
-                                    </a>
-                                </mat-nav-list>
-                            }
-                            <mat-divider />
-                            <mat-nav-list class="nat-expand">
-                                <!-- Account -->
-                                <a
-                                    mat-list-item
-                                    matTooltip="Mon compte"
-                                    matTooltipPosition="after"
-                                    (click)="editUser()"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
-                                </a>
-                                <!-- Logout -->
-                                <a
-                                    mat-list-item
-                                    matTooltip="Se déconnecter"
-                                    matTooltipPosition="after"
-                                    (click)="userService.logout()"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="exit_to_app" />
-                                </a>
-                            </mat-nav-list>
-                        }
-                        @if (!user) {
-                            <mat-nav-list class="nat-expand">
-                                <!-- Dashboard -->
-                                <a
-                                    #homeGuestRla="routerLinkActive"
-                                    mat-list-item
-                                    routerLink="/"
-                                    routerLinkActive
-                                    [activated]="homeGuestRla.isActive"
-                                    [routerLinkActiveOptions]="{exact: true}"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="home" />
-                                </a>
-                                <!-- Logout -->
-                                <a
-                                    mat-list-item
-                                    matTooltip="Se connecter"
-                                    matTooltipPosition="after"
-                                    (click)="userService.revokeTempAccess()"
-                                >
-                                    <mat-icon matListItemIcon naturalIcon="account_circle" />
-                                </a>
-                                <!-- Contact -->
-                                @if (site === Site.Tiresias) {
-                                    <a mat-list-item matTooltip="Contact" matTooltipPosition="after" (click)="mailto()">
-                                        <mat-icon matListItemIcon naturalIcon="announcement" />
-                                        <span>Contact</span>
-                                    </a>
-                                }
-                            </mat-nav-list>
-                        }
-                        <!-- Bottom nav -->
-                        @if (networkActivityService.errors().length) {
-                            <a
-                                mat-icon-button
-                                class="icon-button-circle-warn"
-                                style="margin: 0 11px"
-                                [matMenuTriggerFor]="errorsMenu"
-                            >
-                                <mat-icon naturalIcon="error" />
-                            </a>
-                        }
-                        <mat-nav-list>
-                            <!-- Theme -->
-                            <a mat-list-item (click)="themeService.toggleNightMode()">
-                                <mat-icon matListItemIcon naturalIcon="invert_colors" />
-                                <span>Changer couleurs</span>
-                            </a>
-                        </mat-nav-list>
-                    </div>
-                </ng-scrollbar>
-            </mat-sidenav>
-        }
+<mat-sidenav-container class="nat-expand nat-vertical">
+    @if (showNavigationMenu()) {
+        <mat-sidenav id="menu" mode="side" opened position="start" [attr.data-theme]="menuTheme()">
+            <ng-scrollbar>
+                @if (user) {
+                    <!-- Dashboard -->
+                    <a
+                        routerLink="/home"
+                        routerLinkActive="active"
+                        matTooltip="Non classé"
+                        matTooltipPosition="after"
+                        [queryParams]="null"
+                        [routerLinkActiveOptions]="{exact: true}"
+                    >
+                        <mat-icon naturalIcon="home" />
+                    </a>
 
-        <div class="nat-vertical" id="appContent">
-            <router-outlet />
-        </div>
-    </mat-sidenav-container>
-</div>
+                    <!-- Mes collections privées -->
+                    <a
+                        matTooltip="Mes collections"
+                        matTooltipPosition="after"
+                        routerLink="/my-collection"
+                        routerLinkActive="active"
+                    >
+                        <mat-icon naturalIcon="collections_bookmark" />
+                    </a>
+
+                    <!-- Collections publiques -->
+                    <a
+                        matTooltip="Collections publiques"
+                        matTooltipPosition="after"
+                        routerLink="/collection"
+                        routerLinkActive="active"
+                    >
+                        <mat-icon naturalIcon="collections" />
+                    </a>
+
+                    <!-- Fonds -->
+                    <a matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active">
+                        @if (site === Site.Dilps) {
+                            <app-historic-icon tooltip="" />
+                        } @else {
+                            <mat-icon naturalIcon="folder_special" />
+                        }
+                    </a>
+
+                    <!-- Notifications -->
+                    <a
+                        matTooltip="Notifications"
+                        matTooltipPosition="after"
+                        routerLink="/notification"
+                        routerLinkActive="active"
+                    >
+                        <mat-icon naturalIcon="notifications" />
+                    </a>
+
+                    <!-- Add photos -->
+                    @if (
+                        progress === null &&
+                        (user.role === UserRole.administrator ||
+                            user.role === UserRole.senior ||
+                            user.role === UserRole.junior ||
+                            user.role === UserRole.major)
+                    ) {
+                        <a
+                            matTooltip="Ajouter une image"
+                            matTooltipPosition="after"
+                            naturalFileSelect
+                            [multiple]="true"
+                            [maxSize]="maxFileSize"
+                            (filesChange)="uploadImages($event)"
+                        >
+                            <mat-icon naturalIcon="file_upload" />
+                        </a>
+                    }
+
+                    @if (progress !== null && progress > 0) {
+                        <a>
+                            <mat-progress-spinner
+                                color="tertiary"
+                                [value]="progress"
+                                [diameter]="24"
+                                [strokeWidth]="5"
+                            />
+                        </a>
+                    }
+
+                    <!-- Export template -->
+                    @if (
+                        site === Site.Tiresias &&
+                        (user.role === UserRole.administrator ||
+                            user.role === UserRole.senior ||
+                            user.role === UserRole.junior ||
+                            user.role === UserRole.major)
+                    ) {
+                        <a
+                            href="/api/template"
+                            matTooltip="Télécharger le modèle pour import Excel"
+                            matTooltipPosition="after"
+                        >
+                            <mat-icon naturalIcon="file_download" />
+                        </a>
+                    }
+
+                    <!-- Thésaurus -->
+                    @if (showThesaurusMenu()) {
+                        <mat-divider />
+                        <a
+                            matTooltip="Thésaurus"
+                            matTooltipPosition="after"
+                            [class.active]="isThesaurusActive()"
+                            [matMenuTriggerFor]="thesaurusMenu"
+                        >
+                            <mat-icon naturalIcon="book" />
+                        </a>
+                    }
+
+                    <!-- Administration -->
+                    @if (user.role === UserRole.administrator) {
+                        <mat-divider />
+                        <a
+                            matTooltip="Gestion"
+                            matTooltipPosition="after"
+                            [class.active]="isAdminActive()"
+                            [matMenuTriggerFor]="adminMenu"
+                        >
+                            <mat-icon naturalIcon="build" />
+                        </a>
+                    }
+                    <mat-divider />
+
+                    <!-- Account -->
+                    <a matTooltip="Mon compte" matTooltipPosition="after" (click)="editUser()">
+                        <mat-icon naturalIcon="account_circle" />
+                    </a>
+
+                    <!-- Logout -->
+                    <a matTooltip="Se déconnecter" matTooltipPosition="after" (click)="userService.logout()">
+                        <mat-icon naturalIcon="exit_to_app" />
+                    </a>
+                } @else {
+                    <!-- Dashboard -->
+                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <mat-icon naturalIcon="home" />
+                    </a>
+
+                    <!-- Logout -->
+                    <a matTooltip="Se connecter" matTooltipPosition="after" (click)="userService.revokeTempAccess()">
+                        <mat-icon naturalIcon="account_circle" />
+                    </a>
+
+                    <!-- Contact -->
+                    @if (site === Site.Tiresias) {
+                        <a matTooltip="Contact" matTooltipPosition="after" (click)="mailto()">
+                            <mat-icon naturalIcon="announcement" />
+                        </a>
+                    }
+                }
+
+                <!-- Bottom nav -->
+                @if (networkActivityService.errors().length) {
+                    <a matFab color="error" class="nat-rounded" style="margin: auto" [matMenuTriggerFor]="errorsMenu">
+                        <mat-icon naturalIcon="error" />
+                    </a>
+                }
+                <natural-compact-color-schemer />
+            </ng-scrollbar>
+        </mat-sidenav>
+    }
+
+    <mat-sidenav-content>
+        <router-outlet />
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
 <mat-menu #errorsMenu="matMenu" class="nat-padding error-menu nat-gap nat-vertical" [overlapTrigger]="false">
     @for (error of networkActivityService.errors(); track error) {
         <div class="error nat-vertical" style="user-select: text" (click)="$event.stopPropagation()">
             @if (error.message) {
-                <span class="mat-caption">{{ error.message }}</span>
+                <span class="error-message mat-font-body-sm">{{ error.message }}</span>
             }
             @if (error.extensions?.debugMessage) {
-                <span class="mat-caption">{{ error.extensions?.debugMessage }}</span>
+                <span class="error-message mat-font-body-sm">{{ error.extensions?.debugMessage }}</span>
             }
         </div>
     }

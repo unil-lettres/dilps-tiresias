@@ -33,7 +33,7 @@ export class AlertService {
         message: string,
         confirmText: string,
         cancelText = 'Annuler',
-        confirmButtonColor?: 'primary' | 'accent' | 'warn',
+        confirmButtonColor?: 'primary' | 'tertiary' | 'error',
         confirmButtonType?: 'elevated' | 'outlined' | 'filled',
     ): Observable<any> {
         const dialog = this.dialog.open<ConfirmComponent, ConfirmData>(ConfirmComponent, {

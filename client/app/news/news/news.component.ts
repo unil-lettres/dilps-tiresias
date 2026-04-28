@@ -5,7 +5,7 @@ import {loadImageAsDataUrl} from '../../shared/services/utility';
 import {NewsService} from '../services/news.service';
 import {NewsInput} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
-import {NgClass} from '@angular/common';
+
 import {UrlValidatorDirective} from '../../shared/directives/url-validator.directive';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
@@ -24,7 +24,6 @@ import {MatCheckbox} from '@angular/material/checkbox';
         MatHint,
         MatInput,
         UrlValidatorDirective,
-        NgClass,
         DialogFooterComponent,
     ],
     templateUrl: './news.component.html',

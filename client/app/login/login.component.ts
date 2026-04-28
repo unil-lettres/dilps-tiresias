@@ -18,7 +18,6 @@ import {MatButton} from '@angular/material/button';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatDivider} from '@angular/material/divider';
 import {LogoComponent} from '../shared/components/logo/logo.component';
-import {ThemeService} from '../shared/services/theme.service';
 
 @Component({
     selector: 'app-login',
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     protected readonly dialog = inject(MatDialog);
     protected readonly snackBar = inject(MatSnackBar);
     protected readonly site = inject(SITE);
-    protected readonly themeService = inject(ThemeService);
 
     protected readonly Site = Site;
 

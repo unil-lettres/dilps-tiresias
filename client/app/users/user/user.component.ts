@@ -208,7 +208,7 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
             successMessage = `Désabonnement de la collection « ${collection.name} » effectué`;
         }
 
-        this.alertService.confirm(title, message, buttonLabel, undefined, 'warn', 'filled').subscribe(confirmed => {
+        this.alertService.confirm(title, message, buttonLabel, undefined, 'error', 'filled').subscribe(confirmed => {
             if (!confirmed) {
                 return;
             }

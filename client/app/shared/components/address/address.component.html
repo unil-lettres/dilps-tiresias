@@ -12,7 +12,7 @@
                     (keyup.enter)="search()"
                 />
                 @if (model?.street?.length > 200) {
-                    <mat-hint align="end" [ngClass]="{strong: model!.street!.length >= 255}">
+                    <mat-hint align="end" [class.strong]="model!.street!.length >= 255">
                         {{ model!.street!.length }} / 255
                     </mat-hint>
                 }
@@ -30,7 +30,7 @@
                         (keyup.enter)="search()"
                     />
                     @if (model?.postcode?.length > 15) {
-                        <mat-hint align="end" [ngClass]="{strong: model!.postcode!.length >= 20}">
+                        <mat-hint align="end" [class.strong]="model!.postcode!.length >= 20">
                             {{ model!.postcode!.length }} / 20
                         </mat-hint>
                     }
@@ -47,7 +47,7 @@
                         (keyup.enter)="search()"
                     />
                     @if (model?.locality?.length > 150) {
-                        <mat-hint align="end" [ngClass]="{strong: model!.locality!.length >= 191}">
+                        <mat-hint align="end" [class.strong]="model!.locality!.length >= 191">
                             {{ model!.locality!.length }} / 191
                         </mat-hint>
                     }
@@ -85,10 +85,11 @@
             </div>
         }
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
-            <div id="mapZone">
+            <div id="map-zone">
                 <mat-form-field
                     class="mat-elevation-z4"
                     id="search"
+                    subscriptSizing="dynamic"
                     [class.nat-hide]="!(!readonly && (googleMapLoaded | async))"
                 >
                     <mat-label>Chercher</mat-label>

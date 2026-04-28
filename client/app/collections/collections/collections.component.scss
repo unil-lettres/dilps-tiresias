@@ -1,9 +1,35 @@
-@use '../../../styles/utils';
+@use '../../../styles/utils.scss';
+@use '@angular/material' as mat;
 
 :host {
     display: flex;
     flex-direction: row;
     @include utils.fixedToolbar();
+
+    app-historic-icon {
+        color: var(--mat-sys-tertiary-container);
+    }
+}
+
+.active {
+    background: var(--mat-sys-outline-variant);
+}
+
+.scrolled {
+    @include mat.list-overrides(
+        (
+            active-indicator-shape: 0,
+        )
+    );
+}
+
+.hierarchy-indicator {
+    @include mat.list-overrides(
+        (
+            list-item-leading-icon-start-space: 4px,
+            list-item-leading-icon-end-space: 4px,
+        )
+    );
 }
 
 mat-nav-list {
@@ -14,6 +40,10 @@ mat-nav-list {
 
     .description {
         margin-top: 4px;
+    }
+
+    .mat-mdc-list-item {
+        margin-bottom: -1px;
     }
 }
 
@@ -52,4 +82,14 @@ mat-nav-list {
 mat-list-item:hover .actions-trigger,
 .actions-trigger[aria-expanded='true'] {
     visibility: visible;
+}
+
+.hierarchy-indicator {
+    &.expanded::after {
+        border-left: 2px solid var(--mat-sys-outline-variant);
+    }
+}
+
+.hierarchy-depth-indicator {
+    border-left: 2px solid var(--mat-sys-outline-variant);
 }

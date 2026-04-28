@@ -10,11 +10,11 @@
         }
         <map-info-window [options]="infoWindowOption">
             <div>
-                <div class="mat-h3 name">{{ selectedMarker?.name }}</div>
+                <div class="mat-font-body-lg name">{{ selectedMarker?.name }}</div>
                 <a class="nat-vertical nat-center" [routerLink]="['/card', selectedMarker?.id]">
                     <img class="img" [attr.src]="selectedMarker?.imageSrc" />
                 </a>
-                <button mat-button style="color: black" (click)="forwardSearch(selectedMarker)">
+                <button matButton style="color: black" (click)="forwardSearch(selectedMarker)">
                     Rechercher les fiches à proximité
                 </button>
             </div>

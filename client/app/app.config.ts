@@ -1,10 +1,11 @@
 import {ApplicationConfig, ErrorHandler, inject, InjectionToken, provideAppInitializer} from '@angular/core';
+import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {Site} from './shared/generated-types';
 import {quillConfig} from './shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {routes} from './app.routes';
 import {Apollo} from 'apollo-angular';
-import {Literal, naturalProviders, provideIcons} from '@ecodev/natural';
+import {Literal, naturalProviders, provideIcons, provideThemes} from '@ecodev/natural';
 import {provideHttpClient, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {activityInterceptor} from './shared/interceptors/activity.interceptor';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions} from '@angular/material/tooltip';
@@ -36,7 +37,20 @@ export const appConfig: ApplicationConfig = {
         provideNativeDateAdapter(),
         Apollo,
         naturalProviders,
-        provideIcons({}),
+        provideIcons({
+            sort_asc: {
+                svg: 'assets/icons/sort_asc.svg',
+            },
+            library_remove: {
+                svg: 'assets/icons/library_remove.svg',
+            },
+            select_all_mark: {
+                svg: 'assets/icons/select_all_mark.svg',
+            },
+            cards_game: {
+                svg: 'assets/icons/cards_game.svg',
+            },
+        }),
         {
             // See https://github.com/angular/components/issues/26580
             provide: MAT_PAGINATOR_DEFAULT_OPTIONS,
@@ -62,7 +76,6 @@ export const appConfig: ApplicationConfig = {
                 paramsInheritanceStrategy: 'emptyOnly',
             }),
         ),
-
         provideAppInitializer(() => {
             const dateAdapter = inject(DateAdapter<Date>);
             const statisticService = inject(StatisticService);
@@ -81,5 +94,16 @@ export const appConfig: ApplicationConfig = {
         }),
         {provide: MatPaginatorIntl, useClass: CustomPaginatorIntl},
         provideHighcharts(),
+
+        // Sorting is importance because of scss files optimization (removed inherited tokens)
+        provideThemes([
+            'dilps-production',
+            'dilps-staging',
+            'dilps-development',
+            'tiresias-production',
+            'tiresias-staging',
+            'tiresias-development',
+        ]),
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {maxWidth: '800px'}},
     ],
 };

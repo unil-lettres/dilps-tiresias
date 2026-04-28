@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-color-scheme="auto" data-theme="dilps-production" data-is-dark="false">
     <head>
         <meta charset="utf-8" />
         <title></title>
@@ -7,8 +7,16 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link id="favIcon" rel="icon" type="image/x-icon" href="favicon-dilps.svg" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1&icon_names=123,abc,account_circle,ad,add,add_alert,add_link,analytics,android,announcement,aq,arrow_drop_down,arrow_drop_up,artist,attachment,barefoot,book,box,bubble,build,business,call,camera,cancel,cards,casino,chat,check,chevron_right,church,circle,class,cleaning,clear,close,cloud,cloud_upload,code,coffee,collections,collections_bookmark,colors,compare,computer,construction,content_copy,cooking,create,crown,dark_mode,delete,delete_forever,description,deselect,discount,docs,domain,download,dvr,eco,edit,email,energy,engineering,equal,error,exit_to_app,expand_more,feedback,file_download,file_upload,files,filter,finance,folder_special,font_download,font_download_off,forum,foundation,function,games,get_app,grocery,group,height,help,hide,home,host,house,image,info,input,invert_colors,key,keyboard_arrow_down,kitchen,label,library_add,light,light_mode,link,link_off,list,living,login,logout,man,map,menu,message,mobile,mode,money,mood_bad,more_vert,movie,mp,museum,navigate_before,navigate_next,navigation,news,notifications,open_in_browser,padding,password,percent,phone,photo,pin,place,plumbing,post,radio,refresh,remove,report,restaurant,reviews,road,room,routine,rsvp,satellite,save,scale,school,science,script,sd,search,security,select,share_windows,shop,slideshow,source,spa,star,start,storage,store,stream,style,support,tab,tag,target,today,toolbar,tooltip,toys,travel,tv,undo,update,upload,uppercase,variables,view_column,view_compact,view_list,visibility,watch,water,window,work"
+            rel="stylesheet"
+        />
     </head>
-    <body class="mat-typography">
+    <body>
         <app-root>
             <div class="bootloader">
                 <div class="sk-folding-cube">
@@ -22,11 +30,15 @@
 
         <script>
             window.APP_SITE = window.location.hostname.includes('tiresias') ? 'Tiresias' : 'Dilps';
-            const appRoot = document.getElementsByTagName('app-root')[0];
-            const dilpsTheme = localStorage.getItem('dilps-theme');
-            const tiresiasTheme = localStorage.getItem('tiresias-theme');
-            const theme = window.APP_SITE === 'Tiresias' ? tiresiasTheme : dilpsTheme;
-            appRoot.className = theme || 'dilps-production-dark';
+
+            const scheme = localStorage.getItem('color-scheme');
+            if (scheme) {
+                window.document.documentElement.setAttribute('data-color-scheme', scheme);
+            }
+
+            const dark =
+                scheme === 'dark' || (scheme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            window.document.documentElement.setAttribute('data-is-dark', dark ? 'true' : 'false');
         </script>
     </body>
 </html>
