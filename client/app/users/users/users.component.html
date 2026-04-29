@@ -20,12 +20,10 @@
                 <ng-container matColumnDef="login">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Login</th>
                     <td *matCellDef="let element; dataSource: dataSource" mat-cell>
-                        <app-table-button
-                            icon="edit"
-                            [disable]="isLegacyUser(element)"
-                            [label]="element.login"
-                            (click)="isLegacyUser(element) || edit(element)"
-                        />
+                        <div class="nat-horizontal nat-align nat-gap">
+                            {{ element.login }}
+                            <mat-icon iconPositionEnd fontIcon="edit" class="icon-edit" />
+                        </div>
                     </td>
                 </ng-container>
                 <!-- Name Column -->
@@ -63,7 +61,13 @@
                     </td>
                 </ng-container>
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+                <tr
+                    *matRowDef="let row; columns: displayedColumns"
+                    class="editable-row"
+                    mat-row
+                    [class.disabled]="isLegacyUser(row)"
+                    (click)="isLegacyUser(row) || edit(row)"
+                ></tr>
             </table>
         </div>
 

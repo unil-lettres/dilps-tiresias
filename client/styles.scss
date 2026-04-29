@@ -89,6 +89,21 @@ natural-search {
     padding: 0 3px;
 }
 
+.editable-row {
+    .icon-edit {
+        opacity: 0;
+    }
+
+    &:hover:not(:has(natural-table-button:hover)):not(.disabled) .mat-mdc-cell {
+        cursor: pointer;
+        background-color: var(--mat-sys-surface-container-highest);
+
+        .icon-edit {
+            opacity: 1;
+        }
+    }
+}
+
 natural-gallery {
     .zoomable:hover .image,
     .image.zoomable:hover {

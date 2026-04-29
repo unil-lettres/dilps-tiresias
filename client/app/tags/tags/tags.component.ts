@@ -4,7 +4,6 @@ import {TagService} from '../services/tag.service';
 import {TagComponent} from '../tag/tag.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
@@ -50,7 +49,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         NaturalTableButtonComponent,
         MatTooltip,
         HideTooltipDirective,
-        TableButtonComponent,
         MatProgressSpinner,
         MatPaginator,
         CollectionHierarchyComponent,

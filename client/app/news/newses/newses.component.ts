@@ -4,9 +4,6 @@ import {NewsComponent} from '../news/news.component';
 import {NewsService} from '../services/news.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltip} from '@angular/material/tooltip';
-import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
@@ -43,9 +40,6 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatSort,
         MatSortHeader,
         MatIcon,
-        TableButtonComponent,
-        MatTooltip,
-        HideTooltipDirective,
         MatProgressSpinner,
         MatPaginator,
         NaturalFixedButtonComponent,

@@ -3,8 +3,3 @@
 :host {
     @include utils.fixedToolbar();
 }
-
-.cell-content {
-    display: flex;
-    align-items: last baseline;
-}

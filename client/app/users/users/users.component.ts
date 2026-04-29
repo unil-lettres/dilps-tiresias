@@ -6,7 +6,6 @@ import {UserComponent} from '../user/user.component';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
@@ -23,6 +22,7 @@ import {AsyncPipe, DatePipe} from '@angular/common';
 import {NaturalEnumPipe, NaturalFixedButtonComponent, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
     selector: 'app-users',
@@ -44,12 +44,12 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatRow,
         MatSort,
         MatSortHeader,
-        TableButtonComponent,
         MatProgressSpinner,
         MatPaginator,
         NaturalFixedButtonComponent,
         NaturalEnumPipe,
         TypePipe,
+        MatIcon,
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',

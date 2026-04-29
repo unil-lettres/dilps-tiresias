@@ -6,9 +6,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {MatTooltip} from '@angular/material/tooltip';
-import {TableButtonComponent} from '../../shared/components/table-button/table-button.component';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
@@ -43,9 +40,6 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatRow,
         MatSort,
         MatSortHeader,
-        TableButtonComponent,
-        MatTooltip,
-        HideTooltipDirective,
         MatProgressSpinner,
         MatPaginator,
         MatButton,

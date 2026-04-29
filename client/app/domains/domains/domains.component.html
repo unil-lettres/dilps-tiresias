@@ -22,11 +22,16 @@
         <div class="responsive-table nat-margin-top">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+                <tr
+                    *matRowDef="let row; columns: displayedColumns"
+                    class="editable-row"
+                    mat-row
+                    (click)="edit(row.item)"
+                ></tr>
 
                 <ng-container matColumnDef="navigation">
                     <th *matHeaderCellDef mat-header-cell class="natural-3em-column"></th>
-                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>
+                    <td *matCellDef="let element; dataSource: dataSource" mat-cell (click)="$event.stopPropagation()">
                         @if (element.hasNavigation) {
                             <natural-table-button
                                 icon="chevron_right"
@@ -41,13 +46,9 @@
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef mat-header-cell mat-sort-header>Nom</th>
                     <td *matCellDef="let element; dataSource: dataSource" mat-cell>
-                        <div class="cell-content">
-                            <app-table-button
-                                icon="edit"
-                                matTooltip="Éditer"
-                                [label]="element.item.name"
-                                (click)="edit(element.item)"
-                            />
+                        <div class="nat-horizontal nat-align nat-gap">
+                            {{ element.item.name }}
+                            <mat-icon iconPositionEnd fontIcon="edit" class="icon-edit" />
                             @if (searched()) {
                                 <app-collection-hierarchy [collection]="element.item" />
                             }
