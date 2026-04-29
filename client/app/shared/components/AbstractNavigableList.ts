@@ -1,4 +1,4 @@
-import {inject, OnInit} from '@angular/core';
+import {inject, OnInit, signal} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
     ExtractTallOne,
@@ -38,7 +38,7 @@ export class AbstractNavigableList<
     /**
      * If a search has been performed through natural-search component.
      */
-    public searched = false;
+    public readonly searched = signal(false);
 
     /**
      * Dialog to open detail view
@@ -74,6 +74,11 @@ export class AbstractNavigableList<
         resetPagination = true,
     ): void {
         super.search(naturalSearchSelections, navigationExtras, resetPagination);
-        this.searched = (naturalSearchSelections[0] || []).length > 0;
+        this.searched.set((naturalSearchSelections[0] || []).length > 0);
+    }
+
+    public override clearSearch(resetPagination = true): void {
+        super.clearSearch(resetPagination);
+        this.searched.set(false);
     }
 }

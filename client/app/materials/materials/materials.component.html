@@ -48,7 +48,7 @@
                                 [label]="element.item.name"
                                 (click)="edit(element.item)"
                             />
-                            @if (searched) {
+                            @if (searched()) {
                                 <app-collection-hierarchy [collection]="element.item" />
                             }
                         </div>
