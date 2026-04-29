@@ -5,6 +5,7 @@ import {NewsService} from '../services/news.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
@@ -17,7 +18,7 @@ import {
     MatRowDef,
     MatTable,
 } from '@angular/material/table';
-import {NaturalFixedButtonComponent, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
+import {NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 
@@ -40,9 +41,9 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatSort,
         MatSortHeader,
         MatIcon,
+        MatButton,
         MatProgressSpinner,
         MatPaginator,
-        NaturalFixedButtonComponent,
     ],
     templateUrl: './newses.component.html',
     styleUrl: './newses.component.scss',

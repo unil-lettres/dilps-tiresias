@@ -19,10 +19,11 @@ import {
     MatTable,
 } from '@angular/material/table';
 import {AsyncPipe, DatePipe} from '@angular/common';
-import {NaturalEnumPipe, NaturalFixedButtonComponent, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
+import {NaturalEnumPipe, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 
 @Component({
     selector: 'app-users',
@@ -46,10 +47,10 @@ import {MatIcon} from '@angular/material/icon';
         MatSortHeader,
         MatProgressSpinner,
         MatPaginator,
-        NaturalFixedButtonComponent,
         NaturalEnumPipe,
         TypePipe,
         MatIcon,
+        MatButton,
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',
