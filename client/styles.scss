@@ -68,15 +68,19 @@ ng-progress {
     width: auto !important;
 }
 
-natural-search {
-    natural-input:last-of-type {
-        margin-right: 5px !important;
+mat-toolbar {
+    natural-search {
+        margin-top: 6px;
     }
 }
 
 natural-search {
     align-self: flex-start;
     font-size: 16px;
+
+    natural-input:last-of-type {
+        margin-right: 5px !important;
+    }
 }
 
 // Allow newline in tooltips

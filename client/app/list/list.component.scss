@@ -160,7 +160,6 @@ app-view-grid {
 }
 
 natural-search {
-    margin-top: 6px;
     min-width: 0; // Allow flex shrink below content size so ResizeObserver can detect overflow
 }
 
