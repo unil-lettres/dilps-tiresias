@@ -22,13 +22,15 @@
     <button mat-menu-item routerLink="/statistic" routerLinkActive="active">Statistiques</button>
 </mat-menu>
 
-<mat-sidenav-container class="nat-expand nat-vertical">
+<mat-sidenav-container>
     @if (showNavigationMenu()) {
-        <mat-sidenav id="menu" mode="side" opened position="start" [attr.data-theme]="menuTheme()">
-            <ng-scrollbar>
+        <mat-sidenav disableClose id="menu" mode="side" opened position="start" [attr.data-theme]="menuTheme()">
+            <div class="nat-vertical" style="height: 100%">
                 @if (user) {
                     <!-- Dashboard -->
                     <a
+                        matFab
+                        class="menu-icon-button"
                         routerLink="/home"
                         routerLinkActive="active"
                         matTooltip="Non classé"
@@ -41,6 +43,8 @@
 
                     <!-- Mes collections privées -->
                     <a
+                        matFab
+                        class="menu-icon-button"
                         matTooltip="Mes collections"
                         matTooltipPosition="after"
                         routerLink="/my-collection"
@@ -51,6 +55,8 @@
 
                     <!-- Collections publiques -->
                     <a
+                        matFab
+                        class="menu-icon-button"
                         matTooltip="Collections publiques"
                         matTooltipPosition="after"
                         routerLink="/collection"
@@ -60,7 +66,14 @@
                     </a>
 
                     <!-- Fonds -->
-                    <a matTooltip="Fonds" matTooltipPosition="after" routerLink="/source" routerLinkActive="active">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        matTooltip="Fonds"
+                        matTooltipPosition="after"
+                        routerLink="/source"
+                        routerLinkActive="active"
+                    >
                         @if (site === Site.Dilps) {
                             <app-historic-icon tooltip="" />
                         } @else {
@@ -70,6 +83,8 @@
 
                     <!-- Notifications -->
                     <a
+                        matFab
+                        class="menu-icon-button"
                         matTooltip="Notifications"
                         matTooltipPosition="after"
                         routerLink="/notification"
@@ -87,6 +102,8 @@
                             user.role === UserRole.major)
                     ) {
                         <a
+                            matFab
+                            class="menu-icon-button"
                             matTooltip="Ajouter une image"
                             matTooltipPosition="after"
                             naturalFileSelect
@@ -99,13 +116,8 @@
                     }
 
                     @if (progress !== null && progress > 0) {
-                        <a>
-                            <mat-progress-spinner
-                                color="tertiary"
-                                [value]="progress"
-                                [diameter]="24"
-                                [strokeWidth]="5"
-                            />
+                        <a matFab class="menu-icon-button" aria-disabled="true" tabindex="-1">
+                            <mat-progress-spinner [value]="progress" [diameter]="24" [strokeWidth]="5" />
                         </a>
                     }
 
@@ -118,6 +130,8 @@
                             user.role === UserRole.major)
                     ) {
                         <a
+                            matFab
+                            class="menu-icon-button"
                             href="/api/template"
                             matTooltip="Télécharger le modèle pour import Excel"
                             matTooltipPosition="after"
@@ -130,6 +144,8 @@
                     @if (showThesaurusMenu()) {
                         <mat-divider />
                         <a
+                            matFab
+                            class="menu-icon-button"
                             matTooltip="Thésaurus"
                             matTooltipPosition="after"
                             [class.active]="isThesaurusActive()"
@@ -143,6 +159,8 @@
                     @if (user.role === UserRole.administrator) {
                         <mat-divider />
                         <a
+                            matFab
+                            class="menu-icon-button"
                             matTooltip="Gestion"
                             matTooltipPosition="after"
                             [class.active]="isAdminActive()"
@@ -154,41 +172,72 @@
                     <mat-divider />
 
                     <!-- Account -->
-                    <a matTooltip="Mon compte" matTooltipPosition="after" (click)="editUser()">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        matTooltip="Mon compte"
+                        matTooltipPosition="after"
+                        (click)="editUser()"
+                    >
                         <mat-icon naturalIcon="account_circle" />
                     </a>
 
                     <!-- Logout -->
-                    <a matTooltip="Se déconnecter" matTooltipPosition="after" (click)="userService.logout()">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        matTooltip="Se déconnecter"
+                        matTooltipPosition="after"
+                        (click)="userService.logout()"
+                    >
                         <mat-icon naturalIcon="exit_to_app" />
                     </a>
                 } @else {
                     <!-- Dashboard -->
-                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        routerLink="/"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}"
+                    >
                         <mat-icon naturalIcon="home" />
                     </a>
 
                     <!-- Logout -->
-                    <a matTooltip="Se connecter" matTooltipPosition="after" (click)="userService.revokeTempAccess()">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        matTooltip="Se connecter"
+                        matTooltipPosition="after"
+                        (click)="userService.revokeTempAccess()"
+                    >
                         <mat-icon naturalIcon="account_circle" />
                     </a>
 
                     <!-- Contact -->
                     @if (site === Site.Tiresias) {
-                        <a matTooltip="Contact" matTooltipPosition="after" (click)="mailto()">
+                        <a
+                            matFab
+                            class="menu-icon-button"
+                            matTooltip="Contact"
+                            matTooltipPosition="after"
+                            (click)="mailto()"
+                        >
                             <mat-icon naturalIcon="announcement" />
                         </a>
                     }
                 }
 
                 <!-- Bottom nav -->
+                <div class="nat-expand"></div>
                 @if (networkActivityService.errors().length) {
-                    <a matFab color="error" class="nat-rounded" style="margin: auto" [matMenuTriggerFor]="errorsMenu">
+                    <a matFab class="menu-icon-button" color="error" (click)="openErrorsDialog()">
                         <mat-icon naturalIcon="error" />
                     </a>
                 }
-                <natural-compact-color-schemer />
-            </ng-scrollbar>
+                <natural-compact-color-schemer class="nat-padding-vertical" />
+            </div>
         </mat-sidenav>
     }
 

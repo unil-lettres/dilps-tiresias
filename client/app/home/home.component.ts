@@ -25,7 +25,6 @@ import {
     NaturalIconDirective,
     NetworkActivityService,
 } from '@ecodev/natural';
-import {NgScrollbar} from 'ngx-scrollbar';
 import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -61,7 +60,6 @@ function isExcel(file: File): boolean {
         RouterLinkActive,
         MatSidenav,
         MatSidenavContainer,
-        NgScrollbar,
         MatIcon,
         MatTooltip,
         HideTooltipDirective,

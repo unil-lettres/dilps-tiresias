@@ -7,9 +7,8 @@ mat-sidenav-container {
 }
 
 #menu {
-    @include utils.centerContent();
-    border: none;
     background: var(--mat-sys-primary-container);
+    width: 64px;
     color: var(--mat-sys-on-primary-container);
 
     @include mat.progress-spinner-overrides(
@@ -19,14 +18,17 @@ mat-sidenav-container {
     );
 
     mat-divider {
-        opacity: 0.33;
+        @include mat.divider-overrides(
+            (
+                color: var(--mat-sys-on-primary-container),
+            )
+        );
+        opacity: 0.2;
     }
 
-    natural-compact-color-schemer,
-    a {
-        display: grid;
-        place-content: center;
-        padding: 18px 0;
+    .menu-icon-button {
+        width: 100%;
+        height: 64px;
         color: inherit;
 
         &:hover {
@@ -39,44 +41,18 @@ mat-sidenav-container {
             color: var(--mat-sys-on-primary-fixed);
         }
 
-        app-historic-icon,
-        .mat-icon {
+        app-historic-icon {
             width: 32px;
-            height: auto;
-            text-align: center;
         }
-    }
 
-    natural-compact-color-schemer {
-        margin: auto;
-        padding: 0;
-    }
-
-    &,
-    ng-scrollbar {
-        width: 0;
-        min-width: 64px;
-    }
-}
-
-// Center menu icons
-.mdc-list-item--with-leading-icon .mdc-list-item__start {
-    margin-left: 20px;
-}
-
-.mat-mdc-menu-panel.error-menu {
-    width: auto !important;
-    max-width: none !important;
-
-    .error-message {
-        word-break: break-all;
-    }
-
-    .error:not(:last-child) {
-        padding-bottom: 20px;
-    }
-
-    .mat-mdc-menu-item {
-        height: auto;
+        @include mat.fab-overrides(
+            (
+                container-shape: var(--mat-sys-corner-none),
+                container-elevation-shadow: var(--mat-sys-level0),
+                focus-container-elevation-shadow: var(--mat-sys-level0),
+                hover-container-elevation-shadow: var(--mat-sys-level0),
+                pressed-container-elevation-shadow: var(--mat-sys-level0),
+            )
+        );
     }
 }

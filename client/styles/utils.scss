@@ -1,18 +1,3 @@
-/**
-   * fxLayoutAlign="center start" fxLayout="column"
-   * Center content, but cause bug when there is scroll, the top of the content is **LOST**
-   * This CSS fix this issue
-   * Make sure you added the class contered-content to child element in html markup
-   */
-@mixin centerContent {
-    display: flex;
-    overflow-x: hidden;
-    overflow-y: auto;
-    .centered-content {
-        margin: auto;
-    }
-}
-
 @mixin fixedToolbar() {
     .containerWithToolbar {
         position: relative;
