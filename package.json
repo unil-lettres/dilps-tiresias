@@ -19,7 +19,7 @@
         "clean-env": "prettier --write client/environments/*",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
     },
-    "packageManager": "pnpm@10.33.0",
+    "packageManager": "pnpm@11.0.1",
     "dependencies": {
         "@angular/cdk": "^21.2.0",
         "@angular/common": "^21.2.0",
