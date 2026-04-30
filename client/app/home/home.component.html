@@ -232,7 +232,14 @@
                 <!-- Bottom nav -->
                 <div class="nat-expand"></div>
                 @if (networkActivityService.errors().length) {
-                    <a matFab class="menu-icon-button" color="error" (click)="openErrorsDialog()">
+                    <a
+                        matFab
+                        class="menu-icon-button"
+                        color="error"
+                        matTooltip="Voir les erreurs"
+                        matTooltipPosition="after"
+                        (click)="openErrorsDialog()"
+                    >
                         <mat-icon naturalIcon="error" />
                     </a>
                 }
@@ -245,20 +252,3 @@
         <router-outlet />
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-<mat-menu #errorsMenu="matMenu" class="nat-padding error-menu nat-gap nat-vertical" [overlapTrigger]="false">
-    @for (error of networkActivityService.errors(); track error) {
-        <div class="error nat-vertical" style="user-select: text" (click)="$event.stopPropagation()">
-            @if (error.message) {
-                <span class="error-message mat-font-body-sm">{{ error.message }}</span>
-            }
-            @if (error.extensions?.debugMessage) {
-                <span class="error-message mat-font-body-sm">{{ error.extensions?.debugMessage }}</span>
-            }
-        </div>
-    }
-    <button mat-menu-item (click)="networkActivityService.clearErrors()">
-        <mat-icon matMenuItemIcon naturalIcon="close" />
-        Effacer et fermer
-    </button>
-</mat-menu>

@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatDivider} from '@angular/material/divider';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {ErrorsDialogComponent} from './errors-dialog.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -309,6 +310,19 @@ export class HomeComponent implements OnInit {
 
                 if (login) {
                     this.router.navigateByUrl('/login');
+                }
+            });
+    }
+
+    protected openErrorsDialog(): void {
+        this.dialog
+            .open(ErrorsDialogComponent, {
+                data: this.networkActivityService.errors(),
+            })
+            .afterClosed()
+            .subscribe(clear => {
+                if (clear) {
+                    this.networkActivityService.clearErrors();
                 }
             });
     }
