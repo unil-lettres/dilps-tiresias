@@ -18,7 +18,6 @@ import {filter} from 'rxjs/operators';
 import {StatisticService} from './statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
-import {provideScrollbarOptions} from 'ngx-scrollbar';
 import {CustomPaginatorIntl} from './shared/services/custom-paginator-intl.service';
 import {provideHighcharts} from 'highcharts-angular';
 
@@ -80,10 +79,6 @@ export const appConfig: ApplicationConfig = {
             });
 
             dateAdapter.setLocale('fr-ch');
-        }),
-        provideScrollbarOptions({
-            visibility: 'hover',
-            appearance: 'compact',
         }),
         {provide: MatPaginatorIntl, useClass: CustomPaginatorIntl},
         provideHighcharts(),

@@ -15,7 +15,6 @@ import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
-import {NgScrollbar} from 'ngx-scrollbar';
 import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
@@ -41,7 +40,6 @@ import {
         MatTooltip,
         HideTooltipDirective,
         MatIcon,
-        NgScrollbar,
         MatNavList,
         MatListItem,
         MatListItemIcon,

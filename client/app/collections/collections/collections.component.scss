@@ -15,10 +15,11 @@
     background: var(--mat-sys-outline-variant);
 }
 
-.scrolled {
+.collections {
+    overflow-y: auto;
     @include mat.list-overrides(
         (
-            active-indicator-shape: 0,
+            active-indicator-shape: var(--mat-sys-corner-none),
         )
     );
 }

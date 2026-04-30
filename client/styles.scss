@@ -18,13 +18,6 @@ html {
             density: 0,
         )
     );
-
-    --scrollbar-thumb-color: var(--mat-sys-on-surface);
-    @supports (background: color-mix(in srgb, blue, red)) {
-        --scrollbar-thumb-color: color-mix(in srgb, var(--scrollbar-thumb-color) 30%, transparent);
-    }
-
-    --scrollbar-thickness: 9;
 }
 
 body {
@@ -167,21 +160,6 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 // component because of how PhotoSwipe works.
 .pswp__button--card-button {
     color: #fff;
-}
-
-.ng-scroll-max-width .ng-scroll-content {
-    width: 100% !important;
-}
-
-.ng-scrollbar-wrapper,
-.ng-scroll-viewport-wrapper,
-.ng-scroll-layer,
-.ng-scroll-viewport {
-    /* Replace inset property not supported by Safari 13. */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
 }
 
 @keyframes loading_pulse {
