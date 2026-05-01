@@ -11,14 +11,19 @@
                 <tr
                     *matRowDef="let row; columns: displayedColumns"
                     mat-row
-                    style="cursor: pointer"
+                    class="editable-row"
                     [routerLink]="[row.id]"
                 ></tr>
                 <!-- Type -->
 
                 <ng-container matColumnDef="type">
                     <th *matHeaderCellDef mat-header-cell>Type</th>
-                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>{{ element.type }}</td>
+                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>
+                        <div class="nat-horizontal nat-align nat-gap">
+                            {{ element.type }}
+                            <mat-icon iconPositionEnd fontIcon="chevron_forward" class="icon-edit" />
+                        </div>
+                    </td>
                 </ng-container>
                 <!-- Name Column -->
 

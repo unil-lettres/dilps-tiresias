@@ -3,6 +3,7 @@ import {ChangeService} from '../services/change.service';
 import {NaturalAbstractList, TypedMatCellDef} from '@ecodev/natural';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
@@ -41,6 +42,7 @@ import {MatToolbar} from '@angular/material/toolbar';
         RouterLink,
         MatProgressSpinner,
         MatPaginator,
+        MatIcon,
     ],
     templateUrl: './changes.component.html',
     styleUrl: './changes.component.scss',
