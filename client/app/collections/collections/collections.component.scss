@@ -11,20 +11,9 @@
     }
 }
 
-.active {
-    background: var(--mat-sys-outline-variant);
-}
-
 .collections {
     overflow-y: auto;
-    @include mat.list-overrides(
-        (
-            active-indicator-shape: var(--mat-sys-corner-none),
-        )
-    );
-}
 
-.hierarchy-indicator {
     @include mat.list-overrides(
         (
             list-item-leading-icon-start-space: 4px,
@@ -33,47 +22,21 @@
     );
 }
 
-mat-nav-list {
-    &,
-    & * {
-        white-space: normal;
-    }
-
-    .description {
-        margin-top: 4px;
-    }
-
-    .mat-mdc-list-item {
-        margin-bottom: -1px;
-    }
-}
-
 .left-pane {
-    display: flex;
     flex: 1 1 400px;
-    flex-direction: column;
-    box-sizing: border-box;
     min-width: 400px;
     max-width: 400px;
 }
 
 .hierarchy-indicator {
-    margin-right: 8px;
-    margin-left: 4px;
+    position: relative;
+    z-index: 1;
     padding: 0;
-
-    &.expanded::after {
-        position: absolute;
-        bottom: -16px;
-        left: 11px;
-        width: 2px;
-        height: 15px;
-        content: '';
-    }
 }
 
 .hierarchy-depth-indicator {
-    margin-left: 15px;
+    margin-left: var(--natural-default-spacing);
+    border-left: 2px solid var(--mat-sys-outline-variant);
 }
 
 .actions-trigger {
@@ -85,12 +48,21 @@ mat-list-item:hover .actions-trigger,
     visibility: visible;
 }
 
-.hierarchy-indicator {
-    &.expanded::after {
-        border-left: 2px solid var(--mat-sys-outline-variant);
-    }
-}
+/* Ensure the entire list item is clickable, not just the text */
+mat-list-item.collection-item {
+    .collection-link {
+        text-decoration: none;
 
-.hierarchy-depth-indicator {
-    border-left: 2px solid var(--mat-sys-outline-variant);
+        &::after {
+            position: absolute;
+            z-index: 0;
+            inset: 0;
+            content: '';
+        }
+    }
+
+    [matListItemMeta] {
+        position: relative;
+        z-index: 1;
+    }
 }
