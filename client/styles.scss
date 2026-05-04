@@ -225,3 +225,11 @@ mat-hint.strong {
     background-color: var(--mat-sys-error-container) !important;
     color: var(--mat-sys-on-error-container) !important;
 }
+
+.tooltip-large {
+    @include mat.tooltip-overrides(
+        (
+            supporting-text-size: var(--mat-sys-body-medium-size),
+        )
+    );
+}

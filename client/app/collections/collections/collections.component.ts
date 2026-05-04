@@ -195,6 +195,13 @@ export class CollectionsComponent implements OnInit {
         this.dialog.open(CollectionComponent, {width: '800px'});
     }
 
+    protected isOverflowing(element: HTMLElement | null): boolean {
+        if (!element) {
+            return false;
+        }
+        return element.scrollWidth > element.clientWidth;
+    }
+
     protected linkCollectionToCollection(collection: CollectionsQuery['collections']['items'][0]): void {
         this.dialog.open<CollectionSelectorComponent, CollectionSelectorData>(CollectionSelectorComponent, {
             width: '400px',

@@ -51,9 +51,14 @@
                     @for (collection of collections; track collection) {
                         <mat-list-item
                             #rla="routerLinkActive"
+                            #tooltip="matTooltip"
                             class="collection-item"
                             routerLinkActive
+                            matTooltipPosition="right"
+                            matTooltipClass="tooltip-large"
+                            [matTooltip]="collection.name"
                             [activated]="rla.isActive"
+                            (mouseenter)="tooltip.disabled = !isOverflowing(titleEl.parentElement)"
                         >
                             @if (collection.hasChildren) {
                                 <button
@@ -80,7 +85,7 @@
                             } @else {
                                 <mat-icon matListItemIcon class="hierarchy-indicator" />
                             }
-                            <a matListItemTitle class="collection-link" [routerLink]="[collection.id]">
+                            <a #titleEl matListItemTitle class="collection-link" [routerLink]="[collection.id]">
                                 {{ collection.name }}
                                 @if (collection.hasUsers) {
                                     <span>&nbsp;(*)</span>
