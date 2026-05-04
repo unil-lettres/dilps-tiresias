@@ -2,12 +2,8 @@ import {Component, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {CardQuery} from '../../generated-types';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import {MatCheckbox} from '@angular/material/checkbox';
+import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {FormsModule} from '@angular/forms';
-
-type Checkable = {checked: boolean};
-type CheckablCard = CardQuery['card']['cards'][0] & Checkable;
-type CheckablCards = CheckablCard[];
 
 export type LinkRelatedCardsDialogData = {
     cards: CardQuery['card']['cards'];
@@ -19,26 +15,23 @@ export type LinkRelatedCardsDialogResult = CardQuery['card']['cards'];
 
 @Component({
     selector: 'app-link-related-cards-dialog',
-    imports: [MatButton, MatDialogModule, MatCheckbox, FormsModule],
+    imports: [MatButton, MatDialogModule, MatSelectionList, MatListOption, FormsModule],
     templateUrl: './link-related-cards-dialog.component.html',
-    styleUrl: './link-related-cards-dialog.component.scss',
 })
 export class LinkRelatedCardsDialogComponent {
     protected readonly data = inject<LinkRelatedCardsDialogData>(MAT_DIALOG_DATA);
 
-    protected readonly cards: CheckablCards;
+    protected readonly cards: CardQuery['card']['cards'];
+    protected selectedCards: CardQuery['card']['cards'];
     protected readonly title: string;
     protected readonly help: string;
 
     public constructor() {
         const data = this.data;
 
-        this.cards = data.cards.map(card => ({checked: true, ...card}));
+        this.cards = data.cards;
+        this.selectedCards = [...data.cards];
         this.title = data.title;
         this.help = data.help;
-    }
-
-    protected filterCheckedCards(): CheckablCards {
-        return this.cards.filter(card => card.checked);
     }
 }

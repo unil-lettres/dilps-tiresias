@@ -1,15 +1,17 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content class="wrapper">
+<mat-dialog-content>
     <div>
         <p>{{ help }}</p>
-        @for (card of cards; track card) {
-            <div>
-                <mat-checkbox [(ngModel)]="card.checked"> {{ card.name }} ({{ card.id }}) </mat-checkbox>
-            </div>
-        }
+        <mat-selection-list [(ngModel)]="selectedCards">
+            @for (card of cards; track card) {
+                <mat-list-option togglePosition="before" [value]="card"
+                    >{{ card.name }} ({{ card.id }})</mat-list-option
+                >
+            }
+        </mat-selection-list>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button matButton="outlined" mat-dialog-close>Annuler</button>
-    <button matButton="filled" [mat-dialog-close]="filterCheckedCards()">Créer les associations</button>
+    <button matButton="filled" [mat-dialog-close]="selectedCards">Créer les associations</button>
 </mat-dialog-actions>
