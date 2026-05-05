@@ -865,20 +865,29 @@
                         </div>
                     }
                     @if (!isDilps && (edit || !!model.url)) {
-                        <h2>Référence web</h2>
-                    }
-                    @if (!isDilps && !edit && model.url) {
-                        <mat-list style="padding: 0">
-                            <mat-list-item>
+                        <h2 class="nat-horizontal nat-center nat-gap-10 nat-left reference-title">
+                            <span>Référence web</span>
+                            @if (!!model.url) {
                                 <a
-                                    color="primary"
-                                    style="justify-content: flex-start"
-                                    matButton
+                                    matIconButton
+                                    target="_blank"
+                                    matTooltipPosition="above"
+                                    matTooltip="Ouvrir"
+                                    aria-label="Ouvrir la référence dans un nouvel onglet"
                                     [href]="model.url"
-                                    [innerHTML]="model.urlDescription || model.url"
-                                ></a>
-                            </mat-list-item>
-                        </mat-list>
+                                >
+                                    <mat-icon fontIcon="open_in_new" />
+                                </a>
+                            }
+                        </h2>
+                    }
+                    @if (!isDilps && !edit && !!model.url) {
+                        <div
+                            class="url-description"
+                            [innerHTML]="model.urlDescription || model.url"
+                            [matTooltip]="model.url"
+                            [matTooltipDisabled]="!model.urlDescription"
+                        ></div>
                     }
                     @if (!isDilps && edit) {
                         <mat-form-field>

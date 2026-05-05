@@ -282,3 +282,11 @@ app-related-cards {
         border-top: 1px solid var(--mat-sys-outline-variant);
     }
 }
+
+.reference-title {
+    margin: 0 !important;
+}
+
+.url-description {
+    word-wrap: break-word;
+}
