@@ -18,9 +18,10 @@ import {
     MatRowDef,
     MatTable,
 } from '@angular/material/table';
-import {NaturalSearchComponent, NaturalTableButtonComponent, TypedMatCellDef} from '@ecodev/natural';
+import {NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {CollectionHierarchyComponent} from '../../shared/components/collection-hierarchy/collection-hierarchy.component';
@@ -46,7 +47,8 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatRow,
         MatSort,
         MatSortHeader,
-        NaturalTableButtonComponent,
+        MatIconButton,
+        RouterLink,
         MatTooltip,
         HideTooltipDirective,
         MatProgressSpinner,

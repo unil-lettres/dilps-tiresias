@@ -933,7 +933,7 @@
                             <h2>Fiches associées</h2>
                             <natural-relations
                                 placeholder="Associer une fiche"
-                                id="fiches-additionnelles"
+                                class="table-fixed"
                                 [disabled]="!edit"
                                 [filter]="{
                                     groups: [
@@ -960,17 +960,18 @@
                                 [main]="fetchedModel"
                                 [service]="cardService"
                                 [displayWith]="displayWith"
-                                [class.margin-bottom-hint]="!edit"
                             >
                                 <ng-template let-item="item">
-                                    <div [class.related-card-template]="true">
-                                        <natural-table-button
-                                            icon="image"
-                                            [label]="displayWith(item)"
-                                            [navigate]="['/card/', item.id]"
+                                    <div class="nat-horizontal nat-center nat-gap-10">
+                                        <button
+                                            matButton
+                                            class="btn-text-left nat-expand btn-ellipsis"
+                                            [routerLink]="['/card/', item.id]"
                                             [matTooltip]="displayWith(item)"
-                                            [matTooltipShowDelay]="500"
-                                        />
+                                        >
+                                            <mat-icon>image</mat-icon>
+                                            {{ displayWith(item) }}
+                                        </button>
                                         @if (edit) {
                                             <button
                                                 matIconButton
@@ -986,6 +987,7 @@
                             @if (edit) {
                                 <div class="btn-link-related-cards">
                                     <button matButton="filled" color="tertiary" (click)="openLinkRelatedCardsDialog()">
+                                        <mat-icon fontIcon="arrows_input" />
                                         Associer les fiches entre elles...
                                     </button>
                                 </div>

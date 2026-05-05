@@ -1,14 +1,20 @@
 @if (!disabled || dataSource.data?.items.length > 0) {
-    <div [class.margin-bottom-hint]="disabled">
+    <div [class.nat-margin-bottom]="disabled">
         <h2>Fichiers joints</h2>
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table class="table-fixed" [dataSource]="dataSource">
             <ng-container matColumnDef="name">
                 <td *matCellDef="let element; dataSource: dataSource" mat-cell>
                     @if (element.file) {
                         <div>
-                            <a matButton color="primary" [href]="`/api/file/${element.file.id}/${element.file.name}`">{{
-                                element.file.name
-                            }}</a>
+                            <a
+                                matButton
+                                class="btn-ellipsis btn-text-left"
+                                [matTooltip]="element.file.name"
+                                [href]="`/api/file/${element.file.id}/${element.file.name}`"
+                            >
+                                <mat-icon fontIcon="attach_file" />
+                                {{ element.file.name }}
+                            </a>
                         </div>
                     }
                     @if (element.input) {
@@ -49,6 +55,7 @@
                     [maxSize]="maxFileSize"
                     (filesChange)="uploadFiles($event)"
                 >
+                    <mat-icon fontIcon="upload_file" />
                     Joindre un fichier
                 </button>
             }

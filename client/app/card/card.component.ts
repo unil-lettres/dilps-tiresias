@@ -10,19 +10,17 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
-import {MatList, MatListItem} from '@angular/material/list';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatSlider, MatSliderThumb} from '@angular/material/slider';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {
     FileSelection,
     NaturalFileDropDirective,
     NaturalIconDirective,
     NaturalLinkMutationService,
     NaturalRelationsComponent,
-    NaturalTableButtonComponent,
 } from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
@@ -155,15 +153,13 @@ type InitialCardValues = {
         CdkAccordion,
         CdkAccordionItem,
         NaturalRelationsComponent,
-        NaturalTableButtonComponent,
+        RouterLink,
         FilesComponent,
         StampComponent,
         StripTagsPipe,
         NaturalIconDirective,
         RelatedCardsComponent,
         ExportMenuComponent,
-        MatList,
-        MatListItem,
         HistoricIconComponent,
         UniqueValidatorDirective,
         UrlValidatorDirective,

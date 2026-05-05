@@ -91,7 +91,7 @@ natural-search {
         opacity: 0;
     }
 
-    &:hover:not(:has(natural-table-button:hover)):not(.disabled) .mat-mdc-cell {
+    &:hover:not(:has(button[matIconButton]:hover)):not(.disabled) .mat-mdc-cell {
         cursor: pointer;
         background-color: var(--mat-sys-surface-container-highest);
 
@@ -232,4 +232,25 @@ mat-hint.strong {
             supporting-text-size: var(--mat-sys-body-medium-size),
         )
     );
+}
+
+.btn-text-left {
+    justify-content: flex-start !important;
+}
+
+.btn-ellipsis {
+    width: 100%;
+    overflow: hidden;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.table-fixed {
+    &,
+    table {
+        table-layout: fixed !important;
+    }
 }

@@ -137,23 +137,11 @@ mat-slider {
     justify-content: flex-end;
 }
 
-.related-card-template {
-    display: flex;
-
-    > div:first-child {
-        flex-grow: 1;
-    }
-}
-
 mat-toolbar.edition {
     background: var(--mat-sys-tertiary-container);
     @supports (background: color-mix(in srgb, blue, red)) {
         background: color-mix(in srgb, var(--mat-sys-tertiary-container) 40%, transparent);
     }
-}
-
-.margin-bottom-hint {
-    margin-bottom: $hint-height;
 }
 
 // Try to match official mat-form-field input component style.
@@ -244,31 +232,14 @@ mat-toolbar.edition {
     }
 }
 
-// Be sure that the toolbar stays one one line
+// Be sure that the toolbar stays on one line
 // It should not be necessary but it seems that something goes wrong in the computation of the width by QuillJs
 .ql-flip.ql-tooltip {
     min-width: 170px;
 }
 
-#fiches-additionnelles {
-    table {
-        table-layout: fixed !important;
-
-        .mat-column-unlink {
-            width: 53px !important;
-        }
-    }
-
-    natural-table-button {
-        overflow: hidden;
-
-        span {
-            width: 100%;
-            overflow: hidden;
-            line-height: 1.5em;
-            text-overflow: ellipsis;
-        }
-    }
+::ng-deep .mat-column-unlink {
+    width: 69px !important;
 }
 
 @include nat.media(md) {

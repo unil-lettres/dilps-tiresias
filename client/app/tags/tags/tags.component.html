@@ -33,11 +33,9 @@
                     <th *matHeaderCellDef mat-header-cell class="natural-3em-column"></th>
                     <td *matCellDef="let element; dataSource: dataSource" mat-cell (click)="$event.stopPropagation()">
                         @if (element.hasNavigation) {
-                            <natural-table-button
-                                icon="chevron_right"
-                                matTooltip="Déployer"
-                                [navigate]="getChildLink(element.item)"
-                            />
+                            <button matIconButton matTooltip="Déployer" [routerLink]="getChildLink(element.item)">
+                                <mat-icon>chevron_right</mat-icon>
+                            </button>
                         }
                     </td>
                 </ng-container>
