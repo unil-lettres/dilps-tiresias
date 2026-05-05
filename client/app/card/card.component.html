@@ -509,11 +509,8 @@
                                 [attr.id]="'address'"
                                 [attr.aria-expanded]="accordionItem.expanded"
                             >
-                                <div
-                                    class="address-title mat-font-title-lg nat-horizontal"
-                                    (click)="accordionItem.toggle()"
-                                >
-                                    <span>Adresse</span>
+                                <div class="address-title nat-horizontal" (click)="accordionItem.toggle()">
+                                    <h2>Adresse</h2>
                                     <mat-icon
                                         class="address-toggle-arrow"
                                         [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
@@ -874,7 +871,6 @@
                         <mat-list style="padding: 0">
                             <mat-list-item>
                                 <a
-                                    class="nat-margin-bottom-hint"
                                     color="primary"
                                     style="justify-content: flex-start"
                                     matButton
@@ -924,7 +920,7 @@
                     }
                     <!-- Don't show related cards if current card has no id : it's required to create a relation-->
                     @if (showCards() && fetchedModel && edit) {
-                        <div>
+                        <div class="nat-margin-bottom">
                             <h2>Fiches associées</h2>
                             <natural-relations
                                 placeholder="Associer une fiche"
@@ -979,9 +975,9 @@
                                 </ng-template>
                             </natural-relations>
                             @if (edit) {
-                                <div class="nat-margin-bottom-hint btn-link-related-cards">
-                                    <button matButton="filled" (click)="openLinkRelatedCardsDialog()">
-                                        Associer les fiches entre elles
+                                <div class="btn-link-related-cards">
+                                    <button matButton="filled" color="tertiary" (click)="openLinkRelatedCardsDialog()">
+                                        Associer les fiches entre elles...
                                     </button>
                                 </div>
                             }

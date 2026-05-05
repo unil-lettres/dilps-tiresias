@@ -1,11 +1,15 @@
-<app-stamp class="nat-expand" [item]="item" />
 <div class="nat-horizontal nat-bottom">
-    @if (!readOnly() && item.id && item.permissions?.delete) {
-        <button color="error" matButton="outlined" (click)="delete.emit(item)">
-            <mat-icon naturalIcon="delete_forever" />
-            Supprimer
-        </button>
-    }
+    <div class="nat-vertical nat-gap-10">
+        <app-stamp class="nat-expand" [item]="item" />
+        @if (!readOnly() && item.id && item.permissions?.delete) {
+            <div>
+                <button color="error" matButton="outlined" (click)="delete.emit(item)">
+                    <mat-icon naturalIcon="delete_forever" />
+                    Supprimer
+                </button>
+            </div>
+        }
+    </div>
 
     <div class="nat-expand"></div>
     <button mat-dialog-close cdkFocusInitial [matButton]="readOnly() ? 'filled' : 'outlined'">

@@ -6,7 +6,7 @@
         <h2 mat-dialog-title>Créer une collection</h2>
     }
     <mat-dialog-content>
-        <div class="nat-padding-vertical nat-gap-10 nat-vertical">
+        <div class="nat-padding-vertical nat-vertical">
             @if (isUpdatePage()) {
                 <div class="nat-horizontal nat-distribute nat-center">
                     <div class="nat-horizontal nat-gap-5 nat-center">
@@ -21,13 +21,13 @@
                         }
                     </div>
                     <div class="nat-horizontal nat-gap-10">
-                        <button matButton color="primary" (click)="showSubscribersView()">Gérer les abonnés</button>
                         @if (isCurrentUserSubscribed()) {
                             <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
                         }
+                        <button matButton color="primary" (click)="showSubscribersView()">Gérer les abonnés</button>
                     </div>
                 </div>
-                <mat-divider />
+                <mat-divider class="nat-margin-vertical" />
             }
 
             @if (showVisibility) {
@@ -71,7 +71,7 @@
                 [(ngModel)]="data.item.parent"
             />
 
-            <div class="nat-horizontal nat-gap-20">
+            <div class="nat-horizontal nat-gap-20 nat-margin-bottom">
                 @if (user?.role === UserRole.administrator) {
                     <mat-checkbox [(ngModel)]="data.item.isSource">Est un fonds</mat-checkbox>
                 }
@@ -113,7 +113,7 @@
 @if (currentView() === 'subscribers') {
     <h2 mat-dialog-title>Gérer les abonnés de la collection « {{ data.item.name }} »</h2>
     <mat-dialog-content>
-        <p class="hint">
+        <p class="hint nat-margin-vertical nat-padding">
             Les abonnés sont ajoutés ou retirés immédiatement. Aucune sauvegarde supplémentaire n'est nécessaire.
         </p>
         <div class="nat-vertical nat-gap-10">

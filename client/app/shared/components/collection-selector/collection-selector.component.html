@@ -52,12 +52,12 @@
             </div>
         </mat-tab>
     </mat-tab-group>
-
     <div class="nat-vertical">
-        @if (image?.collections?.length) {
-            <div class="mat-subtitle-1">Collections liées à la fiche</div>
-        }
         @for (collection of image?.collections; track collection) {
+            @if ($first) {
+                <mat-divider class="nat-margin-vertical" />
+                <div class="mat-subtitle-1">Collections liées à la fiche</div>
+            }
             <div class="nat-horizontal nat-align nat-gap-10">
                 <mat-icon naturalIcon="collections" />
                 <div class="nat-expand">{{ collection.name }}</div>

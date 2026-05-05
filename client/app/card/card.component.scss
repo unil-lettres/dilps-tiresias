@@ -152,14 +152,6 @@ mat-toolbar.edition {
     }
 }
 
-::ng-deep {
-    mat-chip-row {
-        // todo : required ? I dont see difference
-        font-size: var(--mat-sys-body-small-size);
-        font-family: inherit !important;
-    }
-}
-
 .margin-bottom-hint {
     margin-bottom: $hint-height;
 }
@@ -186,9 +178,6 @@ mat-toolbar.edition {
         width: 0;
         height: 2px;
         content: '';
-    }
-
-    .mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
     }
 
     &:hover {
@@ -251,7 +240,6 @@ mat-toolbar.edition {
         position: absolute;
         right: 16px;
         bottom: -$hint-height;
-        border: 2px solid red; // todo : keep or remove mat-hint ? no red hightlight here
         font-size: var(--mat-sys-body-small-size);
     }
 }

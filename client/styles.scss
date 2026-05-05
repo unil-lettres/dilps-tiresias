@@ -139,12 +139,6 @@ app-view-map google-map div.gm-style > div:last-child {
     top: 75px !important;
 }
 
-// On /card/6000, keep the "Fiches associées" aligned to the left so it is more
-// readable when name is long and wrapping
-app-card natural-relations natural-table-button .mat-mdc-button {
-    text-align: left;
-}
-
 // It is possible that the server returns error message on multiple line (eg: when ACL with multiple assertions fail),
 // so we try to preserve that formatting, while still wrapping if necessary
 .mat-mdc-snack-bar-label {
@@ -175,12 +169,10 @@ app-card natural-relations natural-table-button .mat-mdc-button {
 }
 
 .hint {
-    margin: 0 0 16px;
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.04);
-    padding: 12px;
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
+    border-radius: var(--mat-sys-corner-medium);
+    background-color: var(--mat-sys-surface-variant);
+    color: var(--mat-sys-on-surface-variant);
+    font-size: var(--mat-sys-body-medium-size);
 }
 
 .natural-dropdown-container .dropdown-title {
@@ -203,7 +195,7 @@ app-card natural-relations natural-table-button .mat-mdc-button {
     );
 
     @supports (background: color-mix(in srgb, blue, red)) {
-        --bgTransparent: color-mix(in srgb, var(--bg) 80%, transparent);
+        --bgTransparent: color-mix(in srgb, var(--bg) 90%, transparent);
         background: var(--bgTransparent);
         @include mat.toolbar-overrides(
             (
@@ -224,6 +216,14 @@ mat-hint.strong {
 .snackbar-error {
     background-color: var(--mat-sys-error-container) !important;
     color: var(--mat-sys-on-error-container) !important;
+}
+
+.tooltip-large {
+    @include mat.tooltip-overrides(
+        (
+            supporting-text-size: var(--mat-sys-body-medium-size),
+        )
+    );
 }
 
 .tooltip-large {

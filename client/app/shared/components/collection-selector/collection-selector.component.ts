@@ -22,6 +22,7 @@ import {FormsModule} from '@angular/forms';
 import {NaturalIconDirective, NaturalSelectComponent} from '@ecodev/natural';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {CollectionHierarchyComponent} from '../collection-hierarchy/collection-hierarchy.component';
+import {MatDivider} from '@angular/material/divider';
 
 /**
  * Exclusive fields:
@@ -65,6 +66,7 @@ export type CollectionSelectorResult =
         HideTooltipDirective,
         NaturalIconDirective,
         CollectionHierarchyComponent,
+        MatDivider,
     ],
     templateUrl: './collection-selector.component.html',
     styleUrl: './collection-selector.component.scss',

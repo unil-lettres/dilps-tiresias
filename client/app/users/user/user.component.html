@@ -24,7 +24,7 @@
                         {{ isSelf ? 'Gérer mes abonnements' : 'Gérer les abonnements' }}
                     </button>
                 </div>
-                <mat-divider />
+                <mat-divider class="nat-margin-vertical" />
             }
 
             <mat-form-field class="width-auto">
@@ -175,11 +175,13 @@
         }}
     </h2>
     <mat-dialog-content>
-        <p class="hint">
-            Les abonnements d'une collection sont gérés par ses responsables via les détails de la collection.
-        </p>
+        @if (!isSelf) {
+            <p class="hint nat-margin-vertical nat-padding">
+                Pour ajouter des abonnés, rendez-vous dans les détails d'une collection dont vous êtes responsable.
+            </p>
+        }
         @if (collections().length === 0) {
-            <p class="no-collections">
+            <p class="nat-horizontal nat-padding nat-center">
                 {{ isSelf ? "Vous n'êtes abonné à aucune collection" : 'Abonné à aucune collection' }}
             </p>
         } @else {
@@ -192,6 +194,7 @@
                             color="error"
                             matListItemMeta
                             aria-label="Se désabonner"
+                            matTooltipPosition="right"
                             [matTooltip]="
                                 isSelf ? 'Se désabonner de cette collection' : 'Désabonner de cette collection'
                             "
@@ -200,6 +203,9 @@
                             <mat-icon fontIcon="link_off" />
                         </button>
                     </mat-list-item>
+                    @if (!$last) {
+                        <mat-divider />
+                    }
                 }
             </mat-list>
         }
