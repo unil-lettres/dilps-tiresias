@@ -59,14 +59,10 @@
     <div class="nat-expand"></div>
     <button matButton="outlined" mat-dialog-close>Annuler</button>
     @if (step === 1) {
-        <button color="primary" matButton="filled" (click)="step = 2">J'ai compris, continuer.</button>
+        <button matButton="filled" (click)="step = 2">J'ai compris, continuer.</button>
     }
     @if (step === 2) {
-        <button
-            color="primary"
-            matButton="filled"
-            [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}"
-        >
+        <button matButton="filled" [mat-dialog-close]="{model: card, createSuggestions: createSuggestions}">
             Valider
         </button>
     }

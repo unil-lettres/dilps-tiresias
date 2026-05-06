@@ -29,7 +29,7 @@ import {GraphQLFormattedError} from 'graphql';
         </mat-dialog-content>
         <mat-dialog-actions align="end">
             <button matButton="outlined" mat-dialog-close>Fermer</button>
-            <button matButton="filled" color="primary" [mat-dialog-close]="true">Effacer et fermer</button>
+            <button matButton="filled" [mat-dialog-close]="true">Effacer et fermer</button>
         </mat-dialog-actions>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,

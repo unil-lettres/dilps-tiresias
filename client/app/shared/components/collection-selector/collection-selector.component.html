@@ -15,7 +15,7 @@
                     </ng-template>
                 </natural-select>
                 <div class="nat-horizontal nat-right">
-                    <button color="primary" mat-flat-button [disabled]="!collection?.id" (click)="link()">
+                    <button matButton="filled" [disabled]="!collection?.id" (click)="link()">
                         Ajouter à la collection
                     </button>
                 </div>
@@ -45,7 +45,7 @@
                 }
 
                 <div class="nat-horizontal nat-right">
-                    <button color="primary" mat-flat-button [disabled]="!newCollection.name" (click)="createAndLink()">
+                    <button matButton="filled" [disabled]="!newCollection.name" (click)="createAndLink()">
                         Ajouter à une nouvelle collection privée
                     </button>
                 </div>

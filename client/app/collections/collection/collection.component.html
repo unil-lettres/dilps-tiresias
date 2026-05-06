@@ -24,7 +24,7 @@
                         @if (isCurrentUserSubscribed()) {
                             <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
                         }
-                        <button matButton color="primary" (click)="showSubscribersView()">Gérer les abonnés</button>
+                        <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
                     </div>
                 </div>
                 <mat-divider class="nat-margin-vertical" />
@@ -138,6 +138,6 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button matButton="filled" color="primary" (click)="showPropertiesView()">Terminer</button>
+        <button matButton="filled" (click)="showPropertiesView()">Terminer</button>
     </mat-dialog-actions>
 }

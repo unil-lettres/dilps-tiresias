@@ -18,7 +18,6 @@
     @if (!readOnly()) {
         @if (item.id && item.permissions?.update) {
             <button
-                color="primary"
                 matButton="filled"
                 [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
                 (click)="update.emit(item)"
@@ -30,7 +29,6 @@
 
         @if (!item.id && canCreate()) {
             <button
-                color="primary"
                 matButton="filled"
                 [disabled]="!!formCtrl()?.errors || disableCreateAndUpdate()"
                 (click)="create.emit(item)"

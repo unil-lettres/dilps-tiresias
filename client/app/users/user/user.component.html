@@ -20,7 +20,7 @@
                             }}
                         </span>
                     }
-                    <button matButton color="primary" (click)="showCollectionsView()">
+                    <button matButton (click)="showCollectionsView()">
                         {{ isSelf ? 'Gérer mes abonnements' : 'Gérer les abonnements' }}
                     </button>
                 </div>
@@ -212,6 +212,6 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button matButton="filled" color="primary" (click)="showPropertiesView()">Terminer</button>
+        <button matButton="filled" (click)="showPropertiesView()">Terminer</button>
     </mat-dialog-actions>
 }

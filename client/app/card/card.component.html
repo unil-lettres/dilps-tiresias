@@ -55,17 +55,12 @@
                             </button>
                         }
                         @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
-                            <button
-                                color="primary"
-                                matIconButton
-                                matTooltip="Soumettre"
-                                [matMenuTriggerFor]="changeMenu"
-                            >
+                            <button matIconButton matTooltip="Soumettre" [matMenuTriggerFor]="changeMenu">
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
-                            <button color="primary" matIconButton matTooltip="Soumettre" (click)="suggestCreation()">
+                            <button matIconButton matTooltip="Soumettre" (click)="suggestCreation()">
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
