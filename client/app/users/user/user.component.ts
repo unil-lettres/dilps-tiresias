@@ -79,7 +79,10 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
 })
-export class UserComponent extends AbstractDetailDirective<UserService, {password?: string; isSelf?: boolean}> {
+export class UserComponent extends AbstractDetailDirective<
+    UserService,
+    {password?: string; isSelf?: boolean; initialView?: 'properties' | 'collections'}
+> {
     protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
@@ -135,7 +138,11 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     protected override postQuery(): void {
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
-            this.loadCollectionsCount();
+            if (this.data.item.initialView === 'collections') {
+                this.showCollectionsView();
+            } else {
+                this.loadCollectionsCount();
+            }
         }
 
         this.userService.getUserRolesAvailable(this.isUpdatePage() ? this.data.item : null).subscribe(userRoles => {
@@ -157,6 +164,10 @@ export class UserComponent extends AbstractDetailDirective<UserService, {passwor
     }
 
     protected showPropertiesView(): void {
+        if (this.data.item.initialView === 'collections') {
+            this.dialogRef.close();
+            return;
+        }
         this.currentView.set('properties');
         if (this.isUpdatePage()) {
             this.loadCollectionsCount();

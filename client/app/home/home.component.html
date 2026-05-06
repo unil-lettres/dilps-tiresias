@@ -1,4 +1,20 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
+<mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item (click)="editUser()">
+        <mat-icon fontIcon="account_circle" />
+        <span>Modifier mon compte</span>
+    </button>
+    <button mat-menu-item (click)="editUserSubscriptions()">
+        <mat-icon fontIcon="collections" />
+        <span>Gérer mes abonnements</span>
+    </button>
+    <mat-divider />
+    <button mat-menu-item (click)="userService.logout()">
+        <mat-icon fontIcon="exit_to_app" />
+        <span>Se déconnecter</span>
+    </button>
+</mat-menu>
+
 <mat-menu #thesaurusMenu="matMenu" [overlapTrigger]="false">
     @if (site === Site.Dilps) {
         <button mat-menu-item routerLink="/institution" routerLinkActive="active">Institutions</button>
@@ -81,6 +97,7 @@
                         }
                     </a>
 
+                    <mat-divider />
                     <!-- Notifications -->
                     <a
                         matFab
@@ -93,6 +110,20 @@
                         <mat-icon naturalIcon="notifications" />
                     </a>
 
+                    <!-- Thésaurus -->
+                    @if (showThesaurusMenu()) {
+                        <a
+                            matFab
+                            class="menu-icon-button"
+                            matTooltip="Thésaurus"
+                            matTooltipPosition="after"
+                            [class.active]="isThesaurusActive()"
+                            [matMenuTriggerFor]="thesaurusMenu"
+                        >
+                            <mat-icon naturalIcon="book" />
+                        </a>
+                    }
+
                     <!-- Add photos -->
                     @if (
                         progress === null &&
@@ -101,12 +132,14 @@
                             user.role === UserRole.junior ||
                             user.role === UserRole.major)
                     ) {
+                        <mat-divider />
                         <a
-                            matFab
-                            class="menu-icon-button"
+                            matIconButton
                             matTooltip="Ajouter une image"
                             matTooltipPosition="after"
                             naturalFileSelect
+                            class="classic-icon-button spacer-top"
+                            color="tertiary"
                             [multiple]="true"
                             [maxSize]="maxFileSize"
                             (filesChange)="uploadImages($event)"
@@ -116,6 +149,7 @@
                     }
 
                     @if (progress !== null && progress > 0) {
+                        <mat-divider />
                         <a matFab class="menu-icon-button" aria-disabled="true" tabindex="-1">
                             <mat-progress-spinner [value]="progress" [diameter]="24" [strokeWidth]="5" />
                         </a>
@@ -130,8 +164,8 @@
                             user.role === UserRole.major)
                     ) {
                         <a
-                            matFab
-                            class="menu-icon-button"
+                            matIconButton
+                            class="classic-icon-button spacer-top"
                             href="/api/template"
                             matTooltip="Télécharger le modèle pour import Excel"
                             matTooltipPosition="after"
@@ -139,59 +173,6 @@
                             <mat-icon naturalIcon="file_download" />
                         </a>
                     }
-
-                    <!-- Thésaurus -->
-                    @if (showThesaurusMenu()) {
-                        <mat-divider />
-                        <a
-                            matFab
-                            class="menu-icon-button"
-                            matTooltip="Thésaurus"
-                            matTooltipPosition="after"
-                            [class.active]="isThesaurusActive()"
-                            [matMenuTriggerFor]="thesaurusMenu"
-                        >
-                            <mat-icon naturalIcon="book" />
-                        </a>
-                    }
-
-                    <!-- Administration -->
-                    @if (user.role === UserRole.administrator) {
-                        <mat-divider />
-                        <a
-                            matFab
-                            class="menu-icon-button"
-                            matTooltip="Gestion"
-                            matTooltipPosition="after"
-                            [class.active]="isAdminActive()"
-                            [matMenuTriggerFor]="adminMenu"
-                        >
-                            <mat-icon naturalIcon="build" />
-                        </a>
-                    }
-                    <mat-divider />
-
-                    <!-- Account -->
-                    <a
-                        matFab
-                        class="menu-icon-button"
-                        matTooltip="Mon compte"
-                        matTooltipPosition="after"
-                        (click)="editUser()"
-                    >
-                        <mat-icon naturalIcon="account_circle" />
-                    </a>
-
-                    <!-- Logout -->
-                    <a
-                        matFab
-                        class="menu-icon-button"
-                        matTooltip="Se déconnecter"
-                        matTooltipPosition="after"
-                        (click)="userService.logout()"
-                    >
-                        <mat-icon naturalIcon="exit_to_app" />
-                    </a>
                 } @else {
                     <!-- Dashboard -->
                     <a
@@ -231,6 +212,7 @@
 
                 <!-- Bottom nav -->
                 <div class="nat-expand"></div>
+                <mat-divider />
                 @if (networkActivityService.errors().length) {
                     <a
                         matFab
@@ -243,7 +225,33 @@
                         <mat-icon naturalIcon="error" />
                     </a>
                 }
-                <natural-compact-color-schemer class="nat-padding-vertical" />
+                @if (user) {
+                    <!-- Administration -->
+                    @if (user.role === UserRole.administrator) {
+                        <a
+                            matFab
+                            class="menu-icon-button"
+                            matTooltip="Gestion"
+                            matTooltipPosition="after"
+                            [class.active]="isAdminActive()"
+                            [matMenuTriggerFor]="adminMenu"
+                        >
+                            <mat-icon naturalIcon="build" />
+                        </a>
+                    }
+
+                    <!-- Account -->
+                    <a
+                        matIconButton
+                        class="classic-icon-button spacer-account"
+                        matTooltip="Mon compte"
+                        matTooltipPosition="after"
+                        [matMenuTriggerFor]="accountMenu"
+                    >
+                        <mat-icon naturalIcon="account_circle" />
+                    </a>
+                }
+                <natural-compact-color-schemer class="natural-icon-button spacer-bottom" />
             </div>
         </mat-sidenav>
     }

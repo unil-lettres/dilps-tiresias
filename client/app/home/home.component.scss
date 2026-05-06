@@ -55,4 +55,43 @@ mat-sidenav-container {
             )
         );
     }
+
+    .classic-icon-button,
+    .natural-icon-button ::ng-deep button {
+        align-self: center;
+        color: inherit;
+
+        &[color='tertiary'] {
+            background-color: var(--mat-sys-tertiary-fixed-dim);
+            color: var(--mat-sys-on-tertiary-fixed);
+        }
+
+        @supports (color: color-mix(in srgb, red, blue)) {
+            &[color='tertiary'] {
+                background-color: color-mix(in srgb, var(--mat-sys-tertiary-fixed-dim) 80%, transparent);
+            }
+        }
+
+        &:hover {
+            background-color: var(--mat-sys-primary-fixed-dim);
+            color: var(--mat-sys-on-primary-fixed-variant);
+
+            &[color='tertiary'] {
+                background-color: var(--mat-sys-tertiary-fixed);
+            }
+        }
+    }
+
+    .spacer-top {
+        margin-top: 24px;
+    }
+
+    .spacer-bottom {
+        margin-bottom: 24px;
+    }
+
+    .spacer-account {
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
 }

@@ -1,6 +1,6 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
-import {MatFabButton} from '@angular/material/button';
+import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {MatDivider} from '@angular/material/divider';
 import {MatIcon} from '@angular/material/icon';
@@ -73,6 +73,7 @@ function isExcel(file: File): boolean {
         NaturalCompactColorSchemerComponent,
         MatSidenavContent,
         MatFabButton,
+        MatIconButton,
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
@@ -285,6 +286,15 @@ export class HomeComponent implements OnInit {
             this.dialog.open(UserComponent, {
                 width: '800px',
                 data: {item: {...user, isSelf: true}},
+            });
+        });
+    }
+
+    protected editUserSubscriptions(): void {
+        this.userService.getCurrentUser().subscribe(user => {
+            this.dialog.open(UserComponent, {
+                width: '800px',
+                data: {item: {...user, isSelf: true, initialView: 'collections'}},
             });
         });
     }
