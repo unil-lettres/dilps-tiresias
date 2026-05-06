@@ -1,13 +1,13 @@
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {NewsesQuery, NewsesQueryVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
 
 @Component({
     selector: 'app-carousel',
-    imports: [MatButtonModule, MatIconModule, NaturalIconDirective],
+    imports: [NaturalIconDirective, MatIcon, MatIconButton],
     templateUrl: './carousel.component.html',
     styleUrl: './carousel.component.scss',
 })
