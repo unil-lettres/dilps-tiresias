@@ -255,23 +255,8 @@ mat-hint.strong {
     }
 }
 
-.tonal-icon-button {
-    background-color: var(--mat-button-tonal-container-color, var(--mat-sys-secondary-container)) !important;
-    color: var(--mat-button-tonal-label-text-color, var(--mat-sys-on-secondary-container)) !important;
-
-    &[color='tertiary'] {
-        --mat-button-tonal-label-text-color: var(--mat-sys-on-tertiary-fixed);
-        --mat-button-tonal-container-color: var(--mat-sys-tertiary-fixed-dim);
-    }
-
-    @supports (color: color-mix(in srgb, red, blue)) {
-        &[color='tertiary'] {
-            --mat-button-tonal-label-text-color: color-mix(
-                in srgb,
-                var(--mat-sys-tertiary-container) 33%,
-                var(--mat-sys-on-surface)
-            );
-            --mat-button-tonal-container-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, transparent);
-        }
-    }
+.btn-tertiary-tonal {
+    border-radius: var(--mat-sys-corner-large);
+    background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, transparent) !important;
+    color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, var(--mat-sys-on-surface)) !important;
 }

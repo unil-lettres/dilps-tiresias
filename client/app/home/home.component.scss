@@ -7,9 +7,9 @@ mat-sidenav-container {
 }
 
 #menu {
+    border: none;
     background: var(--mat-sys-primary-container);
     width: 64px;
-    color: var(--mat-sys-on-primary-container);
 
     @include mat.progress-spinner-overrides(
         (
@@ -29,16 +29,18 @@ mat-sidenav-container {
     .menu-icon-button {
         width: 100%;
         height: 64px;
-        color: inherit;
-
-        &:hover {
-            background: var(--mat-sys-primary-fixed-dim);
-            color: var(--mat-sys-on-primary-fixed-variant);
-        }
 
         &.active {
-            background: var(--mat-sys-primary-fixed);
-            color: var(--mat-sys-on-primary-fixed);
+            background-color: color-mix(in srgb, var(--mat-sys-on-primary-container) 24%, transparent) !important;
+
+            &::after {
+                position: absolute;
+                right: 0;
+                background-color: var(--mat-sys-primary);
+                width: 4px;
+                height: 100%;
+                content: '';
+            }
         }
 
         app-historic-icon {
@@ -47,6 +49,7 @@ mat-sidenav-container {
 
         @include mat.fab-overrides(
             (
+                foreground-color: var(--mat-sys-on-primary-container),
                 container-shape: var(--mat-sys-corner-none),
                 container-elevation-shadow: var(--mat-sys-level0),
                 focus-container-elevation-shadow: var(--mat-sys-level0),
@@ -56,30 +59,31 @@ mat-sidenav-container {
         );
     }
 
-    .classic-icon-button,
-    .natural-icon-button ::ng-deep button {
+    .classic-icon-button {
         align-self: center;
-        color: inherit;
 
-        &[color='tertiary'] {
-            background-color: var(--mat-sys-tertiary-fixed-dim);
-            color: var(--mat-sys-on-tertiary-fixed);
-        }
+        @include mat.icon-button-overrides(
+            (
+                icon-color: var(--mat-sys-on-primary-container),
+                state-layer-color: var(--mat-sys-on-primary-container),
+            )
+        );
+    }
 
-        @supports (color: color-mix(in srgb, red, blue)) {
-            &[color='tertiary'] {
-                background-color: color-mix(in srgb, var(--mat-sys-tertiary-fixed-dim) 80%, transparent);
-            }
-        }
+    .natural-icon-button ::ng-deep button {
+        color: var(--mat-sys-on-primary-container);
+    }
 
-        &:hover {
-            background-color: var(--mat-sys-primary-fixed-dim);
-            color: var(--mat-sys-on-primary-fixed-variant);
+    .upload-btn {
+        box-shadow: var(--mat-sys-level1);
+        background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 40%, var(--mat-sys-surface)) !important;
 
-            &[color='tertiary'] {
-                background-color: var(--mat-sys-tertiary-fixed);
-            }
-        }
+        @include mat.icon-button-overrides(
+            (
+                container-shape: var(--mat-sys-corner-large),
+                icon-color: var(--mat-sys-tertiary),
+            )
+        );
     }
 
     .spacer-top {
