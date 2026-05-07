@@ -135,7 +135,7 @@
                         <mat-divider />
                         <a
                             matIconButton
-                            matTooltip="Ajouter une image"
+                            matTooltip="Ajouter des images"
                             matTooltipPosition="after"
                             naturalFileSelect
                             class="classic-icon-button spacer-top"
@@ -166,11 +166,11 @@
                         <a
                             matIconButton
                             class="classic-icon-button spacer-top"
-                            href="/api/template"
-                            matTooltip="Télécharger le modèle pour import Excel"
+                            matTooltip="Importer avec métadonnées (Excel)"
                             matTooltipPosition="after"
+                            (click)="openImportTemplateDialog()"
                         >
-                            <mat-icon naturalIcon="file_download" />
+                            <mat-icon naturalIcon="table_view" />
                         </a>
                     }
                 } @else {

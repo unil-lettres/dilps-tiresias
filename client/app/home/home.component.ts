@@ -6,6 +6,7 @@ import {MatDivider} from '@angular/material/divider';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {ErrorsDialogComponent} from './errors-dialog.component';
+import {ImportTemplateDialogComponent} from './import-template-dialog.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -322,6 +323,10 @@ export class HomeComponent implements OnInit {
                     this.router.navigateByUrl('/login');
                 }
             });
+    }
+
+    protected openImportTemplateDialog(): void {
+        this.dialog.open(ImportTemplateDialogComponent, {maxWidth: 500});
     }
 
     protected openErrorsDialog(): void {
