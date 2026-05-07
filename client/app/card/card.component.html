@@ -37,21 +37,15 @@
                 }
 
                 @if (showTools()) {
-                    <div class="tools nat-horizontal">
+                    <div class="nat-horizontal nat-center nat-gap-5">
+                        @if (!fetchedModel && user?.globalPermissions?.card?.create) {
+                            <button matIconButton matTooltip="Créer" (click)="create()">
+                                <mat-icon naturalIcon="add" />
+                            </button>
+                        }
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button matIconButton matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
-                            </button>
-                        }
-                        @if (edit && fetchedModel?.permissions?.update) {
-                            <button
-                                matMiniFab
-                                class="nat-rounded"
-                                matTooltip="Enregistrer"
-                                [disabled]="!formIsValid"
-                                (click)="update()"
-                            >
-                                <mat-icon naturalIcon="save" />
                             </button>
                         }
                         @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
@@ -64,9 +58,30 @@
                                 <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
-                        @if (!fetchedModel && user?.globalPermissions?.card?.create) {
-                            <button matIconButton matTooltip="Créer" (click)="create()">
-                                <mat-icon naturalIcon="add" />
+                        @if (fetchedModel && user && !edit) {
+                            <button
+                                matIconButton
+                                matTooltip="Ajouter ou retirer la fiche d'une collection"
+                                (click)="linkToCollection()"
+                            >
+                                <mat-icon naturalIcon="library_add" />
+                            </button>
+                        }
+                        @if (fetchedModel && !edit) {
+                            <app-export-menu
+                                matTooltip="Exporter la fiche"
+                                [selectedCards]="[fetchedModel]"
+                                [showExcelExportation]="!isDilps"
+                            />
+                        }
+                        @if (fetchedModel?.permissions?.delete && !edit) {
+                            <button
+                                color="error"
+                                matIconButton
+                                matTooltip="Supprimer la fiche définitivement"
+                                (click)="confirmDelete()"
+                            >
+                                <mat-icon naturalIcon="delete_forever" />
                             </button>
                         }
                         @if (edit) {
@@ -78,30 +93,16 @@
                                 <mat-icon naturalIcon="content_copy" />
                             </button>
                         }
-                        @if (fetchedModel) {
-                            <app-export-menu
-                                matTooltip="Exporter la fiche"
-                                [selectedCards]="[fetchedModel]"
-                                [showExcelExportation]="!isDilps"
-                            />
-                        }
-                        @if (fetchedModel && user) {
+                        @if (edit && fetchedModel?.permissions?.update) {
                             <button
-                                matIconButton
-                                matTooltip="Ajouter ou retirer la fiche d'une collection"
-                                (click)="linkToCollection()"
+                                matButton="filled"
+                                class="nat-rounded"
+                                matTooltip="Enregistrer"
+                                [disabled]="!formIsValid"
+                                (click)="update()"
                             >
-                                <mat-icon naturalIcon="library_add" />
-                            </button>
-                        }
-                        @if (fetchedModel?.permissions?.delete) {
-                            <button
-                                color="error"
-                                matIconButton
-                                matTooltip="Supprimer la fiche définitivement"
-                                (click)="confirmDelete()"
-                            >
-                                <mat-icon naturalIcon="delete_forever" />
+                                <mat-icon naturalIcon="save" />
+                                <span>Enregistrer</span>
                             </button>
                         }
                     </div>
