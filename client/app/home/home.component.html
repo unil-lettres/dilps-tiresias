@@ -138,8 +138,7 @@
                             matTooltip="Ajouter des images"
                             matTooltipPosition="after"
                             naturalFileSelect
-                            class="upload-btn classic-icon-button spacer-top"
-                            color="tertiary"
+                            class="upload-btn spacer-btn"
                             [multiple]="true"
                             [maxSize]="maxFileSize"
                             (filesChange)="uploadImages($event)"
@@ -165,7 +164,7 @@
                     ) {
                         <a
                             matIconButton
-                            class="classic-icon-button spacer-top"
+                            class="classic-icon-button spacer-btn"
                             matTooltip="Importer avec métadonnées (Excel)"
                             matTooltipPosition="after"
                             (click)="openImportTemplateDialog()"
@@ -215,8 +214,8 @@
                 <mat-divider />
                 @if (networkActivityService.errors().length) {
                     <a
-                        matFab
-                        class="menu-icon-button"
+                        matIconButton
+                        class="error-btn spacer-btn"
                         color="error"
                         matTooltip="Voir les erreurs"
                         matTooltipPosition="after"
@@ -243,7 +242,7 @@
                     <!-- Account -->
                     <a
                         matIconButton
-                        class="classic-icon-button spacer-account"
+                        class="classic-icon-button"
                         matTooltip="Mon compte"
                         matTooltipPosition="after"
                         [matMenuTriggerFor]="accountMenu"

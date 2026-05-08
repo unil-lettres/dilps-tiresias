@@ -4,7 +4,7 @@
     @include utils.fixedToolbar();
 }
 .image {
-    border-radius: 999px;
+    border-radius: var(--mat-sys-corner-small);
     background-size: cover;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.5);

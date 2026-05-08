@@ -123,7 +123,7 @@ natural-gallery {
             justify-content: center;
             align-items: center;
             transition: none;
-            border-radius: 20px;
+            border-radius: var(--mat-sys-corner-small);
             background-color: rgba(0, 0, 0, 0.4);
             padding: 0;
 
@@ -137,12 +137,6 @@ natural-gallery {
 // Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
 app-view-map google-map div.gm-style > div:last-child {
     top: 75px !important;
-}
-
-// It is possible that the server returns error message on multiple line (eg: when ACL with multiple assertions fail),
-// so we try to preserve that formatting, while still wrapping if necessary
-.mat-mdc-snack-bar-label {
-    white-space: pre-wrap;
 }
 
 // Align right so big number are easier to spot
@@ -195,7 +189,8 @@ app-view-map google-map div.gm-style > div:last-child {
     );
 
     @supports (background: color-mix(in srgb, blue, red)) {
-        --bgTransparent: color-mix(in srgb, var(--bg) 90%, transparent);
+        --bgTransparent: color-mix(in srgb, var(--bg) 80%, transparent);
+        backdrop-filter: blur(5px);
         background: var(--bgTransparent);
         @include mat.toolbar-overrides(
             (
@@ -205,17 +200,19 @@ app-view-map google-map div.gm-style > div:last-child {
     }
 }
 
-mat-hint.strong {
-    color: var(--mat-sys-tertiary-container) !important;
-}
-
-.mat-mdc-snack-bar-container {
-    margin-top: 10px;
+// It is possible that the server returns error message on multiple line (eg: when ACL with multiple assertions fail),
+// so we try to preserve that formatting, while still wrapping if necessary
+.mat-mdc-snack-bar-label {
+    white-space: pre-wrap;
 }
 
 .snackbar-error {
-    background-color: var(--mat-sys-error-container) !important;
-    color: var(--mat-sys-on-error-container) !important;
+    @include mat.snack-bar-overrides(
+        (
+            container-color: var(--mat-sys-error-container),
+            supporting-text-color: var(--mat-sys-on-error-container),
+        )
+    );
 }
 
 .tooltip-large {
@@ -256,7 +253,31 @@ mat-hint.strong {
 }
 
 .btn-tertiary-tonal {
-    border-radius: var(--mat-sys-corner-large);
     background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, transparent) !important;
-    color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, var(--mat-sys-on-surface)) !important;
+
+    @include mat.icon-button-overrides(
+        (
+            container-shape: var(--mat-sys-corner-large),
+            icon-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, var(--mat-sys-on-surface)),
+        )
+    );
+}
+
+.fab-tonal {
+    @include mat.fab-overrides(
+        (
+            container-color: var(--mat-sys-secondary-container),
+            foreground-color: var(--mat-sys-on-secondary-container),
+            container-elevation-shadow: var(--mat-sys-level1),
+            hover-container-elevation-shadow: var(--mat-sys-level2),
+            focus-container-elevation-shadow: var(--mat-sys-level1),
+            pressed-container-elevation-shadow: var(--mat-sys-level1),
+            small-container-color: var(--mat-sys-secondary-container),
+            small-foreground-color: var(--mat-sys-on-secondary-container),
+            small-container-elevation-shadow: var(--mat-sys-level1),
+            small-hover-container-elevation-shadow: var(--mat-sys-level2),
+            small-focus-container-elevation-shadow: var(--mat-sys-level1),
+            small-pressed-container-elevation-shadow: var(--mat-sys-level1),
+        )
+    );
 }

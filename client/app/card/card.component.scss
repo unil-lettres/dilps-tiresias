@@ -83,20 +83,16 @@ $rich-text-padding-left: 16px;
     overflow: hidden;
 
     app-historic-icon {
-        color: var(--mat-sys-tertiary-container);
+        position: absolute;
+        top: 10px;
+        right: 60px;
+        height: 25px;
     }
 
     .download-button {
         position: absolute;
         top: 10px;
         right: 10px;
-    }
-
-    app-historic-icon {
-        position: absolute;
-        top: 8px;
-        right: 60px;
-        height: 44px;
     }
 
     .image {
@@ -139,19 +135,21 @@ mat-slider {
 }
 
 mat-toolbar.edition {
-    background: var(--mat-sys-tertiary-container);
+    background-color: var(--mat-sys-tertiary-container);
+    color: var(--mat-sys-on-tertiary) !important;
 
     @include mat.icon-button-overrides(
         (
-            icon-color: var(--mat-sys-on-tertiary-container),
+            icon-color: var(--mat-sys-on-tertiary),
             state-layer-color: var(--mat-sys-on-tertiary-container),
             hover-state-layer-opacity: 0.2,
             pressed-state-layer-opacity: 0.3,
         )
     );
 
-    @supports (background: color-mix(in srgb, blue, red)) {
-        background: color-mix(in srgb, var(--mat-sys-tertiary-container) 90%, transparent);
+    @supports (background-color: color-mix(in srgb, blue, red)) {
+        backdrop-filter: blur(10px);
+        background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 90%, transparent) !important;
     }
 }
 

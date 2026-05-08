@@ -44,7 +44,7 @@ mat-sidenav-container {
         }
 
         app-historic-icon {
-            width: 32px;
+            width: 29px;
         }
 
         @include mat.fab-overrides(
@@ -61,6 +61,8 @@ mat-sidenav-container {
 
     .classic-icon-button {
         align-self: center;
+        margin-top: 8px;
+        margin-bottom: 16px;
 
         @include mat.icon-button-overrides(
             (
@@ -71,31 +73,60 @@ mat-sidenav-container {
     }
 
     .natural-icon-button ::ng-deep button {
-        color: var(--mat-sys-on-primary-container);
-    }
-
-    .upload-btn {
-        box-shadow: var(--mat-sys-level1);
-        background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 40%, var(--mat-sys-surface)) !important;
+        margin-bottom: 24px;
+        color: var(--mat-sys-on-primary-container) !important;
 
         @include mat.icon-button-overrides(
             (
-                container-shape: var(--mat-sys-corner-large),
-                icon-color: var(--mat-sys-tertiary),
+                state-layer-color: var(--mat-sys-on-primary-container),
             )
         );
     }
 
-    .spacer-top {
-        margin-top: 24px;
+    .upload-btn {
+        align-self: center;
+        box-shadow: var(--mat-sys-level1);
+        background-color: color-mix(in srgb, var(--mat-sys-secondary-container) 60%, var(--mat-sys-surface)) !important;
+
+        @include mat.icon-button-overrides(
+            (
+                container-shape: var(--mat-sys-corner-large),
+                icon-color: var(--mat-sys-secondary),
+            )
+        );
     }
 
-    .spacer-bottom {
-        margin-bottom: 24px;
+    @keyframes iconScalePulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 
-    .spacer-account {
-        margin-top: 8px;
+    .error-btn {
+        align-self: center;
+        animation: iconScalePulse 1s infinite ease-in-out;
+        will-change: transform;
         margin-bottom: 16px;
+        box-shadow:
+            var(--mat-sys-level1),
+            inset 0 0 0 1px var(--mat-sys-on-error-container) !important;
+        background-color: var(--mat-sys-error-container) !important;
+
+        @include mat.icon-button-overrides(
+            (
+                container-shape: var(--mat-sys-corner-large),
+                icon-color: var(--mat-sys-on-error-container),
+            )
+        );
+    }
+
+    .spacer-btn {
+        margin-top: 22px;
     }
 }

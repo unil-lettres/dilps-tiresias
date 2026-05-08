@@ -122,7 +122,7 @@
                                     </button>
                                 </mat-menu>
                                 @if (collection.isSource && collection.isHistoric) {
-                                    <app-historic-icon style="height: 30px" />
+                                    <app-historic-icon [badge]="true" [small]="true" />
                                 }
                             </div>
                         </mat-list-item>

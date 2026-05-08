@@ -5,36 +5,29 @@
 
         @if (user?.role === UserRole.administrator) {
             @if (change) {
-                <button matMiniFab class="nat-rounded" matTooltip="Accepter suggestion" (click)="accept()">
-                    <mat-icon naturalIcon="check" />
+                <button matButton="outlined" color="error" (click)="reject()">
+                    <mat-icon naturalIcon="close" />
+                    <span>Refuser la suggestion</span>
                 </button>
             }
             @if (change) {
-                <button
-                    matMiniFab
-                    color="error"
-                    class="nat-rounded"
-                    matTooltip="Refuser la suggestion"
-                    (click)="reject()"
-                >
-                    <mat-icon naturalIcon="close" />
+                <button matButton="filled" (click)="accept()">
+                    <mat-icon naturalIcon="check" />
+                    <span>Accepter la suggestion</span>
                 </button>
             }
         }
 
         @if (!change && original) {
-            <button matMiniFab class="nat-rounded" matTooltip="Soumettre la suggestion à validation" (click)="update()">
+            <button matButton="filled" matTooltip="Soumettre la suggestion à validation" (click)="update()">
                 <mat-icon naturalIcon="save" />
+                <span>Soumettre</span>
             </button>
         }
         @if (!change && !original) {
-            <button
-                matMiniFab
-                class="nat-rounded"
-                matTooltip="Soumettre l'ajout de cette fiche à validation"
-                (click)="create()"
-            >
+            <button matButton="filled" matTooltip="Soumettre l'ajout de cette fiche à validation" (click)="create()">
                 <mat-icon naturalIcon="add" />
+                <span>Soumettre</span>
             </button>
         }
     </mat-toolbar>

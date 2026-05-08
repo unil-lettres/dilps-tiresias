@@ -2,6 +2,21 @@
     color: inherit;
 }
 
+.badge {
+    box-shadow: var(--mat-sys-level1);
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    border-radius: var(--mat-sys-corner-full);
+    background-color: var(--mat-sys-tertiary-container);
+    padding: 6px;
+    color: var(--mat-sys-on-tertiary-container) !important;
+
+    &.small {
+        padding: 3px;
+    }
+}
+
 svg {
     aspect-ratio: 1;
     height: 100%;

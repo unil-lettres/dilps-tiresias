@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {MatMiniFabButton} from '@angular/material/button';
+import {MatAnchor} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
@@ -24,7 +24,7 @@ import {ChangeService} from '../services/change.service';
         MatIcon,
         CardComponent,
         NaturalIconDirective,
-        MatMiniFabButton,
+        MatAnchor,
     ],
     templateUrl: './change.component.html',
     styleUrl: './change.component.scss',

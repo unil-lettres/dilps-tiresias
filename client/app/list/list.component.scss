@@ -129,12 +129,6 @@ app-view-grid {
         background-color: var(--mat-sys-surface-container-highest);
     }
 
-    // Historic icon in chip should match toolbar icon color
-    app-historic-icon {
-        border: 2px solid red;
-        color: var(--mat-sys-on-surface);
-    }
-
     &::before {
         background: linear-gradient(to right, var(--mat-sys-surface-container), transparent);
     }
@@ -156,6 +150,7 @@ app-view-grid {
 
     app-historic-icon {
         height: 20px;
+        color: var(--mat-sys-on-surface);
     }
 }
 
@@ -164,11 +159,17 @@ natural-search {
 }
 
 .background-selection {
-    border-radius: 24px;
+    border-radius: var(--mat-sys-corner-small);
     background-color: var(--mat-sys-tertiary-container);
-    padding-left: 16px;
+    padding: 4px 4px 4px 16px;
     color: var(--mat-sys-on-tertiary-container);
-    --mat-sys-on-surface-variant: var(--mat-sys-on-tertiary-container);
+
+    @include mat.icon-button-overrides(
+        (
+            icon-color: var(--mat-sys-on-tertiary-container),
+            state-layer-color: var(--mat-sys-on-tertiary-container),
+        )
+    );
 }
 
 app-view-map,

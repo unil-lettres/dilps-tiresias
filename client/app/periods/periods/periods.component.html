@@ -11,10 +11,10 @@
 </mat-toolbar>
 
 @if (dataSource) {
-    <div class="nat-padding" style="padding-bottom: 120px !important">
+    <div class="nat-padding">
         <div class="nat-horizontal nat-distribute nat-center">
             <app-navigable-breadcrumb rootLabel="Périodes" [breadcrumbs]="breadcrumbs" [getLink]="getBreadcrumbLink" />
-            <button matButton="tonal" color="tertiary" (click)="add()">
+            <button matButton="filled" color="tertiary" (click)="add()">
                 <mat-icon>add</mat-icon>
                 Créer une période
             </button>

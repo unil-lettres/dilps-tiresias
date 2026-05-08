@@ -10,7 +10,7 @@
             }
         </div>
         <button
-            class="left nat-rounded"
+            class="left fab-tonal"
             matMiniFab
             [disabled]="scrollBarAtLeft()"
             [hidden]="!hasScrollbar()"
@@ -19,7 +19,7 @@
             <mat-icon naturalIcon="navigate_before" />
         </button>
         <button
-            class="right nat-rounded"
+            class="right fab-tonal"
             matMiniFab
             [disabled]="scrollBarAtRight()"
             [hidden]="!hasScrollbar()"
@@ -29,9 +29,8 @@
         </button>
     </div>
     <button
-        class="btn-reduce nat-rounded"
+        class="btn-reduce fab-tonal"
         matMiniFab
-        color="tertiary"
         matTooltipPosition="left"
         [matTooltip]="`${isReduced() ? 'Ouvrir' : 'Fermer'} les images associées`"
         (click)="toggleReduce()"

@@ -29,11 +29,14 @@
 
         @if (showToolbar()) {
             <mat-toolbar class="nat-horizontal nat-align nat-distribute border-right" [class.edition]="edit">
-                @if (showLogo()) {
+                @if (showLogo() && !edit) {
                     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
                 }
+                @if (edit && !title) {
+                    <div class="mat-font-title-md">En cours d'édition</div>
+                }
                 @if (title) {
-                    <div>{{ title }}</div>
+                    <div class="mat-font-title-md">{{ title }}</div>
                 }
 
                 @if (showTools()) {
@@ -96,7 +99,6 @@
                         @if (edit && fetchedModel?.permissions?.update) {
                             <button
                                 matButton="filled"
-                                class="nat-rounded"
                                 matTooltip="Enregistrer"
                                 [disabled]="!formIsValid"
                                 (click)="update()"
@@ -113,7 +115,7 @@
         @if (showImage()) {
             <div class="image-container">
                 @if (fetchedModel?.showHistoric) {
-                    <app-historic-icon />
+                    <app-historic-icon [badge]="true" />
                 }
 
                 @if (imageSrcFull && !imageData) {
@@ -121,7 +123,7 @@
                         download
                         matMiniFab
                         color="tertiary"
-                        class="download-button nat-rounded"
+                        class="download-button"
                         matTooltip="Télécharger l'image"
                         matTooltipPosition="left"
                         [attr.href]="imageSrcFull"
@@ -200,7 +202,7 @@
                                 <mat-error>Cette référence est déjà attribuée à une fiche</mat-error>
                             }
                             @if (edit && model.code?.length > 23) {
-                                <mat-hint align="end" [class.strong]="model.code?.length >= 30">
+                                <mat-hint align="end" [class.mat-text-error]="model.code?.length >= 30">
                                     {{ model.code!.length }} / 30
                                 </mat-hint>
                             }
@@ -224,7 +226,7 @@
                             />
 
                             @if (edit && (model.name | stripTags)?.length > 187) {
-                                <mat-hint [class.strong]="(model.name | stripTags)?.length >= 191">
+                                <mat-hint [class.mat-text-error]="(model.name | stripTags)?.length >= 191">
                                     {{ (model.name | stripTags).length }} / 191
                                 </mat-hint>
                             }
@@ -306,7 +308,7 @@
                                 [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.techniqueAuthor?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.techniqueAuthor?.length >= 255">
                                     {{ model.techniqueAuthor!.length }} / 255
                                 </mat-hint>
                             }
@@ -350,7 +352,7 @@
                                 [(ngModel)]="model.dating"
                             ></textarea>
                             @if (edit && model.dating?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.dating?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.dating?.length >= 255">
                                     {{ model.dating!.length }} / 255
                                 </mat-hint>
                             }
@@ -390,7 +392,7 @@
                                 [(ngModel)]="model.material"
                             ></textarea>
                             @if (edit && model.material?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.material?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.material?.length >= 255">
                                     {{ model.material!.length }} / 255
                                 </mat-hint>
                             }
@@ -415,7 +417,7 @@
                                 [(ngModel)]="model.format"
                             ></textarea>
                             @if (edit && model.format?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.format?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.format?.length >= 255">
                                     {{ model.format!.length }} / 255
                                 </mat-hint>
                             }
@@ -439,7 +441,7 @@
                             <mat-label>Lieu de production</mat-label>
                             <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.productionPlace" />
                             @if (edit && model.productionPlace?.length > 47) {
-                                <mat-hint align="end" [class.strong]="model.productionPlace?.length >= 60">
+                                <mat-hint align="end" [class.mat-text-error]="model.productionPlace?.length >= 60">
                                     {{ model.productionPlace!.length }} / 60
                                 </mat-hint>
                             }
@@ -638,7 +640,7 @@
                                 [(ngModel)]="model.documentSize"
                             ></textarea>
                             @if (edit && model.documentSize?.length > 150) {
-                                <mat-hint align="end" [class.strong]="model.documentSize?.length >= 191">
+                                <mat-hint align="end" [class.mat-text-error]="model.documentSize?.length >= 191">
                                     {{ model.documentSize!.length }} / 191
                                 </mat-hint>
                             }
@@ -656,7 +658,7 @@
                                 [(ngModel)]="model.techniqueAuthor"
                             ></textarea>
                             @if (edit && model.techniqueAuthor?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.techniqueAuthor?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.techniqueAuthor?.length >= 255">
                                     {{ model.techniqueAuthor!.length }} / 255
                                 </mat-hint>
                             }
@@ -667,7 +669,7 @@
                             <mat-label>Date ou année</mat-label>
                             <input matInput maxlength="60" [readonly]="!edit" [(ngModel)]="model.techniqueDate" />
                             @if (edit && model.techniqueDate?.length > 47) {
-                                <mat-hint align="end" [class.strong]="model.techniqueDate?.length >= 60">
+                                <mat-hint align="end" [class.mat-text-error]="model.techniqueDate?.length >= 60">
                                     {{ model.techniqueDate!.length }} / 60
                                 </mat-hint>
                             }
@@ -830,7 +832,7 @@
                             <mat-label>ISBN / ISSN</mat-label>
                             <input matInput maxlength="30" [readonly]="!edit" [(ngModel)]="model.isbn" />
                             @if (edit && model.isbn?.length > 23) {
-                                <mat-hint align="end" [class.strong]="model.isbn?.length >= 30">
+                                <mat-hint align="end" [class.mat-text-error]="model.isbn?.length >= 30">
                                     {{ model.isbn!.length }} / 30
                                 </mat-hint>
                             }
@@ -848,7 +850,7 @@
                                 [(ngModel)]="model.rights"
                             ></textarea>
                             @if (edit && model.rights?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.rights?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.rights?.length >= 255">
                                     {{ model.rights!.length }} / 255
                                 </mat-hint>
                             }
@@ -903,7 +905,7 @@
                                 <mat-error>URL invalide</mat-error>
                             }
                             @if (edit && model.url?.length > 200) {
-                                <mat-hint align="end" [class.strong]="model.url?.length >= 255">
+                                <mat-hint align="end" [class.mat-text-error]="model.url?.length >= 255">
                                     {{ model.url!.length }} / 255
                                 </mat-hint>
                             }
@@ -982,7 +984,7 @@
                             </natural-relations>
                             @if (edit) {
                                 <div class="btn-link-related-cards">
-                                    <button matButton="filled" color="tertiary" (click)="openLinkRelatedCardsDialog()">
+                                    <button matButton="tonal" (click)="openLinkRelatedCardsDialog()">
                                         <mat-icon fontIcon="arrows_input" />
                                         Associer les fiches entre elles...
                                     </button>

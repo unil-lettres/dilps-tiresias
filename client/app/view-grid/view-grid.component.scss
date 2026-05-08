@@ -38,10 +38,6 @@
     z-index: 1000;
 }
 
-.historic-icon {
-    color: var(--mat-sys-tertiary-container);
-}
-
 ::ng-deep {
     app-view-grid {
         .natural-gallery-js {
@@ -80,9 +76,10 @@
             .figure.selected {
                 --ngjs-selected-marker-color: var(--mat-sys-tertiary-container);
                 --ngjs-focus-outline: 3px solid var(--mat-sys-tertiary-container);
+                box-shadow: var(--mat-sys-level1);
 
                 border: 3px solid var(--mat-sys-tertiary-container);
-                border-radius: 3px;
+                border-radius: var(--mat-sys-corner-small);
 
                 @supports (color: color-mix(in srgb, red, transparent)) {
                     .select-btn {
