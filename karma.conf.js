@@ -16,7 +16,7 @@ module.exports = function (config) {
             suppressAll: true, // removes the duplicated traces
         },
         reporters: ['progress', 'kjhtml'],
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadlessCustom'],
         customLaunchers: {
             ChromeHeadlessCustom: {
                 base: 'ChromeHeadless',

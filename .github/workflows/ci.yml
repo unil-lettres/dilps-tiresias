@@ -100,9 +100,12 @@ jobs:
               id: app-test-php
               run: ./vendor/bin/phpunit
 
+            - name: Install Playwright Chromium
+              run: pnpm playwright install chromium --with-deps
+
             - name: Test Angular
               id: app-test-ng
-              run: ./node_modules/.bin/ng test --progress false --watch=false --browsers ChromeHeadlessCustom
+              run: ./node_modules/.bin/ng test --progress false --watch=false
 
             - name: Upload sources map artifact
               id: upload-artifact
