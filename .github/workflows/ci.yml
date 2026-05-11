@@ -35,7 +35,10 @@ jobs:
               with:
                   fetch-depth: 2
 
-            - uses: pnpm/action-setup@v6
+            - name: Enable Corepack & Prepare Node package manager
+              run: |
+                  corepack enable
+                  corepack prepare --activate
 
             - name: Node Setup
               uses: actions/setup-node@v6
