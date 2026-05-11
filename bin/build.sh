@@ -44,7 +44,7 @@ echo "********************* Installing git hooks..."
 ln -fs ../../bin/pre-commit.sh .git/hooks/pre-commit
 
 echo "********************* Updating Node.js packages..."
-pnpm install
+pnpm install --frozen-lockfile
 
 echo "********************* Updating all PHP dependencies via composer..."
 composer install --classmap-authoritative --no-interaction --no-plugins $NO_PROGRESS
