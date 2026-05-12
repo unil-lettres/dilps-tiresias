@@ -61,7 +61,9 @@
 
                 <ng-container matColumnDef="url">
                     <th *matHeaderCellDef mat-header-cell>Lien</th>
-                    <td *matCellDef="let element; dataSource: dataSource" mat-cell>{{ element.url }}</td>
+                    <td *matCellDef="let element; dataSource: dataSource" class="url-column" mat-cell>
+                        {{ element.url }}
+                    </td>
                 </ng-container>
             </table>
         </div>
