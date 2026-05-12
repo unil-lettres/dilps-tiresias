@@ -11,8 +11,8 @@
         },
         "ghcr.io/guiyomh/features/vim": {}
     },
-    // forward ports for the main application (8181), phpmyadmin (9797), and mailhog (8027)
-    "forwardPorts": [8181, 9797, 8027],
+    // forward ports for the main application (8181), and mailhog (8027)
+    "forwardPorts": [8181, 8027],
     "portsAttributes": {
         "9000": {
             "onAutoForward": "ignore"

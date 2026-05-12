@@ -73,16 +73,6 @@ services:
             - dilps-tiresias-net
         container_name: dilps-tiresias-mysql
 
-    dilps-tiresias-myadmin:
-        image: phpmyadmin/phpmyadmin:latest
-        env_file:
-            - ./dev/.env
-        ports:
-            - '127.0.0.1:9797:80'
-        networks:
-            - dilps-tiresias-net
-        container_name: dilps-tiresias-myadmin
-
     dilps-tiresias-mailhog:
         image: mailhog/mailhog:latest
         expose:

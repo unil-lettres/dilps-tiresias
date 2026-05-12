@@ -82,16 +82,6 @@ To access the main application please use the following links.
 - [http://dilps.docker:8181](http://dilps.docker:8181) (administrator / administrator)
 - [http://tiresias.docker:8181](http://tiresias.docker:8181) (administrator / administrator)
 
-#### phpMyAdmin
-
-To access the database please use the following link.
-
-[http://dilps.docker:9797](http://dilps.docker:9797)
-
-- Server: dilps-tiresias-mysql
-- Username: user
-- Password: password
-
 #### MailHog
 
 To access mails please use the following link.
