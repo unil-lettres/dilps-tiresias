@@ -156,7 +156,7 @@ export class ListComponent
         () => (this.naturalSearchComponent()?.innerSelections() ?? []).reduce((acc, val) => acc.concat(val), []).length,
     );
 
-    private readonly hasActiveSearch = computed(() => this.searchTermCount() > 0);
+    protected readonly hasActiveSearch = computed(() => this.searchTermCount() > 0);
 
     /**
      * Reference to grid component

@@ -250,7 +250,11 @@
                     <mat-chip-set>
                         <mat-chip>
                             <div class="chip-infos">
-                                <span>{{ gridNumberVisibleItems() }} / {{ gridNumberTotalItems() }}</span>
+                                @if (dataSource.data?.length > 0) {
+                                    <span>{{ gridNumberVisibleItems() }} / {{ gridNumberTotalItems() }}</span>
+                                } @else {
+                                    <span>0</span>
+                                }
                                 @if (hasHistoricImages()) {
                                     <span>•</span>
                                     <app-historic-icon
@@ -265,17 +269,24 @@
         </mat-toolbar>
         @if (dataSource.data?.length === 0) {
             <div class="empty-result">
-                <div>
-                    <p>Aucun élément ne correspond aux termes recherchés.</p>
-                    <p>Essayez de :</p>
-                    <ul>
-                        <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
-                        <li>Simplifier la recherche.</li>
-                        <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
-                        <li>Enlever virgules, déterminants, prépositions, ...</li>
-                        <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
-                    </ul>
-                </div>
+                @if (hasActiveSearch()) {
+                    <div>
+                        <p>Aucun élément ne correspond aux termes recherchés.</p>
+                        <p>Essayez de :</p>
+                        <ul>
+                            <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
+                            <li>Simplifier la recherche.</li>
+                            <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
+                            <li>Enlever virgules, déterminants, prépositions, ...</li>
+                            <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
+                        </ul>
+                    </div>
+                } @else {
+                    <div class="nat-vertical nat-center nat-gap-10 empty-collection">
+                        <mat-icon>hide_image</mat-icon>
+                        Aucune image dans la collection
+                    </div>
+                }
             </div>
         } @else {
             @if (domains.length) {

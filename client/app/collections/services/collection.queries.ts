@@ -9,7 +9,7 @@ export const collectionsQuery = gql`
                 id
                 name
                 hierarchicName
-                hasUsers
+                usersCount
                 hasChildren
                 isSource
                 isHistoric

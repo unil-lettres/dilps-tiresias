@@ -182,9 +182,9 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
         $this->users->removeElement($user);
     }
 
-    public function hasUsers(): bool
+    public function getUsersCount(): int
     {
-        return count($this->users) > 0;
+        return count($this->users);
     }
 
     /**

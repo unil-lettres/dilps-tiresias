@@ -41,6 +41,32 @@ app-view-grid {
     margin: 100px auto;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.empty-collection {
+    opacity: 0;
+
+    // Defer to avoid interface clip.
+    animation: fadeIn 0.1s ease-in forwards;
+    animation-delay: 100ms;
+    height: 50vh;
+
+    .mat-icon {
+        width: 96px !important;
+        height: 96px !important;
+
+        color: var(--mat-sys-tertiary);
+        font-size: 96px !important;
+    }
+}
+
 #domains-chips {
     display: block;
     position: absolute;
