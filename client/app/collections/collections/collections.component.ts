@@ -146,6 +146,10 @@ export class CollectionsComponent implements OnInit {
             }
 
             this.hasMore = collections.length > this.rootCollections.length;
+
+            if (!this.route.firstChild && this.rootCollections.length > 0) {
+                this.router.navigate([this.rootCollections[0].id], {relativeTo: this.route});
+            }
         });
     }
 
