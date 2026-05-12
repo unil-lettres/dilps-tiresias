@@ -6,7 +6,13 @@
             <div class="nat-expand"></div>
             <span>{{ title }}</span>
             @if (canCreate) {
-                <button matIconButton class="btn-tertiary-tonal" matTooltip="Créer une collection" (click)="add()">
+                <button
+                    color="tertiary"
+                    class="nat-margin-left fab-no-elevation"
+                    matMiniFab
+                    matTooltip="Créer une collection"
+                    (click)="add()"
+                >
                     <mat-icon naturalIcon="add" />
                 </button>
             }

@@ -252,13 +252,13 @@ app-view-map google-map div.gm-style > div:last-child {
     }
 }
 
-.btn-tertiary-tonal {
-    background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, transparent) !important;
-
-    @include mat.icon-button-overrides(
+.fab-no-elevation {
+    @include mat.fab-overrides(
         (
-            container-shape: var(--mat-sys-corner-large),
-            icon-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 33%, var(--mat-sys-on-surface)),
+            container-elevation-shadow: var(--mat-sys-level0),
+            extended-container-elevation-shadow: var(--mat-sys-level0),
+            small-container-elevation-shadow: var(--mat-sys-level0),
+            extended-label-text-weight: 700,
         )
     );
 }

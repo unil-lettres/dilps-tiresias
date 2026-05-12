@@ -19,7 +19,7 @@ import {
     MatTable,
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIconButton, MatFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
 import {NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
@@ -33,7 +33,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatToolbar,
         LogoComponent,
         NaturalSearchComponent,
-        MatButton,
         MatIcon,
         MatTable,
         MatHeaderCellDef,
@@ -55,6 +54,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatPaginator,
         CollectionHierarchyComponent,
         NavigableBreadcrumbComponent,
+        MatFabButton,
     ],
     templateUrl: './periods.component.html',
     styleUrl: './periods.component.scss',

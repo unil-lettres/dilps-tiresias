@@ -18,7 +18,7 @@ import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavL
 import {MatIcon} from '@angular/material/icon';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
-import {MatIconButton} from '@angular/material/button';
+import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {NgTemplateOutlet} from '@angular/common';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -55,6 +55,7 @@ import {
         MatMenuItem,
         MatMenuTrigger,
         ExportMenuComponent,
+        MatMiniFabButton,
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',

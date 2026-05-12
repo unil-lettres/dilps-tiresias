@@ -4,7 +4,7 @@ import {InstitutionComponent} from '../institution/institution.component';
 import {InstitutionService} from '../services/institution.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatButton} from '@angular/material/button';
+import {MatFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
@@ -42,8 +42,8 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatSortHeader,
         MatProgressSpinner,
         MatPaginator,
-        MatButton,
         MatIcon,
+        MatFabButton,
     ],
     templateUrl: './institutions.component.html',
     styleUrl: './institutions.component.scss',

@@ -5,7 +5,7 @@ import {NewsService} from '../services/news.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
+import {MatFabButton} from '@angular/material/button';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
     MatCell,
@@ -41,9 +41,9 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatSort,
         MatSortHeader,
         MatIcon,
-        MatButton,
         MatProgressSpinner,
         MatPaginator,
+        MatFabButton,
     ],
     templateUrl: './newses.component.html',
     styleUrl: './newses.component.scss',

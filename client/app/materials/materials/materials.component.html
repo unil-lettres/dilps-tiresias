@@ -14,7 +14,7 @@
     <div class="nat-padding">
         <div class="nat-horizontal nat-distribute nat-center">
             <app-navigable-breadcrumb rootLabel="Matériaux" [breadcrumbs]="breadcrumbs" [getLink]="getBreadcrumbLink" />
-            <button color="tertiary" matButton="filled" (click)="add()">
+            <button matFab extended color="tertiary" class="fab-no-elevation" (click)="add()">
                 <mat-icon>add</mat-icon>
                 Créer un matériau
             </button>
