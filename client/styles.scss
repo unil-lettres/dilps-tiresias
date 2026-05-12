@@ -14,7 +14,13 @@ html {
     @include mat.theme(
         (
             color: (),
-            typography: Quicksand,
+            typography: (
+                plain-family: Quicksand,
+                brand-family: Quicksand,
+                regular-weight: 500,
+                medium-weight: 600,
+                bold-weight: 700,
+            ),
             density: 0,
         )
     );
