@@ -78,7 +78,7 @@
         </div>
     }
     <div mat-menu-item [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu">
-        <mat-icon svgIcon="sort_asc" />
+        <mat-icon naturalIcon="sort_asc" />
         <span>Trier</span>
     </div>
     @if (viewMode === ViewMode.grid) {
@@ -101,14 +101,14 @@
         </div>
     } @else {
         <div mat-menu-item (click)="selectAll()">
-            <mat-icon svgIcon="select_all_mark" />
+            <mat-icon naturalIcon="select_all_mark" />
             <span>Sélectionner les images visibles</span>
         </div>
     }
     @if (selected.length) {
         @if (!!user && site === Site.Dilps) {
             <div mat-menu-item (click)="goToQuizz(selected)">
-                <mat-icon svgIcon="cards_game" />
+                <mat-icon naturalIcon="cards_game" />
                 <span>Lecture d'oeuvre</span>
             </div>
         }
@@ -116,7 +116,7 @@
     @if (!selected.length && user) {
         @if (site === Site.Dilps) {
             <div mat-menu-item (click)="goToQuizz()">
-                <mat-icon svgIcon="cards_game" />
+                <mat-icon naturalIcon="cards_game" />
                 <span>Lecture d'oeuvre</span>
             </div>
         }
@@ -133,7 +133,7 @@
     }
     @if (collection?.id) {
         <div mat-menu-item (click)="unlinkFromCollection(selected)">
-            <mat-icon svgIcon="library_remove" />
+            <mat-icon naturalIcon="library_remove" />
             <span>Retirer de la collection</span>
         </div>
     }
@@ -185,7 +185,7 @@
                                     matTooltip="Retirer les fiches sélectionnées de la collection"
                                     (click)="unlinkFromCollection(selected)"
                                 >
-                                    <mat-icon svgIcon="library_remove" />
+                                    <mat-icon naturalIcon="library_remove" />
                                 </button>
                             }
                             <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
@@ -250,7 +250,7 @@
                         matTooltip="Trier"
                         [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                     >
-                        <mat-icon svgIcon="sort_asc" />
+                        <mat-icon naturalIcon="sort_asc" />
                     </button>
                     @if (viewMode === ViewMode.grid) {
                         <button
@@ -271,20 +271,20 @@
                         </button>
                     } @else {
                         <button matIconButton matTooltip="Sélectionner les images visibles" (click)="selectAll()">
-                            <mat-icon svgIcon="select_all_mark" />
+                            <mat-icon naturalIcon="select_all_mark" />
                         </button>
                     }
                     @if (selected.length) {
                         @if (!!user && site === Site.Dilps) {
                             <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
-                                <mat-icon svgIcon="cards_game" />
+                                <mat-icon naturalIcon="cards_game" />
                             </button>
                         }
                     }
                     @if (!selected.length && user) {
                         @if (site === Site.Dilps) {
                             <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
-                                <mat-icon svgIcon="cards_game" />
+                                <mat-icon naturalIcon="cards_game" />
                             </button>
                         }
                     }
