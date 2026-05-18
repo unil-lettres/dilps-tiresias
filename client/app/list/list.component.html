@@ -50,8 +50,14 @@
         Référence
     </div>
 </mat-menu>
+<app-export-menu
+    #exportMenuForOverflow
+    [showTrigger]="false"
+    [selectedCards]="selected"
+    [showExcelExportation]="site !== Site.Dilps"
+/>
 
-<!-- Menu overflow pour les actions de la toolbar -->
+<!-- Menu overflow for toolbar actions -->
 <mat-menu #toolbarActionsMenu="matMenu" [overlapTrigger]="false">
     @if (viewMode !== ViewMode.grid) {
         <div mat-menu-item (click)="setViewMode(ViewMode.grid)">
@@ -117,6 +123,38 @@
     }
 </mat-menu>
 
+<!-- Menu overflow for selection actions -->
+<mat-menu #selectionActionsMenu="matMenu" [overlapTrigger]="false">
+    @if (!!user) {
+        <div mat-menu-item (click)="linkSelectionToCollection(selected)">
+            <mat-icon naturalIcon="library_add" />
+            <span>Ajouter à une collection</span>
+        </div>
+    }
+    @if (collection?.id) {
+        <div mat-menu-item (click)="unlinkFromCollection(selected)">
+            <mat-icon svgIcon="library_remove" />
+            <span>Retirer de la collection</span>
+        </div>
+    }
+    <div mat-menu-item [matMenuTriggerFor]="exportMenuForOverflow.matMenu()">
+        <mat-icon naturalIcon="share_windows" />
+        <span>Exporter</span>
+    </div>
+    @if (canMassEdit()) {
+        <div mat-menu-item (click)="edit(selected)">
+            <mat-icon naturalIcon="edit" />
+            <span>Éditer en masse</span>
+        </div>
+    }
+    @if (user?.role === UserRole.administrator) {
+        <div mat-menu-item (click)="delete(selected)">
+            <mat-icon naturalIcon="delete_forever" />
+            <span>Supprimer définitivement</span>
+        </div>
+    }
+</mat-menu>
+
 @if (dataSource) {
     <div class="containerWithToolbar nat-vertical nat-expand">
         <mat-toolbar #toolbar class="nat-horizontal nat-align nat-gap-10">
@@ -124,44 +162,60 @@
                 <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
             }
             @if (selected.length) {
-                <div #toolbarSelection class="background-selection nat-horizontal nat-align">
+                <div class="background-selection nat-horizontal nat-align">
                     <span class="mat-font-body-md nat-margin-right"
                         >{{ selected.length }} fiche{{ selected.length > 1 ? 's' : '' }} sélectionnée{{
                             selected.length > 1 ? 's' : ''
                         }}</span
                     >
-                    @if (!!user) {
+                    @if (!showOverflowSelectionMenu()) {
+                        <div #toolbarSelection>
+                            @if (!!user) {
+                                <button
+                                    matIconButton
+                                    matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
+                                    (click)="linkSelectionToCollection(selected)"
+                                >
+                                    <mat-icon naturalIcon="library_add" />
+                                </button>
+                            }
+                            @if (collection?.id) {
+                                <button
+                                    matIconButton
+                                    matTooltip="Retirer les fiches sélectionnées de la collection"
+                                    (click)="unlinkFromCollection(selected)"
+                                >
+                                    <mat-icon svgIcon="library_remove" />
+                                </button>
+                            }
+                            <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
+                            @if (canMassEdit()) {
+                                <button
+                                    matIconButton
+                                    matTooltip="Editer en masse la sélection"
+                                    (click)="edit(selected)"
+                                >
+                                    <mat-icon naturalIcon="edit" />
+                                </button>
+                            }
+                            @if (user?.role === UserRole.administrator) {
+                                <button
+                                    matIconButton
+                                    matTooltip="Supprimer les fiches sélectionnées définitivement"
+                                    color="error"
+                                    (click)="delete(selected)"
+                                >
+                                    <mat-icon naturalIcon="delete_forever" />
+                                </button>
+                            }
+                        </div>
+                    } @else {
                         <button
                             matIconButton
-                            matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
-                            (click)="linkSelectionToCollection(selected)"
+                            matTooltip="Actions sur la sélection"
+                            [matMenuTriggerFor]="selectionActionsMenu"
                         >
-                            <mat-icon naturalIcon="library_add" />
-                        </button>
-                    }
-                    @if (collection?.id) {
-                        <button
-                            matIconButton
-                            matTooltip="Retirer les fiches sélectionnées de la collection"
-                            (click)="unlinkFromCollection(selected)"
-                        >
-                            <mat-icon svgIcon="library_remove" />
-                        </button>
-                    }
-                    <app-export-menu [selectedCards]="selected" [showExcelExportation]="site !== Site.Dilps" />
-                    @if (canMassEdit()) {
-                        <button matIconButton matTooltip="Editer en masse la sélection" (click)="edit(selected)">
-                            <mat-icon naturalIcon="edit" />
-                        </button>
-                    }
-                    @if (user?.role === UserRole.administrator) {
-                        <button
-                            matIconButton
-                            matTooltip="Supprimer les fiches sélectionnées définitivement"
-                            color="error"
-                            (click)="delete(selected)"
-                        >
-                            <mat-icon naturalIcon="delete_forever" />
+                            <mat-icon naturalIcon="more_vert" />
                         </button>
                     }
                 </div>
@@ -196,7 +250,7 @@
                         matTooltip="Trier"
                         [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                     >
-                        <mat-icon naturalIcon="sort_asc" />
+                        <mat-icon svgIcon="sort_asc" />
                     </button>
                     @if (viewMode === ViewMode.grid) {
                         <button

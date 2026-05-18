@@ -196,10 +196,23 @@ export class ListComponent
      * True when the toolbar is too narrow to fit the selection zone + the search bar.
      */
     protected readonly showOverflowMenu = computed(() => {
-        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() : 0;
-        const searchWidth = 300 + this.searchTermCount() * 250;
-        return this.toolbarWidth() < this.toolbarOptionsWidth() + selectionWidth + searchWidth + 200;
+        return this.toolbarWidth() < this.toolbarTotalWidth();
     });
+
+    /**
+     * Whether selection action buttons should be collapsed into an overflow menu.
+     * Triggers after showOverflowMenu (lower threshold), ensuring options collapse first.
+     */
+    protected readonly showOverflowSelectionMenu = computed(() => {
+        if (!this.hasSelection() || !this.showOverflowMenu()) return false;
+
+        return this.toolbarWidth() < this.toolbarTotalWidth() - this.toolbarSelectionWidth();
+    });
+
+    private toolbarTotalWidth(): number {
+        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() + 200 : 0;
+        return 500 + this.searchTermCount() * 250 + selectionWidth + this.toolbarOptionsWidth();
+    }
 
     /**
      * Current offsetWidth of the toolbar elements.

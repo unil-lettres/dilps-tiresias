@@ -85,6 +85,7 @@ mat-sidenav-container {
 
     .upload-btn {
         align-self: center;
+        margin-bottom: 16px;
         box-shadow: var(--mat-sys-level1);
         background-color: color-mix(in srgb, var(--mat-sys-secondary-container) 60%, var(--mat-sys-surface)) !important;
 

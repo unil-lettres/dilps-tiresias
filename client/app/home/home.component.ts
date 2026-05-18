@@ -326,7 +326,7 @@ export class HomeComponent implements OnInit {
     }
 
     protected openImportTemplateDialog(): void {
-        this.dialog.open(ImportTemplateDialogComponent, {maxWidth: 500});
+        this.dialog.open(ImportTemplateDialogComponent, {maxWidth: 520});
     }
 
     protected openErrorsDialog(): void {
