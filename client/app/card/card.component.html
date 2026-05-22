@@ -235,6 +235,7 @@
                     @if (!isDilps && (edit || !!model.domains?.length)) {
                         <app-thesaurus
                             placeholder="Domaines"
+                            inputPlaceholder="Ajouter un domaine..."
                             [model]="model.domains"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="domainHierarchicConfig"
@@ -283,6 +284,7 @@
                         <app-thesaurus
                             matTooltipPosition="after"
                             placeholder="Artistes"
+                            inputPlaceholder="Ajouter un artiste..."
                             [matTooltip]="
                                 !edit
                                     ? ''
@@ -362,6 +364,7 @@
                         <app-thesaurus
                             matTooltipPosition="after"
                             placeholder="Domaines"
+                            inputPlaceholder="Ajouter un domaine..."
                             [matTooltip]="!edit ? '' : 'Information générique: sculpture, peinture, architecture'"
                             [model]="model.domains"
                             [allowFreeText]="false"
@@ -426,6 +429,7 @@
                     @if (!isDilps && (edit || !!model.materials?.length)) {
                         <app-thesaurus
                             placeholder="Matériaux"
+                            inputPlaceholder="Ajouter un matériau"
                             [model]="model.materials"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="materialHierarchicConfig"
@@ -450,6 +454,7 @@
                     @if (!isDilps && (edit || !!model.tags?.length)) {
                         <app-thesaurus
                             placeholder="Mots clés"
+                            inputPlaceholder="Ajouter un mot clé"
                             [model]="model.tags"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="tagHierarchicConfig"
@@ -467,6 +472,7 @@
                         <app-thesaurus
                             matTooltipPosition="after"
                             placeholder="Institution"
+                            inputPlaceholder="Ajouter une institution..."
                             [matTooltip]="
                                 !edit
                                     ? ''
@@ -529,6 +535,7 @@
                     @if (!isDilps && (edit || !!model.antiqueNames?.length)) {
                         <app-thesaurus
                             placeholder="Nom antique"
+                            inputPlaceholder="Ajouter un nom antique..."
                             [model]="model.antiqueNames"
                             [allowFreeText]="false"
                             [multiple]="true"
@@ -544,6 +551,7 @@
                     @if (!isDilps && (edit || model.periods?.length)) {
                         <app-thesaurus
                             placeholder="Périodes"
+                            inputPlaceholder="Ajouter une période..."
                             [model]="model.periods"
                             [allowFreeText]="false"
                             [hierarchicSelectorConfig]="periodHierarchicConfig"
@@ -582,6 +590,7 @@
                     @if (!isDilps && (edit || !!institution)) {
                         <app-thesaurus
                             placeholder="Institution"
+                            inputPlaceholder="Ajouter une institution..."
                             [model]="institution"
                             [multiple]="false"
                             [previewComponent]="InstitutionComponent"
@@ -619,6 +628,7 @@
                     @if (!isDilps && (edit || !!model.documentType)) {
                         <app-thesaurus
                             placeholder="Type"
+                            inputPlaceholder="Ajouter un type..."
                             [model]="model.documentType"
                             [allowFreeText]="false"
                             [multiple]="false"

@@ -23,6 +23,7 @@
 
         <input
             #thesaurusInput
+            [placeholder]="inputPlaceholder() || ''"
             [formControl]="formControl"
             [class.show]="!readonly() || items.length === 0"
             [matAutocomplete]="autocomplete"

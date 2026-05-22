@@ -106,6 +106,11 @@ export class ThesaurusComponent<
     public readonly placeholder = input.required<string>();
 
     /**
+     * Input label placeholder
+     */
+    public readonly inputPlaceholder = input<string>();
+
+    /**
      * If multi selection is allowed
      */
     public readonly multiple = input(true);
