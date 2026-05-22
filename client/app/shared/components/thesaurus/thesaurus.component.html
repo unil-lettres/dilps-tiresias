@@ -3,7 +3,12 @@
     <mat-chip-grid #chipList aria-orientation="vertical" class="mat-mdc-chip-set-stacked">
         @for (item of items; track item) {
             <mat-chip-row [removable]="!readonly()" (removed)="removeTerm(item)" (click)="openItem(item)">
-                <span class="thesaurus-chip-label">{{ getLabel(item) }}</span>
+                <span class="thesaurus-chip-label">
+                    <span>{{ getLabel(item) }}</span>
+                    @if (getParentHierarchy(item); as hierarchy) {
+                        <span class="mat-font-label-md mat-text-disabled">{{ hierarchy }}</span>
+                    }
+                </span>
 
                 @if (!readonly()) {
                     <button matChipRemove>
@@ -11,12 +16,10 @@
                     </button>
                 }
 
-                @if (item.id && item.__typename) {
-                    <div matChipTrailingIcon class="search-wrapper">
-                        <button matIconButton (click)="search(item)">
-                            <mat-icon fontIcon="search" />
-                        </button>
-                    </div>
+                @if (readonly() && item.id && item.__typename) {
+                    <button matChipRemove (click)="search(item)">
+                        <mat-icon fontIcon="search" />
+                    </button>
                 }
             </mat-chip-row>
         }

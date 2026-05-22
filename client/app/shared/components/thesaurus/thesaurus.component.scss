@@ -1,41 +1,16 @@
 @use '@angular/material' as mat;
 
-:host {
-    --bg: var(--mat-sys-surface-variant);
-
-    ::ng-deep {
-        input.mat-mdc-chip-input {
-            flex: 1 0 auto;
-            width: calc(100% - 5px);
-        }
-
-        .mat-mdc-chip {
-            margin-right: 2em !important;
-        }
-
-        .search-wrapper {
-            padding: 0 !important;
-        }
-        .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__action--primary::before {
-            border: none;
-        }
-    }
-    @supports (background: color-mix(in srgb, blue, red)) {
-        --bg: color-mix(in srgb, var(--mat-sys-surface-variant) 90%, var(--mat-sys-on-surface));
-    }
-
+.mat-mdc-standard-chip {
+    padding: 5px 0;
     @include mat.chips-overrides(
         (
-            container-shape-radius: var(--mat-sys-corner-full),
-            elevated-container-color: var(--bg),
+            container-height: auto,
         )
     );
 }
 
-.search-wrapper {
-    button {
-        background: var(--bg);
-    }
+.mat-mdc-chip-set-stacked {
+    align-items: stretch;
 }
 
 .mat-mdc-form-field {
@@ -43,12 +18,9 @@
 }
 
 .thesaurus-chip-label {
+    display: flex;
+    flex-direction: column;
     white-space: normal;
-}
-
-.mat-mdc-standard-chip {
-    padding: 5px 0;
-    height: auto;
 }
 
 input {
@@ -57,25 +29,4 @@ input {
     &.show {
         display: block;
     }
-}
-
-.search-wrapper {
-    position: absolute;
-    right: -2em;
-
-    &,
-    button {
-        padding: 0;
-        width: 30px !important;
-        height: 30px !important;
-    }
-
-    button {
-        display: grid;
-        place-content: center;
-    }
-}
-
-.mat-mdc-chip-remove {
-    padding-left: 5px;
 }

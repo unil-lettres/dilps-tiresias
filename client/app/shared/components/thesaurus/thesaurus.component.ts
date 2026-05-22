@@ -3,8 +3,7 @@ import {Component, DestroyRef, ElementRef, inject, input, Input, OnInit, output,
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
-import {MatIconButton} from '@angular/material/button';
-import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow, MatChipTrailingIcon} from '@angular/material/chips';
+import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow} from '@angular/material/chips';
 import {MatOption} from '@angular/material/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
@@ -48,14 +47,12 @@ export type ThesaurusModel = {
         MatChipInput,
         MatChipRemove,
         MatChipRow,
-        MatChipTrailingIcon,
         MatIcon,
         FormsModule,
         MatAutocomplete,
         MatAutocompleteTrigger,
         ReactiveFormsModule,
         MatOption,
-        MatIconButton,
     ],
     templateUrl: './thesaurus.component.html',
     styleUrl: './thesaurus.component.scss',
@@ -406,13 +403,26 @@ export class ThesaurusComponent<
     }
 
     protected getLabel(item: ThesaurusModel): string {
-        let result = item.hierarchicName || item.name;
+        let result = item.name;
 
         if (!this.readonly() && item.__typename === 'Period') {
             result += formatYearRange(item.from!, item.to!);
         }
 
         return result;
+    }
+
+    protected getParentHierarchy(item: ThesaurusModel): string | null {
+        if (!item.hierarchicName || item.hierarchicName === item.name) {
+            return null;
+        }
+
+        const parts = item.hierarchicName
+            .split('>')
+            .map(p => p.trim())
+            .filter(p => p.length > 0);
+
+        return parts.slice(0, parts.length - 1).join(' > ');
     }
 
     protected search(item: ThesaurusModel): void {
