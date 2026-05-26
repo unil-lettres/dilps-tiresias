@@ -17,7 +17,7 @@
                 }
 
                 @if (readonly() && item.id && item.__typename) {
-                    <button matChipRemove (click)="search(item)">
+                    <button matChipRemove matTooltip="Rechercher..." matTooltipPosition="right" (click)="search(item)">
                         <mat-icon fontIcon="search" />
                     </button>
                 }

@@ -27,6 +27,8 @@ import {clone} from 'es-toolkit';
 import {Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
+import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
+import {MatTooltip} from '@angular/material/tooltip';
 
 export type ThesaurusModel = {
     id?: string;
@@ -53,6 +55,8 @@ export type ThesaurusModel = {
         MatAutocompleteTrigger,
         ReactiveFormsModule,
         MatOption,
+        HideTooltipDirective,
+        MatTooltip,
     ],
     templateUrl: './thesaurus.component.html',
     styleUrl: './thesaurus.component.scss',
