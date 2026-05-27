@@ -179,7 +179,11 @@ mat-toolbar.edition {
 
     &:hover {
         @supports (background: color-mix(in srgb, blue, red)) {
-            background: color-mix(in srgb, var(--mat-sys-surface-variant) 90%, white);
+            background: color-mix(
+                in srgb,
+                var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
+                var(--mat-sys-surface-variant)
+            );
         }
     }
 
