@@ -14,7 +14,7 @@ return [
                     'password' => '',
                     'port' => 3306,
                     'driverOptions' => [
-                        Pdo\Mysql::ATTR_INIT_COMMAND => 'SET NAMES utf8mb4',
+                        Pdo\Mysql::ATTR_INIT_COMMAND => 'SET NAMES utf8mb4; SET sql_mode = STRICT_TRANS_TABLES;',
                     ],
                     'defaultTableOptions' => [
                         'charset' => 'utf8mb4',
