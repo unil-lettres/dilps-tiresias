@@ -4,7 +4,6 @@
             @for (news of newses; track news) {
                 <a
                     class="carousel-slide"
-                    target="_blank"
                     [attr.href]="news.url"
                     [style.backgroundImage]="`url(${news.imageUrl})`"
                     [attr.aria-hidden]="currentIndex() !== $index"

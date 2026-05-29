@@ -40,7 +40,7 @@
                 }
 
                 @if (showTools()) {
-                    <div class="nat-horizontal nat-center nat-gap-5">
+                    <div class="nat-horizontal nat-center nat-expand nat-gap-10">
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
                             <button matIconButton matTooltip="Créer" (click)="create()">
                                 <mat-icon naturalIcon="add" />
@@ -880,7 +880,7 @@
                                     matIconButton
                                     target="_blank"
                                     matTooltipPosition="above"
-                                    matTooltip="Ouvrir"
+                                    matTooltip="Ouvrir dans un nouvel onglet"
                                     aria-label="Ouvrir la référence dans un nouvel onglet"
                                     [href]="model.url"
                                 >
@@ -891,7 +891,7 @@
                     }
                     @if (!isDilps && !edit && !!model.url) {
                         <div
-                            class="url-description"
+                            class="url-description nat-margin-bottom"
                             [innerHTML]="model.urlDescription || model.url"
                             [matTooltip]="model.url"
                             [matTooltipDisabled]="!model.urlDescription"
