@@ -28,19 +28,24 @@
         <div class="app-file-drag-n-drop-overlay">Glisser-déposer un fichier ici</div>
 
         @if (showToolbar()) {
-            <mat-toolbar class="nat-horizontal nat-align nat-distribute border-right" [class.edition]="edit">
+            <mat-toolbar class="nat-horizontal border-right nat-gap-10" [class.edition]="edit">
                 @if (showLogo() && !edit) {
                     <app-logo [data]="{type: 'toolbar', class: 'logo'}" />
-                }
-                @if (edit && !title) {
-                    <div class="mat-font-title-md">En cours d'édition</div>
                 }
                 @if (title) {
                     <div class="mat-font-title-md">{{ title }}</div>
                 }
+                @if (edit) {
+                    @if (!title) {
+                        <div class="mat-font-title-md">En cours d'édition</div>
+                    }
+                    <button matIconButton matTooltip="Importer les données d'une autre fiche" (click)="complete()">
+                        <mat-icon naturalIcon="content_copy" />
+                    </button>
+                }
 
                 @if (showTools()) {
-                    <div class="nat-horizontal nat-center nat-expand nat-gap-10">
+                    <div class="nat-horizontal nat-center nat-expand nat-right nat-gap-10">
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
                             <button matIconButton matTooltip="Créer" (click)="create()">
                                 <mat-icon naturalIcon="add" />
@@ -88,23 +93,19 @@
                             </button>
                         }
                         @if (edit) {
-                            <button
-                                matIconButton
-                                matTooltip="Importer les données d'une autre fiche"
-                                (click)="complete()"
-                            >
-                                <mat-icon naturalIcon="content_copy" />
+                            <button matIconButton matTooltip="Quitter le mode édition" (click)="cancelEdit()">
+                                <mat-icon naturalIcon="undo" />
                             </button>
                         }
                         @if (edit && fetchedModel?.permissions?.update) {
                             <button
-                                matButton="filled"
-                                matTooltip="Enregistrer"
+                                matMiniFab
+                                class="fab-no-elevation"
+                                matTooltip="Enregistrer les modifications"
                                 [disabled]="!formIsValid"
                                 (click)="update()"
                             >
                                 <mat-icon naturalIcon="save" />
-                                <span>Enregistrer</span>
                             </button>
                         }
                     </div>

@@ -2,6 +2,7 @@ import {Routes} from '@angular/router';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
 import {ArtistsComponent} from './artists/artists/artists.component';
 import {CardComponent} from './card/card.component';
+import {canDeactivateCard} from './card/guards/unsaved-changes.guard';
 import {ChangeComponent} from './changes/change/change.component';
 import {ChangesComponent} from './changes/changes/changes.component';
 import {CollectionsComponent} from './collections/collections/collections.component';
@@ -64,6 +65,7 @@ export const routes: Routes = [
             {
                 path: 'card/:cardId',
                 component: CardComponent,
+                canDeactivate: [canDeactivateCard],
                 data: {showLogo: true, showSlideshowRelatedCards: true},
             },
             {

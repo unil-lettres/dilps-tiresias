@@ -24,7 +24,7 @@ import {
 } from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, QuillModules} from 'ngx-quill';
-import {concatMap, first, from, last} from 'rxjs';
+import {concatMap, first, from, last, map, Observable, of} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -45,6 +45,10 @@ import {PeriodComponent} from '../periods/period/period.component';
 import {PeriodService} from '../periods/services/period.service';
 import {AddressComponent} from '../shared/components/address/address.component';
 import {AlertService} from '../shared/components/alert/alert.service';
+import {
+    UnsavedChangesDialogComponent,
+    UnsavedChangesDialogResult,
+} from '../shared/components/unsaved-changes-dialog/unsaved-changes-dialog.component';
 import {CardSelectorComponent} from '../shared/components/card-selector/card-selector.component';
 import {
     CollectionSelectorComponent,
@@ -442,7 +446,12 @@ export class CardComponent implements OnInit, OnChanges {
     /**
      * Edition mode if true
      */
-    protected edit = false;
+    public edit = false;
+
+    /**
+     * Snapshot of fetchedModel taken when entering edit mode, used to restore original data on discard.
+     */
+    private fetchedModelSnapshot: CardQuery['card'] | null = null;
 
     /**
      * Sorted list collections by their hierarchicNames
@@ -474,6 +483,9 @@ export class CardComponent implements OnInit, OnChanges {
 
     @Input()
     public set editable(val: boolean) {
+        if (val && !this.edit) {
+            this.fetchedModelSnapshot = this.fetchedModel;
+        }
         this.edit = val;
     }
 
@@ -549,6 +561,9 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     protected toggleEdit(): void {
+        if (!this.edit) {
+            this.fetchedModelSnapshot = this.fetchedModel;
+        }
         this.edit = !this.edit;
     }
 
@@ -778,28 +793,62 @@ export class CardComponent implements OnInit, OnChanges {
         this.model.visibility = this.visibilities[this.visibility].value;
     }
 
-    protected update(): void {
+    public discardChanges(): void {
+        const snapshot = this.fetchedModelSnapshot;
+        if (snapshot) {
+            this.fetchedModel = snapshot;
+            this.model = cardToCardInput(snapshot);
+            this.initCard();
+        }
+        this.imageData = '';
+        this.edit = false;
+        this.fetchedModelSnapshot = null;
+    }
+
+    protected cancelEdit(): void {
+        this.dialog
+            .open<UnsavedChangesDialogComponent, undefined, UnsavedChangesDialogResult>(UnsavedChangesDialogComponent)
+            .afterClosed()
+            .subscribe(result => {
+                if (result === 'save') {
+                    this.save().subscribe();
+                } else if (result === 'discard') {
+                    this.discardChanges();
+                }
+            });
+    }
+
+    public save(): Observable<boolean> {
         if (!this.isFetchedCard(this.model)) {
-            return;
+            return of(false);
         }
 
-        this.cardService.updateNow(this.model).subscribe(card => {
-            this.alertService.info('Mis à jour');
-            this.institution = card.institution;
-            this.artists = card.artists;
+        return this.cardService.updateNow(this.model).pipe(
+            map(card => {
+                this.alertService.info('Mis à jour');
+                this.institution = card.institution;
+                this.artists = card.artists;
 
-            this.stamp = {
-                ...this.stamp,
-                updater: card.updater,
-                updateDate: card.updateDate,
-            };
+                this.stamp = {
+                    ...this.stamp,
+                    updater: card.updater,
+                    updateDate: card.updateDate,
+                };
 
-            this.refreshInitialCardValues();
-            this.edit = false;
+                this.refreshInitialCardValues();
+                this.edit = false;
+                this.fetchedModelSnapshot = null;
 
-            // Clear preview to show server image
-            this.imageData = '';
-        });
+                // Clear preview to show server image
+                this.imageData = '';
+
+                return true;
+            }),
+        );
+    }
+
+    protected update(): void {
+        this.save().subscribe();
     }
 
     protected create(): void {
