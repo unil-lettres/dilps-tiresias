@@ -12,11 +12,13 @@
                     <div class="nat-horizontal nat-gap-5 nat-center">
                         <mat-icon fontIcon="group" />
                         <span>{{ subscribersCount() }} abonné{{ subscribersCount() > 1 ? 's' : '' }}</span>
-                        @if (!!data.item.creator && !!user) {
-                            @if (data.item.creator.id === user.id) {
+                        @if (!!user) {
+                            @if (!!data.item.creator && data.item.creator.id === user.id) {
                                 <span> - Vous êtes propriétaire de cette collection</span>
                             } @else {
-                                <span> - Vous êtes abonné à cette collection</span>
+                                @if (isCurrentUserSubscribed()) {
+                                    <span> - Vous êtes abonné à cette collection</span>
+                                }
                             }
                         }
                     </div>
