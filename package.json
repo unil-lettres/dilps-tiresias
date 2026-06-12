@@ -63,7 +63,7 @@
         "@angular/build": "^21.2.0",
         "@angular/cli": "^21.2.0",
         "@angular/compiler-cli": "^21.2.0",
-        "@playwright/test": "^1.55.0",
+        "@playwright/test": "^1.60.0",
         "@types/jasmine": "~5.1.9",
         "@types/node": "^22.14.1",
         "angular-eslint": "^21.2.0",
