@@ -15,6 +15,7 @@ use Imagine\Image\ImagineInterface;
 class ImageResizer
 {
     public const CACHE_IMAGE_PATH = 'data/cache/images/';
+    public const TMP_IMAGE_PATH = 'data/tmp/';
 
     public function __construct(
         private readonly ImagineInterface $imagine,
@@ -22,10 +23,17 @@ class ImageResizer
 
     /**
      * Resize image as JPG or WebP and return the path to the resized version.
+     *
+     * @param Image $image The image to resize
+     * @param int $maxHeight The height to resize to. Will be capped to the original image height.
+     * @param bool $useWebp Whether to use WebP format or JPG
+     * @param bool $tmpFolder Whether to store the resized image in the temporary folder or in the cache folder
+     *
+     * @return string The path to the resized image
      */
-    public function resize(Image $image, int $maxHeight, bool $useWebp): string
+    public function resize(Image $image, int $maxHeight, bool $useWebp, bool $tmpFolder): string
     {
-        $path = $this->getPath($image, $maxHeight, $useWebp);
+        $path = $this->getPath($image, $maxHeight, $useWebp, $tmpFolder);
 
         if (file_exists($path)) {
             return $path;
@@ -40,22 +48,22 @@ class ImageResizer
 
     public function isResizeNeeded(Image $image, int $maxHeight, bool $useWebp): bool
     {
-        $path = $this->getPath($image, $maxHeight, $useWebp);
+        $path = $this->getPath($image, $maxHeight, $useWebp, false);
 
         return !file_exists($path);
     }
 
-    public function getCachePath(Image $image, string $suffix): string
+    protected function getFullPath(Image $image, string $prefix, string $suffix, string $folder): string
     {
         $basename = pathinfo($image->getFilename(), PATHINFO_FILENAME);
 
-        return realpath('.') . '/' . self::CACHE_IMAGE_PATH . $basename . $suffix;
+        return realpath('.') . '/' . $folder . $prefix . $basename . $suffix;
     }
 
     /**
      * Return the path to use to display the image, or null if if no one fit.
      */
-    protected function getPath(Image $image, int $maxHeight, bool $useWebp): string
+    protected function getPath(Image $image, int $maxHeight, bool $useWebp, bool $tmpFolder): string
     {
         if ($image->getMime() === 'image/svg+xml') {
             return $image->getPath();
@@ -63,8 +71,17 @@ class ImageResizer
 
         $maxHeight = min($maxHeight, $image->getHeight());
         $extension = $useWebp ? '.webp' : '.jpg';
-        $path = $this->getCachePath($image, '-' . $maxHeight . $extension);
 
-        return $path;
+        $suffix = '-' . $maxHeight;
+
+        if ($tmpFolder) {
+            $prefix = 'resized-';
+            $suffix .= '-' . bin2hex(random_bytes(8));
+        }
+        $suffix .= $extension;
+
+        $folder = $tmpFolder ? self::TMP_IMAGE_PATH : self::CACHE_IMAGE_PATH;
+
+        return $this->getFullPath($image, $prefix ?? '', $suffix, $folder);
     }
 }

@@ -74,7 +74,7 @@ class Zip implements Writer
         }
 
         if ($this->export->getMaxHeight()) {
-            $path = $this->imageResizer->resize($card, $this->export->getMaxHeight(), false);
+            $path = $this->imageResizer->resize($card, $this->export->getMaxHeight(), false, true);
         } else {
             $path = $card->getPath();
         }

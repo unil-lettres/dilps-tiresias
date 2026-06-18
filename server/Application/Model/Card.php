@@ -669,7 +669,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         // Create most used thumbnails.
         $imageResizer = $container->get(ImageResizer::class);
         foreach ([300, 2000] as $maxHeight) {
-            $imageResizer->resize($this, $maxHeight, true);
+            $imageResizer->resize($this, $maxHeight, true, false);
         }
     }
 

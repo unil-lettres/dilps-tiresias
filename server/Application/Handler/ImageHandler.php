@@ -41,6 +41,17 @@ class ImageHandler extends AbstractHandler
             $accept = $request->getHeaderLine('accept');
             $useWebp = str_contains($accept, 'image/webp');
 
+            // Use cache directory instead of tmp directory for standard sizes.
+            // Standard sizes are maxHeight 300px or 2000px. Note that if the
+            // original image height is smaller than 2000px, the maxHeight will
+            // be normalized to the original image height, and thus be
+            // considered as a standard size.
+            $normalizedHeight = min($maxHeight, $card->getHeight());
+            $useCacheDir = false
+                || $normalizedHeight === 300
+                || $normalizedHeight === 2000
+                || ($card->getHeight() === $normalizedHeight && $normalizedHeight < 2000);
+
             $resizeNeeded = $this->imageResizer->isResizeNeeded($card, $maxHeight, $useWebp);
             $resizeSpecified = array_key_exists('resize', $request->getQueryParams());
 
@@ -53,7 +64,7 @@ class ImageHandler extends AbstractHandler
                 return new RedirectResponse($this->constructRedirectURI(), 302);
             }
 
-            $path = $this->imageResizer->resize($card, $maxHeight, $useWebp);
+            $path = $this->imageResizer->resize($card, $maxHeight, $useWebp, !$useCacheDir);
         }
 
         $queryParams = $request->getQueryParams();
@@ -64,13 +75,14 @@ class ImageHandler extends AbstractHandler
         $filename = $id . '.' . $extension;
         $disposition = isset($queryParams['inline']) ? 'inline' : 'attachment';
 
-        $response = new Response($resource, 200, [
+        $isTmp = str_contains($path, ImageResizer::TMP_IMAGE_PATH);
+        $cacheControl = $isTmp ? 'no-cache' : 'max-age=' . (24 * 60 * 60);
+
+        return new Response($resource, 200, [
             'content-type' => $type,
             'content-disposition' => $disposition . '; filename=' . $filename,
-            'cache-control' => 'max-age=' . (24 * 60 * 60), // 24 hours cache
+            'cache-control' => $cacheControl,
         ]);
-
-        return $response;
     }
 
     /**

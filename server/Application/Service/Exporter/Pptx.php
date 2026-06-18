@@ -107,7 +107,7 @@ class Pptx implements Writer
 
     private function insertImage(Slide $slide, Card $card): void
     {
-        $path = $this->imageResizer->resize($card, 1200, false);
+        $path = $this->imageResizer->resize($card, 1200, false, true);
 
         // Get dimensions
         $image = $this->imagine->open($path);
