@@ -47,10 +47,7 @@ class ImageHandler extends AbstractHandler
             // be normalized to the original image height, and thus be
             // considered as a standard size.
             $normalizedHeight = min($maxHeight, $card->getHeight());
-            $useCacheDir = false
-                || $normalizedHeight === 300
-                || $normalizedHeight === 2000
-                || ($card->getHeight() === $normalizedHeight && $normalizedHeight < 2000);
+            $useCacheDir = $normalizedHeight === 300 || $normalizedHeight === 2000 || ($card->getHeight() === $normalizedHeight && $normalizedHeight < 2000);
 
             $resizeNeeded = $this->imageResizer->isResizeNeeded($card, $maxHeight, $useWebp);
             $resizeSpecified = array_key_exists('resize', $request->getQueryParams());
