@@ -85,6 +85,11 @@ class CreateExport implements FieldInterface
             throw new Exception("L'export en PPTX est limité à $exportPptxMaximumCardCount fiches, mais la sélection actuelle est de $cardCount fiches.");
         }
 
+        $exportZipMaximumCardCount = $config['exportZipMaximumCardCount'];
+        if ($export->getFormat() === ExportFormat::Zip && $cardCount > $exportZipMaximumCardCount) {
+            throw new Exception("L'export en Zip est limité à $exportZipMaximumCardCount fiches, mais la sélection actuelle est de $cardCount fiches.");
+        }
+
         return $export;
     }
 }

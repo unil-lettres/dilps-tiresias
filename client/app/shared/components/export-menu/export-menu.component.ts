@@ -40,6 +40,7 @@ export class ExportMenuComponent {
     protected readonly ExportTheme = ExportTheme;
 
     protected pptValidationMessage = '';
+    protected zipValidationMessage = '';
 
     private menuClosed$ = new Subject<void>();
 
@@ -79,6 +80,7 @@ export class ExportMenuComponent {
 
     protected menuOpened(): void {
         this.pptValidationMessage = 'Validation...';
+        this.zipValidationMessage = 'Validation...';
 
         const input = this.exportService.getDefaultForServer();
         input.cards = [...this.selectedCards().map(card => card.id)];
@@ -86,13 +88,23 @@ export class ExportMenuComponent {
         if (collection?.id) {
             input.collections = [collection.id];
         }
-        input.format = ExportFormat.Pptx;
 
+        // Validate PPTX export
+        input.format = ExportFormat.Pptx;
         this.exportService
             .validate(input)
             .pipe(takeUntil(this.menuClosed$))
             .subscribe(validationMessage => {
                 this.pptValidationMessage = validationMessage ?? '';
+            });
+
+        // Validate ZIP export
+        input.format = ExportFormat.Zip;
+        this.exportService
+            .validate(input)
+            .pipe(takeUntil(this.menuClosed$))
+            .subscribe(validationMessage => {
+                this.zipValidationMessage = validationMessage ?? '';
             });
     }
 

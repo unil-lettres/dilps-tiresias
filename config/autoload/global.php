@@ -26,4 +26,5 @@ return [
         'toOverride' => null, // Override recipient (TO) address of all emails, useful for testing
     ],
     'exportPptxMaximumCardCount' => 200,
+    'exportZipMaximumCardCount' => 1000,
 ];

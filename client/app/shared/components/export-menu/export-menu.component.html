@@ -10,7 +10,12 @@
     </button>
 }
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="export(ExportFormat.Zip)">
+    <button
+        mat-menu-item
+        [disabled]="!!zipValidationMessage"
+        [matTooltip]="zipValidationMessage"
+        (click)="export(ExportFormat.Zip)"
+    >
         {{ optionZipLabel }}
     </button>
     @if (showExcelExportation()) {
