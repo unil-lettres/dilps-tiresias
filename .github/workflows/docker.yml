@@ -14,11 +14,11 @@ jobs:
             matrix:
                 include:
                     - {arch: linux/amd64, os: ubuntu-latest}
-                    - {arch: linux/arm64, os: ubuntu-24.04-arm}
+                    - {arch: linux/arm64, os: ubuntu-26.04-arm}
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
 
             - name: Build image
               uses: unil-lettres/actions/docker-build@main
@@ -38,7 +38,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
 
             - name: Download digests
               uses: actions/download-artifact@v8
@@ -64,7 +64,7 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@v7
 
             - name: Update description
               uses: peter-evans/dockerhub-description@v5
