@@ -68,9 +68,6 @@ importers:
       '@graphql-tools/mock':
         specifier: ^9.0.25
         version: 9.0.25(graphql@16.11.0)
-      '@types/googlemaps':
-        specifier: ^3.43.3
-        version: 3.43.3
       apollo-angular:
         specifier: ^11.0.0
         version: 11.0.0(@angular/core@21.2.17(@angular/compiler@21.2.17)(rxjs@7.8.2)(zone.js@0.15.1))(@apollo/client@3.14.0(graphql-ws@6.0.6(graphql@16.11.0)(ws@8.20.1))(graphql@16.11.0))(graphql@16.11.0)(rxjs@7.8.2)
@@ -1953,10 +1950,6 @@ packages:
 
   '@types/google.maps@3.58.1':
     resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
-
-  '@types/googlemaps@3.43.3':
-    resolution: {integrity: sha512-ZWNoz/O8MPEpiajvj7QiqCY8tTLFNqNZ/a+s+zTV58wFVNAvvqV4bdGfnsjTb5Cs4V6wEsLrX8XRhmnyYJ2Tdg==}
-    deprecated: 'Types for the Google Maps browser API have moved to @types/google.maps. Note: these types are not for the googlemaps npm package, which is a Node API.'
 
   '@types/jasmine@5.1.9':
     resolution: {integrity: sha512-8t4HtkW4wxiPVedMpeZ63n3vlWxEIquo/zc1Tm8ElU+SqVV7+D3Na2PWaJUp179AzTragMWVwkMv7mvty0NfyQ==}
@@ -6704,8 +6697,6 @@ snapshots:
   '@types/estree@1.0.9': {}
 
   '@types/google.maps@3.58.1': {}
-
-  '@types/googlemaps@3.43.3': {}
 
   '@types/jasmine@5.1.9': {}
 

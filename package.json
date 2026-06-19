@@ -40,7 +40,6 @@
         "@graphql-codegen/cli": "^6.0.0",
         "@graphql-codegen/typescript-operations": "^5.0.0",
         "@graphql-tools/mock": "^9.0.25",
-        "@types/googlemaps": "^3.43.3",
         "apollo-angular": "^11.0.0",
         "bugsnag-build-reporter": "^2.0.0",
         "dotenv": "^17.2.2",
