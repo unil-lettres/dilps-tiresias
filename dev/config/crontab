@@ -17,3 +17,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # *  *  *  *  * user-name command to be executed
 * * * * * root echo "$(date)-------------------------------" >> /var/log/cron.log 2>&1
 0 * * * * root find /var/www/htdocs/export -type f ! -iname '.gitkeep' -mtime +3 -delete
+0 * * * * root find /var/www/data/tmp -name "resized*" -type f -mtime +1 -delete
