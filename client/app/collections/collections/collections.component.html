@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 @if (!showUnclassified && !showMyCards && rootCollections.length === 0) {
     <p class="no-collection mat-font-title-md nat-vertical nat-gap-10 nat-center">
-        <mat-icon>gallery_thumbnail</mat-icon>
+        <mat-icon fontIcon="gallery_thumbnail" />
         <span>Aucune collection disponible</span>
     </p>
 } @else {
@@ -83,13 +83,11 @@
                                             [attr.aria-expanded]="children.has(collection.id)"
                                             (click)="toggle($event, collection)"
                                         >
-                                            <mat-icon>
-                                                @if (children.has(collection.id)) {
-                                                    expand_more
-                                                } @else {
-                                                    chevron_right
-                                                }
-                                            </mat-icon>
+                                            <mat-icon
+                                                [fontIcon]="
+                                                    children.has(collection.id) ? 'expand_more' : 'chevron_right'
+                                                "
+                                            />
                                         </button>
                                     } @else {
                                         <mat-icon matListItemIcon class="hierarchy-indicator" />
@@ -104,7 +102,7 @@
                                             aria-label="Actions de la collection"
                                             [matMenuTriggerFor]="actionsMenu"
                                         >
-                                            <mat-icon>more_vert</mat-icon>
+                                            <mat-icon fontIcon="more_vert" />
                                         </button>
                                         @if (collection.usersCount > 0) {
                                             <mat-icon

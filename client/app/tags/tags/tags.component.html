@@ -15,7 +15,7 @@
         <div class="nat-horizontal nat-distribute nat-center">
             <app-navigable-breadcrumb rootLabel="Mots-clés" [breadcrumbs]="breadcrumbs" [getLink]="getBreadcrumbLink" />
             <button matFab extended color="tertiary" class="fab-no-elevation" (click)="add()">
-                <mat-icon>add</mat-icon>
+                <mat-icon fontIcon="add" />
                 Créer un mot-clé
             </button>
         </div>
@@ -34,7 +34,7 @@
                     <td *matCellDef="let element; dataSource: dataSource" mat-cell (click)="$event.stopPropagation()">
                         @if (element.hasNavigation) {
                             <button matIconButton matTooltip="Déployer" [routerLink]="getChildLink(element.item)">
-                                <mat-icon>chevron_right</mat-icon>
+                                <mat-icon fontIcon="chevron_right" />
                             </button>
                         }
                     </td>
