@@ -2,6 +2,7 @@
 @use '@ecodev/natural-layout' as nat;
 @use '@ecodev/angular-natural-gallery' as natural-gallery;
 @use '@ecodev/natural';
+@use '@fontsource-variable/quicksand/wght.css';
 @use 'styles/upload.scss';
 @use 'styles/layout';
 @use 'app/shared/components/boot-loader/boot-loader.external';
@@ -15,8 +16,8 @@ html {
         (
             color: (),
             typography: (
-                plain-family: Quicksand,
-                brand-family: Quicksand,
+                plain-family: "'Quicksand Variable', sans-serif",
+                brand-family: "'Quicksand Variable', sans-serif",
                 regular-weight: 500,
                 medium-weight: 600,
                 bold-weight: 700,

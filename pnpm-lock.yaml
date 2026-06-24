@@ -59,6 +59,9 @@ importers:
       '@ecodev/natural-layout':
         specifier: ^2.0.5
         version: 2.0.5
+      '@fontsource-variable/quicksand':
+        specifier: ^5.2.10
+        version: 5.2.10
       '@graphql-codegen/cli':
         specifier: ^6.0.0
         version: 6.0.0(@parcel/watcher@2.5.1)(@types/node@22.18.1)(graphql@16.11.0)(typescript@5.9.2)
@@ -858,6 +861,9 @@ packages:
 
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
+
+  '@fontsource-variable/quicksand@5.2.10':
+    resolution: {integrity: sha512-1uzkzGDwWgtFnxquAXuD7fZV9wHkALb49UPzRXxGTVeeLsNrGnIU0O/pcz6m1U7RDtpHz2qx77JhCpKaq7FrUg==}
 
   '@gar/promise-retry@1.0.2':
     resolution: {integrity: sha512-Lm/ZLhDZcBECta3TmCQSngiQykFdfw+QtI1/GYMsZd4l3nG+P8WLB16XuS7WaBGLQ+9E+cOcWQsth9cayuGt8g==}
@@ -5576,6 +5582,8 @@ snapshots:
       levn: 0.4.1
 
   '@fastify/busboy@3.2.0': {}
+
+  '@fontsource-variable/quicksand@5.2.10': {}
 
   '@gar/promise-retry@1.0.2':
     dependencies:

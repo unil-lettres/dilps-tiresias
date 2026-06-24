@@ -21,10 +21,10 @@
 /htdocs/*.map
 /htdocs/*.txt
 /htdocs/*.css
-/htdocs/*.woff
-/htdocs/*.woff2
-/htdocs/*.ttf
-/htdocs/*.eot
+/htdocs/**/*.woff
+/htdocs/**/*.woff2
+/htdocs/**/*.ttf
+/htdocs/**/*.eot
 /htdocs/assets
 /.idea/
 /.fleet/

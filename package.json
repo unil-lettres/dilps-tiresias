@@ -37,6 +37,7 @@
         "@ecodev/angular-natural-gallery": "^25.0.0",
         "@ecodev/natural": "^70.1.0",
         "@ecodev/natural-layout": "^2.0.5",
+        "@fontsource-variable/quicksand": "^5.2.10",
         "@graphql-codegen/cli": "^6.0.0",
         "@graphql-codegen/typescript-operations": "^5.0.0",
         "@graphql-tools/mock": "^9.0.25",
