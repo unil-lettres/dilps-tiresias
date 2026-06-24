@@ -25,6 +25,7 @@
 /htdocs/**/*.woff2
 /htdocs/**/*.ttf
 /htdocs/**/*.eot
+/htdocs/*.*.gz
 /htdocs/assets
 /.idea/
 /.fleet/
