@@ -62,6 +62,7 @@ export class AddressComponent implements OnInit, OnChanges {
         tap(() => {
             // load Places Autocomplete
             this.icon = this.getIcon();
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             this.autocomplete = new google.maps.places.Autocomplete(this.inputRef().nativeElement);
             this.autocomplete.addListener('place_changed', () => {
                 this.ngZone.run(() => {
@@ -287,6 +288,7 @@ export class AddressComponent implements OnInit, OnChanges {
         ],
     };
     protected countries: CountriesQuery['countries']['items'][0][] = [];
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     private autocomplete: google.maps.places.Autocomplete | null = null;
 
     public ngOnChanges(): void {
