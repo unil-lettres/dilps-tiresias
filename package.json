@@ -10,7 +10,7 @@
         "prod-map": "pnpm codegen && pnpm set-env --configuration=production && pnpm clean-env && ng build --configuration=production,map --output-hashing=none",
         "staging": "pnpm codegen && pnpm set-env --configuration=staging && pnpm clean-env && ng build --configuration=staging",
         "staging-map": "pnpm codegen && pnpm set-env --configuration=staging && pnpm clean-env && ng build --configuration=staging,map --output-hashing=none",
-        "test": "playwright install chromium --with-deps && pnpm codegen && ng test",
+        "test": "pnpm codegen && ng test",
         "lint": "ng lint --max-warnings 0",
         "e2e": "playwright install chromium --with-deps && playwright test",
         "codegen": "./bin/dump-schema && graphql-codegen --config codegen.ts",
@@ -65,21 +65,16 @@
         "@angular/compiler-cli": "^21.2.17",
         "@eslint/js": "^10.0.1",
         "@playwright/test": "^1.61.0",
-        "@types/jasmine": "~5.1.15",
         "@types/node": "^22.20.0",
         "angular-eslint": "^21.4.0",
         "eslint": "^10.6.0",
-        "jasmine-core": "~5.10.0",
-        "karma": "^6.4.4",
-        "karma-chrome-launcher": "~3.2.0",
-        "karma-cli": "^2.0.0",
-        "karma-jasmine": "~5.1.0",
-        "karma-jasmine-html-reporter": "^2.2.0",
+        "jsdom": "^29.1.1",
         "postcss": "^8.5.15",
         "prettier": "3.8.1",
         "prettier-plugin-css-order": "^2.2.0",
         "ts-node": "^10.9.2",
         "typescript": "~5.9.3",
-        "typescript-eslint": "^8.62.0"
+        "typescript-eslint": "^8.62.0",
+        "vitest": "^4.1.10"
     }
 }
