@@ -1,3 +1,4 @@
+import type {Mock} from 'vitest';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {
     FilterGroupConditionField,
@@ -10,7 +11,7 @@ import {TypeNumericRangeComponent, TypeNumericRangeConfiguration} from './type-n
 describe('TypeNumericRangeComponent', () => {
     let component: TypeNumericRangeComponent;
     let fixture: ComponentFixture<TypeNumericRangeComponent>;
-    let dialogCloseSpy: jasmine.Spy;
+    let dialogCloseSpy: Mock;
     const data: NaturalDropdownData = {
         condition: null,
         configuration: null,
@@ -29,7 +30,7 @@ describe('TypeNumericRangeComponent', () => {
 
     beforeEach(async () => {
         const dialogRef = {close: () => true};
-        dialogCloseSpy = spyOn(dialogRef, 'close');
+        dialogCloseSpy = vi.spyOn(dialogRef, 'close');
 
         await TestBed.configureTestingModule({
             providers: [

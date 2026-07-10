@@ -124,14 +124,11 @@
                     }
                 },
                 "test": {
-                    "builder": "@angular/build:karma",
+                    "builder": "@angular/build:unit-test",
                     "options": {
-                        "karmaConfig": "./karma.conf.js",
-                        "polyfills": ["zone.js", "zone.js/testing", "@angular/localize/init"],
                         "tsConfig": "client/tsconfig.spec.json",
-                        "scripts": [],
-                        "styles": ["client/styles.scss"],
-                        "assets": ["client/assets", "client/favicon-dilps.svg", "client/favicon-tiresias.svg"]
+                        "buildTarget": "::development",
+                        "runnerConfig": "./vitest.config.ts"
                     }
                 },
                 "lint": {
