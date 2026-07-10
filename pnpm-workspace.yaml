@@ -1,3 +1,7 @@
+packages:
+    - '.' # pins package discovery to the root only, avoiding the default recursive
+    - '!data/**' # kept as a belt-and-suspenders exclusion in case
+
 allowBuilds:
     '@parcel/watcher': false
     esbuild: true
