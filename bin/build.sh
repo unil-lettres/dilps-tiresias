@@ -68,6 +68,11 @@ if [ ! -n "$DOCKER_RUNNING" ]; then
   fi
 
   pnpm run ${RUN_CONFIG}
+
+  echo "********************* Pre-compressing JS/CSS assets..."
+  find ./htdocs -type f \( -name "*.js" -o -name "*.css" \) -print0 | while IFS= read -r -d '' file; do
+    [ -f "${file}.gz" ] || gzip -k -9 "${file}"
+  done
 fi
 
 echo "***************************************************************"
