@@ -1,5 +1,6 @@
 import {type Apollo} from 'apollo-angular';
 import {defaultIfEmpty, forkJoin, map, type Observable, take} from 'rxjs';
+import {filter} from 'rxjs/operators';
 
 export function shuffleArray(a: any[]): any[] {
     for (let i = a.length - 1; i > 0; i--) {
@@ -105,7 +106,12 @@ export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T>
     const observableQueries = apollo.client.getObservableQueries();
     const promises = Array.from(observableQueries.values())
         .filter(q => q.getCurrentResult().loading)
-        .map(q => q.pipe(take(1)));
+        .map(q =>
+            q.pipe(
+                filter(result => !result.loading),
+                take(1),
+            ),
+        );
     return forkJoin(promises).pipe(
         map(() => result),
         defaultIfEmpty(result),
