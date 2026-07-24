@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateDocumentType,
-    CreateDocumentTypeVariables,
-    DeleteDocumentTypes,
-    DocumentTypeQuery,
-    DocumentTypeInput,
-    DocumentTypesQuery,
-    DocumentTypesQueryVariables,
-    DocumentTypeQueryVariables,
-    UpdateDocumentType,
-    UpdateDocumentTypeVariables,
+    type CreateDocumentType,
+    type CreateDocumentTypeVariables,
+    type DeleteDocumentTypes,
+    type DocumentTypeQuery,
+    type DocumentTypeInput,
+    type DocumentTypesQuery,
+    type DocumentTypesQueryVariables,
+    type DocumentTypeQueryVariables,
+    type UpdateDocumentType,
+    type UpdateDocumentTypeVariables,
 } from '../../shared/generated-types';
 import {
     createDocumentType,

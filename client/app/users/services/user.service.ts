@@ -1,29 +1,29 @@
 import {DestroyRef, inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
+import {fromEvent, type Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    CardsQuery,
+    type CardsQuery,
     CardVisibility,
-    CreateUser,
-    CreateUserVariables,
-    DeleteUsers,
-    Login,
-    LoginVariables,
-    Logout,
-    UpdateUser,
-    UpdateUserVariables,
-    UserInput,
-    UserQuery,
-    UserQueryVariables,
+    type CreateUser,
+    type CreateUserVariables,
+    type DeleteUsers,
+    type Login,
+    type LoginVariables,
+    type Logout,
+    type UpdateUser,
+    type UpdateUserVariables,
+    type UserInput,
+    type UserQuery,
+    type UserQueryVariables,
     UserRole,
-    UserRolesAvailablesQuery,
-    UserRolesAvailablesQueryVariables,
-    UsersQuery,
-    UsersQueryVariables,
+    type UserRolesAvailablesQuery,
+    type UserRolesAvailablesQueryVariables,
+    type UsersQuery,
+    type UsersQueryVariables,
     UserType,
-    ViewerQuery,
-    ViewerQueryVariables,
+    type ViewerQuery,
+    type ViewerQueryVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {

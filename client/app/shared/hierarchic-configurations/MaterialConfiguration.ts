@@ -1,6 +1,6 @@
-import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {type NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {MaterialService} from '../../materials/services/material.service';
-import {MaterialsQuery} from '../generated-types';
+import {type MaterialsQuery} from '../generated-types';
 import {formatItemNameWithRoot} from '../services/utility';
 
 export const materialHierarchicConfig: NaturalHierarchicConfiguration[] = [

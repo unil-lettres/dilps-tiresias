@@ -3,26 +3,26 @@ import {Component, inject} from '@angular/core';
 import {
     MAT_FORM_FIELD_DEFAULT_OPTIONS,
     MatFormField,
-    MatFormFieldDefaultOptions,
+    type MatFormFieldDefaultOptions,
     MatLabel,
 } from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
 import {
     ignoreErrors,
-    Literal,
+    type Literal,
     NaturalLinkableTabDirective,
     NaturalQueryVariablesManager,
     NaturalSelectComponent,
 } from '@ecodev/natural';
 import {
-    ExtraStatisticsQuery,
+    type ExtraStatisticsQuery,
     SortingOrder,
-    StatisticFilter,
+    type StatisticFilter,
     StatisticSortingField,
-    StatisticsQueryVariables,
-    UsersQuery,
+    type StatisticsQueryVariables,
+    type UsersQuery,
 } from '../../shared/generated-types';
-import {StatisticComponent, StatisticInput} from '../statistic/statistic.component';
+import {StatisticComponent, type StatisticInput} from '../statistic/statistic.component';
 import {extraStatisticsQuery} from '../services/statistic.queries';
 import {UserService} from '../../users/services/user.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';

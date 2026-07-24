@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {CardService} from '../../../card/services/card.service';
-import {CardsQuery} from '../../generated-types';
+import {type CardsQuery} from '../../generated-types';
 import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {NaturalSelectComponent} from '@ecodev/natural';

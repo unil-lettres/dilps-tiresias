@@ -1,6 +1,6 @@
 import {uniq} from 'es-toolkit';
-import {CardQuery} from '../shared/generated-types';
-import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
+import {type CardQuery} from '../shared/generated-types';
+import {type ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 
 export type Result = Record<keyof Pick<CardQuery['card'], 'name' | 'artists' | 'institution' | 'dating'>, boolean>;
 

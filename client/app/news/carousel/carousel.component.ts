@@ -1,8 +1,8 @@
-import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, inject, type OnDestroy, type OnInit, signal} from '@angular/core';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {NewsesQuery, NewsesQueryVariables} from '../../shared/generated-types';
+import {type NewsesQuery, type NewsesQueryVariables} from '../../shared/generated-types';
 import {NewsService} from '../services/news.service';
 
 @Component({

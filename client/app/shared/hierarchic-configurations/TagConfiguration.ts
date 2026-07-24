@@ -1,6 +1,6 @@
-import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {type NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {TagService} from '../../tags/services/tag.service';
-import {TagsQuery} from '../generated-types';
+import {type TagsQuery} from '../generated-types';
 import {formatItemNameWithRoot} from '../services/utility';
 
 export const tagHierarchicConfig: NaturalHierarchicConfiguration[] = [

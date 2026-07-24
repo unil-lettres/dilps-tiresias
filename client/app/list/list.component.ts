@@ -1,11 +1,21 @@
-import {AfterViewInit, Component, computed, effect, ElementRef, inject, OnInit, signal, viewChild} from '@angular/core';
+import {
+    type AfterViewInit,
+    Component,
+    computed,
+    effect,
+    ElementRef,
+    inject,
+    type OnInit,
+    signal,
+    viewChild,
+} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatChip, MatChipListbox, MatChipOption, MatChipSet} from '@angular/material/chips';
 import {MatDialog} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {PageEvent} from '@angular/material/paginator';
+import {type PageEvent} from '@angular/material/paginator';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
 import {
@@ -13,56 +23,56 @@ import {
     NaturalIconDirective,
     NaturalQueryVariablesManager,
     NaturalSearchComponent,
-    NaturalSearchSelections,
+    type NaturalSearchSelections,
     onHistoryEvent,
-    PaginationInput,
-    Sorting,
-    WithId,
+    type PaginationInput,
+    type Sorting,
+    type WithId,
 } from '@ecodev/natural';
 import {defaults, isObject} from 'es-toolkit/compat';
 import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
 
-import {concatMap, finalize, from, Observable, of} from 'rxjs';
+import {concatMap, finalize, from, type Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
-import {ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
+import {type ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
 import {CollectionService} from '../collections/services/collection.service';
-import {FakeCollection} from '../collections/services/fake-collection.resolver';
+import {type FakeCollection} from '../collections/services/fake-collection.resolver';
 import {DomainService} from '../domains/services/domain.service';
 import {NumberSelectorComponent} from '../quizz/shared/number-selector/number-selector.component';
 import {AlertService} from '../shared/components/alert/alert.service';
 import {
     CollectionSelectorComponent,
-    CollectionSelectorData,
-    CollectionSelectorResult,
+    type CollectionSelectorData,
+    type CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
-import {ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
+import {type ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {
-    CardFilter,
-    CardInput,
-    CardsQuery,
+    type CardFilter,
+    type CardInput,
+    type CardsQuery,
     CardSortingField,
     CardVisibility,
-    CreateCard,
+    type CreateCard,
     Site,
     SortingOrder,
     UserRole,
-    ViewerQuery,
+    type ViewerQuery,
 } from '../shared/generated-types';
 import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets';
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
-import {ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
+import {type ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
-import {Location, ViewMapComponent} from '../view-map/view-map.component';
+import {type Location, ViewMapComponent} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
 import {fromResize} from '../shared/utils/resize.utils';
 

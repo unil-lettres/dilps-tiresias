@@ -1,16 +1,16 @@
 import {DestroyRef, inject, Injectable} from '@angular/core';
 import {
-    Exact,
-    StatisticQuery,
-    StatisticQueryVariables,
-    StatisticsQuery,
-    StatisticsQueryVariables,
+    type Exact,
+    type StatisticQuery,
+    type StatisticQueryVariables,
+    type StatisticsQuery,
+    type StatisticsQueryVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
-import {Observable, Subject, switchMap} from 'rxjs';
+import {type Observable, Subject, switchMap} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
-import {DocumentNode} from 'graphql';
+import {type DocumentNode} from 'graphql';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({

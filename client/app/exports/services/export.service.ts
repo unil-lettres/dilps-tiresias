@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateExport,
-    CreateExportInput,
-    CreateExportVariables,
-    ExportQuery,
+    type CreateExport,
+    type CreateExportInput,
+    type CreateExportVariables,
+    type ExportQuery,
     ExportFormat,
-    ExportsQuery,
-    ExportsQueryVariables,
-    ExportQueryVariables,
-    ValidateExportQuery,
-    ValidateExportQueryVariables,
+    type ExportsQuery,
+    type ExportsQueryVariables,
+    type ExportQueryVariables,
+    type ValidateExportQuery,
+    type ValidateExportQueryVariables,
 } from '../../shared/generated-types';
 import {createExport, exportQuery, exportsQuery, validateExportQuery} from './export.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
-import {Observable} from 'rxjs';
+import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ignoreErrors} from '@ecodev/natural';
 

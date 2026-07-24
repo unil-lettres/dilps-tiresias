@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {NaturalAbstractModelService} from '@ecodev/natural';
 import {createFileMutation, deleteFileMutation, filesQuery} from './file.queries';
 import {
-    CreateFile,
-    CreateFileVariables,
-    DeleteFile,
-    DeleteFileVariables,
-    FileInput,
-    FilesQuery,
-    FilesQueryVariables,
+    type CreateFile,
+    type CreateFileVariables,
+    type DeleteFile,
+    type DeleteFileVariables,
+    type FileInput,
+    type FilesQuery,
+    type FilesQueryVariables,
 } from '../../shared/generated-types';
 
 @Injectable({

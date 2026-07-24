@@ -1,5 +1,5 @@
-import {FileSelection} from '@ecodev/natural';
-import {AlertService} from '../components/alert/alert.service';
+import {type FileSelection} from '@ecodev/natural';
+import {type AlertService} from '../components/alert/alert.service';
 import {UPLOAD_CONFIG} from '../config/upload.config';
 
 /**

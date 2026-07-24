@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-    CreatePeriod,
-    CreatePeriodVariables,
-    DeletePeriods,
-    PeriodQuery,
-    PeriodInput,
-    PeriodsQuery,
-    PeriodsQueryVariables,
-    PeriodQueryVariables,
-    UpdatePeriod,
-    UpdatePeriodVariables,
+    type CreatePeriod,
+    type CreatePeriodVariables,
+    type DeletePeriods,
+    type PeriodQuery,
+    type PeriodInput,
+    type PeriodsQuery,
+    type PeriodsQueryVariables,
+    type PeriodQueryVariables,
+    type UpdatePeriod,
+    type UpdatePeriodVariables,
 } from '../../shared/generated-types';
 import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';

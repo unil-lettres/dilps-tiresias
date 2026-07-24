@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateTag,
-    CreateTagVariables,
-    DeleteTags,
-    TagQuery,
-    TagInput,
-    TagsQuery,
-    TagsQueryVariables,
-    TagQueryVariables,
-    UpdateTag,
-    UpdateTagVariables,
+    type CreateTag,
+    type CreateTagVariables,
+    type DeleteTags,
+    type TagQuery,
+    type TagInput,
+    type TagsQuery,
+    type TagsQueryVariables,
+    type TagQueryVariables,
+    type UpdateTag,
+    type UpdateTagVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createTag, deleteTags, tagQuery, tagsQuery, updateTag} from './tag.queries';

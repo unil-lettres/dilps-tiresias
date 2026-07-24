@@ -1,15 +1,15 @@
 import {assertInInjectionContext, inject} from '@angular/core';
 import {
-    DropdownFacet,
-    FlagFacet,
-    NaturalSearchFacets,
+    type DropdownFacet,
+    type FlagFacet,
+    type NaturalSearchFacets,
     replaceOperatorByField,
     replaceOperatorByName,
     TypeHierarchicSelectorComponent,
-    TypeHierarchicSelectorConfiguration,
+    type TypeHierarchicSelectorConfiguration,
     TypeSelectComponent,
-    TypeSelectConfiguration,
-    TypeSelectNaturalConfiguration,
+    type TypeSelectConfiguration,
+    type TypeSelectNaturalConfiguration,
     wrapLike,
 } from '@ecodev/natural';
 import {ArtistService} from '../artists/services/artist.service';
@@ -22,9 +22,9 @@ import {TagService} from '../tags/services/tag.service';
 import {TypeLocationComponent} from '../type-location/type-location.component';
 import {
     TypeNumericRangeComponent,
-    TypeNumericRangeConfiguration,
+    type TypeNumericRangeConfiguration,
 } from '../type-numeric-range/type-numeric-range.component';
-import {CardFilterGroupConditionSite, CardVisibility, Site} from './generated-types';
+import {type CardFilterGroupConditionSite, CardVisibility, Site} from './generated-types';
 import {domainHierarchicConfig} from './hierarchic-configurations/DomainConfiguration';
 import {materialHierarchicConfig} from './hierarchic-configurations/MaterialConfiguration';
 import {periodHierarchicConfig} from './hierarchic-configurations/PeriodConfiguration';

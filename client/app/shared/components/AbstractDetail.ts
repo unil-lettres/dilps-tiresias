@@ -1,20 +1,20 @@
-import {Directive, inject, OnInit} from '@angular/core';
+import {Directive, inject, type OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'es-toolkit';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 import {
-    ExtractTallOne,
-    ExtractTone,
-    ExtractTupdate,
-    ExtractVcreate,
-    Literal,
-    NaturalAbstractModelService,
-    PaginatedData,
-    QueryVariables,
-    WithId,
+    type ExtractTallOne,
+    type ExtractTone,
+    type ExtractTupdate,
+    type ExtractVcreate,
+    type Literal,
+    type NaturalAbstractModelService,
+    type PaginatedData,
+    type QueryVariables,
+    type WithId,
 } from '@ecodev/natural';
-import {ViewerQuery} from '../generated-types';
+import {type ViewerQuery} from '../generated-types';
 
 type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;

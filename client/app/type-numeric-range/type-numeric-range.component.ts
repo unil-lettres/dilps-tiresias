@@ -1,24 +1,24 @@
 import {
-    DropdownComponent,
-    FilterGroupConditionField,
+    type DropdownComponent,
+    type FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
-    NaturalDropdownData,
+    type NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
 import {Component, inject} from '@angular/core';
 import {
-    AbstractControl,
+    type AbstractControl,
     FormControl,
     FormGroup,
-    FormGroupDirective,
+    type FormGroupDirective,
     FormsModule,
-    NgForm,
+    type NgForm,
     ReactiveFormsModule,
-    ValidationErrors,
-    ValidatorFn,
+    type ValidationErrors,
+    type ValidatorFn,
     Validators,
 } from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import {type ErrorStateMatcher} from '@angular/material/core';
 import {BehaviorSubject} from 'rxjs';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField} from '@angular/material/form-field';

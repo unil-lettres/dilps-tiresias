@@ -1,10 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, type OnInit} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
-import {CardQuery} from '../shared/generated-types';
-import {Result, test} from './quizz.utils';
+import {type CardQuery} from '../shared/generated-types';
+import {type Result, test} from './quizz.utils';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';

@@ -26,6 +26,7 @@ module.exports = tseslint.config(
             '@angular-eslint/prefer-on-push-component-change-detection': 'off',
             '@angular-eslint/use-component-selector': 'off', // Some components are not template-able and thus do not need selector
             '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+            '@typescript-eslint/consistent-type-exports': 'error',
             '@typescript-eslint/explicit-member-accessibility': 'error',
             '@typescript-eslint/no-confusing-void-expression': 'off', // Don't create unncessary closure and we prefer code tersity anyway
             '@typescript-eslint/no-dynamic-delete': 'off',
@@ -63,6 +64,12 @@ module.exports = tseslint.config(
                     type: 'element',
                     prefix: 'app',
                     style: 'kebab-case',
+                },
+            ],
+            '@typescript-eslint/consistent-type-imports': [
+                'error',
+                {
+                    fixStyle: 'inline-type-imports',
                 },
             ],
             '@typescript-eslint/explicit-function-return-type': [

@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateInstitution,
-    CreateInstitutionVariables,
-    DeleteInstitutions,
-    InstitutionQuery,
-    InstitutionInput,
-    InstitutionsQuery,
-    InstitutionsQueryVariables,
-    InstitutionQueryVariables,
-    UpdateInstitution,
-    UpdateInstitutionVariables,
+    type CreateInstitution,
+    type CreateInstitutionVariables,
+    type DeleteInstitutions,
+    type InstitutionQuery,
+    type InstitutionInput,
+    type InstitutionsQuery,
+    type InstitutionsQueryVariables,
+    type InstitutionQueryVariables,
+    type UpdateInstitution,
+    type UpdateInstitutionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {

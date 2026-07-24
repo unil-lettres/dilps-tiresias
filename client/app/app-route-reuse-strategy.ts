@@ -1,5 +1,5 @@
-import {ComponentRef} from '@angular/core';
-import {ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy} from '@angular/router';
+import {type ComponentRef} from '@angular/core';
+import {type ActivatedRouteSnapshot, type DetachedRouteHandle, type RouteReuseStrategy} from '@angular/router';
 
 export enum RouteReuseStatus {
     default = 'default',

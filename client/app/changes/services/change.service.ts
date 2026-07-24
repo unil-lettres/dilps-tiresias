@@ -1,20 +1,20 @@
 import {merge} from 'es-toolkit';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    AcceptChange,
-    CardQuery,
-    ChangeQuery,
-    ChangesQuery,
-    ChangesQueryVariables,
-    ChangeQueryVariables,
-    CreateCard,
+    type AcceptChange,
+    type CardQuery,
+    type ChangeQuery,
+    type ChangesQuery,
+    type ChangesQueryVariables,
+    type ChangeQueryVariables,
+    type CreateCard,
     JoinType,
-    RejectChange,
-    SuggestCreation,
-    SuggestDeletion,
-    SuggestUpdate,
+    type RejectChange,
+    type SuggestCreation,
+    type SuggestDeletion,
+    type SuggestUpdate,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {

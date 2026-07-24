@@ -1,25 +1,31 @@
 import {
-    IEnum,
-    LinkableObject,
+    type IEnum,
+    type LinkableObject,
     NaturalEnumService,
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
 } from '@ecodev/natural';
 import {Component, inject, viewChild, signal} from '@angular/core';
 import {
-    AbstractControl,
+    type AbstractControl,
     FormControl,
     FormGroup,
     FormsModule,
-    NgModel,
+    type NgModel,
     ReactiveFormsModule,
-    ValidationErrors,
+    type ValidationErrors,
 } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
-import {UpdateUser, UserQuery, UserRole, UserType, CollectionsQuery} from '../../shared/generated-types';
+import {
+    type UpdateUser,
+    type UserQuery,
+    type UserRole,
+    UserType,
+    type CollectionsQuery,
+} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';

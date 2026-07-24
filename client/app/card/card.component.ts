@@ -1,11 +1,11 @@
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 
-import {Component, inject, Input, input, model, OnChanges, OnInit, viewChild} from '@angular/core';
+import {Component, inject, Input, input, model, type OnChanges, type OnInit, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormsModule, NgModel} from '@angular/forms';
+import {FormsModule, type NgModel} from '@angular/forms';
 import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
-import {ThemePalette} from '@angular/material/core';
+import {type ThemePalette} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
@@ -16,15 +16,15 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatTooltip} from '@angular/material/tooltip';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {
-    FileSelection,
+    type FileSelection,
     NaturalFileDropDirective,
     NaturalIconDirective,
     NaturalLinkMutationService,
     NaturalRelationsComponent,
 } from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
-import {QuillEditorComponent, QuillModules} from 'ngx-quill';
-import {concatMap, first, from, last, map, Observable, of} from 'rxjs';
+import {QuillEditorComponent, type QuillModules} from 'ngx-quill';
+import {concatMap, first, from, last, map, type Observable, of} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -47,25 +47,25 @@ import {AddressComponent} from '../shared/components/address/address.component';
 import {AlertService} from '../shared/components/alert/alert.service';
 import {
     UnsavedChangesDialogComponent,
-    UnsavedChangesDialogResult,
+    type UnsavedChangesDialogResult,
 } from '../shared/components/unsaved-changes-dialog/unsaved-changes-dialog.component';
 import {CardSelectorComponent} from '../shared/components/card-selector/card-selector.component';
 import {
     CollectionSelectorComponent,
-    CollectionSelectorData,
-    CollectionSelectorResult,
+    type CollectionSelectorData,
+    type CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {ErrorService} from '@ecodev/natural';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {
     LinkRelatedCardsDialogComponent,
-    LinkRelatedCardsDialogData,
-    LinkRelatedCardsDialogResult,
+    type LinkRelatedCardsDialogData,
+    type LinkRelatedCardsDialogResult,
 } from '../shared/components/link-related-cards-dialog/link-related-cards-dialog.component';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {RelatedCardsComponent} from '../shared/components/related-cards/related-cards.component';
-import {StampComponent, Stamped} from '../shared/components/stamp/stamp.component';
+import {StampComponent, type Stamped} from '../shared/components/stamp/stamp.component';
 import {ThesaurusComponent} from '../shared/components/thesaurus/thesaurus.component';
 import {quillConfig} from '../shared/config/quill.options';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
@@ -73,17 +73,17 @@ import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive'
 import {UniqueValidatorDirective} from '../shared/directives/unique-validator.directive';
 import {UrlValidatorDirective} from '../shared/directives/url-validator.directive';
 import {
-    CardInput,
-    CardQuery,
-    CardsQuery,
+    type CardInput,
+    type CardQuery,
+    type CardsQuery,
     CardVisibility,
     CollectionVisibility,
-    InputMaybe,
+    type InputMaybe,
     JoinType,
     Site,
-    UpdateCard,
+    type UpdateCard,
     UserRole,
-    ViewerQuery,
+    type ViewerQuery,
 } from '../shared/generated-types';
 import {domainHierarchicConfig} from '../shared/hierarchic-configurations/DomainConfiguration';
 import {onlyLeafMaterialHierarchicConfig} from '../shared/hierarchic-configurations/MaterialConfiguration';

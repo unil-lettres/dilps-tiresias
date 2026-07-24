@@ -1,5 +1,5 @@
 import {inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UserService} from '../../users/services/user.service';
 import {UserRole} from '../generated-types';

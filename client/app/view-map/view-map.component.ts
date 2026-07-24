@@ -1,5 +1,5 @@
 import {Component, inject, Input, NgZone, output, viewChild} from '@angular/core';
-import {CardsQuery, Precision, Site} from '../shared/generated-types';
+import {type CardsQuery, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
 import {MapApiService} from './map-api.service';

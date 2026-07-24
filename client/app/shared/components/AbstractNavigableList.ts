@@ -1,15 +1,15 @@
-import {inject, OnInit, signal} from '@angular/core';
+import {inject, type OnInit, signal} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
-    ExtractTallOne,
-    NaturalAbstractModelService,
+    type ExtractTallOne,
+    type NaturalAbstractModelService,
     NaturalAbstractNavigableList,
-    NaturalSearchSelections,
-    PaginatedData,
-    QueryVariables,
+    type NaturalSearchSelections,
+    type PaginatedData,
+    type QueryVariables,
 } from '@ecodev/natural';
-import {ComponentType} from '@angular/cdk/overlay';
-import {NavigationExtras} from '@angular/router';
+import {type ComponentType} from '@angular/cdk/overlay';
+import {type NavigationExtras} from '@angular/router';
 
 export type BreadcrumbItem = {
     id: string;

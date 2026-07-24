@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
-import {CardQuery} from '../../generated-types';
+import {type CardQuery} from '../../generated-types';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {FormsModule} from '@angular/forms';

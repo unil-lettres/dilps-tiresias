@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, type OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
@@ -21,28 +21,28 @@ import {
     RouterOutlet,
 } from '@angular/router';
 import {
-    FileSelection,
+    type FileSelection,
     NaturalCompactColorSchemerComponent,
     NaturalFileSelectDirective,
     NaturalIconDirective,
     NetworkActivityService,
 } from '@ecodev/natural';
-import {EMPTY, Observable, of} from 'rxjs';
+import {EMPTY, type Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {AppRouteReuseStrategy} from '../app-route-reuse-strategy';
+import {type AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
 import {
     CollectionSelectorComponent,
-    CollectionSelectorData,
-    CollectionSelectorResult,
+    type CollectionSelectorData,
+    type CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
-import {Site, UserRole, ViewerQuery} from '../shared/generated-types';
+import {Site, UserRole, type ViewerQuery} from '../shared/generated-types';
 import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';

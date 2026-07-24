@@ -1,22 +1,22 @@
 import {
-    ApolloClient,
+    type ApolloClient,
     ApolloLink,
     CombinedGraphQLErrors,
-    ErrorLike,
+    type ErrorLike,
     InMemoryCache,
-    InMemoryCacheConfig,
+    type InMemoryCacheConfig,
     type OperationVariables,
     ServerError,
 } from '@apollo/client';
 import {ErrorLink} from '@apollo/client/link/error';
-import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
+import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {createHttpLink, hasFilesAndProcessDate, NetworkActivityService} from '@ecodev/natural';
 import {AlertService} from '../components/alert/alert.service';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
-import {inject, Provider} from '@angular/core';
+import {inject, type Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
 import {APOLLO_OPTIONS} from 'apollo-angular';
-import {FormattedExecutionResult} from 'graphql';
+import {type FormattedExecutionResult} from 'graphql';
 
 export const apolloDefaultOptions: ApolloClient.Options['defaultOptions'] = {
     query: {

@@ -3,7 +3,7 @@ import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {NaturalIconDirective} from '@ecodev/natural';
-import {BreadcrumbItem} from '../AbstractNavigableList';
+import {type BreadcrumbItem} from '../AbstractNavigableList';
 
 @Component({
     selector: 'app-navigable-breadcrumb',

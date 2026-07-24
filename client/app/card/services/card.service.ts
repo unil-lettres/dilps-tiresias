@@ -2,27 +2,27 @@ import {RouteReuseStrategy} from '@angular/router';
 import {inject, Injectable} from '@angular/core';
 import {merge} from 'es-toolkit';
 import {map} from 'rxjs/operators';
-import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
+import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
-    CardInput,
-    CardPartialInput,
-    CardQuery,
-    CardQueryVariables,
-    CardsQuery,
-    CardsQueryVariables,
+    type CardInput,
+    type CardPartialInput,
+    type CardQuery,
+    type CardQueryVariables,
+    type CardsQuery,
+    type CardsQueryVariables,
     CardVisibility,
-    CollectionCopyrightsQuery,
-    CollectionCopyrightsQueryVariables,
-    CollectionsQuery,
-    CreateCard,
-    CreateCards,
-    CreateCardsVariables,
-    CreateCardVariables,
-    CreateCollection,
-    DeleteCards,
+    type CollectionCopyrightsQuery,
+    type CollectionCopyrightsQueryVariables,
+    type CollectionsQuery,
+    type CreateCard,
+    type CreateCards,
+    type CreateCardsVariables,
+    type CreateCardVariables,
+    type CreateCollection,
+    type DeleteCards,
     Precision,
-    UpdateCard,
-    UpdateCardVariables,
+    type UpdateCard,
+    type UpdateCardVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -34,8 +34,8 @@ import {
     deleteCards,
     updateCard,
 } from './card.queries';
-import {Observable, of} from 'rxjs';
-import {ignoreErrors, Literal, WithId} from '@ecodev/natural';
+import {type Observable, of} from 'rxjs';
+import {ignoreErrors, type Literal, type WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;

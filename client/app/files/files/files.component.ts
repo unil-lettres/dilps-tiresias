@@ -1,11 +1,11 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
-import {CardQuery, FileInput, FileMinimal, FilesQueryVariables} from '../../shared/generated-types';
+import {Component, inject, Input, type OnInit} from '@angular/core';
+import {type CardQuery, type FileInput, type FileMinimal, type FilesQueryVariables} from '../../shared/generated-types';
 import {
-    FileSelection,
+    type FileSelection,
     NaturalDataSource,
     NaturalFileSelectDirective,
     NaturalQueryVariablesManager,
-    PaginatedData,
+    type PaginatedData,
     TypedMatCellDef,
 } from '@ecodev/natural';
 import {FileService} from '../services/file.service';

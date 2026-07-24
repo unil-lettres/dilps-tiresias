@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-    AntiqueNameQuery,
-    AntiqueNameInput,
-    AntiqueNamesQuery,
-    AntiqueNamesQueryVariables,
-    AntiqueNameQueryVariables,
-    CreateAntiqueName,
-    CreateAntiqueNameVariables,
-    DeleteAntiqueNames,
-    UpdateAntiqueName,
-    UpdateAntiqueNameVariables,
+    type AntiqueNameQuery,
+    type AntiqueNameInput,
+    type AntiqueNamesQuery,
+    type AntiqueNamesQueryVariables,
+    type AntiqueNameQueryVariables,
+    type CreateAntiqueName,
+    type CreateAntiqueNameVariables,
+    type DeleteAntiqueNames,
+    type UpdateAntiqueName,
+    type UpdateAntiqueNameVariables,
 } from '../../shared/generated-types';
 import {
     antiqueNameQuery,

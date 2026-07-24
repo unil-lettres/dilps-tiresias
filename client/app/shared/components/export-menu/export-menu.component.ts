@@ -3,14 +3,14 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
-import {CardsQuery, ExportFormat} from '../../generated-types';
+import {type CardsQuery, ExportFormat} from '../../generated-types';
 import {ExportService} from 'client/app/exports/services/export.service';
 import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
 import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltip} from '@angular/material/tooltip';
-import {FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
+import {type FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
 
 export enum ExportTheme {
     dark = 'dark',

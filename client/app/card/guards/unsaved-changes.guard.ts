@@ -1,11 +1,11 @@
 import {inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {CanDeactivateFn} from '@angular/router';
+import {type CanDeactivateFn} from '@angular/router';
 import {of, switchMap} from 'rxjs';
-import {CardComponent} from '../card.component';
+import {type CardComponent} from '../card.component';
 import {
     UnsavedChangesDialogComponent,
-    UnsavedChangesDialogResult,
+    type UnsavedChangesDialogResult,
 } from '../../shared/components/unsaved-changes-dialog/unsaved-changes-dialog.component';
 
 export const canDeactivateCard: CanDeactivateFn<CardComponent> = component => {

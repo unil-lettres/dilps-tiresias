@@ -1,6 +1,6 @@
-import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {type NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {PeriodService} from '../../periods/services/period.service';
-import {PeriodsQuery} from '../generated-types';
+import {type PeriodsQuery} from '../generated-types';
 import {formatItemNameWithRoot, formatYearRange} from '../services/utility';
 
 export const periodHierarchicConfig: NaturalHierarchicConfiguration[] = [

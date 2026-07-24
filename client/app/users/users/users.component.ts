@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
-import {UsersQuery, UserType} from '../../shared/generated-types';
+import {type UsersQuery, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {UserComponent} from '../user/user.component';
 import {TypePipe} from '../../shared/pipes/type.pipe';

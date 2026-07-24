@@ -1,12 +1,12 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, inject, Input, input, OnInit, output} from '@angular/core';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {NaturalDataSource} from '@ecodev/natural';
+import {Component, DestroyRef, inject, Input, input, type OnInit, output} from '@angular/core';
+import {MatPaginator, type PageEvent} from '@angular/material/paginator';
+import {type NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'es-toolkit';
-import {ViewInterface} from '../list/list.component';
+import {type ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
-import {CardsQuery, Site} from '../shared/generated-types';
+import {type CardsQuery, Site} from '../shared/generated-types';
 import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';

@@ -4,8 +4,8 @@
  */
 import {Component} from '@angular/core';
 import {
-    FilterGroupConditionField,
-    NaturalAbstractModelService,
+    type FilterGroupConditionField,
+    type NaturalAbstractModelService,
     NaturalSelectComponent,
     TypeNaturalSelectComponent as EcoDevTypeNaturalSelectComponent,
 } from '@ecodev/natural';

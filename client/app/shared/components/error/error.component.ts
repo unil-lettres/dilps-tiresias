@@ -3,7 +3,7 @@ import {ErrorService, NaturalIconDirective} from '@ecodev/natural';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {GraphQLFormattedError} from 'graphql';
+import {type GraphQLFormattedError} from 'graphql';
 
 @Component({
     selector: 'app-error',

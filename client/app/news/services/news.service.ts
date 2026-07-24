@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateNews,
-    CreateNewsVariables,
-    DeleteNewses,
-    NewsQuery,
-    NewsesQuery,
-    NewsesQueryVariables,
-    NewsInput,
-    NewsPartialInput,
-    NewsQueryVariables,
-    UpdateNews,
-    UpdateNewsVariables,
+    type CreateNews,
+    type CreateNewsVariables,
+    type DeleteNewses,
+    type NewsQuery,
+    type NewsesQuery,
+    type NewsesQueryVariables,
+    type NewsInput,
+    type NewsPartialInput,
+    type NewsQueryVariables,
+    type UpdateNews,
+    type UpdateNewsVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
-import {Literal} from '@ecodev/natural';
+import {type Literal} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',

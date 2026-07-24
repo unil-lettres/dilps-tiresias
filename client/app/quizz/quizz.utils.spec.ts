@@ -1,4 +1,4 @@
-import {CardQuery} from '../shared/generated-types';
+import {type CardQuery} from '../shared/generated-types';
 import {test} from './quizz.utils';
 
 describe('Quizz tester', () => {

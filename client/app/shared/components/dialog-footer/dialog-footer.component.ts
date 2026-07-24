@@ -1,6 +1,6 @@
 import {Component, input, Input, output} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {StampComponent, Stamped} from '../stamp/stamp.component';
+import {type FormControl} from '@angular/forms';
+import {StampComponent, type Stamped} from '../stamp/stamp.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';

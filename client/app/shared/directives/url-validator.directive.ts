@@ -1,5 +1,5 @@
 import {Directive, forwardRef} from '@angular/core';
-import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
+import {type AbstractControl, NG_VALIDATORS, type Validator} from '@angular/forms';
 
 @Directive({
     selector: '[appUrl]',

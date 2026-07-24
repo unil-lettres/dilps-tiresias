@@ -1,7 +1,7 @@
 import {Directive, forwardRef, input} from '@angular/core';
-import {AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors} from '@angular/forms';
-import {NaturalAbstractModelService, unique} from '@ecodev/natural';
-import {Observable, of} from 'rxjs';
+import {type AbstractControl, type AsyncValidator, NG_ASYNC_VALIDATORS, type ValidationErrors} from '@angular/forms';
+import {type NaturalAbstractModelService, unique} from '@ecodev/natural';
+import {type Observable, of} from 'rxjs';
 
 @Directive({
     selector: '[appUnique]',

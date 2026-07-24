@@ -1,5 +1,5 @@
-import {Apollo} from 'apollo-angular';
-import {defaultIfEmpty, forkJoin, map, Observable, take} from 'rxjs';
+import {type Apollo} from 'apollo-angular';
+import {defaultIfEmpty, forkJoin, map, type Observable, take} from 'rxjs';
 
 export function shuffleArray(a: any[]): any[] {
     for (let i = a.length - 1; i > 0; i--) {
