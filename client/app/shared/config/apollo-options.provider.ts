@@ -114,12 +114,13 @@ function createErrorHandler(
  *
  *  - an 413 error from `graphql-upload` about `post_max_size`
  *  - a 500 error about max_execution_time
+ *  - a 502 error when uploading files
  */
 function serverErrorToUserFriendlyError(
     error: ErrorLike,
     variables: OperationVariables,
 ): ErrorLike | CombinedGraphQLErrors {
-    if (!ServerError.is(error) || ![413, 500].includes(error.statusCode)) {
+    if (!ServerError.is(error)) {
         return error;
     }
 
