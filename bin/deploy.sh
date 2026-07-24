@@ -41,7 +41,7 @@ echo "********************* Updating project files..."
 git pull origin ${GIT_BRANCH:-master}
 
 # Rebuild project
-sh $PWD/bin/build.sh
+$PWD/bin/build.sh
 
 # Export map files to Bugsnag
 echo "********************* Export map files to Bugsnag..."
