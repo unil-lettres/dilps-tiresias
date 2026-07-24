@@ -4,12 +4,12 @@ import {merge} from 'es-toolkit';
 import {map} from 'rxjs/operators';
 import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
-    CardQuery,
     CardInput,
     CardPartialInput,
+    CardQuery,
+    CardQueryVariables,
     CardsQuery,
     CardsQueryVariables,
-    CardQueryVariables,
     CardVisibility,
     CollectionCopyrightsQuery,
     CollectionCopyrightsQueryVariables,
@@ -35,7 +35,7 @@ import {
     updateCard,
 } from './card.queries';
 import {Observable, of} from 'rxjs';
-import {Literal, WithId} from '@ecodev/natural';
+import {ignoreErrors, Literal, WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;
@@ -238,7 +238,10 @@ export class CardService extends AbstractContextualizedService<
                 query: collectionCopyrightsQuery,
                 variables: {card: card.id},
             })
-            .pipe(map(result => result.data.collectionCopyrights));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.collectionCopyrights),
+            );
     }
 
     public override updateNow(

@@ -56,7 +56,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.client.reFetchObservableQueries();
+                    this.apollo.client.refetchObservableQueries();
 
                     return result.data!.acceptChange;
                 }),
@@ -73,7 +73,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.client.reFetchObservableQueries();
+                    this.apollo.client.refetchObservableQueries();
 
                     return result.data!.rejectChange;
                 }),
@@ -90,7 +90,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.client.reFetchObservableQueries();
+                    this.apollo.client.refetchObservableQueries();
 
                     return result.data!.suggestDeletion;
                 }),
@@ -107,7 +107,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.client.reFetchObservableQueries();
+                    this.apollo.client.refetchObservableQueries();
 
                     return result.data!.suggestCreation;
                 }),
@@ -124,7 +124,7 @@ export class ChangeService extends AbstractContextualizedService<
             })
             .pipe(
                 map(result => {
-                    this.apollo.client.reFetchObservableQueries();
+                    this.apollo.client.refetchObservableQueries();
 
                     return result.data!.suggestUpdate;
                 }),

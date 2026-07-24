@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client/core';
+import {gql} from '@apollo/client';
 import {userMetaFragment} from '../../shared/queries/fragments';
 
 export const periodsQuery = gql`

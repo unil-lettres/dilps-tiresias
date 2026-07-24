@@ -15,6 +15,7 @@ import {createExport, exportQuery, exportsQuery, validateExportQuery} from './ex
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {ignoreErrors} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -59,6 +60,9 @@ export class ExportService extends AbstractContextualizedService<
                 query: validateExportQuery,
                 variables: variables,
             })
-            .pipe(map(result => result.data.validateExport));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.validateExport),
+            );
     }
 }

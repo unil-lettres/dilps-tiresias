@@ -1,5 +1,5 @@
 import {Apollo} from 'apollo-angular';
-import {defaultIfEmpty, forkJoin, map, Observable} from 'rxjs';
+import {defaultIfEmpty, forkJoin, map, Observable, take} from 'rxjs';
 
 export function shuffleArray(a: any[]): any[] {
     for (let i = a.length - 1; i > 0; i--) {
@@ -103,8 +103,9 @@ export function formatItemNameWithRoot(item: {name: string; hierarchicName: stri
  */
 export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T> {
     const observableQueries = apollo.client.getObservableQueries();
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    const promises = Array.from(observableQueries.values()).map(q => q.result());
+    const promises = Array.from(observableQueries.values())
+        .filter(q => q.getCurrentResult().loading)
+        .map(q => q.pipe(take(1)));
     return forkJoin(promises).pipe(
         map(() => result),
         defaultIfEmpty(result),

@@ -8,6 +8,7 @@ import {
 } from '@angular/material/form-field';
 import {StatisticService} from '../services/statistic.service';
 import {
+    ignoreErrors,
     Literal,
     NaturalLinkableTabDirective,
     NaturalQueryVariablesManager,
@@ -381,6 +382,7 @@ export class StatisticsComponent {
                     user: this.user ? this.user.id : null,
                 },
             })
+            .pipe(ignoreErrors())
             .subscribe(result => {
                 this.raw = JSON.parse(result.data.extraStatistics);
                 this.applyCardAndUserTypeSelection();

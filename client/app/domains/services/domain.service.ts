@@ -17,6 +17,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
+import {ignoreErrors} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -51,6 +52,9 @@ export class DomainService extends AbstractContextualizedService<
                 query: cardDomainsQuery,
                 variables: variables,
             })
-            .pipe(map(result => result.data.cardDomains));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.cardDomains),
+            );
     }
 }

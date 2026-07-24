@@ -23,6 +23,7 @@ import {
     UsersQueryVariables,
     UserType,
     ViewerQuery,
+    ViewerQueryVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -36,7 +37,7 @@ import {
     usersQuery,
     viewerQuery,
 } from './user.queries';
-import {LOCAL_STORAGE} from '@ecodev/natural';
+import {ignoreErrors, LOCAL_STORAGE} from '@ecodev/natural';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -98,11 +99,14 @@ export class UserService extends AbstractContextualizedService<
 
     public getCurrentUser(): Observable<ViewerQuery['viewer']> {
         return this.apollo
-            .query<ViewerQuery, never>({
+            .query<ViewerQuery, ViewerQueryVariables>({
                 query: viewerQuery,
                 fetchPolicy: 'cache-first',
             })
-            .pipe(map(result => result.data.viewer));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.viewer),
+            );
     }
 
     public getUserRolesAvailable(user: UserQuery['user'] | null): Observable<UserRole[]> {
@@ -114,6 +118,7 @@ export class UserService extends AbstractContextualizedService<
                 },
             })
             .pipe(
+                ignoreErrors(),
                 map(result => {
                     return result.data.userRolesAvailable;
                 }),
@@ -158,11 +163,14 @@ export class UserService extends AbstractContextualizedService<
                 }
 
                 this.apollo
-                    .query<ViewerQuery, never>({
+                    .query<ViewerQuery, ViewerQueryVariables>({
                         query: viewerQuery,
                         fetchPolicy: 'network-only',
                     })
-                    .pipe(map(result => result.data.viewer))
+                    .pipe(
+                        ignoreErrors(),
+                        map(result => result.data.viewer),
+                    )
                     .subscribe(viewer => {
                         if (viewer) {
                             this.apollo.client.resetStore().then(() => {
@@ -205,7 +213,7 @@ export class UserService extends AbstractContextualizedService<
     private postLogin(viewer: NonNullable<ViewerQuery['viewer']>): void {
         // Inject the freshly logged in user as the current user into Apollo data store
         const data = {viewer: viewer};
-        this.apollo.client.writeQuery<ViewerQuery, never>({
+        this.apollo.client.writeQuery<ViewerQuery, ViewerQueryVariables>({
             query: viewerQuery,
             data,
         });

@@ -55,7 +55,7 @@ import {
     CollectionSelectorData,
     CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
-import {ErrorService} from '../shared/components/error/error.service';
+import {ErrorService} from '@ecodev/natural';
 import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {

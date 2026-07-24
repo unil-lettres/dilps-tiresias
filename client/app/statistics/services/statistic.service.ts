@@ -1,5 +1,6 @@
 import {DestroyRef, inject, Injectable} from '@angular/core';
 import {
+    Exact,
     StatisticQuery,
     StatisticQueryVariables,
     StatisticsQuery,
@@ -51,7 +52,7 @@ export class StatisticService extends AbstractContextualizedService<
                 takeUntilDestroyed(this.destroyRef),
                 debounceTime(800),
                 switchMap(() =>
-                    this.apollo.mutate<unknown, never>({
+                    this.apollo.mutate<unknown, Exact<Record<string, never>>>({
                         mutation: mutation,
                     }),
                 ),

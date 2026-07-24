@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {ErrorService} from './error.service';
+import {ErrorService, NaturalIconDirective} from '@ecodev/natural';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {NaturalIconDirective} from '@ecodev/natural';
+import {GraphQLFormattedError} from 'graphql';
 
 @Component({
     selector: 'app-error',
@@ -12,7 +12,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
     styleUrl: './error.component.scss',
 })
 export class ErrorComponent {
-    protected readonly error: Error | null = null;
+    protected readonly error: Error | GraphQLFormattedError | null;
 
     public constructor() {
         const errorService = inject(ErrorService);
