@@ -104,7 +104,7 @@ export function formatItemNameWithRoot(item: {name: string; hierarchicName: stri
  */
 export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T> {
     const observableQueries = apollo.client.getObservableQueries();
-    const promises = Array.from(observableQueries.values())
+    const loadingQueries = Array.from(observableQueries.values())
         .filter(q => q.getCurrentResult().loading)
         .map(q =>
             q.pipe(
@@ -112,7 +112,7 @@ export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T>
                 take(1),
             ),
         );
-    return forkJoin(promises).pipe(
+    return forkJoin(loadingQueries).pipe(
         map(() => result),
         defaultIfEmpty(result),
     );
