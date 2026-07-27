@@ -70,7 +70,7 @@
         "angular-eslint": "^21.4.0",
         "eslint": "^10.6.0",
         "jsdom": "^29.1.1",
-        "postcss": "^8.5.15",
+        "postcss": "^8.5.18",
         "prettier": "3.8.1",
         "prettier-plugin-css-order": "^2.2.0",
         "ts-node": "^10.9.2",
