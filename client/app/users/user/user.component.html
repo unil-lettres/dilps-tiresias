@@ -177,9 +177,9 @@
     </h2>
     <mat-dialog-content>
         @if (!isSelf) {
-            <p class="hint nat-margin-vertical nat-padding">
+            <app-hint>
                 Pour ajouter des abonnés, rendez-vous dans les détails d'une collection dont vous êtes responsable.
-            </p>
+            </app-hint>
         }
         @if (collections().length === 0) {
             <p class="nat-horizontal nat-padding nat-center">

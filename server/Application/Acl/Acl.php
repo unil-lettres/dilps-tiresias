@@ -7,6 +7,7 @@ namespace Application\Acl;
 use Application\Acl\Assertion\CanUpdateCard;
 use Application\Acl\Assertion\IsCreator;
 use Application\Acl\Assertion\IsNotSuggestion;
+use Application\Acl\Assertion\IsOwner;
 use Application\Acl\Assertion\IsOwnerOrResponsible;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\SameSite;
@@ -90,7 +91,10 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_STUDENT, $change, 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, $change, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $collection, 'create', new SameSite());
-        $this->allow(User::ROLE_STUDENT, $collection, ['update', 'delete', 'linkCard'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        // Only the owner can change the settings, delete, or manage the responsibles of a collection
+        $this->allow(User::ROLE_STUDENT, $collection, ['update', 'delete', 'manageResponsibles'], new All(new IsOwner(), new SameSite()));
+        // Responsibles (and the owner) can curate the cards/images and manage the subscribers
+        $this->allow(User::ROLE_STUDENT, $collection, ['linkCard', 'manageSubscribers'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_STUDENT, $institution, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $tag, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $user, 'read');
@@ -101,7 +105,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
 
         $this->allow(User::ROLE_SENIOR, $card, ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
-        $this->allow(User::ROLE_MAJOR, $collection, 'delete', new All(new IsOwnerOrResponsible(), new SameSite()));
+        $this->allow(User::ROLE_MAJOR, $collection, 'delete', new All(new IsOwner(), new SameSite()));
         $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new SameSite());
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges

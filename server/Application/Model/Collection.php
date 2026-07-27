@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Model;
 
+use Application\Acl\Acl;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
 use Application\Enum\CollectionVisibility;
 use Application\Repository\CollectionRepository;
@@ -60,10 +61,23 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     private DoctrineCollection $children;
 
     /**
+     * Users responsible for the collection: they curate its cards/images and manage its subscribers,
+     * but cannot change the collection settings nor delete it (that is reserved to the owner).
+     *
      * @var DoctrineCollection<User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'collections')]
-    private DoctrineCollection $users;
+    #[ORM\JoinTable(name: 'collection_responsible')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'responsibleCollections')]
+    private DoctrineCollection $responsibles;
+
+    /**
+     * Users who subscribed to the collection: they have read-only access and can only unsubscribe themselves.
+     *
+     * @var DoctrineCollection<User>
+     */
+    #[ORM\JoinTable(name: 'collection_subscriber')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'subscribedCollections')]
+    private DoctrineCollection $subscribers;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isHistoric = false;
@@ -71,7 +85,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->responsibles = new ArrayCollection();
+        $this->subscribers = new ArrayCollection();
     }
 
     /**
@@ -157,34 +172,73 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     }
 
     /**
-     * Get users.
+     * Get responsibles.
      */
-    public function getUsers(): DoctrineCollection
+    public function getResponsibles(): DoctrineCollection
     {
-        return $this->users;
+        return $this->responsibles;
     }
 
     /**
-     * Add User.
+     * Add a responsible.
+     *
+     * A user cannot be a responsible and a subscriber at the same time, so any existing subscription is removed.
      */
-    public function addUser(User $user): void
+    public function addResponsible(User $user): void
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
+        $this->removeSubscriber($user);
+
+        if (!$this->responsibles->contains($user)) {
+            $this->responsibles[] = $user;
         }
     }
 
     /**
-     * Remove User.
+     * Remove a responsible.
      */
-    public function removeUser(User $user): void
+    public function removeResponsible(User $user): void
     {
-        $this->users->removeElement($user);
+        $this->responsibles->removeElement($user);
     }
 
-    public function getUsersCount(): int
+    public function getResponsiblesCount(): int
     {
-        return count($this->users);
+        return count($this->responsibles);
+    }
+
+    /**
+     * Get subscribers.
+     */
+    public function getSubscribers(): DoctrineCollection
+    {
+        return $this->subscribers;
+    }
+
+    /**
+     * Add a subscriber.
+     *
+     * A user cannot be a subscriber and a responsible at the same time, so any existing management role is removed.
+     */
+    public function addSubscriber(User $user): void
+    {
+        $this->removeResponsible($user);
+
+        if (!$this->subscribers->contains($user)) {
+            $this->subscribers[] = $user;
+        }
+    }
+
+    /**
+     * Remove a subscriber.
+     */
+    public function removeSubscriber(User $user): void
+    {
+        $this->subscribers->removeElement($user);
+    }
+
+    public function getSubscribersCount(): int
+    {
+        return count($this->subscribers);
     }
 
     /**
@@ -209,5 +263,54 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function getShowHistoric(): bool
     {
         return $this->isHistoric() && $this->isSource();
+    }
+
+    /**
+     * Whether the current user is allowed to add or remove cards (images) of this collection.
+     */
+    #[API\Field]
+    public function getCanManageContent(): bool
+    {
+        return new Acl()->isCurrentUserAllowed($this, 'linkCard');
+    }
+
+    /**
+     * Whether the current user is allowed to add or remove responsibles of this collection.
+     */
+    #[API\Field]
+    public function getCanManageResponsibles(): bool
+    {
+        return new Acl()->isCurrentUserAllowed($this, 'manageResponsibles');
+    }
+
+    /**
+     * Whether the current user is allowed to add or remove subscribers of this collection.
+     */
+    #[API\Field]
+    public function getCanManageSubscribers(): bool
+    {
+        return new Acl()->isCurrentUserAllowed($this, 'manageSubscribers');
+    }
+
+    /**
+     * Whether the current user is a responsible of this collection.
+     */
+    #[API\Field]
+    public function getViewerIsResponsible(): bool
+    {
+        $user = User::getCurrent();
+
+        return $user !== null && $this->responsibles->contains($user);
+    }
+
+    /**
+     * Whether the current user is a subscriber of this collection.
+     */
+    #[API\Field]
+    public function getViewerIsSubscriber(): bool
+    {
+        $user = User::getCurrent();
+
+        return $user !== null && $this->subscribers->contains($user);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ApplicationTest\Model;
 
 use Application\Model\Collection;
+use Application\Model\User;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -54,5 +55,25 @@ class CollectionTest extends TestCase
         self::expectException(InvalidArgumentException::class);
         self::expectExceptionMessage('An object cannot be his own parent');
         $collection->setParent($collection);
+    }
+
+    public function testUserCannotBeBothResponsibleAndSubscriber(): void
+    {
+        $collection = new Collection();
+        $user = new User();
+
+        $collection->addSubscriber($user);
+        self::assertCount(1, $collection->getSubscribers());
+        self::assertCount(0, $collection->getResponsibles());
+
+        // Promoting the subscriber to responsible must remove the subscription
+        $collection->addResponsible($user);
+        self::assertCount(1, $collection->getResponsibles());
+        self::assertCount(0, $collection->getSubscribers(), 'a responsible must not remain a subscriber');
+
+        // And demoting back to subscriber must remove the management role
+        $collection->addSubscriber($user);
+        self::assertCount(1, $collection->getSubscribers());
+        self::assertCount(0, $collection->getResponsibles(), 'a subscriber must not remain a responsible');
     }
 }

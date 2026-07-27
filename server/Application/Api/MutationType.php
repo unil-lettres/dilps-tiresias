@@ -18,6 +18,7 @@ use Application\Api\Field\Mutation\RejectChange;
 use Application\Api\Field\Mutation\SuggestCreation;
 use Application\Api\Field\Mutation\SuggestDeletion;
 use Application\Api\Field\Mutation\SuggestUpdate;
+use Application\Api\Field\Mutation\UnsubscribeCollection;
 use Application\Api\Field\Standard;
 use Application\Model\AntiqueName;
 use Application\Model\Artist;
@@ -49,6 +50,7 @@ class MutationType extends ObjectType
             Login::build(),
             Logout::build(),
             LinkCollectionToCollection::build(),
+            UnsubscribeCollection::build(),
             RecordPage::build(),
             RecordDetail::build(),
             RecordSearch::build(),
@@ -70,7 +72,8 @@ class MutationType extends ObjectType
             Standard::buildMutation(Tag::class),
             Standard::buildMutation(AntiqueName::class),
             Standard::buildMutation(File::class),
-            Standard::buildRelationMutation(Collection::class, User::class),
+            Standard::buildRelationMutation(Collection::class, User::class, 'manageResponsibles', 'Responsible'),
+            Standard::buildRelationMutation(Collection::class, User::class, 'manageSubscribers', 'Subscriber'),
             Standard::buildRelationMutation(Card::class, Card::class),
             Standard::buildRelationMutation(Card::class, Collection::class, 'linkCard'),
             Standard::buildRelationMutation(Card::class, Period::class),

@@ -9,13 +9,17 @@ export const collectionsQuery = gql`
                 id
                 name
                 hierarchicName
-                usersCount
+                responsiblesCount
+                subscribersCount
                 hasChildren
                 isSource
                 isHistoric
                 showHistoric
                 copyrights
                 usageRights
+                viewerIsResponsible
+                viewerIsSubscriber
+                canManageSubscribers
                 permissions {
                     update
                     delete
@@ -57,6 +61,13 @@ export const collectionQuery = gql`
             updater {
                 ...UserMeta
             }
+            responsiblesCount
+            subscribersCount
+            canManageContent
+            canManageResponsibles
+            canManageSubscribers
+            viewerIsResponsible
+            viewerIsSubscriber
             permissions {
                 update
                 delete
@@ -108,6 +119,14 @@ export const updateCollection = gql`
 export const deleteCollections = gql`
     mutation DeleteCollections($ids: [CollectionID!]!) {
         deleteCollections(ids: $ids)
+    }
+`;
+
+export const unsubscribeCollection = gql`
+    mutation UnsubscribeCollection($collection: CollectionID!) {
+        unsubscribeCollection(collection: $collection) {
+            id
+        }
     }
 `;
 

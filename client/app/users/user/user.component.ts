@@ -5,6 +5,7 @@ import {
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
 } from '@ecodev/natural';
+import {forkJoin} from 'rxjs';
 import {Component, inject, viewChild, signal, ChangeDetectionStrategy} from '@angular/core';
 import {
     type AbstractControl,
@@ -25,10 +26,12 @@ import {
     type UserRole,
     UserType,
     type CollectionsQuery,
+    LogicalOperator,
 } from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {HintComponent} from '../../shared/components/hint/hint.component';
 import {MatOption} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
@@ -81,6 +84,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         TypePipe,
         UniqueValidatorDirective,
         MatDivider,
+        HintComponent,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
@@ -185,12 +189,25 @@ export class UserComponent extends AbstractDetailDirective<
         }
     }
 
+    /**
+     * Filter matching the collections the user is a member of, either as a manager or as a subscriber.
+     */
+    private membershipFilter(): {groups: unknown[]} {
+        return {
+            groups: [
+                {conditions: [{responsibles: {have: {values: [this.data.item.id]}}}]},
+                {
+                    groupLogic: LogicalOperator.OR,
+                    conditions: [{subscribers: {have: {values: [this.data.item.id]}}}],
+                },
+            ],
+        };
+    }
+
     private loadCollectionsCount(): void {
         const qvm = new NaturalQueryVariablesManager();
         qvm.set('variables', {
-            filter: {
-                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
-            },
+            filter: this.membershipFilter(),
             pagination: {pageSize: 1, pageIndex: 0},
         });
 
@@ -202,9 +219,7 @@ export class UserComponent extends AbstractDetailDirective<
     private loadCollections(): void {
         const qvm = new NaturalQueryVariablesManager();
         qvm.set('variables', {
-            filter: {
-                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
-            },
+            filter: this.membershipFilter(),
         });
 
         this.collectionService.getAll(qvm).subscribe(result => {
@@ -235,7 +250,16 @@ export class UserComponent extends AbstractDetailDirective<
                 return;
             }
 
-            this.linkService.unlink(collection, this.user as LinkableObject).subscribe(() => {
+            // When leaving on our own behalf, use the dedicated mutation that requires no privilege on the collection.
+            // When an administrator removes someone else, unlink them from both membership relations.
+            const removal$ = this.isSelf
+                ? this.collectionService.unsubscribe(collection)
+                : forkJoin([
+                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'manager'),
+                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'subscriber'),
+                  ]);
+
+            removal$.subscribe(() => {
                 this.alertService.info(successMessage);
                 this.loadCollections();
                 this.loadCollectionsCount();

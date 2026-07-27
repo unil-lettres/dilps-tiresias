@@ -65,7 +65,7 @@ class IsOwnerOrResponsible implements NamedAssertion
         }
 
         foreach ($collections as $collection) {
-            if ($collection->getUsers()->contains(User::getCurrent())) {
+            if ($collection->getResponsibles()->contains(User::getCurrent())) {
                 return true;
             }
         }

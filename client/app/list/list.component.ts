@@ -268,6 +268,11 @@ export class ListComponent
     private unclassified = false;
 
     /**
+     * Whether the current user is allowed to add/remove cards to/from the contextual collection.
+     */
+    protected readonly canManageCollectionContent = signal(false);
+
+    /**
      * Current user
      */
     protected user!: ViewerQuery['viewer'];
@@ -404,14 +409,27 @@ export class ListComponent
 
             this.variablesManager.set('controller-variables', {filter: filter});
 
+            const collectionChanged = this.collection?.id !== data.collection?.id;
+
             // Only reset pagination if our collection has been initialized and the new collection is not the same as ours
-            if (this.collection !== undefined && this.collection?.id !== data.collection?.id) {
+            if (this.collection !== undefined && collectionChanged) {
                 this.persistSearch = false;
                 this.reset();
                 this.persistSearch = true;
             }
 
             this.collection = data.collection || null;
+
+            // Resolve whether the user may add/remove cards to/from this collection, to show/hide the relevant actions
+            if (collectionChanged) {
+                if (this.collection?.id) {
+                    this.collectionService
+                        .getOne(this.collection.id)
+                        .subscribe(collection => this.canManageCollectionContent.set(collection.canManageContent));
+                } else {
+                    this.canManageCollectionContent.set(false);
+                }
+            }
         });
     }
 

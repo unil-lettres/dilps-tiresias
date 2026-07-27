@@ -102,7 +102,7 @@ export class CollectionSelectorComponent implements OnInit {
                         {conditions: [{owner: {equal: {value: user!.id}}}]},
                         {
                             groupLogic: LogicalOperator.OR,
-                            conditions: [{users: {have: {values: [user!.id]}}}],
+                            conditions: [{responsibles: {have: {values: [user!.id]}}}],
                         },
                     ],
                 };
