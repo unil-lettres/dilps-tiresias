@@ -20,6 +20,7 @@ import {
     type CreateCardVariables,
     type CreateCollection,
     type DeleteCards,
+    type DeleteCardsVariables,
     Precision,
     type UpdateCard,
     type UpdateCardVariables,
@@ -35,7 +36,7 @@ import {
     updateCard,
 } from './card.queries';
 import {type Observable, of} from 'rxjs';
-import {ignoreErrors, type Literal, type WithId} from '@ecodev/natural';
+import {ignoreErrors, type Literal, type MutateOptionsWithoutVariables, type WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;
@@ -58,7 +59,7 @@ export class CardService extends AbstractContextualizedService<
     UpdateCard['updateCard'],
     UpdateCardVariables,
     DeleteCards['deleteCards'],
-    never
+    DeleteCardsVariables
 > {
     private readonly routeReuse = inject(RouteReuseStrategy);
 
@@ -258,8 +259,12 @@ export class CardService extends AbstractContextualizedService<
         );
     }
 
-    public override delete(objects: {id: string}[], resetRouteReuse = true): Observable<DeleteCards['deleteCards']> {
-        return super.delete(objects).pipe(
+    public override delete(
+        objects: {id: string}[],
+        options?: MutateOptionsWithoutVariables<DeleteCards['deleteCards'], DeleteCardsVariables>,
+        resetRouteReuse = true,
+    ): Observable<DeleteCards['deleteCards']> {
+        return super.delete(objects, options).pipe(
             map(r => {
                 if (resetRouteReuse) {
                     (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();

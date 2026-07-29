@@ -14,6 +14,7 @@ import {
     type DomainQueryVariables,
     type UpdateDomain,
     type UpdateDomainVariables,
+    type DeleteDomainsVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
@@ -32,7 +33,7 @@ export class DomainService extends AbstractContextualizedService<
     UpdateDomain['updateDomain'],
     UpdateDomainVariables,
     DeleteDomains['deleteDomains'],
-    never
+    DeleteDomainsVariables
 > {
     public constructor() {
         super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains);

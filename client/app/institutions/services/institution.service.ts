@@ -10,6 +10,7 @@ import {
     type InstitutionQueryVariables,
     type UpdateInstitution,
     type UpdateInstitutionVariables,
+    type DeleteInstitutionsVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -33,7 +34,7 @@ export class InstitutionService extends AbstractContextualizedService<
     UpdateInstitution['updateInstitution'],
     UpdateInstitutionVariables,
     DeleteInstitutions['deleteInstitutions'],
-    never
+    DeleteInstitutionsVariables
 > {
     public constructor() {
         super(

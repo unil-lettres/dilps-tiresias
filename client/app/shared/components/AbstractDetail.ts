@@ -31,7 +31,7 @@ export class AbstractDetailDirective<
         any,
         any,
         any,
-        unknown,
+        any,
         any
     >,
     Extra extends Record<string, any> = Record<never, any>,
@@ -110,10 +110,16 @@ export class AbstractDetailDirective<
                 if (!confirmed || !this.isUpdatePage()) {
                     return;
                 }
-                this.service.delete([this.data.item]).subscribe(() => {
-                    this.alertService.info('Supprimé');
-                    this.dialogRef.close(null);
-                });
+                this.service
+                    .delete([this.data.item], {
+                        // Wait till we refresh the list under the dialog before closing the dialog, to avoid re-clicking on the just deleted item
+                        refetchQueries: 'active',
+                        awaitRefetchQueries: true,
+                    })
+                    .subscribe(() => {
+                        this.alertService.info('Supprimé');
+                        this.dialogRef.close(null);
+                    });
             });
     }
 

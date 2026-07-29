@@ -3,15 +3,16 @@ import {NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, type Observable} from 'rxjs';
 import {
     type CardsQuery,
-    type CollectionQuery,
     type CollectionInput,
+    type CollectionQuery,
+    type CollectionQueryVariables,
     type CollectionsQuery,
     type CollectionsQueryVariables,
-    type CollectionQueryVariables,
     CollectionVisibility,
     type CreateCollection,
     type CreateCollectionVariables,
     type DeleteCollections,
+    type DeleteCollectionsVariables,
     type LinkCollectionToCollection,
     type LinkCollectionToCollectionVariables,
     type UpdateCollection,
@@ -41,7 +42,7 @@ export class CollectionService extends AbstractContextualizedService<
     UpdateCollection['updateCollection'],
     UpdateCollectionVariables,
     DeleteCollections['deleteCollections'],
-    never
+    DeleteCollectionsVariables
 > {
     private readonly linkService = inject(NaturalLinkMutationService);
 

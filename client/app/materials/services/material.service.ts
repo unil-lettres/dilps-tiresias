@@ -10,6 +10,7 @@ import {
     type MaterialQueryVariables,
     type UpdateMaterial,
     type UpdateMaterialVariables,
+    type DeleteMaterialsVariables,
 } from '../../shared/generated-types';
 import {createMaterial, deleteMaterials, materialQuery, materialsQuery, updateMaterial} from './material.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -27,7 +28,7 @@ export class MaterialService extends AbstractContextualizedService<
     UpdateMaterial['updateMaterial'],
     UpdateMaterialVariables,
     DeleteMaterials['deleteMaterials'],
-    never
+    DeleteMaterialsVariables
 > {
     public constructor() {
         super('material', materialQuery, materialsQuery, createMaterial, updateMaterial, deleteMaterials);

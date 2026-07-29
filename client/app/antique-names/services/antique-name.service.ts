@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {
-    type AntiqueNameQuery,
     type AntiqueNameInput,
+    type AntiqueNameQuery,
+    type AntiqueNameQueryVariables,
     type AntiqueNamesQuery,
     type AntiqueNamesQueryVariables,
-    type AntiqueNameQueryVariables,
     type CreateAntiqueName,
     type CreateAntiqueNameVariables,
     type DeleteAntiqueNames,
+    type DeleteAntiqueNamesVariables,
     type UpdateAntiqueName,
     type UpdateAntiqueNameVariables,
 } from '../../shared/generated-types';
@@ -33,7 +34,7 @@ export class AntiqueNameService extends AbstractContextualizedService<
     UpdateAntiqueName['updateAntiqueName'],
     UpdateAntiqueNameVariables,
     DeleteAntiqueNames['deleteAntiqueNames'],
-    never
+    DeleteAntiqueNamesVariables
 > {
     public constructor() {
         super(

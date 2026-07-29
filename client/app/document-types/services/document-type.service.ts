@@ -10,6 +10,7 @@ import {
     type DocumentTypeQueryVariables,
     type UpdateDocumentType,
     type UpdateDocumentTypeVariables,
+    type DeleteDocumentTypesVariables,
 } from '../../shared/generated-types';
 import {
     createDocumentType,
@@ -33,7 +34,7 @@ export class DocumentTypeService extends AbstractContextualizedService<
     UpdateDocumentType['updateDocumentType'],
     UpdateDocumentTypeVariables,
     DeleteDocumentTypes['deleteDocumentTypes'],
-    never
+    DeleteDocumentTypesVariables
 > {
     public constructor() {
         super(

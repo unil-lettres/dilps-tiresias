@@ -8,6 +8,7 @@ import {
     type CreateUser,
     type CreateUserVariables,
     type DeleteUsers,
+    type DeleteUsersVariables,
     type Login,
     type LoginVariables,
     type Logout,
@@ -53,7 +54,7 @@ export class UserService extends AbstractContextualizedService<
     UpdateUser['updateUser'],
     UpdateUserVariables,
     DeleteUsers['deleteUsers'],
-    never
+    DeleteUsersVariables
 > {
     private readonly destroyRef = inject(DestroyRef);
     private readonly route = inject(ActivatedRoute);

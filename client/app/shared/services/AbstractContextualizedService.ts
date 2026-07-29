@@ -41,7 +41,7 @@ export class AbstractContextualizedService<
     /**
      * Returns an additional context to be used in variables.
      *
-     * This is typically a site or state ID, but it could be something else to further filter the query
+     * This is typically the current site, but it could be something else to further filter the query
      */
     public override getPartialVariablesForAll(): Observable<Partial<Vall>> {
         if (this.site) {

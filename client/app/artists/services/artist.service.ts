@@ -10,6 +10,7 @@ import {
     type DeleteArtists,
     type UpdateArtist,
     type UpdateArtistVariables,
+    type DeleteArtistsVariables,
 } from '../../shared/generated-types';
 import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -27,7 +28,7 @@ export class ArtistService extends AbstractContextualizedService<
     UpdateArtist['updateArtist'],
     UpdateArtistVariables,
     DeleteArtists['deleteArtists'],
-    never
+    DeleteArtistsVariables
 > {
     public constructor() {
         super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists);

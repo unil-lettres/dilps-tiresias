@@ -11,6 +11,7 @@ import {
     type NewsQueryVariables,
     type UpdateNews,
     type UpdateNewsVariables,
+    type DeleteNewsesVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
@@ -29,7 +30,7 @@ export class NewsService extends AbstractContextualizedService<
     UpdateNews['updateNews'],
     UpdateNewsVariables,
     DeleteNewses['deleteNewses'],
-    never
+    DeleteNewsesVariables
 > {
     public constructor() {
         super('news', newsQuery, newsesQuery, createNews, updateNews, deleteNewses);

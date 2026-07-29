@@ -518,7 +518,7 @@ export class ListComponent
             )
             .subscribe(confirmed => {
                 if (confirmed) {
-                    this.service.delete(selection, false).subscribe(() => {
+                    this.service.delete(selection, {}, false).subscribe(() => {
                         this.alert.info('Supprimé');
                         this.reset();
                     });

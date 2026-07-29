@@ -10,6 +10,7 @@ import {
     type PeriodQueryVariables,
     type UpdatePeriod,
     type UpdatePeriodVariables,
+    type DeletePeriodsVariables,
 } from '../../shared/generated-types';
 import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -27,7 +28,7 @@ export class PeriodService extends AbstractContextualizedService<
     UpdatePeriod['updatePeriod'],
     UpdatePeriodVariables,
     DeletePeriods['deletePeriods'],
-    never
+    DeletePeriodsVariables
 > {
     public constructor() {
         super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods);

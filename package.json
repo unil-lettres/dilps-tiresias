@@ -35,7 +35,7 @@
         "@bugsnag/js": "^8.9.0",
         "@bugsnag/plugin-angular": "^8.9.0",
         "@ecodev/angular-natural-gallery": "^25.0.0",
-        "@ecodev/natural": "^71.0.1",
+        "@ecodev/natural": "72.0.0-alpha.1",
         "@ecodev/natural-layout": "^2.0.6",
         "@fontsource-variable/quicksand": "^5.2.10",
         "@graphql-codegen/cli": "^6.3.1",
