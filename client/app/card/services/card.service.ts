@@ -261,7 +261,7 @@ export class CardService extends AbstractContextualizedService<
 
     public override delete(
         objects: {id: string}[],
-        options?: MutateOptionsWithoutVariables<DeleteCards['deleteCards'], DeleteCardsVariables>,
+        options?: MutateOptionsWithoutVariables<Literal, Literal>,
         resetRouteReuse = true,
     ): Observable<DeleteCards['deleteCards']> {
         return super.delete(objects, options).pipe(

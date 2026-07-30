@@ -31,7 +31,7 @@ export class AbstractDetailDirective<
         any,
         any,
         any,
-        any,
+        unknown,
         any
     >,
     Extra extends Record<string, any> = Record<never, any>,
@@ -90,10 +90,12 @@ export class AbstractDetailDirective<
     }
 
     public create(): void {
-        this.service.create(this.data.item).subscribe(newItem => {
-            this.alertService.info('Créé');
-            this.dialogRef.close(newItem);
-        });
+        this.service
+            .create(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
+            .subscribe(newItem => {
+                this.alertService.info('Créé');
+                this.dialogRef.close(newItem);
+            });
     }
 
     public delete(): void {
