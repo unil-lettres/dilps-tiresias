@@ -182,7 +182,6 @@ function createApolloLink(
         return forward(operation);
     });
 
-    // const errorLink = createErrorLink(networkActivityService, alertService);
     const errorLink = new ErrorLink(createErrorHandler(networkActivityService, alertService));
 
     return routeReuseClearer.concat(
