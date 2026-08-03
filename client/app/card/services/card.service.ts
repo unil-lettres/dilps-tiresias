@@ -1,7 +1,7 @@
 import {RouteReuseStrategy} from '@angular/router';
 import {inject, Injectable} from '@angular/core';
 import {merge} from 'es-toolkit';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
     type CardInput,
@@ -61,7 +61,7 @@ export class CardService extends AbstractContextualizedService<
     DeleteCards['deleteCards'],
     DeleteCardsVariables
 > {
-    private readonly routeReuse = inject(RouteReuseStrategy);
+    private readonly routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
 
     private collectionIdForCreation: string | null = null;
 
@@ -247,14 +247,14 @@ export class CardService extends AbstractContextualizedService<
 
     public override updateNow(
         object: WithId<CardPartialInput>,
+        options?: MutateOptionsWithoutVariables<Literal, Literal>,
         resetRouteReuse = true,
     ): Observable<UpdateCard['updateCard']> {
-        return super.updateNow(object).pipe(
-            map(r => {
+        return super.updateNow(object, options).pipe(
+            tap(() => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
+                    this.routeReuse.clearDetachedRoutes();
                 }
-                return r;
             }),
         );
     }
@@ -265,11 +265,10 @@ export class CardService extends AbstractContextualizedService<
         resetRouteReuse = true,
     ): Observable<DeleteCards['deleteCards']> {
         return super.delete(objects, options).pipe(
-            map(r => {
+            tap(() => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
+                    this.routeReuse.clearDetachedRoutes();
                 }
-                return r;
             }),
         );
     }

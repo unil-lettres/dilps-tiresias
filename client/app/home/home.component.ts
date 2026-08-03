@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
     private readonly dialog = inject(MatDialog);
     private readonly cardService = inject(CardService);
     protected readonly site = inject(SITE);
-    private readonly routeReuse = inject(RouteReuseStrategy);
+    private readonly routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
     public readonly menuTheme = signal('dilps-production');
 
     protected readonly Site = Site;
@@ -265,7 +265,7 @@ export class HomeComponent implements OnInit {
         const url = collection ? 'my-collection/' + collection.id : 'my-collection/my-cards';
         this.router.navigateByUrl('/empty', {skipLocationChange: true}).then(() => {
             this.router.navigateByUrl(url).then(() => {
-                (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
+                this.routeReuse.clearDetachedRoutes();
             });
         });
     }

@@ -592,7 +592,7 @@ export class ListComponent
                 const observables: Observable<unknown>[] = [];
                 for (const s of selection) {
                     const changes = applyChanges(s, changeAttributes);
-                    observables.push(this.service.updateNow(changes, false));
+                    observables.push(this.service.updateNow(changes, {}, false));
                 }
 
                 const suggestionsObservables: Observable<CreateCard['createCard']>[] = [];

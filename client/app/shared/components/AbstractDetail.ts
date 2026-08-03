@@ -82,11 +82,13 @@ export class AbstractDetailDirective<
     }
 
     public update(): void {
-        this.service.updateNow(this.data.item).subscribe(model => {
-            this.alertService.info('Mis à jour');
-            this.dialogRef.close(this.data.item);
-            this.postUpdate(model);
-        });
+        this.service
+            .updateNow(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
+            .subscribe(model => {
+                this.alertService.info('Mis à jour');
+                this.dialogRef.close(this.data.item);
+                this.postUpdate(model);
+            });
     }
 
     public create(): void {
