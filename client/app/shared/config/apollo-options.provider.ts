@@ -81,7 +81,7 @@ function translatePhpConfigurationError(message: string): string {
 }
 
 /**
- * Create an Apollo link to show alert in case of error, and message if network is down
+ * Create an error handler to show alert in case of error, and message if network is down
  */
 function createErrorHandler(
     networkActivityService: NetworkActivityService,
