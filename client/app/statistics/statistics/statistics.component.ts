@@ -1,5 +1,5 @@
 import {Apollo} from 'apollo-angular';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {
     MAT_FORM_FIELD_DEFAULT_OPTIONS,
     MatFormField,
@@ -105,6 +105,7 @@ type SerieData = {
             } satisfies MatFormFieldDefaultOptions,
         },
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class StatisticsComponent {
     private readonly apollo = inject(Apollo);

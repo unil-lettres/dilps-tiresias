@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {SITE} from '../app.config';
 import {Site} from '../shared/generated-types';
 import {MatButton} from '@angular/material/button';
@@ -8,6 +8,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     selector: 'app-welcome',
     imports: [MatDialogModule, MatButton],
     templateUrl: './welcome.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class WelcomeComponent {
     protected readonly site = inject(SITE);

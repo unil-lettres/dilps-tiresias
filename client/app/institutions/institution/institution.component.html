@@ -37,7 +37,7 @@
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
-        [canCreate]="user?.globalPermissions?.institution?.create"
+        [canCreate]="$safeNavigationMigration(user?.globalPermissions?.institution?.create)"
         [readOnly]="data.item.readOnly"
         [disableCreateAndUpdate]="!!name.invalid"
         [item]="data.item"

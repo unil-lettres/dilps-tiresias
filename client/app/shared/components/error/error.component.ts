@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {ErrorService, NaturalIconDirective} from '@ecodev/natural';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButton} from '@angular/material/button';
@@ -10,6 +10,7 @@ import {type GraphQLFormattedError} from 'graphql';
     imports: [MatIcon, MatButton, RouterLink, NaturalIconDirective],
     templateUrl: './error.component.html',
     styleUrl: './error.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ErrorComponent {
     protected readonly error: Error | GraphQLFormattedError | null;

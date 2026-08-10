@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
@@ -20,9 +20,7 @@ import {AbstractContextualizedService} from '../../shared/services/AbstractConte
 import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
 import {ignoreErrors} from '@ecodev/natural';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class DomainService extends AbstractContextualizedService<
     DomainQuery['domain'],
     DomainQueryVariables,

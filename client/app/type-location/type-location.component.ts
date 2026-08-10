@@ -1,5 +1,5 @@
 import {NaturalErrorMessagePipe} from '@ecodev/natural';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
@@ -26,6 +26,7 @@ import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/for
     ],
     templateUrl: './type-location.component.html',
     styleUrl: './type-location.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TypeLocationComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);

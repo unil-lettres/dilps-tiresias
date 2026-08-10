@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateInstitution,
     type CreateInstitutionVariables,
@@ -21,9 +21,7 @@ import {
     updateInstitution,
 } from './institution.queries';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class InstitutionService extends AbstractContextualizedService<
     InstitutionQuery['institution'],
     InstitutionQueryVariables,

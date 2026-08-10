@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {
     MatCell,
     MatColumnDef,
@@ -71,6 +71,7 @@ function percent(count: number, total: number): number {
     ],
     templateUrl: './statistic.component.html',
     styleUrl: './statistic.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class StatisticComponent {
     @Input({required: true})

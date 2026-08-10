@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, type OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
@@ -59,6 +59,7 @@ import {
     ],
     templateUrl: './collections.component.html',
     styleUrl: './collections.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CollectionsComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

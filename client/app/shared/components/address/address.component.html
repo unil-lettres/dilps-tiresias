@@ -118,7 +118,10 @@
                                 [icon]="icon!"
                                 [position]="
                                     (model?.latitude && model?.longitude
-                                        ? {lat: model?.latitude, lng: model?.longitude}
+                                        ? {
+                                              lat: $safeNavigationMigration(model?.latitude),
+                                              lng: $safeNavigationMigration(model?.longitude),
+                                          }
                                         : null)!
                                 "
                                 [options]="{draggable: !readonly}"

@@ -1,11 +1,9 @@
-import {Directive, inject, Injectable, type OnDestroy, type OnInit} from '@angular/core';
+import {Directive, inject, Service, type OnDestroy, type OnInit} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 import {NavigationStart, Router} from '@angular/router';
 import {filter} from 'rxjs';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 class TooltipCollector {
     public readonly collection = new Set<MatTooltip>();
 

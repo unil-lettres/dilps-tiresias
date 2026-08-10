@@ -4,7 +4,7 @@
  */
 
 import {TypeTextComponent as EcoDevTypeTextComponent} from '@ecodev/natural';
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField} from '@angular/material/form-field';
@@ -12,5 +12,6 @@ import {MatError, MatFormField} from '@angular/material/form-field';
 @Component({
     imports: [MatFormField, MatError, MatInput, FormsModule, ReactiveFormsModule],
     templateUrl: './type-text.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TypeTextComponent extends EcoDevTypeTextComponent {}

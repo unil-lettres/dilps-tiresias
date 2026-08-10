@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateExport,
     type CreateExportInput,
@@ -17,9 +17,7 @@ import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ignoreErrors} from '@ecodev/natural';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class ExportService extends AbstractContextualizedService<
     ExportQuery['export'],
     ExportQueryVariables,

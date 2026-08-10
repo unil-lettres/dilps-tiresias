@@ -1,7 +1,17 @@
 import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 
-import {Component, inject, Input, input, model, type OnChanges, type OnInit, viewChild} from '@angular/core';
+import {
+    Component,
+    inject,
+    Input,
+    input,
+    model,
+    type OnChanges,
+    type OnInit,
+    viewChild,
+    ChangeDetectionStrategy,
+} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, type NgModel} from '@angular/forms';
 import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
@@ -78,7 +88,6 @@ import {
     type CardsQuery,
     CardVisibility,
     CollectionVisibility,
-    type InputMaybe,
     JoinType,
     Site,
     type UpdateCard,
@@ -120,10 +129,10 @@ type CardVisibilities = Visibilities<CardVisibility>;
 export type CollectionVisibilities = Visibilities<CollectionVisibility>;
 
 type InitialCardValues = {
-    page?: InputMaybe<string>;
-    figure?: InputMaybe<string>;
-    table?: InputMaybe<string>;
-    isbn?: InputMaybe<string>;
+    page?: string | null;
+    figure?: string | null;
+    table?: string | null;
+    isbn?: string | null;
 };
 
 @Component({
@@ -171,6 +180,7 @@ type InitialCardValues = {
     ],
     templateUrl: './card.component.html',
     styleUrl: './card.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CardComponent implements OnInit, OnChanges {
     private readonly route = inject(ActivatedRoute);

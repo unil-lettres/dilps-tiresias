@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {type Literal} from '@ecodev/natural';
 import {CardService} from '../../../card/services/card.service';
@@ -15,6 +15,7 @@ import {NgTemplateOutlet} from '@angular/common';
     imports: [NgTemplateOutlet, MatDialogModule, CardComponent, MatCheckbox, FormsModule, MatButton, TruncatePipe],
     templateUrl: './mass-edit.component.html',
     styleUrl: './mass-edit.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class MassEditComponent {
     private readonly cardService = inject(CardService);

@@ -22,6 +22,7 @@ module.exports = tseslint.config(
         rules: {
             'prefer-object-spread': 'error',
             '@angular-eslint/component-max-inline-declarations': 'off', // We use that mostly for testing, so it's fine
+            '@angular-eslint/inject-at-top': 'off',
             '@angular-eslint/no-forward-ref': 'off', // We sometimes need it
             '@angular-eslint/prefer-on-push-component-change-detection': 'off',
             '@angular-eslint/use-component-selector': 'off', // Some components are not template-able and thus do not need selector

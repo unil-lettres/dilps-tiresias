@@ -1,7 +1,6 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
         "outDir": "./dist/out-tsc",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -22,7 +21,6 @@
         "strictStandalone": true,
         "strictInjectionParameters": true,
         "strictInputAccessModifiers": true,
-        "strictTemplates": true,
         // Remove this when https://github.com/angular/angular/issues/37619 is fixed
         "strictSafeNavigationTypes": false,
         "extendedDiagnostics": {

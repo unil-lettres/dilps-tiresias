@@ -1,11 +1,11 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {tagHierarchicConfig} from '../../shared/hierarchic-configurations/TagConfiguration';
 import {TagService} from '../services/tag.service';
 import {type TagFilter} from '../../shared/generated-types';
 import {type HierarchicFiltersConfiguration, NaturalSelectHierarchicComponent} from '@ecodev/natural';
-import {type ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {type ThesaurusDetailDialogExtraData} from '../../shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
@@ -23,6 +23,7 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
         NaturalSelectHierarchicComponent,
     ],
     templateUrl: './tag.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TagComponent extends AbstractDetailDirective<TagService, ThesaurusDetailDialogExtraData> {
     protected hierarchicConfig = tagHierarchicConfig;

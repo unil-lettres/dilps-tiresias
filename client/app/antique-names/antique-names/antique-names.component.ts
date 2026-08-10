@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {AntiqueNameComponent} from '../antique-name/antique-name.component';
 import {AntiqueNameService} from '../services/antique-name.service';
@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './antique-names.component.html',
     styleUrl: './antique-names.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
     public constructor() {

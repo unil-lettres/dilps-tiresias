@@ -8,7 +8,6 @@ const config: CodegenConfig = {
         'client/app/shared/generated-types.ts': {
             // preset: 'near-operation-file',
             plugins: [
-                'typescript',
                 'typescript-operations',
                 {
                     add: {
@@ -32,6 +31,7 @@ const config: CodegenConfig = {
         nonOptionalTypename: true, // Forces `__typename` on all selection sets
         skipTypeNameForRoot: true, // Don't generate __typename for root types
         omitOperationSuffix: true,
+        enumType: 'native',
         scalars: {
             ID: {
                 input: 'string | any',

@@ -1,12 +1,10 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Service} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar, type MatSnackBarRef, type SimpleSnackBar} from '@angular/material/snack-bar';
 import {type Observable} from 'rxjs';
 import {ConfirmComponent, type ConfirmData} from './confirm.component';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class AlertService {
     private readonly dialog = inject(MatDialog);
     private readonly snackBar = inject(MatSnackBar);

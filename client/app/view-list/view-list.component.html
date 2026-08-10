@@ -4,10 +4,10 @@
         <div class="scrolled" [style.marginTop]="scrolledMarginTop()">
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    [length]="dataSource.data?.length"
-                    [pageIndex]="dataSource.data?.pageIndex"
+                    [length]="$safeNavigationMigration(dataSource.data?.length)"
+                    [pageIndex]="$safeNavigationMigration(dataSource.data?.pageIndex)"
                     [pageSizeOptions]="[5, 10, 20, 50]"
-                    [pageSize]="dataSource.data?.pageSize"
+                    [pageSize]="$safeNavigationMigration(dataSource.data?.pageSize)"
                     [showFirstLastButtons]="true"
                     (page)="loadMore($event)"
                 />
@@ -181,10 +181,10 @@
             }
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    [length]="dataSource.data?.length"
-                    [pageIndex]="dataSource.data?.pageIndex"
+                    [length]="$safeNavigationMigration(dataSource.data?.length)"
+                    [pageIndex]="$safeNavigationMigration(dataSource.data?.pageIndex)"
                     [pageSizeOptions]="[5, 10, 20, 50]"
-                    [pageSize]="dataSource.data?.pageSize"
+                    [pageSize]="$safeNavigationMigration(dataSource.data?.pageSize)"
                     [showFirstLastButtons]="true"
                     (page)="loadMore($event)"
                 />

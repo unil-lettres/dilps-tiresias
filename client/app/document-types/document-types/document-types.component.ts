@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {DocumentTypeComponent} from '../document-type/document-type.component';
 import {DocumentTypeService} from '../services/document-type.service';
@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './document-types.component.html',
     styleUrl: './document-types.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
     public constructor() {

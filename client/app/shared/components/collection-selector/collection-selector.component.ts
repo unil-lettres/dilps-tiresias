@@ -1,4 +1,4 @@
-import {Component, inject, type OnInit} from '@angular/core';
+import {Component, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
@@ -45,8 +45,7 @@ export type CollectionSelectorData =
       };
 
 export type CollectionSelectorResult =
-    | CollectionsQuery['collections']['items'][0]
-    | CreateCollection['createCollection'];
+    CollectionsQuery['collections']['items'][0] | CreateCollection['createCollection'];
 
 @Component({
     selector: 'app-collection-selector',
@@ -70,6 +69,7 @@ export type CollectionSelectorResult =
     ],
     templateUrl: './collection-selector.component.html',
     styleUrl: './collection-selector.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CollectionSelectorComponent implements OnInit {
     protected readonly collectionService = inject(CollectionService);

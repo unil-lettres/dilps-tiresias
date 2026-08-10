@@ -87,10 +87,10 @@
         }
         @if (dataSource.data?.length) {
             <mat-paginator
-                [length]="dataSource.data?.length"
-                [pageIndex]="dataSource.data?.pageIndex"
+                [length]="$safeNavigationMigration(dataSource.data?.length)"
+                [pageIndex]="$safeNavigationMigration(dataSource.data?.pageIndex)"
                 [pageSizeOptions]="pageSizeOptions"
-                [pageSize]="dataSource.data?.pageSize"
+                [pageSize]="$safeNavigationMigration(dataSource.data?.pageSize)"
                 (page)="pagination($event)"
             />
         }

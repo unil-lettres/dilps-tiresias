@@ -1,9 +1,9 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
 import {InstitutionService} from '../services/institution.service';
-import {type ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {type ThesaurusDetailDialogExtraData} from '../../shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {AddressComponent} from '../../shared/components/address/address.component';
 import {FormsModule} from '@angular/forms';
@@ -24,6 +24,7 @@ import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
         UniqueValidatorDirective,
     ],
     templateUrl: './institution.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class InstitutionComponent extends AbstractDetailDirective<InstitutionService, ThesaurusDetailDialogExtraData> {
     public constructor() {

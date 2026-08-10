@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {TagService} from '../services/tag.service';
 import {TagComponent} from '../tag/tag.component';
@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './tags.component.html',
     styleUrl: './tags.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {
     public constructor() {

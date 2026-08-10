@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {ChangeService} from '../services/change.service';
 import {NaturalAbstractList, TypedMatCellDef} from '@ecodev/natural';
 import {MatPaginator} from '@angular/material/paginator';
@@ -46,6 +46,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './changes.component.html',
     styleUrl: './changes.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     protected displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];

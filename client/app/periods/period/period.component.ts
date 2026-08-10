@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {periodHierarchicConfig} from '../../shared/hierarchic-configurations/PeriodConfiguration';
@@ -6,7 +6,7 @@ import {PeriodService} from '../services/period.service';
 import {formatYearRange} from '../../shared/services/utility';
 import {type HierarchicFiltersConfiguration, type Literal, NaturalSelectHierarchicComponent} from '@ecodev/natural';
 import {type PeriodFilter} from '../../shared/generated-types';
-import {type ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {type ThesaurusDetailDialogExtraData} from '../../shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
@@ -24,6 +24,7 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
         NaturalSelectHierarchicComponent,
     ],
     templateUrl: './period.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class PeriodComponent extends AbstractDetailDirective<PeriodService, ThesaurusDetailDialogExtraData> {
     protected hierarchicConfig = periodHierarchicConfig;

@@ -1,8 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {AntiqueNameService} from '../services/antique-name.service';
-import {type ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {type ThesaurusDetailDialogExtraData} from '../../shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
@@ -12,6 +12,7 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
     selector: 'app-antique-name',
     imports: [MatDialogModule, MatFormField, MatLabel, MatInput, FormsModule, DialogFooterComponent],
     templateUrl: './antique-name.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class AntiqueNameComponent extends AbstractDetailDirective<AntiqueNameService, ThesaurusDetailDialogExtraData> {
     public constructor() {

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {NaturalAbstractModelService} from '@ecodev/natural';
 import {createFileMutation, deleteFileMutation, filesQuery} from './file.queries';
 import {
@@ -11,9 +11,7 @@ import {
     type FilesQueryVariables,
 } from '../../shared/generated-types';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class FileService extends NaturalAbstractModelService<
     never,
     never,

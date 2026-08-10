@@ -1,4 +1,4 @@
-import {Component, inject, type OnInit} from '@angular/core';
+import {Component, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatAnchor} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -35,6 +35,7 @@ import {ChangeService} from '../services/change.service';
     ],
     templateUrl: './change.component.html',
     styleUrl: './change.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ChangeComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

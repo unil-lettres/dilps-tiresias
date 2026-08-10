@@ -1,4 +1,4 @@
-import {Component, input, Input, output} from '@angular/core';
+import {Component, input, Input, output, ChangeDetectionStrategy} from '@angular/core';
 import {type FormControl} from '@angular/forms';
 import {StampComponent, type Stamped} from '../stamp/stamp.component';
 import {MatIcon} from '@angular/material/icon';
@@ -25,6 +25,7 @@ type Model = Stamped & {
     imports: [StampComponent, MatButton, MatDialogModule, MatIcon, NaturalIconDirective],
     templateUrl: './dialog-footer.component.html',
     styleUrl: './dialog-footer.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class DialogFooterComponent {
     public readonly disableCreateAndUpdate = input<boolean>(false);

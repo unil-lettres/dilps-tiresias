@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {DatePipe} from '@angular/common';
 
 type User = {login: string};
@@ -15,6 +15,7 @@ export type Stamped = {
     imports: [DatePipe],
     templateUrl: './stamp.component.html',
     styleUrl: './stamp.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class StampComponent {
     @Input({required: true}) public item!: Stamped;

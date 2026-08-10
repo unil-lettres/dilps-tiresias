@@ -1,4 +1,4 @@
-import {Component, computed, inject, type OnInit, signal} from '@angular/core';
+import {Component, computed, inject, type OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
@@ -78,6 +78,7 @@ function isExcel(file: File): boolean {
     ],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class HomeComponent implements OnInit {
     protected readonly route = inject(ActivatedRoute);

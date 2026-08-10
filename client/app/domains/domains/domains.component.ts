@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {DomainComponent} from '../domain/domain.component';
 import {DomainService} from '../services/domain.service';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './domains.component.html',
     styleUrl: './domains.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
     public constructor() {

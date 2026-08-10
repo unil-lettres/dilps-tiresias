@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {NewsComponent} from '../news/news.component';
 import {NewsService} from '../services/news.service';
@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './newses.component.html',
     styleUrl: './newses.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];

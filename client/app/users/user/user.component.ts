@@ -5,7 +5,7 @@ import {
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
 } from '@ecodev/natural';
-import {Component, inject, viewChild, signal} from '@angular/core';
+import {Component, inject, viewChild, signal, ChangeDetectionStrategy} from '@angular/core';
 import {
     type AbstractControl,
     FormControl,
@@ -84,6 +84,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class UserComponent extends AbstractDetailDirective<
     UserService,

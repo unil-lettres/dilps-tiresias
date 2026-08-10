@@ -1,4 +1,4 @@
-import {Component, inject, Input, type OnInit} from '@angular/core';
+import {Component, inject, Input, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {type CardQuery, type FileInput, type FileMinimal, type FilesQueryVariables} from '../../shared/generated-types';
 import {
     type FileSelection,
@@ -45,6 +45,7 @@ type Tuple = {
     ],
     templateUrl: './files.component.html',
     styleUrl: './files.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class FilesComponent implements OnInit {
     private readonly fileService = inject(FileService);

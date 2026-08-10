@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {mapValues} from 'es-toolkit';
 
 export type Address = {
@@ -17,9 +17,7 @@ type PlaceModel =
 
 type Config = Record<string, keyof Pick<google.maps.GeocoderAddressComponent, 'long_name' | 'short_name'>>;
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class AddressService {
     /**
      * Binds gmap semantic with string we should retrieve

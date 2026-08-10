@@ -1,4 +1,4 @@
-import {Component, inject, type OnInit} from '@angular/core';
+import {Component, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime} from 'rxjs/operators';
@@ -31,6 +31,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ],
     templateUrl: './quizz.component.html',
     styleUrl: './quizz.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class QuizzComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);

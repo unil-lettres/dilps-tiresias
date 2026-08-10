@@ -1,4 +1,4 @@
-import {Component, inject, type OnInit, signal} from '@angular/core';
+import {Component, inject, type OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -55,6 +55,7 @@ import {MatDivider} from '@angular/material/divider';
     ],
     templateUrl: './collection.component.html',
     styleUrl: './collection.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CollectionComponent extends AbstractDetailDirective<CollectionService> implements OnInit {
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
@@ -85,9 +86,8 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
     };
 
     public institution:
-        | CollectionQuery['collection']['institution']
-        | UpdateCollection['updateCollection']['institution']
-        | null = null;
+        CollectionQuery['collection']['institution'] | UpdateCollection['updateCollection']['institution'] | null =
+        null;
 
     protected hierarchicConfig = collectionsHierarchicConfig;
     protected ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];

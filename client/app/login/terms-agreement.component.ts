@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 
@@ -6,5 +6,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     selector: 'app-terms-agreement',
     imports: [MatDialogModule, MatButton],
     templateUrl: './terms-agreement.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TermsAgreementComponent {}

@@ -1,4 +1,4 @@
-import {DestroyRef, inject, Injectable} from '@angular/core';
+import {DestroyRef, inject, Service} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, type Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -41,9 +41,7 @@ import {
 import {ignoreErrors, LOCAL_STORAGE} from '@ecodev/natural';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class UserService extends AbstractContextualizedService<
     UserQuery['user'],
     UserQueryVariables,

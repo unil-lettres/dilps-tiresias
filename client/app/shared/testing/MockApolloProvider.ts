@@ -1,7 +1,7 @@
 import {Apollo} from 'apollo-angular';
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {SchemaLink} from '@apollo/client/link/schema';
-import {inject, Injectable, NgZone} from '@angular/core';
+import {inject, Service, NgZone} from '@angular/core';
 import {buildClientSchema} from 'graphql';
 import {addMocksToSchema} from '@graphql-tools/mock';
 import {schema as introspectionResult} from '../../../../data/tmp/schema';
@@ -10,9 +10,7 @@ import {apolloDefaultOptions} from '../config/apollo-options.provider';
 /**
  * A mock Apollo to be used in tests only
  */
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 class MockApollo extends Apollo {
     public constructor() {
         super(inject(NgZone));
