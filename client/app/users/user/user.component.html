@@ -155,7 +155,7 @@
     <mat-dialog-actions>
         <app-dialog-footer
             class="nat-expand"
-            [canCreate]="$safeNavigationMigration(user?.globalPermissions?.user?.create)"
+            [canCreate]="user?.globalPermissions?.user?.create"
             [readOnly]="false"
             [formCtrl]="passwordConfirmationCtrl"
             [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"

@@ -119,8 +119,8 @@
                                 [position]="
                                     (model?.latitude && model?.longitude
                                         ? {
-                                              lat: $safeNavigationMigration(model?.latitude),
-                                              lng: $safeNavigationMigration(model?.longitude),
+                                              lat: model?.latitude,
+                                              lng: model?.longitude,
                                           }
                                         : null)!
                                 "

@@ -29,7 +29,7 @@
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
-        [canCreate]="$safeNavigationMigration(user?.globalPermissions?.artist?.create)"
+        [canCreate]="user?.globalPermissions?.artist?.create"
         [readOnly]="data.item.readOnly"
         [disableCreateAndUpdate]="!!name.invalid"
         [item]="data.item"
