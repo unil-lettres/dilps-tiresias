@@ -14,7 +14,7 @@
         "lint": "ng lint --max-warnings 0",
         "e2e": "playwright install chromium --with-deps && playwright test",
         "codegen": "./bin/dump-schema && graphql-codegen --config codegen.ts",
-        "set-env": "ts-node scripts/setenv.ts",
+        "set-env": "./bin/setenv.ts",
         "clean-env": "prettier --write client/environments/*",
         "report-build": "bugsnag-build-reporter -n 'Dilps/Tiresias Deployer'"
     },
@@ -73,7 +73,6 @@
         "postcss": "^8.5.18",
         "prettier": "3.9.6",
         "prettier-plugin-css-order": "^2.2.0",
-        "ts-node": "^10.9.2",
         "typescript": "~6.0.3",
         "typescript-eslint": "^8.62.0",
         "vitest": "^4.1.10"
