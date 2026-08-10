@@ -6,19 +6,14 @@ const config: CodegenConfig = {
     documents: 'client/**/*.ts',
     generates: {
         'client/app/shared/generated-types.ts': {
-            // preset: 'near-operation-file',
-            plugins: [
-                'typescript-operations',
-                {
-                    add: {
-                        content: '/* eslint-disable */',
-                    },
-                },
-            ],
+            plugins: ['typescript-operations'],
         },
     },
     hooks: {
-        afterAllFileWrite: ["prettier --experimental-cli --ignore-path '' --write"],
+        afterAllFileWrite: [
+            "sed -i'' '1s/^/\\/* eslint-disable *\\/\\n/'",
+            "prettier --experimental-cli --ignore-path '' --write",
+        ],
     },
     config: {
         // immutableTypes:true, // TODO enable this when we have time
