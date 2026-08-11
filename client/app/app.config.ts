@@ -6,7 +6,7 @@ import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {routes} from './app.routes';
 import {Apollo} from 'apollo-angular';
 import {type Literal, naturalProviders, provideIcons, provideThemes} from '@ecodev/natural';
-import {provideHttpClient, withInterceptors, withJsonpSupport, withXhr} from '@angular/common/http';
+import {provideHttpClient, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {activityInterceptor} from './shared/interceptors/activity.interceptor';
 import {MAT_TOOLTIP_DEFAULT_OPTIONS, type MatTooltipDefaultOptions} from '@angular/material/tooltip';
 import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
@@ -62,7 +62,7 @@ export const appConfig: ApplicationConfig = {
         apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
         // eslint-disable-next-line @typescript-eslint/no-deprecated
-        provideHttpClient(withXhr(), withInterceptors([activityInterceptor]), withJsonpSupport()),
+        provideHttpClient(withInterceptors([activityInterceptor]), withJsonpSupport()),
         provideRouter(
             routes,
             withRouterConfig({
