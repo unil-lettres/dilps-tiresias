@@ -51,11 +51,11 @@ importers:
         specifier: ^8.9.0
         version: 8.10.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(@bugsnag/js@8.10.0)
       '@ecodev/angular-natural-gallery':
-        specifier: ^25.0.0
-        version: 25.0.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))
+        specifier: ^26.0.0
+        version: 26.0.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))
       '@ecodev/natural':
-        specifier: 72.1.1
-        version: 72.1.1(9d7d20fa5473d4c087c247042c639f0e)
+        specifier: 73.0.1
+        version: 73.0.1(9d7d20fa5473d4c087c247042c639f0e)
       '@ecodev/natural-layout':
         specifier: ^2.0.6
         version: 2.0.6
@@ -636,11 +636,11 @@ packages:
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
 
-  '@ecodev/angular-natural-gallery@25.0.0':
-    resolution: {integrity: sha512-kC1+QlG2dfYBt6+8ppMiKWntPKbFCl2m5bonXsM17cY9jJ+Skycps1El1b72V68hJP6wXQlgkISZim2mqH4k7Q==}
+  '@ecodev/angular-natural-gallery@26.0.0':
+    resolution: {integrity: sha512-kEONRZGKaa2NZ2vjO1evjDNlfv6m5Lg6ln9/gAeTRL6fJ6F04A2bb5pAE5wfeGvFk9gPFw2Ph1ZCYVCEB4RjjQ==}
     peerDependencies:
-      '@angular/common': ^21.1.0
-      '@angular/core': ^21.1.0
+      '@angular/common': ^22.1.0
+      '@angular/core': ^22.1.0
 
   '@ecodev/natural-gallery-js@11.1.3':
     resolution: {integrity: sha512-fBiangkCGiv0hUbTUjQRerV6Hxs8e4VxIEpXiQbOq9oTZZ/KZCRiZ48UfemEujMMqsE5Orh5SPLICzj+t9flaw==}
@@ -649,18 +649,18 @@ packages:
   '@ecodev/natural-layout@2.0.6':
     resolution: {integrity: sha512-L24MIxIcN3AZhdfv97X+RlVmSs5M0IR/UBt6YBDGPpv0YuxfBBkquVvdhcD2xyMODxs+bjttfJoQ1iw5P20tUw==}
 
-  '@ecodev/natural@72.1.1':
-    resolution: {integrity: sha512-UH/MFM0Ez/Hb7dAwl/IqEgeo0huOozXZG9j7VBgZpaXPV7KLvvGJzoO7R9NmcamEBiNdpby5u7ZjYvEQSAYPhg==}
+  '@ecodev/natural@73.0.1':
+    resolution: {integrity: sha512-2eVTld33ZwwY3IUEnwwxRiO6C8pyw/F9Rz2lri76meW3eQ8ZrB3o2vmz5wNAylZ5zNg8XzinOc0VHg/2tzT/mg==}
     hasBin: true
     peerDependencies:
-      '@angular/cdk': ^21.1.0
-      '@angular/common': ^21.1.0
-      '@angular/core': ^21.1.0
-      '@angular/forms': ^21.1.0
-      '@angular/localize': ^21.1.0
-      '@angular/material': ^21.1.0
-      '@angular/platform-browser': ^21.1.0
-      '@angular/router': ^21.1.0
+      '@angular/cdk': ^22.1.0
+      '@angular/common': ^22.1.0
+      '@angular/core': ^22.1.0
+      '@angular/forms': ^22.1.0
+      '@angular/localize': ^22.1.0
+      '@angular/material': ^22.1.0
+      '@angular/platform-browser': ^22.1.0
+      '@angular/router': ^22.1.0
       apollo-angular: ^14.1.0
       es-toolkit: ^1.39.7
       rxjs: ^7.8.2
@@ -4853,7 +4853,7 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
-  '@ecodev/angular-natural-gallery@25.0.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))':
+  '@ecodev/angular-natural-gallery@26.0.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))':
     dependencies:
       '@angular/common': 22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2)
@@ -4864,7 +4864,7 @@ snapshots:
 
   '@ecodev/natural-layout@2.0.6': {}
 
-  '@ecodev/natural@72.1.1(9d7d20fa5473d4c087c247042c639f0e)':
+  '@ecodev/natural@73.0.1(9d7d20fa5473d4c087c247042c639f0e)':
     dependencies:
       '@angular/cdk': 22.1.1(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@22.1.1(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
