@@ -21,7 +21,7 @@
         "strictStandalone": true,
         "strictInjectionParameters": true,
         "strictInputAccessModifiers": true,
-        // Remove this when https://github.com/angular/angular/issues/37619 is fixed
+        // Remove this when https://github.com/angular/angular/issues/70143 is fixed
         "strictSafeNavigationTypes": false,
         "extendedDiagnostics": {
             "defaultCategory": "error",
