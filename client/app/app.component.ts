@@ -103,9 +103,10 @@ class DelayedProgressBar {
 export class AppComponent {
     private readonly networkActivityService = inject(NetworkActivityService);
     private readonly progressService = inject(ProgressService);
-    private readonly ngProgressRef = viewChild.required(NgProgressRef);
     private readonly themeService = inject(NaturalThemeService);
     private readonly site = inject(SITE);
+
+    private readonly ngProgressRef = viewChild.required(NgProgressRef);
 
     /**
      * When first route is loaded, hide the app-bootloader component

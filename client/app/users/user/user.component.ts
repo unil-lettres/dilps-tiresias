@@ -90,11 +90,11 @@ export class UserComponent extends AbstractDetailDirective<
     UserService,
     {password?: string; isSelf?: boolean; initialView?: 'properties' | 'collections'}
 > {
-    protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
     private readonly linkService = inject(NaturalLinkMutationService);
 
+    protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
     protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);
