@@ -52,7 +52,7 @@ services:
         container_name: dilps-tiresias-httpd
 
     dilps-tiresias-mysql:
-        image: mariadb:11.4
+        image: mariadb:12.3
         env_file:
             - ./dev/.env
         environment:
