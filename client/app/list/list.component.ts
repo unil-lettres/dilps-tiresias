@@ -416,7 +416,7 @@ export class ListComponent
     }
 
     protected override handleHistoryNavigation(): void {
-        onHistoryEvent(this.router).pipe(
+        onHistoryEvent(this.router, this.route).pipe(
             takeUntilDestroyed(this.destroyRef),
             filter(() => {
                 if (this.routeReuseStatus === RouteReuseStatus.retrieving) {
