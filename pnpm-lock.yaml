@@ -54,8 +54,8 @@ importers:
         specifier: ^26.0.0
         version: 26.0.0(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))
       '@ecodev/natural':
-        specifier: 73.1.1
-        version: 73.1.1(bc2edda789367b7424f3e328a9f724e4)
+        specifier: 73.2.0
+        version: 73.2.0(bc2edda789367b7424f3e328a9f724e4)
       '@ecodev/natural-layout':
         specifier: ^2.0.6
         version: 2.0.6
@@ -649,8 +649,8 @@ packages:
   '@ecodev/natural-layout@2.0.6':
     resolution: {integrity: sha512-L24MIxIcN3AZhdfv97X+RlVmSs5M0IR/UBt6YBDGPpv0YuxfBBkquVvdhcD2xyMODxs+bjttfJoQ1iw5P20tUw==}
 
-  '@ecodev/natural@73.1.1':
-    resolution: {integrity: sha512-lqYUkUP5yyVQRfdqcZY0nMYkhOVUvCSFR0su4ZT2iuMp7g8mqkxBOU14/buJ1yJqzq8TbaJuWi3IOvheOEjbnQ==}
+  '@ecodev/natural@73.2.0':
+    resolution: {integrity: sha512-amAX0SVWDQ2z6In/dQI7jXXVA4JbXIFh88AX47Si1F4+v4pMXUmfNdCx1mAS6ktM+PTUg0p1ACHR3NpzxbO2QA==}
     hasBin: true
     peerDependencies:
       '@angular/cdk': ^22.1.0
@@ -4864,7 +4864,7 @@ snapshots:
 
   '@ecodev/natural-layout@2.0.6': {}
 
-  '@ecodev/natural@73.1.1(bc2edda789367b7424f3e328a9f724e4)':
+  '@ecodev/natural@73.2.0(bc2edda789367b7424f3e328a9f724e4)':
     dependencies:
       '@angular/cdk': 22.1.1(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@22.1.1(@angular/common@22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 22.1.1(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
