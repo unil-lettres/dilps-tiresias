@@ -1,4 +1,4 @@
-import {NaturalHierarchicConfiguration} from '@ecodev/natural';
+import {type NaturalHierarchicConfiguration} from '@ecodev/natural';
 import {DomainService} from '../../domains/services/domain.service';
 import {formatItemNameWithRoot} from '../services/utility';
 

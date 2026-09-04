@@ -1,22 +1,24 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    CardDomainsQuery,
-    CardsQueryVariables,
-    CreateDomain,
-    CreateDomainVariables,
-    DeleteDomains,
-    DomainQuery,
-    DomainInput,
-    DomainsQuery,
-    DomainsQueryVariables,
-    DomainQueryVariables,
-    UpdateDomain,
-    UpdateDomainVariables,
+    type CardDomainsQuery,
+    type CardsQueryVariables,
+    type CreateDomain,
+    type CreateDomainVariables,
+    type DeleteDomains,
+    type DomainQuery,
+    type DomainInput,
+    type DomainsQuery,
+    type DomainsQueryVariables,
+    type DomainQueryVariables,
+    type UpdateDomain,
+    type UpdateDomainVariables,
+    type DeleteDomainsVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {cardDomainsQuery, createDomain, deleteDomains, domainQuery, domainsQuery, updateDomain} from './domain.queries';
+import {ignoreErrors} from '@ecodev/natural';
 
 @Injectable({
     providedIn: 'root',
@@ -31,7 +33,7 @@ export class DomainService extends AbstractContextualizedService<
     UpdateDomain['updateDomain'],
     UpdateDomainVariables,
     DeleteDomains['deleteDomains'],
-    never
+    DeleteDomainsVariables
 > {
     public constructor() {
         super('domain', domainQuery, domainsQuery, createDomain, updateDomain, deleteDomains);
@@ -51,6 +53,9 @@ export class DomainService extends AbstractContextualizedService<
                 query: cardDomainsQuery,
                 variables: variables,
             })
-            .pipe(map(result => result.data.cardDomains));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.cardDomains),
+            );
     }
 }

@@ -1,5 +1,5 @@
 import {Apollo} from 'apollo-angular';
-import {ApolloClient, InMemoryCache} from '@apollo/client/core';
+import {ApolloClient, InMemoryCache} from '@apollo/client';
 import {SchemaLink} from '@apollo/client/link/schema';
 import {inject, Injectable, NgZone} from '@angular/core';
 import {buildClientSchema} from 'graphql';
@@ -23,7 +23,7 @@ class MockApollo extends Apollo {
      * This will create a fake ApolloClient who can responds to queries
      * against our real schema with random values
      */
-    private createMockClient(): ApolloClient<unknown> {
+    private createMockClient(): ApolloClient {
         const schema = buildClientSchema(introspectionResult.data as any);
 
         // Configure hardcoded mocked values on a type basis.

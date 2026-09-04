@@ -1,13 +1,13 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, type OnDestroy, type OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {type Subscription} from 'rxjs';
 import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
 import {SITE} from '../app.config';
-import {Site, ViewerQuery} from '../shared/generated-types';
+import {Site, type ViewerQuery} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';
 import {MatInput} from '@angular/material/input';

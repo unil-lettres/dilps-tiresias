@@ -1,21 +1,22 @@
 import {inject, Injectable} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {forkJoin, Observable} from 'rxjs';
+import {forkJoin, type Observable} from 'rxjs';
 import {
-    CardsQuery,
-    CollectionQuery,
-    CollectionInput,
-    CollectionsQuery,
-    CollectionsQueryVariables,
-    CollectionQueryVariables,
+    type CardsQuery,
+    type CollectionInput,
+    type CollectionQuery,
+    type CollectionQueryVariables,
+    type CollectionsQuery,
+    type CollectionsQueryVariables,
     CollectionVisibility,
-    CreateCollection,
-    CreateCollectionVariables,
-    DeleteCollections,
-    LinkCollectionToCollection,
-    LinkCollectionToCollectionVariables,
-    UpdateCollection,
-    UpdateCollectionVariables,
+    type CreateCollection,
+    type CreateCollectionVariables,
+    type DeleteCollections,
+    type DeleteCollectionsVariables,
+    type LinkCollectionToCollection,
+    type LinkCollectionToCollectionVariables,
+    type UpdateCollection,
+    type UpdateCollectionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -26,7 +27,7 @@ import {
     linkCollectionToCollection,
     updateCollection,
 } from './collection.queries';
-import {FakeCollection} from './fake-collection.resolver';
+import {type FakeCollection} from './fake-collection.resolver';
 
 @Injectable({
     providedIn: 'root',
@@ -41,7 +42,7 @@ export class CollectionService extends AbstractContextualizedService<
     UpdateCollection['updateCollection'],
     UpdateCollectionVariables,
     DeleteCollections['deleteCollections'],
-    never
+    DeleteCollectionsVariables
 > {
     private readonly linkService = inject(NaturalLinkMutationService);
 

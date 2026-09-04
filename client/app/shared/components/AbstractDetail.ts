@@ -1,20 +1,20 @@
-import {Directive, inject, OnInit} from '@angular/core';
+import {Directive, inject, type OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {merge} from 'es-toolkit';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
 import {
-    ExtractTallOne,
-    ExtractTone,
-    ExtractTupdate,
-    ExtractVcreate,
-    Literal,
-    NaturalAbstractModelService,
-    PaginatedData,
-    QueryVariables,
-    WithId,
+    type ExtractTallOne,
+    type ExtractTone,
+    type ExtractTupdate,
+    type ExtractVcreate,
+    type Literal,
+    type NaturalAbstractModelService,
+    type PaginatedData,
+    type QueryVariables,
+    type WithId,
 } from '@ecodev/natural';
-import {ViewerQuery} from '../generated-types';
+import {type ViewerQuery} from '../generated-types';
 
 type Data<TService, Extra> = {
     item: {id?: string} & (ExtractTone<TService> | ExtractVcreate<TService>['input']) & Extra;
@@ -82,18 +82,22 @@ export class AbstractDetailDirective<
     }
 
     public update(): void {
-        this.service.updateNow(this.data.item).subscribe(model => {
-            this.alertService.info('Mis à jour');
-            this.dialogRef.close(this.data.item);
-            this.postUpdate(model);
-        });
+        this.service
+            .updateNow(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
+            .subscribe(model => {
+                this.alertService.info('Mis à jour');
+                this.dialogRef.close(this.data.item);
+                this.postUpdate(model);
+            });
     }
 
     public create(): void {
-        this.service.create(this.data.item).subscribe(newItem => {
-            this.alertService.info('Créé');
-            this.dialogRef.close(newItem);
-        });
+        this.service
+            .create(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
+            .subscribe(newItem => {
+                this.alertService.info('Créé');
+                this.dialogRef.close(newItem);
+            });
     }
 
     public delete(): void {
@@ -110,10 +114,16 @@ export class AbstractDetailDirective<
                 if (!confirmed || !this.isUpdatePage()) {
                     return;
                 }
-                this.service.delete([this.data.item]).subscribe(() => {
-                    this.alertService.info('Supprimé');
-                    this.dialogRef.close(null);
-                });
+                this.service
+                    .delete([this.data.item], {
+                        // Wait till we refresh the list under the dialog before closing the dialog, to avoid re-clicking on the just deleted item
+                        refetchQueries: 'active',
+                        awaitRefetchQueries: true,
+                    })
+                    .subscribe(() => {
+                        this.alertService.info('Supprimé');
+                        this.dialogRef.close(null);
+                    });
             });
     }
 

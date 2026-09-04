@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
+import {type ThesaurusDetailDialogExtraData} from 'client/app/shared/components';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';

@@ -1,13 +1,13 @@
 import {
-    AfterViewInit,
+    type AfterViewInit,
     Component,
     computed,
     DestroyRef,
     effect,
-    ElementRef,
+    type ElementRef,
     inject,
     input,
-    OnInit,
+    type OnInit,
     output,
     signal,
     viewChild,
@@ -15,19 +15,19 @@ import {
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {NaturalGalleryComponent} from '@ecodev/angular-natural-gallery';
-import {NaturalDataSource, PaginationInput} from '@ecodev/natural';
+import {type NaturalDataSource, type PaginationInput} from '@ecodev/natural';
 import {
-    CustomEventDetailMap,
-    Item,
+    type CustomEventDetailMap,
+    type Item,
     LabelVisibility,
-    ModelAttributes,
-    NaturalGalleryOptions,
+    type ModelAttributes,
+    type NaturalGalleryOptions,
 } from '@ecodev/natural-gallery-js';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
-import {ViewInterface} from '../list/list.component';
+import {type ViewInterface} from '../list/list.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
-import {CardsQuery} from '../shared/generated-types';
+import {type CardsQuery} from '../shared/generated-types';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 export type ContentChange = {

@@ -1,13 +1,13 @@
-import {ComponentType} from '@angular/cdk/overlay';
-import {inject, OnInit} from '@angular/core';
+import {type ComponentType} from '@angular/cdk/overlay';
+import {inject, type OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {
-    ExtractTallOne,
-    Literal,
+    type ExtractTallOne,
+    type Literal,
     NaturalAbstractList,
-    NaturalAbstractModelService,
-    PaginatedData,
-    QueryVariables,
+    type NaturalAbstractModelService,
+    type PaginatedData,
+    type QueryVariables,
 } from '@ecodev/natural';
 
 export class AbstractList<

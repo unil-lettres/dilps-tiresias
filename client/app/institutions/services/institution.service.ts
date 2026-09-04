@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateInstitution,
-    CreateInstitutionVariables,
-    DeleteInstitutions,
-    InstitutionQuery,
-    InstitutionInput,
-    InstitutionsQuery,
-    InstitutionsQueryVariables,
-    InstitutionQueryVariables,
-    UpdateInstitution,
-    UpdateInstitutionVariables,
+    type CreateInstitution,
+    type CreateInstitutionVariables,
+    type DeleteInstitutions,
+    type InstitutionQuery,
+    type InstitutionInput,
+    type InstitutionsQuery,
+    type InstitutionsQueryVariables,
+    type InstitutionQueryVariables,
+    type UpdateInstitution,
+    type UpdateInstitutionVariables,
+    type DeleteInstitutionsVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -33,7 +34,7 @@ export class InstitutionService extends AbstractContextualizedService<
     UpdateInstitution['updateInstitution'],
     UpdateInstitutionVariables,
     DeleteInstitutions['deleteInstitutions'],
-    never
+    DeleteInstitutionsVariables
 > {
     public constructor() {
         super(

@@ -1,17 +1,17 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, type OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {UserService} from '../../../users/services/user.service';
 import {
-    CardsQuery,
-    CollectionFilter,
-    CollectionsQuery,
-    CreateCollection,
+    type CardsQuery,
+    type CollectionFilter,
+    type CollectionsQuery,
+    type CreateCollection,
     LogicalOperator,
     UserRole,
 } from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
-import {FakeCollection} from '../../../collections/services/fake-collection.resolver';
+import {type FakeCollection} from '../../../collections/services/fake-collection.resolver';
 import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatIcon} from '@angular/material/icon';

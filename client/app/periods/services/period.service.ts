@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {
-    CreatePeriod,
-    CreatePeriodVariables,
-    DeletePeriods,
-    PeriodQuery,
-    PeriodInput,
-    PeriodsQuery,
-    PeriodsQueryVariables,
-    PeriodQueryVariables,
-    UpdatePeriod,
-    UpdatePeriodVariables,
+    type CreatePeriod,
+    type CreatePeriodVariables,
+    type DeletePeriods,
+    type PeriodQuery,
+    type PeriodInput,
+    type PeriodsQuery,
+    type PeriodsQueryVariables,
+    type PeriodQueryVariables,
+    type UpdatePeriod,
+    type UpdatePeriodVariables,
+    type DeletePeriodsVariables,
 } from '../../shared/generated-types';
 import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -27,7 +28,7 @@ export class PeriodService extends AbstractContextualizedService<
     UpdatePeriod['updatePeriod'],
     UpdatePeriodVariables,
     DeletePeriods['deletePeriods'],
-    never
+    DeletePeriodsVariables
 > {
     public constructor() {
         super('period', periodQuery, periodsQuery, createPeriod, updatePeriod, deletePeriods);

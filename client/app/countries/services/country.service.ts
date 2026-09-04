@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {NaturalAbstractModelService} from '@ecodev/natural';
 import {
-    CountriesQuery,
-    CountriesQueryVariables,
-    CountryQuery,
-    CountryQueryVariables,
+    type CountriesQuery,
+    type CountriesQueryVariables,
+    type CountryQuery,
+    type CountryQueryVariables,
 } from '../../shared/generated-types';
 import {countriesQuery, countryQuery} from './country.queries';
 

@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import {type Routes} from '@angular/router';
 import {AntiqueNamesComponent} from './antique-names/antique-names/antique-names.component';
 import {ArtistsComponent} from './artists/artists/artists.component';
 import {CardComponent} from './card/card.component';
@@ -19,8 +19,8 @@ import {PeriodsComponent} from './periods/periods/periods.component';
 import {QuizzComponent} from './quizz/quizz.component';
 import {EmptyComponent} from './shared/components/empty/empty.component';
 import {
-    CardFilterGroupCondition,
-    CollectionFilterGroupCondition,
+    type CardFilterGroupCondition,
+    type CollectionFilterGroupCondition,
     CollectionVisibility,
     UserRole,
 } from './shared/generated-types';

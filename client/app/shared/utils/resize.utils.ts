@@ -1,4 +1,4 @@
-import {ElementRef, Signal, effect, signal} from '@angular/core';
+import {type ElementRef, type Signal, effect, signal} from '@angular/core';
 
 /**
  * Creates a readonly signal that emits the `offsetWidth` of the element

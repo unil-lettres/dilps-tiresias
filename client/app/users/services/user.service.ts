@@ -1,28 +1,30 @@
 import {DestroyRef, inject, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {fromEvent, Observable, Subject, switchMap} from 'rxjs';
+import {fromEvent, type Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
-    CardsQuery,
+    type CardsQuery,
     CardVisibility,
-    CreateUser,
-    CreateUserVariables,
-    DeleteUsers,
-    Login,
-    LoginVariables,
-    Logout,
-    UpdateUser,
-    UpdateUserVariables,
-    UserInput,
-    UserQuery,
-    UserQueryVariables,
+    type CreateUser,
+    type CreateUserVariables,
+    type DeleteUsers,
+    type DeleteUsersVariables,
+    type Login,
+    type LoginVariables,
+    type Logout,
+    type UpdateUser,
+    type UpdateUserVariables,
+    type UserInput,
+    type UserQuery,
+    type UserQueryVariables,
     UserRole,
-    UserRolesAvailablesQuery,
-    UserRolesAvailablesQueryVariables,
-    UsersQuery,
-    UsersQueryVariables,
+    type UserRolesAvailablesQuery,
+    type UserRolesAvailablesQueryVariables,
+    type UsersQuery,
+    type UsersQueryVariables,
     UserType,
-    ViewerQuery,
+    type ViewerQuery,
+    type ViewerQueryVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -36,7 +38,7 @@ import {
     usersQuery,
     viewerQuery,
 } from './user.queries';
-import {LOCAL_STORAGE} from '@ecodev/natural';
+import {ignoreErrors, LOCAL_STORAGE} from '@ecodev/natural';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -52,7 +54,7 @@ export class UserService extends AbstractContextualizedService<
     UpdateUser['updateUser'],
     UpdateUserVariables,
     DeleteUsers['deleteUsers'],
-    never
+    DeleteUsersVariables
 > {
     private readonly destroyRef = inject(DestroyRef);
     private readonly route = inject(ActivatedRoute);
@@ -98,11 +100,14 @@ export class UserService extends AbstractContextualizedService<
 
     public getCurrentUser(): Observable<ViewerQuery['viewer']> {
         return this.apollo
-            .query<ViewerQuery, never>({
+            .query<ViewerQuery, ViewerQueryVariables>({
                 query: viewerQuery,
                 fetchPolicy: 'cache-first',
             })
-            .pipe(map(result => result.data.viewer));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.viewer),
+            );
     }
 
     public getUserRolesAvailable(user: UserQuery['user'] | null): Observable<UserRole[]> {
@@ -114,6 +119,7 @@ export class UserService extends AbstractContextualizedService<
                 },
             })
             .pipe(
+                ignoreErrors(),
                 map(result => {
                     return result.data.userRolesAvailable;
                 }),
@@ -158,11 +164,14 @@ export class UserService extends AbstractContextualizedService<
                 }
 
                 this.apollo
-                    .query<ViewerQuery, never>({
+                    .query<ViewerQuery, ViewerQueryVariables>({
                         query: viewerQuery,
                         fetchPolicy: 'network-only',
                     })
-                    .pipe(map(result => result.data.viewer))
+                    .pipe(
+                        ignoreErrors(),
+                        map(result => result.data.viewer),
+                    )
                     .subscribe(viewer => {
                         if (viewer) {
                             this.apollo.client.resetStore().then(() => {
@@ -205,7 +214,7 @@ export class UserService extends AbstractContextualizedService<
     private postLogin(viewer: NonNullable<ViewerQuery['viewer']>): void {
         // Inject the freshly logged in user as the current user into Apollo data store
         const data = {viewer: viewer};
-        this.apollo.client.writeQuery<ViewerQuery, never>({
+        this.apollo.client.writeQuery<ViewerQuery, ViewerQueryVariables>({
             query: viewerQuery,
             data,
         });

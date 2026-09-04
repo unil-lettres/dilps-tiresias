@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client/core';
+import {gql} from '@apollo/client';
 
 export const statisticDetails = gql`
     fragment StatisticDetails on Statistic {

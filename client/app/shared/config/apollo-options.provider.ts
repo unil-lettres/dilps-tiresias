@@ -1,27 +1,36 @@
 import {
-    ApolloClientOptions,
+    type ApolloClient,
     ApolloLink,
-    DefaultOptions,
+    CombinedGraphQLErrors,
+    type ErrorLike,
     InMemoryCache,
-    InMemoryCacheConfig,
-    NormalizedCacheObject,
-} from '@apollo/client/core';
-import {onError} from '@apollo/client/link/error';
-import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
+    type InMemoryCacheConfig,
+    type OperationVariables,
+    ServerError,
+} from '@apollo/client';
+import {ErrorLink} from '@apollo/client/link/error';
+import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {createHttpLink, hasFilesAndProcessDate, NetworkActivityService} from '@ecodev/natural';
 import {AlertService} from '../components/alert/alert.service';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
-import {inject, Provider} from '@angular/core';
+import {inject, type Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
 import {APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpErrorResponse} from '@angular/common/http';
+import {type FormattedExecutionResult} from 'graphql';
 
-export const apolloDefaultOptions: DefaultOptions = {
+export const apolloDefaultOptions: ApolloClient.Options['defaultOptions'] = {
     query: {
         fetchPolicy: 'network-only',
+        errorPolicy: 'none',
     },
     watchQuery: {
         fetchPolicy: 'cache-and-network',
+        errorPolicy: 'none',
+        returnPartialData: false,
+        notifyOnNetworkStatusChange: false,
+    },
+    mutate: {
+        errorPolicy: 'none',
     },
 };
 
@@ -72,48 +81,19 @@ function translatePhpConfigurationError(message: string): string {
 }
 
 /**
- * Create an Apollo link to show alert in case of error, and message if network is down
+ * Create an error handler to show alert in case of error, and message if network is down
  */
-function createErrorLink(networkActivityService: NetworkActivityService, alertService: AlertService): ApolloLink {
-    return onError(errorResponse => {
-        // Network errors are not caught by uploadInterceptor, so we need to decrease pending queries
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        const networkError = errorResponse.networkError;
-        if (networkError) {
-            networkActivityService.decrease();
+function createErrorHandler(
+    networkActivityService: NetworkActivityService,
+    alertService: AlertService,
+): ErrorLink.ErrorHandler {
+    return options => {
+        const error = serverErrorToUserFriendlyError(options.error, options.operation.variables);
 
-            // Show the error message if is:
-            // - an 413 error from `graphql-upload` about `post_max_size`
-            // - a 500 error about max_execution_time
-            if (
-                networkError instanceof HttpErrorResponse &&
-                [413, 500].includes(networkError.status) &&
-                typeof networkError.error?.message === 'string'
-            ) {
-                const translatedMessage = translatePhpConfigurationError(networkError.error.message);
-                alertService.error(translatedMessage, 5000);
-                networkActivityService.addErrors([{...networkError.error, message: translatedMessage}]);
-            } else if (
-                networkError instanceof HttpErrorResponse &&
-                networkError.status === 502 &&
-                hasFilesAndProcessDate(errorResponse.operation.variables)
-            ) {
-                // Trying our best to rescue a total crash of PHP because of a total crash of ImageMagick
-                const message = `L'image n'a pas pu être traitée par le serveur. Essayez de convertir l'image dans un autre format.`;
-                alertService.error(message, 5000);
-                networkActivityService.addErrors([{message: message}]);
-            } else {
-                alertService.error('Une erreur est survenue sur le réseau');
-            }
-        }
-
-        // Show Graphql responses with errors to end-users (but do not decrease pending queries because it is done by uploadInterceptor)
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        if (errorResponse.graphQLErrors) {
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
-            errorResponse.graphQLErrors.forEach(error => {
+        // Show GraphQL responses with errors to end-users
+        if (CombinedGraphQLErrors.is(error)) {
+            error.errors.forEach(error => {
                 const translatedMessage = translatePhpConfigurationError(error.message);
-
                 if ('extensions' in error && error.extensions?.showSnack) {
                     // Show whatever server prepared for end-user, with a bit more time to read
                     alertService.error(translatedMessage, 5000);
@@ -124,8 +104,65 @@ function createErrorLink(networkActivityService: NetworkActivityService, alertSe
 
                 networkActivityService.addErrors([{...error, message: translatedMessage}]);
             });
+        } else {
+            alertService.error('Une erreur est survenue sur le réseau');
         }
-    });
+    };
+}
+/**
+ *  Maybe transform the server error into a user visible, user friendly, error, but only if it is:
+ *
+ *  - an 413 error from `graphql-upload` about `post_max_size`
+ *  - a 500 error about max_execution_time
+ *  - a 502 error when uploading files
+ */
+function serverErrorToUserFriendlyError(
+    error: ErrorLike,
+    variables: OperationVariables,
+): ErrorLike | CombinedGraphQLErrors {
+    if (!ServerError.is(error)) {
+        return error;
+    }
+
+    if ([413, 500].includes(error.statusCode)) {
+        let json: unknown;
+        try {
+            json = JSON.parse(error.bodyText) as unknown;
+        } catch (e) {
+            return error;
+        }
+
+        if (
+            json &&
+            typeof json === 'object' &&
+            'message' in json &&
+            Object.keys(json).length === 1 &&
+            typeof json.message === 'string'
+        ) {
+            return combinedGraphQLErrors(json.message);
+        }
+    } else if (error.statusCode === 502 && hasFilesAndProcessDate(variables)) {
+        // Trying our best to rescue a total crash of PHP because of a total crash of ImageMagick
+        const message = `L'image n'a pas pu être traitée par le serveur. Essayez de convertir l'image dans un autre format.`;
+        return combinedGraphQLErrors(message);
+    }
+
+    return error;
+}
+
+function combinedGraphQLErrors(message: string): CombinedGraphQLErrors {
+    return new CombinedGraphQLErrors(
+        {
+            data: undefined,
+            extensions: undefined,
+        } as Partial<FormattedExecutionResult>,
+        [
+            {
+                message: message,
+                extensions: {showSnack: true},
+            },
+        ],
+    );
 }
 
 function createApolloLink(
@@ -138,14 +175,14 @@ function createApolloLink(
     const routeReuseClearer = new ApolloLink((operation, forward) => {
         const resetReuseOperations = ['CreateCard', 'CreateCollection', 'UpdateCollection', 'DeleteCollections'];
 
-        if (resetReuseOperations.includes(operation.operationName)) {
+        if (resetReuseOperations.includes(operation.operationName ?? '')) {
             routeReuseStrategy.clearDetachedRoutes();
         }
 
         return forward(operation);
     });
 
-    const errorLink = createErrorLink(networkActivityService, alertService);
+    const errorLink = new ErrorLink(createErrorHandler(networkActivityService, alertService));
 
     return routeReuseClearer.concat(
         errorLink.concat(
@@ -156,7 +193,7 @@ function createApolloLink(
     );
 }
 
-function apolloOptionsFactory(): ApolloClientOptions<NormalizedCacheObject> {
+function apolloOptionsFactory(): ApolloClient.Options {
     const networkActivityService = inject(NetworkActivityService);
     const alertService = inject(AlertService);
     const httpLink = inject(HttpLink);

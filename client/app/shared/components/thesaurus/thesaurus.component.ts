@@ -1,30 +1,44 @@
-import {ComponentType} from '@angular/cdk/overlay';
-import {Component, DestroyRef, ElementRef, inject, input, Input, OnInit, output, viewChild} from '@angular/core';
+import {type ComponentType} from '@angular/cdk/overlay';
+import {
+    Component,
+    DestroyRef,
+    type ElementRef,
+    inject,
+    input,
+    Input,
+    type OnInit,
+    output,
+    viewChild,
+} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {
+    MatAutocomplete,
+    type MatAutocompleteSelectedEvent,
+    MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import {MatChipGrid, MatChipInput, MatChipRemove, MatChipRow} from '@angular/material/chips';
 import {MatOption} from '@angular/material/core';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog, type MatDialogConfig} from '@angular/material/dialog';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {
-    HierarchicDialogConfig,
-    Literal,
+    type HierarchicDialogConfig,
+    type Literal,
     makePlural,
-    NaturalAbstractModelService,
-    NaturalHierarchicConfiguration,
+    type NaturalAbstractModelService,
+    type NaturalHierarchicConfiguration,
     NaturalHierarchicSelectorDialogService,
     NaturalQueryVariablesManager,
-    NaturalSearchSelections,
-    PaginatedData,
-    QueryVariables,
+    type NaturalSearchSelections,
+    type PaginatedData,
+    type QueryVariables,
     toUrl,
 } from '@ecodev/natural';
 import {isObject} from 'es-toolkit/compat';
 import {clone} from 'es-toolkit';
-import {Observable} from 'rxjs';
+import {type Observable} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 import {formatYearRange} from '../../services/utility';
 import {HideTooltipDirective} from '../../directives/hide-tooltip.directive';

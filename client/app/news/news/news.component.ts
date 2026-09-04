@@ -3,7 +3,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {loadImageAsDataUrl} from '../../shared/services/utility';
 import {NewsService} from '../services/news.service';
-import {NewsInput} from '../../shared/generated-types';
+import {type NewsInput} from '../../shared/generated-types';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 
 import {UrlValidatorDirective} from '../../shared/directives/url-validator.directive';
@@ -13,7 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {FileSelection, NaturalFileSelectDirective} from '@ecodev/natural';
+import {type FileSelection, NaturalFileSelectDirective} from '@ecodev/natural';
 
 @Component({
     selector: 'app-news',

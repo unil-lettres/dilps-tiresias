@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {
-    CreateDocumentType,
-    CreateDocumentTypeVariables,
-    DeleteDocumentTypes,
-    DocumentTypeQuery,
-    DocumentTypeInput,
-    DocumentTypesQuery,
-    DocumentTypesQueryVariables,
-    DocumentTypeQueryVariables,
-    UpdateDocumentType,
-    UpdateDocumentTypeVariables,
+    type CreateDocumentType,
+    type CreateDocumentTypeVariables,
+    type DeleteDocumentTypes,
+    type DocumentTypeQuery,
+    type DocumentTypeInput,
+    type DocumentTypesQuery,
+    type DocumentTypesQueryVariables,
+    type DocumentTypeQueryVariables,
+    type UpdateDocumentType,
+    type UpdateDocumentTypeVariables,
+    type DeleteDocumentTypesVariables,
 } from '../../shared/generated-types';
 import {
     createDocumentType,
@@ -33,7 +34,7 @@ export class DocumentTypeService extends AbstractContextualizedService<
     UpdateDocumentType['updateDocumentType'],
     UpdateDocumentTypeVariables,
     DeleteDocumentTypes['deleteDocumentTypes'],
-    never
+    DeleteDocumentTypesVariables
 > {
     public constructor() {
         super(

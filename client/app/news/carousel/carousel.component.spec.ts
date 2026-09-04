@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {type ComponentFixture, TestBed} from '@angular/core/testing';
 import {SITE} from '../../app.config';
 import {Site} from '../../shared/generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, type OnInit, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -7,27 +7,27 @@ import {MatInput} from '@angular/material/input';
 import {MatSlider, MatSliderThumb} from '@angular/material/slider';
 import {MatButton} from '@angular/material/button';
 import {
-    HierarchicFiltersConfiguration,
+    type HierarchicFiltersConfiguration,
     NaturalRelationsComponent,
     NaturalSelectHierarchicComponent,
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
-    LinkableObject,
+    type LinkableObject,
 } from '@ecodev/natural';
 import {findKey} from 'es-toolkit';
-import {CollectionVisibilities} from '../../card/card.component';
+import {type CollectionVisibilities} from '../../card/card.component';
 import {DomainService} from '../../domains/services/domain.service';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {
-    CollectionQuery,
-    CollectionFilter,
+    type CollectionQuery,
+    type CollectionFilter,
     CollectionVisibility,
-    UpdateCollection,
+    type UpdateCollection,
     UserRole,
-    UsersQuery,
+    type UsersQuery,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';

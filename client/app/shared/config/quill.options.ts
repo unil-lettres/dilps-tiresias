@@ -1,6 +1,6 @@
-import {QuillConfig} from 'ngx-quill';
+import {type QuillConfig} from 'ngx-quill';
 import {pick} from 'es-toolkit';
-import Delta from 'quill-delta';
+import type Delta from 'quill-delta';
 
 export function keepOnlyTextAndBasicFormatting(node: Node, delta: Delta): Delta {
     const ops: any[] = [];

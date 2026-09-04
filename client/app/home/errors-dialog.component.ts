@@ -3,7 +3,7 @@ import {MatButton} from '@angular/material/button';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {MatDivider} from '@angular/material/divider';
 import {ChangeDetectionStrategy} from '@angular/core';
-import {GraphQLFormattedError} from 'graphql';
+import {type GraphQLFormattedError} from 'graphql';
 
 @Component({
     selector: 'app-errors-dialog',

@@ -1,9 +1,15 @@
-import {Literal, NaturalAbstractModelService, PaginatedData, QueryVariables, VariablesWithInput} from '@ecodev/natural';
-import {DocumentNode} from 'graphql';
-import {Observable, of} from 'rxjs';
+import {
+    type Literal,
+    NaturalAbstractModelService,
+    type PaginatedData,
+    type QueryVariables,
+    type VariablesWithInput,
+} from '@ecodev/natural';
+import {type DocumentNode} from 'graphql';
+import {type Observable, of} from 'rxjs';
 import {inject} from '@angular/core';
 import {SITE} from '../../app.config';
-import {UsersQueryVariables} from '../generated-types';
+import {type UsersQueryVariables} from '../generated-types';
 
 export class AbstractContextualizedService<
     Tone,
@@ -35,7 +41,7 @@ export class AbstractContextualizedService<
     /**
      * Returns an additional context to be used in variables.
      *
-     * This is typically a site or state ID, but it could be something else to further filter the query
+     * This is typically the current site, but it could be something else to further filter the query
      */
     public override getPartialVariablesForAll(): Observable<Partial<Vall>> {
         if (this.site) {

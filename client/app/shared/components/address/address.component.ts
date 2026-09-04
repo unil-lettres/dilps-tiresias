@@ -1,4 +1,14 @@
-import {Component, ElementRef, inject, Input, input, NgZone, OnChanges, OnInit, viewChild} from '@angular/core';
+import {
+    Component,
+    type ElementRef,
+    inject,
+    Input,
+    input,
+    NgZone,
+    type OnChanges,
+    type OnInit,
+    viewChild,
+} from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     NaturalIconDirective,
@@ -10,11 +20,11 @@ import {
 import {merge} from 'es-toolkit';
 import {CountryService} from '../../../countries/services/country.service';
 import {
-    CardQuery,
-    CardInput,
-    CountriesQuery,
-    CountriesQueryVariables,
-    InstitutionQuery,
+    type CardQuery,
+    type CardInput,
+    type CountriesQuery,
+    type CountriesQueryVariables,
+    type InstitutionQuery,
     Site,
 } from '../../generated-types';
 import {AddressService} from './address.service';

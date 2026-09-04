@@ -3,13 +3,13 @@ import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {
-    DropdownComponent,
-    FilterGroupConditionField,
+    type DropdownComponent,
+    type FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
-    NaturalDropdownData,
+    type NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {LocationOperatorString} from '../shared/generated-types';
+import {type LocationOperatorString} from '../shared/generated-types';
 import {MatInput} from '@angular/material/input';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 

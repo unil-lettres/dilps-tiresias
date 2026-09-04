@@ -1,15 +1,15 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
+import {IMAGE_LOADER, type ImageLoaderConfig, NgOptimizedImage} from '@angular/common';
 import {
     Component,
-    ElementRef,
+    type ElementRef,
     effect,
     inject,
     input,
-    OnChanges,
-    OnInit,
+    type OnChanges,
+    type OnInit,
     signal,
-    SimpleChanges,
+    type SimpleChanges,
     viewChild,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -20,7 +20,7 @@ import {RouterLink} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {CardService} from 'client/app/card/services/card.service';
 import {fromResize} from '../../utils/resize.utils';
-import {CardQuery, CardsQuery, CardsQueryVariables, JoinType} from '../../generated-types';
+import {type CardQuery, type CardsQuery, type CardsQueryVariables, JoinType} from '../../generated-types';
 
 @Component({
     selector: 'app-related-cards',

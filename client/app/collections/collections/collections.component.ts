@@ -1,15 +1,15 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, type OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {HistoricIconComponent} from '../../shared/components/historic-icon/historic-icon.component';
 import {
-    CollectionsQuery,
-    CollectionsQueryVariables,
+    type CollectionsQuery,
+    type CollectionsQueryVariables,
     LogicalOperator,
-    SearchOperatorString,
-    UserRole,
-    ViewerQuery,
+    type SearchOperatorString,
+    type UserRole,
+    type ViewerQuery,
 } from '../../shared/generated-types';
 import {CollectionComponent} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
@@ -27,7 +27,7 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {ExportMenuComponent} from '../../shared/components/export-menu/export-menu.component';
 import {
     CollectionSelectorComponent,
-    CollectionSelectorData,
+    type CollectionSelectorData,
 } from '../../shared/components/collection-selector/collection-selector.component';
 
 @Component({

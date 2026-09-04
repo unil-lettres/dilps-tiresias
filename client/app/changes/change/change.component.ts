@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, type OnInit} from '@angular/core';
 import {MatAnchor} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -10,7 +10,14 @@ import {CardComponent, cardToCardInput} from '../../card/card.component';
 import {CardService} from '../../card/services/card.service';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {HideTooltipDirective} from '../../shared/directives/hide-tooltip.directive';
-import {CardInput, CardQuery, CardVisibility, ChangeQuery, UserRole, ViewerQuery} from '../../shared/generated-types';
+import {
+    type CardInput,
+    type CardQuery,
+    CardVisibility,
+    type ChangeQuery,
+    UserRole,
+    type ViewerQuery,
+} from '../../shared/generated-types';
 import {UserService} from '../../users/services/user.service';
 import {ChangeService} from '../services/change.service';
 

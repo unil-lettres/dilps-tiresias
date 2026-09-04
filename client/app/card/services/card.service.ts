@@ -1,28 +1,29 @@
 import {RouteReuseStrategy} from '@angular/router';
 import {inject, Injectable} from '@angular/core';
 import {merge} from 'es-toolkit';
-import {map} from 'rxjs/operators';
-import {AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
+import {map, tap} from 'rxjs/operators';
+import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
-    CardQuery,
-    CardInput,
-    CardPartialInput,
-    CardsQuery,
-    CardsQueryVariables,
-    CardQueryVariables,
+    type CardInput,
+    type CardPartialInput,
+    type CardQuery,
+    type CardQueryVariables,
+    type CardsQuery,
+    type CardsQueryVariables,
     CardVisibility,
-    CollectionCopyrightsQuery,
-    CollectionCopyrightsQueryVariables,
-    CollectionsQuery,
-    CreateCard,
-    CreateCards,
-    CreateCardsVariables,
-    CreateCardVariables,
-    CreateCollection,
-    DeleteCards,
+    type CollectionCopyrightsQuery,
+    type CollectionCopyrightsQueryVariables,
+    type CollectionsQuery,
+    type CreateCard,
+    type CreateCards,
+    type CreateCardsVariables,
+    type CreateCardVariables,
+    type CreateCollection,
+    type DeleteCards,
+    type DeleteCardsVariables,
     Precision,
-    UpdateCard,
-    UpdateCardVariables,
+    type UpdateCard,
+    type UpdateCardVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -34,8 +35,8 @@ import {
     deleteCards,
     updateCard,
 } from './card.queries';
-import {Observable, of} from 'rxjs';
-import {Literal, WithId} from '@ecodev/natural';
+import {type Observable, of} from 'rxjs';
+import {ignoreErrors, type Literal, type MutateOptionsWithoutVariables, type WithId} from '@ecodev/natural';
 
 type CardWithImage = {
     id?: string;
@@ -58,9 +59,9 @@ export class CardService extends AbstractContextualizedService<
     UpdateCard['updateCard'],
     UpdateCardVariables,
     DeleteCards['deleteCards'],
-    never
+    DeleteCardsVariables
 > {
-    private readonly routeReuse = inject(RouteReuseStrategy);
+    private readonly routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
 
     private collectionIdForCreation: string | null = null;
 
@@ -238,30 +239,36 @@ export class CardService extends AbstractContextualizedService<
                 query: collectionCopyrightsQuery,
                 variables: {card: card.id},
             })
-            .pipe(map(result => result.data.collectionCopyrights));
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.collectionCopyrights),
+            );
     }
 
     public override updateNow(
         object: WithId<CardPartialInput>,
+        options?: MutateOptionsWithoutVariables<Literal, Literal>,
         resetRouteReuse = true,
     ): Observable<UpdateCard['updateCard']> {
-        return super.updateNow(object).pipe(
-            map(r => {
+        return super.updateNow(object, options).pipe(
+            tap(() => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
+                    this.routeReuse.clearDetachedRoutes();
                 }
-                return r;
             }),
         );
     }
 
-    public override delete(objects: {id: string}[], resetRouteReuse = true): Observable<DeleteCards['deleteCards']> {
-        return super.delete(objects).pipe(
-            map(r => {
+    public override delete(
+        objects: {id: string}[],
+        options?: MutateOptionsWithoutVariables<Literal, Literal>,
+        resetRouteReuse = true,
+    ): Observable<DeleteCards['deleteCards']> {
+        return super.delete(objects, options).pipe(
+            tap(() => {
                 if (resetRouteReuse) {
-                    (this.routeReuse as AppRouteReuseStrategy).clearDetachedRoutes();
+                    this.routeReuse.clearDetachedRoutes();
                 }
-                return r;
             }),
         );
     }

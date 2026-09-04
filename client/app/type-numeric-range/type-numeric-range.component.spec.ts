@@ -1,12 +1,12 @@
 import type {Mock} from 'vitest';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {type ComponentFixture, TestBed} from '@angular/core/testing';
 import {
-    FilterGroupConditionField,
+    type FilterGroupConditionField,
     NATURAL_DROPDOWN_DATA,
-    NaturalDropdownData,
+    type NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {TypeNumericRangeComponent, TypeNumericRangeConfiguration} from './type-numeric-range.component';
+import {TypeNumericRangeComponent, type TypeNumericRangeConfiguration} from './type-numeric-range.component';
 
 describe('TypeNumericRangeComponent', () => {
     let component: TypeNumericRangeComponent;

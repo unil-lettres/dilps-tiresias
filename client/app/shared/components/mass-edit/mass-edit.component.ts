@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
-import {Literal} from '@ecodev/natural';
+import {type Literal} from '@ecodev/natural';
 import {CardService} from '../../../card/services/card.service';
-import {CardInput, Site} from '../../generated-types';
+import {type CardInput, Site} from '../../generated-types';
 import {TruncatePipe} from '../../pipes/truncate.pipe';
 import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';

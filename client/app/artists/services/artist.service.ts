@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {
-    ArtistQuery,
-    ArtistInput,
-    ArtistsQuery,
-    ArtistsQueryVariables,
-    ArtistQueryVariables,
-    CreateArtist,
-    CreateArtistVariables,
-    DeleteArtists,
-    UpdateArtist,
-    UpdateArtistVariables,
+    type ArtistQuery,
+    type ArtistInput,
+    type ArtistsQuery,
+    type ArtistsQueryVariables,
+    type ArtistQueryVariables,
+    type CreateArtist,
+    type CreateArtistVariables,
+    type DeleteArtists,
+    type UpdateArtist,
+    type UpdateArtistVariables,
+    type DeleteArtistsVariables,
 } from '../../shared/generated-types';
 import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
@@ -27,7 +28,7 @@ export class ArtistService extends AbstractContextualizedService<
     UpdateArtist['updateArtist'],
     UpdateArtistVariables,
     DeleteArtists['deleteArtists'],
-    never
+    DeleteArtistsVariables
 > {
     public constructor() {
         super('artist', artistQuery, artistsQuery, createArtist, updateArtist, deleteArtists);
