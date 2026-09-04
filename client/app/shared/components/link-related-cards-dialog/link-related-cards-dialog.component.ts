@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {type CardQuery} from '../../generated-types';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
@@ -17,6 +17,7 @@ export type LinkRelatedCardsDialogResult = CardQuery['card']['cards'];
     selector: 'app-link-related-cards-dialog',
     imports: [MatButton, MatDialogModule, MatSelectionList, MatListOption, FormsModule],
     templateUrl: './link-related-cards-dialog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class LinkRelatedCardsDialogComponent {
     protected readonly data = inject<LinkRelatedCardsDialogData>(MAT_DIALOG_DATA);

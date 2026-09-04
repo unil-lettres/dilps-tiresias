@@ -8,6 +8,7 @@ import {
     type OnInit,
     signal,
     viewChild,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatIconButton, MatMiniFabButton} from '@angular/material/button';
@@ -141,6 +142,7 @@ enum ViewMode {
     ],
     templateUrl: './list.component.html',
     styleUrl: './list.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ListComponent
     extends NaturalAbstractList<CardService>
@@ -414,7 +416,7 @@ export class ListComponent
     }
 
     protected override handleHistoryNavigation(): void {
-        onHistoryEvent(this.router).pipe(
+        onHistoryEvent(this.router, this.route).pipe(
             takeUntilDestroyed(this.destroyRef),
             filter(() => {
                 if (this.routeReuseStatus === RouteReuseStatus.retrieving) {

@@ -1,5 +1,5 @@
 import {RouteReuseStrategy} from '@angular/router';
-import {inject, Injectable} from '@angular/core';
+import {inject, Service} from '@angular/core';
 import {merge} from 'es-toolkit';
 import {map, tap} from 'rxjs/operators';
 import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
@@ -46,9 +46,7 @@ type CardWithImage = {
     updateDate?: string | null;
 };
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class CardService extends AbstractContextualizedService<
     CardQuery['card'],
     CardQueryVariables,

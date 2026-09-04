@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateDocumentType,
     type CreateDocumentTypeVariables,
@@ -21,9 +21,7 @@ import {
 } from './document-type.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class DocumentTypeService extends AbstractContextualizedService<
     DocumentTypeQuery['documentType'],
     DocumentTypeQueryVariables,

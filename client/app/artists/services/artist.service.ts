@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type ArtistQuery,
     type ArtistInput,
@@ -15,9 +15,7 @@ import {
 import {artistQuery, artistsQuery, createArtist, deleteArtists, updateArtist} from './artist.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class ArtistService extends AbstractContextualizedService<
     ArtistQuery['artist'],
     ArtistQueryVariables,

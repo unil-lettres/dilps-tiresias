@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
@@ -10,6 +10,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     imports: [MatDialogModule, MatFormField, MatLabel, MatInput, FormsModule, MatButton],
     templateUrl: './number-selector.component.html',
     styleUrl: './number-selector.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class NumberSelectorComponent {
     protected number = 5;

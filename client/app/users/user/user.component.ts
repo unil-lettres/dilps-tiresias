@@ -5,7 +5,7 @@ import {
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
 } from '@ecodev/natural';
-import {Component, inject, viewChild, signal} from '@angular/core';
+import {Component, inject, viewChild, signal, ChangeDetectionStrategy} from '@angular/core';
 import {
     type AbstractControl,
     FormControl,
@@ -84,16 +84,17 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class UserComponent extends AbstractDetailDirective<
     UserService,
     {password?: string; isSelf?: boolean; initialView?: 'properties' | 'collections'}
 > {
-    protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly collectionService = inject(CollectionService);
     private readonly linkService = inject(NaturalLinkMutationService);
 
+    protected readonly emailRef = viewChild<NgModel>('email');
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
     protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);

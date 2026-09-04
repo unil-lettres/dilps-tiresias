@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {loadImageAsDataUrl} from '../../shared/services/utility';
@@ -34,6 +34,7 @@ import {type FileSelection, NaturalFileSelectDirective} from '@ecodev/natural';
     ],
     templateUrl: './news.component.html',
     styleUrl: './news.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: File; imageUrl: string}> {
     protected imageData: string | null = null;

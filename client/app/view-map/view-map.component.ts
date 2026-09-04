@@ -1,4 +1,4 @@
-import {Component, inject, Input, NgZone, output, viewChild} from '@angular/core';
+import {Component, inject, Input, NgZone, output, viewChild, ChangeDetectionStrategy} from '@angular/core';
 import {type CardsQuery, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
 import {SITE} from '../app.config';
@@ -25,6 +25,7 @@ type Marker = {
     imports: [GoogleMap, MapInfoWindow, MapMarker, RouterLink, MatButton],
     templateUrl: './view-map.component.html',
     styleUrl: './view-map.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ViewMapComponent {
     protected readonly mapApiService = inject(MapApiService);

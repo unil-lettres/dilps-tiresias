@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type AntiqueNameInput,
     type AntiqueNameQuery,
@@ -21,9 +21,7 @@ import {
 } from './antique-name.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class AntiqueNameService extends AbstractContextualizedService<
     AntiqueNameQuery['antiqueName'],
     AntiqueNameQueryVariables,

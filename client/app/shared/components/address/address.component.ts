@@ -8,6 +8,7 @@ import {
     type OnChanges,
     type OnInit,
     viewChild,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
@@ -60,6 +61,7 @@ import {tap} from 'rxjs/operators';
     templateUrl: './address.component.html',
     styleUrl: './address.component.scss',
     providers: [AddressService, CountryService],
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class AddressComponent implements OnInit, OnChanges {
     private readonly mapApiService = inject(MapApiService);
@@ -113,11 +115,8 @@ export class AddressComponent implements OnInit, OnChanges {
      * Object reference is directly modified
      */
     @Input() public model:
-        | CardQuery['card']
-        | InstitutionQuery['institution']
-        | CardQuery['card']['institution']
-        | CardInput
-        | null = null;
+        CardQuery['card'] | InstitutionQuery['institution'] | CardQuery['card']['institution'] | CardInput | null =
+        null;
 
     protected formCtrl = new FormControl();
 

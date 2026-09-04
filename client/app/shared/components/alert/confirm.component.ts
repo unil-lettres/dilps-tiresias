@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 
@@ -16,6 +16,7 @@ export type ConfirmData = {
     imports: [MatDialogModule, MatButton],
     templateUrl: './confirm.component.html',
     styleUrl: './confirm.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ConfirmComponent {
     protected readonly data = inject<ConfirmData>(MAT_DIALOG_DATA);

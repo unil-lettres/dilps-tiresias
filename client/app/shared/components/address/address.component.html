@@ -118,7 +118,10 @@
                                 [icon]="icon!"
                                 [position]="
                                     (model?.latitude && model?.longitude
-                                        ? {lat: model?.latitude, lng: model?.longitude}
+                                        ? {
+                                              lat: model?.latitude,
+                                              lng: model?.longitude,
+                                          }
                                         : null)!
                                 "
                                 [options]="{draggable: !readonly}"

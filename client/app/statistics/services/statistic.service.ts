@@ -1,6 +1,5 @@
-import {DestroyRef, inject, Injectable} from '@angular/core';
+import {DestroyRef, inject, Service} from '@angular/core';
 import {
-    type Exact,
     type StatisticQuery,
     type StatisticQueryVariables,
     type StatisticsQuery,
@@ -13,9 +12,7 @@ import {debounceTime} from 'rxjs/operators';
 import {type DocumentNode} from 'graphql';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class StatisticService extends AbstractContextualizedService<
     StatisticQuery['statistic'],
     StatisticQueryVariables,
@@ -52,7 +49,7 @@ export class StatisticService extends AbstractContextualizedService<
                 takeUntilDestroyed(this.destroyRef),
                 debounceTime(800),
                 switchMap(() =>
-                    this.apollo.mutate<unknown, Exact<Record<string, never>>>({
+                    this.apollo.mutate<unknown, Record<string, never>>({
                         mutation: mutation,
                     }),
                 ),

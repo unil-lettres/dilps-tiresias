@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {ArtistComponent} from '../artist/artist.component';
 import {ArtistService} from '../services/artist.service';
@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './artists.component.html',
     styleUrl: './artists.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
     public constructor() {

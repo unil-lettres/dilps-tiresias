@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateMaterial,
     type CreateMaterialVariables,
@@ -15,9 +15,7 @@ import {
 import {createMaterial, deleteMaterials, materialQuery, materialsQuery, updateMaterial} from './material.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class MaterialService extends AbstractContextualizedService<
     MaterialQuery['material'],
     MaterialQueryVariables,

@@ -61,6 +61,7 @@ export const appConfig: ApplicationConfig = {
         {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy},
         apolloOptionsProvider,
         {provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: matTooltipCustomConfig},
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         provideHttpClient(withInterceptors([activityInterceptor]), withJsonpSupport()),
         provideRouter(
             routes,

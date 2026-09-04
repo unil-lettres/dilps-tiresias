@@ -1,4 +1,4 @@
-import {Component, computed, input} from '@angular/core';
+import {Component, computed, input, ChangeDetectionStrategy} from '@angular/core';
 import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
@@ -6,6 +6,7 @@ import {MatTooltip} from '@angular/material/tooltip';
     imports: [MatTooltip],
     templateUrl: './collection-hierarchy.component.html',
     styleUrl: './collection-hierarchy.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CollectionHierarchyComponent {
     public readonly collection = input.required<{name: string; hierarchicName: string}>();

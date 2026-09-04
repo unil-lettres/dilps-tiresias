@@ -81,7 +81,7 @@ class MessageQueuerTest extends TestCase
         // Log actual result for easier comparison with external diff tools
         $logFile = 'logs/' . $file;
         $dir = dirname($logFile);
-        @mkdir($dir, 0o777, true);
+        @mkdir($dir, recursive: true);
         file_put_contents($logFile, $actual);
 
         self::assertFileExists($file, 'Expected file must exist on disk, fix it with: cp ' . $logFile . ' ' . $file);

@@ -9,6 +9,7 @@ import {
     type OnInit,
     output,
     viewChild,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -74,6 +75,7 @@ export type ThesaurusModel = {
     ],
     templateUrl: './thesaurus.component.html',
     styleUrl: './thesaurus.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ThesaurusComponent<
     TService extends NaturalAbstractModelService<

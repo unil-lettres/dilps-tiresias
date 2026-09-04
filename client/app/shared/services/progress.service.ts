@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 
 export type ProgressBar = {
     startManual(): void;
@@ -9,9 +9,7 @@ export type ProgressBar = {
 /**
  * Service to access the progress bar for manual control.
  */
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class ProgressService {
     private progressBar: ProgressBar | null = null;
 

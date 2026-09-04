@@ -1,5 +1,5 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, inject, Input, input, type OnInit, output} from '@angular/core';
+import {Component, DestroyRef, inject, Input, input, type OnInit, output, ChangeDetectionStrategy} from '@angular/core';
 import {MatPaginator, type PageEvent} from '@angular/material/paginator';
 import {type NaturalDataSource} from '@ecodev/natural';
 import {intersectionBy} from 'es-toolkit';
@@ -27,6 +27,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ],
     templateUrl: './view-list.component.html',
     styleUrl: './view-list.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ViewListComponent implements OnInit, ViewInterface {
     private readonly destroyRef = inject(DestroyRef);

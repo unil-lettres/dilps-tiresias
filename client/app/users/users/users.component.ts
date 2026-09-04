@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {type UsersQuery, UserType} from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
@@ -54,6 +54,7 @@ import {MatFabButton} from '@angular/material/button';
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];

@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Service} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
 import {forkJoin, type Observable} from 'rxjs';
 import {
@@ -29,9 +29,7 @@ import {
 } from './collection.queries';
 import {type FakeCollection} from './fake-collection.resolver';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class CollectionService extends AbstractContextualizedService<
     CollectionQuery['collection'],
     CollectionQueryVariables,

@@ -2,7 +2,7 @@
  * This class was extended from its module to hide the operators list
  * and always use "is".
  */
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {
     type FilterGroupConditionField,
     type NaturalAbstractModelService,
@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 @Component({
     imports: [FormsModule, ReactiveFormsModule, NaturalSelectComponent],
     templateUrl: './type-natural-select.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TypeNaturalSelectComponent<
     TService extends NaturalAbstractModelService<any, any, any, any, any, any, any, any, any, any>,

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {PeriodComponent} from '../period/period.component';
 import {PeriodService} from '../services/period.service';
@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './periods.component.html',
     styleUrl: './periods.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];

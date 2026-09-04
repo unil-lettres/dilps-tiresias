@@ -1,5 +1,5 @@
 import {merge} from 'es-toolkit';
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {type Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
@@ -27,9 +27,7 @@ import {
     suggestUpdate,
 } from './change.queries';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class ChangeService extends AbstractContextualizedService<
     ChangeQuery['change'],
     ChangeQueryVariables,

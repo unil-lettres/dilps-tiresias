@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateNews,
     type CreateNewsVariables,
@@ -17,9 +17,7 @@ import {AbstractContextualizedService} from '../../shared/services/AbstractConte
 import {createNews, deleteNewses, newsesQuery, newsQuery, updateNews} from './news.queries';
 import {type Literal} from '@ecodev/natural';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class NewsService extends AbstractContextualizedService<
     NewsQuery['news'],
     NewsQueryVariables,

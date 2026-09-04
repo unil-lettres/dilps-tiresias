@@ -1,4 +1,4 @@
-import {Component, inject, type OnDestroy, type OnInit} from '@angular/core';
+import {Component, inject, type OnDestroy, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -38,6 +38,7 @@ import {LogoComponent} from '../shared/components/logo/logo.component';
     ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class LoginComponent implements OnInit, OnDestroy {
     private readonly route = inject(ActivatedRoute);

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractNavigableList} from '../../shared/components/AbstractNavigableList';
 import {MaterialComponent} from '../material/material.component';
 import {MaterialService} from '../services/material.service';
@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './materials.component.html',
     styleUrl: './materials.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {

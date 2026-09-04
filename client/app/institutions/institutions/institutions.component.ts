@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractList} from '../../shared/components/AbstractList';
 import {InstitutionComponent} from '../institution/institution.component';
 import {InstitutionService} from '../services/institution.service';
@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './institutions.component.html',
     styleUrl: './institutions.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];

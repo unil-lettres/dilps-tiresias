@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreatePeriod,
     type CreatePeriodVariables,
@@ -15,9 +15,7 @@ import {
 import {createPeriod, deletePeriods, periodQuery, periodsQuery, updatePeriod} from './period.queries';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class PeriodService extends AbstractContextualizedService<
     PeriodQuery['period'],
     PeriodQueryVariables,

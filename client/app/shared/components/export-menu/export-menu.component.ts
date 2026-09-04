@@ -1,16 +1,16 @@
-import {Component, inject, input, viewChild} from '@angular/core';
+import {Component, inject, input, viewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
 import {type CardsQuery, ExportFormat} from '../../generated-types';
-import {ExportService} from 'client/app/exports/services/export.service';
+import {ExportService} from '../../../exports/services/export.service';
 import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
 import {waitOnApolloQueries} from '../../services/utility';
 import {Apollo} from 'apollo-angular';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltip} from '@angular/material/tooltip';
-import {type FakeCollection} from 'client/app/collections/services/fake-collection.resolver';
+import {type FakeCollection} from '../../../collections/services/fake-collection.resolver';
 
 export enum ExportTheme {
     dark = 'dark',
@@ -22,6 +22,7 @@ export enum ExportTheme {
     imports: [MatMenu, MatMenuItem, MatMenuTrigger, MatIconButton, MatIcon, NaturalIconDirective, MatTooltip],
     templateUrl: './export-menu.component.html',
     styleUrl: './export-menu.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ExportMenuComponent {
     private readonly exportService = inject(ExportService);

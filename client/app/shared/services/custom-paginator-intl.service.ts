@@ -1,10 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {type MatPaginatorIntl} from '@angular/material/paginator';
 import {Subject} from 'rxjs';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class CustomPaginatorIntl implements MatPaginatorIntl {
     public changes = new Subject<void>();
 

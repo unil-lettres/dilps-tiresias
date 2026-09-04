@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {CardService} from '../../../card/services/card.service';
 import {type CardsQuery} from '../../generated-types';
 import {MatButton} from '@angular/material/button';
@@ -11,6 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     imports: [MatDialogModule, NaturalSelectComponent, FormsModule, MatButton],
     templateUrl: './card-selector.component.html',
     styleUrl: './card-selector.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CardSelectorComponent {
     protected readonly cardService = inject(CardService);

@@ -5,7 +5,7 @@ import {
     type NaturalDropdownData,
     NaturalDropdownRef,
 } from '@ecodev/natural';
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {
     type AbstractControl,
     FormControl,
@@ -62,6 +62,7 @@ function toGreaterThanFrom(control: AbstractControl): ValidationErrors | null {
     imports: [FormsModule, ReactiveFormsModule, MatFormField, MatError, MatInput],
     templateUrl: './type-numeric-range.component.html',
     styleUrl: './type-numeric-range.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TypeNumericRangeComponent implements DropdownComponent {
     protected readonly dropdownRef = inject(NaturalDropdownRef);

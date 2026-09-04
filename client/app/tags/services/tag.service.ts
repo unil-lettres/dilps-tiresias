@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Service} from '@angular/core';
 import {
     type CreateTag,
     type CreateTagVariables,
@@ -15,9 +15,7 @@ import {
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {createTag, deleteTags, tagQuery, tagsQuery, updateTag} from './tag.queries';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Service()
 export class TagService extends AbstractContextualizedService<
     TagQuery['tag'],
     TagQueryVariables,

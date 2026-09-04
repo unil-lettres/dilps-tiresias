@@ -11,6 +11,7 @@ import {
     signal,
     type SimpleChanges,
     viewChild,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatMiniFabButton} from '@angular/material/button';
@@ -18,7 +19,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {RouterLink} from '@angular/router';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
-import {CardService} from 'client/app/card/services/card.service';
+import {CardService} from '../../../card/services/card.service';
 import {fromResize} from '../../utils/resize.utils';
 import {type CardQuery, type CardsQuery, type CardsQueryVariables, JoinType} from '../../generated-types';
 
@@ -35,6 +36,7 @@ import {type CardQuery, type CardsQuery, type CardsQueryVariables, JoinType} fro
             },
         },
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class RelatedCardsComponent implements OnInit, OnChanges {
     protected readonly cardService = inject(CardService);

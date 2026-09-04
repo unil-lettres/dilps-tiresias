@@ -11,6 +11,7 @@ import {
     output,
     signal,
     viewChild,
+    ChangeDetectionStrategy,
 } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -43,6 +44,7 @@ type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
     imports: [NaturalGalleryComponent, HistoricIconComponent, MatProgressSpinner],
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private readonly router = inject(Router);

@@ -1,4 +1,4 @@
-import {Component, inject, type OnDestroy, type OnInit, signal} from '@angular/core';
+import {Component, inject, type OnDestroy, type OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
@@ -10,6 +10,7 @@ import {NewsService} from '../services/news.service';
     imports: [NaturalIconDirective, MatIcon, MatIconButton],
     templateUrl: './carousel.component.html',
     styleUrl: './carousel.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CarouselComponent implements OnInit, OnDestroy {
     protected readonly newsService = inject(NewsService);
