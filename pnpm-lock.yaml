@@ -71,9 +71,6 @@ importers:
       '@graphql-tools/mock':
         specifier: ^9.1.7
         version: 9.1.12(graphql@16.14.2)
-      '@material-symbols/font-400':
-        specifier: ^0.45.8
-        version: 0.45.10
       apollo-angular:
         specifier: ^14.2.0
         version: 14.2.0(@angular/core@22.1.1(@angular/compiler@22.1.1)(rxjs@7.8.2)(zone.js@0.16.2))(@apollo/client@4.2.10(graphql-ws@6.2.1(graphql@16.14.2)(ws@8.21.3))(graphql@16.14.2)(rxjs@7.8.2))(graphql@16.14.2)(rxjs@7.8.2)
@@ -1360,9 +1357,6 @@ packages:
     resolution: {integrity: sha512-1g7G0knRX2iV/voDu54yxrGqw5Dk0w2oIYb7dgJq8IkOi+m7wbD8Q3QpPFjh0C01G58S88dqGn03len6UPCXsg==}
     cpu: [x64]
     os: [win32]
-
-  '@material-symbols/font-400@0.45.10':
-    resolution: {integrity: sha512-HUstRoXOYFUe4/zRqwSnA2Zp8Ei5y4m9vqzwHb6sJEfUrYg780an0PcVnrlTJgqRwrOCPR5ttViF+yLAzla0BQ==}
 
   '@modelcontextprotocol/sdk@1.29.0':
     resolution: {integrity: sha512-zo37mZA9hJWpULgkRpowewez1y6ML5GsXJPY8FI0tBBCd77HEvza4jDqRKOXgHNn867PVGCyTdzqpz0izu5ZjQ==}
@@ -5632,8 +5626,6 @@ snapshots:
 
   '@lmdb/lmdb-win32-x64@3.5.6':
     optional: true
-
-  '@material-symbols/font-400@0.45.10': {}
 
   '@modelcontextprotocol/sdk@1.29.0(zod@4.4.3)':
     dependencies:

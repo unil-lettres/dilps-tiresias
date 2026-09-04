@@ -3,7 +3,6 @@
 @use '@ecodev/angular-natural-gallery' as natural-gallery;
 @use '@ecodev/natural';
 @use '@fontsource-variable/quicksand/wght.css';
-@use '@material-symbols/font-400/outlined.css';
 @use 'styles/upload.scss';
 @use 'styles/layout';
 @use 'app/shared/components/boot-loader/boot-loader.external';
@@ -30,10 +29,6 @@ html {
 
 body {
     --natural-default-spacing: 10px;
-}
-
-.material-symbols-outlined {
-    font-variation-settings: 'FILL' 1;
 }
 
 mat-sidenav-content {
