@@ -14,6 +14,7 @@ import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConf
 import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {apolloOptionsProvider} from './shared/config/apollo-options.provider';
+import {iconsProvider} from './shared/config/icons';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './statistics/services/statistic.service';
 import {MAT_TABS_CONFIG, type MatTabsConfig} from '@angular/material/tabs';
@@ -36,20 +37,8 @@ export const appConfig: ApplicationConfig = {
         provideNativeDateAdapter(),
         Apollo,
         naturalProviders,
-        provideIcons({
-            sort_asc: {
-                svg: 'assets/icons/sort_asc.svg',
-            },
-            library_remove: {
-                svg: 'assets/icons/library_remove.svg',
-            },
-            select_all_mark: {
-                svg: 'assets/icons/select_all_mark.svg',
-            },
-            cards_game: {
-                svg: 'assets/icons/cards_game.svg',
-            },
-        }),
+        provideIcons({}),
+        iconsProvider,
         {
             provide: MAT_TABS_CONFIG,
             useValue: {

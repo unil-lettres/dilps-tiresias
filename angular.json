@@ -30,6 +30,9 @@
                         "deleteOutputPath": false,
                         "polyfills": ["zone.js", "@angular/localize/init"],
                         "assets": ["client/assets", "client/favicon-dilps.svg", "client/favicon-tiresias.svg"],
+                        "loader": {
+                            ".svg": "text"
+                        },
                         "styles": [
                             "client/styles.scss",
                             "client/styles/tokens/dilps-production.scss",
