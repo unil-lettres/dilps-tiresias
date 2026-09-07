@@ -21,6 +21,7 @@ if id "$DEPLOY_USER" >/dev/null 2>&1; then
     # Declare a fake HOME, so that cache and various config files can be created
     export HOME="/tmp/$DEPLOY_USER"
     export HOME="$TMP_DIR/home-$DEPLOY_USER"
+    export PNPM_HOME="$HOME/pnpm"
 fi
 
 # Never let Angular block the build with an interactive prompt to enable autocomplete
