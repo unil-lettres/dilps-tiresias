@@ -23,7 +23,7 @@
                             } @else if (viewerIsResponsible()) {
                                 <span> - Vous êtes responsable de cette collection</span>
                             } @else if (viewerIsSubscriber()) {
-                                <span> - Vous êtes abonné à cette collection</span>
+                                <span> - Vous êtes lecteur de cette collection</span>
                             }
                         }
                     </div>
@@ -121,9 +121,9 @@
         <div class="nat-horizontal nat-gap-10">
             @if (!!user && canManageSubscribers()) {
                 <div class="nat-vertical nat-gap-5" style="flex: 1">
-                    <strong>Abonnés</strong>
+                    <strong>Lecteurs</strong>
                     <natural-relations
-                        placeholder="Ajouter un abonné"
+                        placeholder="Ajouter un lecteur"
                         otherName="subscriber"
                         [displayWith]="displayFn"
                         [filter]="{
@@ -138,7 +138,7 @@
                         [main]="$any(subscribersMain())"
                         [service]="userService"
                     />
-                    <app-hint>Les abonnés peuvent uniquement consulter les images de la collection.</app-hint>
+                    <app-hint>Les lecteurs peuvent uniquement consulter les images de la collection.</app-hint>
                 </div>
             }
 
@@ -163,7 +163,7 @@
                         [service]="userService"
                     />
                     <app-hint>
-                        Les responsables peuvent consulter, ajouter ou supprimer les images et les abonnés de la
+                        Les responsables peuvent consulter, ajouter ou supprimer des images et des lecteurs de la
                         collection. Ils ne peuvent pas modifier les réglages, supprimer la collection ou ajouter
                         d'autres responsables.
                     </app-hint>
