@@ -1,7 +1,3 @@
-import {type Apollo} from 'apollo-angular';
-import {defaultIfEmpty, forkJoin, map, type Observable, take} from 'rxjs';
-import {filter} from 'rxjs/operators';
-
 export function shuffleArray(a: any[]): any[] {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -91,29 +87,4 @@ export function formatItemNameWithRoot(item: {name: string; hierarchicName: stri
 
     const strParents = parents.slice(0, parents.length - 1).join(' > ');
     return `${parents[parents.length - 1]} (${strParents})`;
-}
-
-/**
- * Return an observable that will emit the given result after all the queries
- * currently in the Apollo stack have been resolved.
- *
- * @param apollo the Apollo instance.
- * @param result the result to emit.
- * @returns an observable that will emit the given result after all the queries
- * currently in the Apollo stack have been resolved.
- */
-export function waitOnApolloQueries<T>(apollo: Apollo, result: T): Observable<T> {
-    const observableQueries = apollo.client.getObservableQueries();
-    const loadingQueries = Array.from(observableQueries.values())
-        .filter(q => q.getCurrentResult().loading)
-        .map(q =>
-            q.pipe(
-                filter(result => !result.loading),
-                take(1),
-            ),
-        );
-    return forkJoin(loadingQueries).pipe(
-        map(() => result),
-        defaultIfEmpty(result),
-    );
 }

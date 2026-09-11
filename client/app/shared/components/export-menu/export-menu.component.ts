@@ -5,9 +5,7 @@ import {MatIcon} from '@angular/material/icon';
 import {NaturalIconDirective} from '@ecodev/natural';
 import {type CardsQuery, ExportFormat} from '../../generated-types';
 import {ExportService} from '../../../exports/services/export.service';
-import {EMPTY, Subject, switchMap, takeUntil} from 'rxjs';
-import {waitOnApolloQueries} from '../../services/utility';
-import {Apollo} from 'apollo-angular';
+import {Subject, takeUntil} from 'rxjs';
 import {AlertService} from '../alert/alert.service';
 import {MatTooltip} from '@angular/material/tooltip';
 import {type FakeCollection} from '../../../collections/services/fake-collection.resolver';
@@ -27,7 +25,6 @@ export enum ExportTheme {
 export class ExportMenuComponent {
     private readonly exportService = inject(ExportService);
     private readonly alertService = inject(AlertService);
-    private readonly apollo = inject(Apollo);
 
     public readonly showExcelExportation = input(true);
     public readonly showTrigger = input(true);
@@ -134,30 +131,15 @@ export class ExportMenuComponent {
                 input.textColor = '#FFFFFF';
         }
 
-        this.exportService
-            .create(input)
-            .pipe(
-                switchMap(newExport => {
-                    if (newExport.filename) {
-                        const url = '/export/' + newExport.filename;
-
-                        // Safari blocks the download of the file if the
-                        // location of the page is changed while xhr requests
-                        // are pending.
-                        return waitOnApolloQueries<string>(this.apollo, url);
-                    } else {
-                        this.alertService.info(
-                            "L'exportation est en cours de préparation. Un email vous sera envoyé quand il sera prêt.",
-                            8000,
-                        );
-                        return EMPTY;
-                    }
-                }),
-            )
-            .subscribe(url => {
-                if (url) {
-                    window.document.location.href = url;
-                }
-            });
+        this.exportService.create(input).subscribe(newExport => {
+            if (newExport.filename) {
+                window.document.location.href = '/export/' + newExport.filename;
+            } else {
+                this.alertService.info(
+                    "L'exportation est en cours de préparation. Un email vous sera envoyé quand il sera prêt.",
+                    8000,
+                );
+            }
+        });
     }
 }
