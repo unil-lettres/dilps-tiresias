@@ -187,7 +187,7 @@ function createApolloLink(
     return routeReuseClearer.concat(
         errorLink.concat(
             createHttpLink(httpLink, httpBatchLink, {
-                uri: '/graphql',
+                uri: window.location.origin + '/graphql',
             }),
         ),
     );
