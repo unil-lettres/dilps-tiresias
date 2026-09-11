@@ -1,6 +1,7 @@
 import {Component, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
+import {collectionsQuery} from '../../../collections/services/collection.queries';
 import {UserService} from '../../../users/services/user.service';
 import {
     type CardsQuery,
@@ -129,9 +130,12 @@ export class CollectionSelectorComponent implements OnInit {
     }
 
     protected createAndLink(): void {
-        this.collectionService.create(this.newCollection).subscribe(collection => {
-            this.linkInternal(collection);
-        });
+        this.collectionService
+            // Refresh the collections tree under the dialog
+            .create(this.newCollection, {refetchQueries: [collectionsQuery]})
+            .subscribe(collection => {
+                this.linkInternal(collection);
+            });
     }
 
     private linkInternal(

@@ -95,6 +95,8 @@ export class CollectionService extends AbstractContextualizedService<
                 sourceCollection: sourceCollection.id,
                 targetCollection: targetCollection.id,
             },
+            // Refresh the collections tree
+            refetchQueries: [collectionsQuery],
         });
     }
 }
