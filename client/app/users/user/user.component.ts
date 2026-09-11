@@ -159,6 +159,10 @@ export class UserComponent extends AbstractDetailDirective<
 
     protected override postUpdate(model: UpdateUser['updateUser']): void {
         this.institution = model.institution;
+
+        if (this.isSelf) {
+            this.userService.refreshViewer();
+        }
     }
 
     protected roleDisabled(role: string): boolean {

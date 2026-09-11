@@ -1,5 +1,7 @@
 import {Directive, inject, type OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {type DocumentNode, type InternalRefetchQueryDescriptor} from '@apollo/client';
+import {Apollo} from 'apollo-angular';
 import {merge} from 'es-toolkit';
 import {UserService} from '../../users/services/user.service';
 import {AlertService} from './alert/alert.service';
@@ -39,6 +41,7 @@ export class AbstractDetailDirective<
     protected readonly alertService = inject(AlertService);
     public readonly dialogRef = inject<MatDialogRef<unknown>>(MatDialogRef);
     public readonly userService = inject(UserService);
+    private readonly apollo = inject(Apollo);
 
     /**
      * Once set, this must not change anymore, especially not right after the creation mutation,
@@ -81,9 +84,33 @@ export class AbstractDetailDirective<
         return this._isUpdatePage;
     }
 
+    /**
+     * Queries to refetch after create/update, overridable when other data than the list also needs
+     * to be refreshed
+     */
+    protected getRefetchQueries(): InternalRefetchQueryDescriptor[] {
+        return this.service.allQuery && this.isQueryActive(this.service.allQuery) ? [this.service.allQuery] : [];
+    }
+
+    /**
+     * Whether the given query currently has an active watcher (eg. its list is mounted somewhere).
+     * Apollo's refetchQueries logs a dev-only "Unknown query ... requested in refetchQueries" warning
+     * and does nothing when asked to refetch a query that isn't watched by anyone at the moment (eg.
+     * `allQuery` when this dialog is opened outside of its list, such as the user dialog from the
+     * home page) — this check lets us skip the request instead of always attempting a no-op
+     */
+    private isQueryActive(query: DocumentNode): boolean {
+        return Array.from(this.apollo.client.getObservableQueries()).some(oq => oq.options.query === query);
+    }
+
     public update(): void {
         this.service
-            .updateNow(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
+            .updateNow(this.data.item, {
+                // Wait till we refresh the list under the dialog before closing it,
+                // to avoid re-clicking on the just updated item
+                refetchQueries: this.getRefetchQueries(),
+                awaitRefetchQueries: true,
+            })
             .subscribe(model => {
                 this.alertService.info('Mis à jour');
                 this.dialogRef.close(this.data.item);
@@ -92,12 +119,10 @@ export class AbstractDetailDirective<
     }
 
     public create(): void {
-        this.service
-            .create(this.data.item, {refetchQueries: this.service.allQuery ? [this.service.allQuery] : []})
-            .subscribe(newItem => {
-                this.alertService.info('Créé');
-                this.dialogRef.close(newItem);
-            });
+        this.service.create(this.data.item, {refetchQueries: this.getRefetchQueries()}).subscribe(newItem => {
+            this.alertService.info('Créé');
+            this.dialogRef.close(newItem);
+        });
     }
 
     public delete(): void {
@@ -116,8 +141,13 @@ export class AbstractDetailDirective<
                 }
                 this.service
                     .delete([this.data.item], {
-                        // Wait till we refresh the list under the dialog before closing the dialog, to avoid re-clicking on the just deleted item
+                        // Unlike create/update, refetch every active query rather than just
+                        // getRefetchQueries(): a deletion has a wide blast radius (usageCount
+                        // columns in admin lists, parent/child hierarchies, detail pages
+                        // referencing the deleted entity, …) that is impractical to enumerate.
                         refetchQueries: 'active',
+                        // Wait for it before closing the dialog, to avoid re-clicking on the
+                        // just deleted item
                         awaitRefetchQueries: true,
                     })
                     .subscribe(() => {

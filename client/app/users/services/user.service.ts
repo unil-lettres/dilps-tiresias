@@ -108,6 +108,22 @@ export class UserService extends AbstractContextualizedService<
             );
     }
 
+    /**
+     * Force a real network refetch of the viewer.
+     *
+     * Call this after mutating the current user's own data to refresh fields
+     * that the mutation response doesn't return (role, globalPermissions, …).
+     */
+    public refreshViewer(): void {
+        this.apollo
+            .query<ViewerQuery, ViewerQueryVariables>({
+                query: viewerQuery,
+                fetchPolicy: 'network-only',
+            })
+            .pipe(ignoreErrors())
+            .subscribe();
+    }
+
     public getUserRolesAvailable(user: UserQuery['user'] | null): Observable<UserRole[]> {
         return this.apollo
             .query<UserRolesAvailablesQuery, UserRolesAvailablesQueryVariables>({
