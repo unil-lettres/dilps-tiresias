@@ -188,7 +188,7 @@ export class CardService extends AbstractContextualizedService<
     ): Observable<unknown> {
         this.collectionIdForCreation = collection ? collection.id : null;
 
-        return this.createWithoutRefetch(object);
+        return this.create(object);
     }
 
     protected override getPartialVariablesForCreation(): Partial<CreateCardVariables> {
@@ -213,22 +213,6 @@ export class CardService extends AbstractContextualizedService<
                 },
             })
             .pipe(map(result => result.data!.createCards));
-    }
-
-    public createWithoutRefetch(object: CardInput): Observable<CreateCard['createCard']> {
-        this.throwIfObservable(object);
-
-        const variables = merge(
-            {input: this.getInput(object, true)},
-            this.getPartialVariablesForCreation(),
-        ) satisfies CreateCardVariables;
-
-        return this.apollo
-            .mutate<CreateCard, CreateCardVariables>({
-                mutation: this.createMutation!,
-                variables: variables,
-            })
-            .pipe(map(result => result.data!.createCard));
     }
 
     public getCollectionCopyrights(card: CardQuery['card']): Observable<string> {
