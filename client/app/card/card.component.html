@@ -45,7 +45,7 @@
                 }
 
                 @if (showTools()) {
-                    <div class="nat-horizontal nat-center nat-expand nat-right nat-gap-10">
+                    <div class="nat-horizontal nat-center nat-expand nat-right">
                         @if (!fetchedModel && user?.globalPermissions?.card?.create) {
                             <button matIconButton matTooltip="Créer" (click)="create()">
                                 <mat-icon naturalIcon="add" />
@@ -54,16 +54,6 @@
                         @if (!edit && fetchedModel?.permissions?.update) {
                             <button matIconButton matTooltip="Passer en mode édition" (click)="toggleEdit()">
                                 <mat-icon naturalIcon="edit" />
-                            </button>
-                        }
-                        @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
-                            <button matIconButton matTooltip="Soumettre" [matMenuTriggerFor]="changeMenu">
-                                <mat-icon naturalIcon="add_alert" />
-                            </button>
-                        }
-                        @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
-                            <button matIconButton matTooltip="Soumettre" (click)="suggestCreation()">
-                                <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (fetchedModel && user && !edit) {
@@ -90,6 +80,16 @@
                                 (click)="confirmDelete()"
                             >
                                 <mat-icon naturalIcon="delete_forever" />
+                            </button>
+                        }
+                        @if (user && !edit && (canSuggestUpdate() || canSuggestDelete())) {
+                            <button matIconButton matTooltip="Soumettre" [matMenuTriggerFor]="changeMenu">
+                                <mat-icon naturalIcon="add_alert" />
+                            </button>
+                        }
+                        @if (user && !edit && !canSuggestUpdate() && !canSuggestDelete() && canSuggestCreate()) {
+                            <button matIconButton matTooltip="Soumettre" (click)="suggestCreation()">
+                                <mat-icon naturalIcon="add_alert" />
                             </button>
                         }
                         @if (edit) {
