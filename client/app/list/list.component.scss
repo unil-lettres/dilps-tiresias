@@ -74,36 +74,9 @@ app-view-grid {
     right: 15px; // Keep a space for the gallery scrollbar.
     left: 0;
     z-index: 10;
-    padding-right: 10px;
+    padding-right: 5px;
     padding-bottom: 7px;
-    padding-left: 10px;
-
-    // Fade effect on edges
-    &::before,
-    &::after {
-        position: absolute;
-        top: 0;
-        bottom: 7px;
-        opacity: 0;
-        z-index: 2;
-        transition: opacity 0.2s ease-in-out;
-        width: 40px;
-        pointer-events: none;
-        content: '';
-    }
-
-    &::before {
-        left: 10px;
-    }
-
-    &::after {
-        right: 10px;
-    }
-
-    &.fade-left::before,
-    &.fade-right::after {
-        opacity: 1;
-    }
+    padding-left: 5px;
 
     &:hover {
         .scroll-arrow {
@@ -145,22 +118,32 @@ app-view-grid {
         scrollbar-width: none; // Firefox
         -ms-overflow-style: none; // IE/Edge
 
+        --fade-mask: linear-gradient(
+            to right,
+            transparent,
+            black var(--fade-left, 0px),
+            black calc(100% - var(--fade-right, 0px)),
+            transparent
+        );
+        mask-image: var(--fade-mask);
+        -webkit-mask-image: var(--fade-mask); // iOS 15.0-15.3, no autoprefixer in the build
+
         &::-webkit-scrollbar {
             display: none; // Chrome/Safari
         }
     }
 
+    &.fade-left .chips-container {
+        --fade-left: 20px;
+    }
+
+    &.fade-right .chips-container {
+        --fade-right: 20px;
+    }
+
     // Remove transparency on background chips for better readability (because toolbar is transparent too)
     .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled):not(.mdc-evolution-chip--selected) {
         background-color: var(--mat-sys-surface-container-highest);
-    }
-
-    &::before {
-        background: linear-gradient(to right, var(--mat-sys-surface-container), transparent);
-    }
-
-    &::after {
-        background: linear-gradient(to left, var(--mat-sys-surface-container), transparent);
     }
 
     ::ng-deep {
