@@ -23,7 +23,7 @@ import {NaturalEnumPipe, NaturalSearchComponent, TypedMatCellDef} from '@ecodev/
 import {LogoComponent} from '../../shared/components/logo/logo.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
-import {MatFabButton} from '@angular/material/button';
+import {CreateButtonComponent} from '../../shared/components/create-button/create-button.component';
 
 @Component({
     selector: 'app-users',
@@ -50,7 +50,7 @@ import {MatFabButton} from '@angular/material/button';
         NaturalEnumPipe,
         TypePipe,
         MatIcon,
-        MatFabButton,
+        CreateButtonComponent,
     ],
     templateUrl: './users.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

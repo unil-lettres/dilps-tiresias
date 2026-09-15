@@ -4,7 +4,7 @@ import {AntiqueNameComponent} from '../antique-name/antique-name.component';
 import {AntiqueNameService} from '../services/antique-name.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatFabButton} from '@angular/material/button';
+import {CreateButtonComponent} from '../../shared/components/create-button/create-button.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {
@@ -43,7 +43,7 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatProgressSpinner,
         MatPaginator,
         MatIcon,
-        MatFabButton,
+        CreateButtonComponent,
     ],
     templateUrl: './antique-names.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

@@ -8,17 +8,12 @@
         [selections]="naturalSearchSelections"
         (selectionChange)="search($event)"
     />
+    <app-create-button label="Créer une période" (click)="add()" />
 </mat-toolbar>
 
 @if (dataSource) {
     <div class="nat-padding">
-        <div class="nat-horizontal nat-distribute nat-center">
-            <app-navigable-breadcrumb rootLabel="Périodes" [breadcrumbs]="breadcrumbs" [getLink]="getBreadcrumbLink" />
-            <button matFab extended color="tertiary" class="fab-no-elevation" (click)="add()">
-                <mat-icon fontIcon="add" />
-                Créer une période
-            </button>
-        </div>
+        <app-navigable-breadcrumb rootLabel="Périodes" [breadcrumbs]="breadcrumbs" [getLink]="getBreadcrumbLink" />
         <div class="responsive-table nat-margin-top">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

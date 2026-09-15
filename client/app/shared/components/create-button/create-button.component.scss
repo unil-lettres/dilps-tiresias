@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@use '@ecodev/natural-layout' as nat;
+
+:host {
+    display: flex;
+    flex-shrink: 0;
+}
+
+@include nat.media(null, sm) {
+    .extended {
+        display: none;
+    }
+}
+
+@include nat.media(sm) {
+    .mini {
+        display: none;
+    }
+}

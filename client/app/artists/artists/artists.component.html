@@ -8,17 +8,12 @@
         [selections]="naturalSearchSelections"
         (selectionChange)="search($event)"
     />
+    <app-create-button label="Créer un artiste" (click)="add()" />
 </mat-toolbar>
 
 @if (dataSource) {
     <div class="nat-padding">
-        <div class="nat-horizontal nat-distribute nat-center">
-            <h2 class="mat-font-headline-sm">Artistes</h2>
-            <button matFab extended color="tertiary" class="fab-no-elevation" (click)="add()">
-                <mat-icon fontIcon="add" />
-                Créer un artiste
-            </button>
-        </div>
+        <h2 class="mat-font-headline-sm">Artistes</h2>
         <div class="responsive-table nat-margin-top">
             <table mat-table matSort [dataSource]="dataSource" (matSortChange)="sorting([$event])">
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

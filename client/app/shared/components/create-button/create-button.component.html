@@ -1,0 +1,7 @@
+<button matFab extended color="tertiary" class="extended fab-no-elevation">
+    <mat-icon naturalIcon="add" />
+    {{ label() }}
+</button>
+<button matMiniFab color="tertiary" class="mini fab-no-elevation" [matTooltip]="label()" [attr.aria-label]="label()">
+    <mat-icon naturalIcon="add" />
+</button>

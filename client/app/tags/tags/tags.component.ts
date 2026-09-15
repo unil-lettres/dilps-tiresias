@@ -19,7 +19,8 @@ import {
     MatTable,
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
-import {MatIconButton, MatFabButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
+import {CreateButtonComponent} from '../../shared/components/create-button/create-button.component';
 import {RouterLink} from '@angular/router';
 import {NaturalSearchComponent, TypedMatCellDef} from '@ecodev/natural';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
@@ -54,7 +55,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatPaginator,
         CollectionHierarchyComponent,
         NavigableBreadcrumbComponent,
-        MatFabButton,
+        CreateButtonComponent,
     ],
     templateUrl: './tags.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
