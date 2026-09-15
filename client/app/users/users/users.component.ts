@@ -53,7 +53,6 @@ import {MatFabButton} from '@angular/material/button';
         MatFabButton,
     ],
     templateUrl: './users.component.html',
-    styleUrl: './users.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class UsersComponent extends AbstractList<UserService> {

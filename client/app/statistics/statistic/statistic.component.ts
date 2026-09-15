@@ -70,7 +70,6 @@ function percent(count: number, total: number): number {
         HighchartsChartComponent,
     ],
     templateUrl: './statistic.component.html',
-    styleUrl: './statistic.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class StatisticComponent {

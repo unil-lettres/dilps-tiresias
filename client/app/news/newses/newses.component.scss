@@ -1,8 +1,3 @@
-@use '../../../styles/utils.scss';
-
-:host {
-    @include utils.fixedToolbar();
-}
 .image {
     border-radius: var(--mat-sys-corner-small);
     background-size: cover;

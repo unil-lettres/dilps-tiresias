@@ -57,7 +57,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatFabButton,
     ],
     templateUrl: './periods.component.html',
-    styleUrl: './periods.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {

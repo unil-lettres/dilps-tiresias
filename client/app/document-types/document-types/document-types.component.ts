@@ -46,7 +46,6 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatFabButton,
     ],
     templateUrl: './document-types.component.html',
-    styleUrl: './document-types.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {

@@ -57,7 +57,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatFabButton,
     ],
     templateUrl: './materials.component.html',
-    styleUrl: './materials.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {

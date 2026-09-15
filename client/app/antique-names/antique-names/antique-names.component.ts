@@ -46,7 +46,6 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatFabButton,
     ],
     templateUrl: './antique-names.component.html',
-    styleUrl: './antique-names.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {

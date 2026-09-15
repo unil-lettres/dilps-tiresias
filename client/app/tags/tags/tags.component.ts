@@ -57,7 +57,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatFabButton,
     ],
     templateUrl: './tags.component.html',
-    styleUrl: './tags.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TagsComponent extends AbstractNavigableList<TagService> {

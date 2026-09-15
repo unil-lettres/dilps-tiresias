@@ -95,7 +95,6 @@ type SerieData = {
         NaturalLinkableTabDirective,
     ],
     templateUrl: './statistics.component.html',
-    styleUrl: './statistic.component.scss',
     providers: [
         {
             // Remove "hint" section below mat-form-field if empty.

@@ -46,7 +46,6 @@ import {MatToolbar} from '@angular/material/toolbar';
         MatFabButton,
     ],
     templateUrl: './institutions.component.html',
-    styleUrl: './institutions.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class InstitutionsComponent extends AbstractList<InstitutionService> {

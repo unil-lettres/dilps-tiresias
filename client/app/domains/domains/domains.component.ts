@@ -57,7 +57,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
         MatFabButton,
     ],
     templateUrl: './domains.component.html',
-    styleUrl: './domains.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
