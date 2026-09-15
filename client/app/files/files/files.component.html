@@ -1,4 +1,4 @@
-@if (!disabled || dataSource.data?.items.length > 0) {
+@if (!disabled || (dataSource.data?.items.length ?? 0) > 0) {
     <div [class.nat-margin-bottom]="disabled">
         <h2>Fichiers joints</h2>
         <table mat-table class="table-fixed" [dataSource]="dataSource">

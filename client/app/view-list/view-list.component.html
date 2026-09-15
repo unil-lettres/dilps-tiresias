@@ -4,10 +4,10 @@
         <div class="scrolled" [style.marginTop]="scrolledMarginTop()">
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    [length]="dataSource.data?.length"
-                    [pageIndex]="dataSource.data?.pageIndex"
+                    [length]="dataSource.data.length"
+                    [pageIndex]="dataSource.data.pageIndex"
                     [pageSizeOptions]="[5, 10, 20, 50]"
-                    [pageSize]="dataSource.data?.pageSize"
+                    [pageSize]="dataSource.data.pageSize"
                     [showFirstLastButtons]="true"
                     (page)="loadMore($event)"
                 />
@@ -146,7 +146,7 @@
                                     @if (item.site === Site.Tiresias) {
                                         <div>Lieu (Musée)</div>
                                     }
-                                    <div>{{ item.institution?.name }}<br /></div>
+                                    <div>{{ item.institution.name }}<br /></div>
                                 </div>
                             }
                             @if (item.street || item.locality || item.country?.name) {
@@ -181,10 +181,10 @@
             }
             @if (dataSource.data?.length) {
                 <mat-paginator
-                    [length]="dataSource.data?.length"
-                    [pageIndex]="dataSource.data?.pageIndex"
+                    [length]="dataSource.data.length"
+                    [pageIndex]="dataSource.data.pageIndex"
                     [pageSizeOptions]="[5, 10, 20, 50]"
-                    [pageSize]="dataSource.data?.pageSize"
+                    [pageSize]="dataSource.data.pageSize"
                     [showFirstLastButtons]="true"
                     (page)="loadMore($event)"
                 />

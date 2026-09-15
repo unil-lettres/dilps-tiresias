@@ -11,7 +11,7 @@
                     [(ngModel)]="model!.street"
                     (keyup.enter)="search()"
                 />
-                @if (model?.street?.length > 200) {
+                @if ((model?.street?.length ?? 0) > 200) {
                     <mat-hint align="end" [class.mat-text-error]="model!.street!.length >= 255">
                         {{ model!.street!.length }} / 255
                     </mat-hint>
@@ -29,7 +29,7 @@
                         [(ngModel)]="model!.postcode"
                         (keyup.enter)="search()"
                     />
-                    @if (model?.postcode?.length > 15) {
+                    @if ((model?.postcode?.length ?? 0) > 15) {
                         <mat-hint align="end" [class.mat-text-error]="model!.postcode!.length >= 20">
                             {{ model!.postcode!.length }} / 20
                         </mat-hint>
@@ -46,7 +46,7 @@
                         [(ngModel)]="model!.locality"
                         (keyup.enter)="search()"
                     />
-                    @if (model?.locality?.length > 150) {
+                    @if ((model?.locality?.length ?? 0) > 150) {
                         <mat-hint align="end" [class.mat-text-error]="model!.locality!.length >= 191">
                             {{ model!.locality!.length }} / 191
                         </mat-hint>
@@ -75,7 +75,7 @@
         [expanded]="!allowExpandableMap() || !readonly"
         [attr.aria-expanded]="accordionItem.expanded"
     >
-        @if (allowExpandableMap() && readonly && !!model?.latitude && !!model?.longitude) {
+        @if (allowExpandableMap() && readonly && !!model?.latitude && !!model.longitude) {
             <div class="map-accordion-header nat-horizontal nat-right nat-center" (click)="accordionItem.toggle()">
                 <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte</span>
                 <mat-icon
@@ -105,7 +105,7 @@
                 </mat-form-field>
 
                 <!-- Map -->
-                @if ((!readonly || (!!model?.latitude && !!model?.longitude)) && (googleMapLoaded | async)) {
+                @if ((!readonly || (!!model?.latitude && !!model.longitude)) && (googleMapLoaded | async)) {
                     <div class="wrapper-google-map">
                         <google-map
                             height="450px"
@@ -117,10 +117,10 @@
                             <map-marker
                                 [icon]="icon!"
                                 [position]="
-                                    (model?.latitude && model?.longitude
+                                    (model?.latitude && model.longitude
                                         ? {
-                                              lat: model?.latitude,
-                                              lng: model?.longitude,
+                                              lat: model.latitude,
+                                              lng: model.longitude,
                                           }
                                         : null)!
                                 "

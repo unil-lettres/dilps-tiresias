@@ -18,7 +18,7 @@ import {type GraphQLFormattedError} from 'graphql';
                             <span class="mat-body-2">{{ error.message }}</span>
                         }
                         @if (error.extensions?.['debugMessage']) {
-                            <span class="mat-body-2">{{ error.extensions?.['debugMessage'] }}</span>
+                            <span class="mat-body-2">{{ error.extensions['debugMessage'] }}</span>
                         }
                     </div>
                     @if (!$last) {

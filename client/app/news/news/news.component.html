@@ -34,8 +34,8 @@
             @if (url.invalid && (url.dirty || url.touched)) {
                 <mat-error>URL invalide</mat-error>
             }
-            @if (data.item.url?.length > 200) {
-                <mat-hint align="end" [class.mat-text-error]="data.item.url?.length >= 255">
+            @if ((data.item.url?.length ?? 0) > 200) {
+                <mat-hint align="end" [class.mat-text-error]="(data.item.url?.length ?? 0) >= 255">
                     {{ data.item.url?.length }} / 255
                 </mat-hint>
             }

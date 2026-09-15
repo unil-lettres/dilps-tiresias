@@ -304,7 +304,7 @@
                     <mat-chip-set>
                         <mat-chip>
                             <div class="chip-infos">
-                                @if (dataSource.data?.length > 0) {
+                                @if ((dataSource.data?.length ?? 0) > 0) {
                                     <span>{{ gridNumberVisibleItems() }} / {{ gridNumberTotalItems() }}</span>
                                 } @else {
                                     <span>0</span>
