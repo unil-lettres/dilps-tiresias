@@ -146,9 +146,9 @@
             </div>
         }
 
-        <div class="left-pane" [class.containerWithToolbar]="showToolbar()" [class.border-right]="showImage()">
+        <div class="left-pane" [class.border-right]="showImage()">
             <div class="scroll nat-expand ng-scroll-max-width">
-                <div class="padding-scrollbar scrolled nat-vertical">
+                <div class="padding-scrollbar nat-vertical">
                     @if (user?.role === UserRole.administrator) {
                         <div class="nat-vertical">
                             <div class="nat-horizontal">

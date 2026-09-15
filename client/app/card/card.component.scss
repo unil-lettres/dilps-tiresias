@@ -1,4 +1,3 @@
-@use '../../styles/utils.scss';
 @use '@angular/material' as mat;
 @use '@ecodev/natural-layout' as nat;
 
@@ -9,7 +8,6 @@ $rich-text-padding-left: 16px;
 :host {
     display: flex;
     flex: auto;
-    @include utils.fixedToolbar();
 }
 
 // Very small screens
@@ -29,10 +27,6 @@ $rich-text-padding-left: 16px;
     align-items: center;
 
     &.vertical {
-        .containerWithToolbar .scrolled {
-            margin-top: 0;
-        }
-
         app-related-cards {
             display: none !important;
         }
@@ -45,19 +39,30 @@ $rich-text-padding-left: 16px;
     .left-pane {
         width: 100%;
     }
+
+    // Shrink the form rather than the image to allow the image to be fully visible on small screens
+    &:not(.vertical) .left-pane {
+        min-height: 0;
+    }
 }
 
 // Bigger screens
 @include nat.media(sm, null) {
     .body:not(.vertical) {
         display: grid;
-        grid-template-rows: 0 1fr;
-        grid-template-columns: 400px minmax(0, 1fr);
+        grid-template:
+            'toolbar image' auto
+            'content image' 1fr
+            / 400px minmax(0, 1fr);
         align-items: initial;
+
+        mat-toolbar {
+            grid-area: toolbar;
+        }
 
         .image-container {
             display: flex;
-            grid-row: span 2;
+            grid-area: image;
             flex-direction: column;
 
             img {
@@ -66,6 +71,8 @@ $rich-text-padding-left: 16px;
         }
 
         .left-pane {
+            grid-area: content;
+
             .scroll {
                 overflow: auto;
             }
