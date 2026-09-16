@@ -184,6 +184,7 @@ natural-gallery {
 .toolbar-with-chips {
     color: var(--mat-sys-on-surface);
     --bg: var(--mat-sys-surface-container);
+    box-shadow: 0 1px 0 var(--mat-sys-outline-variant);
     background: var(--bg);
     @include mat.toolbar-overrides(
         (

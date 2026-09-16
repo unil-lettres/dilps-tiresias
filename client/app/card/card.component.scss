@@ -142,6 +142,7 @@ mat-slider {
 }
 
 mat-toolbar.edition {
+    box-shadow: none;
     background-color: var(--mat-sys-tertiary-container);
     color: var(--mat-sys-on-tertiary) !important;
 

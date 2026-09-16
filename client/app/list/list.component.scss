@@ -19,6 +19,8 @@
         @include utils.stickyToolbar();
 
         .mat-toolbar {
+            box-shadow: none;
+
             // Disable the default mat-toolbar background.
             @include mat.toolbar-overrides(
                 (
