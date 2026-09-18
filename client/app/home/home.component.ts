@@ -207,8 +207,6 @@ export class HomeComponent implements OnInit {
             this.progress = 0;
             this.snackBar.open("L'upload est en cours, ne fermez pas votre navigateur", 'Compris', {
                 duration: 10000,
-                verticalPosition: 'top',
-                horizontalPosition: 'end',
             });
 
             of(...inputs)
@@ -238,8 +236,6 @@ export class HomeComponent implements OnInit {
                             this.snackBar.open(message, 'Compris', {
                                 duration: 15000,
                                 panelClass: ['snackbar-error'],
-                                verticalPosition: 'top',
-                                horizontalPosition: 'end',
                             });
                         } else {
                             this.alertService.info("L'upload est terminé");
