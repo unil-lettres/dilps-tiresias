@@ -51,11 +51,6 @@ export class ViewListComponent implements OnInit, ViewInterface {
     protected cards: CardsQuery['cards']['items'][0][] = [];
 
     /**
-     * The margin-top size in px for the scrollable area.
-     */
-    public readonly scrolledMarginTop = input<string>();
-
-    /**
      * Template exposed variable
      */
     protected readonly Site = Site;

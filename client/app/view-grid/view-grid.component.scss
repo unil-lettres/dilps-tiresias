@@ -1,13 +1,11 @@
 :host {
+    display: block;
+    isolation: isolate;
+
     ::ng-deep .natural-gallery-body {
         justify-content: flex-start !important;
         gap: 5px;
     }
-}
-
-.scrollable {
-    height: 100vh;
-    overflow: auto;
 }
 
 .gallery-wrapper {

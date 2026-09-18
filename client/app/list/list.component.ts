@@ -184,6 +184,7 @@ export class ListComponent
      * Reference to chips container for scroll
      */
     protected readonly chipsContainer = viewChild<ElementRef<HTMLElement>>('chipsContainer');
+    private readonly scrollable = viewChild<ElementRef<HTMLElement>>('scrollable');
     private readonly toolbarRef = viewChild('toolbar', {read: ElementRef});
     private readonly toolbarSelectionRef = viewChild('toolbarSelection', {read: ElementRef});
     private readonly toolbarOptionsRef = viewChild('toolbarOptions', {read: ElementRef});
@@ -469,6 +470,10 @@ export class ListComponent
      */
     protected setViewMode(mode: ViewMode): void {
         this.viewMode = mode;
+
+        // Views share the same scroll container, so the new one must not open
+        // where the previous one was scrolled
+        this.scrollable()?.nativeElement.scrollTo({top: 0});
 
         if (mode !== ViewMode.map) {
             sessionStorage.setItem('view-mode', mode);

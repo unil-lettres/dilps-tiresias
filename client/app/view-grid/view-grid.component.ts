@@ -4,7 +4,6 @@ import {
     computed,
     DestroyRef,
     effect,
-    type ElementRef,
     inject,
     input,
     type OnInit,
@@ -24,6 +23,7 @@ import {
     type ModelAttributes,
     type NaturalGalleryOptions,
 } from '@ecodev/natural-gallery-js';
+import {fromEvent} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {CardService} from '../card/services/card.service';
 import {type ViewInterface} from '../list/list.component';
@@ -38,6 +38,25 @@ export type ContentChange = {
 };
 
 type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
+
+/**
+ * natural-gallery binds a scroll listener to its scrollable and never removes
+ * it. When the scrollable outlives this component, that listener keeps the
+ * gallery instance alive : it would keep reacting to scrolls and emitting
+ * through destroyed outputs (NG0953).
+ */
+function scrollRelay(scrollable: HTMLElement, destroyRef: DestroyRef): HTMLElement {
+    const relay = new EventTarget();
+    fromEvent(scrollable, 'scroll')
+        .pipe(takeUntilDestroyed(destroyRef))
+        .subscribe(() => relay.dispatchEvent(new Event('scroll')));
+
+    return Object.defineProperties(relay, {
+        scrollTop: {get: () => scrollable.scrollTop},
+        clientTop: {get: () => scrollable.clientTop},
+        clientHeight: {get: () => scrollable.clientHeight},
+    }) as unknown as HTMLElement;
+}
 
 @Component({
     selector: 'app-view-grid',
@@ -87,9 +106,15 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     protected readonly selectionChange = output<CardsQuery['cards']['items'][0][]>();
 
     /**
-     * The margin-top size in px for the scrollable area.
+     * The element scrolling the gallery, used for the infinite scroll and to
+     * restore the scroll position.
      */
-    public readonly scrolledMarginTop = input<string>();
+    public readonly scrollable = input.required<HTMLElement>();
+
+    /**
+     * What natural-gallery gets as its scrollable, see scrollRelay()
+     */
+    protected galleryScrollable?: HTMLElement;
 
     /**
      * Current pagination offset from parent.
@@ -100,11 +125,6 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
      * Indicates if there are more items to load
      */
     protected readonly hasMoreItems = signal(true);
-
-    /**
-     * Reference to scrollable element
-     */
-    private readonly scrollable = viewChild<ElementRef<HTMLElement>>('scrollable');
 
     /**
      * Vertical scroll position cache
@@ -223,10 +243,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                             g.clear();
 
                             // Scroll to top and prevent restoration
-                            const scrollable = this.scrollable();
-                            if (scrollable) {
-                                scrollable.nativeElement.scrollTop = 0;
-                            }
+                            this.scrollable().scrollTop = 0;
                             this.preventScrollRestoration = true;
                             this.scrollTop = 0;
                         }
@@ -237,6 +254,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     }
 
     public ngOnInit(): void {
+        this.galleryScrollable = scrollRelay(this.scrollable(), this.destroyRef);
+
         this.dataSource()
             .internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(result => {
@@ -265,13 +284,16 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 this.contentChange.emit({total: result.length, hasHistoric: this.currentHasHistoricImages});
             });
 
-        // Cache scroll when user... scrolls
-        this.scrollable()?.nativeElement.addEventListener('scroll', () => {
-            const scroll = this.scrollable()?.nativeElement.scrollTop;
-            if (scroll && scroll > 0) {
-                this.scrollTop = scroll;
-            }
-        });
+        // Cache the scroll position. The scrollable outlives this component,
+        // so stop listening when destroyed.
+        fromEvent(this.scrollable(), 'scroll')
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+                const scroll = this.scrollable().scrollTop;
+                if (scroll > 0) {
+                    this.scrollTop = scroll;
+                }
+            });
 
         // Restore scroll when component is retrieved from reuse strategy
         this.routerEvents$.subscribe(() => {
@@ -279,9 +301,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
             this.lastCollectionId = this.route.snapshot?.data?.collection?.id;
 
             setTimeout(() => {
-                const scrollable = this.scrollable();
-                if (restoreScroll && scrollable && !this.preventScrollRestoration) {
-                    scrollable.nativeElement.scrollTop = this.scrollTop;
+                if (restoreScroll && !this.preventScrollRestoration) {
+                    this.scrollable().scrollTop = this.scrollTop;
                 }
             }, 200);
         });

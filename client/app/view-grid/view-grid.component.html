@@ -1,25 +1,23 @@
 <app-historic-icon id="original-historic-icon" class="historic-icon" [small]="true" [badge]="true" />
-<div #scrollable class="scrollable">
-    @if (isClearing()) {
-        <div class="clearing-overlay">
-            <mat-progress-spinner mode="indeterminate" [diameter]="60" />
+@if (isClearing()) {
+    <div class="clearing-overlay">
+        <mat-progress-spinner mode="indeterminate" [diameter]="60" />
+    </div>
+}
+<div class="gallery-wrapper">
+    <natural-gallery
+        #gallery
+        [options]="options"
+        [scrollable]="galleryScrollable"
+        [items]="emptyItemsList"
+        (activate)="activate($event.item.model)"
+        (pagination)="loadMore($event)"
+        (select)="selectionChange.emit(bindModel($event))"
+        (itemAddedToDom)="itemAddedToDom($event)"
+    />
+    @if (hasMoreItems()) {
+        <div class="spinner-container">
+            <mat-progress-spinner mode="indeterminate" [diameter]="40" />
         </div>
     }
-    <div class="gallery-wrapper" [style]="{marginTop: scrolledMarginTop()}">
-        <natural-gallery
-            #gallery
-            [options]="options"
-            [scrollable]="scrollable"
-            [items]="emptyItemsList"
-            (activate)="activate($event.item.model)"
-            (pagination)="loadMore($event)"
-            (select)="selectionChange.emit(bindModel($event))"
-            (itemAddedToDom)="itemAddedToDom($event)"
-        />
-        @if (hasMoreItems()) {
-            <div class="spinner-container">
-                <mat-progress-spinner mode="indeterminate" [diameter]="40" />
-            </div>
-        }
-    </div>
 </div>

@@ -141,11 +141,6 @@ natural-gallery {
     }
 }
 
-// Target the "Satellite/Roadmap" button of Google map to put it under our toolbar
-app-view-map google-map div.gm-style > div:last-child {
-    top: 75px !important;
-}
-
 // Align right so big number are easier to spot
 .mat-column-usageCount {
     width: 12em;
@@ -184,8 +179,8 @@ app-view-map google-map div.gm-style > div:last-child {
     text-align: center;
 }
 
-.mat-toolbar,
-#domains-chips {
+.mat-toolbar:not(.toolbar-with-chips > *),
+.toolbar-with-chips {
     color: var(--mat-sys-on-surface);
     --bg: var(--mat-sys-surface-container);
     background: var(--bg);

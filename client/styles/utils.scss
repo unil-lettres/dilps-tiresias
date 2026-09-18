@@ -1,23 +1,6 @@
-@mixin fixedToolbar() {
-    .containerWithToolbar {
-        position: relative;
-        min-height: 0;
-
-        .scrollable:not(perfect-scrollbar) {
-            padding-top: 64px;
-            overflow-y: auto;
-        }
-
-        .scrolled {
-            margin-top: 64px;
-        }
-
-        mat-toolbar {
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            z-index: 10;
-        }
-    }
+// The toolbar must be an in-flow child of the element that scrolls, placed before the content.
+@mixin stickyToolbar() {
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }

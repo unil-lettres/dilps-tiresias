@@ -4,12 +4,15 @@
 :host {
     display: flex;
     flex-direction: row;
-    @include utils.fixedToolbar();
 
     app-historic-icon {
         width: 30px;
         color: var(--mat-sys-tertiary-container);
     }
+}
+
+.collections-toolbar {
+    @include utils.stickyToolbar();
 }
 
 .collections {

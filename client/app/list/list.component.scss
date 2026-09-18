@@ -3,8 +3,32 @@
 
 :host {
     --mat-toolbar-standard-height: 69px;
-    display: block;
-    @include utils.fixedToolbar();
+    --mat-toolbar-mobile-height: 69px;
+    display: flex;
+    flex-direction: column;
+    // Take our width from the parent only: otherwise the header's content would
+    // impose a minimum width and a vertical scrollbar would appear when the
+    // window is resized smaller than that.
+    contain: inline-size;
+
+    .scrollable {
+        position: relative;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .toolbar-with-chips {
+        @include utils.stickyToolbar();
+
+        .mat-toolbar {
+            // Disable the default mat-toolbar background.
+            @include mat.toolbar-overrides(
+                (
+                    container-background-color: transparent,
+                )
+            );
+        }
+    }
 
     @include mat.checkbox-overrides(
         (
@@ -32,13 +56,8 @@ mat-toolbar {
     overflow: hidden; // Clip items that would visually overflow the toolbar height
 }
 
-app-view-grid {
-    position: relative;
-    z-index: 9;
-}
-
 .empty-result {
-    margin: 100px auto;
+    margin: 30px auto;
 }
 
 @keyframes fadeIn {
@@ -69,11 +88,7 @@ app-view-grid {
 
 #domains-chips {
     display: block;
-    position: absolute;
-    top: 69px;
-    right: 15px; // Keep a space for the gallery scrollbar.
-    left: 0;
-    z-index: 10;
+    position: relative;
     padding-right: 5px;
     padding-bottom: 7px;
     padding-left: 5px;
@@ -181,9 +196,7 @@ natural-search {
     );
 }
 
-app-view-map,
-app-view-grid,
-app-view-list {
-    width: 100%;
-    height: 100vh;
+// The map has no height of its own, fill what's left below the header
+app-view-map {
+    flex: 1;
 }

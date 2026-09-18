@@ -1,22 +1,13 @@
 $gap: 10px;
 
 :host {
-    display: flex;
+    display: block;
 }
 
-.scrollable {
-    flex: 1;
-    overflow: auto;
-}
-
-.scrolled {
+.content {
     margin-right: auto;
     margin-left: auto;
     max-width: 1130px;
-}
-
-mat-paginator {
-    margin-top: $gap;
 }
 
 .line {
