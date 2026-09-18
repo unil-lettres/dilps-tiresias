@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './artists.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
     public constructor() {

@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './document-types.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
     public constructor() {

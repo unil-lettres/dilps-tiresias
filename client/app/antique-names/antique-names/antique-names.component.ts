@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './antique-names.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
     public constructor() {

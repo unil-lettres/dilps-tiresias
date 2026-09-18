@@ -48,6 +48,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     templateUrl: './newses.component.html',
     styleUrl: './newses.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];

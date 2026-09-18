@@ -54,6 +54,7 @@ import {MatFabButton} from '@angular/material/button';
     ],
     templateUrl: './users.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];

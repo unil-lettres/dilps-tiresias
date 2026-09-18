@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './materials.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {

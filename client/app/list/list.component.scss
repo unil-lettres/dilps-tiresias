@@ -2,8 +2,6 @@
 @use '@angular/material' as mat;
 
 :host {
-    --mat-toolbar-standard-height: 69px;
-    --mat-toolbar-mobile-height: 69px;
     display: flex;
     flex-direction: column;
     // Take our width from the parent only: otherwise the header's content would
@@ -36,24 +34,6 @@
             selected-focus-icon-color: var(--mat-sys-tertiary-container),
         )
     );
-
-    ::ng-deep {
-        #main-natural-search .endOfRowButton {
-            margin-bottom: 11px !important;
-        }
-
-        // Prevent natural-group from wrapping chips to a second row when the toolbar
-        // is compressed.
-        #main-natural-search natural-group {
-            flex-wrap: nowrap;
-            overflow: hidden;
-        }
-    }
-}
-
-mat-toolbar {
-    padding: 0 5px;
-    overflow: hidden; // Clip items that would visually overflow the toolbar height
 }
 
 .empty-result {
@@ -176,10 +156,6 @@ mat-toolbar {
         height: 20px;
         color: var(--mat-sys-on-surface);
     }
-}
-
-natural-search {
-    min-width: 0; // Allow flex shrink below content size so ResizeObserver can detect overflow
 }
 
 .background-selection {

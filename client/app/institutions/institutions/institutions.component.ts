@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     ],
     templateUrl: './institutions.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];

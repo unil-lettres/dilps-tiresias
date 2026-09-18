@@ -5,6 +5,7 @@
 @use '@fontsource-variable/quicksand/wght.css';
 @use 'styles/upload.scss';
 @use 'styles/layout';
+@use 'styles/utils';
 @use 'app/shared/components/boot-loader/boot-loader.external';
 
 @import 'quill/dist/quill.bubble.css';
@@ -202,6 +203,37 @@ natural-gallery {
     }
 }
 
+.mat-toolbar.mat-toolbar-single-row {
+    --mat-toolbar-standard-height: 69px;
+    --mat-toolbar-mobile-height: 69px;
+    flex-shrink: 0;
+    padding: 0 5px;
+    overflow: hidden;
+
+    natural-search {
+        min-width: 0;
+
+        .endOfRowButton {
+            margin-bottom: 11px !important;
+        }
+
+        // Prevent natural-group from wrapping chips to a second row when the toolbar is compressed
+        natural-group {
+            flex-wrap: nowrap;
+            overflow: hidden;
+        }
+    }
+}
+
+.toolbar-page {
+    display: block;
+    height: auto;
+
+    > .mat-toolbar {
+        @include utils.stickyToolbar();
+    }
+}
+
 // It is possible that the server returns error message on multiple line (eg: when ACL with multiple assertions fail),
 // so we try to preserve that formatting, while still wrapping if necessary
 .mat-mdc-snack-bar-label {
@@ -258,8 +290,17 @@ natural-gallery {
     @include mat.fab-overrides(
         (
             container-elevation-shadow: var(--mat-sys-level0),
+            hover-container-elevation-shadow: var(--mat-sys-level0),
+            focus-container-elevation-shadow: var(--mat-sys-level0),
+            pressed-container-elevation-shadow: var(--mat-sys-level0),
             extended-container-elevation-shadow: var(--mat-sys-level0),
+            extended-hover-container-elevation-shadow: var(--mat-sys-level0),
+            extended-focus-container-elevation-shadow: var(--mat-sys-level0),
+            extended-pressed-container-elevation-shadow: var(--mat-sys-level0),
             small-container-elevation-shadow: var(--mat-sys-level0),
+            small-hover-container-elevation-shadow: var(--mat-sys-level0),
+            small-focus-container-elevation-shadow: var(--mat-sys-level0),
+            small-pressed-container-elevation-shadow: var(--mat-sys-level0),
             extended-label-text-weight: 700,
         )
     );

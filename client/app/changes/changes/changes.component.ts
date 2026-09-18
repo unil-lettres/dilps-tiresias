@@ -47,6 +47,7 @@ import {MatToolbar} from '@angular/material/toolbar';
     templateUrl: './changes.component.html',
     styleUrl: './changes.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class ChangesComponent extends NaturalAbstractList<ChangeService> {
     protected displayedColumns = ['type', 'original', 'suggestion', 'owner', 'creationDate'];

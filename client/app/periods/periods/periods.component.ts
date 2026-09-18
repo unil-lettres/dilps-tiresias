@@ -58,6 +58,7 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
     ],
     templateUrl: './periods.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];
