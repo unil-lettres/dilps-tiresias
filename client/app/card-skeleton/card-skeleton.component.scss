@@ -19,23 +19,23 @@
 }
 
 .block-input {
-    margin: 0 12px 22.5px 12px;
+    margin: 0 10px 22.5px 10px;
     border-radius: 10px;
-    width: 375px;
+    width: 379px;
     height: 56px;
 }
 
-.block-input-xs {
-    margin: 0 20px 15px 20px;
+.block-visibility {
+    margin: 12px 0 0 10px;
     border-radius: 10px;
     width: 200px;
     height: 15px;
 }
 
-.block-input-sm {
-    margin: 0 auto 40px auto;
+.block-slider {
+    margin: 23px 0 40px 25px;
     border-radius: 10px;
-    width: 330px;
+    width: 349px;
     height: 7px;
 }
 
@@ -47,19 +47,30 @@
 }
 
 .left-pane {
+    flex: 0 0 400px;
+    box-sizing: border-box;
+    border-right: 1px solid var(--mat-sys-outline-variant);
+    max-width: 100%;
     overflow: hidden;
 }
 
 .left-pane > div {
     position: relative;
-    padding-top: 20px;
 }
 
 .skeleton-menu {
     display: flex;
     justify-content: space-between;
-    padding: 0 15px 15px;
-    height: 50px;
+    align-items: center;
+    box-shadow: 0 1px 0 var(--mat-sys-outline-variant);
+    background: var(--mat-sys-surface-container);
+    padding: 0 9px 0 5px;
+    height: 69px;
+}
+
+.skeleton-buttons {
+    display: flex;
+    gap: 8px;
 }
 
 .skeleton-screen {
