@@ -32,6 +32,7 @@ import {KeyValuePipe} from '@angular/common';
 import {MatSelect} from '@angular/material/select';
 import {MatTab, MatTabContent, MatTabGroup} from '@angular/material/tabs';
 import {LogoComponent} from '../../shared/components/logo/logo.component';
+import {MatToolbar} from '@angular/material/toolbar';
 
 function formatDate(date: Date): string {
     const month = (date.getMonth() < 9 ? '0' : '') + (date.getMonth() + 1);
@@ -81,6 +82,7 @@ type SerieData = {
     selector: 'app-statistics',
     imports: [
         LogoComponent,
+        MatToolbar,
         MatTabContent,
         MatTab,
         MatTabGroup,
@@ -105,6 +107,7 @@ type SerieData = {
         },
     ],
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'toolbar-page'},
 })
 export class StatisticsComponent {
     private readonly apollo = inject(Apollo);
