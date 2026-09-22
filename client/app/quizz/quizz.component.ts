@@ -72,6 +72,11 @@ export class QuizzComponent implements OnInit {
         this.getCard(this.cards[index + 1]);
     }
 
+    protected restart(): void {
+        this.formCtrl.setValue('');
+        this.getCard(this.cards[0]);
+    }
+
     protected getArtistsNames(artists: CardQuery['card']['artists']): string {
         return artists.map(a => a.name).join(', ');
     }
