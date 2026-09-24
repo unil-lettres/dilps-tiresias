@@ -15,7 +15,7 @@
 
 // Only light color for old browsers that don't support light-dark()
 /* prettier-ignore */
-[data-theme^="tiresias-"] {
+[data-theme="tiresias"] {
     @include mat.theme-overrides((
             primary: #9B3F2A,
             primary-container: #BB563F,
@@ -79,7 +79,7 @@
 @supports (color: light-dark(white, black)) {
     /* prettier-ignore */
 
-    [data-theme^="tiresias"] {
+    [data-theme="tiresias"] {
         @include mat.theme-overrides((
                 primary: light-dark(#9B3F2A, #FFB4A3),
                 primary-container: light-dark(#BB563F, #DE7158),

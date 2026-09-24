@@ -1,4 +1,4 @@
-import {Component, computed, inject, type OnInit, signal, ChangeDetectionStrategy} from '@angular/core';
+import {Component, computed, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {takeUntilDestroyed, toSignal} from '@angular/core/rxjs-interop';
 import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
@@ -29,7 +29,6 @@ import {
 } from '@ecodev/natural';
 import {EMPTY, type Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
-import {environment} from '../../environments/environment';
 import {type AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -40,6 +39,7 @@ import {
     type CollectionSelectorResult,
 } from '../shared/components/collection-selector/collection-selector.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
+import {environmentBadge} from '../shared/config/environment-badge';
 import {UPLOAD_CONFIG} from '../shared/config/upload.config';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {Site, UserRole, type ViewerQuery} from '../shared/generated-types';
@@ -91,9 +91,8 @@ export class HomeComponent implements OnInit {
     private readonly cardService = inject(CardService);
     protected readonly site = inject(SITE);
     private readonly routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
-    public readonly menuTheme = signal('dilps-production');
-
     protected readonly Site = Site;
+    protected readonly environmentBadge = environmentBadge;
     protected readonly UserRole = UserRole;
 
     protected user: ViewerQuery['viewer'] | null = null;
@@ -139,7 +138,6 @@ export class HomeComponent implements OnInit {
 
     public constructor() {
         this.networkActivityService.clearErrors();
-        this.menuTheme.set((this.site + '-' + environment.environment).toLowerCase());
     }
 
     public ngOnInit(): void {

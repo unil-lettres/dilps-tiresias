@@ -74,14 +74,7 @@ export const appConfig: ApplicationConfig = {
         provideHighcharts(),
 
         // Sorting is importance because of scss files optimization (removed inherited tokens)
-        provideThemes([
-            'dilps-production',
-            'dilps-staging',
-            'dilps-development',
-            'tiresias-production',
-            'tiresias-staging',
-            'tiresias-development',
-        ]),
+        provideThemes(['dilps', 'tiresias']),
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {maxWidth: '800px'}},
     ],
 };

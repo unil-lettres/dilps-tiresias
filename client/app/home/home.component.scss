@@ -19,6 +19,17 @@ mat-sidenav-container {
         )
     );
 
+    .environment-badge {
+        align-self: center;
+        margin: 8px 0;
+        border-radius: var(--mat-sys-corner-extra-small);
+        background: var(--mat-sys-tertiary-container);
+        padding: 2px 4px;
+        color: var(--mat-sys-on-tertiary-container);
+        font: var(--mat-sys-label-small);
+        letter-spacing: 0.05em;
+    }
+
     mat-divider {
         @include mat.divider-overrides(
             (

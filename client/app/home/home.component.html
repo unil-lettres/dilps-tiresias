@@ -40,8 +40,13 @@
 
 <mat-sidenav-container>
     @if (showNavigationMenu()) {
-        <mat-sidenav disableClose id="menu" mode="side" opened position="start" [attr.data-theme]="menuTheme()">
+        <mat-sidenav disableClose id="menu" mode="side" opened position="start">
             <div class="nat-vertical" style="height: 100%">
+                @if (environmentBadge) {
+                    <div class="environment-badge" matTooltipPosition="after" [matTooltip]="environmentBadge.name">
+                        {{ environmentBadge.label }}
+                    </div>
+                }
                 @if (user) {
                     <!-- Dashboard -->
                     <a

@@ -1,11 +1,15 @@
 import {Component, effect, inject, viewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 import {RouterOutlet} from '@angular/router';
 import {NaturalThemeService, NetworkActivityService} from '@ecodev/natural';
 import {NgProgressbar, NgProgressRef} from 'ngx-progressbar';
 import {SITE} from './app.config';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
+import {badgeFavicon, environmentBadge} from './shared/config/environment-badge';
 import {Site} from './shared/generated-types';
 import {ProgressService} from './shared/services/progress.service';
+import dilpsFavicon from '../favicon-dilps.svg';
+import tiresiasFavicon from '../favicon-tiresias.svg';
 
 class DelayedProgressBar {
     private isVisible = false;
@@ -105,6 +109,7 @@ export class AppComponent {
     private readonly progressService = inject(ProgressService);
     private readonly themeService = inject(NaturalThemeService);
     private readonly site = inject(SITE);
+    private readonly title = inject(Title);
 
     private readonly ngProgressRef = viewChild.required(NgProgressRef);
 
@@ -123,7 +128,21 @@ export class AppComponent {
             this.networkActivityService.setProgressRef(delayedProgressBar);
         });
 
-        this.themeService.setTheme((this.site + '-production').toLowerCase());
-        this.favIcon.href = this.site === Site.Dilps ? 'favicon-dilps.svg' : 'favicon-tiresias.svg';
+        this.themeService.setTheme(this.site.toLowerCase());
+
+        // Outside production, the environment's badge prefixes the title and marks the favicon, to tell tabs apart
+        const siteTitle =
+            this.site === Site.Dilps
+                ? "Dilps - Banque d'images d'histoire de l'art, UNIL"
+                : "Tiresias - Banque d'images d'archéologie et des sciences de l'Antiquité, UNIL";
+        this.title.setTitle(environmentBadge ? `[${environmentBadge.label}] ${siteTitle}` : siteTitle);
+        if (environmentBadge) {
+            this.favIcon.href = badgeFavicon(
+                this.site === Site.Dilps ? dilpsFavicon : tiresiasFavicon,
+                environmentBadge,
+            );
+        } else {
+            this.favIcon.href = this.site === Site.Dilps ? 'favicon-dilps.svg' : 'favicon-tiresias.svg';
+        }
     }
 }

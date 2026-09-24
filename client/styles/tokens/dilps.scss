@@ -16,7 +16,7 @@
 // Only light color for old browsers that don't support light-dark()
 /* prettier-ignore */
 
-[data-theme^="dilps"] {
+[data-theme="dilps"] {
     @include mat.theme-overrides((
             primary: #0061A3,
             primary-container: #2197F3,
@@ -79,7 +79,7 @@
 // Both colors for new browsers that support light-dark()
 @supports (color: light-dark(white, black)) {
     /* prettier-ignore */
-    [data-theme^="dilps"]{
+    [data-theme="dilps"]{
         @include mat.theme-overrides((
                 primary: light-dark(#0061A3, #9ECAFF),
                 primary-container: light-dark(#2197F3, #2197F3),
