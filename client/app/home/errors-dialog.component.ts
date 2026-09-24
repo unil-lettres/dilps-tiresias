@@ -28,7 +28,7 @@ import {type GraphQLFormattedError} from 'graphql';
             </div>
         </mat-dialog-content>
         <mat-dialog-actions align="end">
-            <button matButton="outlined" mat-dialog-close>Fermer</button>
+            <button matButton mat-dialog-close>Fermer</button>
             <button matButton="filled" [mat-dialog-close]="true">Effacer et fermer</button>
         </mat-dialog-actions>
     `,

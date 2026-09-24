@@ -23,7 +23,7 @@ import {NaturalIconDirective} from '@ecodev/natural';
             </ol>
         </mat-dialog-content>
         <mat-dialog-actions align="end">
-            <button mat-dialog-close matButton="outlined">Fermer</button>
+            <button mat-dialog-close matButton>Fermer</button>
             <a matButton="filled" href="/api/template" mat-dialog-close>
                 <mat-icon naturalIcon="table_view" />
                 Télécharger le modèle Excel
