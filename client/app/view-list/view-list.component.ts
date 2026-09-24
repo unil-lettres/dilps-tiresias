@@ -11,6 +11,9 @@ import {TruncatePipe} from '../shared/pipes/truncate.pipe';
 import {OnlyLeavesPipe} from '../shared/pipes/only-leaves.pipe';
 import {StripTagsPipe} from '../shared/pipes/strip-tags.pipe';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
 import {RouterLink} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -20,6 +23,9 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
         MatPaginator,
         RouterLink,
         MatCheckbox,
+        MatIconButton,
+        MatIcon,
+        MatTooltip,
         StripTagsPipe,
         OnlyLeavesPipe,
         TruncatePipe,

@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 @if (dataSource) {
-    <div class="content">
+    <div class="content nat-vertical nat-gap-10 nat-padding-top">
         @if (dataSource.data?.length) {
             <mat-paginator
                 [length]="dataSource.data.length"
@@ -12,171 +12,157 @@
             />
         }
         @for (item of cards; track item) {
-            <div class="line">
-                <div class="image-wrapper">
-                    <a
-                        class="image"
-                        [routerLink]="['/card', item.id]"
-                        [style.backgroundImage]="`url(${CardService.getImageLink(item, 300)})`"
-                    ></a>
-
+            <article
+                class="line nat-padding nat-gap-10 nat-md-gap-20"
+                [class.selected]="selectionModel.isSelected(item)"
+            >
+                <a class="image" tabindex="-1" aria-hidden="true" [routerLink]="['/card', item.id]">
+                    @if (CardService.getImageLink(item, 300); as src) {
+                        <img
+                            class="image-backdrop"
+                            alt=""
+                            loading="lazy"
+                            [src]="src"
+                            [attr.width]="item.width"
+                            [attr.height]="item.height"
+                        />
+                    }
                     @if (item.showHistoric) {
                         <app-historic-icon [badge]="true" />
                     }
-                </div>
-                <div class="line-body">
-                    <div class="line-body-table">
-                        @if (item.site === Site.Tiresias) {
-                            @if (item.code) {
-                                <div>
-                                    <div>Référence</div>
-                                    <div>{{ item.code }}</div>
-                                </div>
-                            }
+                </a>
+
+                <dl class="metadata nat-gap-horizontal-15 nat-md-gap-vertical-5">
+                    @if (item.site === Site.Tiresias) {
+                        @if (item.code) {
+                            <dt>Référence</dt>
+                            <dd>{{ item.code }}</dd>
                         }
-                        <div>
-                            <div>Titre</div>
-                            <div [innerHTML]="item.name | truncate: ['250', '...']"></div>
-                        </div>
+                    }
+                    <dt>Titre</dt>
+                    <dd>
+                        @if (item.name) {
+                            <span [innerHTML]="item.name | truncate: ['250', '...']"></span>
+                        } @else {
+                            <span class="untitled">Sans titre</span>
+                        }
+                    </dd>
+                    @if (item.site === Site.Dilps) {
+                        @if (item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)) {
+                            <dt>Titre étendu</dt>
+                            <dd [innerHTML]="item.expandedName | truncate: ['250', '...']"></dd>
+                        }
+                        @if (item.artists.length) {
+                            <dt>Artistes</dt>
+                            <dd>
+                                @for (artist of item.artists; track artist) {
+                                    <div>{{ artist.name }}</div>
+                                }
+                            </dd>
+                        }
+                        @if (item.addition) {
+                            <dt>Supplément</dt>
+                            <dd>{{ item.addition | truncate: ['250', '...'] }}</dd>
+                        }
+                    }
+                    @if (item.site === Site.Tiresias) {
+                        @if (item.tags.length) {
+                            <dt>Mots clés</dt>
+                            <dd>
+                                @for (tag of item.tags | onlyLeaves; track tag) {
+                                    <div>{{ tag.hierarchicName }}</div>
+                                }
+                            </dd>
+                        }
+                        @if (item.periods.length) {
+                            <dt>Périodes</dt>
+                            <dd>
+                                @for (period of item.periods; track period) {
+                                    <div>{{ period.hierarchicName }}</div>
+                                }
+                            </dd>
+                        }
+                        @if (item.from || item.to) {
+                            <dt>Datation</dt>
+                            <dd>De {{ item.from }} jusqu'à {{ item.to }}</dd>
+                        }
+                    }
+                    @if (item.dating) {
                         @if (item.site === Site.Dilps) {
-                            @if (item.expandedName && (item.name | stripTags) !== (item.expandedName | stripTags)) {
-                                <div>
-                                    <div>Titre étendu</div>
-                                    <div [innerHTML]="item.expandedName | truncate: ['250', '...']"></div>
-                                </div>
-                            }
-                            @if (item.artists.length) {
-                                <div>
-                                    <div>Artistes</div>
-                                    <div>
-                                        @for (artist of item.artists; track artist) {
-                                            <div>{{ artist.name }}</div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            @if (item.addition) {
-                                <div>
-                                    <div>Supplément</div>
-                                    <div>{{ item.addition | truncate: ['250', '...'] }}</div>
-                                </div>
-                            }
+                            <dt>Datation</dt>
                         }
                         @if (item.site === Site.Tiresias) {
-                            @if (item.tags.length) {
-                                <div>
-                                    <div>Mots clés</div>
-                                    <div>
-                                        @for (tag of item.tags | onlyLeaves; track tag) {
-                                            <div>{{ tag.hierarchicName }}</div>
-                                        }
-                                    </div>
-                                </div>
+                            <dt>Date (Datation)</dt>
+                        }
+                        <dd>{{ item.dating }}</dd>
+                    }
+                    @if (item.domains.length) {
+                        <dt>Domaines</dt>
+                        <dd>
+                            @for (domain of item.domains | onlyLeaves; track domain) {
+                                <div>{{ domain.hierarchicName }}</div>
                             }
-                            @if (item.periods.length) {
-                                <div>
-                                    <div>Périodes</div>
-                                    <div>
-                                        @for (period of item.periods; track period) {
-                                            <div>{{ period.hierarchicName }}</div>
-                                        }
-                                    </div>
-                                </div>
+                        </dd>
+                    }
+                    @if (item.materials.length || item.material) {
+                        @if (item.site === Site.Dilps) {
+                            <dt>Technique & matériel</dt>
+                        }
+                        @if (item.site === Site.Tiresias) {
+                            <dt>Matériel (Matériaux)</dt>
+                        }
+                        <dd>
+                            @for (material of item.materials | onlyLeaves; track material) {
+                                <div>{{ material.hierarchicName }}</div>
                             }
-                            @if (item.from || item.to) {
-                                <div>
-                                    <div>Datation</div>
-                                    <div>De {{ item.from }} jusqu'à {{ item.to }}</div>
-                                </div>
-                            }
+                            <div>{{ item.material }}</div>
+                        </dd>
+                    }
+                    @if (item.site === Site.Dilps && (item.format || item.documentSize)) {
+                        <dt>Dimensions</dt>
+                        <dd>{{ item.format || item.documentSize }}</dd>
+                    }
+                    @if (item.institution?.name) {
+                        @if (item.site === Site.Dilps) {
+                            <dt>Lieu</dt>
                         }
-                        @if (item.dating) {
-                            <div>
-                                @if (item.site === Site.Dilps) {
-                                    <div>Datation</div>
-                                }
-                                @if (item.site === Site.Tiresias) {
-                                    <div>Date (Datation)</div>
-                                }
-                                <div>{{ item.dating }}</div>
-                            </div>
+                        @if (item.site === Site.Tiresias) {
+                            <dt>Lieu (Musée)</dt>
                         }
-                        @if (item.domains.length) {
-                            <div>
-                                <div>Domaines</div>
-                                <div>
-                                    @for (domain of item.domains | onlyLeaves; track domain) {
-                                        <div>
-                                            {{ domain.hierarchicName }}
-                                        </div>
-                                    }
-                                </div>
-                            </div>
+                        <dd>{{ item.institution.name }}</dd>
+                    }
+                    @if (item.street || item.locality || item.country?.name) {
+                        <dt>Adresse</dt>
+                        <dd>{{ getCardAddress(item) }}</dd>
+                    }
+                    @if (item.literature) {
+                        @if (item.site === Site.Dilps) {
+                            <dt class="secondary">Référence de l'image</dt>
                         }
-                        @if (item.materials.length || item.material) {
-                            <div>
-                                @if (item.site === Site.Dilps) {
-                                    <div>Technique & matériel</div>
-                                }
-                                @if (item.site === Site.Tiresias) {
-                                    <div>Matériel (Matériaux)</div>
-                                }
-                                <div>
-                                    @for (material of item.materials | onlyLeaves; track material) {
-                                        <div>
-                                            {{ material.hierarchicName }}
-                                        </div>
-                                    }
-                                    <div>{{ item.material }}</div>
-                                </div>
-                            </div>
+                        @if (item.site === Site.Tiresias) {
+                            <dt class="secondary">Source (référence de l'image)</dt>
                         }
-                        @if (item.site === Site.Dilps && (item.format || item.documentSize)) {
-                            <div>
-                                <div>Dimensions</div>
-                                <div>{{ item.format || item.documentSize }}</div>
-                            </div>
-                        }
-                        @if (item.institution?.name) {
-                            <div>
-                                @if (item.site === Site.Dilps) {
-                                    <div>Lieu</div>
-                                }
-                                @if (item.site === Site.Tiresias) {
-                                    <div>Lieu (Musée)</div>
-                                }
-                                <div>{{ item.institution.name }}<br /></div>
-                            </div>
-                        }
-                        @if (item.street || item.locality || item.country?.name) {
-                            <div>
-                                <div>Adresse</div>
-                                <div>
-                                    {{ getCardAddress(item) }}
-                                </div>
-                            </div>
-                        }
-                        @if (item.literature) {
-                            <div>
-                                @if (item.site === Site.Dilps) {
-                                    <div>Référence de l'image</div>
-                                }
-                                @if (item.site === Site.Tiresias) {
-                                    <div>Source (référence de l'image)</div>
-                                }
-                                <div [innerHTML]="item.literature | truncate: ['250', '...']"></div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div>
+                        <dd class="secondary" [innerHTML]="item.literature | truncate: ['250', '...']"></dd>
+                    }
+                </dl>
+
+                <div class="actions nat-vertical nat-center nat-gap-5">
                     <mat-checkbox
+                        [aria-label]="`Sélectionner ${item.plainName || item.code || 'la fiche'}`"
                         [checked]="selectionModel.isSelected(item)"
                         (change)="$event ? selectionModel.toggle(item) : null"
                         (click)="$event.stopPropagation()"
                     />
+                    <a
+                        matIconButton
+                        matTooltip="Ouvrir la fiche"
+                        [attr.aria-label]="`Ouvrir ${item.plainName || item.code || 'la fiche'}`"
+                        [routerLink]="['/card', item.id]"
+                    >
+                        <mat-icon fontIcon="arrow_forward" />
+                    </a>
                 </div>
-            </div>
+            </article>
         }
         @if (dataSource.data?.length) {
             <mat-paginator

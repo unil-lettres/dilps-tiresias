@@ -1,91 +1,118 @@
-$gap: 10px;
+@use '@angular/material' as mat;
+@use '@ecodev/natural-layout' as nat;
+
+$image-size: 240px;
 
 :host {
     display: block;
 }
 
 .content {
-    margin-right: auto;
-    margin-left: auto;
+    margin-inline: auto;
     max-width: 1130px;
 }
 
+mat-paginator {
+    @include mat.paginator-overrides(
+        (
+            container-background-color: var(--mat-sys-surface-container-lowest),
+        )
+    );
+
+    border-radius: var(--mat-sys-corner-medium);
+}
+
 .line {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: $gap;
-    padding: $gap;
+    display: grid;
+    grid-template-columns: $image-size minmax(0, 1fr) auto;
+    align-items: start;
+    transition: background-color 150ms;
+    border-radius: var(--mat-sys-corner-medium);
+    background: var(--mat-sys-surface-container-lowest);
 
-    & > *:not(:last-child) {
-        margin-right: $gap;
+    &:hover {
+        background: var(--mat-sys-surface-container-highest);
     }
 
-    &:nth-child(odd) {
-        background: rgba(0, 0, 0, 0.1);
-    }
+    &.selected {
+        background: var(--mat-sys-secondary-container);
+        color: var(--mat-sys-on-secondary-container);
 
-    .line-body {
-        flex: 1;
-
-        .line-body-table {
-            display: table;
-            width: 100%;
-
-            & > *:not(:last-child) {
-                margin-bottom: 2 * $gap;
-            }
-
-            & > div {
-                display: table-row;
-
-                & > div {
-                    display: table-cell;
-                    padding: 5px;
-
-                    &:first-child {
-                        width: 25%;
-                        font-weight: bold;
-                    }
-
-                    &:last-child {
-                        padding-bottom: 1.5 * $gap;
-                        width: 75%;
-                    }
-                }
+        @supports (background: color-mix(in srgb, blue, red)) {
+            &:hover {
+                background: color-mix(
+                    in srgb,
+                    var(--mat-sys-on-secondary-container) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
+                    var(--mat-sys-secondary-container)
+                );
             }
         }
     }
-    mat-checkbox {
-        margin-right: 20px;
+}
+
+.image {
+    display: block;
+    position: relative;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: $image-size;
+        object-fit: contain;
     }
 
-    .image-wrapper {
-        display: flex;
-        position: relative;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+    app-historic-icon {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        height: 15px;
+    }
+}
 
-        border-radius: var(--mat-sys-corner-small);
-        background: rgba(0, 0, 0, 0.3);
-        padding: $gap;
-        width: 300px;
-        height: 200px;
+.metadata {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: baseline;
+    margin: 0;
+    overflow-wrap: anywhere;
 
-        .image {
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-            width: 300px;
-            height: 200px;
+    dd {
+        margin: 0;
+    }
+
+    .untitled {
+        font-style: italic;
+    }
+
+    .secondary {
+        margin-top: var(--natural-default-spacing);
+
+        &:is(dd) {
+            color: var(--mat-sys-on-surface-variant);
         }
+    }
+}
 
-        app-historic-icon {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            height: 20px;
+@include nat.media(null, md) {
+    .line,
+    mat-paginator {
+        border-radius: var(--mat-sys-corner-none);
+    }
+
+    .line {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .image {
+        grid-column: 1 / -1;
+    }
+
+    .metadata {
+        grid-template-columns: minmax(0, 1fr);
+
+        dd:not(:last-child) {
+            margin-bottom: var(--natural-default-spacing);
         }
     }
 }

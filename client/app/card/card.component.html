@@ -134,10 +134,10 @@
                 }
 
                 @if (imageSrc && !imageData) {
-                    <img class="image" [attr.src]="imageSrc" />
+                    <img class="image image-backdrop" [attr.src]="imageSrc" />
                 }
                 @if (imageData) {
-                    <img class="image" [attr.src]="imageData" />
+                    <img class="image image-backdrop" [attr.src]="imageData" />
                 }
 
                 @if (showCards() && showSlideshowRelatedCards() && fetchedModel) {
