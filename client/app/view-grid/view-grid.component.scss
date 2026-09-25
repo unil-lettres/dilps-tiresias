@@ -73,6 +73,7 @@
 
             .figure.selected {
                 --ngjs-selected-marker-color: var(--mat-sys-tertiary-container);
+                --ngjs-selected-marker-check: var(--mat-sys-on-tertiary-container);
                 --ngjs-focus-outline: 3px solid var(--mat-sys-tertiary-container);
                 box-shadow: var(--mat-sys-level1);
 
@@ -80,6 +81,15 @@
                 border-radius: var(--mat-sys-corner-small);
 
                 @supports (color: color-mix(in srgb, red, transparent)) {
+                    &::after {
+                        position: absolute;
+                        z-index: 101;
+                        inset: 0;
+                        background: color-mix(in srgb, var(--mat-sys-tertiary-container) 15%, transparent);
+                        pointer-events: none;
+                        content: '';
+                    }
+
                     .select-btn {
                         background: color-mix(in srgb, var(--mat-sys-tertiary-container) 30%, transparent);
                     }

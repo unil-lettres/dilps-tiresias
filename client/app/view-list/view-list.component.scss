@@ -35,15 +35,22 @@ mat-paginator {
     }
 
     &.selected {
-        background: var(--mat-sys-secondary-container);
-        color: var(--mat-sys-on-secondary-container);
+        box-shadow: inset 0 0 0 3px var(--mat-sys-tertiary-container);
 
         @supports (background: color-mix(in srgb, blue, red)) {
+            --selected-background: color-mix(
+                in srgb,
+                var(--mat-sys-tertiary-container) 15%,
+                var(--mat-sys-surface-container-lowest)
+            );
+
+            background: var(--selected-background);
+
             &:hover {
                 background: color-mix(
                     in srgb,
-                    var(--mat-sys-on-secondary-container) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
-                    var(--mat-sys-secondary-container)
+                    var(--mat-sys-on-surface) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
+                    var(--selected-background)
                 );
             }
         }
