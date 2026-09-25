@@ -45,9 +45,30 @@
                 width: 100%;
             }
 
-            .button.title {
-                padding: 5px !important;
-                line-height: 1.4em !important;
+            .figure .title.link {
+                padding: 5px;
+
+                button {
+                    transition: background-color 0.2s;
+                    box-shadow: var(--mat-sys-level1);
+                    padding: 7px 12px;
+                    font: var(--mat-sys-body-medium);
+                    letter-spacing: var(--mat-sys-body-medium-tracking);
+                    text-wrap: balance;
+                }
+
+                @supports (color: color-mix(in srgb, red, transparent)) {
+                    --ngjs-link-bg: color-mix(in srgb, var(--mat-sys-scrim) 55%, transparent);
+                    --ngjs-link-hover-bg: color-mix(in srgb, var(--mat-sys-scrim) 70%, transparent);
+
+                    button {
+                        backdrop-filter: blur(12px) saturate(160%);
+                        box-shadow:
+                            inset 0 1px color-mix(in srgb, currentColor 12%, transparent),
+                            var(--mat-sys-level1);
+                        border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+                    }
+                }
             }
 
             figcaption button.historic {
@@ -55,7 +76,7 @@
                 grid-template-columns: 30px 1fr;
                 align-items: center;
                 gap: 10px;
-                padding: 6px !important;
+                padding: 5px !important;
                 text-align: center;
             }
 
@@ -69,6 +90,7 @@
 
             .figure {
                 --ngjs-figure-radius: 0;
+                --ngjs-link-radius: var(--mat-sys-corner-small);
             }
 
             .figure.selected {
