@@ -88,16 +88,19 @@ mat-paginator {
         margin: 0;
     }
 
+    .title {
+        font-weight: bold;
+    }
+
     .untitled {
         font-style: italic;
     }
 
     .secondary {
         margin-top: var(--natural-default-spacing);
-
-        &:is(dd) {
-            color: var(--mat-sys-on-surface-variant);
-        }
+        color: var(--mat-sys-on-surface-variant);
+        font-style: italic;
+        font-size: var(--mat-sys-body-small-size);
     }
 }
 

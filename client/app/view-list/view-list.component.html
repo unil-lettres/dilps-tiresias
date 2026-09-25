@@ -39,8 +39,8 @@
                             <dd>{{ item.code }}</dd>
                         }
                     }
-                    <dt>Titre</dt>
-                    <dd>
+                    <dt class="title">Titre</dt>
+                    <dd class="title">
                         @if (item.name) {
                             <span [innerHTML]="item.name | truncate: ['250', '...']"></span>
                         } @else {
