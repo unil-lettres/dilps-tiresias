@@ -8,6 +8,8 @@ $image-size: 240px;
 }
 
 .content {
+    display: grid;
+    grid-template-columns: $image-size max-content minmax(0, 1fr) auto;
     margin-inline: auto;
     max-width: 1130px;
 }
@@ -19,12 +21,14 @@ mat-paginator {
         )
     );
 
+    grid-column: 1 / -1;
     border-radius: var(--mat-sys-corner-medium);
 }
 
 .line {
     display: grid;
-    grid-template-columns: $image-size minmax(0, 1fr) auto;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
     align-items: start;
     transition: background-color 150ms;
     border-radius: var(--mat-sys-corner-medium);
@@ -79,10 +83,15 @@ mat-paginator {
 
 .metadata {
     display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: subgrid;
+    grid-column: span 2;
     align-items: baseline;
     margin: 0;
     overflow-wrap: anywhere;
+
+    dt {
+        white-space: nowrap;
+    }
 
     dd {
         margin: 0;
@@ -105,6 +114,10 @@ mat-paginator {
 }
 
 @include nat.media(null, md) {
+    .content {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
     .line,
     mat-paginator {
         border-radius: var(--mat-sys-corner-none);
@@ -120,6 +133,7 @@ mat-paginator {
 
     .metadata {
         grid-template-columns: minmax(0, 1fr);
+        grid-column: auto;
 
         dd:not(:last-child) {
             margin-bottom: var(--natural-default-spacing);
