@@ -214,6 +214,7 @@ export const routes: Routes = [
                         component: ListComponent,
                         resolve: {creator: resolveUser},
                         data: {
+                            unclassified: true,
                             filter: {
                                 groups: [{conditions: [{collections: {empty: {}}} satisfies CardFilterGroupCondition]}],
                             },

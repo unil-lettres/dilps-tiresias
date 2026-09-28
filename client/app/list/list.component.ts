@@ -263,6 +263,11 @@ export class ListComponent
     protected collection: FakeCollection | undefined | null;
 
     /**
+     * Whether only cards that are in no collection are listed
+     */
+    private unclassified = false;
+
+    /**
      * Current user
      */
     protected user!: ViewerQuery['viewer'];
@@ -377,6 +382,7 @@ export class ListComponent
         // Required because when /:id change, the route stays the same, and component is not re-initialized
         this.routeData$.subscribe(data => {
             this.showLogo = data.showLogo;
+            this.unclassified = !!data.unclassified;
 
             if (data.collection) {
                 const collectionFilter: CardFilter = {
@@ -495,13 +501,28 @@ export class ListComponent
     }
 
     protected linkSelectionToCollection(selection: CardsQuery['cards']['items'][0][]): void {
-        this.dialog.open<CollectionSelectorComponent, CollectionSelectorData, CollectionSelectorResult>(
+        const dialogRef = this.dialog.open<
             CollectionSelectorComponent,
-            {
-                width: '400px',
-                data: {images: selection},
-            },
-        );
+            CollectionSelectorData,
+            CollectionSelectorResult
+        >(CollectionSelectorComponent, {
+            width: '400px',
+            data: {images: selection},
+        });
+
+        let unlinkedFromCurrentCollection = false;
+        dialogRef.componentInstance.unlinked.subscribe(collection => {
+            unlinkedFromCurrentCollection ||= collection.id === this.collection?.id;
+        });
+
+        dialogRef.afterClosed().subscribe(collection => {
+            // Linked cards leave the unclassified list, and unlinked cards
+            // leave the current collection, reload the grid to take these
+            // changes into account
+            if ((collection && this.unclassified) || unlinkedFromCurrentCollection) {
+                this.reset();
+            }
+        });
     }
 
     protected unlinkFromCollection(selection: CardsQuery['cards']['items'][0][]): void {

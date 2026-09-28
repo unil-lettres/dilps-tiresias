@@ -1,4 +1,4 @@
-import {Component, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject, type OnInit, output, ChangeDetectionStrategy} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
 import {collectionsQuery} from '../../../collections/services/collection.queries';
@@ -80,6 +80,11 @@ export class CollectionSelectorComponent implements OnInit {
     private readonly alertService = inject(AlertService);
     protected readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
 
+    /**
+     * Emits the collection the image was just removed from
+     */
+    public readonly unlinked = output<CardsQuery['cards']['items'][0]['collections'][0]>();
+
     protected listFilter!: CollectionFilter;
     protected collection: CollectionsQuery['collections']['items'][0] | null = null;
     protected image: CardsQuery['cards']['items'][0] | undefined;
@@ -126,6 +131,7 @@ export class CollectionSelectorComponent implements OnInit {
                 collections: splicedCollection,
             };
             this.alertService.info('Fiche retirée de la collection');
+            this.unlinked.emit(collection);
         });
     }
 
