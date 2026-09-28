@@ -522,10 +522,11 @@
                             >
                                 <div class="address-title nat-horizontal" (click)="accordionItem.toggle()">
                                     <h2>Adresse</h2>
-                                    <mat-icon
-                                        class="address-toggle-arrow"
-                                        [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
-                                    />
+                                    @if (accordionItem.expanded) {
+                                        <mat-icon class="address-toggle-arrow" naturalIcon="arrow_drop_up" />
+                                    } @else {
+                                        <mat-icon class="address-toggle-arrow" naturalIcon="arrow_drop_down" />
+                                    }
                                 </div>
                                 <div [style.display]="accordionItem.expanded ? '' : 'none'">
                                     <app-address

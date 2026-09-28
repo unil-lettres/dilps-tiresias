@@ -78,10 +78,11 @@
         @if (allowExpandableMap() && readonly && !!model?.latitude && !!model.longitude) {
             <div class="map-accordion-header nat-horizontal nat-right nat-center" (click)="accordionItem.toggle()">
                 <span> {{ accordionItem.expanded ? 'masquer' : 'afficher' }} la carte</span>
-                <mat-icon
-                    class="address-toggle-arrow"
-                    [naturalIcon]="accordionItem.expanded ? 'arrow_drop_up' : 'arrow_drop_down'"
-                />
+                @if (accordionItem.expanded) {
+                    <mat-icon class="address-toggle-arrow" naturalIcon="arrow_drop_up" />
+                } @else {
+                    <mat-icon class="address-toggle-arrow" naturalIcon="arrow_drop_down" />
+                }
             </div>
         }
         <div role="region" [style.display]="accordionItem.expanded ? '' : 'none'">
