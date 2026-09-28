@@ -13,7 +13,7 @@ import {AppRouteReuseStrategy} from './app-route-reuse-strategy';
 import {NavigationEnd, provideRouter, Router, RouteReuseStrategy, withRouterConfig} from '@angular/router';
 import {bugsnagErrorHandlerFactory} from './shared/config/bugsnag';
 import {MatPaginatorIntl} from '@angular/material/paginator';
-import {apolloOptionsProvider} from './shared/config/apollo-options.provider';
+import {apolloOptionsProvider, ignoreAbortedRefetches} from './shared/config/apollo-options.provider';
 import {iconsProvider} from './shared/config/icons';
 import {filter} from 'rxjs/operators';
 import {StatisticService} from './statistics/services/statistic.service';
@@ -62,6 +62,8 @@ export const appConfig: ApplicationConfig = {
             const dateAdapter = inject(DateAdapter<Date>);
             const statisticService = inject(StatisticService);
             const router = inject(Router);
+
+            ignoreAbortedRefetches(inject(Apollo).client);
 
             // On each page change, record in stats
             router.events.pipe(filter(ev => ev instanceof NavigationEnd)).subscribe(() => {

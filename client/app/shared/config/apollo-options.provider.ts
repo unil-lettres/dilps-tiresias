@@ -213,3 +213,26 @@ export const apolloOptionsProvider: Provider = {
     provide: APOLLO_OPTIONS,
     useFactory: apolloOptionsFactory,
 };
+
+/**
+ * Stop reporting refetches aborted because their query was torn down meanwhile
+ *
+ * `NaturalLinkMutationService` and `ChangeService` refetch all queries without waiting for the result. A refetch whose
+ * query is torn down before its response arrives, eg: in a dialog closed right after linking, rejects with an
+ * `AbortError`, that would be reported as an unhandled error although nobody needs that result anymore.
+ *
+ * The promise is returned untouched, so a caller awaiting it still gets the rejection.
+ */
+export function ignoreAbortedRefetches(client: ApolloClient): void {
+    const refetchObservableQueries = client.refetchObservableQueries.bind(client);
+    client.refetchObservableQueries = includeStandby => {
+        const promise = refetchObservableQueries(includeStandby);
+        promise.catch((error: unknown) => {
+            if (!(error instanceof Error && error.name === 'AbortError')) {
+                throw error;
+            }
+        });
+
+        return promise;
+    };
+}
