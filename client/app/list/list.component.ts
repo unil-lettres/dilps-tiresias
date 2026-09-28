@@ -400,7 +400,9 @@ export class ListComponent
 
             // Only reset pagination if our collection has been initialized and the new collection is not the same as ours
             if (this.collection !== undefined && this.collection?.id !== data.collection?.id) {
+                this.persistSearch = false;
                 this.reset();
+                this.persistSearch = true;
             }
 
             this.collection = data.collection || null;
