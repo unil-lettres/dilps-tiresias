@@ -19,7 +19,7 @@ export type EnvironmentBadge = {
 
 const badges: Readonly<Record<string, EnvironmentBadge>> = {
     development: {label: 'DEV', name: 'Environnement de développement', color: '#2E7D32'},
-    staging: {label: 'STAGING', name: 'Environnement de test', color: '#E65100'},
+    staging: {label: 'STAGE', name: 'Environnement de test', color: '#E65100'},
 };
 
 /**
