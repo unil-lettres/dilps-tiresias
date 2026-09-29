@@ -20,6 +20,7 @@
 
         .mat-toolbar {
             box-shadow: none;
+            padding: 0 5px;
 
             // Disable the default mat-toolbar background.
             @include mat.toolbar-overrides(
