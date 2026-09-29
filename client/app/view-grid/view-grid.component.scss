@@ -1,3 +1,5 @@
+@use '../../styles/utils.scss';
+
 :host {
     display: block;
     isolation: isolate;
@@ -55,14 +57,10 @@
                     font: var(--mat-sys-body-medium);
                     letter-spacing: var(--mat-sys-body-medium-tracking);
                     text-wrap: balance;
-                }
 
-                @supports (color: color-mix(in srgb, red, transparent)) {
-                    --ngjs-link-bg: color-mix(in srgb, var(--mat-sys-scrim) 55%, transparent);
-                    --ngjs-link-hover-bg: color-mix(in srgb, var(--mat-sys-scrim) 70%, transparent);
-
-                    button {
-                        backdrop-filter: blur(12px) saturate(160%);
+                    @include utils.glass {
+                        --ngjs-link-bg: color-mix(in srgb, var(--mat-sys-scrim) 55%, transparent);
+                        --ngjs-link-hover-bg: color-mix(in srgb, var(--mat-sys-scrim) 70%, transparent);
                         box-shadow:
                             inset 0 1px color-mix(in srgb, currentColor 12%, transparent),
                             var(--mat-sys-level1);

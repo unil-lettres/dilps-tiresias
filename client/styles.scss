@@ -192,9 +192,8 @@ natural-gallery {
         )
     );
 
-    @supports (background: color-mix(in srgb, blue, red)) {
+    @include utils.glass {
         --bgTransparent: color-mix(in srgb, var(--bg) 80%, transparent);
-        backdrop-filter: blur(5px);
         background: var(--bgTransparent);
         @include mat.toolbar-overrides(
             (

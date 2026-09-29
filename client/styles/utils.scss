@@ -5,6 +5,13 @@
     z-index: 10;
 }
 
+@mixin glass() {
+    @supports (color: color-mix(in srgb, red, transparent)) {
+        backdrop-filter: blur(12px) saturate(160%);
+        @content;
+    }
+}
+
 .image-backdrop {
     background-color: rgba(0, 0, 0, 0.33);
 }
