@@ -155,8 +155,8 @@ importers:
         specifier: ^26.0.0
         version: 26.0.0(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))
       '@ecodev/natural':
-        specifier: 73.2.4
-        version: 73.2.4(3bf2190ef27a764b7f593b19da63c163)
+        specifier: 73.3.0
+        version: 73.3.0(3bf2190ef27a764b7f593b19da63c163)
       '@ecodev/natural-layout':
         specifier: ^2.0.6
         version: 2.0.6
@@ -766,8 +766,8 @@ packages:
   '@ecodev/natural-layout@2.0.6':
     resolution: {integrity: sha512-L24MIxIcN3AZhdfv97X+RlVmSs5M0IR/UBt6YBDGPpv0YuxfBBkquVvdhcD2xyMODxs+bjttfJoQ1iw5P20tUw==}
 
-  '@ecodev/natural@73.2.4':
-    resolution: {integrity: sha512-Yf9DTV/bK/p2wpqjciul9JGRvzT6NYowz0ZxnJcYAL5+imStEwa3eLukmdBqkXVLGi1+CJrH6hAZ8TMYmyIxbg==}
+  '@ecodev/natural@73.3.0':
+    resolution: {integrity: sha512-stWjJPGBjBZ8PELMlIka7UWviSkcN0IAQ+vSC6FKEIWh6AYqQFuVCAkwBbRrEP7h4Ehs8D7Dca9yFtpy9rQj0A==}
     hasBin: true
     peerDependencies:
       '@angular/cdk': ^22.1.0
@@ -5019,7 +5019,7 @@ snapshots:
 
   '@ecodev/natural-layout@2.0.6': {}
 
-  '@ecodev/natural@73.2.4(3bf2190ef27a764b7f593b19da63c163)':
+  '@ecodev/natural@73.3.0(3bf2190ef27a764b7f593b19da63c163)':
     dependencies:
       '@angular/cdk': 22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/forms@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2))(@angular/platform-browser@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
