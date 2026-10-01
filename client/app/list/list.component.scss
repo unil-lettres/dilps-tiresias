@@ -35,6 +35,9 @@
         (
             selected-icon-color: var(--mat-sys-tertiary-container),
             selected-focus-icon-color: var(--mat-sys-tertiary-container),
+            selected-hover-icon-color: var(--mat-sys-tertiary-container),
+            selected-pressed-icon-color: var(--mat-sys-tertiary-container),
+            selected-checkmark-color: var(--mat-sys-on-tertiary-container),
         )
     );
 }

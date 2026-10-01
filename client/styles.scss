@@ -30,6 +30,47 @@ html {
 
 body {
     --natural-default-spacing: 10px;
+    --nat-primary-link-color: var(--mat-sys-primary);
+    --nat-components-primary: var(--mat-sys-primary);
+}
+
+.mdc-button {
+    @include mat.button-overrides(
+        (
+            filled-label-text-color: var(--mat-sys-on-primary),
+        )
+    );
+}
+
+.mdc-button.mat-error,
+.mdc-button[color='error'] {
+    @include mat.button-overrides(
+        (
+            text-label-text-color: var(--mat-sys-error),
+            outlined-label-text-color: var(--mat-sys-error),
+            protected-label-text-color: var(--mat-sys-error),
+            text-state-layer-color: var(--mat-sys-error),
+            filled-container-color: var(--mat-sys-error),
+            filled-label-text-color: var(--mat-sys-on-error),
+        )
+    );
+}
+
+.mdc-icon-button.mat-error,
+.mdc-icon-button[color='error'] {
+    @include mat.icon-button-overrides(
+        (
+            icon-color: var(--mat-sys-error),
+        )
+    );
+}
+
+.mat-icon.mat-error {
+    @include mat.icon-overrides(
+        (
+            color: var(--mat-sys-error),
+        )
+    );
 }
 
 mat-sidenav-content {

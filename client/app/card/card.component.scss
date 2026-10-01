@@ -143,21 +143,16 @@ mat-slider {
 mat-toolbar.edition {
     box-shadow: none;
     background-color: var(--mat-sys-tertiary-container);
-    color: var(--mat-sys-on-tertiary) !important;
+    color: var(--mat-sys-on-tertiary-container) !important;
 
     @include mat.icon-button-overrides(
         (
-            icon-color: var(--mat-sys-on-tertiary),
+            icon-color: var(--mat-sys-on-tertiary-container),
             state-layer-color: var(--mat-sys-on-tertiary-container),
             hover-state-layer-opacity: 0.2,
             pressed-state-layer-opacity: 0.3,
         )
     );
-
-    @supports (background-color: color-mix(in srgb, blue, red)) {
-        backdrop-filter: blur(10px);
-        background-color: color-mix(in srgb, var(--mat-sys-tertiary-container) 90%, transparent) !important;
-    }
 }
 
 // Try to match official mat-form-field input component style.
@@ -178,7 +173,7 @@ mat-toolbar.edition {
         position: absolute;
         bottom: -1px;
         left: 50%;
-        background-color: var(--mat-sys-primary-container);
+        background-color: var(--mat-sys-primary);
         width: 0;
         height: 2px;
         content: '';
@@ -227,7 +222,7 @@ mat-toolbar.edition {
 
     quill-editor {
         display: block;
-        caret-color: var(--mat-sys-primary-container);
+        caret-color: var(--mat-sys-primary);
     }
 
     ::ng-deep {

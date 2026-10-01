@@ -7,15 +7,13 @@ mat-sidenav-container {
 }
 
 #menu {
-    --menu-icon-color: white;
-
     border: none;
     background: var(--mat-sys-primary-container);
     width: 64px;
 
     @include mat.progress-spinner-overrides(
         (
-            active-indicator-color: var(--menu-icon-color),
+            active-indicator-color: var(--mat-sys-on-primary-container),
         )
     );
 
@@ -44,7 +42,7 @@ mat-sidenav-container {
         height: 64px;
 
         &.active {
-            background-color: color-mix(in srgb, var(--menu-icon-color) 24%, transparent) !important;
+            background-color: color-mix(in srgb, black 15%, transparent) !important;
 
             &::after {
                 position: absolute;
@@ -62,7 +60,7 @@ mat-sidenav-container {
 
         @include mat.fab-overrides(
             (
-                foreground-color: var(--menu-icon-color),
+                foreground-color: var(--mat-sys-on-primary-container),
                 container-shape: var(--mat-sys-corner-none),
                 container-elevation-shadow: var(--mat-sys-level0),
                 focus-container-elevation-shadow: var(--mat-sys-level0),
@@ -79,19 +77,19 @@ mat-sidenav-container {
 
         @include mat.icon-button-overrides(
             (
-                icon-color: var(--menu-icon-color),
-                state-layer-color: var(--menu-icon-color),
+                icon-color: var(--mat-sys-on-primary-container),
+                state-layer-color: var(--mat-sys-on-primary-container),
             )
         );
     }
 
     .natural-icon-button ::ng-deep button {
         margin-bottom: 24px;
-        color: var(--menu-icon-color) !important;
+        color: var(--mat-sys-on-primary-container) !important;
 
         @include mat.icon-button-overrides(
             (
-                state-layer-color: var(--menu-icon-color),
+                state-layer-color: var(--mat-sys-on-primary-container),
             )
         );
     }

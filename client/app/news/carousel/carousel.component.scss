@@ -46,10 +46,6 @@
 
 .carousel-nav {
     --bg: var(--mat-sys-tertiary-fixed-dim);
-
-    @supports (color: color-mix(in srgb, red, blue)) {
-        --bg: color-mix(in srgb, var(--mat-sys-tertiary-fixed-dim) 50%, transparent);
-    }
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
