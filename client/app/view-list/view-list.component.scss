@@ -11,6 +11,7 @@ $image-size: 240px;
     display: grid;
     grid-template-columns: $image-size max-content minmax(0, 1fr) auto;
     margin-inline: auto;
+    padding: 5px;
     max-width: 1130px;
 }
 
