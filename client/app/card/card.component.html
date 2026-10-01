@@ -158,13 +158,7 @@
                                         : 'Visibilité inchangée'
                                 }}
                             </div>
-                            <mat-slider
-                                [color]="visibilities[visibility] ? visibilities[visibility].color : 'warn'"
-                                [disabled]="!edit"
-                                [max]="3"
-                                [min]="1"
-                                [step]="1"
-                            >
+                            <mat-slider [disabled]="!edit" [max]="3" [min]="1" [step]="1">
                                 <input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()" />
                             </mat-slider>
                         </div>

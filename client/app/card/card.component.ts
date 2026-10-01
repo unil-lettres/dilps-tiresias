@@ -15,7 +15,6 @@ import {
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, type NgModel} from '@angular/forms';
 import {MatButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
-import {type ThemePalette} from '@angular/material/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
@@ -121,7 +120,6 @@ export function cardToCardInput(fetchedModel: CardQuery['card']): CardInputWithI
 export type VisibilityConfig<V> = {
     value: V;
     text: string;
-    color: NonNullable<ThemePalette>;
 };
 
 type Visibilities<V> = Record<1 | 2 | 3, VisibilityConfig<V>>;
@@ -296,17 +294,14 @@ export class CardComponent implements OnInit, OnChanges {
         1: {
             value: CardVisibility.Private,
             text: 'par moi, les admins et les abonnés',
-            color: 'warn',
         },
         2: {
             value: CardVisibility.Member,
             text: 'par les membres',
-            color: 'accent',
         },
         3: {
             value: CardVisibility.Public,
             text: 'par tous',
-            color: 'primary',
         },
     };
 

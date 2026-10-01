@@ -71,17 +71,14 @@ export class CollectionComponent extends AbstractDetailDirective<CollectionServi
         1: {
             value: CollectionVisibility.Private,
             text: 'par moi et les abonnés',
-            color: 'warn',
         },
         2: {
             value: CollectionVisibility.Administrator,
             text: 'par moi, les admins et les abonnés',
-            color: 'accent',
         },
         3: {
             value: CollectionVisibility.Member,
             text: 'par les membres',
-            color: 'primary',
         },
     };
 
