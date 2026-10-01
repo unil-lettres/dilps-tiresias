@@ -48,8 +48,8 @@ mat-sidenav-container {
 
             &::after {
                 position: absolute;
-                right: 0;
-                background-color: var(--mat-sys-primary);
+                left: 0;
+                background-color: var(--mat-sys-on-primary-container);
                 width: 4px;
                 height: 100%;
                 content: '';
