@@ -40,6 +40,11 @@
 
 ::ng-deep {
     app-view-grid {
+        .zoomable:hover .image,
+        .image.zoomable:hover {
+            transform: none !important;
+        }
+
         .natural-gallery-js {
             a,
             button {
@@ -89,6 +94,22 @@
             .figure {
                 --ngjs-figure-radius: 0;
                 --ngjs-link-radius: var(--mat-sys-corner-small);
+
+                .select-btn {
+                    display: flex;
+                    top: 5px !important;
+                    left: 5px !important;
+                    justify-content: center;
+                    align-items: center;
+                    transition: none;
+                    border-radius: var(--mat-sys-corner-full);
+                    background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 60%, transparent);
+                    padding: 0;
+
+                    .marker {
+                        border-color: var(--mat-sys-on-surface-variant);
+                    }
+                }
             }
 
             .figure.selected {
@@ -100,6 +121,10 @@
                 border: 3px solid var(--mat-sys-tertiary-container);
                 border-radius: var(--mat-sys-corner-small);
 
+                .select-btn .marker {
+                    border-color: transparent;
+                }
+
                 @supports (color: color-mix(in srgb, red, transparent)) {
                     &::after {
                         position: absolute;
@@ -108,10 +133,6 @@
                         background: color-mix(in srgb, var(--mat-sys-tertiary-container) 15%, transparent);
                         pointer-events: none;
                         content: '';
-                    }
-
-                    .select-btn {
-                        background: color-mix(in srgb, var(--mat-sys-tertiary-container) 30%, transparent);
                     }
                 }
             }

@@ -150,39 +150,6 @@ natural-search {
     }
 }
 
-natural-gallery {
-    .zoomable:hover .image,
-    .image.zoomable:hover {
-        transform: none !important;
-    }
-
-    .natural-gallery-js .figure {
-        --marge: 5px;
-
-        &.selected .select-btn {
-            .marker {
-                border-color: transparent;
-            }
-        }
-
-        .select-btn {
-            display: flex;
-            top: var(--marge) !important;
-            left: var(--marge) !important;
-            justify-content: center;
-            align-items: center;
-            transition: none;
-            border-radius: var(--mat-sys-corner-small);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 0;
-
-            .marker {
-                border-color: rgba(255, 255, 255, 0.8);
-            }
-        }
-    }
-}
-
 // Align right so big number are easier to spot
 .mat-column-usageCount {
     width: 12em;
