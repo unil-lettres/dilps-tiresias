@@ -102,9 +102,14 @@
                     justify-content: center;
                     align-items: center;
                     transition: none;
+                    box-shadow: var(--mat-sys-level1);
                     border-radius: var(--mat-sys-corner-full);
-                    background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 60%, transparent);
+                    background-color: var(--mat-sys-surface-container-lowest);
                     padding: 0;
+
+                    @include utils.glass {
+                        background-color: color-mix(in srgb, var(--mat-sys-surface-container-lowest) 75%, transparent);
+                    }
 
                     .marker {
                         border-color: var(--mat-sys-on-surface-variant);
