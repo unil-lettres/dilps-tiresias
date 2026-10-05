@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use '@ecodev/natural-layout' as nat;
 
-$image-size: 240px;
+$image-size: 280px;
 
 :host {
     display: block;
@@ -34,6 +34,7 @@ mat-paginator {
     transition: background-color 150ms;
     border-radius: var(--mat-sys-corner-medium);
     background: var(--mat-sys-surface-container-lowest);
+    padding: calc(2 * var(--natural-default-spacing));
 
     &:hover {
         background: var(--mat-sys-surface-container-highest);
@@ -91,6 +92,7 @@ mat-paginator {
     overflow-wrap: anywhere;
 
     dt {
+        color: var(--mat-sys-on-surface-variant);
         white-space: nowrap;
     }
 
@@ -98,8 +100,8 @@ mat-paginator {
         margin: 0;
     }
 
-    .title {
-        font-weight: bold;
+    dd.title {
+        font: var(--mat-sys-body-large);
     }
 
     .untitled {

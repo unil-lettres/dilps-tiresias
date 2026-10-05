@@ -1,6 +1,6 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 @if (dataSource) {
-    <div class="content nat-gap-10">
+    <div class="content nat-gap-15">
         @if (dataSource.data?.length) {
             <mat-paginator
                 [length]="dataSource.data.length"
@@ -12,34 +12,24 @@
             />
         }
         @for (item of cards; track item) {
-            <article
-                class="line nat-padding nat-gap-10 nat-md-gap-20"
-                [class.selected]="selectionModel.isSelected(item)"
-            >
+            <article class="line nat-gap-10 nat-md-gap-20" [class.selected]="selectionModel.isSelected(item)">
                 <a class="image" tabindex="-1" aria-hidden="true" [routerLink]="['/card', item.id]">
                     @if (CardService.getImageLink(item, 300); as src) {
-                        <img
-                            class="image-backdrop"
-                            alt=""
-                            loading="lazy"
-                            [src]="src"
-                            [attr.width]="item.width"
-                            [attr.height]="item.height"
-                        />
+                        <img alt="" loading="lazy" [src]="src" [attr.width]="item.width" [attr.height]="item.height" />
                     }
                     @if (item.showHistoric) {
                         <app-historic-icon [badge]="true" />
                     }
                 </a>
 
-                <dl class="metadata nat-gap-horizontal-15 nat-md-gap-vertical-5">
+                <dl class="metadata nat-gap-horizontal-15 nat-md-gap-vertical-10">
                     @if (item.site === Site.Tiresias) {
                         @if (item.code) {
                             <dt>Référence</dt>
                             <dd>{{ item.code }}</dd>
                         }
                     }
-                    <dt class="title">Titre</dt>
+                    <dt>Titre</dt>
                     <dd class="title">
                         @if (item.name) {
                             <span [innerHTML]="item.name | truncate: ['250', '...']"></span>
