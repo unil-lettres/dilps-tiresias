@@ -1,5 +1,12 @@
 import {expect, test as base} from '@playwright/test';
 
+type Cleanup = {
+    /**
+     * Run the callback after the test, even if it failed or timed out, eg: to delete the data it created
+     */
+    add: (callback: () => Promise<unknown>) => void;
+};
+
 type Problems = {
     /**
      * Allow problems matching the pattern, for a test that expects them, eg: a denied action
@@ -13,7 +20,17 @@ type Problems = {
  * Those errors are often silent for the user: a list is empty instead of showing the expected items, or a button
  * does nothing. So they must be caught even if the test does not look for them.
  */
-export const test = base.extend<{problems: Problems}>({
+export const test = base.extend<{problems: Problems; cleanup: Cleanup}>({
+    // Depends on the page, so that the page is still open during the cleanup
+    cleanup: async ({page: _page}, use) => {
+        const callbacks: (() => Promise<unknown>)[] = [];
+        await use({add: callback => callbacks.push(callback)});
+
+        for (const callback of callbacks.reverse()) {
+            await callback();
+        }
+    },
+
     problems: [
         async ({page}, use) => {
             const problems: string[] = [];

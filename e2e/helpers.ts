@@ -61,11 +61,18 @@ export async function getViewer(page: Page): Promise<Viewer> {
 }
 
 /**
+ * A name that no other test, even running in parallel, can use
+ */
+export function uniqueName(prefix: string): string {
+    return `${prefix} ${crypto.randomUUID()}`;
+}
+
+/**
  * Create a collection owned by the current user, with a unique name
  */
 export async function createCollection(page: Page, prefix: string): Promise<{id: string; name: string}> {
     const viewer = await getViewer(page);
-    const name = `${prefix} ${Date.now()}`;
+    const name = uniqueName(prefix);
     const data = await graphql<{createCollection: {id: string; name: string}}>(
         page,
         'mutation ($input: CollectionInput!) { createCollection(input: $input) { id name } }',
@@ -73,6 +80,19 @@ export async function createCollection(page: Page, prefix: string): Promise<{id:
     );
 
     return data.createCollection;
+}
+
+/**
+ * Find the collections of the given name
+ */
+export async function findCollections(page: Page, name: string): Promise<{id: string; parent: {id: string} | null}[]> {
+    const data = await graphql<{collections: {items: {id: string; parent: {id: string} | null}[]}}>(
+        page,
+        'query ($name: String!) { collections(filter: {groups: [{conditions: [{name: {equal: {value: $name}}}]}]}) { items { id parent { id } } } }',
+        {name},
+    );
+
+    return data.collections.items;
 }
 
 /**

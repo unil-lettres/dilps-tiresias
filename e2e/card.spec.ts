@@ -4,34 +4,29 @@ import {browseAnonymously, createCollection, deleteCollections, graphql, login} 
 /**
  * Requires the test data of the Dilps site, see `tests/data/`
  */
-test('student can only remove a card from the collections they manage', async ({page}) => {
+test('student can only remove a card from the collections they manage', async ({page, cleanup}) => {
     await login(page, 'student');
 
     // Card 6001 of the student is also in collection 2001, that the student does not manage
     const collection = await createCollection(page, 'E2E card');
-    try {
-        await graphql(
-            page,
-            'mutation ($collection: CollectionID!) { linkCardCollection(card: 6001, collection: $collection) { id } }',
-            {
-                collection: collection.id,
-            },
-        );
+    cleanup.add(() => deleteCollections(page, [collection.id]));
+    await graphql(
+        page,
+        'mutation ($collection: CollectionID!) { linkCardCollection(card: 6001, collection: $collection) { id } }',
+        {collection: collection.id},
+    );
 
-        await page.goto('card/6001');
-        await page.locator('button[mattooltip="Ajouter ou retirer la fiche d\'une collection"]').click();
-        const dialog = page.getByRole('dialog');
-        const removeButton = 'button[mattooltip="Retirer la fiche de la collection"]';
+    await page.goto('card/6001');
+    await page.locator('button[mattooltip="Ajouter ou retirer la fiche d\'une collection"]').click();
+    const dialog = page.getByRole('dialog');
+    const removeButton = 'button[mattooltip="Retirer la fiche de la collection"]';
 
-        const managed = dialog.locator('.nat-horizontal', {hasText: collection.name});
-        await expect(managed.locator(removeButton)).toHaveCount(1);
+    const managed = dialog.locator('.nat-horizontal', {hasText: collection.name});
+    await expect(managed.locator(removeButton)).toHaveCount(1);
 
-        const other = dialog.locator('.nat-horizontal', {hasText: 'Test collection 2001'});
-        await expect(other).toHaveCount(1);
-        await expect(other.locator(removeButton)).toHaveCount(0);
-    } finally {
-        await deleteCollections(page, [collection.id]);
-    }
+    const other = dialog.locator('.nat-horizontal', {hasText: 'Test collection 2001'});
+    await expect(other).toHaveCount(1);
+    await expect(other.locator(removeButton)).toHaveCount(0);
 });
 
 test('student can export a card', async ({page}) => {
