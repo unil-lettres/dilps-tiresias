@@ -149,10 +149,12 @@
             <span>Voir sur la carte</span>
         </button>
     }
-    <div mat-menu-item [matMenuTriggerFor]="exportMenuForOverflow.matMenu()">
-        <mat-icon naturalIcon="share_windows" />
-        <span>Exporter</span>
-    </div>
+    @if (user) {
+        <div mat-menu-item [matMenuTriggerFor]="exportMenuForOverflow.matMenu()">
+            <mat-icon naturalIcon="share_windows" />
+            <span>Exporter</span>
+        </div>
+    }
     @if (canMassEdit()) {
         <div mat-menu-item (click)="edit(selected)">
             <mat-icon naturalIcon="edit" />
@@ -216,10 +218,12 @@
                                         <mat-icon naturalIcon="map" />
                                     </button>
                                 }
-                                <app-export-menu
-                                    [selectedCards]="selected"
-                                    [showExcelExportation]="site !== Site.Dilps"
-                                />
+                                @if (user) {
+                                    <app-export-menu
+                                        [selectedCards]="selected"
+                                        [showExcelExportation]="site !== Site.Dilps"
+                                    />
+                                }
                                 @if (canMassEdit()) {
                                     <button
                                         matIconButton
