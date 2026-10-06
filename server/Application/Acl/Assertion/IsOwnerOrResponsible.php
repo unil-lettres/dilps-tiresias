@@ -23,7 +23,9 @@ class IsOwnerOrResponsible implements NamedAssertion
     }
 
     /**
-     * Assert that the object belongs to the current user, or belong to a collection that the user is responsible of.
+     * Assert that the object belongs to the current user, or belong to a collection that the user owns or is responsible of.
+     *
+     * The owner of a collection has at least the same rights as its responsibles on the objects it contains.
      *
      * @param \Application\Acl\Acl $acl
      * @param ModelResource $resource
@@ -45,7 +47,7 @@ class IsOwnerOrResponsible implements NamedAssertion
             return true;
         }
 
-        // If not direct owner, look for indirect collection responsible
+        // If not direct owner, look for a collection that the user owns or is responsible of
         /** @var Collection[] $collections */
         $collections = [];
         if ($object instanceof Collection) {
@@ -65,7 +67,7 @@ class IsOwnerOrResponsible implements NamedAssertion
         }
 
         foreach ($collections as $collection) {
-            if ($collection->getResponsibles()->contains(User::getCurrent())) {
+            if ($collection->getOwner() === User::getCurrent() || $collection->getResponsibles()->contains(User::getCurrent())) {
                 return true;
             }
         }
