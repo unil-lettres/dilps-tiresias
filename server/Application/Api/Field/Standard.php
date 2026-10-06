@@ -150,7 +150,7 @@ abstract class Standard
                     $object = $id->getEntity();
 
                     // Check ACL
-                    Helper::throwIfDenied($object, 'update');
+                    Helper::throwIfDenied($object, 'delete');
 
                     // Do it
                     _em()->remove($object);
