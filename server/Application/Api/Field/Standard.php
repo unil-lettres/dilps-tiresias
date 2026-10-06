@@ -90,7 +90,7 @@ abstract class Standard
             'type' => Type::nonNull(_types()->getOutput($class)),
             'description' => 'Create a new ' . $name,
             'args' => [
-                'input' => Type::nonNull(_types()->getInput($class)),
+                'input' => Type::nonNull(Helper::getInput($class)),
             ],
             'resolve' => function ($root, array $args) use ($class): AbstractModel {
                 $object = new $class();

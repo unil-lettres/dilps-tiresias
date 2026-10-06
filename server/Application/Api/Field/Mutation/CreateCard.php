@@ -21,7 +21,7 @@ class CreateCard implements FieldInterface
             'type' => Type::nonNull(_types()->getOutput(Card::class)),
             'description' => 'Create a new card',
             'args' => [
-                'input' => Type::nonNull(_types()->getInput(Card::class)),
+                'input' => Type::nonNull(Helper::getInput(Card::class)),
                 'collection' => _types()->getId(Collection::class),
             ],
             'resolve' => function ($root, array $args): Card {

@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Definition\EntityID;
+use GraphQL\Type\Definition\InputObjectType;
 use RuntimeException;
 
 abstract class Helper
@@ -58,6 +59,20 @@ abstract class Helper
         foreach ($filter['groups'] ?? [] as $group) {
             self::throwIfFilteringOnAdministratorFieldsInGroup($class, $group);
         }
+    }
+
+    /**
+     * Returns the input type of the class, but always create its partial input type first.
+     *
+     * graphql-doctrine creates the partial input type by cloning the input type. If the input type already resolved its
+     * fields, the clone keeps them, and the partial input type wrongly gets required fields. That happens as soon as a
+     * batch of requests creates and then updates objects of the same type.
+     */
+    public static function getInput(string $class): InputObjectType
+    {
+        _types()->getPartialInput($class);
+
+        return _types()->getInput($class);
     }
 
     public static function paginate(array $pagination, QueryBuilder $query): array
