@@ -1,13 +1,24 @@
 @use '@angular/material' as mat;
+@use '@ecodev/natural-layout' as nat;
 
 :host {
     display: flex;
     flex: 1;
     flex-direction: column;
+    align-self: flex-start;
+    box-sizing: border-box;
     padding: 20px;
+    min-width: 0;
+    min-height: 100%;
 
     & > div {
+        gap: 30px;
         margin: auto;
+        max-width: 100%;
+
+        @include nat.media(md) {
+            gap: 50px;
+        }
     }
 }
 
@@ -23,7 +34,8 @@ mat-grid-list {
 }
 
 app-carousel {
-    margin-left: 50px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .shib-link {
@@ -38,8 +50,11 @@ app-carousel {
 
 .login-info {
     text-align: center;
+    text-wrap: balance;
 }
 
 .login {
+    flex: none;
     width: 332px;
+    max-width: 100%;
 }

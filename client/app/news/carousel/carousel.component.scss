@@ -5,8 +5,10 @@
 
 .carousel-container {
     position: relative;
+    container-type: inline-size;
+    aspect-ratio: 16 / 9;
     width: 800px;
-    height: 450px;
+    max-width: 100%;
     overflow: hidden;
 }
 
@@ -93,5 +95,44 @@
     &:focus-visible {
         outline: 2px solid white;
         outline-offset: 2px;
+    }
+}
+
+// When narrow, gather the navigation in a row at the bottom, so it does not cover a more compact label
+@container (max-width: 599px) {
+    .carousel-label {
+        right: 10px;
+        bottom: 60px;
+        left: 10px;
+        padding: 10px;
+        max-width: none;
+    }
+
+    .name,
+    .description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .name {
+        margin-bottom: 4px;
+        font: var(--mat-sys-title-medium);
+        letter-spacing: var(--mat-sys-title-medium-tracking);
+    }
+
+    .description {
+        margin: 0;
+    }
+
+    .carousel-nav {
+        top: auto;
+        bottom: 6px;
+        transform: none;
+    }
+
+    .carousel-indicators {
+        bottom: 24px;
     }
 }
