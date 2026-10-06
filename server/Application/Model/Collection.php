@@ -18,6 +18,7 @@ use Application\Traits\HasSorting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection as DoctrineCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ecodev\Felix\Api\Exception;
 use Ecodev\Felix\Model\Traits\HasName;
 use GraphQL\Doctrine\Attribute as API;
 
@@ -236,11 +237,14 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     /**
      * Add a subscriber.
      *
-     * A user cannot be a subscriber and a responsible at the same time, so any existing management role is removed.
+     * A user cannot be a subscriber and a responsible at the same time. But responsibles may add subscribers, so this
+     * must not demote an existing responsible: that is reserved to the owner, by removing them from the responsibles.
      */
     public function addSubscriber(User $user): void
     {
-        $this->removeResponsible($user);
+        if ($this->responsibles->contains($user)) {
+            throw new Exception("Cet utilisateur est déjà responsable de la collection. Pour en faire un lecteur, retirez-le d'abord des responsables.");
+        }
 
         if (!$this->subscribers->contains($user)) {
             $this->subscribers[] = $user;

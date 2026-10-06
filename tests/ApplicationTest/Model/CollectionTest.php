@@ -71,9 +71,8 @@ class CollectionTest extends TestCase
         self::assertCount(1, $collection->getResponsibles());
         self::assertCount(0, $collection->getSubscribers(), 'a responsible must not remain a subscriber');
 
-        // And demoting back to subscriber must remove the management role
+        // But adding a responsible as subscriber must not demote them, because responsibles may add subscribers
+        $this->expectExceptionMessage('Cet utilisateur est déjà responsable de la collection.');
         $collection->addSubscriber($user);
-        self::assertCount(1, $collection->getSubscribers());
-        self::assertCount(0, $collection->getResponsibles(), 'a subscriber must not remain a responsible');
     }
 }
