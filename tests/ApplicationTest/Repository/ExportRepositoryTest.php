@@ -10,17 +10,28 @@ use Application\Model\Export;
 use Application\Model\User;
 use Application\Repository\ExportRepository;
 use Application\Repository\UserRepository;
+use ApplicationTest\Repository\Traits\LimitedAccessSubQuery;
 use GraphQL\Doctrine\DefaultFieldResolver;
 use GraphQL\GraphQL;
 
 class ExportRepositoryTest extends AbstractRepository
 {
+    use LimitedAccessSubQuery;
+
     private ExportRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->repository = $this->getEntityManager()->getRepository(Export::class);
+    }
+
+    public static function providerGetAccessibleSubQuery(): iterable
+    {
+        yield ['anonymous', []];
+        yield ['student', []];
+        yield ['junior', []];
+        yield ['administrator', [14000, 14001]];
     }
 
     public function testUpdateCards(): void

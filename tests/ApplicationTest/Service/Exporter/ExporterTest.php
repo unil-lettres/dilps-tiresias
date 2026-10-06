@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace ApplicationTest\Service\Exporter;
 
 use Application\Enum\ExportStatus;
+use Application\Enum\Site;
 use Application\Model\Export;
+use Application\Model\User;
+use Application\Repository\UserRepository;
 use Application\Service\Exporter\Exporter;
 use ApplicationTest\Traits\TestWithTransaction;
 use PHPUnit\Framework\TestCase;
@@ -16,6 +19,11 @@ class ExporterTest extends TestCase
 
     public function testExport(): void
     {
+        // Exports are only accessible to logged-in users
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getEntityManager()->getRepository(User::class);
+        User::setCurrent($userRepository->getOneByLogin('administrator', Site::Dilps));
+
         /** @var Export $export */
         $export = $this->getEntityManager()->getReference(Export::class, 14001);
 
@@ -27,7 +35,7 @@ class ExporterTest extends TestCase
         $export = $exporter->export($export);
 
         self::assertSame(ExportStatus::Done, $export->getStatus());
-        self::assertSame(182402, $export->getFileSize());
+        self::assertSame(182428, $export->getFileSize());
         self::assertNotEmpty($export->getFilename());
         self::assertFileExists($export->getPath());
         self::assertNotNull($export->getStart());

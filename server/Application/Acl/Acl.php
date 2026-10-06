@@ -81,8 +81,9 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ANONYMOUS, $news, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $period, 'read');
         $this->allow(User::ROLE_ANONYMOUS, $file, 'read');
-        $this->allow(User::ROLE_ANONYMOUS, $export, 'read');
 
+        // An export may contain private cards, so only its owner can read it
+        $this->allow(User::ROLE_STUDENT, $export, 'read', new IsOwner());
         // Exports are heavy to produce, so they are only for logged-in users
         $this->allow(User::ROLE_STUDENT, $export, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $artist, 'create', new SameSite());
@@ -150,6 +151,7 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $period, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $statistic, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $file, 'read');
+        $this->allow(User::ROLE_ADMINISTRATOR, $export, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $export, 'create', new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $file, ['create', 'update', 'delete'], new CanUpdateCard());
     }
