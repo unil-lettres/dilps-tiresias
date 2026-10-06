@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Acl\Acl;
+use Application\Api\Helper;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
 use Application\Enum\CollectionVisibility;
 use Application\Repository\CollectionRepository;
@@ -30,7 +31,9 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 {
     use HasInstitution;
     use HasName;
-    use HasParent;
+    use HasParent {
+        setParent as private setParentWithoutCheck;
+    }
     use HasSite;
     use HasSorting;
 
@@ -87,6 +90,22 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
         $this->children = new ArrayCollection();
         $this->responsibles = new ArrayCollection();
         $this->subscribers = new ArrayCollection();
+    }
+
+    /**
+     * Set the parent collection.
+     *
+     * Putting a collection inside another one adds content to that parent, so it requires the same right as adding
+     * images to it: being its owner or one of its responsibles.
+     */
+    public function setParent(?self $parent): void
+    {
+        // Without a logged-in user (CLI, unit tests) there is nobody to check, and anonymous cannot reach this via the API
+        if (User::getCurrent() && $parent && $parent !== $this->getParent()) {
+            Helper::throwIfDenied($parent, 'linkCard');
+        }
+
+        $this->setParentWithoutCheck($parent);
     }
 
     /**

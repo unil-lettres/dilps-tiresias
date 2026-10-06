@@ -70,7 +70,7 @@
             <natural-select-hierarchic
                 placeholder="Collection parente"
                 [config]="hierarchicConfig"
-                [filters]="ancestorsHierarchicFilters"
+                [filters]="parentHierarchicFilters"
                 [showIcon]="false"
                 [disabled]="isUpdatePage() && !data.item.permissions.update"
                 [(ngModel)]="data.item.parent"

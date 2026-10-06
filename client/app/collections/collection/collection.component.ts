@@ -13,7 +13,6 @@ import {
 } from '@ecodev/natural';
 import {findKey} from 'es-toolkit';
 import {type CollectionVisibilities} from '../../card/card.component';
-import {DomainService} from '../../domains/services/domain.service';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
@@ -21,10 +20,14 @@ import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.co
 import {
     type CollectionQuery,
     type CollectionFilter,
+    type CollectionFilterGroup,
+    type CollectionFilterGroupCondition,
     CollectionVisibility,
+    LogicalOperator,
     type UpdateCollection,
     UserRole,
     type UsersQuery,
+    type ViewerQuery,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';
@@ -112,12 +115,47 @@ export class CollectionComponent
         null;
 
     protected hierarchicConfig = collectionsHierarchicConfig;
-    protected ancestorsHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
+    protected parentHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
 
     protected showVisibility = true;
 
     public constructor() {
         super(inject(CollectionService));
+    }
+
+    public override ngOnInit(): void {
+        super.ngOnInit();
+
+        this.userService
+            .getCurrentUser()
+            .subscribe(user => (this.parentHierarchicFilters = this.getParentHierarchicFilters(user)));
+    }
+
+    /**
+     * A collection can only be put inside a collection whose content the user manages (owner or responsible, as
+     * enforced by the server), and never inside itself or its descendants, which would form a cyclic hierarchy.
+     *
+     * Like in the collection selector, administrators and majors are not filtered.
+     */
+    private getParentHierarchicFilters(
+        user: ViewerQuery['viewer'] | null,
+    ): HierarchicFiltersConfiguration<CollectionFilter> {
+        const notCyclic: CollectionFilterGroupCondition = this.data.item.id
+            ? {custom: {excludeSelfAndDescendants: {value: this.data.item.id}}}
+            : {};
+
+        const groups: CollectionFilterGroup[] =
+            user && ![UserRole.administrator, UserRole.major].includes(user.role)
+                ? [
+                      {conditions: [{...notCyclic, owner: {equal: {value: user.id}}}]},
+                      {
+                          groupLogic: LogicalOperator.OR,
+                          conditions: [{...notCyclic, responsibles: {have: {values: [user.id]}}}],
+                      },
+                  ]
+                : [{conditions: [notCyclic]}];
+
+        return [{service: CollectionService, filter: {groups}}];
     }
 
     protected updateVisibility(): void {
@@ -177,18 +215,6 @@ export class CollectionComponent
         }
 
         this.showVisibility = this.computeShowVisibility();
-
-        // Prevent parent choices that would form cyclic hierarchy
-        if (this.data.item.id) {
-            this.ancestorsHierarchicFilters = [
-                {
-                    service: DomainService,
-                    filter: {
-                        groups: [{conditions: [{custom: {excludeSelfAndDescendants: {value: this.data.item.id}}}]}],
-                    },
-                },
-            ];
-        }
     }
 
     protected override postUpdate(model: UpdateCollection['updateCollection']): void {
