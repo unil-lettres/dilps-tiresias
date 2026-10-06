@@ -53,7 +53,7 @@
         </mat-tab>
     </mat-tab-group>
     <div class="nat-vertical">
-        @for (collection of image?.collections; track collection) {
+        @for (collection of imageCollections(); track collection.id) {
             @if ($first) {
                 <mat-divider class="nat-margin-vertical" />
                 <div class="mat-subtitle-1">Collections liées à la fiche</div>
@@ -61,13 +61,15 @@
             <div class="nat-horizontal nat-align nat-gap-10">
                 <mat-icon naturalIcon="collections" />
                 <div class="nat-expand">{{ collection.name }}</div>
-                <button
-                    matIconButton
-                    matTooltip="Retirer la fiche de la collection"
-                    (click)="unlink(image!, collection)"
-                >
-                    <mat-icon naturalIcon="remove" />
-                </button>
+                @if (collection.canManageContent) {
+                    <button
+                        matIconButton
+                        matTooltip="Retirer la fiche de la collection"
+                        (click)="unlink(image!, collection)"
+                    >
+                        <mat-icon naturalIcon="remove" />
+                    </button>
+                }
             </div>
         }
     </div>
