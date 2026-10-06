@@ -133,6 +133,11 @@ export class CollectionsComponent implements OnInit {
                                 groupLogic: LogicalOperator.OR,
                                 conditions: [{responsibles: {have: {values: [data.creator.id]}}}],
                             },
+                            // Readers too, otherwise a private collection they read would not be listed anywhere
+                            {
+                                groupLogic: LogicalOperator.OR,
+                                conditions: [{subscribers: {have: {values: [data.creator.id]}}}],
+                            },
                         ],
                     },
                 });
