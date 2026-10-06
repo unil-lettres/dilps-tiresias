@@ -24,7 +24,7 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
      * - card is public
      * - card is member and user is logged in
      * - card owner or creator is the user
-     * - card's collection owner or responsible is the user.
+     * - card's collection owner, responsible or subscriber is the user.
      */
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
     {
@@ -48,11 +48,14 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             $userId = $user->getId() ?? -1;
             $qb->leftJoin('card', 'card_collection', 'card_collection', 'card_collection.card_id = card.id')
                 ->leftJoin('card_collection', 'collection', 'collection', 'card_collection.collection_id = collection.id')
-                ->leftJoin('card_collection', 'collection_responsible', 'collection_responsible', 'card_collection.collection_id = collection_responsible.collection_id')
+                // Membership joins are restricted to the user, to avoid multiplying rows by the number of members
+                ->leftJoin('card_collection', 'collection_responsible', 'collection_responsible', 'card_collection.collection_id = collection_responsible.collection_id AND collection_responsible.user_id = ' . $userId)
+                ->leftJoin('card_collection', 'collection_subscriber', 'collection_subscriber', 'card_collection.collection_id = collection_subscriber.collection_id AND collection_subscriber.user_id = ' . $userId)
                 ->orWhere('card.owner_id = ' . $userId)
                 ->orWhere('card.creator_id = ' . $userId)
                 ->orWhere('collection.owner_id = ' . $userId)
-                ->orWhere('collection_responsible.user_id = ' . $userId);
+                ->orWhere('collection_responsible.user_id = ' . $userId)
+                ->orWhere('collection_subscriber.user_id = ' . $userId);
         }
 
         return $qb->getSQL();
