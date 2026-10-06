@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Application\Acl;
 
 use Application\Acl\Assertion\CanUpdateCard;
-use Application\Acl\Assertion\IsCreator;
 use Application\Acl\Assertion\IsNotSuggestion;
 use Application\Acl\Assertion\IsOwner;
 use Application\Acl\Assertion\IsOwnerOrResponsible;
+use Application\Acl\Assertion\IsSubscriber;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\SameSite;
 use Application\Acl\Assertion\Visibility;
@@ -114,7 +114,12 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $card, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $change, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $collection, 'create', new SameSite());
-        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([CollectionVisibility::Member, CollectionVisibility::Administrator])), new SameSite()));
+        // Like any other member, an administrator can read the private collections they are responsible or reader of
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, 'read', new One(new IsOwnerOrResponsible(), new IsSubscriber()));
+        // Administrators fully manage the non-private collections, and their own ones like any owner
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwner(), new Visibility([CollectionVisibility::Member, CollectionVisibility::Administrator])), new SameSite()));
+        // On a private collection, being a responsible gives the same rights as to any other responsible
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, ['linkCard', 'manageSubscribers'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $tag, 'read');

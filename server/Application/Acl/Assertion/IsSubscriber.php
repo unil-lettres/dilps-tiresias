@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Acl\Assertion;
 
-use Application\Model\AbstractModel;
+use Application\Model\Collection;
 use Application\Model\User;
 use Ecodev\Felix\Acl\Assertion\NamedAssertion;
 use Ecodev\Felix\Acl\ModelResource;
@@ -12,16 +12,17 @@ use Laminas\Permissions\Acl\Acl;
 use Laminas\Permissions\Acl\Resource\ResourceInterface;
 use Laminas\Permissions\Acl\Role\RoleInterface;
 
-class IsCreator implements NamedAssertion
+/**
+ * Assert that the current user is a subscriber (reader) of the collection.
+ */
+class IsSubscriber implements NamedAssertion
 {
     public function getName(): string
     {
-        return 'je suis le créateur';
+        return 'je suis lecteur de la collection';
     }
 
     /**
-     * Assert that the object has been created by the current user.
-     *
      * @param \Application\Acl\Acl $acl
      * @param ModelResource $resource
      * @param string $privilege
@@ -30,9 +31,14 @@ class IsCreator implements NamedAssertion
      */
     public function assert(Acl $acl, ?RoleInterface $role = null, ?ResourceInterface $resource = null, $privilege = null)
     {
-        /** @var AbstractModel $object */
-        $object = $resource->getInstance();
+        /** @var Collection $collection */
+        $collection = $resource->getInstance();
 
-        return User::getCurrent() && User::getCurrent() === $object->getCreator();
+        $user = User::getCurrent();
+        if ($user && $collection->getSubscribers()->contains($user)) {
+            return true;
+        }
+
+        return $acl->reject('it is not one of the subscribers');
     }
 }
