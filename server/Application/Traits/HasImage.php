@@ -6,7 +6,7 @@ namespace Application\Traits;
 
 use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
+use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Attribute as API;
 use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
