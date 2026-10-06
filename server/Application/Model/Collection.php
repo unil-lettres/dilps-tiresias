@@ -70,8 +70,9 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      *
      * @var DoctrineCollection<User>
      */
+    // Extra lazy, so that counting and checking membership (in lists of collections and in ACL) do not hydrate all users
     #[ORM\JoinTable(name: 'collection_responsible')]
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'responsibleCollections')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'responsibleCollections', fetch: 'EXTRA_LAZY')]
     private DoctrineCollection $responsibles;
 
     /**
@@ -80,7 +81,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * @var DoctrineCollection<User>
      */
     #[ORM\JoinTable(name: 'collection_subscriber')]
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'subscribedCollections')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'subscribedCollections', fetch: 'EXTRA_LAZY')]
     private DoctrineCollection $subscribers;
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
