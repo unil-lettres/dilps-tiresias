@@ -28,7 +28,7 @@ class MessageQueuer
             'export' => $export,
         ];
 
-        $message = $this->createMessage($user, $user->getEmail(), $subject, MessageTypeType::EXPORT_DONE, $mailParams);
+        $message = $this->createMessage($user, $user->getEmailRegardlessOfViewer(), $subject, MessageTypeType::EXPORT_DONE, $mailParams);
 
         return $message;
     }

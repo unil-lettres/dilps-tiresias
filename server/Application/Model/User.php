@@ -190,10 +190,26 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     }
 
     /**
-     * Get email.
+     * Get email, only for the user themselves and for administrators, because any user can list all users.
+     *
+     * To actually send an email, use getEmailRegardlessOfViewer() instead.
      */
     #[API\Field(type: '?Email')]
     public function getEmail(): ?string
+    {
+        $viewer = self::getCurrent();
+        if ($viewer === $this || $viewer?->getRole() === self::ROLE_ADMINISTRATOR) {
+            return $this->email;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get email, whoever is the current user, or even without any current user (CLI). Never expose it via API.
+     */
+    #[API\Exclude]
+    public function getEmailRegardlessOfViewer(): ?string
     {
         return $this->email;
     }

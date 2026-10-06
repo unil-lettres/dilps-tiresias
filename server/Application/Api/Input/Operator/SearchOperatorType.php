@@ -9,6 +9,7 @@ use Application\Model\Card;
 use Application\Model\Country;
 use Application\Model\Domain;
 use Application\Model\Institution;
+use Application\Model\User;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 class SearchOperatorType extends AbstractSearchOperatorType
@@ -30,7 +31,7 @@ class SearchOperatorType extends AbstractSearchOperatorType
             return ['name'];
         }
 
-        return [
+        $fields = [
             'name',
             'expandedName',
             'cachedArtistNames',
@@ -40,7 +41,6 @@ class SearchOperatorType extends AbstractSearchOperatorType
             'material',
             'addition',
             'login',
-            'email',
             'dating',
             'id',
             'code',
@@ -48,6 +48,13 @@ class SearchOperatorType extends AbstractSearchOperatorType
             'corpus',
             'techniqueAuthor',
         ];
+
+        // Only administrators can see the email of other users, so only they can search by email
+        if (User::getCurrent()?->getRole() === User::ROLE_ADMINISTRATOR) {
+            $fields[] = 'email';
+        }
+
+        return $fields;
     }
 
     protected function getSearchableJoinedEntities(): array
