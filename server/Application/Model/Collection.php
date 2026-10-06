@@ -7,6 +7,7 @@ namespace Application\Model;
 use Application\Acl\Acl;
 use Application\Api\Helper;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
+use Application\Api\Input\Operator\ManageableByViewerOperatorType;
 use Application\Enum\CollectionVisibility;
 use Application\Repository\CollectionRepository;
 use Application\Traits\HasInstitution;
@@ -27,6 +28,7 @@ use GraphQL\Doctrine\Attribute as API;
  */
 #[ORM\Index(name: 'collection_name_idx', columns: ['name'])]
 #[API\Filter(field: 'custom', operator: ExcludeSelfAndDescendantsOperatorType::class, type: 'id')]
+#[API\Filter(field: 'custom', operator: ManageableByViewerOperatorType::class, type: 'boolean')]
 #[ORM\Entity(CollectionRepository::class)]
 class Collection extends AbstractModel implements HasParentInterface, HasSiteInterface
 {

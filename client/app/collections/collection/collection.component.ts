@@ -20,10 +20,8 @@ import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.co
 import {
     type CollectionQuery,
     type CollectionFilter,
-    type CollectionFilterGroup,
-    type CollectionFilterGroupCondition,
+    type CollectionFilterGroupConditionCustom,
     CollectionVisibility,
-    LogicalOperator,
     type UpdateCollection,
     UserRole,
     type UsersQuery,
@@ -146,27 +144,22 @@ export class CollectionComponent
      * A collection can only be put inside a collection whose content the user manages (owner or responsible, as
      * enforced by the server), and never inside itself or its descendants, which would form a cyclic hierarchy.
      *
-     * Like in the collection selector, administrators and majors are not filtered.
+     * Like in the collection selector, administrators and majors are not filtered. This must be a single group of
+     * conditions, because the hierarchic selector cannot merge groups of different logics.
      */
     private getParentHierarchicFilters(
         user: ViewerQuery['viewer'] | null,
     ): HierarchicFiltersConfiguration<CollectionFilter> {
-        const notCyclic: CollectionFilterGroupCondition = this.data.item.id
-            ? {custom: {excludeSelfAndDescendants: {value: this.data.item.id}}}
-            : {};
+        const custom: CollectionFilterGroupConditionCustom = {};
+        if (this.data.item.id) {
+            custom.excludeSelfAndDescendants = {value: this.data.item.id};
+        }
 
-        const groups: CollectionFilterGroup[] =
-            user && ![UserRole.administrator, UserRole.major].includes(user.role)
-                ? [
-                      {conditions: [{...notCyclic, owner: {equal: {value: user.id}}}]},
-                      {
-                          groupLogic: LogicalOperator.OR,
-                          conditions: [{...notCyclic, responsibles: {have: {values: [user.id]}}}],
-                      },
-                  ]
-                : [{conditions: [notCyclic]}];
+        if (user && ![UserRole.administrator, UserRole.major].includes(user.role)) {
+            custom.manageableByViewer = {value: true};
+        }
 
-        return [{service: CollectionService, filter: {groups}}];
+        return [{service: CollectionService, filter: {groups: [{conditions: [{custom}]}]}}];
     }
 
     protected updateVisibility(): void {
