@@ -125,6 +125,40 @@ class CollectionTest extends TestCase
         yield 'administrator can make public what is visible to administrators' => [User::ROLE_ADMINISTRATOR, CollectionVisibility::Administrator, CollectionVisibility::Member, false];
     }
 
+    #[DataProvider('providerOnlyAdministratorCanMakeFonds')]
+    public function testOnlyAdministratorCanMakeFonds(string $role, string $field, ?string $expectedMessage): void
+    {
+        $collection = new Collection();
+        User::setCurrent(new User($role));
+        $setter = 'set' . ucfirst($field);
+
+        // Unchanged values are always accepted
+        $collection->$setter(false);
+
+        if ($expectedMessage) {
+            $this->expectExceptionMessage($expectedMessage);
+        }
+
+        $collection->$setter(true);
+        self::assertTrue($collection->$field());
+    }
+
+    public static function providerOnlyAdministratorCanMakeFonds(): iterable
+    {
+        $messages = [
+            'isSource' => 'Only administrators can change the isSource of a collection',
+            'isHistoric' => 'Only administrators can change the isHistoric of a collection',
+        ];
+
+        foreach ($messages as $field => $message) {
+            foreach ([User::ROLE_STUDENT, User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_MAJOR] as $role) {
+                yield "$role cannot change $field" => [$role, $field, $message];
+            }
+
+            yield "administrator can change $field" => [User::ROLE_ADMINISTRATOR, $field, null];
+        }
+    }
+
     private function createCollection(): Collection
     {
         $collection = new Collection();

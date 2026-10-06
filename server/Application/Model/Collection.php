@@ -164,6 +164,10 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function setIsSource(bool $isSource): void
     {
+        if ($isSource !== $this->isSource) {
+            $this->throwIfNotAdministrator('isSource');
+        }
+
         $this->isSource = $isSource;
     }
 
@@ -287,6 +291,10 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function setIsHistoric(bool $isHistoric): void
     {
+        if ($isHistoric !== $this->isHistoric) {
+            $this->throwIfNotAdministrator('isHistoric');
+        }
+
         $this->isHistoric = $isHistoric;
     }
 
@@ -345,5 +353,18 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
         $user = User::getCurrent();
 
         return $user !== null && $this->subscribers->contains($user);
+    }
+
+    /**
+     * Throw if the current user is not an administrator.
+     *
+     * Only administrators can make a collection a fonds, like the client only offers it to them. Otherwise, anybody
+     * could show their own copyrights on any card, by adding it to a fonds of their own.
+     */
+    private function throwIfNotAdministrator(string $field): void
+    {
+        if (User::getCurrent()?->getRole() !== User::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrators can change the ' . $field . ' of a collection');
+        }
     }
 }
