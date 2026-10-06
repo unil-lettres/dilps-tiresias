@@ -126,13 +126,26 @@ To run PHPunit test:
 ./vendor/bin/phpunit # as many times as necessary
 ```
 
-### Karma
+### Angular unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` to execute the unit tests via [Vitest](https://vitest.dev/).
 
 ### End to end
 
-Run `pnpm e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/).
+Run `pnpm e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/). They are not run by CI.
+
+They need the reference test data on the Dilps site, see PHPUnit above, and run against `http://dilps.lan:4400/`
+by default. Each test creates and deletes its own data. To run them against Docker:
+
+```sh
+E2E_BASE_URL=http://dilps.docker:8181/ pnpm e2e --workers=2
+```
+
+More workers would overload the development server. If `pnpm` is only available in the container, run
+`npx playwright install chromium` once, then `npx playwright test` instead of `pnpm e2e`.
+
+Every test fails on any console error, uncaught error or GraphQL error, even if it does not look for them, see
+`e2e/fixtures.ts`. So new tests must import `test` from `./fixtures`.
 
 ### Credits
 
