@@ -56,17 +56,35 @@ export const cacheConfig: InMemoryCacheConfig = {
 };
 
 /**
- * Translate PHP configuration error messages to French
+ * Translate to French the technical error messages that are shown to end-users, but that we do not write ourselves
  *
  * Errors handled:
  * - upload_max_filesize
  * - post_max_size
  * - max_execution_time
+ * - invalid variables, eg: `Variable "$login" got invalid value "foo "; Not a valid Login: "foo "`
+ * - data rejected by the database, as reported by felix
  *
  * @param message The original error message
  * @returns Translated error message
  */
-function translatePhpConfigurationError(message: string): string {
+function translateTechnicalError(message: string): string {
+    if (message.startsWith('Variable "$')) {
+        return "Une des valeurs saisies n'est pas valide.";
+    }
+
+    if (message === 'String data, right truncated') {
+        return 'Un des textes saisis est trop long.';
+    }
+
+    if (message === 'Numeric value out of range') {
+        return 'Un des nombres saisis est trop grand.';
+    }
+
+    if (message === 'Invalid datetime format') {
+        return "Une des dates saisies n'est pas valide.";
+    }
+
     if (message.includes('upload_max_filesize')) {
         return 'Le fichier dépasse la limite de taille autorisée.';
     }
@@ -103,7 +121,7 @@ function createErrorHandler(
         // Show GraphQL responses with errors to end-users
         if (CombinedGraphQLErrors.is(error)) {
             error.errors.forEach(error => {
-                const translatedMessage = translatePhpConfigurationError(error.message);
+                const translatedMessage = translateTechnicalError(error.message);
                 if ('extensions' in error && error.extensions?.showSnack) {
                     // Show whatever server prepared for end-user, with a bit more time to read
                     alertService.error(translatedMessage, 5000);
