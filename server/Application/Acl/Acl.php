@@ -105,7 +105,6 @@ class Acl extends \Ecodev\Felix\Acl\Acl
 
         $this->allow(User::ROLE_SENIOR, $card, ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
-        $this->allow(User::ROLE_MAJOR, $collection, 'delete', new All(new IsOwner(), new SameSite()));
         $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new SameSite());
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
