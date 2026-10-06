@@ -49,6 +49,11 @@ export const collectionQuery = gql`
                 id
                 name
             }
+            parentHierarchy {
+                id
+                name
+                visibility
+            }
             institution {
                 id
                 name

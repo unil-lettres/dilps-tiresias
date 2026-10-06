@@ -75,6 +75,17 @@ export class CollectionComponent
     protected readonly canManageSubscribers = signal<boolean>(false);
 
     /**
+     * Names of the parent collections that are not visible to all members. A collection is only visible if all its
+     * parents are, so the people added to this collection must also be given access to those parents.
+     */
+    protected readonly restrictedParents = signal<string[]>([]);
+    protected readonly restrictedParentsLabel = computed(() =>
+        this.restrictedParents()
+            .map(name => `« ${name} »`)
+            .join(', '),
+    );
+
+    /**
      * A responsible is a subscriber with more rights, so the total number of subscribers includes the responsibles.
      */
     protected readonly subscribersCount = computed(() => this.responsiblesCount() + this.plainSubscribersCount());
@@ -207,6 +218,11 @@ export class CollectionComponent
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
             this.applyMembershipFromItem();
+            this.restrictedParents.set(
+                (this.data.item as CollectionQuery['collection']).parentHierarchy
+                    .filter(parent => parent.visibility !== CollectionVisibility.Member)
+                    .map(parent => parent.name),
+            );
 
             // When opened directly on the subscribers management (eg: from a responsible's contextual menu)
             if (this.data.item.initialView === 'subscribers') {

@@ -118,6 +118,13 @@
 @if (currentView() === 'subscribers') {
     <h2 mat-dialog-title>Gérer les abonnés de la collection « {{ data.item.name }} »</h2>
     <mat-dialog-content>
+        @if (restrictedParents().length) {
+            <app-hint icon="warning" class="nat-margin-bottom">
+                Cette collection se trouve dans {{ restrictedParentsLabel() }}, dont la visibilité est restreinte. Les
+                personnes ajoutées ici ne la verront que si elles ont aussi accès à
+                {{ restrictedParents().length > 1 ? 'ces collections' : 'cette collection' }}.
+            </app-hint>
+        }
         <div class="nat-horizontal nat-gap-10">
             @if (!!user && canManageSubscribers()) {
                 <div class="nat-vertical nat-gap-5" style="flex: 1">
