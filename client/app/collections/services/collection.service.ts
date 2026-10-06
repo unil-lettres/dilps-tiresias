@@ -89,7 +89,7 @@ export class CollectionService extends AbstractContextualizedService<
     }
 
     /**
-     * Remove the current user from the collection (as manager and/or subscriber), i.e. leave it.
+     * Remove the current user from the collection (as responsible and/or subscriber), i.e. leave it.
      */
     public unsubscribe(collection: FakeCollection | CollectionQuery['collection']): Observable<unknown> {
         return this.apollo.mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({

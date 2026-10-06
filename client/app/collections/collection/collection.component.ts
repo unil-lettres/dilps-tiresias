@@ -224,7 +224,7 @@ export class CollectionComponent
     /**
      * Copy the membership related fields returned by the collection query into the local signals.
      *
-     * On the server side, responsibles and plain subscribers are two distinct relations ("managers" and
+     * On the server side, responsibles and plain subscribers are two distinct relations ("responsibles" and
      * "subscribers"), but in the UI a responsible is presented as a subscriber with more rights.
      */
     private setMembershipSignals(item: CollectionQuery['collection']): void {

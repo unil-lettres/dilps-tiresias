@@ -190,7 +190,7 @@ export class UserComponent extends AbstractDetailDirective<
     }
 
     /**
-     * Filter matching the collections the user is a member of, either as a manager or as a subscriber.
+     * Filter matching the collections the user is a member of, either as a responsible or as a subscriber.
      */
     private membershipFilter(): {groups: unknown[]} {
         return {
@@ -255,7 +255,7 @@ export class UserComponent extends AbstractDetailDirective<
             const removal$ = this.isSelf
                 ? this.collectionService.unsubscribe(collection)
                 : forkJoin([
-                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'manager'),
+                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'responsible'),
                       this.linkService.unlink(collection, this.data.item as LinkableObject, 'subscriber'),
                   ]);
 
