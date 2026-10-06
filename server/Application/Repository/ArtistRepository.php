@@ -25,8 +25,11 @@ class ArtistRepository extends AbstractRepository
             return [];
         }
 
-        // Dedup and trim whitespaces
-        $names = array_unique(array_map(fn ($value) => mb_trim($value), $names));
+        // Dedup and trim whitespaces, and ignore empty names, an artist without name would be useless
+        $names = array_unique(array_filter(array_map(fn ($value) => mb_trim($value), $names), fn ($value) => $value !== ''));
+        if (!$names) {
+            return [];
+        }
 
         $artists = $this->findBy([
             'name' => $names,

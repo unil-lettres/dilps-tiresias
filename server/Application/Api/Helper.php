@@ -131,7 +131,7 @@ abstract class Helper
             }
 
             $setter = 'set' . ucfirst($name);
-            $object->$setter($value);
+            $object->$setter(self::trim($name, $value));
         }
     }
 
@@ -166,5 +166,27 @@ abstract class Helper
         if (in_array($field, $administratorFields[$class] ?? [], true)) {
             throw new Exception('Seul·e·s les administrateur·rice·s peuvent filtrer ou trier par ' . $field . '.');
         }
+    }
+
+    /**
+     * Trim the texts typed by the user, also within lists, eg: the names of artists.
+     *
+     * But never the password, whose spaces might be intentional.
+     */
+    private static function trim(string $field, mixed $value): mixed
+    {
+        if ($field === 'password') {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            return mb_trim($value);
+        }
+
+        if (is_array($value)) {
+            return array_map(fn ($item) => is_string($item) ? mb_trim($item) : $item, $value);
+        }
+
+        return $value;
     }
 }
