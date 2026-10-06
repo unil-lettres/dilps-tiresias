@@ -9,6 +9,9 @@ return [
             searchByEmail: users(filter: {groups: [{conditions: [{custom: {search: {value: "student-dilps@example.com"}}}]}]}) {
                 items { id }
             }
+            filterByEmail: users(filter: {groups: [{conditions: [{email: {equal: {value: "student-dilps@example.com"}}}]}]}, sorting: [{field: email, order: ASC}]) {
+                items { id }
+            }
         }',
     ],
     [
@@ -17,6 +20,13 @@ return [
                 'email' => 'student-dilps@example.com',
             ],
             'searchByEmail' => [
+                'items' => [
+                    [
+                        'id' => '1003',
+                    ],
+                ],
+            ],
+            'filterByEmail' => [
                 'items' => [
                     [
                         'id' => '1003',

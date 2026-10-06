@@ -53,6 +53,7 @@ abstract class Standard
                     'order' => 'ASC',
                 ];
 
+                Helper::throwIfFilteringOnAdministratorFields($class, $args['filter'] ?? [], $sorting);
                 $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
 
                 $result = Helper::paginate($args['pagination'], $qb);

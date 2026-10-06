@@ -39,6 +39,26 @@ abstract class Helper
         }
     }
 
+    /**
+     * Throw if the filter, or the sorting, uses a field that only administrators can see.
+     *
+     * Otherwise, anybody could guess the hidden values, eg: with a `like` condition, or by sorting.
+     */
+    public static function throwIfFilteringOnAdministratorFields(string $class, array $filter, array $sorting = []): void
+    {
+        if (User::getCurrent()?->getRole() === User::ROLE_ADMINISTRATOR) {
+            return;
+        }
+
+        foreach ($sorting as $sort) {
+            self::throwIfAdministratorField($class, $sort['field'] ?? null);
+        }
+
+        foreach ($filter['groups'] ?? [] as $group) {
+            self::throwIfFilteringOnAdministratorFieldsInGroup($class, $group);
+        }
+    }
+
     public static function paginate(array $pagination, QueryBuilder $query): array
     {
         $offset = max(0, $pagination['offset']);
@@ -96,6 +116,39 @@ abstract class Helper
 
             $setter = 'set' . ucfirst($name);
             $object->$setter($value);
+        }
+    }
+
+    /**
+     * Check the conditions of a group, or of a join, and recursively its joins.
+     */
+    private static function throwIfFilteringOnAdministratorFieldsInGroup(string $class, array $group): void
+    {
+        foreach ($group['conditions'] ?? [] as $condition) {
+            foreach ($condition as $field => $operators) {
+                if ($operators !== null) {
+                    self::throwIfAdministratorField($class, $field);
+                }
+            }
+        }
+
+        $metadata = _em()->getClassMetadata($class);
+        foreach ($group['joins'] ?? [] as $relation => $join) {
+            if ($join) {
+                self::throwIfFilteringOnAdministratorFieldsInGroup($metadata->getAssociationTargetClass($relation), $join);
+            }
+        }
+    }
+
+    private static function throwIfAdministratorField(string $class, mixed $field): void
+    {
+        // Fields only visible to administrators, see User::getEmail()
+        $administratorFields = [
+            User::class => ['email'],
+        ];
+
+        if (in_array($field, $administratorFields[$class] ?? [], true)) {
+            throw new Exception('Only administrators can filter or sort on ' . $field);
         }
     }
 }
