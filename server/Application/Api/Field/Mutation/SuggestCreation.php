@@ -29,6 +29,7 @@ class SuggestCreation implements FieldInterface
                 $site = $root['site'];
 
                 $suggestion = $args['id']->getEntity();
+                Helper::throwIfCannotSuggest($suggestion);
 
                 /** @var ChangeRepository $changeRepository */
                 $changeRepository = _em()->getRepository(Change::class);

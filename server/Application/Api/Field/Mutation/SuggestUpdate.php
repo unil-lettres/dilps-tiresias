@@ -30,6 +30,8 @@ class SuggestUpdate implements FieldInterface
                 $site = $root['site'];
 
                 $suggestion = $args['id']->getEntity();
+                Helper::throwIfCannotSuggest($suggestion);
+
                 $original = $suggestion->getOriginal();
 
                 if (!$original) {

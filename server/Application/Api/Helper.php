@@ -6,6 +6,8 @@ namespace Application\Api;
 
 use Application\Acl\Acl;
 use Application\Model\AbstractModel;
+use Application\Model\Card;
+use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Ecodev\Felix\Api\Exception;
@@ -19,6 +21,21 @@ abstract class Helper
         $acl = new Acl();
         if (!$acl->isCurrentUserAllowed($model, $privilege)) {
             throw new Exception($acl->getLastDenialMessage());
+        }
+    }
+
+    /**
+     * Throw if the current user cannot submit the given card as a suggestion.
+     *
+     * Only the creator of a card can submit it, and only as long as they own it, that is until an administrator
+     * accepts it. Otherwise, anybody could turn the card of somebody else into a suggestion, and gain the rights
+     * that ACL grant on suggestions.
+     */
+    public static function throwIfCannotSuggest(Card $suggestion): void
+    {
+        $user = User::getCurrent();
+        if (!$user || $suggestion->getCreator() !== $user || $suggestion->getOwner() !== $user) {
+            throw new Exception('Only the creator of a card can submit it as a suggestion');
         }
     }
 
