@@ -217,7 +217,7 @@ class CardTest extends TestCase
         User::setCurrent($user);
 
         if ($shouldThrow) {
-            $this->expectExceptionMessage('Only administrators can change the visibility of a card');
+            $this->expectExceptionMessage("Seul·e·s les administrateur·rice·s peuvent modifier la visibilité d'une fiche.");
         }
 
         $card->setVisibility($next);

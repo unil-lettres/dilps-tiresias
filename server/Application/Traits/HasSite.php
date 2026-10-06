@@ -30,7 +30,7 @@ trait HasSite
     public function setSite(Site $site): void
     {
         if (isset($this->site) && $site !== $this->site) {
-            throw new Exception('Cannot move an object to another site');
+            throw new Exception("Impossible de déplacer un élément vers l'autre site.");
         }
 
         $this->site = $site;

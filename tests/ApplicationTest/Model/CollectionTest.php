@@ -103,7 +103,7 @@ class CollectionTest extends TestCase
         User::setCurrent(new User($role));
 
         if ($shouldThrow) {
-            $this->expectExceptionMessage('Only seniors, majors and administrators can make a collection visible to all members');
+            $this->expectExceptionMessage('Seul·e·s les seniors, les majors et les administrateur·rice·s peuvent rendre une collection visible par les membres.');
         }
 
         $collection->setVisibility($next);
@@ -146,8 +146,8 @@ class CollectionTest extends TestCase
     public static function providerOnlyAdministratorCanMakeFonds(): iterable
     {
         $messages = [
-            'isSource' => 'Only administrators can change the isSource of a collection',
-            'isHistoric' => 'Only administrators can change the isHistoric of a collection',
+            'isSource' => "Seul·e·s les administrateur·rice·s peuvent faire d'une collection un fonds.",
+            'isHistoric' => 'Seul·e·s les administrateur·rice·s peuvent rendre un fonds historique.',
         ];
 
         foreach ($messages as $field => $message) {

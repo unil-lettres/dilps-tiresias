@@ -35,7 +35,7 @@ class SuggestUpdate implements FieldInterface
                 $original = $suggestion->getOriginal();
 
                 if (!$original) {
-                    throw new Exception('An suggestion must have an original defined');
+                    throw new Exception('Une suggestion de modification doit porter sur une fiche existante.');
                 }
 
                 /** @var ChangeRepository $changeRepository */

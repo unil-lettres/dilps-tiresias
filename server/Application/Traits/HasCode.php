@@ -23,7 +23,7 @@ trait HasCode
         }
 
         if ($code !== $this->code && !$this->canUpdateCode()) {
-            throw new Exception('Only majors and administrators are allowed to update card.code');
+            throw new Exception("Seul·e·s les majors et les administrateur·rice·s peuvent modifier la référence d'une fiche.");
         }
 
         $this->code = $code;

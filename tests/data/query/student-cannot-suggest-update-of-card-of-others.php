@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only the creator of a card can submit it as a suggestion',
+                'message' => "Seul·e le·la créateur·rice d'une fiche peut la proposer.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

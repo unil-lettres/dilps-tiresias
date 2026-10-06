@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only administrators can change the email of a user',
+                'message' => "Seul·e·s les administrateur·rice·s peuvent modifier l'email d'un·e utilisateur·rice.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

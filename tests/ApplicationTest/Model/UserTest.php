@@ -151,13 +151,13 @@ class UserTest extends TestCase
 
     public static function providerSetRole(): iterable
     {
-        yield [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'anonymous is not allowed to change role from student to junior'];
+        yield [User::ROLE_ANONYMOUS, User::ROLE_STUDENT, User::ROLE_JUNIOR, "Vous n'avez pas le droit d'attribuer ce rôle."];
         yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_STUDENT, null];
-        yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, 'student is not allowed to change role from student to junior'];
+        yield [User::ROLE_STUDENT, User::ROLE_STUDENT, User::ROLE_JUNIOR, "Vous n'avez pas le droit d'attribuer ce rôle."];
         yield [User::ROLE_JUNIOR, User::ROLE_STUDENT, User::ROLE_JUNIOR, null];
         yield [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_JUNIOR, null];
-        yield 'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, 'junior is not allowed to change role from junior to senior'];
-        yield 'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, 'junior is not allowed to change role from senior to junior'];
+        yield 'cannot promote higher than us' => [User::ROLE_JUNIOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, "Vous n'avez pas le droit d'attribuer ce rôle."];
+        yield 'cannot demote' => [User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_JUNIOR, "Vous n'avez pas le droit d'attribuer ce rôle."];
         yield [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null];
         yield [User::ROLE_MAJOR, User::ROLE_JUNIOR, User::ROLE_MAJOR, null];
         yield [User::ROLE_ADMINISTRATOR, User::ROLE_JUNIOR, User::ROLE_SENIOR, null];

@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only administrators can change the visibility of a card',
+                'message' => "Seul·e·s les administrateur·rice·s peuvent modifier la visibilité d'une fiche.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

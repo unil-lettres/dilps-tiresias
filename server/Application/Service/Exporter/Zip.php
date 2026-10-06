@@ -45,7 +45,7 @@ class Zip implements Writer
         $result = $this->zip->open($export->getPath(), ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
         if ($result !== true) {
-            throw new Exception($this->zip->getStatusString());
+            throw new Exception("L'export n'a pas pu être créé.", $result);
         }
     }
 
