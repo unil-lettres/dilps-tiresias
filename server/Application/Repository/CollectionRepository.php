@@ -48,12 +48,13 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
                         OR cs.user_id = $userId
             STRING;
 
+        // Membership joins are restricted to the user, to avoid multiplying rows by the number of members
         $sql = <<<STRING
             WITH RECURSIVE parent AS (
 
             SELECT collection.id, collection.parent_id FROM collection
-            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id
-            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id
+            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id AND cu.user_id = $userId
+            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id AND cs.user_id = $userId
             WHERE
             parent_id IS NULL
             AND ($isAccessible)
@@ -62,8 +63,8 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
 
             SELECT collection.id, collection.parent_id FROM collection
             INNER JOIN parent ON collection.parent_id = parent.id
-            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id
-            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id
+            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id AND cu.user_id = $userId
+            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id AND cs.user_id = $userId
             WHERE
             $isAccessible
 
