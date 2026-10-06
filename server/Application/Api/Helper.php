@@ -7,6 +7,8 @@ namespace Application\Api;
 use Application\Acl\Acl;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
+use Application\Model\Collection;
+use Application\Model\Thesaurus;
 use Application\Model\User;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -132,6 +134,16 @@ abstract class Helper
 
             $setter = 'set' . ucfirst($name);
             $object->$setter(self::trim($name, $value));
+        }
+    }
+
+    /**
+     * Throw if the object has no name, but must have one, otherwise it could not be told apart from others.
+     */
+    public static function throwIfNameMissing(AbstractModel $object): void
+    {
+        if (($object instanceof Collection || $object instanceof Thesaurus) && $object->getName() === '') {
+            throw new Exception('Le nom est obligatoire.');
         }
     }
 

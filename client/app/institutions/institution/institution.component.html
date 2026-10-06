@@ -13,6 +13,7 @@
             <input
                 #name="ngModel"
                 matInput
+                required
                 fieldName="name"
                 [appUnique]="data.item"
                 [service]="service"
@@ -21,7 +22,9 @@
             />
 
             @if (name.invalid && (name?.dirty || name?.touched)) {
-                <mat-error>Ce nom est déjà attribué</mat-error>
+                <mat-error>{{
+                    name.hasError('required') ? 'Le nom est obligatoire' : 'Ce nom est déjà attribué'
+                }}</mat-error>
             }
         </mat-form-field>
 

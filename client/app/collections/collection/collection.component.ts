@@ -2,7 +2,7 @@ import {Component, computed, inject, type OnInit, signal, ChangeDetectionStrateg
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatError} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatSlider, MatSliderThumb} from '@angular/material/slider';
 import {MatButton} from '@angular/material/button';
@@ -49,6 +49,7 @@ const publishers = [UserRole.senior, UserRole.major, UserRole.administrator];
         FormsModule,
         MatFormField,
         MatLabel,
+        MatError,
         MatInput,
         ThesaurusComponent,
         NaturalRelationsComponent,

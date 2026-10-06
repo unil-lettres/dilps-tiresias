@@ -45,7 +45,8 @@
 
             <mat-form-field>
                 <mat-label>Nom</mat-label>
-                <input matInput [(ngModel)]="data.item.name" />
+                <input #nameModel="ngModel" matInput required [(ngModel)]="data.item.name" />
+                <mat-error>Le nom est obligatoire</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -102,6 +103,7 @@
             class="nat-expand"
             [canCreate]="user?.globalPermissions?.collection?.create"
             [readOnly]="false"
+            [disableCreateAndUpdate]="!!nameModel.invalid"
             [item]="data.item"
             (create)="create()"
             (delete)="delete()"

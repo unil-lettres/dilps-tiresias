@@ -110,6 +110,7 @@ abstract class Standard
 
                 // Do it
                 Helper::hydrate($object, $input);
+                Helper::throwIfNameMissing($object);
                 _em()->persist($object);
                 _em()->flush();
 
@@ -133,6 +134,7 @@ abstract class Standard
                 // Do it
                 $input = $args['input'];
                 Helper::hydrate($object, $input);
+                Helper::throwIfNameMissing($object);
 
                 _em()->flush();
 

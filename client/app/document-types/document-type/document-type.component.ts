@@ -6,11 +6,11 @@ import {type ThesaurusDetailDialogExtraData} from '../../shared/components';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
 import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatError} from '@angular/material/form-field';
 
 @Component({
     selector: 'app-document-type',
-    imports: [MatDialogModule, MatFormField, MatLabel, MatInput, FormsModule, DialogFooterComponent],
+    imports: [MatDialogModule, MatFormField, MatLabel, MatError, MatInput, FormsModule, DialogFooterComponent],
     templateUrl: './document-type.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
 })

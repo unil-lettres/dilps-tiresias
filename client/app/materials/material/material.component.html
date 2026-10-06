@@ -11,10 +11,13 @@
         <mat-form-field>
             <mat-label>Nom</mat-label>
             <input
+                #nameModel="ngModel"
                 matInput
+                required
                 [readonly]="data.item.readOnly || (isUpdatePage() && !data.item.permissions.update)"
                 [(ngModel)]="data.item.name"
             />
+            <mat-error>Le nom est obligatoire</mat-error>
         </mat-form-field>
 
         <natural-select-hierarchic
@@ -31,6 +34,7 @@
 <mat-dialog-actions>
     <app-dialog-footer
         class="nat-expand"
+        [disableCreateAndUpdate]="!!nameModel.invalid"
         [canCreate]="user?.globalPermissions?.material?.create"
         [readOnly]="data.item.readOnly"
         [item]="data.item"
