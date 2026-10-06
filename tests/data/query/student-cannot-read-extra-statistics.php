@@ -11,7 +11,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Statistic#null" with privilege "read"',
+                'message' => "Vous n'avez pas accès à ces statistiques.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

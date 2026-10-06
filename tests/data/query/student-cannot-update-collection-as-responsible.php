@@ -21,7 +21,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Collection#2002" with privilege "update" because it is not the owner',
+                'message' => "Vous n'avez pas le droit de modifier cette collection.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

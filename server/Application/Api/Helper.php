@@ -20,7 +20,8 @@ abstract class Helper
     {
         $acl = new Acl();
         if (!$acl->isCurrentUserAllowed($model, $privilege)) {
-            throw new Exception($acl->getLastDenialMessage());
+            // The detailed denial message is not shown, it would be unreadable for end-users, and expose the internals of the API
+            throw new Exception($acl->getUserDenialMessage($model, $privilege));
         }
     }
 

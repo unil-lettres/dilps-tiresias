@@ -20,7 +20,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Non-logged user with role anonymous is not allowed on resource "Export#null" with privilege "create"',
+                'message' => "Vous n'avez pas le droit de créer un export.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Card#6006" with privilege "update"',
+                'message' => "Vous n'avez pas le droit de modifier cette fiche.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

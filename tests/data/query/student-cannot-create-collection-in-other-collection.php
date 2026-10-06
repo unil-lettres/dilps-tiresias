@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Collection#2002" with privilege "linkCard" because it is not the owner, nor one of the responsible',
+                'message' => "Vous n'avez pas le droit de modifier le contenu de cette collection.",
                 'extensions' => [
                     'showSnack' => true,
                 ],
