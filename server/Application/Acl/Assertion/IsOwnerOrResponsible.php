@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Acl\Assertion;
 
+use Application\Enum\CollectionVisibility;
 use Application\Model\AbstractModel;
 use Application\Model\Card;
 use Application\Model\Change;
@@ -17,9 +18,21 @@ use Laminas\Permissions\Acl\Role\RoleInterface;
 
 class IsOwnerOrResponsible implements NamedAssertion
 {
+    /**
+     * @param null|CollectionVisibility[] $collectionVisibilities if given, owning or being responsible of a collection
+     *                                                             only counts for collections with one of these visibilities
+     */
+    public function __construct(
+        private readonly ?array $collectionVisibilities = null,
+    ) {}
+
     public function getName(): string
     {
-        return "l'objet m'appartient ou j'en suis responsable";
+        if ($this->collectionVisibilities === null) {
+            return "l'objet m'appartient ou j'en suis responsable";
+        }
+
+        return "l'objet m'appartient ou j'en suis responsable via une collection dont la visibilité est " . $this->getVisibilitiesList('ou');
     }
 
     /**
@@ -67,11 +80,24 @@ class IsOwnerOrResponsible implements NamedAssertion
         }
 
         foreach ($collections as $collection) {
+            if ($this->collectionVisibilities !== null && !in_array($collection->getVisibility(), $this->collectionVisibilities, true)) {
+                continue;
+            }
+
             if ($collection->getOwner() === User::getCurrent() || $collection->getResponsibles()->contains(User::getCurrent())) {
                 return true;
             }
         }
 
+        if ($this->collectionVisibilities !== null) {
+            return $acl->reject('it is not the owner, nor one of the responsible of a collection with visibility ' . $this->getVisibilitiesList('or'));
+        }
+
         return $acl->reject('it is not the owner, nor one of the responsible');
+    }
+
+    private function getVisibilitiesList(string $separator): string
+    {
+        return implode(' ' . $separator . ' ', array_map(fn (CollectionVisibility $visibility) => $visibility->value, $this->collectionVisibilities ?? []));
     }
 }

@@ -100,10 +100,14 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_STUDENT, $user, 'read');
         $this->allow(User::ROLE_STUDENT, $user, ['update', 'delete'], new All(new IsMyself(), new SameSite()));
 
-        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible(), new SameSite()));
-        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
+        // Adding a card to a collection only requires to manage the collection, and then gives rights on that card. So juniors only get
+        // rights via the non-private collections, which they cannot create themselves, otherwise they could take over any card they see
+        $nonPrivateCollections = [CollectionVisibility::Member, CollectionVisibility::Administrator];
+        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
+        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
 
-        $this->allow(User::ROLE_SENIOR, $card, ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        // Seniors and above get rights via any collection
+        $this->allow(User::ROLE_SENIOR, $card, ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
         $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new SameSite());
 
