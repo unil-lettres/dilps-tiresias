@@ -12,14 +12,18 @@ return [
                 login
                 email
                 type
+                activeUntil
+                name
             }
         }',
         'variables' => [
             'inputUser' => [
-                'login' => 'testlogin',
-                'email' => 'test@email.com',
-                'type' => 'Default',
+                // The client sends the whole profile, so administrative fields are accepted as long as they are unchanged
+                'login' => 'student',
+                'email' => 'student-dilps@example.com',
+                'activeUntil' => null,
                 'role' => User::ROLE_STUDENT,
+                'name' => 'new name',
             ],
         ],
     ],
@@ -27,9 +31,11 @@ return [
         'data' => [
             'updateUser' => [
                 'id' => 1003,
-                'login' => 'testlogin',
-                'email' => 'test@email.com',
+                'login' => 'student',
+                'email' => 'student-dilps@example.com',
                 'type' => 'Default',
+                'activeUntil' => null,
+                'name' => 'new name',
             ],
         ],
     ],

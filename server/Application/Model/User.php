@@ -137,6 +137,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[API\Input(type: LoginType::class)]
     public function setLogin(string $login): void
     {
+        if ($login !== $this->login) {
+            $this->throwIfCannotChangeAdministrativeField('login');
+        }
+
         $this->login = $login;
     }
 
@@ -178,6 +182,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[API\Input(type: '?Email')]
     public function setEmail(?string $email): void
     {
+        if ($email !== $this->email) {
+            $this->throwIfCannotChangeAdministrativeField('email');
+        }
+
         $this->email = $email;
     }
 
@@ -227,6 +235,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      */
     public function setActiveUntil(?Chronos $activeUntil): void
     {
+        if ($activeUntil?->getTimestamp() !== $this->activeUntil?->getTimestamp()) {
+            $this->throwIfCannotChangeAdministrativeField('activeUntil');
+        }
+
         $this->activeUntil = $activeUntil;
     }
 
@@ -250,10 +262,33 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Set user type.
+     *
+     * Only Shibboleth sets it, when creating an AAI user. Otherwise, an AAI account could keep a password and be used
+     * once the institution closed it.
      */
+    #[API\Exclude]
     public function setType(UserType $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Throw if the current user is not allowed to change the given administrative field of an existing user.
+     *
+     * Users can update their own profile, but they must neither extend their own access (activeUntil), nor change
+     * how they are identified (login, email). Shibboleth logs users in by their email, so changing our email
+     * to the address of somebody who never logged in yet would log that person into our account.
+     */
+    private function throwIfCannotChangeAdministrativeField(string $field): void
+    {
+        // A new user is created either by an administrator, as checked by ACL, or by Shibboleth
+        if (!$this->getId()) {
+            return;
+        }
+
+        if (self::getCurrent()?->getRole() !== self::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrators can change the ' . $field . ' of a user');
+        }
     }
 
     /**
