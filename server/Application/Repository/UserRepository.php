@@ -25,15 +25,16 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
             return null;
         }
 
-        if (!$user->canLogin()) {
-            throw new Exception("Ce compte n'est plus actif");
-        }
-
         $hashFromDb = $user->getPassword();
         $isMd5 = mb_strlen($hashFromDb) === 32 && ctype_xdigit($hashFromDb);
 
         // If we found a user and he has a correct MD5 or correct new hash, then return the user
         if (($isMd5 && md5($password) === $hashFromDb) || password_verify($password, $hashFromDb)) {
+            // Only tell whoever knows the password, otherwise anybody could find out which logins exist
+            if (!$user->canLogin()) {
+                throw new Exception("Ce compte n'est plus actif");
+            }
+
             // Update the hash in DB, if we are still MD5, or if PHP default options changed
             if ($isMd5 || password_needs_rehash($hashFromDb, PASSWORD_DEFAULT)) {
                 $user->setPassword($password);
