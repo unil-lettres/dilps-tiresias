@@ -120,9 +120,19 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
 
     /**
      * Set whether this is publicly available to only to member, or only administrators, or only owner.
+     *
+     * Only seniors and above can make a collection visible to others than its members, like the client only offers
+     * it to them.
      */
     public function setVisibility(CollectionVisibility $visibility): void
     {
+        // Without a logged-in user (CLI, unit tests) there is nobody to check, and anonymous cannot reach this via the API
+        $user = User::getCurrent();
+        if ($user && $visibility !== $this->visibility && $visibility !== CollectionVisibility::Private
+            && !in_array($user->getRole(), [User::ROLE_SENIOR, User::ROLE_MAJOR, User::ROLE_ADMINISTRATOR], true)) {
+            throw new Exception('Only seniors, majors and administrators can make a collection visible to others than its members');
+        }
+
         $this->visibility = $visibility;
     }
 

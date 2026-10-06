@@ -7,7 +7,7 @@ use Doctrine\DBAL\Connection;
 return [
     [
         'query' => 'mutation {
-            createCollection(input: {name: "sub-collection", visibility: Member, site: Dilps, parent: 2002}) {
+            createCollection(input: {name: "sub-collection", site: Dilps, parent: 2002}) {
                 name
                 parent {
                     id
