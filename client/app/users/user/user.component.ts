@@ -44,13 +44,20 @@ import {MatList, MatListItem, MatListItemTitle, MatDivider} from '@angular/mater
 import {MatTooltip} from '@angular/material/tooltip';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {InstitutionSortedByUsageService} from '../../institutions/services/institutionSortedByUsage.service';
+import {omit} from 'es-toolkit';
 
+/**
+ * Show on the confirmation whether it matches the password, whichever of the two was changed
+ */
 function matchPassword(ac: AbstractControl): ValidationErrors | null {
     const password = ac.get('password')!.value; // to get value in input tag
-    const passwordConfirmation = ac.get('passwordConfirmation')!.value; // to get value in input tag
+    const confirmation = ac.get('passwordConfirmation')!;
 
-    if (password !== passwordConfirmation) {
-        ac.get('passwordConfirmation')!.setErrors({password: true});
+    if (password !== confirmation.value) {
+        confirmation.setErrors({...confirmation.errors, password: true});
+    } else if (confirmation.hasError('password')) {
+        const others = omit(confirmation.errors!, ['password']);
+        confirmation.setErrors(Object.keys(others).length ? others : null);
     }
 
     return null;
