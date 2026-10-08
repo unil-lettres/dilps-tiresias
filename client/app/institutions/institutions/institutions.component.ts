@@ -53,6 +53,6 @@ export class InstitutionsComponent extends AbstractList<InstitutionService> {
     public override displayedColumns = ['name', 'locality', 'usageCount'];
 
     public constructor() {
-        super(inject(InstitutionService), InstitutionComponent);
+        super(inject(InstitutionService), InstitutionComponent, 'institution');
     }
 }

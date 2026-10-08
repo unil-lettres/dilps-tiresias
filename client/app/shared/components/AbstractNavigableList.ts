@@ -1,5 +1,6 @@
-import {inject, type OnInit, signal} from '@angular/core';
+import {inject, type OnInit, type Signal, signal} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import {type GlobalPermission, viewerCanCreate} from './viewer-can-create';
 import {
     type ExtractTallOne,
     type NaturalAbstractModelService,
@@ -45,11 +46,18 @@ export class AbstractNavigableList<
      */
     protected readonly dialog = inject(MatDialog);
 
+    /**
+     * Whether the viewer can create objects of this list
+     */
+    protected readonly canCreate: Signal<boolean>;
+
     public constructor(
         service: TService,
         private readonly component: ComponentType<unknown>,
+        permission: GlobalPermission,
     ) {
         super(service);
+        this.canCreate = viewerCanCreate(permission);
     }
 
     public edit(item: ExtractTallOne<TService>): void {

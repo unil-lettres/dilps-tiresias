@@ -51,6 +51,6 @@ import {MatToolbar} from '@angular/material/toolbar';
 })
 export class ArtistsComponent extends AbstractList<ArtistService> {
     public constructor() {
-        super(inject(ArtistService), ArtistComponent);
+        super(inject(ArtistService), ArtistComponent, 'artist');
     }
 }

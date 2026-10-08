@@ -51,6 +51,6 @@ import {MatToolbar} from '@angular/material/toolbar';
 })
 export class AntiqueNamesComponent extends AbstractList<AntiqueNameService> {
     public constructor() {
-        super(inject(AntiqueNameService), AntiqueNameComponent);
+        super(inject(AntiqueNameService), AntiqueNameComponent, 'antiqueName');
     }
 }

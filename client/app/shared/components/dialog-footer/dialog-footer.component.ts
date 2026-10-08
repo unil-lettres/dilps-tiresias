@@ -36,4 +36,11 @@ export class DialogFooterComponent {
     protected readonly create = output<Model>();
     protected readonly update = output<Model>();
     protected readonly delete = output<Model>();
+
+    /**
+     * Whether nothing can be changed in the dialog, which can then only be closed
+     */
+    protected cannotChange(): boolean {
+        return !!this.readOnly() || (!!this.item.id && !this.item.permissions?.update);
+    }
 }

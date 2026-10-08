@@ -54,6 +54,6 @@ export class NewsesComponent extends AbstractList<NewsService> {
     public override displayedColumns = ['isActive', 'image', 'name', 'url'];
 
     public constructor() {
-        super(inject(NewsService), NewsComponent);
+        super(inject(NewsService), NewsComponent, 'news');
     }
 }

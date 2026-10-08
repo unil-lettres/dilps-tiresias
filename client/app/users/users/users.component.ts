@@ -60,7 +60,7 @@ export class UsersComponent extends AbstractList<UserService> {
     public override displayedColumns = ['login', 'name', 'email', 'role', 'type', 'activeUntil'];
 
     public constructor() {
-        super(inject(UserService), UserComponent);
+        super(inject(UserService), UserComponent, 'user');
     }
 
     protected isLegacyUser(user: UsersQuery['users']['items'][0]): boolean {

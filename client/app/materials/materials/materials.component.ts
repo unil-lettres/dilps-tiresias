@@ -63,6 +63,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
 })
 export class MaterialsComponent extends AbstractNavigableList<MaterialService> {
     public constructor() {
-        super(inject(MaterialService), MaterialComponent);
+        super(inject(MaterialService), MaterialComponent, 'material');
     }
 }

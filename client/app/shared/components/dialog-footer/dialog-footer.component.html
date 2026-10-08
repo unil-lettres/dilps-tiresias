@@ -13,7 +13,7 @@
 
     <div class="nat-expand"></div>
     <button mat-dialog-close matButton>
-        {{ readOnly() ? 'Fermer' : 'Annuler' }}
+        {{ cannotChange() ? 'Fermer' : 'Annuler' }}
     </button>
     @if (!readOnly()) {
         @if (item.id && item.permissions?.update) {

@@ -1,8 +1,17 @@
-<h2 mat-dialog-title>{{ isUpdatePage() ? "Modifier l'actualité" : 'Créer une actualité' }}</h2>
+@if (!isUpdatePage()) {
+    <h2 mat-dialog-title>Créer une actualité</h2>
+} @else if (!data.item.permissions.update) {
+    <h2 mat-dialog-title>Détails de l'actualité</h2>
+} @else {
+    <h2 mat-dialog-title>Modifier l'actualité</h2>
+}
 
 <mat-dialog-content>
     <div class="nat-padding-vertical nat-vertical">
-        <mat-checkbox class="nat-margin-bottom" [(ngModel)]="data.item.isActive"
+        <mat-checkbox
+            class="nat-margin-bottom"
+            [disabled]="isUpdatePage() && !data.item.permissions.update"
+            [(ngModel)]="data.item.isActive"
             >Actif (sera visible sur la page de connexion)</mat-checkbox
         >
 

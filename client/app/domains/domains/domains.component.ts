@@ -63,6 +63,6 @@ import {NavigableBreadcrumbComponent} from '../../shared/components/navigable-br
 })
 export class DomainsComponent extends AbstractNavigableList<DomainService> {
     public constructor() {
-        super(inject(DomainService), DomainComponent);
+        super(inject(DomainService), DomainComponent, 'domain');
     }
 }
