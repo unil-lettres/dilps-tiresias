@@ -296,9 +296,6 @@ export async function deleteCollections(session: Session, ids: string[]): Promis
 
 /**
  * Show only the cards of the given search on the home page, by opening its URL, like a link to a search
- *
- * Typing the search instead would hit a bug of the gallery that sometimes mixes the results of two searches, see
- * search.spec.ts, which is not what most tests are about.
  */
 export async function openSearch(page: Page, term: string): Promise<void> {
     const selections = [[{f: 'search', c: {like: {value: term}}}]];
@@ -315,10 +312,7 @@ export function searchInput(page: Page): Locator {
 }
 
 /**
- * Search the cards, each term being typed separately, like a human would do
- *
- * Wait for the results of each term, because the gallery mixes the results of searches that follow each other too
- * quickly (see search.spec.ts)
+ * Search the cards, each term being typed separately, and its results awaited, like a human would do
  */
 export async function search(page: Page, ...terms: string[]): Promise<void> {
     for (const term of terms) {

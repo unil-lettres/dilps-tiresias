@@ -20,6 +20,7 @@ import {
     type Item,
     LabelVisibility,
     type ModelAttributes,
+    type Natural,
     type NaturalGalleryOptions,
     type VisibleCollectionChange,
 } from '@ecodev/natural-gallery-js';
@@ -242,22 +243,21 @@ export class ViewGridComponent implements OnInit, ViewInterface {
             const offset = this.paginationOffset();
             if (offset === null) {
                 this.isClearing.set(true);
-                const gallery = this.gallery();
-                if (gallery) {
-                    gallery.gallery.then(g => {
-                        if (g.collection.length > 0) {
-                            this.currentHasHistoricImages = false;
-                            g.clear();
-
-                            // Scroll to top and prevent restoration
-                            this.scrollable().scrollTop = 0;
-                            this.preventScrollRestoration = true;
-                            this.scrollTop = 0;
-                        }
-                    });
-                }
+                this.gallery()?.gallery.then(gallery => this.clear(gallery));
             }
         });
+    }
+
+    private clear(gallery: Natural<GalleryModel>): void {
+        if (gallery.collection.length > 0) {
+            this.currentHasHistoricImages = false;
+            gallery.clear();
+
+            // Scroll to top and prevent restoration
+            this.scrollable().scrollTop = 0;
+            this.preventScrollRestoration = true;
+            this.scrollTop = 0;
+        }
     }
 
     public ngOnInit(): void {
@@ -272,6 +272,16 @@ export class ViewGridComponent implements OnInit, ViewInterface {
                 this.isClearing.set(false);
 
                 gallery.gallery.then(gallery => {
+                    // Results without offset start another list, eg: of another search. The gallery is normally
+                    // cleared as soon as the pagination is reset, see constructor, but not if it was reset already,
+                    // eg: when the new search came before the gallery asked for more. Then clear it now, and it
+                    // will ask for its first items itself, with the offset 0
+                    if (result.offset === null && gallery.collection.length > 0) {
+                        this.clear(gallery);
+
+                        return;
+                    }
+
                     if (result.items.length > 0) {
                         const hasHistoric = result.items.some(card => card.showHistoric);
                         if (hasHistoric) {

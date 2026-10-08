@@ -59,12 +59,8 @@ test('student can combine, remove and clear search terms', async ({page, cleanup
     await expect.poll(() => galleryTitles(page).count()).toBeGreaterThan(2);
 });
 
-// Known bug: when a search follows another one shortly after its results are shown, eg: right after the page loaded,
-// or after cancelling the search, the gallery sometimes keeps the previous results and adds the new ones (the
-// counter shows "3 / 1"). The gallery is only cleared when the pagination offset changes to null, and it may still be
-// null then. Remove `test.fail()` once fixed.
+// The gallery must not mix the results of two searches that follow each other quickly, even before the page is loaded
 test('student can add a search term right after the first results are shown', async ({page, cleanup}) => {
-    test.fail();
     await login(page, 'student');
     const tag = crypto.randomUUID();
     const [alpha, beta] = await createTwoCards(page, tag);
@@ -102,8 +98,7 @@ test('student can search with special characters, as text or as institution', as
     await search(page, 'notre+dame*de-paris', tag);
     await expect(galleryTitles(page)).toHaveText([card.name]);
 
-    // From a new page, because the gallery may mix the results of two searches, see above
-    await openHome(page);
+    await clearSearch(page);
     await searchInput(page).click();
     await page.locator('.natural-dropdown-container').getByText('Institution', {exact: true}).click();
     await page.keyboard.type('notre-');
