@@ -117,10 +117,7 @@ test('student can export the selected cards as zip', async ({page, cleanup}) => 
     expect((await download).suggestedFilename()).toMatch(/\.zip$/);
 });
 
-// Known bug: "Exporter en PowerPoint" both opens the menu of themes and exports with the dark theme, so choosing a
-// theme exports a second time. Remove `test.fail()` once fixed.
 test('student can export the selected cards as PowerPoint, with the chosen theme', async ({page, cleanup}) => {
-    test.fail();
     await login(page, 'student');
     const tag = crypto.randomUUID();
     const cards = await createCards(page, cleanup, [`E2E ${tag} 1`, `E2E ${tag} 2`]);

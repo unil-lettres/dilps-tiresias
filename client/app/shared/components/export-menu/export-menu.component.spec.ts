@@ -140,9 +140,7 @@ describe('ExportMenuComponent', () => {
         expect(menuItem('Exporter la fiche').disabled).toBe(false);
     });
 
-    // Known bug: "Exporter en PowerPoint" both opens the menu of the themes and exports in the dark theme, so that
-    // choosing a theme then exports a second time. Replace `it.fails` by `it` once fixed.
-    it.fails('exports in PowerPoint only once the theme is chosen', async () => {
+    it('exports in PowerPoint only once the theme is chosen', async () => {
         setUp([card1]);
         await openMenu();
 
