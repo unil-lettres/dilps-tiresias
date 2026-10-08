@@ -115,12 +115,12 @@ export const routes: Routes = [
             {
                 path: 'news',
                 component: NewsesComponent,
-                canActivate: [canActivateAuth],
+                canActivate: [canActivateAuthAdmin],
             },
             {
                 path: 'statistic',
                 component: StatisticsComponent,
-                canActivate: [canActivateAuth],
+                canActivate: [canActivateAuthAdmin],
             },
             {
                 path: 'notification',
