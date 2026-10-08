@@ -277,8 +277,8 @@ export class ThesaurusComponent<
             const nbTotal = data.length;
             const nbListed = Math.min(data.length, this.pageSize);
             this.moreNbItems = nbTotal - nbListed;
-            this.suggestions = data.items.filter((item: ThesaurusModel) =>
-                this.items.findIndex(term => term.name === item.name),
+            this.suggestions = data.items.filter(
+                (item: ThesaurusModel) => !this.items.some(term => term.name === item.name),
             );
         });
     }
