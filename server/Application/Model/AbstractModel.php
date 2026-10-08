@@ -39,12 +39,20 @@ abstract class AbstractModel implements HasOwner, Model
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?Chronos $updateDate = null;
 
+    /**
+     * Only to know who created the object, so it may be forgotten when the user is deleted.
+     */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $creator = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $owner = null;
 
+    /**
+     * Only to know who updated the object last, so it may be forgotten when the user is deleted.
+     */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: User::class)]
     private ?User $updater = null;
 

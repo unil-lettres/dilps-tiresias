@@ -18,6 +18,20 @@ class UserRepositoryTest extends AbstractRepository
         $this->repository = _em()->getRepository(User::class);
     }
 
+    public function testDeletedUserIsForgottenAsCreatorAndUpdater(): void
+    {
+        $connection = _em()->getConnection();
+        $connection->executeStatement("INSERT INTO `user` (id, login, email, password, role, site) VALUES (1999, 'deleted', 'deleted@example.com', '', 'student', 'dilps')");
+        $connection->executeStatement("INSERT INTO log (creator_id, level, message) VALUES (1999, 6, 'login')");
+        $connection->executeStatement('UPDATE card SET updater_id = 1999 WHERE id = 6000');
+
+        $connection->executeStatement('DELETE FROM `user` WHERE id = 1999');
+
+        self::assertSame(0, (int) $connection->fetchOne('SELECT COUNT(*) FROM log WHERE creator_id = 1999'));
+        self::assertNull($connection->fetchOne('SELECT updater_id FROM card WHERE id = 6000'));
+        self::assertNotNull($connection->fetchOne('SELECT owner_id FROM card WHERE id = 6000'), 'owner is kept');
+    }
+
     public function testGetLoginPassword(): void
     {
         self::assertNull($this->repository->getLoginPassword('foo', 'bar', Site::Dilps), 'wrong user');

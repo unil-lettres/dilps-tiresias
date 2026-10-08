@@ -73,22 +73,16 @@ test('administrator can create a user, edit and delete them', async ({page, clea
     expect(await findIds(page, 'User', name)).toEqual([]);
 });
 
-// Known bug: a user cannot be deleted once they logged in, because the log of their login references them, and the
-// server answers "Internal server error". The same goes for any other object that they created. A fixed login is used,
-// so that at most one such user is left behind until fixed. Remove `test.fail()` once fixed.
 test('administrator can delete a user who logged in', async ({page, browser, cleanup}) => {
-    test.fail();
     await login(page, 'administrator');
-    const name = 'e2e-logged-in';
+    const viewer = await getViewer(page);
+    const name = `e2e-${crypto.randomUUID()}`;
     cleanup.add(async () => deleteObjects(page, 'User', await findIds(page, 'User', name)));
+    await graphql(page, 'mutation ($input: UserInput!) { createUser(input: $input) { id } }', {
+        input: {login: name, name, email: `${name}@example.com`, password: name, site: viewer.site},
+    });
 
-    if (!(await findIds(page, 'User', name)).length) {
-        const viewer = await getViewer(page);
-        await graphql(page, 'mutation ($input: UserInput!) { createUser(input: $input) { id } }', {
-            input: {login: name, name, email: `${name}@example.com`, password: name, site: viewer.site},
-        });
-    }
-
+    // Logging in leaves a log of it, that must not prevent deleting the user
     const user = await browser.newPage();
     try {
         await loginAs(user, name, name);
@@ -103,6 +97,7 @@ test('administrator can delete a user who logged in', async ({page, browser, cle
     await dialog.getByRole('button', {name: 'Supprimer'}).click();
     await confirmDeletion(page, 'Cette action est irréversible');
     await expect(rows).toHaveCount(0);
+    expect(await findIds(page, 'User', name)).toEqual([]);
 });
 
 test('administrator can choose the role of a new user', async ({page, cleanup}) => {
