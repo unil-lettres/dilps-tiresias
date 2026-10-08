@@ -127,4 +127,41 @@ describe('Quizz tester', () => {
             dating: true,
         });
     });
+
+    function cardDated(from: string, to: string, name = 'balloon'): CardQuery['card'] {
+        return {
+            name,
+            artists: [],
+            institution: null,
+            dating: 'XVIIe siècle',
+            datings: [{from: `${from}-01-01T00:00:00+00:00`, to: `${to}-12-31T00:00:00+00:00`}],
+        } as unknown as CardQuery['card'];
+    }
+
+    it('accepts dates within a margin that depends on how precise the dating is', () => {
+        const exact = cardDated('1600', '1600');
+        expect(test('1575', exact).dating, '25 years before an exact dating').toBe(true);
+        expect(test('1574', exact).dating).toBe(false);
+        expect(test('1625', exact).dating, '25 years after an exact dating').toBe(true);
+        expect(test('1626', exact).dating).toBe(false);
+
+        const short = cardDated('1600', '1610');
+        expect(test('1585', short).dating, '15 years before a short span').toBe(true);
+        expect(test('1584', short).dating).toBe(false);
+        expect(test('1625', short).dating, '15 years after a short span').toBe(true);
+        expect(test('1626', short).dating).toBe(false);
+
+        const long = cardDated('1600', '1700');
+        expect(test('1600', long).dating, 'no margin for a long span').toBe(true);
+        expect(test('1599', long).dating).toBe(false);
+        expect(test('1701', long).dating).toBe(false);
+    });
+
+    it('ignores the common names of places', () => {
+        const card = cardDated('1600', '1600', 'Église Saint-Pierre');
+
+        expect(test('église', card).name).toBe(false);
+        expect(test('musée chapelle', card).name).toBe(false);
+        expect(test('église pierre', card).name).toBe(true);
+    });
 });

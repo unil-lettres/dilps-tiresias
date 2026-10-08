@@ -70,7 +70,7 @@ export const cacheConfig: InMemoryCacheConfig = {
  * @param message The original error message
  * @returns Translated error message
  */
-function translateTechnicalError(message: string): string {
+export function translateTechnicalError(message: string): string {
     const notFound = /^Entity not found for class `Application\\Model\\(\w+)`/.exec(message);
     if (notFound) {
         const object =
@@ -163,7 +163,7 @@ function createErrorHandler(
  *  - a 500 error about max_execution_time
  *  - a 502 error when uploading files
  */
-function serverErrorToUserFriendlyError(
+export function serverErrorToUserFriendlyError(
     error: ErrorLike,
     variables: OperationVariables,
 ): ErrorLike | CombinedGraphQLErrors {
