@@ -83,17 +83,15 @@ describe('AppRouteReuseStrategy', () => {
         return ListStubComponent.instances.at(-1) === list && list.routeReuseStatus === RouteReuseStatus.retrieving;
     }
 
-    for (const url of ['/home', '/collection/2000', '/my-collection/my-cards', '/my-collection/unclassified']) {
+    for (const url of [
+        '/home',
+        '/collection/2000',
+        '/source/2000',
+        '/my-collection/my-cards',
+        '/my-collection/unclassified',
+        '/my-collection/2000',
+    ]) {
         it(`reuses the list of ${url} when coming back from a card`, async () => {
-            expect(await isReusedAfterCard(url)).toBe(true);
-        });
-    }
-
-    // Known bug: the routes to reuse miss "/source/:collectionId", and have "/my-collection/my-collection" instead of
-    // "/my-collection/:collectionId", so the lists of a fonds, and of a collection in "Mes collections", are created
-    // again when coming back from a card, and lose their scroll position. Replace `it.fails` by `it` once fixed.
-    for (const url of ['/source/2000', '/my-collection/2000']) {
-        it.fails(`reuses the list of ${url} when coming back from a card`, async () => {
             expect(await isReusedAfterCard(url)).toBe(true);
         });
     }

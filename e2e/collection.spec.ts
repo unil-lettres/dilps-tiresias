@@ -1,8 +1,10 @@
 import {type Locator, type Page} from '@playwright/test';
 import {expect, test} from './fixtures';
 import {
+    createCard,
     createCollection,
     deleteCollections,
+    deleteObjects,
     findCollections,
     graphql,
     login,
@@ -245,4 +247,36 @@ test('student can delete their collection', async ({page, cleanup}) => {
 
     expect(await findCollections(page, collection.name)).toEqual([]);
     await expect(collectionItem(page, collection.name)).toHaveCount(0);
+});
+
+test('administrator comes back from a card to the same list, in each kind of collection', async ({page, cleanup}) => {
+    await login(page, 'administrator');
+    const card = await createCard(page);
+    const collection = await createCollection(page, 'E2E list');
+    const fonds = await createCollection(page, 'E2E fonds', {isSource: true});
+    cleanup.add(async () => {
+        await deleteObjects(page, 'Card', [card.id]);
+        await deleteCollections(page, [collection.id, fonds.id]);
+    });
+    for (const {id} of [collection, fonds]) {
+        await graphql(
+            page,
+            'mutation ($card: CardID!, $collection: CollectionID!) { linkCardCollection(card: $card, collection: $collection) { id } }',
+            {card: card.id, collection: id},
+        );
+    }
+
+    for (const url of ['home', 'my-collection/my-cards', `my-collection/${collection.id}`, `source/${fonds.id}`]) {
+        await page.goto(url);
+        await page.waitForLoadState('networkidle');
+
+        // Mark the list, to know whether it is kept, with its scroll position, or created again
+        await page.locator('app-list').evaluate(element => ((element as HTMLElement).dataset.marked = 'yes'));
+        await page.locator(`natural-gallery figure:has(img[src^="/api/image/${card.id}/"]) button.activation`).click();
+        await expect(page).toHaveURL(new RegExp(`/card/${card.id}$`));
+        await page.waitForLoadState('networkidle');
+
+        await page.goBack();
+        await expect(page.locator('app-list'), url).toHaveAttribute('data-marked', 'yes');
+    }
 });
