@@ -53,12 +53,13 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
         Record<string, Map<string, DetachedRouteHandle & {componentRef?: ComponentRef<unknown>}>>
     > = {
         '/home': new Map(),
+        '/collection': new Map(),
         '/collection/:collectionId': new Map(),
         '/my-collection/unclassified': new Map(),
         '/my-collection/my-cards': new Map(),
-        '/my-collection/my-collection': new Map(),
+        '/my-collection/:collectionId': new Map(),
         '/source': new Map(),
-        '/collection': new Map(),
+        '/source/:collectionId': new Map(),
     };
 
     /**
