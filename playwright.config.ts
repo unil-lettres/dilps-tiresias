@@ -27,7 +27,8 @@ const config: PlaywrightTestConfig = {
     },
     projects: [
         {name: 'dilps', testIgnore: 'tiresias.spec.ts', use: {baseURL: dilps}},
-        {name: 'tiresias', testMatch: 'tiresias.spec.ts', use: {baseURL: tiresias}},
+        // Also run the specs that are about both sites
+        {name: 'tiresias', testMatch: ['tiresias.spec.ts', 'dialogs.spec.ts'], use: {baseURL: tiresias}},
     ],
 };
 

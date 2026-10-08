@@ -51,6 +51,6 @@ import {MatToolbar} from '@angular/material/toolbar';
 })
 export class DocumentTypesComponent extends AbstractList<DocumentTypeService> {
     public constructor() {
-        super(inject(DocumentTypeService), DocumentTypeComponent);
+        super(inject(DocumentTypeService), DocumentTypeComponent, 'documentType');
     }
 }

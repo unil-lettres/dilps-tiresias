@@ -8,7 +8,9 @@
         [selections]="naturalSearchSelections"
         (selectionChange)="search($event)"
     />
-    <app-create-button label="Créer un matériau" (click)="add()" />
+    @if (canCreate()) {
+        <app-create-button label="Créer un matériau" (click)="add()" />
+    }
 </mat-toolbar>
 
 @if (dataSource) {

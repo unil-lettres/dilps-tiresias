@@ -65,6 +65,6 @@ export class PeriodsComponent extends AbstractNavigableList<PeriodService> {
     public override displayedColumns = ['navigation', 'name', 'from', 'to', 'usageCount'];
 
     public constructor() {
-        super(inject(PeriodService), PeriodComponent);
+        super(inject(PeriodService), PeriodComponent, 'period');
     }
 }
