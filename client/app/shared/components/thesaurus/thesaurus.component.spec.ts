@@ -125,9 +125,7 @@ describe('ThesaurusComponent', () => {
         expect(create(null, {readonly: true}).getLabel(period)).toBe('Empire');
     });
 
-    // Known bug: the suggestions should exclude the terms already chosen, but the filter compares the position of
-    // the term with zero, so only the first chosen term is excluded. Replace `it.fails` by `it` once fixed.
-    it.fails('does not suggest the terms already chosen', () => {
+    it('does not suggest the terms already chosen', () => {
         suggestions = [
             {id: '1', name: 'First'},
             {id: '2', name: 'Second'},
