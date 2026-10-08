@@ -132,6 +132,7 @@ const lists: List[] = [
         update: "Modifier l'actualité",
         details: "Détails de l'actualité",
         items: {Dilps: 'Test news 10002', Tiresias: 'Test news 10000'},
+        adminOnly: true,
     },
     {
         path: 'user',

@@ -200,3 +200,17 @@ test('administrator can see the statistics of visits, cards and users', async ({
         await expect(panel.locator('table[mat-table]').first()).toBeVisible();
     }
 });
+
+test('only administrators can open the pages of the administration', async ({page}) => {
+    await login(page, 'senior');
+
+    for (const [path, heading] of [
+        ['user', 'Utilisateurs'],
+        ['news', 'Actualités'],
+        ['statistic', 'Statistiques'],
+    ]) {
+        await page.goto(path);
+        await page.waitForLoadState('networkidle');
+        await expect(page.getByRole('heading', {name: heading}), path).toHaveCount(0);
+    }
+});
