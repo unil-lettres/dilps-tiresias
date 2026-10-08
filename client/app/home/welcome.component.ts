@@ -1,5 +1,5 @@
 import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
-import {SITE} from '../app.config';
+import {SITE} from '../shared/config/site';
 import {Site} from '../shared/generated-types';
 import {MatButton} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';

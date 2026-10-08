@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {UserService} from '../../users/services/user.service';
 import {type Observable} from 'rxjs';
 import {Site} from '../generated-types';
-import {SITE} from '../../app.config';
+import {SITE} from '../config/site';
 
 /**
  * App need user to be connected or explicit action to access the inner content. Login service provide anonymous user in second case

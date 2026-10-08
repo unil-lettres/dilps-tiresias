@@ -1,6 +1,6 @@
-import {type ApplicationConfig, ErrorHandler, inject, InjectionToken, provideAppInitializer} from '@angular/core';
+import {type ApplicationConfig, ErrorHandler, inject, provideAppInitializer} from '@angular/core';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material/dialog';
-import {type Site} from './shared/generated-types';
+import {SITE} from './shared/config/site';
 import {quillConfig} from './shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
 import {routes} from './app.routes';
@@ -21,8 +21,6 @@ import {MAT_TABS_CONFIG, type MatTabsConfig} from '@angular/material/tabs';
 import {provideQuillConfig} from 'ngx-quill';
 import {CustomPaginatorIntl} from './shared/services/custom-paginator-intl.service';
 import {provideHighcharts} from 'highcharts-angular';
-
-export const SITE = new InjectionToken<Site>('Current site');
 
 const matTooltipCustomConfig: MatTooltipDefaultOptions = {
     showDelay: 5,

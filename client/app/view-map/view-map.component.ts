@@ -1,7 +1,7 @@
 import {Component, inject, NgZone, viewChild, ChangeDetectionStrategy} from '@angular/core';
 import {type CardsQuery, Precision, Site} from '../shared/generated-types';
 import {CardService} from '../card/services/card.service';
-import {SITE} from '../app.config';
+import {SITE} from '../shared/config/site';
 import {MapApiService} from './map-api.service';
 import {groupByLocation, type Location} from './view-map.utils';
 import {GoogleMap, MapInfoWindow, MapMarker} from '@angular/google-maps';

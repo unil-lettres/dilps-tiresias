@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {SITE} from '../../app.config';
+import {SITE} from '../config/site';
 import {Site, UserType} from '../generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../testing/MockApolloProvider';
 import {TypePipe} from './type.pipe';

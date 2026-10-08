@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {Apollo} from 'apollo-angular';
 import {of, throwError} from 'rxjs';
-import {SITE} from '../../app.config';
+import {SITE} from '../../shared/config/site';
 import {Site} from '../../shared/generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';
 import {StatisticService} from './statistic.service';

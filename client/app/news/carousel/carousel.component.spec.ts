@@ -1,5 +1,5 @@
 import {type ComponentFixture, TestBed} from '@angular/core/testing';
-import {SITE} from '../../app.config';
+import {SITE} from '../../shared/config/site';
 import {Site} from '../../shared/generated-types';
 import {MOCK_APOLLO_PROVIDER} from '../../shared/testing/MockApolloProvider';
 import {CarouselComponent} from './carousel.component';

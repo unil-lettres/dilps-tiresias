@@ -13,7 +13,7 @@ import {
     type ViewerQuery,
 } from '../../shared/generated-types';
 import {CollectionComponent, unsubscribed} from '../collection/collection.component';
-import {SITE} from '../../app.config';
+import {SITE} from '../../shared/config/site';
 import {CollectionService} from '../services/collection.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';

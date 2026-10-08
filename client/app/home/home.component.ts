@@ -30,7 +30,7 @@ import {
 import {EMPTY, type Observable, of} from 'rxjs';
 import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
 import {type AppRouteReuseStrategy} from '../app-route-reuse-strategy';
-import {SITE} from '../app.config';
+import {SITE} from '../shared/config/site';
 import {CardService} from '../card/services/card.service';
 import {AlertService} from '../shared/components/alert/alert.service';
 import {

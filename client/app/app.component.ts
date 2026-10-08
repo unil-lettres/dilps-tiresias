@@ -3,7 +3,7 @@ import {Title} from '@angular/platform-browser';
 import {RouterOutlet} from '@angular/router';
 import {NaturalThemeService, NetworkActivityService} from '@ecodev/natural';
 import {NgProgressbar, NgProgressRef} from 'ngx-progressbar';
-import {SITE} from './app.config';
+import {SITE} from './shared/config/site';
 import {BootLoaderComponent} from './shared/components/boot-loader/boot-loader.component';
 import {badgeFavicon, environmentBadge} from './shared/config/environment-badge';
 import {Site} from './shared/generated-types';

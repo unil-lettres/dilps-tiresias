@@ -1,5 +1,5 @@
 import {Component, inject, input, ChangeDetectionStrategy} from '@angular/core';
-import {SITE} from '../../../app.config';
+import {SITE} from '../../config/site';
 import {Site} from '../../generated-types';
 
 @Component({

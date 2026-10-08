@@ -8,7 +8,7 @@ import {
 import {type DocumentNode} from 'graphql';
 import {type Observable, of} from 'rxjs';
 import {inject} from '@angular/core';
-import {SITE} from '../../app.config';
+import {SITE} from '../config/site';
 import {type UsersQueryVariables} from '../generated-types';
 
 export class AbstractContextualizedService<

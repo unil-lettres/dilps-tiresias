@@ -6,7 +6,7 @@ import {type Subscription} from 'rxjs';
 import {UserService} from '../users/services/user.service';
 import {TermsAgreementComponent} from './terms-agreement.component';
 import {finalize} from 'rxjs/operators';
-import {SITE} from '../app.config';
+import {SITE} from '../shared/config/site';
 import {Site, type ViewerQuery} from '../shared/generated-types';
 import {formatIsoDateTime} from '@ecodev/natural';
 import {CarouselComponent} from '../news/carousel/carousel.component';

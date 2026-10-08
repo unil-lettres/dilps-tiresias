@@ -30,7 +30,7 @@ import {
     Site,
 } from '../../generated-types';
 import {AddressService} from './address.service';
-import {SITE} from '../../../app.config';
+import {SITE} from '../../config/site';
 import {MapApiService} from '../../../view-map/map-api.service';
 import {GoogleMap, MapMarker} from '@angular/google-maps';
 import {MatIcon} from '@angular/material/icon';

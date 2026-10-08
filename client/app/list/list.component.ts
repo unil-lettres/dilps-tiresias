@@ -36,7 +36,7 @@ import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
 import {concatMap, finalize, from, type Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
 import {type ReusableRouteStatus, RouteReuseStatus} from '../app-route-reuse-strategy';
-import {SITE} from '../app.config';
+import {SITE} from '../shared/config/site';
 import {CardService} from '../card/services/card.service';
 import {ChangeService} from '../changes/services/change.service';
 import {CollectionService} from '../collections/services/collection.service';
