@@ -47,6 +47,16 @@ export const adminFacets: NaturalSearchFacets = [
     } satisfies DropdownFacet<TypeSelectConfiguration>,
 ];
 
+/**
+ * Add the facets reserved to administrators, before the flag to include the other site, if not added yet
+ */
+export function addAdminFacets(facets: NaturalSearchFacets, site: Site): void {
+    if (!facets.includes(adminFacets[0])) {
+        const index = facets.length - (site === Site.Dilps ? 1 : 0);
+        facets.splice(index, 0, ...adminFacets);
+    }
+}
+
 export function dilps(): NaturalSearchFacets {
     assertInInjectionContext(dilps);
 

@@ -40,6 +40,26 @@ export type ContentChange = {
 
 type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
 
+/**
+ * The title of a card in the gallery, with its code and its artists if any
+ */
+export function galleryTitle(card: CardsQuery['cards']['items'][0]): string {
+    let title = card.name ? card.name : null;
+    const artists = card.artists.map(a => a.name).join('<br/>');
+
+    if (artists && title) {
+        title = '[ ' + artists + ' ] ' + title;
+    } else if (artists && !title) {
+        title = artists;
+    }
+
+    if (card.code) {
+        title = '[ ' + card.code + ' ] ' + title;
+    }
+
+    return title ? nonBreakingFrenchSpaces(title) : 'Éditer la fiche';
+}
+
 @Component({
     selector: 'app-view-grid',
     imports: [NaturalGalleryComponent, HistoricIconComponent, MatProgressSpinner],
@@ -344,21 +364,8 @@ export class ViewGridComponent implements OnInit, ViewInterface {
                 enlargedHeight: cardWithBig.height,
             };
 
-            let title = card.name ? card.name : null;
-            const artists = card.artists.map(a => a.name).join('<br/>');
-
-            if (artists && title) {
-                title = '[ ' + artists + ' ] ' + title;
-            } else if (artists && !title) {
-                title = artists;
-            }
-
-            if (card.code) {
-                title = '[ ' + card.code + ' ] ' + title;
-            }
-
             const fields: any = {
-                title: title ? nonBreakingFrenchSpaces(title) : 'Éditer la fiche',
+                title: galleryTitle(card),
             };
 
             return {

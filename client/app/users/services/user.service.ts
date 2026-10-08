@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {fromEvent, type Observable, Subject, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {
+    type CardQuery,
     type CardsQuery,
     CardVisibility,
     type CreateUser,
@@ -68,6 +69,20 @@ export class UserService extends AbstractContextualizedService<
     public constructor() {
         super('user', userQuery, usersQuery, createUser, updateUser, deleteUsers);
         this.keepViewerSyncedAcrossBrowserTabs();
+    }
+
+    /**
+     * Whether the user can submit their own private card to be added to the public cards
+     */
+    public static canSuggestCreate(user: ViewerQuery['viewer'] | null, card: CardQuery['card'] | null): boolean {
+        return (
+            !!user &&
+            !!card?.owner &&
+            card.owner.id === user.id &&
+            !!card.creator &&
+            card.creator.id === user.id &&
+            card.visibility === CardVisibility.Private
+        );
     }
 
     public static canSuggestUpdate(

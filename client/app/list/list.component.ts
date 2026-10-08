@@ -28,10 +28,8 @@ import {
     onHistoryEvent,
     type PaginationInput,
     type Sorting,
-    type WithId,
 } from '@ecodev/natural';
-import {defaults, isObject} from 'es-toolkit/compat';
-import {clone, isString, merge, pick, pickBy} from 'es-toolkit';
+import {merge, pick} from 'es-toolkit';
 
 import {concatMap, finalize, from, type Observable, of} from 'rxjs';
 import {filter, tap} from 'rxjs/operators';
@@ -53,7 +51,7 @@ import {ExportMenuComponent} from '../shared/components/export-menu/export-menu.
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {LogoComponent} from '../shared/components/logo/logo.component';
 import {MassEditComponent} from '../shared/components/mass-edit/mass-edit.component';
-import {type ThesaurusModel} from '../shared/components/thesaurus/thesaurus.component';
+import {applyChanges, canMassEdit, getFilledFields} from '../shared/components/mass-edit/mass-edit.utils';
 import {HideTooltipDirective} from '../shared/directives/hide-tooltip.directive';
 import {
     type CardFilter,
@@ -67,7 +65,7 @@ import {
     UserRole,
     type ViewerQuery,
 } from '../shared/generated-types';
-import {adminFacets, dilps, tiresias} from '../shared/natural-search-facets';
+import {addAdminFacets, adminFacets, dilps, tiresias} from '../shared/natural-search-facets';
 import {shuffleArray} from '../shared/services/utility';
 import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
@@ -76,27 +74,6 @@ import {ViewListComponent} from '../view-list/view-list.component';
 import {isLocated, type Location, ViewMapComponent, type ViewMapData} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
 import {fromResize} from '../shared/utils/resize.utils';
-
-function applyChanges(
-    destination: CardsQuery['cards']['items'][0],
-    changes: Partial<CardInput>,
-): WithId<Partial<CardInput>> {
-    const result = {
-        id: destination.id,
-        ...clone(changes),
-    };
-    defaults(result, destination);
-    if (result.artists) {
-        result.artists = result.artists.map((a: string | ThesaurusModel) => (typeof a === 'string' ? a : a.name));
-    }
-
-    if (result.institution) {
-        result.institution =
-            typeof result.institution === 'string' ? result.institution : (result.institution as ThesaurusModel).name;
-    }
-
-    return result;
-}
 
 export type ViewInterface = {
     unselectAll: () => void;
@@ -642,17 +619,7 @@ export class ListComponent
                 const model: CardInput = result.model;
                 const createSuggestions = result.createSuggestions;
 
-                /**
-                 * Pick attributes with values that are objects, numbers, non-empty array, non-empty strings
-                 */
-                const changeAttributes = pickBy(model, value => {
-                    return (
-                        (isObject(value) && !Array.isArray(value) && !isString(value)) ||
-                        Number.isFinite(value) ||
-                        (isString(value) && value !== '') ||
-                        (Array.isArray(value) && value.length > 0)
-                    );
-                });
+                const changeAttributes = getFilledFields(model);
 
                 const observables: Observable<unknown>[] = [];
                 for (const s of selection) {
@@ -846,10 +813,7 @@ export class ListComponent
     }
 
     protected canMassEdit(): boolean {
-        return (
-            !!this.user?.role &&
-            [UserRole.administrator, UserRole.junior, UserRole.senior, UserRole.major].includes(this.user.role)
-        );
+        return canMassEdit(this.user);
     }
 
     /**
@@ -866,13 +830,7 @@ export class ListComponent
         return this.gridComponent() ?? this.listComponent();
     }
 
-    /**
-     * Push admin config, but only if it does not already exist
-     */
     private pushAdminConfig(): void {
-        if (!this.naturalSearchFacets.includes(adminFacets[0])) {
-            const index = this.naturalSearchFacets.length - (this.site === Site.Dilps ? 1 : 0);
-            this.naturalSearchFacets.splice(index, 0, ...adminFacets);
-        }
+        addAdminFacets(this.naturalSearchFacets, this.site);
     }
 }

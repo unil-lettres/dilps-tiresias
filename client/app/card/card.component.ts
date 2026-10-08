@@ -105,16 +105,7 @@ import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
-
-export type CardInputWithId = CardInput & {id?: string};
-
-export function cardToCardInput(fetchedModel: CardQuery['card']): CardInputWithId {
-    return {
-        ...fetchedModel,
-        artists: fetchedModel.artists.map(a => a.name),
-        institution: fetchedModel.institution?.name ?? null,
-    };
-}
+import {cardLabel, type CardInputWithId, cardToCardInput, suggestCreationLabel} from './card.utils';
 
 export type VisibilityConfig<V> = {
     value: V;
@@ -962,23 +953,11 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     protected getSuggestAddLabel(): string {
-        if (this.user?.role === UserRole.junior || this.user?.role === UserRole.senior) {
-            return 'Soumettre';
-        }
-
-        return "Suggérer l'ajout";
+        return suggestCreationLabel(this.user);
     }
 
     protected canSuggestCreate(): boolean {
-        return (
-            !!this.user &&
-            !!this.fetchedModel &&
-            !!this.fetchedModel.owner &&
-            this.fetchedModel.owner.id === this.user.id &&
-            !!this.fetchedModel.creator &&
-            this.fetchedModel.creator.id === this.user.id &&
-            this.fetchedModel.visibility === CardVisibility.Private
-        );
+        return UserService.canSuggestCreate(this.user, this.fetchedModel);
     }
 
     protected canSuggestUpdate(): boolean {
@@ -989,18 +968,7 @@ export class CardComponent implements OnInit, OnChanges {
         return this.canSuggestUpdate();
     }
 
-    protected displayWith(item: CardsQuery['cards']['items'][0] | null): string {
-        if (!item) {
-            return '';
-        }
-
-        // Turn HTML to plain text
-        const temp = document.createElement('div');
-        temp.innerHTML = item.name;
-        const namePlainText = temp.textContent || temp.innerText || '';
-
-        return namePlainText + ' (' + item.id + ')';
-    }
+    protected readonly displayWith = cardLabel;
 
     protected useSuggestedCode(event: Event): void {
         event.preventDefault();
