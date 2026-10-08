@@ -105,6 +105,7 @@ import {TagService} from '../tags/services/tag.service';
 import {TagComponent} from '../tags/tag/tag.component';
 import {UserService} from '../users/services/user.service';
 import {CardService} from './services/card.service';
+import {suggestCode} from './card.utils';
 
 export type CardInputWithId = CardInput & {id?: string};
 
@@ -783,7 +784,7 @@ export class CardComponent implements OnInit, OnChanges {
 
         if (this.fetchedModel.collections.length === 1 && this.fetchedModel.id) {
             const idForCode = this.fetchedModel.legacyId ?? this.fetchedModel.id;
-            this.suggestedCode = this.fetchedModel.collections[0].name + '-' + idForCode;
+            this.suggestedCode = suggestCode(this.fetchedModel.collections[0].name, String(idForCode));
         } else {
             this.suggestedCode = null;
         }

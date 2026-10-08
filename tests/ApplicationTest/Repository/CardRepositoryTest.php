@@ -6,6 +6,7 @@ namespace ApplicationTest\Repository;
 
 use Application\Enum\Site;
 use Application\Model\Card;
+use Application\Model\Collection;
 use Application\Model\Export;
 use Application\Repository\CardRepository;
 
@@ -34,6 +35,19 @@ class CardRepositoryTest extends AbstractRepository
         $this->getEntityManager()->remove($card);
         $this->getEntityManager()->flush();
         self::assertFileDoesNotExist($card->getPath(), 'test file must have been deleted when record was deleted');
+    }
+
+    public function testGetNextCodeAvailableFitsInTheColumn(): void
+    {
+        $short = new Collection();
+        $short->setName('Rome');
+        self::assertMatchesRegularExpression('~^Rome-\\d+$~', $this->repository->getNextCodeAvailable($short));
+
+        $long = new Collection();
+        $long->setName('Sculptures romaines du IIe siècle après J.-C.');
+        $code = $this->repository->getNextCodeAvailable($long);
+        self::assertMatchesRegularExpression('~^Sculptures romaines du[^-]*-\\d+$~', $code);
+        self::assertLessThanOrEqual(30, mb_strlen($code));
     }
 
     public function testGetExportCards(): void
