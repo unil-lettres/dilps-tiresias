@@ -1,5 +1,5 @@
 import {type CardQuery, type CardsQuery, UserRole, type ViewerQuery} from '../shared/generated-types';
-import {cardLabel, cardToCardInput, suggestCreationLabel} from './card.utils';
+import {cardLabel, cardToCardInput, suggestCode, suggestCreationLabel} from './card.utils';
 
 describe('cardToCardInput', () => {
     it('gives the names of the artists and of the institution', () => {
@@ -63,5 +63,18 @@ describe('suggestCreationLabel', () => {
         expect(suggestCreationLabel(user(UserRole.major))).toBe("Suggérer l'ajout");
         expect(suggestCreationLabel(user(UserRole.administrator))).toBe("Suggérer l'ajout");
         expect(suggestCreationLabel(null)).toBe("Suggérer l'ajout");
+    });
+});
+
+describe('suggestCode', () => {
+    it('is the name of the collection followed by the ID of the card', () => {
+        expect(suggestCode('Rome', '6100')).toBe('Rome-6100');
+    });
+
+    it('shortens the name of the collection to fit in 30 characters', () => {
+        const code = suggestCode('Sculptures romaines du IIe siècle après J.-C.', '6100');
+
+        expect(code).toBe('Sculptures romaines du II-6100');
+        expect(code.length).toBeLessThanOrEqual(30);
     });
 });

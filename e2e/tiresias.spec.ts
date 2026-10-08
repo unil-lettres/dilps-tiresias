@@ -223,11 +223,9 @@ test('administrator can add images into a new collection', async ({page, cleanup
     expect(await cardsOfCollection(page, id)).toHaveLength(1);
 });
 
-// Known bug: a card added to a collection by an administrator or a major gets the code "<collection name>-<card ID>",
-// but codes are limited to 30 characters, so adding images to a collection whose name is longer than about 24
-// characters fails with "String data, right truncated". Remove `test.fail()` once fixed.
+// The code of a card added to a collection by an administrator or a major is made of the name of the collection,
+// shortened to fit in 30 characters
 test('administrator can add images into a new collection with a long name', async ({page, cleanup}) => {
-    test.fail();
     await login(page, 'administrator');
     const collection = uniqueName('E2E collection with a long name');
     cleanup.add(() => deleteCollectionsWithCards(page, collection));

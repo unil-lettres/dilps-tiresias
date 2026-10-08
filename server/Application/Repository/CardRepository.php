@@ -106,7 +106,10 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
             ++$nextId;
         }
 
-        return $collection->getName() . '-' . $nextId;
+        // The ID makes the code unique, so shorten the name of the collection to fit in the length of the column
+        $suffix = '-' . $nextId;
+
+        return mb_rtrim(mb_substr($collection->getName(), 0, 30 - mb_strlen($suffix))) . $suffix;
     }
 
     /**
