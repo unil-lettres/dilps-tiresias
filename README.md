@@ -113,6 +113,9 @@ you deploy to the same directory. You may do so using the following:
 
 ## Testing
 
+Like any PHP command, the PHP tests run in the application container. So do the Angular unit tests, because
+`node_modules` holds the binaries for its system.
+
 ### PHPUnit
 
 PHPUnit tests require a reference database dump. When the dump is loaded it **will destroy**
@@ -122,30 +125,50 @@ within a transaction which is rolled back, so the database state is always predi
 To run PHPunit test:
 
 ```sh
-./bin/load-test-data.php
-./vendor/bin/phpunit # as many times as necessary
+docker compose exec dilps-tiresias-app ./bin/load-test-data.php
+docker compose exec dilps-tiresias-app ./vendor/bin/phpunit # as many times as necessary
 ```
+
+`docker compose exec dilps-tiresias-app composer check` runs PHP CS Fixer, PHPStan and then PHPUnit. The CI runs them
+too, along with the Angular unit tests, `pnpm lint` and Prettier.
 
 ### Angular unit tests
 
-Run `ng test` to execute the unit tests via [Vitest](https://vitest.dev/).
+The unit tests run via [Vitest](https://vitest.dev/), in Node with jsdom:
+
+```sh
+docker compose exec dilps-tiresias-app ./node_modules/.bin/ng test --watch=false
+
+# Only some test files
+docker compose exec dilps-tiresias-app ./node_modules/.bin/ng test --watch=false --include=client/app/card/card.utils.spec.ts
+```
+
+`pnpm test` also generates the GraphQL schema and types first, which the tests need, see `pnpm codegen`.
 
 ### End to end
 
 Run `pnpm e2e` to execute the end-to-end tests via [Playwright](https://playwright.dev/). They are not run by CI.
 
-They need the reference test data on the Dilps site, see PHPUnit above, and run against `http://dilps.lan:4400/`
-by default. Each test creates and deletes its own data. To run them against Docker:
+They run on both sites, so they need the reference test data, see PHPUnit above. Each test creates and deletes its own
+data. The Dilps site is `http://dilps.lan:4400/` by default, and the Tiresias site is the same URL with `dilps` replaced
+by `tiresias`, unless given by `E2E_TIRESIAS_BASE_URL`. To run them against Docker, on the host:
 
 ```sh
-E2E_BASE_URL=http://dilps.docker:8181/ pnpm e2e --workers=2
+npx playwright install chromium # once
+E2E_BASE_URL=http://dilps.docker:8181/ npx playwright test --workers=2
+
+# Only some test files, or only one site
+E2E_BASE_URL=http://dilps.docker:8181/ npx playwright test e2e/card.spec.ts --project=dilps
 ```
 
-More workers would overload the development server. If `pnpm` is only available in the container, run
-`npx playwright install chromium` once, then `npx playwright test` instead of `pnpm e2e`.
+More workers would overload the development server. `tiresias.spec.ts` only runs on Tiresias, `dialogs.spec.ts` runs
+on both sites, and the other specs only run on Dilps, see `playwright.config.ts`.
 
 Every test fails on any console error, uncaught error or GraphQL error, even if it does not look for them, see
 `e2e/fixtures.ts`. So new tests must import `test` from `./fixtures`.
+
+A known bug may be covered by a test of the expected behavior, marked `test.fail()` (or `it.fails` in unit tests), with
+a comment describing the bug. Such a test fails as soon as the bug is fixed, as a reminder to remove the mark.
 
 ### Credits
 
