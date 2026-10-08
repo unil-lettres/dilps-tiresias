@@ -101,9 +101,7 @@ describe('UserComponent', () => {
             expect(component.data.item.password).toBe('secret');
         });
 
-        // Known bug: the error of the confirmation is only cleared when the confirmation itself changes, so fixing
-        // the password instead keeps the form invalid. Replace `it.fails` by `it` once fixed.
-        it.fails('accepts the confirmation once the password is fixed to match it', () => {
+        it('accepts the confirmation once the password is fixed to match it', () => {
             const {password, confirmation} = passwords(create({}, UserRole.administrator));
 
             password.setValue('secret');
