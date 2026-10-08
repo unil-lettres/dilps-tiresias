@@ -1,17 +1,22 @@
-import {expect, test} from '@playwright/test';
-import {LoginPage} from './login.po';
+import {expect, test} from './fixtures';
 
-test.describe('Login page', () => {
-    let app: LoginPage;
+test('anonymous sees how to log in', async ({page}) => {
+    await page.goto('');
+    await expect(page.locator('.login-info')).toHaveText("Veuillez choisir une méthode d'authentification");
+});
 
-    test.beforeEach(({page}) => {
-        app = new LoginPage(page);
-    });
+test('anonymous sees an error with wrong credentials', async ({page, problems}) => {
+    problems.allow(/Le nom d'utilisateur ou mot de passe est incorrect/);
+    await page.goto('login');
+    await page.waitForLoadState('networkidle');
 
-    test('with wrong credentials should see an error notification', async () => {
-        await app.navigateTo();
-        await app.fillCredentials('wrongname', 'wrongpasswd');
-        expect(await app.getParagraphText()).toEqual("Veuillez choisir une méthode d'authentification");
-        expect(await app.getErrorMessage()).toMatch(/Le nom d'utilisateur ou mot de passe est incorrect/);
-    });
+    await page.getByText('Utilisateur·rice externe').click();
+    await page.locator('input[name="login"]').fill('wrongname');
+    await page.locator('input[name="password"]').fill('wrongpasswd');
+    await page.locator('button[type="submit"]').click();
+
+    await expect(page.locator('[matsnackbarlabel]')).toContainText(
+        "Le nom d'utilisateur ou mot de passe est incorrect",
+    );
+    await expect(page).toHaveURL(/\/login/);
 });

@@ -1,7 +1,7 @@
-import {expect, test} from '@playwright/test';
+import {expect, test} from './fixtures';
 
 test('anonymous can see error page', async ({page}) => {
     await page.goto('error');
 
-    expect(await page.innerText('h1')).toMatch('Oups, une erreur est survenue');
+    await expect(page.locator('h1')).toContainText('Oups, une erreur est survenue');
 });

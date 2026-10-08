@@ -1,4 +1,8 @@
 {
     "extends": "../tsconfig.json",
+    "compilerOptions": {
+        // Tests run in Node, eg: to read the files to upload
+        "types": ["node"]
+    },
     "include": ["./**/*.ts"]
 }
