@@ -155,6 +155,9 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Encrypt and change the user password.
+     *
+     * An AAI user logs in through their institution, so the client never offers them a password. With a password of
+     * their own, they could keep logging in once their institution closed their account.
      */
     public function setPassword(string $password): void
     {
@@ -162,6 +165,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
         // when agreeing to terms
         if ($password === '') {
             return;
+        }
+
+        if ($this->type === UserType::Aai) {
+            throw new Exception('Un compte AAI se connecte par son institution, il ne peut pas avoir de mot de passe.');
         }
 
         $this->password = password_hash($password, PASSWORD_DEFAULT);

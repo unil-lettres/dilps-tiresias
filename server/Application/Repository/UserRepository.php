@@ -30,6 +30,10 @@ class UserRepository extends AbstractRepository implements \Ecodev\Felix\Reposit
 
         // If we found a user and he has a correct MD5 or correct new hash, then return the user
         if (($isMd5 && md5($password) === $hashFromDb) || password_verify($password, $hashFromDb)) {
+            if ($user->getType() === UserType::Aai) {
+                return null;
+            }
+
             // Only tell whoever knows the password, otherwise anybody could find out which logins exist
             if (!$user->canLogin()) {
                 throw new Exception("Ce compte n'est plus actif");

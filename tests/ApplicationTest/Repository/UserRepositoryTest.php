@@ -32,6 +32,13 @@ class UserRepositoryTest extends AbstractRepository
         self::assertNotSame(md5('administrator'), $hash, 'password should have been re-hashed automatically');
     }
 
+    public function testGetLoginPasswordOfAaiUser(): void
+    {
+        _em()->getConnection()->executeStatement("UPDATE `user` SET type = 'aai' WHERE id = 1000");
+
+        self::assertNull($this->repository->getLoginPassword('administrator', 'administrator', Site::Dilps));
+    }
+
     public function testGetLoginPasswordOfInactiveUser(): void
     {
         _em()->getConnection()->executeStatement("UPDATE `user` SET active_until = '2000-01-01' WHERE id = 1000");
