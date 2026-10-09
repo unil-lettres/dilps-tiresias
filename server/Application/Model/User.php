@@ -276,11 +276,21 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * The date when the user agreed to the terms of usage.
      *
-     * A user cannot un-agree once he agreed.
+     * Only the user themselves can agree, once, and the date is always the current one, like when the client asks
+     * them to agree after their login. Otherwise, a user could backdate or withdraw their agreement, or somebody else
+     * could agree on their behalf.
      */
     public function setTermsAgreement(?Chronos $termsAgreement): void
     {
-        $this->termsAgreement = $termsAgreement;
+        if ($termsAgreement?->getTimestamp() === $this->termsAgreement?->getTimestamp()) {
+            return;
+        }
+
+        if (self::getCurrent() !== $this || $this->termsAgreement || !$termsAgreement) {
+            throw new Exception("La licence ne peut être acceptée qu'une fois, par l'utilisateur·rice concerné·e.");
+        }
+
+        $this->termsAgreement = new Chronos();
     }
 
     /**
