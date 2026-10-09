@@ -1,6 +1,6 @@
 import {inject, Service} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {forkJoin, type Observable} from 'rxjs';
+import {forkJoin, type Observable, tap} from 'rxjs';
 import {
     type CardsQuery,
     type CollectionInput,
@@ -90,14 +90,18 @@ export class CollectionService extends AbstractContextualizedService<
 
     /**
      * Remove the current user from the collection (as responsible and/or subscriber), i.e. leave it.
+     *
+     * Like natural does after unlinking, the lists are refreshed, eg: "Mes collections" no longer shows the collection.
      */
     public unsubscribe(collection: FakeCollection | CollectionQuery['collection']): Observable<unknown> {
-        return this.apollo.mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
-            mutation: unsubscribeCollection,
-            variables: {
-                collection: collection.id,
-            },
-        });
+        return this.apollo
+            .mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
+                mutation: unsubscribeCollection,
+                variables: {
+                    collection: collection.id,
+                },
+            })
+            .pipe(tap(() => this.apollo.client.refetchObservableQueries()));
     }
 
     public linkCollectionToCollection(
