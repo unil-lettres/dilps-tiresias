@@ -19,6 +19,7 @@ export const collectionsQuery = gql`
                 usageRights
                 viewerIsResponsible
                 viewerIsSubscriber
+                canManageResponsibles
                 canManageSubscribers
                 permissions {
                     update

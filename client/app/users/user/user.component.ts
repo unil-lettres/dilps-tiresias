@@ -102,6 +102,11 @@ export class UserComponent extends AbstractDetailDirective<
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
     protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);
+
+    /**
+     * Among `collections`, the ones of which the user is a responsible, rather than a subscriber
+     */
+    private readonly responsibleCollectionIds = signal<ReadonlySet<string>>(new Set());
     protected isSelf = false;
 
     protected roles: IEnum[] = [];
@@ -222,9 +227,31 @@ export class UserComponent extends AbstractDetailDirective<
             filter: this.membershipFilter(),
         });
 
-        this.collectionService.getAll(qvm).subscribe(result => {
-            this.collections.set(result.items);
+        const responsibleQvm = new NaturalQueryVariablesManager();
+        responsibleQvm.set('variables', {
+            filter: {groups: [{conditions: [{responsibles: {have: {values: [this.data.item.id]}}}]}]},
         });
+
+        forkJoin([this.collectionService.getAll(qvm), this.collectionService.getAll(responsibleQvm)]).subscribe(
+            ([result, responsibleResult]) => {
+                this.responsibleCollectionIds.set(new Set(responsibleResult.items.map(collection => collection.id)));
+                this.collections.set(result.items);
+            },
+        );
+    }
+
+    /**
+     * Whether the user may be removed from the collection: anybody may leave on their own, but removing somebody else
+     * requires the privilege of the relation they belong to
+     */
+    protected canRemoveFrom(collection: CollectionsQuery['collections']['items'][0]): boolean {
+        if (this.isSelf) {
+            return true;
+        }
+
+        return this.responsibleCollectionIds().has(collection.id)
+            ? collection.canManageResponsibles
+            : collection.canManageSubscribers;
     }
 
     protected unsubscribeFromCollection(collection: CollectionsQuery['collections']['items'][0]): void {
@@ -251,13 +278,14 @@ export class UserComponent extends AbstractDetailDirective<
             }
 
             // When leaving on our own behalf, use the dedicated mutation that requires no privilege on the collection.
-            // When an administrator removes someone else, unlink them from both membership relations.
+            // When an administrator removes someone else, unlink them from the only relation they belong to.
             const removal$ = this.isSelf
                 ? this.collectionService.unsubscribe(collection)
-                : forkJoin([
-                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'responsible'),
-                      this.linkService.unlink(collection, this.data.item as LinkableObject, 'subscriber'),
-                  ]);
+                : this.linkService.unlink(
+                      collection,
+                      this.data.item as LinkableObject,
+                      this.responsibleCollectionIds().has(collection.id) ? 'responsible' : 'subscriber',
+                  );
 
             removal$.subscribe(() => {
                 this.alertService.info(successMessage);
