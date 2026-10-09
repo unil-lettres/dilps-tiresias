@@ -109,7 +109,9 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         // Seniors and above get rights via any collection
         $this->allow(User::ROLE_SENIOR, $card, ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
-        $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new SameSite());
+        // Like administrators, majors add images to any non-private collection. On a private one, they only get the rights of its
+        // owner or of a responsible, inherited from students
+        $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new All(new Visibility($nonPrivateCollections), new SameSite()));
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
         $this->allow(User::ROLE_ADMINISTRATOR, $artist, null, new SameSite());
