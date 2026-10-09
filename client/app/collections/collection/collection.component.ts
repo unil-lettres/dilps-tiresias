@@ -25,7 +25,6 @@ import {
     type UpdateCollection,
     UserRole,
     type UsersQuery,
-    type ViewerQuery,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
 import {CollectionService} from '../services/collection.service';
@@ -135,28 +134,19 @@ export class CollectionComponent
     public override ngOnInit(): void {
         super.ngOnInit();
 
-        this.userService
-            .getCurrentUser()
-            .subscribe(user => (this.parentHierarchicFilters = this.getParentHierarchicFilters(user)));
+        this.parentHierarchicFilters = this.getParentHierarchicFilters();
     }
 
     /**
-     * A collection can only be put inside a collection whose content the user manages (owner or responsible, as
-     * enforced by the server), and never inside itself or its descendants, which would form a cyclic hierarchy.
+     * A collection can only be put inside a collection whose content the user manages, as enforced by the server, and
+     * never inside itself or its descendants, which would form a cyclic hierarchy.
      *
-     * Like in the collection selector, administrators and majors are not filtered. This must be a single group of
-     * conditions, because the hierarchic selector cannot merge groups of different logics.
+     * This must be a single group of conditions, because the hierarchic selector cannot merge groups of different logics.
      */
-    private getParentHierarchicFilters(
-        user: ViewerQuery['viewer'] | null,
-    ): HierarchicFiltersConfiguration<CollectionFilter> {
-        const custom: CollectionFilterGroupConditionCustom = {};
+    private getParentHierarchicFilters(): HierarchicFiltersConfiguration<CollectionFilter> {
+        const custom: CollectionFilterGroupConditionCustom = {manageableByViewer: {value: true}};
         if (this.data.item.id) {
             custom.excludeSelfAndDescendants = {value: this.data.item.id};
-        }
-
-        if (user && ![UserRole.administrator, UserRole.major].includes(user.role)) {
-            custom.manageableByViewer = {value: true};
         }
 
         return [{service: CollectionService, filter: {groups: [{conditions: [{custom}]}]}}];

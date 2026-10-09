@@ -3,15 +3,12 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {CollectionService} from '../../../collections/services/collection.service';
 import {CardService} from '../../../card/services/card.service';
 import {collectionsQuery} from '../../../collections/services/collection.queries';
-import {UserService} from '../../../users/services/user.service';
 import {
     type CardCollectionsQuery,
     type CardsQuery,
     type CollectionFilter,
     type CollectionsQuery,
     type CreateCollection,
-    LogicalOperator,
-    UserRole,
 } from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
 import {type FakeCollection} from '../../../collections/services/fake-collection.resolver';
@@ -79,7 +76,6 @@ export class CollectionSelectorComponent implements OnInit {
     private readonly cardService = inject(CardService);
     private readonly dialogRef =
         inject<MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>>(MatDialogRef);
-    private readonly userService = inject(UserService);
     private readonly alertService = inject(AlertService);
     protected readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
 
@@ -88,7 +84,13 @@ export class CollectionSelectorComponent implements OnInit {
      */
     public readonly unlinked = output<CardCollectionsQuery['card']['collections'][0]>();
 
-    protected listFilter!: CollectionFilter;
+    /**
+     * Only the collections to which the user may add images, as enforced by the server
+     */
+    protected readonly listFilter: CollectionFilter = {
+        groups: [{conditions: [{custom: {manageableByViewer: {value: true}}}]}],
+    };
+
     protected collection: CollectionsQuery['collections']['items'][0] | null = null;
     protected image: CardsQuery['cards']['items'][0] | undefined;
 
@@ -103,20 +105,6 @@ export class CollectionSelectorComponent implements OnInit {
     };
 
     public ngOnInit(): void {
-        this.userService.getCurrentUser().subscribe(user => {
-            if (![UserRole.administrator, UserRole.major].includes(user!.role)) {
-                this.listFilter = {
-                    groups: [
-                        {conditions: [{owner: {equal: {value: user!.id}}}]},
-                        {
-                            groupLogic: LogicalOperator.OR,
-                            conditions: [{responsibles: {have: {values: [user!.id]}}}],
-                        },
-                    ],
-                };
-            }
-        });
-
         if (this.data.images?.length === 1) {
             this.image = this.data.images[0];
             this.cardService
