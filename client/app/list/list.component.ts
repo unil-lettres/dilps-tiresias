@@ -422,12 +422,16 @@ export class ListComponent
 
             // Resolve whether the user may add/remove cards to/from this collection, to show/hide the relevant actions
             if (collectionChanged) {
-                if (this.collection?.id) {
-                    this.collectionService
-                        .getOne(this.collection.id)
-                        .subscribe(collection => this.canManageCollectionContent.set(collection.canManageContent));
-                } else {
-                    this.canManageCollectionContent.set(false);
+                this.canManageCollectionContent.set(false);
+
+                const collectionId = this.collection?.id;
+                if (collectionId) {
+                    this.collectionService.getOne(collectionId).subscribe(collection => {
+                        // Ignore the answer for a collection that is not shown anymore
+                        if (this.collection?.id === collectionId) {
+                            this.canManageCollectionContent.set(collection.canManageContent);
+                        }
+                    });
                 }
             }
         });
