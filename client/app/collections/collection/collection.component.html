@@ -27,14 +27,9 @@
                             }
                         }
                     </div>
-                    <div class="nat-horizontal nat-gap-10">
-                        @if (viewerIsResponsible() || viewerIsSubscriber()) {
-                            <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
-                        }
-                        @if (canManageResponsibles() || canManageSubscribers()) {
-                            <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
-                        }
-                    </div>
+                    @if (canManageResponsibles() || canManageSubscribers()) {
+                        <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
+                    }
                 </div>
                 <mat-divider class="nat-margin-vertical" />
             }
@@ -180,6 +175,10 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
+        @if (viewerIsResponsible() || viewerIsSubscriber()) {
+            <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
+        }
+        <div class="nat-expand"></div>
         <button matButton (click)="showPropertiesView()">Terminer</button>
     </mat-dialog-actions>
 }

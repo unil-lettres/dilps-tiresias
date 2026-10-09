@@ -11,7 +11,7 @@ import {
     type UserRole,
     type ViewerQuery,
 } from '../../shared/generated-types';
-import {CollectionComponent} from '../collection/collection.component';
+import {CollectionComponent, unsubscribed} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
@@ -216,6 +216,8 @@ export class CollectionsComponent implements OnInit {
             // if returned data is null, it means deletion
             if (data === null) {
                 this.router.navigate(['..'], {relativeTo: this.route.firstChild});
+            } else if (data === unsubscribed) {
+                this.leaveIfShown(collection);
             }
         });
     }
@@ -224,10 +226,32 @@ export class CollectionsComponent implements OnInit {
      * Open the collection dialog directly on the subscribers management, for responsibles who cannot edit the collection.
      */
     protected manageSubscribers(collection: CollectionsQuery['collections']['items'][0]): void {
-        this.dialog.open(CollectionComponent, {
-            width: '800px',
-            data: {item: {...collection, initialView: 'subscribers'}},
-        });
+        this.dialog
+            .open(CollectionComponent, {
+                width: '800px',
+                data: {item: {...collection, initialView: 'subscribers'}},
+                // Focusing the field to add a reader would open its list over the buttons below, eg: "Me désabonner"
+                autoFocus: 'dialog',
+            })
+            .afterClosed()
+            .subscribe(data => {
+                if (data === unsubscribed) {
+                    this.leaveIfShown(collection);
+                }
+            });
+    }
+
+    protected unsubscribe(collection: CollectionsQuery['collections']['items'][0]): void {
+        this.collectionsService.confirmAndUnsubscribe(collection).subscribe(() => this.leaveIfShown(collection));
+    }
+
+    /**
+     * Stop showing the collection that the current user just left, because they may not see it anymore
+     */
+    private leaveIfShown(collection: CollectionsQuery['collections']['items'][0]): void {
+        if (this.route.firstChild?.snapshot.params.collectionId === collection.id) {
+            this.router.navigate(['..'], {relativeTo: this.route.firstChild});
+        }
     }
 
     protected add(): void {

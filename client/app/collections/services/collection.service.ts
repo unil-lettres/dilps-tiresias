@@ -1,6 +1,6 @@
 import {inject, Service} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {forkJoin, type Observable, tap} from 'rxjs';
+import {filter, forkJoin, type Observable, switchMap, tap} from 'rxjs';
 import {
     type CardsQuery,
     type CollectionInput,
@@ -21,6 +21,7 @@ import {
     type UnsubscribeCollectionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {AlertService} from '../../shared/components/alert/alert.service';
 import {
     collectionQuery,
     collectionsQuery,
@@ -46,6 +47,7 @@ export class CollectionService extends AbstractContextualizedService<
     DeleteCollectionsVariables
 > {
     private readonly linkService = inject(NaturalLinkMutationService);
+    private readonly alertService = inject(AlertService);
 
     public constructor() {
         super('collection', collectionQuery, collectionsQuery, createCollection, updateCollection, deleteCollections);
@@ -93,7 +95,7 @@ export class CollectionService extends AbstractContextualizedService<
      *
      * Like natural does after unlinking, the lists are refreshed, eg: "Mes collections" no longer shows the collection.
      */
-    public unsubscribe(collection: FakeCollection | CollectionQuery['collection']): Observable<unknown> {
+    public unsubscribe(collection: {id: string}): Observable<unknown> {
         return this.apollo
             .mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
                 mutation: unsubscribeCollection,
@@ -102,6 +104,20 @@ export class CollectionService extends AbstractContextualizedService<
                 },
             })
             .pipe(tap(() => this.apollo.client.refetchObservableQueries()));
+    }
+
+    /**
+     * Ask the current user to confirm, then unsubscribe them from the collection. Emits only once they are unsubscribed.
+     */
+    public confirmAndUnsubscribe(collection: {id: string; name: string}): Observable<unknown> {
+        const title = `Se désabonner de la collection « ${collection.name} » ?`;
+        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+
+        return this.alertService.confirm(title, message, 'Me désabonner', undefined, 'error', 'filled').pipe(
+            filter(confirmed => !!confirmed),
+            switchMap(() => this.unsubscribe(collection)),
+            tap(() => this.alertService.info(`Vous avez été désabonné de la collection « ${collection.name} »`)),
+        );
     }
 
     public linkCollectionToCollection(

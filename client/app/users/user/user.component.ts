@@ -255,43 +255,37 @@ export class UserComponent extends AbstractDetailDirective<
     }
 
     protected unsubscribeFromCollection(collection: CollectionsQuery['collections']['items'][0]): void {
-        let title: string;
-        let message: string;
-        let buttonLabel: string;
-        let successMessage: string;
+        const reload = (): void => {
+            this.loadCollections();
+            this.loadCollectionsCount();
+        };
 
+        // When leaving on our own behalf, use the dedicated mutation that requires no privilege on the collection
         if (this.isSelf) {
-            title = `Se désabonner de la collection « ${collection.name} » ?`;
-            message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
-            buttonLabel = 'Me désabonner';
-            successMessage = `Vous avez été désabonné de la collection « ${collection.name} »`;
-        } else {
-            title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
-            message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
-            buttonLabel = 'Désabonner';
-            successMessage = `Désabonnement de la collection « ${collection.name} » effectué`;
+            this.collectionService.confirmAndUnsubscribe(collection).subscribe(reload);
+
+            return;
         }
 
-        this.alertService.confirm(title, message, buttonLabel, undefined, 'error', 'filled').subscribe(confirmed => {
+        const title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
+        const message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+
+        this.alertService.confirm(title, message, 'Désabonner', undefined, 'error', 'filled').subscribe(confirmed => {
             if (!confirmed) {
                 return;
             }
 
-            // When leaving on our own behalf, use the dedicated mutation that requires no privilege on the collection.
-            // When an administrator removes someone else, unlink them from the only relation they belong to.
-            const removal$ = this.isSelf
-                ? this.collectionService.unsubscribe(collection)
-                : this.linkService.unlink(
-                      collection,
-                      this.data.item as LinkableObject,
-                      this.responsibleCollectionIds().has(collection.id) ? 'responsible' : 'subscriber',
-                  );
-
-            removal$.subscribe(() => {
-                this.alertService.info(successMessage);
-                this.loadCollections();
-                this.loadCollectionsCount();
-            });
+            // When an administrator removes someone else, unlink them from the only relation they belong to
+            this.linkService
+                .unlink(
+                    collection,
+                    this.data.item as LinkableObject,
+                    this.responsibleCollectionIds().has(collection.id) ? 'responsible' : 'subscriber',
+                )
+                .subscribe(() => {
+                    this.alertService.info(`Désabonnement de la collection « ${collection.name} » effectué`);
+                    reload();
+                });
         });
     }
 

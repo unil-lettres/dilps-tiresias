@@ -32,6 +32,11 @@ import {MatIcon} from '@angular/material/icon';
 import {MatDivider} from '@angular/material/divider';
 import {HintComponent} from '../../shared/components/hint/hint.component';
 
+/**
+ * Returned when the dialog closes because the current user unsubscribed from the collection, that they may not see anymore
+ */
+export const unsubscribed = 'unsubscribed';
+
 @Component({
     selector: 'app-collection',
     imports: [
@@ -251,25 +256,9 @@ export class CollectionComponent
     }
 
     protected unsubscribeCurrentUser(): void {
-        if (!this.user || !this.isUpdatePage() || (!this.viewerIsResponsible() && !this.viewerIsSubscriber())) {
-            return;
-        }
-
-        const title = 'Se désabonner de cette collection ?';
-        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Seul un responsable de la collection pourra vous réabonner.<br><br>Voulez-vous vraiment vous désabonner ?`;
-
-        this.alertService
-            .confirm(title, message, 'Me désabonner', undefined, 'error', 'filled')
-            .subscribe(confirmed => {
-                if (!confirmed) {
-                    return;
-                }
-
-                this.service.unsubscribe(this.data.item).subscribe(() => {
-                    this.alertService.info('Vous avez été désabonné de cette collection');
-                    this.dialogRef.close();
-                });
-            });
+        this.service
+            .confirmAndUnsubscribe(this.data.item as CollectionQuery['collection'])
+            .subscribe(() => this.dialogRef.close(unsubscribed));
     }
 
     protected showSubscribersView(): void {

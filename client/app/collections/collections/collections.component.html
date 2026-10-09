@@ -133,6 +133,13 @@
                                             <mat-icon naturalIcon="library_add" />
                                             <span>Ajouter à une autre collection</span>
                                         </button>
+                                        <!-- Those who manage the subscribers leave from there, so never both actions -->
+                                        @if (collection.viewerIsSubscriber && !collection.canManageSubscribers) {
+                                            <button mat-menu-item (click)="unsubscribe(collection)">
+                                                <mat-icon fontIcon="link_off" />
+                                                <span>Me désabonner</span>
+                                            </button>
+                                        }
                                     </mat-menu>
                                     @if (collection.isSource && collection.isHistoric) {
                                         <app-historic-icon [badge]="true" [small]="true" />
