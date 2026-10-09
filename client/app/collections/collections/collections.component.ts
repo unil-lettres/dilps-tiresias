@@ -131,7 +131,12 @@ export class CollectionsComponent implements OnInit {
                             {conditions: [{owner: {in: {values: [data.creator.id]}}}]},
                             {
                                 groupLogic: LogicalOperator.OR,
-                                conditions: [{users: {have: {values: [data.creator.id]}}}],
+                                conditions: [{responsibles: {have: {values: [data.creator.id]}}}],
+                            },
+                            // Readers too, otherwise a private collection they read would not be listed anywhere
+                            {
+                                groupLogic: LogicalOperator.OR,
+                                conditions: [{subscribers: {have: {values: [data.creator.id]}}}],
                             },
                         ],
                     },
@@ -152,6 +157,24 @@ export class CollectionsComponent implements OnInit {
                 this.router.navigate([this.rootCollections[0].id], {relativeTo: this.route});
             }
         });
+    }
+
+    /**
+     * Exporting is a read-only action available to anyone related to the collection: its owner (or an
+     * administrator who can otherwise manage it), its responsibles and its subscribers.
+     */
+    protected canExport(collection: CollectionsQuery['collections']['items'][0]): boolean {
+        return (
+            collection.permissions.update ||
+            collection.permissions.delete ||
+            collection.viewerIsResponsible ||
+            collection.viewerIsSubscriber
+        );
+    }
+
+    protected subscribersTooltip(collection: CollectionsQuery['collections']['items'][0]): string {
+        const total = collection.responsiblesCount + collection.subscribersCount;
+        return `${total} abonné${total > 1 ? 's' : ''}`;
     }
 
     protected toggle(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
@@ -194,6 +217,16 @@ export class CollectionsComponent implements OnInit {
             if (data === null) {
                 this.router.navigate(['..'], {relativeTo: this.route.firstChild});
             }
+        });
+    }
+
+    /**
+     * Open the collection dialog directly on the subscribers management, for responsibles who cannot edit the collection.
+     */
+    protected manageSubscribers(collection: CollectionsQuery['collections']['items'][0]): void {
+        this.dialog.open(CollectionComponent, {
+            width: '800px',
+            data: {item: {...collection, initialView: 'subscribers'}},
         });
     }
 

@@ -210,3 +210,19 @@ export const collectionCopyrightsQuery = gql`
         collectionCopyrights(card: $card)
     }
 `;
+
+/**
+ * The collections of a card, with whether the viewer may remove the card from them
+ */
+export const cardCollectionsQuery = gql`
+    query CardCollectionsQuery($id: CardID!) {
+        card(id: $id) {
+            id
+            collections {
+                id
+                name
+                canManageContent
+            }
+        }
+    }
+`;

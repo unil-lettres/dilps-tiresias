@@ -102,11 +102,8 @@
                                     >
                                         <mat-icon fontIcon="more_vert" />
                                     </button>
-                                    @if (collection.usersCount > 0) {
-                                        <mat-icon
-                                            fontIcon="group"
-                                            [matTooltip]="`${collection.usersCount} abonné${collection.usersCount > 1 ? 's' : ''}`"
-                                        />
+                                    @if (collection.responsiblesCount + collection.subscribersCount > 0) {
+                                        <mat-icon fontIcon="group" [matTooltip]="subscribersTooltip(collection)" />
                                     }
                                     <mat-menu #actionsMenu>
                                         @if (collection.permissions.update || collection.permissions.delete) {
@@ -114,6 +111,14 @@
                                                 <mat-icon naturalIcon="edit" />
                                                 <span>Modifier</span>
                                             </button>
+                                        }
+                                        @if (collection.canManageSubscribers) {
+                                            <button mat-menu-item (click)="manageSubscribers(collection)">
+                                                <mat-icon naturalIcon="group" />
+                                                <span>Gérer les abonnés</span>
+                                            </button>
+                                        }
+                                        @if (canExport(collection)) {
                                             <button mat-menu-item [matMenuTriggerFor]="exportMenuComp.matMenu()">
                                                 <mat-icon naturalIcon="share_windows" />
                                                 <span>Exporter</span>

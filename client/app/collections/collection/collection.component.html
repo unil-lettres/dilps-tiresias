@@ -11,22 +11,29 @@
                 <div class="nat-horizontal nat-distribute nat-center">
                     <div class="nat-horizontal nat-gap-5 nat-center">
                         <mat-icon fontIcon="group" />
-                        <span>{{ subscribersCount() }} abonné{{ subscribersCount() > 1 ? 's' : '' }}</span>
+                        <span>
+                            {{ subscribersCount() }} abonné{{ subscribersCount() > 1 ? 's' : '' }}
+                            @if (responsiblesCount() > 0) {
+                                (dont {{ responsiblesCount() }} responsable{{ responsiblesCount() > 1 ? 's' : '' }})
+                            }
+                        </span>
                         @if (!!user) {
-                            @if (!!data.item.creator && data.item.creator.id === user.id) {
+                            @if (isOwner()) {
                                 <span> - Vous êtes propriétaire de cette collection</span>
-                            } @else {
-                                @if (isCurrentUserSubscribed()) {
-                                    <span> - Vous êtes abonné à cette collection</span>
-                                }
+                            } @else if (viewerIsResponsible()) {
+                                <span> - Vous êtes responsable de cette collection</span>
+                            } @else if (viewerIsSubscriber()) {
+                                <span> - Vous êtes lecteur de cette collection</span>
                             }
                         }
                     </div>
                     <div class="nat-horizontal nat-gap-10">
-                        @if (isCurrentUserSubscribed()) {
+                        @if (viewerIsResponsible() || viewerIsSubscriber()) {
                             <button matButton color="error" (click)="unsubscribeCurrentUser()">Me désabonner</button>
                         }
-                        <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
+                        @if (canManageResponsibles() || canManageSubscribers()) {
+                            <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
+                        }
                     </div>
                 </div>
                 <mat-divider class="nat-margin-vertical" />
@@ -63,7 +70,7 @@
             <natural-select-hierarchic
                 placeholder="Collection parente"
                 [config]="hierarchicConfig"
-                [filters]="ancestorsHierarchicFilters"
+                [filters]="parentHierarchicFilters"
                 [showIcon]="false"
                 [disabled]="isUpdatePage() && !data.item.permissions.update"
                 [(ngModel)]="data.item.parent"
@@ -111,26 +118,63 @@
 @if (currentView() === 'subscribers') {
     <h2 mat-dialog-title>Gérer les abonnés de la collection « {{ data.item.name }} »</h2>
     <mat-dialog-content>
-        <p class="hint nat-margin-vertical nat-padding">
-            Les abonnés sont ajoutés ou retirés immédiatement. Aucune sauvegarde supplémentaire n'est nécessaire.
-        </p>
-        <div class="nat-vertical nat-gap-10">
-            @if (!!user) {
-                <natural-relations
-                    placeholder="Ajouter un abonné"
-                    [displayWith]="displayFn"
-                    [filter]="{
-                        groups: [
-                            {conditions: [{collections: {have: {values: [data.item.id]}}}]},
-                            {conditions: [{id: {equal: {value: user.id, not: true}}}]},
-                        ],
-                    }"
-                    [autocompleteSelectorFilter]="{
-                        groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
-                    }"
-                    [main]="$any(data.item)"
-                    [service]="userService"
-                />
+        @if (restrictedParents().length) {
+            <app-hint icon="warning" class="nat-margin-bottom">
+                Cette collection se trouve dans {{ restrictedParentsLabel() }}, dont la visibilité est restreinte. Les
+                personnes ajoutées ici ne la verront que si elles ont aussi accès à
+                {{ restrictedParents().length > 1 ? 'ces collections' : 'cette collection' }}.
+            </app-hint>
+        }
+        <div class="nat-horizontal nat-gap-10">
+            @if (!!user && canManageSubscribers()) {
+                <div class="nat-vertical nat-gap-5" style="flex: 1">
+                    <strong>Lecteurs</strong>
+                    <natural-relations
+                        placeholder="Ajouter un lecteur"
+                        otherName="subscriber"
+                        [displayWith]="displayFn"
+                        [filter]="{
+                            groups: [
+                                {conditions: [{subscribedCollections: {have: {values: [data.item.id]}}}]},
+                                {conditions: [{id: {equal: {value: user.id, not: true}}}]},
+                            ],
+                        }"
+                        [autocompleteSelectorFilter]="{
+                            groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
+                        }"
+                        [main]="$any(subscribersMain())"
+                        [service]="userService"
+                    />
+                    <app-hint>Les lecteurs peuvent uniquement consulter les images de la collection.</app-hint>
+                </div>
+            }
+
+            @if (!!user && canManageResponsibles()) {
+                <mat-divider vertical class="nat-margin-horizontal" />
+                <div class="nat-vertical nat-gap-5" style="flex: 1">
+                    <strong>Responsables</strong>
+                    <natural-relations
+                        placeholder="Ajouter un responsable"
+                        otherName="responsible"
+                        [displayWith]="displayFn"
+                        [filter]="{
+                            groups: [
+                                {conditions: [{responsibleCollections: {have: {values: [data.item.id]}}}]},
+                                {conditions: [{id: {equal: {value: user.id, not: true}}}]},
+                            ],
+                        }"
+                        [autocompleteSelectorFilter]="{
+                            groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
+                        }"
+                        [main]="$any(responsiblesMain())"
+                        [service]="userService"
+                    />
+                    <app-hint>
+                        Les responsables peuvent consulter, ajouter ou supprimer des images et des lecteurs de la
+                        collection. Ils ne peuvent pas modifier les réglages, supprimer la collection ou ajouter
+                        d'autres responsables.
+                    </app-hint>
+                </div>
             }
         </div>
     </mat-dialog-content>

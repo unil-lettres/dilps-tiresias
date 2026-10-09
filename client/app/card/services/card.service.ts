@@ -4,6 +4,8 @@ import {merge} from 'es-toolkit';
 import {map, tap} from 'rxjs/operators';
 import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
 import {
+    type CardCollectionsQuery,
+    type CardCollectionsQueryVariables,
     type CardInput,
     type CardPartialInput,
     type CardQuery,
@@ -27,6 +29,7 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
+    cardCollectionsQuery,
     cardQuery,
     cardsQuery,
     collectionCopyrightsQuery,
@@ -213,6 +216,22 @@ export class CardService extends AbstractContextualizedService<
                 },
             })
             .pipe(map(result => result.data!.createCards));
+    }
+
+    /**
+     * Returns the collections of the card, with whether the viewer may remove the card from them
+     */
+    public getCollections(card: {id: string}): Observable<CardCollectionsQuery['card']['collections']> {
+        return this.apollo
+            .query<CardCollectionsQuery, CardCollectionsQueryVariables>({
+                query: cardCollectionsQuery,
+                variables: {id: card.id},
+                fetchPolicy: 'network-only',
+            })
+            .pipe(
+                ignoreErrors(),
+                map(result => result.data.card.collections),
+            );
     }
 
     public getCollectionCopyrights(card: CardQuery['card']): Observable<string> {

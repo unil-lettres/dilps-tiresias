@@ -17,6 +17,8 @@ import {
     type LinkCollectionToCollectionVariables,
     type UpdateCollection,
     type UpdateCollectionVariables,
+    type UnsubscribeCollection,
+    type UnsubscribeCollectionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {
@@ -25,6 +27,7 @@ import {
     createCollection,
     deleteCollections,
     linkCollectionToCollection,
+    unsubscribeCollection,
     updateCollection,
 } from './collection.queries';
 import {type FakeCollection} from './fake-collection.resolver';
@@ -83,6 +86,18 @@ export class CollectionService extends AbstractContextualizedService<
         });
 
         return forkJoin(observables);
+    }
+
+    /**
+     * Remove the current user from the collection (as responsible and/or subscriber), i.e. leave it.
+     */
+    public unsubscribe(collection: FakeCollection | CollectionQuery['collection']): Observable<unknown> {
+        return this.apollo.mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
+            mutation: unsubscribeCollection,
+            variables: {
+                collection: collection.id,
+            },
+        });
     }
 
     public linkCollectionToCollection(

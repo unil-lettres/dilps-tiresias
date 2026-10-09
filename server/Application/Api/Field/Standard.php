@@ -169,17 +169,21 @@ abstract class Standard
      * @param string $ownerClass The class owning the relation
      * @param string $otherClass The other class, not-owning the relation
      * @param string $privilege the ACL privilege to assert before linking, usually "update", but in edge cases a custom one
+     * @param null|string $otherName override the name of the other side of the relation, used for the mutation name
+     *                               (eg: `linkCollectionResponsible`) and the related `add*`/`remove*` methods (eg: `addResponsible`).
+     *                               This is required when several distinct relations exist between the same two classes,
+     *                               to avoid mutation name collisions. Defaults to the other class short name.
      *
      * @return PermissiveFieldsConfig
      */
-    public static function buildRelationMutation(string $ownerClass, string $otherClass, string $privilege = 'update'): iterable
+    public static function buildRelationMutation(string $ownerClass, string $otherClass, string $privilege = 'update', ?string $otherName = null): iterable
     {
         $ownerReflect = new ReflectionClass($ownerClass);
         $ownerName = $ownerReflect->getShortName();
         $lowerOwnerName = lcfirst($ownerName);
 
         $otherReflect = new ReflectionClass($otherClass);
-        $otherName = $otherReflect->getShortName();
+        $otherName ??= $otherReflect->getShortName();
         $lowerOtherName = lcfirst($otherName);
 
         if ($lowerOwnerName === $lowerOtherName) {

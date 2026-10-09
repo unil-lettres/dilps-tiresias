@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Application\Acl;
 
 use Application\Acl\Assertion\CanUpdateCard;
-use Application\Acl\Assertion\IsCreator;
 use Application\Acl\Assertion\IsNotSuggestion;
+use Application\Acl\Assertion\IsOwner;
 use Application\Acl\Assertion\IsOwnerOrResponsible;
+use Application\Acl\Assertion\IsSubscriber;
 use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\SameSite;
 use Application\Acl\Assertion\Visibility;
@@ -90,18 +91,24 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_STUDENT, $change, 'read', new IsOwnerOrResponsible());
         $this->allow(User::ROLE_STUDENT, $change, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $collection, 'create', new SameSite());
-        $this->allow(User::ROLE_STUDENT, $collection, ['update', 'delete', 'linkCard'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        // Only the owner can change the settings, delete, or manage the responsibles of a collection
+        $this->allow(User::ROLE_STUDENT, $collection, ['update', 'delete', 'manageResponsibles'], new All(new IsOwner(), new SameSite()));
+        // Responsibles (and the owner) can curate the cards/images and manage the subscribers
+        $this->allow(User::ROLE_STUDENT, $collection, ['linkCard', 'manageSubscribers'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_STUDENT, $institution, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $tag, 'create', new SameSite());
         $this->allow(User::ROLE_STUDENT, $user, 'read');
         $this->allow(User::ROLE_STUDENT, $user, ['update', 'delete'], new All(new IsMyself(), new SameSite()));
 
-        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible(), new SameSite()));
-        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible(), new SameSite()));
+        // Adding a card to a collection only requires to manage the collection, and then gives rights on that card. So juniors only get
+        // rights via the non-private collections, which they cannot create themselves, otherwise they could take over any card they see
+        $nonPrivateCollections = [CollectionVisibility::Member, CollectionVisibility::Administrator];
+        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
+        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
 
-        $this->allow(User::ROLE_SENIOR, $card, ['delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
+        // Seniors and above get rights via any collection
+        $this->allow(User::ROLE_SENIOR, $card, ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
-        $this->allow(User::ROLE_MAJOR, $collection, 'delete', new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new SameSite());
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges
@@ -110,7 +117,12 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $card, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $change, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $collection, 'create', new SameSite());
-        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwnerOrResponsible(), new IsCreator(), new Visibility([CollectionVisibility::Member, CollectionVisibility::Administrator])), new SameSite()));
+        // Like any other member, an administrator can read the private collections they are responsible or reader of
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, 'read', new One(new IsOwnerOrResponsible(), new IsSubscriber()));
+        // Administrators fully manage the non-private collections, and their own ones like any owner
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, null, new All(new One(new IsOwner(), new Visibility([CollectionVisibility::Member, CollectionVisibility::Administrator])), new SameSite()));
+        // On a private collection, being a responsible gives the same rights as to any other responsible
+        $this->allow(User::ROLE_ADMINISTRATOR, $collection, ['linkCard', 'manageSubscribers'], new All(new IsOwnerOrResponsible(), new SameSite()));
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $institution, null, new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $tag, 'read');

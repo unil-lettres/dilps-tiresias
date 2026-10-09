@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Doctrine\DBAL\Connection;
+
 return [
     [
         'query' => ' mutation UpdateCollection($id: CollectionID!, $input: CollectionPartialInput!) {
@@ -10,7 +12,7 @@ return [
             }
         }',
         'variables' => [
-            'id' => 2001,
+            'id' => 2002,
             'input' => [
                 'name' => 'updated name',
             ],
@@ -19,7 +21,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "major" with role major is not allowed on resource "Collection#2001" with privilege "update" because it is not the owner',
+                'message' => 'User "student" with role student is not allowed on resource "Collection#2002" with privilege "update" because it is not the owner',
                 'extensions' => [
                     'showSnack' => true,
                 ],
@@ -35,4 +37,8 @@ return [
             ],
         ],
     ],
+    // student (1003) is only a responsible of collection 2002 (owned by junior 1002)
+    function (Connection $connection): void {
+        $connection->executeStatement('INSERT INTO collection_responsible (collection_id, user_id) VALUES (2002, 1003)');
+    },
 ];
