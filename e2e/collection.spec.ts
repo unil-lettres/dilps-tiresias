@@ -1,11 +1,13 @@
 import {type Locator, type Page} from '@playwright/test';
 import {expect, test} from './fixtures';
 import {
+    asUser,
     createCard,
     createCollection,
     deleteCollections,
     deleteObjects,
     findCollections,
+    getViewer,
     graphql,
     login,
     type Role,
@@ -230,6 +232,87 @@ test('student can add a reader to their collection, who then sees it', async ({p
     } finally {
         await reader.close();
     }
+});
+
+/**
+ * Create a private collection of junior, of which student is a member with the given relation
+ */
+async function createCollectionOfJunior(
+    page: Page,
+    name: string,
+    relation: 'responsible' | 'subscriber',
+): Promise<{id: string; name: string}> {
+    const student = await getViewer(page);
+
+    return asUser(page, 'junior', async junior => {
+        const created = await createCollection(junior, name);
+        const mutation = relation === 'responsible' ? 'linkCollectionResponsible' : 'linkCollectionSubscriber';
+        await graphql(
+            junior,
+            `mutation ($collection: CollectionID!, $user: UserID!) { ${mutation}(collection: $collection, ${relation}: $user) { id } }`,
+            {collection: created.id, user: student.id},
+        );
+
+        return created;
+    });
+}
+
+test('student can unsubscribe from a collection they read from its menu, which leaves it at once', async ({
+    page,
+    cleanup,
+}) => {
+    await login(page, 'student');
+    const collection = await createCollectionOfJunior(page, 'E2E read', 'subscriber');
+    cleanup.add(() => asUser(page, 'junior', junior => deleteCollections(junior, [collection.id])));
+
+    // The collection is shown, so leaving it must also leave its page
+    await page.goto(`my-collection/${collection.id}`);
+    await page.waitForLoadState('networkidle');
+    const item = collectionItem(page, collection.name);
+    await item.hover();
+    await item.getByRole('button', {name: 'Actions de la collection'}).click();
+    await page.getByRole('menuitem', {name: 'Me désabonner'}).click();
+    const confirm = page
+        .getByRole('dialog')
+        .filter({hasText: `Se désabonner de la collection « ${collection.name} » ?`});
+    await confirm.getByRole('button', {name: 'Me désabonner'}).click();
+
+    // Without reloading the page
+    await expect(item).toHaveCount(0);
+    await expect(page).not.toHaveURL(new RegExp(`/my-collection/${collection.id}$`));
+});
+
+test('student can unsubscribe from a collection they are responsible of, only from the management of its subscribers', async ({
+    page,
+    cleanup,
+}) => {
+    await login(page, 'student');
+    const collection = await createCollectionOfJunior(page, 'E2E managed', 'responsible');
+    cleanup.add(() => asUser(page, 'junior', junior => deleteCollections(junior, [collection.id])));
+
+    // The menu of the collection only offers it to readers
+    await page.goto('my-collection');
+    const item = collectionItem(page, collection.name);
+    await item.hover();
+    await item.getByRole('button', {name: 'Actions de la collection'}).click();
+    await expect(page.getByRole('menuitem', {name: 'Gérer les abonné·es'})).toBeVisible();
+    await expect(page.getByRole('menuitem', {name: 'Me désabonner'})).toHaveCount(0);
+    await page.keyboard.press('Escape');
+
+    const dialog = await openCollectionAction(
+        page,
+        collection.name,
+        'Gérer les abonné·es',
+        `Gérer les abonné·es de la collection « ${collection.name} »`,
+    );
+    await dialog.getByRole('button', {name: 'Me désabonner'}).click();
+    const confirm = page
+        .getByRole('dialog')
+        .filter({hasText: `Se désabonner de la collection « ${collection.name} » ?`});
+    await confirm.getByRole('button', {name: 'Me désabonner'}).click();
+
+    await expect(dialog).toBeHidden();
+    await expect(collectionItem(page, collection.name)).toHaveCount(0);
 });
 
 test('student can delete their collection', async ({page, cleanup}) => {
