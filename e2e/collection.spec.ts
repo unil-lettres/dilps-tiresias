@@ -280,3 +280,15 @@ test('administrator comes back from a card to the same list, in each kind of col
         await expect(page.locator('app-list'), url).toHaveAttribute('data-marked', 'yes');
     }
 });
+
+test('a collection cannot be created without name', async ({page}) => {
+    await login(page, 'student');
+    await page.goto('my-collection');
+    await page.getByRole('button', {name: 'Créer une collection'}).click();
+    const dialog = page.getByRole('dialog', {name: 'Créer une collection'});
+    const add = dialog.getByRole('button', {name: 'Ajouter'});
+
+    await expect(add).toBeDisabled();
+    await dialog.getByLabel('Nom', {exact: true}).fill('E2E name');
+    await expect(add).toBeEnabled();
+});
