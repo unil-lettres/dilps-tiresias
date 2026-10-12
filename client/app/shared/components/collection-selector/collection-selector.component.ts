@@ -1,15 +1,14 @@
-import {Component, inject, type OnInit, output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject, type OnInit, output, ChangeDetectionStrategy, signal} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CollectionService} from '../../../collections/services/collection.service';
+import {CardService} from '../../../card/services/card.service';
 import {collectionsQuery} from '../../../collections/services/collection.queries';
-import {UserService} from '../../../users/services/user.service';
 import {
+    type CardCollectionsQuery,
     type CardsQuery,
     type CollectionFilter,
     type CollectionsQuery,
     type CreateCollection,
-    LogicalOperator,
-    UserRole,
 } from '../../generated-types';
 import {AlertService} from '../alert/alert.service';
 import {type FakeCollection} from '../../../collections/services/fake-collection.resolver';
@@ -74,20 +73,31 @@ export type CollectionSelectorResult =
 })
 export class CollectionSelectorComponent implements OnInit {
     protected readonly collectionService = inject(CollectionService);
+    private readonly cardService = inject(CardService);
     private readonly dialogRef =
         inject<MatDialogRef<CollectionSelectorComponent, CollectionSelectorResult>>(MatDialogRef);
-    private readonly userService = inject(UserService);
     private readonly alertService = inject(AlertService);
     protected readonly data = inject<CollectionSelectorData>(MAT_DIALOG_DATA);
 
     /**
      * Emits the collection the image was just removed from
      */
-    public readonly unlinked = output<CardsQuery['cards']['items'][0]['collections'][0]>();
+    public readonly unlinked = output<CardCollectionsQuery['card']['collections'][0]>();
 
-    protected listFilter!: CollectionFilter;
+    /**
+     * Only the collections to which the user may add images, as enforced by the server
+     */
+    protected readonly listFilter: CollectionFilter = {
+        groups: [{conditions: [{custom: {manageableByViewer: {value: true}}}]}],
+    };
+
     protected collection: CollectionsQuery['collections']['items'][0] | null = null;
     protected image: CardsQuery['cards']['items'][0] | undefined;
+
+    /**
+     * The collections of the image, with whether the viewer may remove the image from them
+     */
+    protected readonly imageCollections = signal<CardCollectionsQuery['card']['collections']>([]);
     protected newCollection: any = {
         name: '',
         description: '',
@@ -95,22 +105,11 @@ export class CollectionSelectorComponent implements OnInit {
     };
 
     public ngOnInit(): void {
-        this.userService.getCurrentUser().subscribe(user => {
-            if (![UserRole.administrator, UserRole.major].includes(user!.role)) {
-                this.listFilter = {
-                    groups: [
-                        {conditions: [{owner: {equal: {value: user!.id}}}]},
-                        {
-                            groupLogic: LogicalOperator.OR,
-                            conditions: [{users: {have: {values: [user!.id]}}}],
-                        },
-                    ],
-                };
-            }
-        });
-
         if (this.data.images?.length === 1) {
             this.image = this.data.images[0];
+            this.cardService
+                .getCollections(this.image)
+                .subscribe(collections => this.imageCollections.set(collections));
         }
     }
 
@@ -120,16 +119,10 @@ export class CollectionSelectorComponent implements OnInit {
 
     protected unlink(
         image: CardsQuery['cards']['items'][0],
-        collection: CardsQuery['cards']['items'][0]['collections'][0],
+        collection: CardCollectionsQuery['card']['collections'][0],
     ): void {
         this.collectionService.unlink(collection, [image]).subscribe(() => {
-            const index = image.collections.findIndex(c => c.id === collection.id);
-            const splicedCollection = [...image.collections];
-            splicedCollection.splice(index, 1);
-            this.image = {
-                ...image,
-                collections: splicedCollection,
-            };
+            this.imageCollections.update(collections => collections.filter(c => c.id !== collection.id));
             this.alertService.info('Fiche retirée de la collection');
             this.unlinked.emit(collection);
         });

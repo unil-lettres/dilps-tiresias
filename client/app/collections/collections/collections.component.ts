@@ -11,7 +11,7 @@ import {
     type UserRole,
     type ViewerQuery,
 } from '../../shared/generated-types';
-import {CollectionComponent} from '../collection/collection.component';
+import {CollectionComponent, unsubscribed} from '../collection/collection.component';
 import {CollectionService} from '../services/collection.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
@@ -131,7 +131,12 @@ export class CollectionsComponent implements OnInit {
                             {conditions: [{owner: {in: {values: [data.creator.id]}}}]},
                             {
                                 groupLogic: LogicalOperator.OR,
-                                conditions: [{users: {have: {values: [data.creator.id]}}}],
+                                conditions: [{responsibles: {have: {values: [data.creator.id]}}}],
+                            },
+                            // Readers too, otherwise a private collection they read would not be listed anywhere
+                            {
+                                groupLogic: LogicalOperator.OR,
+                                conditions: [{subscribers: {have: {values: [data.creator.id]}}}],
                             },
                         ],
                     },
@@ -152,6 +157,24 @@ export class CollectionsComponent implements OnInit {
                 this.router.navigate([this.rootCollections[0].id], {relativeTo: this.route});
             }
         });
+    }
+
+    /**
+     * Exporting is a read-only action available to anyone related to the collection: its owner (or an
+     * administrator who can otherwise manage it), its responsibles and its subscribers.
+     */
+    protected canExport(collection: CollectionsQuery['collections']['items'][0]): boolean {
+        return (
+            collection.permissions.update ||
+            collection.permissions.delete ||
+            collection.viewerIsResponsible ||
+            collection.viewerIsSubscriber
+        );
+    }
+
+    protected subscribersTooltip(collection: CollectionsQuery['collections']['items'][0]): string {
+        const total = collection.responsiblesCount + collection.subscribersCount;
+        return `${total} abonné${total > 1 ? 's' : ''}`;
     }
 
     protected toggle(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {
@@ -193,8 +216,42 @@ export class CollectionsComponent implements OnInit {
             // if returned data is null, it means deletion
             if (data === null) {
                 this.router.navigate(['..'], {relativeTo: this.route.firstChild});
+            } else if (data === unsubscribed) {
+                this.leaveIfShown(collection);
             }
         });
+    }
+
+    /**
+     * Open the collection dialog directly on the subscribers management, for responsibles who cannot edit the collection.
+     */
+    protected manageSubscribers(collection: CollectionsQuery['collections']['items'][0]): void {
+        this.dialog
+            .open(CollectionComponent, {
+                width: '800px',
+                data: {item: {...collection, initialView: 'subscribers'}},
+                // Focusing the field to add a reader would open its list over the buttons below, eg: "Me désabonner"
+                autoFocus: 'dialog',
+            })
+            .afterClosed()
+            .subscribe(data => {
+                if (data === unsubscribed) {
+                    this.leaveIfShown(collection);
+                }
+            });
+    }
+
+    protected unsubscribe(collection: CollectionsQuery['collections']['items'][0]): void {
+        this.collectionsService.confirmAndUnsubscribe(collection).subscribe(() => this.leaveIfShown(collection));
+    }
+
+    /**
+     * Stop showing the collection that the current user just left, because they may not see it anymore
+     */
+    private leaveIfShown(collection: CollectionsQuery['collections']['items'][0]): void {
+        if (this.route.firstChild?.snapshot.params.collectionId === collection.id) {
+            this.router.navigate(['..'], {relativeTo: this.route.firstChild});
+        }
     }
 
     protected add(): void {

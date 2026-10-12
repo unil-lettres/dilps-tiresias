@@ -1,6 +1,6 @@
 import {inject, Service} from '@angular/core';
 import {NaturalLinkMutationService} from '@ecodev/natural';
-import {forkJoin, type Observable} from 'rxjs';
+import {filter, forkJoin, type Observable, switchMap, tap} from 'rxjs';
 import {
     type CardsQuery,
     type CollectionInput,
@@ -17,14 +17,18 @@ import {
     type LinkCollectionToCollectionVariables,
     type UpdateCollection,
     type UpdateCollectionVariables,
+    type UnsubscribeCollection,
+    type UnsubscribeCollectionVariables,
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
+import {AlertService} from '../../shared/components/alert/alert.service';
 import {
     collectionQuery,
     collectionsQuery,
     createCollection,
     deleteCollections,
     linkCollectionToCollection,
+    unsubscribeCollection,
     updateCollection,
 } from './collection.queries';
 import {type FakeCollection} from './fake-collection.resolver';
@@ -43,6 +47,7 @@ export class CollectionService extends AbstractContextualizedService<
     DeleteCollectionsVariables
 > {
     private readonly linkService = inject(NaturalLinkMutationService);
+    private readonly alertService = inject(AlertService);
 
     public constructor() {
         super('collection', collectionQuery, collectionsQuery, createCollection, updateCollection, deleteCollections);
@@ -83,6 +88,38 @@ export class CollectionService extends AbstractContextualizedService<
         });
 
         return forkJoin(observables);
+    }
+
+    /**
+     * Remove the current user from the collection (as responsible and/or subscriber), i.e. leave it.
+     *
+     * Unlike natural's unlinking, this mutation refreshes no list by itself, so the collections are refreshed, eg: "Mes
+     * collections" no longer shows the collection. It emits only once they are, so the confirmation comes with an up to
+     * date list.
+     */
+    public unsubscribe(collection: {id: string}): Observable<unknown> {
+        return this.apollo.mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
+            mutation: unsubscribeCollection,
+            variables: {
+                collection: collection.id,
+            },
+            refetchQueries: [collectionsQuery],
+            awaitRefetchQueries: true,
+        });
+    }
+
+    /**
+     * Ask the current user to confirm, then unsubscribe them from the collection. Emits only once they are unsubscribed.
+     */
+    public confirmAndUnsubscribe(collection: {id: string; name: string}): Observable<unknown> {
+        const title = `Se désabonner de la collection « ${collection.name} » ?`;
+        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+
+        return this.alertService.confirm(title, message, 'Me désabonner', undefined, 'error', 'filled').pipe(
+            filter(confirmed => !!confirmed),
+            switchMap(() => this.unsubscribe(collection)),
+            tap(() => this.alertService.info(`Vous avez été désabonné de la collection « ${collection.name} »`)),
+        );
     }
 
     public linkCollectionToCollection(

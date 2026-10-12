@@ -46,10 +46,20 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     private static ?User $currentUser = null;
 
     /**
+     * Collections the user is responsible for.
+     *
      * @var DoctrineCollection<Collection>
      */
-    #[ORM\ManyToMany(targetEntity: Collection::class, mappedBy: 'users')]
-    private DoctrineCollection $collections;
+    #[ORM\ManyToMany(targetEntity: Collection::class, mappedBy: 'responsibles')]
+    private DoctrineCollection $responsibleCollections;
+
+    /**
+     * Collections the user subscribed to (read-only access).
+     *
+     * @var DoctrineCollection<Collection>
+     */
+    #[ORM\ManyToMany(targetEntity: Collection::class, mappedBy: 'subscribers')]
+    private DoctrineCollection $subscribedCollections;
 
     /**
      * Set currently logged in user
@@ -116,7 +126,8 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      */
     public function __construct(string $role = self::ROLE_STUDENT)
     {
-        $this->collections = new ArrayCollection();
+        $this->responsibleCollections = new ArrayCollection();
+        $this->subscribedCollections = new ArrayCollection();
         $this->role = $role;
     }
 
@@ -311,7 +322,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      */
     public function collectionAdded(Collection $collection): void
     {
-        $this->collections->add($collection);
+        $this->responsibleCollections->add($collection);
     }
 
     /**
@@ -320,7 +331,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      */
     public function collectionRemoved(Collection $collection): void
     {
-        $this->collections->removeElement($collection);
+        $this->responsibleCollections->removeElement($collection);
     }
 
     /**

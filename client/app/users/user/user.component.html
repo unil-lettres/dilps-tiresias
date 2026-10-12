@@ -177,9 +177,9 @@
     </h2>
     <mat-dialog-content>
         @if (!isSelf) {
-            <p class="hint nat-margin-vertical nat-padding">
+            <app-hint>
                 Pour ajouter des abonnés, rendez-vous dans les détails d'une collection dont vous êtes responsable.
-            </p>
+            </app-hint>
         }
         @if (collections().length === 0) {
             <p class="nat-horizontal nat-padding nat-center">
@@ -190,19 +190,21 @@
                 @for (collection of collections(); track collection.id) {
                     <mat-list-item>
                         <span matListItemTitle>{{ collection.hierarchicName || collection.name }}</span>
-                        <button
-                            matIconButton
-                            color="error"
-                            matListItemMeta
-                            aria-label="Se désabonner"
-                            matTooltipPosition="right"
-                            [matTooltip]="
-                                isSelf ? 'Se désabonner de cette collection' : 'Désabonner de cette collection'
-                            "
-                            (click)="unsubscribeFromCollection(collection)"
-                        >
-                            <mat-icon fontIcon="link_off" />
-                        </button>
+                        @if (canRemoveFrom(collection)) {
+                            <button
+                                matIconButton
+                                color="error"
+                                matListItemMeta
+                                aria-label="Se désabonner"
+                                matTooltipPosition="right"
+                                [matTooltip]="
+                                    isSelf ? 'Se désabonner de cette collection' : 'Désabonner de cette collection'
+                                "
+                                (click)="unsubscribeFromCollection(collection)"
+                            >
+                                <mat-icon fontIcon="link_off" />
+                            </button>
+                        }
                     </mat-list-item>
                     @if (!$last) {
                         <mat-divider />

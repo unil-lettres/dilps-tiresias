@@ -68,7 +68,11 @@ class AclTest extends TestCase
         $collection = new Collection();
         $collection->setSite(Site::Dilps);
         self::assertFalse($acl->isCurrentUserAllowed($collection, 'read'), 'admin cannot read non-admin collection');
-        self::assertSame('User "Jane" with role administrator is not allowed on resource "Collection#null" with privilege "read" because it is not the owner, nor one of the responsible', $acl->getLastDenialMessage());
+        self::assertSame('User "Jane" with role administrator is not allowed on resource "Collection#null" with privilege "read" because:
+
+- it is not the owner, nor one of the responsible
+- it is not one of the subscribers
+- it is not the owner', $acl->getLastDenialMessage());
 
         $collection->setVisibility(CollectionVisibility::Administrator);
         self::assertTrue($acl->isCurrentUserAllowed($collection, 'read'), 'admin can do anything');

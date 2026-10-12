@@ -131,7 +131,7 @@
             <span>Ajouter à une collection</span>
         </div>
     }
-    @if (collection?.id) {
+    @if (collection?.id && canManageCollectionContent()) {
         <div mat-menu-item (click)="unlinkFromCollection(selected)">
             <mat-icon svgIcon="library_remove" />
             <span>Retirer de la collection</span>
@@ -180,7 +180,7 @@
                                         <mat-icon naturalIcon="library_add" />
                                     </button>
                                 }
-                                @if (collection?.id) {
+                                @if (collection?.id && canManageCollectionContent()) {
                                     <button
                                         matIconButton
                                         matTooltip="Retirer les fiches sélectionnées de la collection"

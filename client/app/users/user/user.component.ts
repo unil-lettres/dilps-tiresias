@@ -5,6 +5,7 @@ import {
     NaturalQueryVariablesManager,
     NaturalLinkMutationService,
 } from '@ecodev/natural';
+import {forkJoin} from 'rxjs';
 import {Component, inject, viewChild, signal, ChangeDetectionStrategy} from '@angular/core';
 import {
     type AbstractControl,
@@ -25,10 +26,12 @@ import {
     type UserRole,
     UserType,
     type CollectionsQuery,
+    LogicalOperator,
 } from '../../shared/generated-types';
 import {UserService} from '../services/user.service';
 import {TypePipe} from '../../shared/pipes/type.pipe';
 import {DialogFooterComponent} from '../../shared/components/dialog-footer/dialog-footer.component';
+import {HintComponent} from '../../shared/components/hint/hint.component';
 import {MatOption} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
@@ -81,6 +84,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         TypePipe,
         UniqueValidatorDirective,
         MatDivider,
+        HintComponent,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.scss',
@@ -98,6 +102,11 @@ export class UserComponent extends AbstractDetailDirective<
     protected readonly currentView = signal<'properties' | 'collections'>('properties');
     protected readonly collectionsCount = signal<number>(0);
     protected readonly collections = signal<CollectionsQuery['collections']['items']>([]);
+
+    /**
+     * Among `collections`, the ones of which the user is a responsible, rather than a subscriber
+     */
+    private readonly responsibleCollectionIds = signal<ReadonlySet<string>>(new Set());
     protected isSelf = false;
 
     protected roles: IEnum[] = [];
@@ -185,12 +194,25 @@ export class UserComponent extends AbstractDetailDirective<
         }
     }
 
+    /**
+     * Filter matching the collections the user is a member of, either as a responsible or as a subscriber.
+     */
+    private membershipFilter(): {groups: unknown[]} {
+        return {
+            groups: [
+                {conditions: [{responsibles: {have: {values: [this.data.item.id]}}}]},
+                {
+                    groupLogic: LogicalOperator.OR,
+                    conditions: [{subscribers: {have: {values: [this.data.item.id]}}}],
+                },
+            ],
+        };
+    }
+
     private loadCollectionsCount(): void {
         const qvm = new NaturalQueryVariablesManager();
         qvm.set('variables', {
-            filter: {
-                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
-            },
+            filter: this.membershipFilter(),
             pagination: {pageSize: 1, pageIndex: 0},
         });
 
@@ -202,44 +224,68 @@ export class UserComponent extends AbstractDetailDirective<
     private loadCollections(): void {
         const qvm = new NaturalQueryVariablesManager();
         qvm.set('variables', {
-            filter: {
-                groups: [{conditions: [{users: {have: {values: [this.data.item.id]}}}]}],
-            },
+            filter: this.membershipFilter(),
         });
 
-        this.collectionService.getAll(qvm).subscribe(result => {
-            this.collections.set(result.items);
+        const responsibleQvm = new NaturalQueryVariablesManager();
+        responsibleQvm.set('variables', {
+            filter: {groups: [{conditions: [{responsibles: {have: {values: [this.data.item.id]}}}]}]},
         });
+
+        forkJoin([this.collectionService.getAll(qvm), this.collectionService.getAll(responsibleQvm)]).subscribe(
+            ([result, responsibleResult]) => {
+                this.responsibleCollectionIds.set(new Set(responsibleResult.items.map(collection => collection.id)));
+                this.collections.set(result.items);
+            },
+        );
+    }
+
+    /**
+     * Whether the user may be removed from the collection: anybody may leave on their own, but removing somebody else
+     * requires the privilege of the relation they belong to
+     */
+    protected canRemoveFrom(collection: CollectionsQuery['collections']['items'][0]): boolean {
+        if (this.isSelf) {
+            return true;
+        }
+
+        return this.responsibleCollectionIds().has(collection.id)
+            ? collection.canManageResponsibles
+            : collection.canManageSubscribers;
     }
 
     protected unsubscribeFromCollection(collection: CollectionsQuery['collections']['items'][0]): void {
-        let title: string;
-        let message: string;
-        let buttonLabel: string;
-        let successMessage: string;
+        const reload = (): void => {
+            this.loadCollections();
+            this.loadCollectionsCount();
+        };
 
+        // When leaving on our own behalf, use the dedicated mutation that requires no privilege on the collection
         if (this.isSelf) {
-            title = `Se désabonner de la collection « ${collection.name} » ?`;
-            message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
-            buttonLabel = 'Me désabonner';
-            successMessage = `Vous avez été désabonné de la collection « ${collection.name} »`;
-        } else {
-            title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
-            message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
-            buttonLabel = 'Désabonner';
-            successMessage = `Désabonnement de la collection « ${collection.name} » effectué`;
+            this.collectionService.confirmAndUnsubscribe(collection).subscribe(reload);
+
+            return;
         }
 
-        this.alertService.confirm(title, message, buttonLabel, undefined, 'error', 'filled').subscribe(confirmed => {
+        const title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
+        const message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+
+        this.alertService.confirm(title, message, 'Désabonner', undefined, 'error', 'filled').subscribe(confirmed => {
             if (!confirmed) {
                 return;
             }
 
-            this.linkService.unlink(collection, this.user as LinkableObject).subscribe(() => {
-                this.alertService.info(successMessage);
-                this.loadCollections();
-                this.loadCollectionsCount();
-            });
+            // When an administrator removes someone else, unlink them from the only relation they belong to
+            this.linkService
+                .unlink(
+                    collection,
+                    this.data.item as LinkableObject,
+                    this.responsibleCollectionIds().has(collection.id) ? 'responsible' : 'subscriber',
+                )
+                .subscribe(() => {
+                    this.alertService.info(`Désabonnement de la collection « ${collection.name} » effectué`);
+                    reload();
+                });
         });
     }
 

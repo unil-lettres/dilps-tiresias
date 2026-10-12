@@ -25,7 +25,8 @@ class LinkCollectionToCollection implements FieldInterface
                 $sourceCollection = $args['sourceCollection']->getEntity();
                 $targetCollection = $args['targetCollection']->getEntity();
 
-                Helper::throwIfDenied($targetCollection, 'update');
+                // Adding images to the target is curating its content, not changing its settings
+                Helper::throwIfDenied($targetCollection, 'linkCard');
 
                 /** @var CollectionRepository $collectionRepository */
                 $collectionRepository = _em()->getRepository(Collection::class);

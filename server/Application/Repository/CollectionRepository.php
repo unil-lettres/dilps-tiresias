@@ -22,7 +22,7 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
      *
      * - collection is member and user is logged in
      * - collection is admin and user is admin
-     * - collection owner, creator or responsible is the user
+     * - collection owner, creator, responsible or subscriber is the user
      * - collection parent is accessible (recursively)
      */
     public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
@@ -44,23 +44,27 @@ class CollectionRepository extends AbstractHasParentRepository implements \Ecode
                         collection.visibility IN ($visibility)
                         OR collection.owner_id = $userId
                         OR collection.creator_id = $userId
-                        OR cu.user_id = $userId 
+                        OR cu.user_id = $userId
+                        OR cs.user_id = $userId
             STRING;
 
+        // Membership joins are restricted to the user, to avoid multiplying rows by the number of members
         $sql = <<<STRING
             WITH RECURSIVE parent AS (
 
             SELECT collection.id, collection.parent_id FROM collection
-            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id AND cu.user_id = $userId
+            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id AND cs.user_id = $userId
             WHERE
-            parent_id IS NULL 
+            parent_id IS NULL
             AND ($isAccessible)
 
             UNION
 
             SELECT collection.id, collection.parent_id FROM collection
             INNER JOIN parent ON collection.parent_id = parent.id
-            LEFT JOIN collection_user cu ON collection.id = cu.collection_id
+            LEFT JOIN collection_responsible cu ON collection.id = cu.collection_id AND cu.user_id = $userId
+            LEFT JOIN collection_subscriber cs ON collection.id = cs.collection_id AND cs.user_id = $userId
             WHERE
             $isAccessible
 
