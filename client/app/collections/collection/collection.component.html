@@ -37,7 +37,7 @@
             @if (showVisibility) {
                 <div class="nat-vertical" style="max-width: 400px">
                     <div class="nat-horizontal">Visible {{ visibilities[visibility].text }}</div>
-                    <mat-slider [max]="3" [min]="1" [step]="1">
+                    <mat-slider [max]="maxVisibility()" [min]="1" [step]="1">
                         <input matSliderThumb [(ngModel)]="visibility" (change)="updateVisibility()" />
                     </mat-slider>
                 </div>

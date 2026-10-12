@@ -92,7 +92,7 @@ class CollectionTest extends TestCase
         User::setCurrent(new User($role));
 
         if ($shouldThrow) {
-            $this->expectExceptionMessage('Only seniors, majors and administrators can make a collection visible to others than its members');
+            $this->expectExceptionMessage('Only seniors, majors and administrators can make a collection visible to all members');
         }
 
         $collection->setVisibility($next);
@@ -103,12 +103,14 @@ class CollectionTest extends TestCase
     {
         yield 'student cannot make public' => [User::ROLE_STUDENT, CollectionVisibility::Private, CollectionVisibility::Member, true];
         yield 'junior cannot make public' => [User::ROLE_JUNIOR, CollectionVisibility::Private, CollectionVisibility::Member, true];
-        yield 'junior cannot make visible to administrators' => [User::ROLE_JUNIOR, CollectionVisibility::Private, CollectionVisibility::Administrator, true];
-        yield 'junior cannot change between non-private' => [User::ROLE_JUNIOR, CollectionVisibility::Member, CollectionVisibility::Administrator, true];
+        yield 'student can make visible to administrators' => [User::ROLE_STUDENT, CollectionVisibility::Private, CollectionVisibility::Administrator, false];
+        yield 'junior can make visible to administrators' => [User::ROLE_JUNIOR, CollectionVisibility::Private, CollectionVisibility::Administrator, false];
+        yield 'junior cannot make public what is visible to administrators' => [User::ROLE_JUNIOR, CollectionVisibility::Administrator, CollectionVisibility::Member, true];
+        yield 'junior can make visible only to administrators' => [User::ROLE_JUNIOR, CollectionVisibility::Member, CollectionVisibility::Administrator, false];
         yield 'junior can keep public' => [User::ROLE_JUNIOR, CollectionVisibility::Member, CollectionVisibility::Member, false];
         yield 'junior can make private' => [User::ROLE_JUNIOR, CollectionVisibility::Member, CollectionVisibility::Private, false];
         yield 'senior can make public' => [User::ROLE_SENIOR, CollectionVisibility::Private, CollectionVisibility::Member, false];
         yield 'major can make public' => [User::ROLE_MAJOR, CollectionVisibility::Private, CollectionVisibility::Member, false];
-        yield 'administrator can make visible to administrators' => [User::ROLE_ADMINISTRATOR, CollectionVisibility::Private, CollectionVisibility::Administrator, false];
+        yield 'administrator can make public what is visible to administrators' => [User::ROLE_ADMINISTRATOR, CollectionVisibility::Administrator, CollectionVisibility::Member, false];
     }
 }

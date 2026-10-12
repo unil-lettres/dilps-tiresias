@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only seniors, majors and administrators can make a collection visible to others than its members',
+                'message' => 'Only seniors, majors and administrators can make a collection visible to all members',
                 'extensions' => [
                     'showSnack' => true,
                 ],

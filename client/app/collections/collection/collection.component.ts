@@ -37,6 +37,9 @@ import {HintComponent} from '../../shared/components/hint/hint.component';
  */
 export const unsubscribed = 'unsubscribed';
 
+// Only they may make a collection public, as enforced by the server
+const publishers = [UserRole.senior, UserRole.major, UserRole.administrator];
+
 @Component({
     selector: 'app-collection',
     imports: [
@@ -131,6 +134,7 @@ export class CollectionComponent
     protected parentHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
 
     protected showVisibility = true;
+    private publicWhenLoaded = false;
 
     public constructor() {
         super(inject(CollectionService));
@@ -171,7 +175,7 @@ export class CollectionComponent
     }
 
     /**
-     * Visibility is seen by >=seniors if they are the creator, or by admins if visibility is set to admin.
+     * Visibility is seen by the creator, or by admins if visibility is set to admin.
      */
     protected computeShowVisibility(): boolean {
         // While no user loaded
@@ -181,9 +185,8 @@ export class CollectionComponent
 
         const hasCreator = this.isUpdatePage() && !!this.data.item.creator;
         const isCreator = hasCreator && this.user.id === this.data.item.creator!.id;
-        const isOwner = isCreator && [UserRole.senior, UserRole.administrator, UserRole.major].includes(this.user.role);
 
-        if (isOwner) {
+        if (isCreator) {
             return true;
         }
 
@@ -195,6 +198,13 @@ export class CollectionComponent
         return this.user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
+    /**
+     * Students and juniors cannot make a collection public, but an administrator can, and they may then keep it public
+     */
+    protected maxVisibility(): keyof CollectionVisibilities {
+        return (!!this.user && publishers.includes(this.user.role)) || this.publicWhenLoaded ? 3 : 2;
+    }
+
     protected displayFn(item: UsersQuery['users']['items'][0] | string | null): string {
         return item && typeof item !== 'string' ? item.login : '';
     }
@@ -202,6 +212,7 @@ export class CollectionComponent
     protected override postQuery(): void {
         // Init visibility
         this.visibility = findKey(this.visibilities, s => s.value === this.data.item.visibility)!;
+        this.publicWhenLoaded = this.data.item.visibility === CollectionVisibility.Member;
 
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
