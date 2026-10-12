@@ -93,17 +93,19 @@ export class CollectionService extends AbstractContextualizedService<
     /**
      * Remove the current user from the collection (as responsible and/or subscriber), i.e. leave it.
      *
-     * Like natural does after unlinking, the lists are refreshed, eg: "Mes collections" no longer shows the collection.
+     * Unlike natural's unlinking, this mutation refreshes no list by itself, so the collections are refreshed, eg: "Mes
+     * collections" no longer shows the collection. It emits only once they are, so the confirmation comes with an up to
+     * date list.
      */
     public unsubscribe(collection: {id: string}): Observable<unknown> {
-        return this.apollo
-            .mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
-                mutation: unsubscribeCollection,
-                variables: {
-                    collection: collection.id,
-                },
-            })
-            .pipe(tap(() => this.apollo.client.refetchObservableQueries()));
+        return this.apollo.mutate<UnsubscribeCollection, UnsubscribeCollectionVariables>({
+            mutation: unsubscribeCollection,
+            variables: {
+                collection: collection.id,
+            },
+            refetchQueries: [collectionsQuery],
+            awaitRefetchQueries: true,
+        });
     }
 
     /**
