@@ -134,7 +134,7 @@ export class CollectionComponent
     protected hierarchicConfig = collectionsHierarchicConfig;
     protected parentHierarchicFilters: HierarchicFiltersConfiguration<CollectionFilter> = [];
 
-    protected showVisibility = true;
+    protected showVisibility = false;
     private publicWhenLoaded = false;
 
     public constructor() {
@@ -145,6 +145,9 @@ export class CollectionComponent
         super.ngOnInit();
 
         this.parentHierarchicFilters = this.getParentHierarchicFilters();
+
+        // The user may be known only after the collection
+        this.userService.getCurrentUser().subscribe(user => (this.showVisibility = this.computeShowVisibility(user)));
     }
 
     /**
@@ -176,16 +179,16 @@ export class CollectionComponent
     }
 
     /**
-     * Visibility is seen by the creator, or by admins if visibility is set to admin.
+     * Visibility is seen by the creator, or by whoever creates the collection, or by admins if visibility is set to
+     * admin.
      */
-    protected computeShowVisibility(): boolean {
+    protected computeShowVisibility(user = this.user): boolean {
         // While no user loaded
-        if (!this.user) {
+        if (!user) {
             return false;
         }
 
-        const hasCreator = this.isUpdatePage() && !!this.data.item.creator;
-        const isCreator = hasCreator && this.user.id === this.data.item.creator!.id;
+        const isCreator = this.isUpdatePage() ? user.id === this.data.item.creator?.id : true;
 
         if (isCreator) {
             return true;
@@ -196,7 +199,7 @@ export class CollectionComponent
             this.data.item.visibility === CollectionVisibility.Member;
 
         // If is admin and has visibility
-        return this.user.role === UserRole.administrator && collectionIsNotPrivate;
+        return user.role === UserRole.administrator && collectionIsNotPrivate;
     }
 
     /**

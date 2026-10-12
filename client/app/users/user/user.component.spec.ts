@@ -57,9 +57,7 @@ describe('UserComponent', () => {
         expect(testable(component).roleDisabled(UserRole.administrator)).toBe(true);
     });
 
-    // Known bug: the roles available are only loaded for an existing user, so they are all disabled when creating
-    // one, and administrators can only create students. Replace `it.fails` by `it` once fixed.
-    it.fails('enables the roles that the viewer may give to a new user', () => {
+    it('enables the roles that the viewer may give to a new user', () => {
         const component = create({}, UserRole.administrator);
 
         expect(testable(component).roleDisabled(UserRole.senior)).toBe(false);

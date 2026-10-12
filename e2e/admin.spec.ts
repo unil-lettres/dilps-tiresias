@@ -105,16 +105,32 @@ test('administrator can delete a user who logged in', async ({page, browser, cle
     await expect(rows).toHaveCount(0);
 });
 
-// Known bug: the roles available are only loaded when editing a user, so they are all disabled when creating one, and
-// only students can be created. Remove `test.fail()` once fixed.
-test('administrator can choose the role of a new user', async ({page}) => {
-    test.fail();
+test('administrator can choose the role of a new user', async ({page, cleanup}) => {
     await login(page, 'administrator');
+    const name = `e2e-${crypto.randomUUID()}`;
+    cleanup.add(async () => deleteObjects(page, 'User', await findIds(page, 'User', name)));
+
     await openAdministration(page, 'Utilisateurs');
     await page.getByRole('button', {name: 'Créer un utilisateur'}).click();
     const dialog = page.getByRole('dialog', {name: 'Créer un utilisateur'});
+    await dialog.getByLabel('Login').fill(name);
+    await dialog.getByLabel('Email').fill(`${name}@example.com`);
     await dialog.getByRole('combobox', {name: 'Rôle'}).click();
-    await expect(page.getByRole('option', {name: 'Senior'})).toBeEnabled({timeout: 2_000});
+    await page.getByRole('option', {name: 'Senior'}).click();
+    await dialog.getByRole('button', {name: 'Ajouter'}).click();
+    await expect(dialog).toBeHidden();
+
+    await expect
+        .poll(async () => {
+            const data = await graphql<{users: {items: {role: string}[]}}>(
+                page,
+                'query ($login: String!) { users(filter: {groups: [{conditions: [{login: {equal: {value: $login}}}]}]}) { items { role } } }',
+                {login: name},
+            );
+
+            return data.users.items.map(user => user.role);
+        })
+        .toEqual(['senior']);
 });
 
 /**

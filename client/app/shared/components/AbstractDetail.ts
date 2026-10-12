@@ -69,6 +69,8 @@ export class AbstractDetailDirective<
                 this._isUpdatePage = true;
                 this.postQuery();
             });
+        } else {
+            this.postQuery();
         }
 
         this.userService.getCurrentUser().subscribe(user => (this.user = user));
@@ -165,6 +167,9 @@ export class AbstractDetailDirective<
         return 'Supprimer cet élément ?';
     }
 
+    /**
+     * Called once the object is loaded, or right away for a new object, see `isUpdatePage()`
+     */
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected postQuery(): void {}
 
