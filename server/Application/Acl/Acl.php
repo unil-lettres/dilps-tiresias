@@ -101,16 +101,18 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_STUDENT, $user, ['update', 'delete'], new All(new IsMyself(), new SameSite()));
 
         // Adding a card to a collection only requires to manage the collection, and then gives rights on that card. So juniors only get
-        // rights via the non-private collections, which they cannot create themselves, otherwise they could take over any card they see
-        $nonPrivateCollections = [CollectionVisibility::Member, CollectionVisibility::Administrator];
-        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
-        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible($nonPrivateCollections), new SameSite()));
+        // rights via the public collections, which only seniors and above can make public, otherwise they could take over any card they see.
+        // Making the collection of a junior public thus trusts them with any card they add to it
+        $publicCollections = [CollectionVisibility::Member];
+        $this->allow(User::ROLE_JUNIOR, $card, ['update'], new All(new IsOwnerOrResponsible($publicCollections), new SameSite()));
+        $this->allow(User::ROLE_JUNIOR, $card, ['delete'], new All(new IsNotSuggestion(), new IsOwnerOrResponsible($publicCollections), new SameSite()));
 
         // Seniors and above get rights via any collection
         $this->allow(User::ROLE_SENIOR, $card, ['update', 'delete'], new All(new IsOwnerOrResponsible(), new SameSite()));
 
         // Like administrators, majors add images to any non-private collection. On a private one, they only get the rights of its
         // owner or of a responsible, inherited from students
+        $nonPrivateCollections = [CollectionVisibility::Member, CollectionVisibility::Administrator];
         $this->allow(User::ROLE_MAJOR, $collection, ['linkCard'], new All(new Visibility($nonPrivateCollections), new SameSite()));
 
         // Administrator inherits only read from anonymous, and is allowed **almost** all other privileges

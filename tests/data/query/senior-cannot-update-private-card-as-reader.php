@@ -18,7 +18,7 @@ return [
                 'message' => 'User "senior" with role senior is not allowed on resource "Card#6000" with privilege "update" because:
 
 - it is not the owner, nor one of the responsible
-- it is not the owner, nor one of the responsible of a collection with visibility member or administrator',
+- it is not the owner, nor one of the responsible of a collection with visibility member',
                 'extensions' => [
                     'showSnack' => true,
                 ],
