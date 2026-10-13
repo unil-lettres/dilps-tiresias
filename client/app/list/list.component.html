@@ -94,7 +94,19 @@
             </div>
         }
     }
-    @if (selected.length) {
+    @if (viewMode === ViewMode.grid) {
+        @if (gridSelectionModeActive()) {
+            <div mat-menu-item class="cancel-selection" (click)="unselectAll()">
+                <mat-icon naturalIcon="deselect" />
+                <span>Annuler la sélection</span>
+            </div>
+        } @else {
+            <div mat-menu-item (click)="gridSelectionModeActive.set(true)">
+                <mat-icon naturalIcon="select_check_box" />
+                <span>Sélectionner des images</span>
+            </div>
+        }
+    } @else if (selected.length) {
         <div mat-menu-item (click)="unselectAll()">
             <mat-icon naturalIcon="deselect" />
             <span>Désélectionner tout</span>
@@ -267,7 +279,26 @@
                                 }
                             </button>
                         }
-                        @if (selected.length) {
+                        @if (viewMode === ViewMode.grid) {
+                            @if (gridSelectionModeActive()) {
+                                <button
+                                    matIconButton
+                                    class="cancel-selection"
+                                    matTooltip="Annuler la sélection"
+                                    (click)="unselectAll()"
+                                >
+                                    <mat-icon naturalIcon="deselect" />
+                                </button>
+                            } @else {
+                                <button
+                                    matIconButton
+                                    matTooltip="Sélectionner des images"
+                                    (click)="gridSelectionModeActive.set(true)"
+                                >
+                                    <mat-icon naturalIcon="select_check_box" />
+                                </button>
+                            }
+                        } @else if (selected.length) {
                             <button matIconButton matTooltip="Désélectionner tout" (click)="unselectAll()">
                                 <mat-icon naturalIcon="deselect" />
                             </button>
@@ -394,6 +425,7 @@
                     [selected]="selected"
                     [scrollable]="scrollable"
                     [paginationOffset]="paginationOffset()"
+                    [(selectionModeActive)]="gridSelectionModeActive"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                     (contentChange)="gridContentChange($event)"

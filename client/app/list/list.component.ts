@@ -99,7 +99,6 @@ function applyChanges(
 }
 
 export type ViewInterface = {
-    selectAll: () => Promise<CardsQuery['cards']['items'][0][]>;
     unselectAll: () => void;
 };
 
@@ -251,6 +250,11 @@ export class ListComponent
     private readonly hasSelection = signal(false);
 
     /**
+     * Whether the selection mode of the grid view is active
+     */
+    protected readonly gridSelectionModeActive = signal(false);
+
+    /**
      * Show logo on top left corner
      */
     protected showLogo = true;
@@ -278,7 +282,7 @@ export class ListComponent
     protected user!: ViewerQuery['viewer'];
 
     /**
-     * Number of items added to dom from the gallery (grid view)
+     * Number of the last card visible on screen in the gallery (grid view)
      */
     protected readonly gridNumberVisibleItems = signal(0);
 
@@ -500,6 +504,7 @@ export class ListComponent
      */
     protected setViewMode(mode: ViewMode): void {
         this.viewMode = mode;
+        this.gridSelectionModeActive.set(false);
 
         // Views share the same scroll container, so the new one must not open
         // where the previous one was scrolled
@@ -519,6 +524,7 @@ export class ListComponent
     protected reset(): void {
         this.selected = [];
         this.hasSelection.set(false);
+        this.gridSelectionModeActive.set(false);
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
@@ -700,15 +706,14 @@ export class ListComponent
     }
 
     protected selectAll(): void {
-        this.getViewComponent()
-            .selectAll()
-            .then(number => (this.selected = number));
+        this.listComponent()?.selectAll();
     }
 
     protected unselectAll(): void {
         this.selected = [];
         this.hasSelection.set(false);
-        this.getViewComponent().unselectAll();
+        this.gridSelectionModeActive.set(false);
+        this.getViewComponent()?.unselectAll();
     }
 
     public override search(naturalSearchSelections: NaturalSearchSelections): void {
@@ -824,10 +829,10 @@ export class ListComponent
     }
 
     /**
-     * Return the only activated View Component
+     * Return the only activated View Component, if any
      */
-    private getViewComponent(): ViewInterface {
-        return (this.gridComponent() || this.listComponent())!;
+    private getViewComponent(): ViewInterface | undefined {
+        return this.gridComponent() ?? this.listComponent();
     }
 
     /**

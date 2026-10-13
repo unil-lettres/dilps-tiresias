@@ -1,11 +1,10 @@
 import {
-    type AfterViewInit,
     Component,
-    computed,
     DestroyRef,
     effect,
     inject,
     input,
+    model,
     type OnInit,
     output,
     signal,
@@ -22,6 +21,7 @@ import {
     LabelVisibility,
     type ModelAttributes,
     type NaturalGalleryOptions,
+    type VisibleCollectionChange,
 } from '@ecodev/natural-gallery-js';
 import {fromEvent} from 'rxjs';
 import {filter} from 'rxjs/operators';
@@ -39,25 +39,6 @@ export type ContentChange = {
 
 type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
 
-/**
- * natural-gallery binds a scroll listener to its scrollable and never removes
- * it. When the scrollable outlives this component, that listener keeps the
- * gallery instance alive : it would keep reacting to scrolls and emitting
- * through destroyed outputs (NG0953).
- */
-function scrollRelay(scrollable: HTMLElement, destroyRef: DestroyRef): HTMLElement {
-    const relay = new EventTarget();
-    fromEvent(scrollable, 'scroll')
-        .pipe(takeUntilDestroyed(destroyRef))
-        .subscribe(() => relay.dispatchEvent(new Event('scroll')));
-
-    return Object.defineProperties(relay, {
-        scrollTop: {get: () => scrollable.scrollTop},
-        clientTop: {get: () => scrollable.clientTop},
-        clientHeight: {get: () => scrollable.clientHeight},
-    }) as unknown as HTMLElement;
-}
-
 @Component({
     selector: 'app-view-grid',
     imports: [NaturalGalleryComponent, HistoricIconComponent, MatProgressSpinner],
@@ -65,7 +46,7 @@ function scrollRelay(scrollable: HTMLElement, destroyRef: DestroyRef): HTMLEleme
     styleUrl: './view-grid.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
+export class ViewGridComponent implements OnInit, ViewInterface {
     private readonly router = inject(Router);
     private readonly route = inject(ActivatedRoute);
 
@@ -96,7 +77,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     protected readonly pagination = output<PaginationInput>();
 
     /**
-     * Emits number of visible items in dom and number of total items
+     * Emits the number of the last card visible on screen and the number of total cards
      */
     protected readonly contentChange = output<ContentChange>();
 
@@ -106,15 +87,15 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     protected readonly selectionChange = output<CardsQuery['cards']['items'][0][]>();
 
     /**
+     * Whether the selection mode of the gallery is active
+     */
+    public readonly selectionModeActive = model(false);
+
+    /**
      * The element scrolling the gallery, used for the infinite scroll and to
      * restore the scroll position.
      */
     public readonly scrollable = input.required<HTMLElement>();
-
-    /**
-     * What natural-gallery gets as its scrollable, see scrollRelay()
-     */
-    protected galleryScrollable?: HTMLElement;
 
     /**
      * Current pagination offset from parent.
@@ -137,6 +118,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     private preventScrollRestoration = false;
 
     /**
+     * True while the gallery is cleared, because the selection mode that the gallery leaves must not unselect the cards
+     */
+    private clearing = false;
+
+    /**
      * Row height of thumbnails in grid
      */
     private thumbnailHeight = 300;
@@ -151,7 +137,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     /**
      * Signal indicating that we are clearing the gallery and results are not yet loaded
      */
-    protected readonly isClearing = computed(() => this.paginationOffset() === 0);
+    protected readonly isClearing = signal(false);
 
     private readonly routerEvents$ = this.router.events.pipe(
         takeUntilDestroyed(),
@@ -164,26 +150,31 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         rowHeight: this.thumbnailHeight,
         activable: true,
         selectable: true,
+        selectionMode: true,
         lightbox: true,
         photoSwipePluginsInitFn: lightbox => {
             lightbox.on('uiRegister', () => {
+                // PhotoSwipe and the PhotoSwipe UI exist when PhotoSwipe registers the UI elements
+                const pswp = lightbox.pswp!;
+                const ui = pswp.ui!;
+
                 // Link to card button
                 // https://photoswipe.com/adding-ui-elements/#adding-a-button-to-the-toolbar
-                lightbox.pswp.ui.registerElement({
+                ui.registerElement({
                     name: 'card-button',
                     ariaLabel: 'Voir la fiche',
                     order: 5,
                     isButton: true,
                     html: 'Voir la fiche',
                     onClick: () => {
-                        this.activate(lightbox.pswp.currSlide.data.item.model);
-                        lightbox.pswp.destroy();
+                        this.activate(pswp.currSlide!.data.item.model);
+                        pswp.destroy();
                     },
                 });
 
                 // Download button
                 // https://photoswipe.com/adding-ui-elements/#adding-download-button
-                lightbox.pswp.ui.registerElement({
+                ui.registerElement({
                     name: 'download-button',
                     order: 8,
                     isButton: true,
@@ -202,7 +193,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                 });
 
                 // Historic icon
-                lightbox.pswp.ui.registerElement({
+                ui.registerElement({
                     name: 'historic-icon',
                     order: 7,
                     isButton: false,
@@ -235,12 +226,22 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         effect(() => {
             const offset = this.paginationOffset();
             if (offset === null) {
+                this.isClearing.set(true);
                 const gallery = this.gallery();
                 if (gallery) {
                     gallery.gallery.then(g => {
                         if (g.collection.length > 0) {
                             this.currentHasHistoricImages = false;
+
+                            // The selection outlives the reload, and the selection mode outlives the reload too
+                            this.clearing = true;
                             g.clear();
+                            this.clearing = false;
+                            if (this.selected().length) {
+                                g.setSelectionModeActive(true);
+                            } else {
+                                this.selectionModeActive.set(false);
+                            }
 
                             // Scroll to top and prevent restoration
                             this.scrollable().scrollTop = 0;
@@ -254,8 +255,6 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
     }
 
     public ngOnInit(): void {
-        this.galleryScrollable = scrollRelay(this.scrollable(), this.destroyRef);
-
         this.dataSource()
             .internalDataObservable.pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(result => {
@@ -264,6 +263,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                     return;
                 }
 
+                this.isClearing.set(false);
+
                 gallery.gallery.then(gallery => {
                     if (result.items.length > 0) {
                         const hasHistoric = result.items.some(card => card.showHistoric);
@@ -271,6 +272,11 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
                             this.currentHasHistoricImages = true;
                         }
                         gallery.addItems(this.formatImages(result.items));
+
+                        // The selected cards may not be part of the displayed items, for example after a switch from the list view
+                        if (this.selected().length && !gallery.selectionModeActive) {
+                            gallery.setSelectionModeActive(true);
+                        }
 
                         this.hasMoreItems.set(gallery.collection.length < result.length);
 
@@ -308,12 +314,8 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         });
     }
 
-    public ngAfterViewInit(): void {
-        this.gallery()?.gallery.then(gallery =>
-            gallery.addEventListener('item-added-to-dom', () => {
-                this.contentChange.emit({visible: gallery.domCollection.length});
-            }),
-        );
+    protected visibleCollectionChange(change: VisibleCollectionChange<GalleryModel>): void {
+        this.contentChange.emit({visible: change.lastIndex + 1});
     }
 
     protected loadMore(ev: CustomEventDetailMap<GalleryModel>['pagination']): void {
@@ -324,15 +326,23 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         this.router.navigate(['card', item.id]);
     }
 
-    public selectAll(): Promise<GalleryModel[]> {
-        return (
-            this.gallery()?.gallery.then(gallery => gallery.selectDomCollection().map(i => i.model)) ??
-            Promise.resolve([])
-        );
+    /**
+     * The gallery unselects only the cards that the gallery displays, so the grid also unselects the cards selected
+     * before the last search when the gallery leaves the selection mode
+     */
+    protected selectionModeChange(active: boolean): void {
+        if (this.clearing) {
+            return;
+        }
+
+        this.selectionModeActive.set(active);
+        if (!active && this.selected().length) {
+            this.selectionChange.emit([]);
+        }
     }
 
     public unselectAll(): void {
-        this.gallery()?.gallery.then(gallery => gallery.unselectAllItems());
+        this.gallery()?.gallery.then(gallery => gallery.setSelectionModeActive(false));
     }
 
     private formatImages(cards: CardsQuery['cards']['items'][0][]): GalleryModel[] {
@@ -385,7 +395,7 @@ export class ViewGridComponent implements OnInit, ViewInterface, AfterViewInit {
         return event.map(i => i.model);
     }
 
-    protected itemAddedToDom(item: Item<GalleryModel>): void {
+    protected itemElementCreated(item: Item<GalleryModel>): void {
         if (!item.model.showHistoric) {
             return;
         }

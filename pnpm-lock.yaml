@@ -152,8 +152,8 @@ importers:
         specifier: ^8.9.0
         version: 8.10.0(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(@bugsnag/js@8.10.0)
       '@ecodev/angular-natural-gallery':
-        specifier: ^26.0.0
-        version: 26.0.0(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))
+        specifier: ^27.1.1
+        version: 27.1.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))
       '@ecodev/natural':
         specifier: 73.3.0
         version: 73.3.0(3bf2190ef27a764b7f593b19da63c163)
@@ -753,14 +753,14 @@ packages:
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
 
-  '@ecodev/angular-natural-gallery@26.0.0':
-    resolution: {integrity: sha512-kEONRZGKaa2NZ2vjO1evjDNlfv6m5Lg6ln9/gAeTRL6fJ6F04A2bb5pAE5wfeGvFk9gPFw2Ph1ZCYVCEB4RjjQ==}
+  '@ecodev/angular-natural-gallery@27.1.1':
+    resolution: {integrity: sha512-WJfnucm10WfnAtglN1T2TpxqtFevWD3s9i4hDa0NxjT5bSOCkN/vRF5svNfGIFwKKPixL53ZaUc+l2Omt1i/WQ==}
     peerDependencies:
       '@angular/common': ^22.1.0
       '@angular/core': ^22.1.0
 
-  '@ecodev/natural-gallery-js@11.1.3':
-    resolution: {integrity: sha512-fBiangkCGiv0hUbTUjQRerV6Hxs8e4VxIEpXiQbOq9oTZZ/KZCRiZ48UfemEujMMqsE5Orh5SPLICzj+t9flaw==}
+  '@ecodev/natural-gallery-js@12.1.0':
+    resolution: {integrity: sha512-B2A8GAY+PdaBUoREPVcv2/u2owRH+3pijr8Nt1W1ASGOs0WBdqFzP6bfQ7/1trOI4JdDGr7BTNUekykHLMVYsg==}
     engines: {node: '>=18.0.0'}
 
   '@ecodev/natural-layout@2.0.6':
@@ -5008,14 +5008,14 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
-  '@ecodev/angular-natural-gallery@26.0.0(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))':
+  '@ecodev/angular-natural-gallery@27.1.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))':
     dependencies:
       '@angular/common': 22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)
-      '@ecodev/natural-gallery-js': 11.1.3
+      '@ecodev/natural-gallery-js': 12.1.0
       tslib: 2.8.1
 
-  '@ecodev/natural-gallery-js@11.1.3': {}
+  '@ecodev/natural-gallery-js@12.1.0': {}
 
   '@ecodev/natural-layout@2.0.6': {}
 

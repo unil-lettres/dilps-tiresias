@@ -34,7 +34,7 @@
         "@bugsnag/core": "^8.9.0",
         "@bugsnag/js": "^8.9.0",
         "@bugsnag/plugin-angular": "^8.9.0",
-        "@ecodev/angular-natural-gallery": "^26.0.0",
+        "@ecodev/angular-natural-gallery": "^27.1.1",
         "@ecodev/natural": "73.3.0",
         "@ecodev/natural-layout": "^2.0.6",
         "@fontsource-variable/quicksand": "^5.2.10",

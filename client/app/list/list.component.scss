@@ -164,16 +164,39 @@
     }
 }
 
-.background-selection {
-    border-radius: var(--mat-sys-corner-small);
+.background-selection,
+.cancel-selection {
     background-color: var(--mat-sys-tertiary-container);
-    padding: 4px 4px 4px 16px;
-    color: var(--mat-sys-on-tertiary-container);
 
     @include mat.icon-button-overrides(
         (
             icon-color: var(--mat-sys-on-tertiary-container),
             state-layer-color: var(--mat-sys-on-tertiary-container),
+        )
+    );
+}
+
+.background-selection {
+    border-radius: var(--mat-sys-corner-small);
+    padding: 4px 4px 4px 16px;
+    color: var(--mat-sys-on-tertiary-container);
+}
+
+.cancel-selection {
+    @include mat.menu-overrides(
+        (
+            item-label-text-color: var(--mat-sys-on-tertiary-container),
+            item-icon-color: var(--mat-sys-on-tertiary-container),
+            item-hover-state-layer-color: color-mix(
+                    in srgb,
+                    var(--mat-sys-on-tertiary-container) calc(var(--mat-sys-hover-state-layer-opacity) * 100%),
+                    var(--mat-sys-tertiary-container)
+                ),
+            item-focus-state-layer-color: color-mix(
+                    in srgb,
+                    var(--mat-sys-on-tertiary-container) calc(var(--mat-sys-focus-state-layer-opacity) * 100%),
+                    var(--mat-sys-tertiary-container)
+                ),
         )
     );
 }

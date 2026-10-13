@@ -94,6 +94,7 @@
             .figure {
                 --ngjs-figure-radius: 0;
                 --ngjs-link-radius: var(--mat-sys-corner-small);
+                --ngjs-selected-marker-color: var(--mat-sys-tertiary-container);
 
                 .select-btn {
                     display: flex;
@@ -118,12 +119,9 @@
             }
 
             .figure.selected {
-                --ngjs-selected-marker-color: var(--mat-sys-tertiary-container);
                 --ngjs-selected-marker-check: var(--mat-sys-on-tertiary-container);
                 --ngjs-focus-outline: 3px solid var(--mat-sys-tertiary);
                 box-shadow: var(--mat-sys-level1);
-
-                border: 3px solid var(--mat-sys-tertiary-container);
                 border-radius: var(--mat-sys-corner-small);
 
                 .select-btn .marker {

@@ -80,12 +80,10 @@ export class ViewListComponent implements OnInit, ViewInterface {
         this.pagination.emit(event);
     }
 
-    public selectAll(): Promise<CardsQuery['cards']['items'][0][]> {
+    public selectAll(): void {
         if (this.dataSource.data) {
             this.selectionModel.select(...this.dataSource.data.items);
         }
-
-        return Promise.resolve(this.selectionModel.selected);
     }
 
     public unselectAll(): void {
