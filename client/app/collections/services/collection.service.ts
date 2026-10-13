@@ -113,12 +113,12 @@ export class CollectionService extends AbstractContextualizedService<
      */
     public confirmAndUnsubscribe(collection: {id: string; name: string}): Observable<unknown> {
         const title = `Se désabonner de la collection « ${collection.name} » ?`;
-        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+        const message = `Vous <strong>ne verrez plus</strong> cette collection si elle n'est pas publique et <strong>ne pourrez plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un·e responsable de la collection.<br><br>Confirmer le désabonnement ?`;
 
         return this.alertService.confirm(title, message, 'Me désabonner', undefined, 'error', 'filled').pipe(
             filter(confirmed => !!confirmed),
             switchMap(() => this.unsubscribe(collection)),
-            tap(() => this.alertService.info(`Vous avez été désabonné de la collection « ${collection.name} »`)),
+            tap(() => this.alertService.info(`Vous avez été désabonné·e de la collection « ${collection.name} »`)),
         );
     }
 

@@ -12,7 +12,7 @@
                     <div class="nat-horizontal nat-gap-5 nat-center">
                         <mat-icon fontIcon="group" />
                         <span>
-                            {{ subscribersCount() }} abonné{{ subscribersCount() > 1 ? 's' : '' }}
+                            {{ subscribersCount() }} abonné·e{{ subscribersCount() > 1 ? '·s' : '' }}
                             @if (responsiblesCount() > 0) {
                                 (dont {{ responsiblesCount() }} responsable{{ responsiblesCount() > 1 ? 's' : '' }})
                             }
@@ -23,12 +23,12 @@
                             } @else if (viewerIsResponsible()) {
                                 <span> - Vous êtes responsable de cette collection</span>
                             } @else if (viewerIsSubscriber()) {
-                                <span> - Vous êtes lecteur de cette collection</span>
+                                <span> - Vous êtes lecteur·rice de cette collection</span>
                             }
                         }
                     </div>
                     @if (canManageResponsibles() || canManageSubscribers()) {
-                        <button matButton (click)="showSubscribersView()">Gérer les abonnés</button>
+                        <button matButton (click)="showSubscribersView()">Gérer les abonné·es</button>
                     }
                 </div>
                 <mat-divider class="nat-margin-vertical" />
@@ -111,7 +111,7 @@
 }
 
 @if (currentView() === 'subscribers') {
-    <h2 mat-dialog-title>Gérer les abonnés de la collection « {{ data.item.name }} »</h2>
+    <h2 mat-dialog-title>Gérer les abonné·es de la collection « {{ data.item.name }} »</h2>
     <mat-dialog-content>
         @if (restrictedParents().length) {
             <app-hint icon="warning" class="nat-margin-bottom">
@@ -123,9 +123,9 @@
         <div class="nat-horizontal nat-gap-10">
             @if (!!user && canManageSubscribers()) {
                 <div class="nat-vertical nat-gap-5" style="flex: 1">
-                    <strong>Lecteurs</strong>
+                    <strong>Lecteur·rices</strong>
                     <natural-relations
-                        placeholder="Ajouter un lecteur"
+                        placeholder="Ajouter un·e lecteur·rice"
                         otherName="subscriber"
                         [displayWith]="displayFn"
                         [filter]="{
@@ -140,7 +140,7 @@
                         [main]="$any(subscribersMain())"
                         [service]="userService"
                     />
-                    <app-hint>Les lecteurs peuvent uniquement consulter les images de la collection.</app-hint>
+                    <app-hint>Les lecteur·rices peuvent uniquement consulter les images de la collection.</app-hint>
                 </div>
             }
 
@@ -149,7 +149,7 @@
                 <div class="nat-vertical nat-gap-5" style="flex: 1">
                     <strong>Responsables</strong>
                     <natural-relations
-                        placeholder="Ajouter un responsable"
+                        placeholder="Ajouter un·e responsable"
                         otherName="responsible"
                         [displayWith]="displayFn"
                         [filter]="{
@@ -165,9 +165,9 @@
                         [service]="userService"
                     />
                     <app-hint>
-                        Les responsables peuvent consulter, ajouter ou supprimer des images et des lecteurs de la
-                        collection. Ils ne peuvent pas modifier les réglages, supprimer la collection ou ajouter
-                        d'autres responsables.
+                        Les responsables peuvent consulter, ajouter ou supprimer des images et des lecteur·rices de la
+                        collection, mais pas modifier les réglages, supprimer la collection ou ajouter d'autres
+                        responsables.
                     </app-hint>
                 </div>
             }

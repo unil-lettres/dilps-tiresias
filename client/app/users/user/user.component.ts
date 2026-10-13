@@ -268,7 +268,7 @@ export class UserComponent extends AbstractDetailDirective<
         }
 
         const title = `Désabonner l'utilisateur de la collection « ${collection.name} » ?`;
-        const message = `Cette collection <strong>ne sera plus visible</strong> par l'utilisateur si elle n'est pas publique et <strong>il ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un responsable de la collection.<br><br>Confirmer le désabonnement ?`;
+        const message = `L'utilisateur·rice <strong>ne verra plus</strong> cette collection si elle n'est pas publique et <strong>ne pourra plus la modifier</strong>.<br><br>Le réabonnement devra être effectué par un·e responsable de la collection.<br><br>Confirmer le désabonnement ?`;
 
         this.alertService.confirm(title, message, 'Désabonner', undefined, 'error', 'filled').subscribe(confirmed => {
             if (!confirmed) {

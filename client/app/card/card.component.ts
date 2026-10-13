@@ -293,7 +293,7 @@ export class CardComponent implements OnInit, OnChanges {
     protected visibilities: CardVisibilities = {
         1: {
             value: CardVisibility.Private,
-            text: 'par moi, les admins et les abonnés',
+            text: 'par moi, les admins et les abonné·es',
         },
         2: {
             value: CardVisibility.Member,
@@ -301,7 +301,7 @@ export class CardComponent implements OnInit, OnChanges {
         },
         3: {
             value: CardVisibility.Public,
-            text: 'par tous',
+            text: 'par tou·tes',
         },
     };
 

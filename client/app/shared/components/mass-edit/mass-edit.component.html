@@ -28,7 +28,7 @@
             <p>
                 Vous n'avez pas les permissions pour éditer les fiches ci-dessous. Les modifications ne les affecteront
                 pas. Vous pouvez cependant créer des suggestions pour ces fiches, les modifications seront alors
-                soumises pour validation par un administrateur.
+                soumises pour validation par un·e administrateur·rice.
             </p>
             <ng-container *ngTemplateOutlet="listTemplate; context: {$implicit: data.changeable}" />
             @if (data.unchangeable?.length) {

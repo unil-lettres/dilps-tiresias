@@ -174,7 +174,7 @@ export class CollectionsComponent implements OnInit {
 
     protected subscribersTooltip(collection: CollectionsQuery['collections']['items'][0]): string {
         const total = collection.responsiblesCount + collection.subscribersCount;
-        return `${total} abonné${total > 1 ? 's' : ''}`;
+        return `${total} abonné·e${total > 1 ? 's' : ''}`;
     }
 
     protected toggle(event: MouseEvent, collection: CollectionsQuery['collections']['items'][0]): void {

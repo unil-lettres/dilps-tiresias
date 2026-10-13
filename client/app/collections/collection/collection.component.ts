@@ -114,11 +114,11 @@ export class CollectionComponent
     protected visibilities: CollectionVisibilities = {
         1: {
             value: CollectionVisibility.Private,
-            text: 'par moi et les abonnés',
+            text: 'par moi et les abonné·es',
         },
         2: {
             value: CollectionVisibility.Administrator,
-            text: 'par moi, les admins et les abonnés',
+            text: 'par moi, les admins et les abonné·es',
         },
         3: {
             value: CollectionVisibility.Member,
@@ -294,6 +294,6 @@ export class CollectionComponent
     }
 
     protected override getDeleteMessage(): string {
-        return `Cette collection sera supprimée pour <strong>tous les utilisateurs</strong> et ne sera plus accessible.<br><br><strong>Cette action est irréversible.</strong><br><br>Les fiches qu'elle contient ne seront pas supprimées.`;
+        return `Cette collection sera supprimée pour <strong>tou·tes les utilisateur·rices</strong> et ne sera plus accessible.<br><br><strong>Cette action est irréversible.</strong><br><br>Les fiches qu'elle contient ne seront pas supprimées.`;
     }
 }

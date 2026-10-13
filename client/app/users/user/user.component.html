@@ -1,7 +1,9 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
 @if (currentView() === 'properties') {
     @if (isUpdatePage()) {
-        <h2 mat-dialog-title>{{ isSelf ? 'Modifier mon profil' : `Modifier l'utilisateur « ${data.item.login} »` }}</h2>
+        <h2 mat-dialog-title>
+            {{ isSelf ? 'Modifier mon profil' : `Modifier l'utilisateur « ${data.item.login} »` }}
+        </h2>
     } @else {
         <h2 mat-dialog-title>Créer un utilisateur</h2>
     }
@@ -11,11 +13,11 @@
                 <div class="nat-horizontal nat-distribute nat-center">
                     @if (collectionsCount() === 0) {
                         <span>{{
-                            isSelf ? "Vous n'êtes abonné à aucune collection" : 'Abonné à aucune collection'
+                            isSelf ? "Vous n'êtes abonné·e à aucune collection" : 'Abonné·e à aucune collection'
                         }}</span>
                     } @else {
                         <span>
-                            {{ isSelf ? 'Vous êtes abonné' : 'Abonné' }} à {{ collectionsCount() }} collection{{
+                            {{ isSelf ? 'Vous êtes abonné·e' : 'Abonné·e' }} à {{ collectionsCount() }} collection{{
                                 collectionsCount() > 1 ? 's' : ''
                             }}
                         </span>
@@ -178,12 +180,12 @@
     <mat-dialog-content>
         @if (!isSelf) {
             <app-hint>
-                Pour ajouter des abonnés, rendez-vous dans les détails d'une collection dont vous êtes responsable.
+                Pour ajouter des abonné·es, rendez-vous dans les détails d'une collection dont vous êtes responsable.
             </app-hint>
         }
         @if (collections().length === 0) {
             <p class="nat-horizontal nat-padding nat-center">
-                {{ isSelf ? "Vous n'êtes abonné à aucune collection" : 'Abonné à aucune collection' }}
+                {{ isSelf ? "Vous n'êtes abonné·e à aucune collection" : 'Abonné·e à aucune collection' }}
             </p>
         } @else {
             <mat-list>
