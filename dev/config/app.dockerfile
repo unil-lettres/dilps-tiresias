@@ -4,7 +4,6 @@ ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV NODE_VERSION=24
-ENV PNPM_VERSION=11.0.1
 ENV COMPOSER_VERSION=2.9.8
 
 # Install additional packages
@@ -47,7 +46,6 @@ RUN mkdir -p /etc/apt/keyrings; \
     apt-get update; \
     apt-get install -y --no-install-recommends nodejs && \
     corepack enable && \
-    corepack prepare pnpm@$PNPM_VERSION --activate && \
     pnpm --version
 
 # Replace default crontab
