@@ -1,4 +1,5 @@
 import type {CodegenConfig} from '@graphql-codegen/cli';
+import {readFileSync, writeFileSync} from 'node:fs';
 
 const config: CodegenConfig = {
     overwrite: true,
@@ -11,7 +12,8 @@ const config: CodegenConfig = {
     },
     hooks: {
         afterAllFileWrite: [
-            "sed -i'' '1s/^/\\/* eslint-disable *\\/\\n/'",
+            (...files: string[]) =>
+                files.forEach(file => writeFileSync(file, '/* eslint-disable */\n' + readFileSync(file, 'utf8'))),
             "prettier --experimental-cli --ignore-path '' --write",
         ],
     },
