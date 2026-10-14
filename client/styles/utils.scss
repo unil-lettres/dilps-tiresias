@@ -7,7 +7,7 @@
 
 @mixin glass() {
     @supports (color: color-mix(in srgb, red, transparent)) {
-        backdrop-filter: blur(12px) saturate(160%);
+        backdrop-filter: blur(6px);
         @content;
     }
 }
