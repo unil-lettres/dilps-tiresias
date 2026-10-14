@@ -141,4 +141,20 @@ class ImporterTest extends TestCase
         $this->expectExceptionMessage('Erreur dans la cellule D2: Domaine introuvable: non-existing-domain');
         $importer->import($excel, $images, null);
     }
+
+    public function testImportThrowsWithTooLongText(): void
+    {
+        $excel = $this->createExcel([
+            TemplateHandler::HEADERS,
+            ['dw4jV3zYSPsqE2CB8BcP8ABD0', 'My Name', 'Long description', 'Test domain 9001', 'Test root material 8000 > Test child material 8001', 'Test root period 7000', '123', '456', 'Anguilla', 'The Valley', 'Paris', 'REF972', 'Test document type 11001', 'John Rambo', str_repeat('1997, ', 12), '1.1231', '1231.132', 'building'],
+        ]);
+
+        $images = $this->createImages([
+            'data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg',
+        ]);
+
+        $importer = new Importer(Site::Tiresias);
+        $this->expectExceptionMessage('Erreur dans la cellule O2: Le texte dépasse la limite de 60 caractères (71 caractères)');
+        $importer->import($excel, $images, null);
+    }
 }

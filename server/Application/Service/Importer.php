@@ -168,7 +168,7 @@ class Importer
         _em()->persist($card);
         $col = 2;
 
-        $card->setName($this->readString($sheet, $col++, $row));
+        $card->setName($this->readString($sheet, $col++, $row, 191));
         $card->setExpandedName($this->readString($sheet, $col++, $row));
         $domain = $this->readDomain($sheet, $col++, $row);
         if ($domain) {
@@ -188,12 +188,12 @@ class Importer
         $card->setFrom($this->readInt($sheet, $col++, $row));
         $card->setTo($this->readInt($sheet, $col++, $row));
         $card->setCountry($this->readCountry($sheet, $col++, $row));
-        $card->setLocality($this->readString($sheet, $col++, $row));
-        $card->setProductionPlace($this->readString($sheet, $col++, $row));
+        $card->setLocality($this->readString($sheet, $col++, $row, 191));
+        $card->setProductionPlace($this->readString($sheet, $col++, $row, 60));
         $card->setObjectReference($this->readString($sheet, $col++, $row));
         $card->setDocumentType($this->readDocumentType($sheet, $col++, $row));
-        $card->setTechniqueAuthor($this->readString($sheet, $col++, $row));
-        $card->setTechniqueDate($this->readString($sheet, $col++, $row));
+        $card->setTechniqueAuthor($this->readString($sheet, $col++, $row, 255));
+        $card->setTechniqueDate($this->readString($sheet, $col++, $row, 60));
         $card->setLatitude($this->readFloat($sheet, $col++, $row));
         $card->setLongitude($this->readFloat($sheet, $col++, $row));
         $card->setPrecision($this->readPrecision($sheet, $col++, $row));
@@ -207,9 +207,17 @@ class Importer
         return $card;
     }
 
-    private function readString(Worksheet $sheet, int $col, int $row): string
+    /**
+     * @param null|int $maxLength the length of the column in DB, to report the cell instead of a DB error that names no cell
+     */
+    private function readString(Worksheet $sheet, int $col, int $row, ?int $maxLength = null): string
     {
-        return mb_trim((string) $sheet->getCell([$col, $row])->getValue());
+        $value = mb_trim((string) $sheet->getCell([$col, $row])->getValue());
+        if ($maxLength && mb_strlen($value) > $maxLength) {
+            $this->throwException($col, $row, 'Le texte dépasse la limite de ' . $maxLength . ' caractères (' . mb_strlen($value) . ' caractères)');
+        }
+
+        return $value;
     }
 
     private function readDomain(Worksheet $sheet, int $col, int $row): ?Domain
