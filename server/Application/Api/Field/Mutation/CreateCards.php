@@ -37,7 +37,9 @@ class CreateCards implements FieldInterface
                 // Get optional collection
                 if ($args['collection'] ?? false) {
                     $collection = $args['collection']->getEntity();
-                    Helper::throwIfDenied($collection, 'update');
+
+                    // Like when uploading images one by one, adding them to a collection is curating its content
+                    Helper::throwIfDenied($collection, 'linkCard');
                 } else {
                     $collection = null;
                 }
