@@ -17,6 +17,7 @@ import {inject, type Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
 import {APOLLO_OPTIONS} from 'apollo-angular';
 import {type FormattedExecutionResult} from 'graphql';
+import {leaveGraphQLErrorBreadcrumb} from './bugsnag';
 import {recordOperationNames} from '../../statistics/services/statistic.queries';
 
 export const apolloDefaultOptions: ApolloClient.Options['defaultOptions'] = {
@@ -89,6 +90,8 @@ function createErrorHandler(
     alertService: AlertService,
 ): ErrorLink.ErrorHandler {
     return options => {
+        leaveGraphQLErrorBreadcrumb(options.operation.operationName, options.error);
+
         // The user does not know about those, so cannot do anything about their failure
         if (recordOperationNames.includes(options.operation.operationName ?? '')) {
             return;
