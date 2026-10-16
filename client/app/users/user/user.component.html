@@ -134,7 +134,10 @@
                 </mat-form-field>
             }
 
-            <mat-form-field>
+            <mat-form-field
+                [subscriptSizing]="canChangeRole() && data.item.role ? 'dynamic' : 'fixed'"
+                [class.nat-margin-bottom]="canChangeRole() && data.item.role"
+            >
                 <mat-label>Rôle</mat-label>
                 <mat-select [disabled]="user?.id === data.item.id" [(value)]="data.item.role">
                     @for (role of roles; track role) {
@@ -143,6 +146,9 @@
                         >
                     }
                 </mat-select>
+                @if (canChangeRole() && data.item.role) {
+                    <mat-hint>{{ roleDescriptions[data.item.role] }}</mat-hint>
+                }
             </mat-form-field>
 
             @if (isUpdatePage()) {

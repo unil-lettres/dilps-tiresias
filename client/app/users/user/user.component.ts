@@ -23,7 +23,7 @@ import {UniqueValidatorDirective} from '../../shared/directives/unique-validator
 import {
     type UpdateUser,
     type UserQuery,
-    type UserRole,
+    UserRole,
     UserType,
     type CollectionsQuery,
     LogicalOperator,
@@ -37,7 +37,7 @@ import {MatSelect} from '@angular/material/select';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {ThesaurusComponent} from '../../shared/components/thesaurus/thesaurus.component';
 import {MatInput} from '@angular/material/input';
-import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatList, MatListItem, MatListItemTitle, MatDivider} from '@angular/material/list';
@@ -68,6 +68,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         MatListItemTitle,
         MatTooltip,
         MatFormField,
+        MatHint,
         MatLabel,
         MatError,
         MatSuffix,
@@ -111,6 +112,22 @@ export class UserComponent extends AbstractDetailDirective<
 
     protected roles: IEnum[] = [];
     private userRolesAvailable: UserRole[] = [];
+
+    /**
+     * What each role allows, shown to whoever chooses the role
+     */
+    protected readonly roleDescriptions: Record<UserRole, string> = {
+        [UserRole.student]:
+            "Consulte les fiches visibles par les membres, ainsi que toutes les fiches des collections dont ce compte est lecteur·rice ou responsable, et suggère des modifications de leurs informations, qu'un·e administrateur·rice valide. Crée des collections, privées ou visibles par les admins, y ajoute ou en retire des fiches existantes, et y invite des lecteur·rices et des responsables. Ne peut pas ajouter d'images.",
+        [UserRole.junior]:
+            "Comme étudiant·e, et en plus : ajoute des images, que seul·e un·e administrateur·rice rend visibles à tou·tes les membres. Modifie les informations de ses propres fiches et les supprime, de même pour toute fiche contenue dans une collection publique dont ce compte est propriétaire ou responsable. Attention : ce compte peut ajouter n'importe quelle fiche à une telle collection pour obtenir le droit d'en modifier les informations, ou de la supprimer.",
+        [UserRole.senior]:
+            "Comme junior, et en plus : modifie les informations et supprime toute fiche contenue dans une collection dont ce compte est propriétaire ou responsable, même si elle n'est pas publique. Peut rendre ses collections publiques. Attention : ce compte peut donc créer une collection, y ajouter toutes les fiches qu'il voit, puis en modifier les informations ou les supprimer.",
+        [UserRole.major]:
+            'Comme senior, et en plus : ajoute des images à toute collection publique ou visible par les admins, et modifie le champ « Référence » des fiches.',
+        [UserRole.administrator]:
+            "Tous les droits : rend les fiches visibles, valide les suggestions, gère les comptes, les thésaurus, les actualités et les statistiques, et toutes les collections, sauf les collections privées des autres, où ce compte n'a que les droits qu'on lui donne.",
+    };
 
     protected passwordGroupCtrl: FormGroup;
     protected passwordCtrl: FormControl;
@@ -176,6 +193,13 @@ export class UserComponent extends AbstractDetailDirective<
 
     protected roleDisabled(role: string): boolean {
         return !this.userRolesAvailable.includes(role as UserRole);
+    }
+
+    /**
+     * Whether the viewer may choose the role, and so is explained what the chosen role allows
+     */
+    protected canChangeRole(): boolean {
+        return !this.isSelf && this.userRolesAvailable.length > 1;
     }
 
     protected showCollectionsView(): void {
