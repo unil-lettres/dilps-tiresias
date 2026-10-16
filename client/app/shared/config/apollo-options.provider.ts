@@ -17,6 +17,7 @@ import {inject, type Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
 import {APOLLO_OPTIONS} from 'apollo-angular';
 import {type FormattedExecutionResult} from 'graphql';
+import {recordOperationNames} from '../../statistics/services/statistic.queries';
 
 export const apolloDefaultOptions: ApolloClient.Options['defaultOptions'] = {
     query: {
@@ -88,6 +89,11 @@ function createErrorHandler(
     alertService: AlertService,
 ): ErrorLink.ErrorHandler {
     return options => {
+        // The user does not know about those, so cannot do anything about their failure
+        if (recordOperationNames.includes(options.operation.operationName ?? '')) {
+            return;
+        }
+
         const error = serverErrorToUserFriendlyError(options.error, options.operation.variables);
 
         // Show GraphQL responses with errors to end-users

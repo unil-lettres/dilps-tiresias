@@ -43,6 +43,9 @@ export const statisticQuery = gql`
     ${statisticDetails}
 `;
 
+/** Mutations sent in the background, without any action from the user */
+export const recordOperationNames = ['RecordPage', 'RecordDetail', 'RecordSearch'];
+
 export const recordPage = gql`
     mutation RecordPage {
         recordPage

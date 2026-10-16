@@ -7,8 +7,8 @@ import {
 } from '../../shared/generated-types';
 import {AbstractContextualizedService} from '../../shared/services/AbstractContextualizedService';
 import {recordDetail, recordPage, recordSearch, statisticQuery, statisticsQuery} from './statistic.queries';
-import {type Observable, Subject, switchMap} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import {EMPTY, type Observable, Subject, switchMap} from 'rxjs';
+import {catchError, debounceTime} from 'rxjs/operators';
 import {type DocumentNode} from 'graphql';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -49,9 +49,12 @@ export class StatisticService extends AbstractContextualizedService<
                 takeUntilDestroyed(this.destroyRef),
                 debounceTime(800),
                 switchMap(() =>
-                    this.apollo.mutate<unknown, Record<string, never>>({
-                        mutation: mutation,
-                    }),
+                    this.apollo
+                        .mutate<unknown, Record<string, never>>({
+                            mutation: mutation,
+                        })
+                        // A statistic lost, eg: on the network, must not stop recording the next ones
+                        .pipe(catchError(() => EMPTY)),
                 ),
             )
             .subscribe();

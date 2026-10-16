@@ -2,6 +2,7 @@ import {type HttpInterceptorFn} from '@angular/common/http';
 import {inject} from '@angular/core';
 import {NetworkActivityService} from '@ecodev/natural';
 import {finalize} from 'rxjs';
+import {recordOperationNames} from '../../statistics/services/statistic.queries';
 
 /**
  * Check if the request body corresponds to a silent operation.
@@ -21,7 +22,7 @@ function isSilentOperation(body: unknown): boolean {
 
     // Statistics queries should be silent
     const operationName = (body as {operationName?: string}).operationName;
-    if (operationName && ['RecordPage', 'RecordDetail', 'RecordSearch'].includes(operationName)) {
+    if (operationName && recordOperationNames.includes(operationName)) {
         return true;
     }
 
