@@ -46,6 +46,7 @@ class LocationOperatorType extends AbstractOperator
         $queryBuilder->setParameter($paramPoint, $point);
         $queryBuilder->setParameter($paramDistance, $args['distance'] / 100000);
 
-        return "ST_Distance(GeomFromText(:$paramPoint), $alias.location) < :$paramDistance";
+        // Without the first condition, MariaDB also ignores all the rows that follow a row without location
+        return "($alias.location IS NOT NULL AND ST_Distance(GeomFromText(:$paramPoint), $alias.location) < :$paramDistance)";
     }
 }
