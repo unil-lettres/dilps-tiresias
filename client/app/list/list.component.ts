@@ -221,8 +221,16 @@ export class ListComponent
         return this.toolbarWidth() < this.toolbarTotalWidth() - this.toolbarSelectionWidth();
     });
 
+    /**
+     * The hint does not fit next to the search on a narrow toolbar
+     */
+    protected readonly showSelectionHint = computed(
+        () => this.gridSelectionModeActive() && this.toolbarWidth() >= 1050,
+    );
+
     private toolbarTotalWidth(): number {
-        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() + 200 : 0;
+        const selectionHintWidth = this.showSelectionHint() ? 650 : 0;
+        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() + 200 : selectionHintWidth;
         return 500 + this.searchTermCount() * 250 + selectionWidth + this.toolbarOptionsWidth();
     }
 
@@ -476,6 +484,12 @@ export class ListComponent
      * On pagination request, dont persist for gallery as it's meaningless
      */
     public override pagination(event: PaginationInput | PageEvent, defer?: Promise<unknown>): void {
+        // Scrolling the gallery only loads more cards, anything else changes the list of cards
+        const isGalleryScroll = this.viewMode === ViewMode.grid && 'offset' in event && event.offset != null;
+        if (!isGalleryScroll) {
+            this.unselectAll();
+        }
+
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
             super.pagination(event, defer);
@@ -522,9 +536,6 @@ export class ListComponent
     }
 
     protected reset(): void {
-        this.selected = [];
-        this.hasSelection.set(false);
-        this.gridSelectionModeActive.set(false);
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
@@ -780,6 +791,7 @@ export class ListComponent
     }
 
     protected domainSelectionChange(): void {
+        this.unselectAll();
         this.variablesManager.merge('pagination', {
             pagination: pick(this.defaultPagination, ['offset', 'pageIndex']),
         });

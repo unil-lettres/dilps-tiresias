@@ -182,6 +182,13 @@
     color: var(--mat-sys-on-tertiary-container);
 }
 
+// Same height as the bar with its action buttons
+.selection-hint {
+    box-sizing: border-box;
+    padding-right: 16px;
+    min-height: 56px;
+}
+
 .cancel-selection {
     @include mat.menu-overrides(
         (

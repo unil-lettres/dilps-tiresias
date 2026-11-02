@@ -111,7 +111,7 @@
             <mat-icon naturalIcon="deselect" />
             <span>Désélectionner tout</span>
         </div>
-    } @else {
+    } @else if (viewMode === ViewMode.list) {
         <div mat-menu-item (click)="selectAll()">
             <mat-icon svgIcon="select_all_mark" />
             <span>Sélectionner les images visibles</span>
@@ -234,6 +234,13 @@
                             </button>
                         }
                     </div>
+                } @else if (showSelectionHint()) {
+                    <div class="background-selection selection-hint nat-horizontal nat-align nat-gap-10">
+                        <mat-icon fontIcon="info" />
+                        <span class="mat-font-body-md"
+                            >Cliquez ou glissez sur les images · Maj+clic : plage · Cmd/Ctrl+A : images visibles</span
+                        >
+                    </div>
                 }
                 <natural-search
                     dropdownTitle="Recherche approfondie"
@@ -302,7 +309,7 @@
                             <button matIconButton matTooltip="Désélectionner tout" (click)="unselectAll()">
                                 <mat-icon naturalIcon="deselect" />
                             </button>
-                        } @else {
+                        } @else if (viewMode === ViewMode.list) {
                             <button matIconButton matTooltip="Sélectionner les images visibles" (click)="selectAll()">
                                 <mat-icon svgIcon="select_all_mark" />
                             </button>
@@ -422,7 +429,6 @@
             @if (viewMode === ViewMode.grid) {
                 <app-view-grid
                     [dataSource]="dataSource"
-                    [selected]="selected"
                     [scrollable]="scrollable"
                     [paginationOffset]="paginationOffset()"
                     [(selectionModeActive)]="gridSelectionModeActive"
@@ -434,7 +440,6 @@
             @if (viewMode === ViewMode.list) {
                 <app-view-list
                     [dataSource]="dataSource"
-                    [selected]="selected"
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                 />
