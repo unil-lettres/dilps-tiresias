@@ -245,12 +245,44 @@ test('administrator can search the cards around a card of the map', async ({page
     const marker = page.locator('app-view-map img[src*="gmap_"]').first();
     await expect(marker).toBeVisible({timeout: 15_000});
     await marker.click({force: true});
-    await page.getByRole('button', {name: 'Rechercher les fiches à proximité'}).click();
+    await page.getByRole('button', {name: 'Rechercher à proximité'}).click();
 
     await expect(page.locator('app-view-map')).toHaveCount(0);
     await expect(page.locator('natural-search natural-input', {hasText: 'à 200 m de'})).toHaveCount(1);
     await expect(galleryTitles(page).filter({hasText: card.name})).toHaveCount(1);
     await expect(page.locator('app-list .background-selection')).toHaveCount(0);
+});
+
+test('administrator can reach all the cards a few meters away from a single marker', async ({page, cleanup}) => {
+    await login(page, 'administrator');
+    const tag = crypto.randomUUID();
+    const first = await createCard(page, {name: `E2E ${tag} 1`, ...location});
+    // About 3 meters north of the first card
+    const second = await createCard(page, {name: `E2E ${tag} 2`, ...location, latitude: location.latitude + 0.00003});
+    cleanup.add(() => deleteObjects(page, 'Card', [first.id, second.id]));
+
+    await openSearch(page, tag);
+    await selectCards(page, [first, second]);
+    await mapButton(page).click();
+
+    const marker = page.locator('app-view-map img[src*="gmap_"]');
+    await expect(marker).toHaveCount(1, {timeout: 15_000});
+    await marker.click({force: true});
+    const links = page.locator('app-view-map .info-window a');
+    await expect.poll(async () => (await links.allInnerTexts()).sort()).toEqual([first.name, second.name]);
+
+    // The info window has its own button to close, instead of a cross
+    await page.locator('app-view-map .info-window').getByRole('button', {name: 'Fermer'}).click();
+    await expect(links).toHaveCount(0);
+
+    // The map moves after closing the info window, so a first click may miss the marker
+    await expect(async () => {
+        await marker.click({force: true});
+        await expect(links).toHaveCount(2, {timeout: 1000});
+    }).toPass();
+    await links.filter({hasText: second.name}).click();
+    await expect(page).toHaveURL(new RegExp(`/card/${second.id}$`));
+    await expect(page.locator('app-view-map')).toHaveCount(0);
 });
 
 test('administrator can export the selected cards to Excel', async ({page, cleanup}) => {
