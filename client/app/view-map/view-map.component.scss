@@ -1,33 +1,77 @@
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    max-height: none;
+
+    google-map {
+        flex: 1;
+        min-height: 0;
+    }
+}
+
+.info-window {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    padding: 4px;
+    width: 360px;
+    max-width: 100%;
+    // Google always draws the info window in white, so it keeps the colors of the light theme
+    color-scheme: light;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    max-height: 250px;
+    overflow-y: auto;
+
+    // Several cards at the same location share the space
+    &:has(.card + .card) .image {
+        height: 110px;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: black;
+    text-decoration: none;
+
+    &:hover .name {
+        text-decoration: underline;
+    }
 }
 
 .name {
-    padding: 5px;
-    color: black;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
-.img {
-    max-width: 500px;
-    max-height: 300px;
+.image {
+    border-radius: var(--mat-sys-corner-small);
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
 }
 
-.image-wrapper {
+.actions {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-
-    height: 200px;
-
-    .image {
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 300px;
-        height: 200px;
-    }
+    justify-content: flex-end;
+    gap: 8px;
 }
 
 google-map .map-container {

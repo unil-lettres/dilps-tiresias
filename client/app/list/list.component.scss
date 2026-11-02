@@ -207,8 +207,3 @@
         )
     );
 }
-
-// The map has no height of its own, fill what's left below the header
-app-view-map {
-    flex: 1;
-}

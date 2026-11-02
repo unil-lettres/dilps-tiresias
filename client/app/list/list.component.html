@@ -71,12 +71,6 @@
             <span>Affichage Liste</span>
         </div>
     }
-    @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
-        <div mat-menu-item (click)="setViewMode(ViewMode.map)">
-            <mat-icon naturalIcon="map" />
-            <span>Affichage Carte</span>
-        </div>
-    }
     <div mat-menu-item [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu">
         <mat-icon svgIcon="sort_asc" />
         <span>Trier</span>
@@ -111,7 +105,7 @@
             <mat-icon naturalIcon="deselect" />
             <span>Désélectionner tout</span>
         </div>
-    } @else if (viewMode === ViewMode.list) {
+    } @else {
         <div mat-menu-item (click)="selectAll()">
             <mat-icon svgIcon="select_all_mark" />
             <span>Sélectionner les images visibles</span>
@@ -148,6 +142,12 @@
             <mat-icon svgIcon="library_remove" />
             <span>Retirer de la collection</span>
         </div>
+    }
+    @if (site === Site.Tiresias) {
+        <button mat-menu-item [disabled]="!hasLocatedSelection()" (click)="showSelectionOnMap()">
+            <mat-icon naturalIcon="map" />
+            <span>Voir sur la carte</span>
+        </button>
     }
     <div mat-menu-item [matMenuTriggerFor]="exportMenuForOverflow.matMenu()">
         <mat-icon naturalIcon="share_windows" />
@@ -199,6 +199,21 @@
                                         (click)="unlinkFromCollection(selected)"
                                     >
                                         <mat-icon svgIcon="library_remove" />
+                                    </button>
+                                }
+                                @if (site === Site.Tiresias) {
+                                    <button
+                                        matIconButton
+                                        disabledInteractive
+                                        [disabled]="!hasLocatedSelection()"
+                                        [matTooltip]="
+                                            hasLocatedSelection()
+                                                ? 'Voir sur la carte'
+                                                : 'Aucune fiche sélectionnée n\'est localisée'
+                                        "
+                                        (click)="showSelectionOnMap()"
+                                    >
+                                        <mat-icon naturalIcon="map" />
                                     </button>
                                 }
                                 <app-export-menu
@@ -261,11 +276,6 @@
                                 <mat-icon naturalIcon="view_list" />
                             </button>
                         }
-                        @if (site === Site.Tiresias && selected.length && viewMode !== ViewMode.map) {
-                            <button matIconButton matTooltip="Affichage Carte" (click)="setViewMode(ViewMode.map)">
-                                <mat-icon naturalIcon="map" />
-                            </button>
-                        }
                         <button
                             matIconButton
                             matTooltip="Trier"
@@ -309,7 +319,7 @@
                             <button matIconButton matTooltip="Désélectionner tout" (click)="unselectAll()">
                                 <mat-icon naturalIcon="deselect" />
                             </button>
-                        } @else if (viewMode === ViewMode.list) {
+                        } @else {
                             <button matIconButton matTooltip="Sélectionner les images visibles" (click)="selectAll()">
                                 <mat-icon svgIcon="select_all_mark" />
                             </button>
@@ -443,9 +453,6 @@
                     (pagination)="pagination($event)"
                     (selectionChange)="select($event)"
                 />
-            }
-            @if (viewMode === ViewMode.map) {
-                <app-view-map [cards]="selected" (searchByLocation)="searchByLocation($event)" />
             }
         }
     </div>

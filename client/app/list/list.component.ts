@@ -73,7 +73,7 @@ import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
 import {type ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
-import {type Location, ViewMapComponent} from '../view-map/view-map.component';
+import {isLocated, type Location, ViewMapComponent, type ViewMapData} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
 import {fromResize} from '../shared/utils/resize.utils';
 
@@ -111,7 +111,6 @@ type SelectableDomains = {
 enum ViewMode {
     grid = 'grid',
     list = 'list',
-    map = 'map',
 }
 
 @Component({
@@ -134,7 +133,6 @@ enum ViewMode {
         MatMiniFabButton,
         ViewGridComponent,
         ViewListComponent,
-        ViewMapComponent,
         NaturalIconDirective,
         ExportMenuComponent,
         HistoricIconComponent,
@@ -524,10 +522,8 @@ export class ListComponent
         // where the previous one was scrolled
         this.scrollable()?.nativeElement.scrollTo({top: 0});
 
-        if (mode !== ViewMode.map) {
-            sessionStorage.setItem('view-mode', mode);
-            this.pagination(this.defaultPagination); // reset pagination, will clean url
-        }
+        sessionStorage.setItem('view-mode', mode);
+        this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
     protected select(cards: CardsQuery['cards']['items'][0][]): void {
@@ -806,8 +802,31 @@ export class ListComponent
         }
     }
 
-    protected searchByLocation($event: Location): void {
-        this.viewMode = ViewMode.grid;
+    protected hasLocatedSelection(): boolean {
+        return this.selected.some(isLocated);
+    }
+
+    protected showSelectionOnMap(): void {
+        if (!this.hasLocatedSelection()) {
+            return;
+        }
+
+        this.dialog
+            .open<ViewMapComponent, ViewMapData, Location>(ViewMapComponent, {
+                data: {cards: this.selected},
+                width: '90vw',
+                maxWidth: '90vw',
+                height: '90vh',
+            })
+            .afterClosed()
+            .subscribe(location => {
+                if (location) {
+                    this.searchByLocation(location);
+                }
+            });
+    }
+
+    private searchByLocation($event: Location): void {
         this.naturalSearchSelections = [
             [
                 {
