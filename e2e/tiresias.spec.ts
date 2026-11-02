@@ -1,4 +1,4 @@
-import {type Page} from '@playwright/test';
+import {type Locator, type Page} from '@playwright/test';
 import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, test} from './fixtures';
@@ -15,6 +15,7 @@ import {
     openExportMenu,
     openSearch,
     type Role,
+    selectButton,
     selectCards,
     selectionAction,
     uniqueName,
@@ -173,23 +174,81 @@ test('administrator can edit cards at once without an horizontal scroll', async 
     expect(await content.evaluate(element => element.scrollWidth - element.clientWidth)).toBe(0);
 });
 
-test('administrator can show the selected cards on a map', async ({page, cleanup}) => {
+/**
+ * The button of the selection that shows it on a map. Its tooltip changes, so it is found by its icon
+ */
+function mapButton(page: Page): Locator {
+    return page.locator('app-list .background-selection button:has(mat-icon[data-mat-icon-name="map"])');
+}
+
+const location = {latitude: 46.5197, longitude: 6.6323, precision: 'Locality'};
+
+test('administrator can show the selected cards on a map, and find the selection intact when closing it', async ({
+    page,
+    cleanup,
+}) => {
     await login(page, 'administrator');
     const tag = crypto.randomUUID();
-    const card = await createCard(page, {
-        name: `E2E ${tag}`,
-        latitude: 46.5197,
-        longitude: 6.6323,
-        precision: 'Locality',
-    });
+    const located = await createCard(page, {name: `E2E ${tag} located`, ...location});
+    const other = await createCard(page, {name: `E2E ${tag} other`});
+    cleanup.add(() => deleteObjects(page, 'Card', [located.id, other.id]));
+
+    await openSearch(page, tag);
+    await selectCards(page, [located, other]);
+    await mapButton(page).click();
+
+    // Google Maps is loaded from the internet, which may take a while
+    const map = page.locator('app-view-map');
+    await expect(map.locator('google-map')).toBeVisible({timeout: 15_000});
+    await expect(map).toContainText('1 fiche sur 2 est localisée');
+
+    await page.keyboard.press('Escape');
+    await expect(map).toHaveCount(0);
+    await expect(page.locator('app-list .background-selection')).toContainText('2 fiches sélectionnées');
+    await expect(selectButton(page, located.name)).toHaveAttribute('aria-checked', 'true');
+});
+
+test('the map cannot be opened for cards without location', async ({page, cleanup}) => {
+    await login(page, 'administrator');
+    const tag = crypto.randomUUID();
+    const card = await createCard(page, {name: `E2E ${tag}`});
     cleanup.add(() => deleteObjects(page, 'Card', [card.id]));
 
     await openSearch(page, tag);
     await selectCards(page, [card]);
-    await galleryAction(page, 'Affichage Carte');
+    await expect(mapButton(page)).toHaveAttribute('aria-disabled', 'true');
+    await mapButton(page).hover();
+    await expect(page.locator('mat-tooltip-component')).toHaveText("Aucune fiche sélectionnée n'est localisée");
 
-    // Google Maps is loaded from the internet, which may take a while
-    await expect(page.locator('app-view-map google-map')).toBeVisible({timeout: 15_000});
+    // Playwright refuses to click a disabled button, even if it stays interactive for its tooltip
+    await mapButton(page).click({force: true});
+    await expect(page.locator('app-view-map')).toHaveCount(0);
+
+    // Also from the menu of the selection, when the toolbar is too narrow for its buttons
+    await page.setViewportSize({width: 700, height: 720});
+    await page.locator('app-list .background-selection button[mattooltip="Actions sur la sélection"]').click();
+    await expect(page.getByRole('menuitem', {name: 'Voir sur la carte'})).toBeDisabled();
+});
+
+test('administrator can search the cards around a card of the map', async ({page, cleanup}) => {
+    await login(page, 'administrator');
+    const tag = crypto.randomUUID();
+    const card = await createCard(page, {name: `E2E ${tag}`, ...location});
+    cleanup.add(() => deleteObjects(page, 'Card', [card.id]));
+
+    await openSearch(page, tag);
+    await selectCards(page, [card]);
+    await mapButton(page).click();
+
+    await expect(page.locator('app-view-map')).toContainText('1 fiche sur 1 est localisée');
+    const marker = page.locator('app-view-map img[src*="gmap_"]').first();
+    await expect(marker).toBeVisible({timeout: 15_000});
+    await marker.click({force: true});
+    await page.getByRole('button', {name: 'Rechercher les fiches à proximité'}).click();
+
+    await expect(page.locator('app-view-map')).toHaveCount(0);
+    await expect(page.locator('natural-search natural-input', {hasText: 'à 200 m de'})).toHaveCount(1);
+    await expect(page.locator('app-list .background-selection')).toHaveCount(0);
 });
 
 test('administrator can export the selected cards to Excel', async ({page, cleanup}) => {
