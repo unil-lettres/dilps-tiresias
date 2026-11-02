@@ -9,6 +9,7 @@ import {
     type FileToUpload,
     findIds,
     galleryAction,
+    galleryTitles,
     graphql,
     images,
     login,
@@ -248,6 +249,7 @@ test('administrator can search the cards around a card of the map', async ({page
 
     await expect(page.locator('app-view-map')).toHaveCount(0);
     await expect(page.locator('natural-search natural-input', {hasText: 'à 200 m de'})).toHaveCount(1);
+    await expect(galleryTitles(page).filter({hasText: card.name})).toHaveCount(1);
     await expect(page.locator('app-list .background-selection')).toHaveCount(0);
 });
 
