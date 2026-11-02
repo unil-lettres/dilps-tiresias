@@ -27,4 +27,5 @@ return [
     ],
     'exportPptxMaximumCardCount' => 200,
     'exportZipMaximumCardCount' => 1000,
+    'exportZipMaximumGigabytes' => 5,
 ];

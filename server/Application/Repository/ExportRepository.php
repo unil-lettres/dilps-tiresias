@@ -53,6 +53,20 @@ class ExportRepository extends AbstractRepository
         return (int) $cardCount;
     }
 
+    /**
+     * Get the total size in bytes of the images of all the cards of the export.
+     */
+    public function getCardsFileSize(Export $export): int
+    {
+        $sql = <<<STRING
+                SELECT COALESCE(SUM(card.file_size), 0) FROM export_card
+                INNER JOIN card ON card.id = export_card.card_id
+                WHERE export_card.export_id = :export
+            STRING;
+
+        return (int) $this->getEntityManager()->getConnection()->fetchOne($sql, ['export' => $export->getId()]);
+    }
+
     private function insertMultiple(Export $export, string $table, string $field, array $ids): void
     {
         $connection = $this->getEntityManager()->getConnection();

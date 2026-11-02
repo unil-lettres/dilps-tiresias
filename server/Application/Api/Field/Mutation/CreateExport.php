@@ -90,6 +90,16 @@ class CreateExport implements FieldInterface
             throw new Exception("L'export en Zip est limité à $exportZipMaximumCardCount fiches, mais la sélection actuelle est de $cardCount fiches.");
         }
 
+        $exportZipMaximumGigabytes = $config['exportZipMaximumGigabytes'];
+        if ($export->getFormat() === ExportFormat::Zip) {
+            $gigabytes = $exportRepository->getCardsFileSize($export) / 1_000_000_000;
+            if ($gigabytes > $exportZipMaximumGigabytes) {
+                $selection = number_format(ceil($gigabytes * 10) / 10, 1, ',', '');
+
+                throw new Exception("L'export en Zip est limité à $exportZipMaximumGigabytes Go, mais la sélection actuelle est de $selection Go.");
+            }
+        }
+
         return $export;
     }
 }
