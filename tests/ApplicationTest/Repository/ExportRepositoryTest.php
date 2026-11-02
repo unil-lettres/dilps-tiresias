@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace ApplicationTest\Repository;
 
+use Application\Api\Schema;
 use Application\Enum\Site;
 use Application\Model\Export;
 use Application\Model\User;
 use Application\Repository\ExportRepository;
 use Application\Repository\UserRepository;
+use GraphQL\Doctrine\DefaultFieldResolver;
+use GraphQL\GraphQL;
 
 class ExportRepositoryTest extends AbstractRepository
 {
@@ -42,6 +45,28 @@ class ExportRepositoryTest extends AbstractRepository
         self::assertSame(3, $this->repository->updateCards($export1, [], [6000, 6001, 6003]), 'can add more cards to hand-picked cards');
 
         self::assertSame(4, $this->repository->updateCards($export2, [2001], [6007, 6008]), 'can add more cards to collection');
+    }
+
+    public function testFileSizeCanExceedTwoGibibytes(): void
+    {
+        /** @var UserRepository $userRepository */
+        $userRepository = _em()->getRepository(User::class);
+        User::setCurrent($userRepository->getOneByLogin('administrator', Site::Dilps));
+
+        $size = 3_000_000_000;
+
+        /** @var Export $export */
+        $export = $this->repository->find(14000);
+        $export->setFileSize($size);
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
+
+        /** @var Export $export */
+        $export = $this->repository->find(14000);
+        self::assertSame($size, $export->getFileSize());
+
+        $result = GraphQL::executeQuery(new Schema(), '{ export(id: 14000) { fileSize } }', fieldResolver: new DefaultFieldResolver())->toArray();
+        self::assertEquals(['data' => ['export' => ['fileSize' => $size]]], $result);
     }
 
     private function getCardCount(Export $export): int
