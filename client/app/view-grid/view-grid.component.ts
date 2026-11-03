@@ -308,8 +308,10 @@ export class ViewGridComponent implements OnInit, ViewInterface {
 
     protected selectAll(event: Event): void {
         const target = event.target as HTMLElement;
+        // The list stays alive while a card is shown, see AppRouteReuseStrategy, but its gallery must not react then
         if (
             !this.selectionModeActive() ||
+            !this.scrollable().isConnected ||
             target.isContentEditable ||
             target.closest('input, textarea, select, .cdk-overlay-container')
         ) {
