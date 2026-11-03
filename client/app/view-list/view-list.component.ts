@@ -1,8 +1,7 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, DestroyRef, inject, Input, input, type OnInit, output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, DestroyRef, inject, Input, type OnInit, output, ChangeDetectionStrategy} from '@angular/core';
 import {MatPaginator, type PageEvent} from '@angular/material/paginator';
 import {type NaturalDataSource} from '@ecodev/natural';
-import {intersectionBy} from 'es-toolkit';
 import {type ViewInterface} from '../list/list.component';
 import {CardService} from '../card/services/card.service';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
@@ -52,7 +51,6 @@ export class ViewListComponent implements OnInit, ViewInterface {
      * Emits when some cards are selected
      */
     protected readonly selectionChange = output<CardsQuery['cards']['items'][0][]>();
-    public readonly selected = input<CardsQuery['cards']['items'][0][]>([]);
     protected selectionModel = new SelectionModel<CardsQuery['cards']['items'][0]>(true);
     protected cards: CardsQuery['cards']['items'][0][] = [];
 
@@ -69,7 +67,6 @@ export class ViewListComponent implements OnInit, ViewInterface {
             .subscribe(cards => {
                 this.cards = cards;
                 this.selectionModel.clear();
-                this.selectionModel.select(...intersectionBy(cards, this.selected(), c => c.id));
             });
 
         this.selectionModel.changed.subscribe(() => this.selectionChange.emit(this.selectionModel.selected));

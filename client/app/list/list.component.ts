@@ -73,7 +73,7 @@ import {StatisticService} from '../statistics/services/statistic.service';
 import {UserService} from '../users/services/user.service';
 import {type ContentChange, ViewGridComponent} from '../view-grid/view-grid.component';
 import {ViewListComponent} from '../view-list/view-list.component';
-import {type Location, ViewMapComponent} from '../view-map/view-map.component';
+import {isLocated, type Location, ViewMapComponent, type ViewMapData} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
 import {fromResize} from '../shared/utils/resize.utils';
 
@@ -111,7 +111,6 @@ type SelectableDomains = {
 enum ViewMode {
     grid = 'grid',
     list = 'list',
-    map = 'map',
 }
 
 @Component({
@@ -134,7 +133,6 @@ enum ViewMode {
         MatMiniFabButton,
         ViewGridComponent,
         ViewListComponent,
-        ViewMapComponent,
         NaturalIconDirective,
         ExportMenuComponent,
         HistoricIconComponent,
@@ -221,8 +219,16 @@ export class ListComponent
         return this.toolbarWidth() < this.toolbarTotalWidth() - this.toolbarSelectionWidth();
     });
 
+    /**
+     * The hint does not fit next to the search on a narrow toolbar
+     */
+    protected readonly showSelectionHint = computed(
+        () => this.gridSelectionModeActive() && this.toolbarWidth() >= 1050,
+    );
+
     private toolbarTotalWidth(): number {
-        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() + 200 : 0;
+        const selectionHintWidth = this.showSelectionHint() ? 650 : 0;
+        const selectionWidth = this.hasSelection() ? this.toolbarSelectionWidth() + 200 : selectionHintWidth;
         return 500 + this.searchTermCount() * 250 + selectionWidth + this.toolbarOptionsWidth();
     }
 
@@ -476,6 +482,12 @@ export class ListComponent
      * On pagination request, dont persist for gallery as it's meaningless
      */
     public override pagination(event: PaginationInput | PageEvent, defer?: Promise<unknown>): void {
+        // Scrolling the gallery only loads more cards, anything else changes the list of cards
+        const isGalleryScroll = this.viewMode === ViewMode.grid && 'offset' in event && event.offset != null;
+        if (!isGalleryScroll) {
+            this.unselectAll();
+        }
+
         if (this.viewMode === ViewMode.grid) {
             this.persistSearch = false;
             super.pagination(event, defer);
@@ -510,10 +522,8 @@ export class ListComponent
         // where the previous one was scrolled
         this.scrollable()?.nativeElement.scrollTo({top: 0});
 
-        if (mode !== ViewMode.map) {
-            sessionStorage.setItem('view-mode', mode);
-            this.pagination(this.defaultPagination); // reset pagination, will clean url
-        }
+        sessionStorage.setItem('view-mode', mode);
+        this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
     protected select(cards: CardsQuery['cards']['items'][0][]): void {
@@ -522,9 +532,6 @@ export class ListComponent
     }
 
     protected reset(): void {
-        this.selected = [];
-        this.hasSelection.set(false);
-        this.gridSelectionModeActive.set(false);
         this.pagination(this.defaultPagination); // reset pagination, will clean url
     }
 
@@ -780,6 +787,7 @@ export class ListComponent
     }
 
     protected domainSelectionChange(): void {
+        this.unselectAll();
         this.variablesManager.merge('pagination', {
             pagination: pick(this.defaultPagination, ['offset', 'pageIndex']),
         });
@@ -794,8 +802,31 @@ export class ListComponent
         }
     }
 
-    protected searchByLocation($event: Location): void {
-        this.viewMode = ViewMode.grid;
+    protected hasLocatedSelection(): boolean {
+        return this.selected.some(isLocated);
+    }
+
+    protected showSelectionOnMap(): void {
+        if (!this.hasLocatedSelection()) {
+            return;
+        }
+
+        this.dialog
+            .open<ViewMapComponent, ViewMapData, Location>(ViewMapComponent, {
+                data: {cards: this.selected},
+                width: '90vw',
+                maxWidth: '90vw',
+                height: '90vh',
+            })
+            .afterClosed()
+            .subscribe(location => {
+                if (location) {
+                    this.searchByLocation(location);
+                }
+            });
+    }
+
+    private searchByLocation($event: Location): void {
         this.naturalSearchSelections = [
             [
                 {

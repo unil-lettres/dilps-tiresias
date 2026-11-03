@@ -45,6 +45,10 @@ type GalleryModel = CardsQuery['cards']['items'][0] & ModelAttributes;
     templateUrl: './view-grid.component.html',
     styleUrl: './view-grid.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {
+        '(document:keydown.meta.a)': 'selectAll($event)',
+        '(document:keydown.control.a)': 'selectAll($event)',
+    },
 })
 export class ViewGridComponent implements OnInit, ViewInterface {
     private readonly router = inject(Router);
@@ -66,11 +70,6 @@ export class ViewGridComponent implements OnInit, ViewInterface {
      * DataSource containing cards
      */
     public readonly dataSource = input.required<NaturalDataSource<CardsQuery['cards']>>();
-    /**
-     *
-     */
-    public readonly selected = input<CardsQuery['cards']['items'][0][]>([]);
-
     /**
      * Emits when data is required
      */
@@ -116,11 +115,6 @@ export class ViewGridComponent implements OnInit, ViewInterface {
      * Flag to prevent scroll restoration after gallery clear
      */
     private preventScrollRestoration = false;
-
-    /**
-     * True while the gallery is cleared, because the selection mode that the gallery leaves must not unselect the cards
-     */
-    private clearing = false;
 
     /**
      * Row height of thumbnails in grid
@@ -232,16 +226,7 @@ export class ViewGridComponent implements OnInit, ViewInterface {
                     gallery.gallery.then(g => {
                         if (g.collection.length > 0) {
                             this.currentHasHistoricImages = false;
-
-                            // The selection outlives the reload, and the selection mode outlives the reload too
-                            this.clearing = true;
                             g.clear();
-                            this.clearing = false;
-                            if (this.selected().length) {
-                                g.setSelectionModeActive(true);
-                            } else {
-                                this.selectionModeActive.set(false);
-                            }
 
                             // Scroll to top and prevent restoration
                             this.scrollable().scrollTop = 0;
@@ -272,11 +257,6 @@ export class ViewGridComponent implements OnInit, ViewInterface {
                             this.currentHasHistoricImages = true;
                         }
                         gallery.addItems(this.formatImages(result.items));
-
-                        // The selected cards may not be part of the displayed items, for example after a switch from the list view
-                        if (this.selected().length && !gallery.selectionModeActive) {
-                            gallery.setSelectionModeActive(true);
-                        }
 
                         this.hasMoreItems.set(gallery.collection.length < result.length);
 
@@ -326,19 +306,20 @@ export class ViewGridComponent implements OnInit, ViewInterface {
         this.router.navigate(['card', item.id]);
     }
 
-    /**
-     * The gallery unselects only the cards that the gallery displays, so the grid also unselects the cards selected
-     * before the last search when the gallery leaves the selection mode
-     */
-    protected selectionModeChange(active: boolean): void {
-        if (this.clearing) {
+    protected selectAll(event: Event): void {
+        const target = event.target as HTMLElement;
+        // The list stays alive while a card is shown, see AppRouteReuseStrategy, but its gallery must not react then
+        if (
+            !this.selectionModeActive() ||
+            !this.scrollable().isConnected ||
+            target.isContentEditable ||
+            target.closest('input, textarea, select, .cdk-overlay-container')
+        ) {
             return;
         }
 
-        this.selectionModeActive.set(active);
-        if (!active && this.selected().length) {
-            this.selectionChange.emit([]);
-        }
+        event.preventDefault();
+        this.gallery()?.gallery.then(gallery => gallery.selectCollection());
     }
 
     public unselectAll(): void {
@@ -346,8 +327,6 @@ export class ViewGridComponent implements OnInit, ViewInterface {
     }
 
     private formatImages(cards: CardsQuery['cards']['items'][0][]): GalleryModel[] {
-        const selected = this.selected().map(c => c.id);
-
         return cards.map(card => {
             const cardWithThumb = CardService.formatImage(card, this.thumbnailHeight);
             const cardWithBig = CardService.formatImage(card, this.enlargedHeight);
@@ -379,7 +358,6 @@ export class ViewGridComponent implements OnInit, ViewInterface {
 
             const fields: any = {
                 title: title ? title : 'Éditer la fiche',
-                selected: selected.includes(card.id),
             };
 
             return {

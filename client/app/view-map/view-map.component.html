@@ -1,23 +1,46 @@
-@if (markers) {
-    <google-map height="100%" width="100%" [options]="mapOptions">
-        @for (marker of markers; track marker) {
-            <map-marker
-                #mapMarker="mapMarker"
-                [icon]="marker.icon"
-                [position]="{lat: marker.latitude, lng: marker.longitude}"
-                (mapClick)="openInfoWindow(mapMarker, marker)"
-            />
-        }
-        <map-info-window [options]="infoWindowOption">
-            <div>
-                <div class="mat-font-body-lg name">{{ selectedMarker?.name }}</div>
-                <a class="nat-vertical nat-center" [routerLink]="['/card', selectedMarker?.id]">
-                    <img class="img" [attr.src]="selectedMarker?.imageSrc" />
-                </a>
-                <button matButton style="color: black" (click)="forwardSearch(selectedMarker)">
-                    Rechercher les fiches à proximité
-                </button>
-            </div>
-        </map-info-window>
-    </google-map>
-}
+<h2 mat-dialog-title>Carte de la sélection</h2>
+<mat-dialog-content class="content nat-expand nat-gap-10">
+    <p class="mat-font-body-md">
+        {{ locatedCount }} {{ locatedCount > 1 ? 'fiches' : 'fiche' }} sur {{ cards.length }}
+        {{ locatedCount > 1 ? 'sont localisées' : 'est localisée' }}
+    </p>
+    @if (markers) {
+        <google-map class="nat-expand" height="100%" width="100%" [options]="mapOptions">
+            @for (marker of markers; track marker) {
+                <map-marker
+                    #mapMarker="mapMarker"
+                    [icon]="marker.icon"
+                    [position]="{lat: marker.latitude, lng: marker.longitude}"
+                    (mapClick)="openInfoWindow(mapMarker, marker)"
+                />
+            }
+            <map-info-window [options]="infoWindowOption">
+                @if (selectedMarker) {
+                    <div class="info-window nat-vertical nat-gap-10">
+                        <div class="cards nat-gap-10">
+                            @for (card of selectedMarker.cards; track card.id) {
+                                <a
+                                    class="card nat-vertical nat-gap-5"
+                                    mat-dialog-close
+                                    [routerLink]="['/card', card.id]"
+                                >
+                                    <img class="image" alt="" [attr.src]="card.imageSrc" />
+                                    <span class="mat-font-body-md name">{{ card.name }}</span>
+                                </a>
+                            }
+                        </div>
+                        <div class="nat-horizontal nat-right nat-gap-10">
+                            <button matButton (click)="closeInfoWindow()">Fermer</button>
+                            <button matButton="filled" (click)="forwardSearch(selectedMarker)">
+                                Rechercher à proximité
+                            </button>
+                        </div>
+                    </div>
+                }
+            </map-info-window>
+        </google-map>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button matButton mat-dialog-close>Fermer</button>
+</mat-dialog-actions>
