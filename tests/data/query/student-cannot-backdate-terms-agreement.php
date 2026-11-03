@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Application\Model\User;
 use Doctrine\DBAL\Connection;
 
 return [
@@ -34,5 +35,8 @@ return [
     // student (1003) already agreed
     function (Connection $connection): void {
         $connection->executeStatement("UPDATE user SET terms_agreement = '2026-01-01 00:00:00' WHERE id = 1003");
+
+        // The current user is already loaded, so it must see the change too
+        _em()->refresh(User::getCurrent());
     },
 ];
