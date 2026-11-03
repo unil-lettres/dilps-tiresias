@@ -104,8 +104,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function setParent(?self $parent): void
     {
-        // Without a logged-in user (CLI, unit tests) there is nobody to check, and anonymous cannot reach this via the API
-        if (User::getCurrent() && $parent && $parent !== $this->getParent()) {
+        if ($parent && $parent !== $this->getParent()) {
             Helper::throwIfDenied($parent, 'linkCard');
         }
 
@@ -128,10 +127,8 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function setVisibility(CollectionVisibility $visibility): void
     {
-        // Without a logged-in user (CLI, unit tests) there is nobody to check, and anonymous cannot reach this via the API
-        $user = User::getCurrent();
-        if ($user && $visibility !== $this->visibility && $visibility === CollectionVisibility::Member
-            && !in_array($user->getRole(), [User::ROLE_SENIOR, User::ROLE_MAJOR, User::ROLE_ADMINISTRATOR], true)) {
+        if ($visibility !== $this->visibility && $visibility === CollectionVisibility::Member
+            && !in_array(User::getCurrent()?->getRole(), [User::ROLE_SENIOR, User::ROLE_MAJOR, User::ROLE_ADMINISTRATOR], true)) {
             throw new Exception('Only seniors, majors and administrators can make a collection visible to all members');
         }
 
