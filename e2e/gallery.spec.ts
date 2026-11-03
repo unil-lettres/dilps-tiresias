@@ -110,6 +110,27 @@ test('the shortcut to select all cards leaves the search input alone', async ({p
     await expect(page.locator('app-list .background-selection')).toContainText('1 fiche sélectionnée');
 });
 
+test('the shortcut to select all cards does nothing while a card is shown', async ({page, cleanup}) => {
+    await login(page, 'student');
+    const tag = crypto.randomUUID();
+    const [first, second] = await createCards(page, cleanup, [`E2E ${tag} 1`, `E2E ${tag} 2`]);
+    await openSearch(page, tag);
+    await selectCards(page, [first]);
+
+    // The list stays alive, but hidden, while the card is shown. The zoom button only shows on hover, and the sticky
+    // toolbar covers it after scrolling, so it is clicked directly
+    await galleryItem(page, second.name).locator('.zoom-btn').dispatchEvent('click');
+    await page.locator('.pswp').getByRole('button', {name: 'Voir la fiche'}).click();
+    await expect(page).toHaveURL(new RegExp(`/card/${second.id}$`));
+    await expect(page.locator('app-card .ql-editor').first()).toHaveText(second.name);
+    await page.keyboard.press('ControlOrMeta+a');
+    expect(await page.evaluate(() => window.getSelection()?.toString().length)).toBeGreaterThan(0);
+
+    await page.goBack();
+    await expect(page.locator('app-list .background-selection')).toContainText('1 fiche sélectionnée');
+    await expect(selectButton(page, second.name)).toHaveAttribute('aria-checked', 'false');
+});
+
 test('a search unselects all the cards', async ({page, cleanup}) => {
     await login(page, 'student');
     const tag = crypto.randomUUID();
