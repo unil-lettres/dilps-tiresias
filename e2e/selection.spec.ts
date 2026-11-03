@@ -8,6 +8,7 @@ import {
     createCollection,
     deleteObjects,
     findIds,
+    galleryItem,
     graphql,
     login,
     openExportMenu,
@@ -62,6 +63,35 @@ test('student can add the selected cards to a new collection', async ({page, cle
             return collection ? getCollectionCards(page, {id: collection}) : [];
         })
         .toEqual(ids(cards));
+});
+
+test('the gallery shown again after a card survives the creation of a collection', async ({page, cleanup}) => {
+    await login(page, 'student');
+    const tag = crypto.randomUUID();
+    const [card] = await createCards(page, cleanup, [`E2E ${tag}`]);
+    const name = uniqueName('E2E new collection');
+    cleanup.add(async () => deleteObjects(page, 'Collection', await findIds(page, 'Collection', name)));
+
+    // The gallery is kept while the card is shown, and shown again when coming back
+    await openSearch(page, tag);
+    await galleryItem(page, card.name).getByRole('button', {name: 'activate item'}).click();
+    await expect(page).toHaveURL(new RegExp(`/card/${card.id}$`));
+    await page.goBack();
+
+    await selectCards(page, [card]);
+    await selectionAction(
+        page,
+        "Ajouter ou retirer les fiches sélectionnées d'une collection",
+        'Ajouter à une collection',
+    );
+    const dialog = page.getByRole('dialog');
+    await dialog.getByRole('tab', {name: 'Nouvelle collection'}).click();
+    await dialog.getByLabel('Nom').fill(name);
+    await dialog.getByRole('button', {name: 'Ajouter à une nouvelle collection privée'}).click();
+    await expect(dialog).toBeHidden();
+
+    await expect(page.locator('natural-gallery figcaption')).toHaveText([card.name]);
+    await expect(page.locator('app-list .background-selection')).toContainText('1 fiche sélectionnée');
 });
 
 test('student can add the selected cards to one of their collections', async ({page, cleanup}) => {
