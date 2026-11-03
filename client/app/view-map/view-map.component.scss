@@ -1,26 +1,18 @@
 :host {
-    display: flex;
-    flex-direction: column;
     height: 100%;
 }
 
 .content {
     display: flex;
-    flex: 1;
     flex-direction: column;
-    gap: 8px;
     max-height: none;
 
     google-map {
-        flex: 1;
         min-height: 0;
     }
 }
 
 .info-window {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     box-sizing: border-box;
     padding: 4px;
     width: 360px;
@@ -32,7 +24,6 @@
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
     max-height: 250px;
     overflow-y: auto;
 
@@ -43,10 +34,7 @@
 }
 
 .card {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    color: black;
+    color: var(--mat-sys-on-surface);
     text-decoration: none;
 
     &:hover .name {
@@ -66,12 +54,6 @@
     width: 100%;
     height: 180px;
     object-fit: cover;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
 }
 
 google-map .map-container {

@@ -62,6 +62,7 @@ export function isLocated(card: Card): boolean {
     templateUrl: './view-map.component.html',
     styleUrl: './view-map.component.scss',
     changeDetection: ChangeDetectionStrategy.Eager,
+    host: {class: 'nat-vertical'},
 })
 export class ViewMapComponent {
     protected readonly mapApiService = inject(MapApiService);
