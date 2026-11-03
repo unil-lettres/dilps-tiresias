@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, type OnDestroy} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {provideRouter, RouteReuseStrategy, RouterOutlet, type Routes} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
@@ -8,12 +8,17 @@ import {AppRouteReuseStrategy, type ReusableRouteStatus, RouteReuseStatus} from 
  * Stands for `ListComponent`, recording its instances to know whether it was reused
  */
 @Component({selector: 'app-list-stub', template: 'list'})
-class ListStubComponent implements ReusableRouteStatus {
+class ListStubComponent implements ReusableRouteStatus, OnDestroy {
     public static instances: ListStubComponent[] = [];
     public routeReuseStatus = RouteReuseStatus.default;
+    public destroyed = false;
 
     public constructor() {
         ListStubComponent.instances.push(this);
+    }
+
+    public ngOnDestroy(): void {
+        this.destroyed = true;
     }
 }
 
@@ -103,6 +108,29 @@ describe('AppRouteReuseStrategy', () => {
         await harness.navigateByUrl('/card/6000');
         await harness.navigateByUrl('/collection/2001');
 
+        expect(ListStubComponent.instances.at(-1)).not.toBe(list);
+    });
+
+    it('keeps the list shown when the stored lists are cleared, eg: after creating a collection', async () => {
+        expect(await isReusedAfterCard('/home')).toBe(true);
+        const list = ListStubComponent.instances.at(-1)!;
+
+        (TestBed.inject(RouteReuseStrategy) as AppRouteReuseStrategy).clearDetachedRoutes();
+
+        expect(list.destroyed).toBe(false);
+        expect(await isReusedAfterCard('/home')).toBe(true);
+        expect(ListStubComponent.instances.at(-1)).toBe(list);
+    });
+
+    it('destroys the lists that are not shown when the stored lists are cleared', async () => {
+        await harness.navigateByUrl('/home');
+        const list = ListStubComponent.instances.at(-1)!;
+        await harness.navigateByUrl('/card/6000');
+
+        (TestBed.inject(RouteReuseStrategy) as AppRouteReuseStrategy).clearDetachedRoutes();
+        await harness.navigateByUrl('/home');
+
+        expect(list.destroyed).toBe(true);
         expect(ListStubComponent.instances.at(-1)).not.toBe(list);
     });
 
