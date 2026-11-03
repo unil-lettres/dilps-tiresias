@@ -164,7 +164,11 @@ export class AppRouteReuseStrategy implements RouteReuseStrategy {
     public clearDetachedRoutes(): void {
         Object.keys(this.routes).forEach(routeName => {
             this.routes[routeName].forEach((handle, handleName) => {
-                handle.componentRef?.destroy();
+                // A list that was retrieved is shown again, so it is forgotten, but not destroyed
+                if (!handle.componentRef?.location.nativeElement.isConnected) {
+                    handle.componentRef?.destroy();
+                }
+
                 this.routes[routeName].delete(handleName);
             });
         });
