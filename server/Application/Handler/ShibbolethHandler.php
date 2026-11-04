@@ -32,9 +32,12 @@ class ShibbolethHandler implements RequestHandlerInterface
             return new RedirectResponse($quizzUrl, 302);
         }
 
-        // Redirect to return url if return url is found in the query params
+        // Redirect to return url if return url is found in the query params, but only within our own site
         if (array_key_exists('returnUrl', $request->getQueryParams())) {
-            $returnUrl = $request->getQueryParams()['returnUrl'] ?: '/';
+            $returnUrl = (string) $request->getQueryParams()['returnUrl'];
+            if (preg_match('~[[:cntrl:]]~', $returnUrl) || !preg_match('~^/(?![/\\\\])~', $returnUrl)) {
+                $returnUrl = '/';
+            }
 
             return new RedirectResponse($returnUrl, 302);
         }

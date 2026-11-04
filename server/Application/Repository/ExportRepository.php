@@ -11,8 +11,30 @@ use Application\Model\User;
 /**
  * @extends AbstractRepository<Export>
  */
-class ExportRepository extends AbstractRepository
+class ExportRepository extends AbstractRepository implements \Ecodev\Felix\Repository\LimitedAccessSubQuery
 {
+    /**
+     * Returns pure SQL to get ID of all exports that are accessible to given user.
+     *
+     * An export may contain private cards, and its file can be downloaded by anybody knowing its filename, so it is
+     * only accessible to the user who created it. Anonymous exports are not accessible at all, the client gets their
+     * filename from the createExport mutation itself.
+     */
+    public function getAccessibleSubQuery(?\Ecodev\Felix\Model\User $user): string
+    {
+        if (!$user) {
+            return '-1';
+        }
+
+        if ($user->getRole() === User::ROLE_ADMINISTRATOR) {
+            return '';
+        }
+
+        $userId = $user->getId() ?? -1;
+
+        return 'SELECT id FROM export WHERE owner_id = ' . $userId . ' OR creator_id = ' . $userId;
+    }
+
     public function updateCards(Export $export, array $collectionIds, array $cardIds): int
     {
         // Inject all collections and cards picked one-by-one

@@ -79,6 +79,9 @@ class ImageHandler extends AbstractHandler
             'content-type' => $type,
             'content-disposition' => $disposition . '; filename=' . $filename,
             'cache-control' => $cacheControl,
+            // An SVG image may contain scripts that would run on our own domain if the image is opened directly
+            'content-security-policy' => "default-src 'none'; img-src data:; style-src 'unsafe-inline'; sandbox",
+            'x-content-type-options' => 'nosniff',
         ]);
     }
 

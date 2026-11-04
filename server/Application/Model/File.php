@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Model;
 
 use Application\Api\FileException;
+use Application\Api\Helper;
 use Application\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ecodev\Felix\Model\Traits\HasName;
@@ -29,8 +30,17 @@ class File extends AbstractModel implements \Ecodev\Felix\Model\File
     }
     use HasName;
 
+    /**
+     * Set the card the file belongs to.
+     *
+     * Moving a file to another card adds content to that card, so it requires to be allowed to update it too.
+     */
     public function setCard(Card $card): void
     {
+        if ($this->card && $card !== $this->card) {
+            Helper::throwIfDenied($card, 'update');
+        }
+
         $this->card = $card;
     }
 

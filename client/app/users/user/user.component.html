@@ -62,6 +62,7 @@
                         fieldName="email"
                         [appUnique]="data.item"
                         [service]="service"
+                        [disabled]="!canEditAdministrativeFields()"
                         [(ngModel)]="data.item.email"
                     />
                     @if (email.invalid && (email?.dirty || email?.touched)) {
@@ -114,7 +115,13 @@
 
             <mat-form-field>
                 <mat-label>Actif jusqu'au</mat-label>
-                <input matInput name="activeUntil" [matDatepicker]="picker" [(ngModel)]="data.item.activeUntil" />
+                <input
+                    matInput
+                    name="activeUntil"
+                    [matDatepicker]="picker"
+                    [disabled]="!canEditAdministrativeFields()"
+                    [(ngModel)]="data.item.activeUntil"
+                />
                 <mat-datepicker-toggle matIconSuffix [for]="picker" />
                 <mat-datepicker #picker />
             </mat-form-field>
@@ -154,7 +161,7 @@
             @if (isUpdatePage()) {
                 <mat-form-field>
                     <mat-label>Type d'utilisateur</mat-label>
-                    <input disabled matInput name="type" [value]="data.item.type | type" [(ngModel)]="data.item.type" />
+                    <input disabled matInput name="type" [value]="userType() | type" />
                 </mat-form-field>
             }
         </div>

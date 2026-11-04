@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Query;
 
+use Application\Api\Helper;
 use Application\Enum\Site;
 use Application\Model\Statistic;
 use Application\Model\User;
@@ -25,6 +26,11 @@ abstract class ExtraStatistics implements FieldInterface
             'resolve' => function ($root, array $args): string {
                 /** @var Site $site */
                 $site = $root['site'];
+
+                // Like the statistics themselves, only for administrators
+                $statistic = new Statistic();
+                $statistic->setSite($site);
+                Helper::throwIfDenied($statistic, 'read');
 
                 /** @var StatisticRepository $repository */
                 $repository = _em()->getRepository(Statistic::class);

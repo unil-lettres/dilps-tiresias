@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ApplicationTest\Model;
 
 use Application\Enum\CollectionVisibility;
+use Application\Enum\Site;
 use Application\Model\Collection;
 use Application\Model\User;
 use InvalidArgumentException;
@@ -13,6 +14,15 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
+    private User $user;
+
+    protected function setUp(): void
+    {
+        $this->user = new User();
+        $this->user->setSite(Site::Dilps);
+        User::setCurrent($this->user);
+    }
+
     protected function tearDown(): void
     {
         User::setCurrent(null);
@@ -20,15 +30,15 @@ class CollectionTest extends TestCase
 
     public function testChildCollectionsRelation(): void
     {
-        $parent = new Collection();
-        $child = new Collection();
+        $parent = $this->createCollection();
+        $child = $this->createCollection();
         self::assertCount(0, $parent->getChildren());
 
         $child->setParent($parent);
         self::assertCount(1, $parent->getChildren());
         self::assertSame($child, $parent->getChildren()[0]);
 
-        $otherParent = new Collection();
+        $otherParent = $this->createCollection();
         self::assertCount(0, $otherParent->getChildren());
 
         $child->setParent($otherParent);
@@ -43,9 +53,9 @@ class CollectionTest extends TestCase
 
     public function testCannotCreateCyclicHierarchy(): void
     {
-        $parent = new Collection();
-        $child = new Collection();
-        $grandChild = new Collection();
+        $parent = $this->createCollection();
+        $child = $this->createCollection();
+        $grandChild = $this->createCollection();
 
         $child->setParent($parent);
         $grandChild->setParent($child);
@@ -57,7 +67,7 @@ class CollectionTest extends TestCase
 
     public function testCannotCreateCyclicHierarchyAsMyOwnParent(): void
     {
-        $collection = new Collection();
+        $collection = $this->createCollection();
 
         self::expectException(InvalidArgumentException::class);
         self::expectExceptionMessage('An object cannot be his own parent');
@@ -87,6 +97,7 @@ class CollectionTest extends TestCase
     public function testSetVisibility(string $role, CollectionVisibility $previous, CollectionVisibility $next, bool $shouldThrow): void
     {
         $collection = new Collection();
+        User::setCurrent(new User(User::ROLE_ADMINISTRATOR));
         $collection->setVisibility($previous);
 
         User::setCurrent(new User($role));
@@ -112,5 +123,48 @@ class CollectionTest extends TestCase
         yield 'senior can make public' => [User::ROLE_SENIOR, CollectionVisibility::Private, CollectionVisibility::Member, false];
         yield 'major can make public' => [User::ROLE_MAJOR, CollectionVisibility::Private, CollectionVisibility::Member, false];
         yield 'administrator can make public what is visible to administrators' => [User::ROLE_ADMINISTRATOR, CollectionVisibility::Administrator, CollectionVisibility::Member, false];
+    }
+
+    #[DataProvider('providerOnlyAdministratorCanMakeFonds')]
+    public function testOnlyAdministratorCanMakeFonds(string $role, string $field, ?string $expectedMessage): void
+    {
+        $collection = new Collection();
+        User::setCurrent(new User($role));
+        $setter = 'set' . ucfirst($field);
+
+        // Unchanged values are always accepted
+        $collection->$setter(false);
+
+        if ($expectedMessage) {
+            $this->expectExceptionMessage($expectedMessage);
+        }
+
+        $collection->$setter(true);
+        self::assertTrue($collection->$field());
+    }
+
+    public static function providerOnlyAdministratorCanMakeFonds(): iterable
+    {
+        $messages = [
+            'isSource' => 'Only administrators can change the isSource of a collection',
+            'isHistoric' => 'Only administrators can change the isHistoric of a collection',
+        ];
+
+        foreach ($messages as $field => $message) {
+            foreach ([User::ROLE_STUDENT, User::ROLE_JUNIOR, User::ROLE_SENIOR, User::ROLE_MAJOR] as $role) {
+                yield "$role cannot change $field" => [$role, $field, $message];
+            }
+
+            yield "administrator can change $field" => [User::ROLE_ADMINISTRATOR, $field, null];
+        }
+    }
+
+    private function createCollection(): Collection
+    {
+        $collection = new Collection();
+        $collection->setSite(Site::Dilps);
+        $collection->setOwner($this->user);
+
+        return $collection;
     }
 }

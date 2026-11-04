@@ -6,8 +6,10 @@ namespace Application\Api\Field\Mutation;
 
 use Application\Api\Scalar\LoginType;
 use Application\Enum\Site;
+use Application\Model\Log;
 use Application\Model\Statistic;
 use Application\Model\User;
+use Application\Repository\LogRepository;
 use Application\Repository\StatisticRepository;
 use Application\Repository\UserRepository;
 use Ecodev\Felix\Api\Exception;
@@ -34,6 +36,13 @@ abstract class Login implements FieldInterface
                 $session->clear();
                 User::setCurrent(null);
 
+                // Slow down password guessing, by refusing any attempt after too many failures from the same IP
+                /** @var LogRepository $logRepository */
+                $logRepository = _em()->getRepository(Log::class);
+                if ($logRepository->loginFailedOften()) {
+                    throw new Exception('Trop de tentatives de connexion ont échoué. Veuillez réessayer dans une demi-heure.');
+                }
+
                 /** @var UserRepository $userRepository */
                 $userRepository = _em()->getRepository(User::class);
                 $user = $userRepository->getLoginPassword($args['login'], $args['password'], $site);
@@ -43,6 +52,7 @@ abstract class Login implements FieldInterface
                     $session->regenerate();
                     $session->set('user', $user->getId());
                     User::setCurrent($user);
+                    _log()->info(LogRepository::LOGIN);
 
                     /** @var StatisticRepository $statisticRepository */
                     $statisticRepository = _em()->getRepository(Statistic::class);
@@ -53,6 +63,8 @@ abstract class Login implements FieldInterface
 
                     return $user;
                 }
+
+                _log()->info(LogRepository::LOGIN_FAILED);
 
                 throw new Exception("Le nom d'utilisateur ou mot de passe est incorrect");
             },

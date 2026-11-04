@@ -218,6 +218,9 @@ class Card extends AbstractModel implements HasSiteInterface, Image
 
     /**
      * Set whether this is publicly available to everybody, or only member, or only owner.
+     *
+     * Only administrators can change it, like the client only offers it to them, because they validate the cards
+     * before showing them to others.
      */
     public function setVisibility(CardVisibility $visibility): void
     {
@@ -225,9 +228,8 @@ class Card extends AbstractModel implements HasSiteInterface, Image
             return;
         }
 
-        $user = User::getCurrent();
-        if ($visibility === CardVisibility::Public && $user->getRole() !== User::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrator can make a card public');
+        if (User::getCurrent()?->getRole() !== User::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrators can change the visibility of a card');
         }
 
         $this->visibility = $visibility;

@@ -217,7 +217,7 @@ class CardTest extends TestCase
         User::setCurrent($user);
 
         if ($shouldThrow) {
-            $this->expectExceptionMessage('Only administrator can make a card public');
+            $this->expectExceptionMessage('Only administrators can change the visibility of a card');
         }
 
         $card->setVisibility($next);
@@ -227,14 +227,15 @@ class CardTest extends TestCase
     public static function providerSetVisibility(): iterable
     {
         yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Private, false];
-        yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Member, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Member, true];
         yield [User::ROLE_STUDENT, CardVisibility::Private, CardVisibility::Public, true];
-        yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Private, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Private, true];
         yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Member, false];
         yield [User::ROLE_STUDENT, CardVisibility::Member, CardVisibility::Public, true];
-        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Private, false];
-        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Member, false];
+        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Private, true];
+        yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Member, true];
         yield [User::ROLE_STUDENT, CardVisibility::Public, CardVisibility::Public, false];
+        yield [User::ROLE_MAJOR, CardVisibility::Private, CardVisibility::Member, true];
         yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Private, false];
         yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Member, false];
         yield [User::ROLE_ADMINISTRATOR, CardVisibility::Private, CardVisibility::Public, false];

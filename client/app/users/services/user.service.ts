@@ -89,7 +89,6 @@ export class UserService extends AbstractContextualizedService<
             email: null,
             activeUntil: '',
             termsAgreement: null,
-            type: UserType.Default,
             role: UserRole.student,
             institution: null,
             password: '',

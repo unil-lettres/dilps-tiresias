@@ -159,8 +159,19 @@ export class UserComponent extends AbstractDetailDirective<
         );
     }
 
+    protected userType(): UserType {
+        return 'type' in this.data.item ? this.data.item.type : UserType.Default;
+    }
+
     protected isShibbolethUser(): boolean {
-        return this.data.item.type === UserType.Aai;
+        return this.userType() === UserType.Aai;
+    }
+
+    /**
+     * Only administrators can change the email or the end of access of a user, the server refuses it to anybody else
+     */
+    protected canEditAdministrativeFields(): boolean {
+        return this.user?.role === UserRole.administrator;
     }
 
     public override ngOnInit(): void {

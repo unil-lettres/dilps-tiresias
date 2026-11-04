@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Api\Field\Query;
 
+use Application\Api\Helper;
 use Application\Model\Card;
 use Application\Model\Domain;
 use Ecodev\Felix\Api\Field\FieldInterface;
@@ -22,7 +23,12 @@ abstract class CardDomains implements FieldInterface
                 ],
             ],
             'description' => 'List domains sorted by usage on cards filtered by given variables',
-            'resolve' => fn ($root, array $args): array => _em()->getRepository(Domain::class)->getByCards($args['filter'] ?? []),
+            'resolve' => function ($root, array $args): array {
+                $filter = $args['filter'] ?? [];
+                Helper::throwIfFilteringOnAdministratorFields(Card::class, $filter);
+
+                return _em()->getRepository(Domain::class)->getByCards($filter);
+            },
         ];
     }
 }

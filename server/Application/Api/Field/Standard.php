@@ -53,6 +53,7 @@ abstract class Standard
                     'order' => 'ASC',
                 ];
 
+                Helper::throwIfFilteringOnAdministratorFields($class, $args['filter'] ?? [], $sorting);
                 $qb = _types()->createFilteredQueryBuilder($class, $args['filter'] ?? [], $sorting);
 
                 $result = Helper::paginate($args['pagination'], $qb);
@@ -150,7 +151,7 @@ abstract class Standard
                     $object = $id->getEntity();
 
                     // Check ACL
-                    Helper::throwIfDenied($object, 'update');
+                    Helper::throwIfDenied($object, 'delete');
 
                     // Do it
                     _em()->remove($object);

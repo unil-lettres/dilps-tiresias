@@ -65,7 +65,7 @@
                                 <mat-icon naturalIcon="library_add" />
                             </button>
                         }
-                        @if (fetchedModel && !edit) {
+                        @if (fetchedModel && !edit && user) {
                             <app-export-menu
                                 matTooltip="Exporter la fiche"
                                 [selectedCards]="[fetchedModel]"

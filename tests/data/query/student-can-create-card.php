@@ -27,7 +27,7 @@ return [
                 // Fake a a file uploaded with incorrect data, to check if we trust them (we should not)
                 'file' => new UploadedFile(new Stream('data/images/dw4jV3zYSPsqE2CB8BcP8ABD0.jpg'), 999, UPLOAD_ERR_OK, 'card.jpg', 'text/plain'),
                 'site' => Application\Enum\Site::Dilps,
-                'visibility' => 'Member',
+                'visibility' => 'Private',
                 'dating' => 'test dating',
                 'addition' => 'test addition',
                 'expandedName' => 'test expandedName',

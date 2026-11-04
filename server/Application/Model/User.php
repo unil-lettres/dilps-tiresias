@@ -137,6 +137,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[API\Input(type: LoginType::class)]
     public function setLogin(string $login): void
     {
+        if ($login !== $this->login) {
+            $this->throwIfCannotChangeAdministrativeField('login');
+        }
+
         $this->login = $login;
     }
 
@@ -151,6 +155,9 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
 
     /**
      * Encrypt and change the user password.
+     *
+     * An AAI user logs in through their institution, so the client never offers them a password. With a password of
+     * their own, they could keep logging in once their institution closed their account.
      */
     public function setPassword(string $password): void
     {
@@ -158,6 +165,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
         // when agreeing to terms
         if ($password === '') {
             return;
+        }
+
+        if ($this->type === UserType::Aai) {
+            throw new Exception('Un compte AAI se connecte par son institution, il ne peut pas avoir de mot de passe.');
         }
 
         $this->password = password_hash($password, PASSWORD_DEFAULT);
@@ -178,14 +189,34 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     #[API\Input(type: '?Email')]
     public function setEmail(?string $email): void
     {
+        if ($email !== $this->email) {
+            $this->throwIfCannotChangeAdministrativeField('email');
+        }
+
         $this->email = $email;
     }
 
     /**
-     * Get email.
+     * Get email, only for the user themselves and for administrators, because any user can list all users.
+     *
+     * To actually send an email, use getEmailRegardlessOfViewer() instead.
      */
     #[API\Field(type: '?Email')]
     public function getEmail(): ?string
+    {
+        $viewer = self::getCurrent();
+        if ($viewer === $this || $viewer?->getRole() === self::ROLE_ADMINISTRATOR) {
+            return $this->email;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get email, whoever is the current user, or even without any current user (CLI). Never expose it via API.
+     */
+    #[API\Exclude]
+    public function getEmailRegardlessOfViewer(): ?string
     {
         return $this->email;
     }
@@ -227,6 +258,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      */
     public function setActiveUntil(?Chronos $activeUntil): void
     {
+        if ($activeUntil?->getTimestamp() !== $this->activeUntil?->getTimestamp()) {
+            $this->throwIfCannotChangeAdministrativeField('activeUntil');
+        }
+
         $this->activeUntil = $activeUntil;
     }
 
@@ -241,19 +276,52 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     /**
      * The date when the user agreed to the terms of usage.
      *
-     * A user cannot un-agree once he agreed.
+     * Only the user themselves can agree, once, and the date is always the current one, like when the client asks
+     * them to agree after their login. Otherwise, a user could backdate or withdraw their agreement, or somebody else
+     * could agree on their behalf.
      */
     public function setTermsAgreement(?Chronos $termsAgreement): void
     {
-        $this->termsAgreement = $termsAgreement;
+        if ($termsAgreement?->getTimestamp() === $this->termsAgreement?->getTimestamp()) {
+            return;
+        }
+
+        if (self::getCurrent() !== $this || $this->termsAgreement || !$termsAgreement) {
+            throw new Exception("La licence ne peut être acceptée qu'une fois, par l'utilisateur·rice concerné·e.");
+        }
+
+        $this->termsAgreement = new Chronos();
     }
 
     /**
      * Set user type.
+     *
+     * Only Shibboleth sets it, when creating an AAI user. Otherwise, an AAI account could keep a password and be used
+     * once the institution closed it.
      */
+    #[API\Exclude]
     public function setType(UserType $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * Throw if the current user is not allowed to change the given administrative field of an existing user.
+     *
+     * Users can update their own profile, but they must neither extend their own access (activeUntil), nor change
+     * how they are identified (login, email). Shibboleth logs users in by their email, so changing our email
+     * to the address of somebody who never logged in yet would log that person into our account.
+     */
+    private function throwIfCannotChangeAdministrativeField(string $field): void
+    {
+        // A new user is created either by an administrator, as checked by ACL, or by Shibboleth
+        if (!$this->getId()) {
+            return;
+        }
+
+        if (self::getCurrent()?->getRole() !== self::ROLE_ADMINISTRATOR) {
+            throw new Exception('Only administrators can change the ' . $field . ' of a user');
+        }
     }
 
     /**
