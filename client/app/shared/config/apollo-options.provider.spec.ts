@@ -23,6 +23,15 @@ describe('translateTechnicalError', () => {
         );
     });
 
+    it('explains that an object cannot be found, without telling whether it exists', () => {
+        expect(
+            translateTechnicalError('Entity not found for class `Application\\Model\\Collection` and ID `2008`.'),
+        ).toBe("Cette collection n'existe pas ou vous n'y avez pas accès.");
+        expect(translateTechnicalError('Entity not found for class `Application\\Model\\Tag` and ID `1`.')).toBe(
+            "Cet élément n'existe pas ou vous n'y avez pas accès.",
+        );
+    });
+
     it('keeps the messages that we write ourselves', () => {
         expect(translateTechnicalError("Ce compte n'est plus actif")).toBe("Ce compte n'est plus actif");
     });

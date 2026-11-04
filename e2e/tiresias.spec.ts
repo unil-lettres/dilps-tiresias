@@ -3,6 +3,7 @@ import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {expect, test} from './fixtures';
 import {
+    browseAnonymously,
     createCard,
     deleteCollections,
     deleteObjects,
@@ -64,6 +65,16 @@ test('anonymous can browse the public cards via the public access', async ({page
 
     await expect(page.locator('natural-gallery figcaption', {hasText: 'Test related card 6012'})).toHaveCount(1);
     await expect(page.locator('natural-gallery figcaption', {hasText: 'Test card 6007'})).toHaveCount(0);
+});
+
+test('anonymous is sent home from the pages of logged-in users', async ({page}) => {
+    await browseAnonymously(page);
+
+    for (const path of ['my-collection', 'collection', 'collection/2004', 'source', 'notification', 'user']) {
+        await page.goto(path);
+        await expect(page, path).toHaveURL(/\/home$/);
+        await expect(page.locator('[matsnackbarlabel]'), path).toContainText("Vous n'avez pas accès à cette page.");
+    }
 });
 
 async function cardsOfCollection(page: Page, collection: string): Promise<{id: string; name: string}[]> {

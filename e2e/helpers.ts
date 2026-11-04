@@ -72,7 +72,13 @@ export async function login(page: Page, role: Role): Promise<void> {
  */
 export async function loginAs(page: Page, login: string, password: string): Promise<void> {
     await page.goto('login');
+    await submitLogin(page, login, password);
+}
 
+/**
+ * Log in via the login form already shown, and accept the terms of use if never accepted yet
+ */
+export async function submitLogin(page: Page, login: string, password: string): Promise<void> {
     // Like a human typing, let the login page load first, otherwise logging in resets the Apollo store while queries
     // are in flight, and Apollo logs an error about it
     await page.waitForLoadState('networkidle');

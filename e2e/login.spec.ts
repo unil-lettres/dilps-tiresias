@@ -1,4 +1,5 @@
 import {expect, test} from './fixtures';
+import {submitLogin} from './helpers';
 
 test('anonymous sees how to log in', async ({page}) => {
     await page.goto('');
@@ -19,4 +20,14 @@ test('anonymous sees an error with wrong credentials', async ({page, problems}) 
         "Le nom d'utilisateur ou mot de passe est incorrect",
     );
     await expect(page).toHaveURL(/\/login/);
+});
+
+test('a user logging in to open a page reserved to others lands on home', async ({page}) => {
+    await page.goto('user');
+    await expect(page).toHaveURL(/\/login\?returnUrl=%2Fuser$/);
+
+    await submitLogin(page, 'senior', 'senior');
+
+    await expect(page).toHaveURL(/\/home$/);
+    await expect(page.locator('[matsnackbarlabel]')).toContainText("Vous n'avez pas accès à cette page.");
 });

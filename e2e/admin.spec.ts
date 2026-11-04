@@ -215,13 +215,9 @@ test('administrator can see the statistics of visits, cards and users', async ({
 test('only administrators can open the pages of the administration', async ({page}) => {
     await login(page, 'senior');
 
-    for (const [path, heading] of [
-        ['user', 'Utilisateurs'],
-        ['news', 'Actualités'],
-        ['statistic', 'Statistiques'],
-    ]) {
+    for (const path of ['user', 'news', 'statistic']) {
         await page.goto(path);
-        await page.waitForLoadState('networkidle');
-        await expect(page.getByRole('heading', {name: heading}), path).toHaveCount(0);
+        await expect(page, path).toHaveURL(/\/home$/);
+        await expect(page.locator('[matsnackbarlabel]'), path).toContainText("Vous n'avez pas accès à cette page.");
     }
 });
