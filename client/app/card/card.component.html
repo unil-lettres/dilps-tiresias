@@ -1007,7 +1007,7 @@
                             }
                         </div>
                     }
-                    @if (fetchedModel) {
+                    @if (fetchedModel && showFiles()) {
                         <app-files [card]="fetchedModel" [disabled]="!edit" />
                     }
                     @if (isDilps && collectionCopyrights) {

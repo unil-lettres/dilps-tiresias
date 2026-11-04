@@ -41,7 +41,7 @@
                 </div>
             } @else {
                 <div class="card-original nat-vertical nat-expand">
-                    <app-card class="nat-expand" title="Original" [fetchedModel]="original" />
+                    <app-card class="nat-expand" title="Original" [fetchedModel]="original" [showFiles]="false" />
                 </div>
             }
             <!-- Suggestion -->
@@ -60,6 +60,7 @@
                         [showTools]="showTools"
                         [showCards]="false"
                         [showCode]="false"
+                        [showFiles]="false"
                     />
                 </div>
             }

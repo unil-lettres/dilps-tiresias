@@ -243,6 +243,11 @@ export class CardComponent implements OnInit, OnChanges {
     public readonly showCards = input(true);
 
     /**
+     * Hide attached files, eg: for a suggestion, whose files would never be applied to the original card
+     */
+    public readonly showFiles = input(true);
+
+    /**
      * Hide some toolbar actions
      */
     public readonly showTools = input(true);
