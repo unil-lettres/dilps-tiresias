@@ -10,13 +10,13 @@ import {
 } from '@apollo/client';
 import {ErrorLink} from '@apollo/client/link/error';
 import {type AppRouteReuseStrategy} from '../../app-route-reuse-strategy';
-import {createHttpLink, hasFilesAndProcessDate, NetworkActivityService} from '@ecodev/natural';
+import {createHttpLink, ErrorService, hasFilesAndProcessDate, NetworkActivityService} from '@ecodev/natural';
 import {AlertService} from '../components/alert/alert.service';
 import {HttpBatchLink, HttpLink} from 'apollo-angular/http';
 import {inject, type Provider} from '@angular/core';
 import {RouteReuseStrategy} from '@angular/router';
 import {APOLLO_OPTIONS} from 'apollo-angular';
-import {type FormattedExecutionResult} from 'graphql';
+import {type FormattedExecutionResult, OperationTypeNode} from 'graphql';
 import {leaveGraphQLErrorBreadcrumb} from './bugsnag';
 import {recordOperationNames} from '../../statistics/services/statistic.queries';
 
@@ -88,6 +88,7 @@ function translatePhpConfigurationError(message: string): string {
 function createErrorHandler(
     networkActivityService: NetworkActivityService,
     alertService: AlertService,
+    errorService: ErrorService,
 ): ErrorLink.ErrorHandler {
     return options => {
         leaveGraphQLErrorBreadcrumb(options.operation.operationName, options.error);
@@ -106,6 +107,14 @@ function createErrorHandler(
                 if ('extensions' in error && error.extensions?.showSnack) {
                     // Show whatever server prepared for end-user, with a bit more time to read
                     alertService.error(translatedMessage, 5000);
+                } else if (
+                    'extensions' in error &&
+                    error.extensions?.objectNotFound &&
+                    options.operation.operationType === OperationTypeNode.QUERY
+                ) {
+                    // The page cannot be shown without its object, eg: a link to a private collection. And the page
+                    // itself never gets the error, because watched queries do not emit errors, so it would wait forever.
+                    errorService.redirectError({...error, message: translatedMessage});
                 } else {
                     // Use a generic message for internal error not to frighten end-user too much
                     alertService.error('Une erreur est survenue du côté du serveur');
@@ -177,6 +186,7 @@ function combinedGraphQLErrors(message: string): CombinedGraphQLErrors {
 function createApolloLink(
     networkActivityService: NetworkActivityService,
     alertService: AlertService,
+    errorService: ErrorService,
     httpLink: HttpLink,
     httpBatchLink: HttpBatchLink,
     routeReuseStrategy: AppRouteReuseStrategy,
@@ -191,7 +201,7 @@ function createApolloLink(
         return forward(operation);
     });
 
-    const errorLink = new ErrorLink(createErrorHandler(networkActivityService, alertService));
+    const errorLink = new ErrorLink(createErrorHandler(networkActivityService, alertService, errorService));
 
     return routeReuseClearer.concat(
         errorLink.concat(
@@ -205,11 +215,19 @@ function createApolloLink(
 function apolloOptionsFactory(): ApolloClient.Options {
     const networkActivityService = inject(NetworkActivityService);
     const alertService = inject(AlertService);
+    const errorService = inject(ErrorService);
     const httpLink = inject(HttpLink);
     const httpBatchLink = inject(HttpBatchLink);
     const routeReuse = inject(RouteReuseStrategy) as AppRouteReuseStrategy;
 
-    const link = createApolloLink(networkActivityService, alertService, httpLink, httpBatchLink, routeReuse);
+    const link = createApolloLink(
+        networkActivityService,
+        alertService,
+        errorService,
+        httpLink,
+        httpBatchLink,
+        routeReuse,
+    );
 
     return {
         link: link,
