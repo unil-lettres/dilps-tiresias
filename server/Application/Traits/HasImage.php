@@ -6,7 +6,7 @@ namespace Application\Traits;
 
 use Application\Api\FileException;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
+use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Attribute as API;
 use Psr\Http\Message\UploadedFileInterface;
 use Throwable;
@@ -30,7 +30,7 @@ trait HasImage
 
             $path = $this->getPath();
             if (file_exists($path)) {
-                throw new Exception('A file already exist with the same name: ' . $this->getFilename());
+                throw new Exception('Un fichier du même nom existe déjà.');
             }
             $file->moveTo($path);
 
@@ -97,7 +97,7 @@ trait HasImage
         $path = $this->getPath();
         $mime = mime_content_type($path);
         if ($mime === false) {
-            throw new Exception('Could not get mimetype for path: ' . $path);
+            throw new Exception('Impossible de déterminer le type du fichier.');
         }
 
         if ($mime === 'image/svg') {
@@ -134,7 +134,7 @@ trait HasImage
             $path = $this->getPath();
             unlink($path);
 
-            throw new Exception('Invalid file type of: ' . $mime);
+            throw new Exception('Le type de fichier « ' . $mime . " » n'est pas accepté.");
         }
     }
 

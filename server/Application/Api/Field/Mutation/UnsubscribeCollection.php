@@ -27,7 +27,7 @@ class UnsubscribeCollection implements FieldInterface
 
                 $user = User::getCurrent();
                 if (!$user) {
-                    throw new Exception('Must be logged in to unsubscribe from a collection');
+                    throw new Exception("Vous devez être connecté·e pour vous désabonner d'une collection.");
                 }
 
                 $collection->removeResponsible($user);

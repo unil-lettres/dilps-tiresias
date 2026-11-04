@@ -13,6 +13,7 @@ use Application\Acl\Assertion\IsSuggestion;
 use Application\Acl\Assertion\SameSite;
 use Application\Acl\Assertion\Visibility;
 use Application\Enum\CollectionVisibility;
+use Application\Model\AbstractModel;
 use Application\Model\AntiqueName;
 use Application\Model\Artist;
 use Application\Model\Card;
@@ -154,5 +155,48 @@ class Acl extends \Ecodev\Felix\Acl\Acl
         $this->allow(User::ROLE_ADMINISTRATOR, $export, 'read');
         $this->allow(User::ROLE_ADMINISTRATOR, $export, 'create', new SameSite());
         $this->allow(User::ROLE_ADMINISTRATOR, $file, ['create', 'update', 'delete'], new CanUpdateCard());
+    }
+
+    /**
+     * Returns a message explaining the denial to the end-user.
+     *
+     * Contrary to getLastDenialMessage(), it does not expose the internals of the API, such as the names of the
+     * resources, privileges and assertions.
+     */
+    public function getUserDenialMessage(AbstractModel $model, string $privilege): string
+    {
+        // The object, as "this object" and as "an object", with instanceof to support Doctrine proxies
+        [$thisObject, $anObject] = match (true) {
+            $model instanceof AntiqueName => ['ce nom antique', 'un nom antique'],
+            $model instanceof Artist => ['cet artiste', 'un artiste'],
+            $model instanceof Card => ['cette fiche', 'une fiche'],
+            $model instanceof Change => ['cette suggestion', 'une suggestion'],
+            $model instanceof Collection => ['cette collection', 'une collection'],
+            $model instanceof Country => ['ce pays', 'un pays'],
+            $model instanceof Dating => ['cette datation', 'une datation'],
+            $model instanceof DocumentType => ['ce type de document', 'un type de document'],
+            $model instanceof Domain => ['ce domaine', 'un domaine'],
+            $model instanceof Export => ['cet export', 'un export'],
+            $model instanceof File => ['ce fichier', 'un fichier'],
+            $model instanceof Institution => ['cette institution', 'une institution'],
+            $model instanceof Material => ['ce matériau', 'un matériau'],
+            $model instanceof News => ['cette actualité', 'une actualité'],
+            $model instanceof Period => ['cette période', 'une période'],
+            $model instanceof Statistic => ['ces statistiques', 'des statistiques'],
+            $model instanceof Tag => ['ce mot-clé', 'un mot-clé'],
+            $model instanceof User => ['cet·te utilisateur·rice', 'un·e utilisateur·rice'],
+            default => ['cet élément', 'un élément'],
+        };
+
+        return match ($privilege) {
+            'read' => "Vous n'avez pas accès à $thisObject.",
+            'create' => "Vous n'avez pas le droit de créer $anObject.",
+            'update' => "Vous n'avez pas le droit de modifier $thisObject.",
+            'delete' => "Vous n'avez pas le droit de supprimer $thisObject.",
+            'linkCard' => "Vous n'avez pas le droit de modifier le contenu de $thisObject.",
+            'manageResponsibles' => "Vous n'avez pas le droit de gérer les responsables de $thisObject.",
+            'manageSubscribers' => "Vous n'avez pas le droit de gérer les lecteur·rice·s de $thisObject.",
+            default => "Vous n'avez pas le droit d'effectuer cette action.",
+        };
     }
 }

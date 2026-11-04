@@ -20,7 +20,8 @@ abstract class Helper
     {
         $acl = new Acl();
         if (!$acl->isCurrentUserAllowed($model, $privilege)) {
-            throw new Exception($acl->getLastDenialMessage());
+            // The detailed denial message is not shown, it would be unreadable for end-users, and expose the internals of the API
+            throw new Exception($acl->getUserDenialMessage($model, $privilege));
         }
     }
 
@@ -35,7 +36,7 @@ abstract class Helper
     {
         $user = User::getCurrent();
         if (!$user || $suggestion->getCreator() !== $user || $suggestion->getOwner() !== $user) {
-            throw new Exception('Only the creator of a card can submit it as a suggestion');
+            throw new Exception("Seul·e le·la créateur·rice d'une fiche peut la proposer.");
         }
     }
 
@@ -148,7 +149,7 @@ abstract class Helper
         ];
 
         if (in_array($field, $administratorFields[$class] ?? [], true)) {
-            throw new Exception('Only administrators can filter or sort on ' . $field);
+            throw new Exception('Seul·e·s les administrateur·rice·s peuvent filtrer ou trier par ' . $field . '.');
         }
     }
 }

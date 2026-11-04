@@ -229,7 +229,7 @@ class Card extends AbstractModel implements HasSiteInterface, Image
         }
 
         if (User::getCurrent()?->getRole() !== User::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrators can change the visibility of a card');
+            throw new Exception("Seul·e·s les administrateur·rice·s peuvent modifier la visibilité d'une fiche.");
         }
 
         $this->visibility = $visibility;

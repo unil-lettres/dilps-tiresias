@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "junior" with role junior is not allowed on resource "Card#6006" with privilege "delete"',
+                'message' => "Vous n'avez pas le droit de supprimer cette fiche.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

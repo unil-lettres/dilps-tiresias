@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "junior" with role junior is not allowed on resource "Card#6000" with privilege "update" because it is not the owner, nor one of the responsible of a collection with visibility member',
+                'message' => "Vous n'avez pas le droit de modifier cette fiche.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

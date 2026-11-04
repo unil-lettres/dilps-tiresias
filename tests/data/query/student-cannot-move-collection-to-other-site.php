@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Cannot move an object to another site',
+                'message' => "Impossible de déplacer un élément vers l'autre site.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

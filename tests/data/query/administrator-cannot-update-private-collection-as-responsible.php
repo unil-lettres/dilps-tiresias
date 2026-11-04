@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "administrator" with role administrator is not allowed on resource "Collection#2000" with privilege "update" because it is not the owner',
+                'message' => "Vous n'avez pas le droit de modifier cette collection.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

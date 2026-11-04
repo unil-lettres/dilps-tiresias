@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only administrators can change the isSource of a collection',
+                'message' => "Seul·e·s les administrateur·rice·s peuvent faire d'une collection un fonds.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

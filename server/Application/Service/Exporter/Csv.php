@@ -33,7 +33,7 @@ class Csv implements Writer
     {
         $file = fopen($export->getPath(), 'w+b');
         if ($file === false) {
-            throw new Exception('Cannot write to file');
+            throw new Exception("L'export n'a pas pu être créé.");
         }
 
         $this->file = $file;

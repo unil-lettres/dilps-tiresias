@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'User "student" with role student is not allowed on resource "Collection#2002" with privilege "manageSubscribers" because it is not the owner, nor one of the responsible',
+                'message' => "Vous n'avez pas le droit de gérer les lecteur·rice·s de cette collection.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

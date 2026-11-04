@@ -13,7 +13,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only administrators can change the activeUntil of a user',
+                'message' => "Seul·e·s les administrateur·rice·s peuvent modifier la date de fin d'accès d'un·e utilisateur·rice.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

@@ -129,7 +129,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     {
         if ($visibility !== $this->visibility && $visibility === CollectionVisibility::Member
             && !in_array(User::getCurrent()?->getRole(), [User::ROLE_SENIOR, User::ROLE_MAJOR, User::ROLE_ADMINISTRATOR], true)) {
-            throw new Exception('Only seniors, majors and administrators can make a collection visible to all members');
+            throw new Exception('Seul·e·s les seniors, les majors et les administrateur·rice·s peuvent rendre une collection visible par les membres.');
         }
 
         $this->visibility = $visibility;
@@ -165,7 +165,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function setIsSource(bool $isSource): void
     {
         if ($isSource !== $this->isSource) {
-            $this->throwIfNotAdministrator('isSource');
+            $this->throwIfNotAdministrator("Seul·e·s les administrateur·rice·s peuvent faire d'une collection un fonds.");
         }
 
         $this->isSource = $isSource;
@@ -292,7 +292,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
     public function setIsHistoric(bool $isHistoric): void
     {
         if ($isHistoric !== $this->isHistoric) {
-            $this->throwIfNotAdministrator('isHistoric');
+            $this->throwIfNotAdministrator('Seul·e·s les administrateur·rice·s peuvent rendre un fonds historique.');
         }
 
         $this->isHistoric = $isHistoric;
@@ -361,10 +361,10 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      * Only administrators can make a collection a fonds, like the client only offers it to them. Otherwise, anybody
      * could show their own copyrights on any card, by adding it to a fonds of their own.
      */
-    private function throwIfNotAdministrator(string $field): void
+    private function throwIfNotAdministrator(string $message): void
     {
         if (User::getCurrent()?->getRole() !== User::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrators can change the ' . $field . ' of a collection');
+            throw new Exception($message);
         }
     }
 }

@@ -138,7 +138,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     public function setLogin(string $login): void
     {
         if ($login !== $this->login) {
-            $this->throwIfCannotChangeAdministrativeField('login');
+            $this->throwIfCannotChangeAdministrativeField("l'identifiant");
         }
 
         $this->login = $login;
@@ -190,7 +190,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     public function setEmail(?string $email): void
     {
         if ($email !== $this->email) {
-            $this->throwIfCannotChangeAdministrativeField('email');
+            $this->throwIfCannotChangeAdministrativeField("l'email");
         }
 
         $this->email = $email;
@@ -237,9 +237,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     public function setRole(string $role): void
     {
         if (!Role::canUpdate(self::getCurrent(), $this->role, $role)) {
-            $currentRole = self::getCurrent() ? self::getCurrent()->getRole() : self::ROLE_ANONYMOUS;
-
-            throw new Exception($currentRole . ' is not allowed to change role from ' . $this->role . ' to ' . $role);
+            throw new Exception("Vous n'avez pas le droit d'attribuer ce rôle.");
         }
 
         $this->role = $role;
@@ -259,7 +257,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
     public function setActiveUntil(?Chronos $activeUntil): void
     {
         if ($activeUntil?->getTimestamp() !== $this->activeUntil?->getTimestamp()) {
-            $this->throwIfCannotChangeAdministrativeField('activeUntil');
+            $this->throwIfCannotChangeAdministrativeField("la date de fin d'accès");
         }
 
         $this->activeUntil = $activeUntil;
@@ -311,8 +309,10 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      * Users can update their own profile, but they must neither extend their own access (activeUntil), nor change
      * how they are identified (login, email). Shibboleth logs users in by their email, so changing our email
      * to the address of somebody who never logged in yet would log that person into our account.
+     *
+     * @param string $fieldLabel the field as shown to the user, eg: "l'email"
      */
-    private function throwIfCannotChangeAdministrativeField(string $field): void
+    private function throwIfCannotChangeAdministrativeField(string $fieldLabel): void
     {
         // A new user is created either by an administrator, as checked by ACL, or by Shibboleth
         if (!$this->getId()) {
@@ -320,7 +320,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
         }
 
         if (self::getCurrent()?->getRole() !== self::ROLE_ADMINISTRATOR) {
-            throw new Exception('Only administrators can change the ' . $field . ' of a user');
+            throw new Exception('Seul·e·s les administrateur·rice·s peuvent modifier ' . $fieldLabel . " d'un·e utilisateur·rice.");
         }
     }
 

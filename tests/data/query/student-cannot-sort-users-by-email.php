@@ -11,7 +11,7 @@ return [
     [
         'errors' => [
             [
-                'message' => 'Only administrators can filter or sort on email',
+                'message' => 'Seul·e·s les administrateur·rice·s peuvent filtrer ou trier par email.',
                 'extensions' => [
                     'showSnack' => true,
                 ],
