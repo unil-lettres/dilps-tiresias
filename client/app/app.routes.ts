@@ -24,7 +24,7 @@ import {
     CollectionVisibility,
     UserRole,
 } from './shared/generated-types';
-import {canActivateAuthAdmin} from './shared/services/auth.admin.guard';
+import {canActivateAuthAdmin, canActivateLoggedIn} from './shared/services/auth.admin.guard';
 import {canActivateAuth} from './shared/services/auth.guard';
 import {StatisticsComponent} from './statistics/statistics/statistics.component';
 import {TagsComponent} from './tags/tags/tags.component';
@@ -125,14 +125,17 @@ export const routes: Routes = [
             {
                 path: 'notification',
                 component: ChangesComponent,
+                canActivate: [canActivateLoggedIn],
             },
             {
                 path: 'notification/new/:cardId',
                 component: ChangeComponent,
+                canActivate: [canActivateLoggedIn],
             },
             {
                 path: 'notification/:changeId',
                 component: ChangeComponent,
+                canActivate: [canActivateLoggedIn],
             },
             {
                 path: 'quizz',
@@ -141,6 +144,7 @@ export const routes: Routes = [
             {
                 path: 'collection',
                 component: CollectionsComponent,
+                canActivate: [canActivateLoggedIn],
                 data: {
                     creationButtonForRoles: false,
                     title: 'Collections publiques',
@@ -180,6 +184,7 @@ export const routes: Routes = [
             {
                 path: 'my-collection',
                 component: CollectionsComponent,
+                canActivate: [canActivateLoggedIn],
                 resolve: {creator: resolveUser},
                 data: {
                     creationButtonForRoles: true,
@@ -232,6 +237,7 @@ export const routes: Routes = [
             {
                 path: 'source',
                 component: CollectionsComponent,
+                canActivate: [canActivateLoggedIn],
                 data: {
                     title: 'Fonds',
                     creationButtonForRoles: [UserRole.administrator],
