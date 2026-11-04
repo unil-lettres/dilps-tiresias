@@ -64,11 +64,25 @@ export const cacheConfig: InMemoryCacheConfig = {
  * - max_execution_time
  * - invalid variables, eg: `Variable "$login" got invalid value "foo "; Not a valid Login: "foo "`
  * - data rejected by the database, as reported by felix
+ * - objects not found, that might exist but that the user cannot see, eg: `Entity not found for class
+ *   `Application\Model\Card` and ID `123`.`
  *
  * @param message The original error message
  * @returns Translated error message
  */
 function translateTechnicalError(message: string): string {
+    const notFound = /^Entity not found for class `Application\\Model\\(\w+)`/.exec(message);
+    if (notFound) {
+        const object =
+            {
+                Card: 'Cette fiche',
+                Collection: 'Cette collection',
+                Change: 'Cette suggestion',
+            }[notFound[1]] ?? 'Cet élément';
+
+        return `${object} n'existe pas ou vous n'y avez pas accès.`;
+    }
+
     if (message.startsWith('Variable "$')) {
         return "Une des valeurs saisies n'est pas valide.";
     }
@@ -122,17 +136,14 @@ function createErrorHandler(
         if (CombinedGraphQLErrors.is(error)) {
             error.errors.forEach(error => {
                 const translatedMessage = translateTechnicalError(error.message);
-                if ('extensions' in error && error.extensions?.showSnack) {
-                    // Show whatever server prepared for end-user, with a bit more time to read
-                    alertService.error(translatedMessage, 5000);
-                } else if (
-                    'extensions' in error &&
-                    error.extensions?.objectNotFound &&
-                    options.operation.operationType === OperationTypeNode.QUERY
-                ) {
+                const objectNotFound = 'extensions' in error && error.extensions?.objectNotFound;
+                if (objectNotFound && options.operation.operationType === OperationTypeNode.QUERY) {
                     // The page cannot be shown without its object, eg: a link to a private collection. And the page
                     // itself never gets the error, because watched queries do not emit errors, so it would wait forever.
                     errorService.redirectError({...error, message: translatedMessage});
+                } else if (objectNotFound || ('extensions' in error && error.extensions?.showSnack)) {
+                    // Show whatever server prepared for end-user, with a bit more time to read
+                    alertService.error(translatedMessage, 5000);
                 } else {
                     // Use a generic message for internal error not to frighten end-user too much
                     alertService.error('Une erreur est survenue du côté du serveur');
