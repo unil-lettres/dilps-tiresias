@@ -407,6 +407,9 @@ for (const [action, suggestion] of [
         if (action === 'Suggérer une modification') {
             // The suggestion is a copy of the card, edited beside the original
             await expect(page).toHaveURL(new RegExp(`/notification/new/${original.id}$`));
+            await expect(page.locator('.card-original')).toBeVisible();
+            // Files would go straight to the original card, and accepting a suggestion never applies them
+            await expect(page.locator('app-files')).toHaveCount(0);
             await page.locator('.card-suggestion').getByLabel('Datation').fill('Suggested dating');
             await page.locator('button[mattooltip="Soumettre la suggestion à validation"]').click();
         }
