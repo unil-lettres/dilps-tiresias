@@ -29,7 +29,6 @@ import {canActivateAuth} from './shared/services/auth.guard';
 import {StatisticsComponent} from './statistics/statistics/statistics.component';
 import {TagsComponent} from './tags/tags/tags.component';
 import {resolveUser} from './users/services/user.resolver';
-import {UserComponent} from './users/user/user.component';
 import {UsersComponent} from './users/users/users.component';
 import {ErrorComponent} from './shared/components/error/error.component';
 
@@ -67,10 +66,6 @@ export const routes: Routes = [
                 component: CardComponent,
                 canDeactivate: [canDeactivateCard],
                 data: {showLogo: true, showSlideshowRelatedCards: true},
-            },
-            {
-                path: 'profile',
-                component: UserComponent,
             },
             {
                 path: 'user',
