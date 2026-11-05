@@ -53,6 +53,11 @@
             .figure .title.link {
                 padding: 5px;
 
+                // Room for the upper half of the historic badge, which sits astride the corner of the caption
+                &:has(.historic) {
+                    padding-top: 12px;
+                }
+
                 button {
                     transition: background-color 0.2s;
                     box-shadow: var(--mat-sys-level1);
@@ -72,20 +77,10 @@
                 }
             }
 
-            figcaption button.historic {
-                display: grid !important;
-                grid-template-columns: 30px 1fr;
-                align-items: center;
-                gap: 10px;
-                padding: 5px !important;
-                text-align: center;
-            }
-
             .historic-icon {
-                display: inline;
-                position: relative;
-                vertical-align: center;
-                float: left;
+                position: absolute;
+                top: 0;
+                left: 3px;
                 height: 24px;
             }
 
