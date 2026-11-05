@@ -1,7 +1,7 @@
 import {type Locator, type Page} from '@playwright/test';
 import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
-import {expect, test} from './fixtures';
+import {expect, test, withoutGoogleMaps} from './fixtures';
 import {
     browseAnonymously,
     createCard,
@@ -243,6 +243,7 @@ test('the map cannot be opened for cards without location', async ({page, cleanu
 });
 
 test('administrator can search the cards around a card of the map', async ({page, cleanup}) => {
+    test.skip(withoutGoogleMaps, 'Google Maps shows no marker');
     await login(page, 'administrator');
     const tag = crypto.randomUUID();
     const card = await createCard(page, {name: `E2E ${tag}`, ...location});
@@ -265,6 +266,7 @@ test('administrator can search the cards around a card of the map', async ({page
 });
 
 test('administrator can reach all the cards a few meters away from a single marker', async ({page, cleanup}) => {
+    test.skip(withoutGoogleMaps, 'Google Maps shows no marker');
     await login(page, 'administrator');
     const tag = crypto.randomUUID();
     const first = await createCard(page, {name: `E2E ${tag} 1`, ...location});

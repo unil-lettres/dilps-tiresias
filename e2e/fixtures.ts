@@ -52,6 +52,11 @@ async function findDeletedCards(page: Page, ids: string[]): Promise<string[]> {
  * Those errors are often silent for the user: a list is empty instead of showing the expected items, or a button
  * does nothing. So they must be caught even if the test does not look for them.
  */
+/**
+ * Whether Google Maps refuses to work, because no key allows the URL of the tests, eg: in CI
+ */
+export const withoutGoogleMaps = !!process.env.E2E_WITHOUT_GOOGLE_MAPS;
+
 export const test = base.extend<{problems: Problems; cleanup: Cleanup}>({
     // Depends on the page, so that the page is still open during the cleanup
     cleanup: async ({page: _page}, use) => {
@@ -66,7 +71,7 @@ export const test = base.extend<{problems: Problems; cleanup: Cleanup}>({
     problems: [
         async ({page}, use) => {
             const problems: string[] = [];
-            const allowed: RegExp[] = [];
+            const allowed: RegExp[] = withoutGoogleMaps ? [/Google Maps JavaScript API error/] : [];
             const pending: Promise<void>[] = [];
 
             page.on('console', message => {

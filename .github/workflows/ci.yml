@@ -79,8 +79,6 @@ jobs:
               id: app-build
               env:
                   GENERATE_MAP: true
-                  # For the maps of E2E tests, allowed for the hostnames below
-                  MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
               run: ./bin/build.sh
 
             - name: Load test data
@@ -113,6 +111,7 @@ jobs:
               id: app-test-e2e
               env:
                   E2E_BASE_URL: http://dilps.docker:8181/
+                  E2E_WITHOUT_GOOGLE_MAPS: true
                   PHP_CLI_SERVER_WORKERS: 4
               run: |
                   echo '127.0.0.1 dilps.docker tiresias.docker' | sudo tee -a /etc/hosts
