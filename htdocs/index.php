@@ -1,11 +1,22 @@
 <?php
 
 declare(strict_types=1);
-// Delegate static file requests back to the PHP built-in webserver
-if (PHP_SAPI === 'cli-server'
-    && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))
-) {
-    return false;
+// Route like Apache does in configuration/apache.conf, for the PHP built-in webserver
+if (PHP_SAPI === 'cli-server') {
+    // Serve both sites on the same port, like the virtual hosts of Apache
+    $_SERVER['SERVER_NAME'] = parse_url('//' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST);
+    putenv('SERVER_NAME=' . $_SERVER['SERVER_NAME']);
+
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (is_file(__DIR__ . $path)) {
+        return false;
+    }
+
+    if (!preg_match('~^/(graphql|auth|detail/?|api/.*)$~', $path)) {
+        readfile(__DIR__ . '/index.html');
+
+        return;
+    }
 }
 
 chdir(dirname(__DIR__));

@@ -79,6 +79,8 @@ jobs:
               id: app-build
               env:
                   GENERATE_MAP: true
+                  # For the maps of E2E tests, allowed for the hostnames below
+                  MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
               run: ./bin/build.sh
 
             - name: Load test data
@@ -105,6 +107,26 @@ jobs:
             - name: Test Angular
               id: app-test-ng
               run: ./node_modules/.bin/ng test --progress false --watch=false
+
+            # After PHPUnit, because E2E tests leave data behind, eg: exports
+            - name: Test E2E
+              id: app-test-e2e
+              env:
+                  E2E_BASE_URL: http://dilps.docker:8181/
+                  PHP_CLI_SERVER_WORKERS: 4
+              run: |
+                  echo '127.0.0.1 dilps.docker tiresias.docker' | sudo tee -a /etc/hosts
+                  mkdir -p logs
+                  # Hide deprecations, like dev/config/dilps-tiresias.ini
+                  php -d error_reporting='E_ALL & ~E_DEPRECATED' -S 127.0.0.1:8181 -t htdocs htdocs/index.php > logs/e2e-server.log 2>&1 &
+                  pnpm e2e --workers=2
+
+            - name: Upload E2E results
+              if: failure() && steps.app-test-e2e.outcome == 'failure'
+              uses: actions/upload-artifact@v7
+              with:
+                  name: e2e-results
+                  path: ${{ github.workspace }}/logs
 
             - name: Upload sources map artifact
               id: upload-artifact
