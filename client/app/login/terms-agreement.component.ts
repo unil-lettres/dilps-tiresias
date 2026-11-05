@@ -1,6 +1,8 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import {SITE} from '../app.config';
+import {Site} from '../shared/generated-types';
 
 @Component({
     selector: 'app-terms-agreement',
@@ -8,4 +10,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     templateUrl: './terms-agreement.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class TermsAgreementComponent {}
+export class TermsAgreementComponent {
+    protected readonly siteName = inject(SITE) === Site.Tiresias ? 'Tirésias' : 'DILPS';
+}
