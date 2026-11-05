@@ -27,4 +27,20 @@ class ImageHandlerTest extends TestCase
         self::assertStringContainsString('sandbox', $response->getHeaderLine('content-security-policy'), 'an SVG image opened directly must not run its scripts');
         self::assertSame('nosniff', $response->getHeaderLine('x-content-type-options'));
     }
+
+    public function testImageToResizeRedirectsToItsResizing(): void
+    {
+        global $container;
+
+        /** @var ImageHandler $handler */
+        $handler = $container->get(ImageHandler::class);
+        $request = new ServerRequest(uri: '/api/image/6005/123')->withAttribute('id', 6005)->withAttribute('maxHeight', 123);
+
+        $response = $handler->handle($request);
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/api/image/6005/123?resize=true', $response->getHeaderLine('location'));
+
+        $response = $handler->handle($request->withQueryParams(['inline' => '']));
+        self::assertSame('/api/image/6005/123?inline=&resize=true', $response->getHeaderLine('location'));
+    }
 }

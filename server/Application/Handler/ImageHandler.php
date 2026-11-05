@@ -58,7 +58,7 @@ class ImageHandler extends AbstractHandler
                 // without any special configuration if not needed.
                 // Resizing operation is ressource intensive and could lead to block
                 // the server if not properly configured.
-                return new RedirectResponse($this->constructRedirectURI(), 302);
+                return new RedirectResponse($this->constructRedirectURI($request), 302);
             }
 
             $path = $this->imageResizer->resize($card, $maxHeight, $useWebp, !$useCacheDir);
@@ -89,19 +89,10 @@ class ImageHandler extends AbstractHandler
      * Construct a new URI for the current request with the resize query
      * parameter set to true.
      */
-    protected function constructRedirectURI(): string
+    protected function constructRedirectURI(ServerRequestInterface $request): string
     {
-        $currentUrl = $_SERVER['REQUEST_URI'];
-        $queryString = $_SERVER['QUERY_STRING'];
+        $query = [...$request->getQueryParams(), 'resize' => 'true'];
 
-        // Build the new query string
-        parse_str($queryString, $queryArray);
-        $queryArray['resize'] = 'true';
-        $newQueryString = http_build_query($queryArray);
-
-        // Reconstruct the URL with the new query string
-        $baseUrl = strtok($currentUrl, '?');
-
-        return $baseUrl . '?' . $newQueryString;
+        return $request->getUri()->getPath() . '?' . http_build_query($query);
     }
 }
