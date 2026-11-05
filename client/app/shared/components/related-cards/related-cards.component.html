@@ -4,7 +4,13 @@
             @for (card of cards; track card) {
                 <div>
                     <a class="image" [routerLink]="['/card', card.id]" [matTooltip]="card.plainName">
-                        <img priority fill [ngSrc]="`card-${card.id}.jpg`" [loaderParams]="{card: card}" />
+                        <img
+                            priority
+                            fill
+                            [alt]="card.plainName || 'Fiche sans titre'"
+                            [ngSrc]="`card-${card.id}.jpg`"
+                            [loaderParams]="{card: card}"
+                        />
                     </a>
                 </div>
             }
@@ -12,6 +18,7 @@
         <button
             class="left fab-tonal"
             matMiniFab
+            aria-label="Images associées précédentes"
             [disabled]="scrollBarAtLeft()"
             [hidden]="!hasScrollbar()"
             (click)="scrollLeft()"
@@ -21,6 +28,7 @@
         <button
             class="right fab-tonal"
             matMiniFab
+            aria-label="Images associées suivantes"
             [disabled]="scrollBarAtRight()"
             [hidden]="!hasScrollbar()"
             (click)="scrollRight()"
@@ -33,6 +41,7 @@
         matMiniFab
         matTooltipPosition="left"
         [matTooltip]="`${isReduced() ? 'Ouvrir' : 'Fermer'} les images associées`"
+        [attr.aria-label]="`${isReduced() ? 'Ouvrir' : 'Fermer'} les images associées`"
         (click)="toggleReduce()"
     >
         <mat-icon naturalIcon="expand_more" />
