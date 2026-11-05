@@ -276,7 +276,7 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
      *
      * Only the user themselves can agree, once, and the date is always the current one, like when the client asks
      * them to agree after their login. Otherwise, a user could backdate or withdraw their agreement, or somebody else
-     * could agree on their behalf.
+     * could agree on their behalf. Agreeing again, eg: from another tab, keeps the first agreement.
      */
     public function setTermsAgreement(?Chronos $termsAgreement): void
     {
@@ -284,11 +284,11 @@ class User extends AbstractModel implements \Ecodev\Felix\Model\User, HasSiteInt
             return;
         }
 
-        if (self::getCurrent() !== $this || $this->termsAgreement || !$termsAgreement) {
-            throw new Exception("La licence ne peut être acceptée qu'une fois, par l'utilisateur·rice concerné·e.");
+        if (self::getCurrent() !== $this || !$termsAgreement) {
+            throw new Exception("La licence ne peut être acceptée que par l'utilisateur·rice concerné·e, et ne peut pas être retirée.");
         }
 
-        $this->termsAgreement = new Chronos();
+        $this->termsAgreement ??= new Chronos();
     }
 
     /**

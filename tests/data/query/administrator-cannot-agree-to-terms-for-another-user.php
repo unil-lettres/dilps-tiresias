@@ -15,7 +15,7 @@ return [
     [
         'errors' => [
             [
-                'message' => "La licence ne peut être acceptée qu'une fois, par l'utilisateur·rice concerné·e.",
+                'message' => "La licence ne peut être acceptée que par l'utilisateur·rice concerné·e, et ne peut pas être retirée.",
                 'extensions' => [
                     'showSnack' => true,
                 ],

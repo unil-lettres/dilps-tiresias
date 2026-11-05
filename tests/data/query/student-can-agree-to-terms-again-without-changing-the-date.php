@@ -14,21 +14,9 @@ return [
         }',
     ],
     [
-        'errors' => [
-            [
-                'message' => "La licence ne peut être acceptée qu'une fois, par l'utilisateur·rice concerné·e.",
-                'extensions' => [
-                    'showSnack' => true,
-                ],
-                'locations' => [
-                    [
-                        'line' => 2,
-                        'column' => 13,
-                    ],
-                ],
-                'path' => [
-                    'updateUser',
-                ],
+        'data' => [
+            'updateUser' => [
+                'id' => '1003',
             ],
         ],
     ],
@@ -38,5 +26,10 @@ return [
 
         // The current user is already loaded, so it must see the change too
         _em()->refresh(User::getCurrent());
+    },
+    // the first agreement is kept, neither backdated nor moved to now
+    function (Connection $connection): void {
+        $date = $connection->fetchOne('SELECT terms_agreement FROM user WHERE id = 1003');
+        PHPUnit\Framework\Assert::assertSame('2026-01-01 00:00:00', $date);
     },
 ];
