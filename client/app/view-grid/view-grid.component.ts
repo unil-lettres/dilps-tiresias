@@ -30,6 +30,7 @@ import {type ViewInterface} from '../list/list.component';
 import {HistoricIconComponent} from '../shared/components/historic-icon/historic-icon.component';
 import {type CardsQuery} from '../shared/generated-types';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {nonBreakingFrenchSpaces} from './view-grid.utils';
 
 export type ContentChange = {
     visible?: number;
@@ -357,7 +358,7 @@ export class ViewGridComponent implements OnInit, ViewInterface {
             }
 
             const fields: any = {
-                title: title ? title : 'Éditer la fiche',
+                title: title ? nonBreakingFrenchSpaces(title) : 'Éditer la fiche',
             };
 
             return {
