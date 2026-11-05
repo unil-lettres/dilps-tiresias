@@ -8,10 +8,12 @@ import {
     type CollectionsQueryVariables,
     LogicalOperator,
     type SearchOperatorString,
+    Site,
     type UserRole,
     type ViewerQuery,
 } from '../../shared/generated-types';
 import {CollectionComponent, unsubscribed} from '../collection/collection.component';
+import {SITE} from '../../app.config';
 import {CollectionService} from '../services/collection.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatListItem, MatListItemIcon, MatListItemMeta, MatListItemTitle, MatNavList} from '@angular/material/list';
@@ -62,10 +64,11 @@ import {
     changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class CollectionsComponent implements OnInit {
-    private readonly route = inject(ActivatedRoute);
+    protected readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly collectionsService = inject(CollectionService);
     private readonly dialog = inject(MatDialog);
+    protected readonly site = inject(SITE);
 
     private readonly destroyRef = inject(DestroyRef);
 
@@ -90,6 +93,9 @@ export class CollectionsComponent implements OnInit {
      * Title for the page
      */
     protected title = '';
+
+    protected sources = false;
+    protected readonly Site = Site;
 
     /**
      * Can create permissions
@@ -121,6 +127,7 @@ export class CollectionsComponent implements OnInit {
             this.showUnclassified = data.showUnclassified;
             this.showMyCards = data.showMyCards;
             this.title = data.title || '';
+            this.sources = !!data.sources;
 
             this.queryVariables.set('route-context', {filter: data.filter ? data.filter : {}});
 
@@ -152,10 +159,6 @@ export class CollectionsComponent implements OnInit {
             }
 
             this.hasMore = collections.length > this.rootCollections.length;
-
-            if (!this.route.firstChild && this.rootCollections.length > 0) {
-                this.router.navigate([this.rootCollections[0].id], {relativeTo: this.route});
-            }
         });
     }
 

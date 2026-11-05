@@ -1,8 +1,21 @@
 <!-- eslint-disable @angular-eslint/template/cyclomatic-complexity -->
+<ng-template #sourceIcon>
+    @if (site === Site.Dilps) {
+        <app-historic-icon tooltip="" />
+    } @else {
+        <mat-icon fontIcon="folder_special" />
+    }
+</ng-template>
+
 @if (!showUnclassified && !showMyCards && rootCollections.length === 0) {
     <p class="no-collection mat-font-title-md nat-vertical nat-gap-10 nat-center">
-        <mat-icon fontIcon="gallery_thumbnail" />
-        <span>Aucune collection disponible</span>
+        @if (!sources) {
+            <mat-icon fontIcon="gallery_thumbnail" />
+            <span>Aucune collection disponible</span>
+        } @else {
+            <ng-container *ngTemplateOutlet="sourceIcon" />
+            <span>Aucun fonds disponible</span>
+        }
     </p>
 } @else {
     <div class="nat-expand nat-horizontal">
@@ -171,6 +184,17 @@
         </div>
         <mat-divider vertical />
 
+        @if (!route.firstChild) {
+            <p class="no-selection mat-font-title-md nat-expand nat-vertical nat-gap-10 nat-center">
+                @if (!sources) {
+                    <mat-icon fontIcon="collections" />
+                    <span>Aucune collection sélectionnée</span>
+                } @else {
+                    <ng-container *ngTemplateOutlet="sourceIcon" />
+                    <span>Aucun fonds sélectionné</span>
+                }
+            </p>
+        }
         <router-outlet />
     </div>
 }
