@@ -75,6 +75,7 @@
             transition-duration: 1s;
 
             &:not(.is-hidden) {
+                visibility: visible;
                 opacity: 1;
                 transition-duration: 0s;
             }
@@ -84,15 +85,12 @@
     .scroll-arrow {
         position: absolute;
         top: -2px;
+        visibility: hidden; // Let the clicks through to the chips below
         opacity: 0;
         z-index: 3;
         transition-duration: 0s;
-        transition-property: opacity;
+        transition-property: opacity, visibility;
         transition-timing-function: ease-in;
-
-        &.is-hidden {
-            opacity: 0;
-        }
 
         &.left {
             left: 4px;
