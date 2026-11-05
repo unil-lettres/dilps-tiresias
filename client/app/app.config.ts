@@ -1,5 +1,5 @@
 import {type ApplicationConfig, ErrorHandler, inject, InjectionToken, provideAppInitializer} from '@angular/core';
-import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material/dialog';
 import {type Site} from './shared/generated-types';
 import {quillConfig} from './shared/config/quill.options';
 import {DateAdapter, provideNativeDateAdapter} from '@angular/material/core';
@@ -77,6 +77,8 @@ export const appConfig: ApplicationConfig = {
 
         // Sorting is importance because of scss files optimization (removed inherited tokens)
         provideThemes(['dilps', 'tiresias']),
-        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {maxWidth: '800px'}},
+        // Material uses these options instead of its own defaults, not on top of them, so start from its defaults to
+        // keep them, eg: the dialog role
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: Object.assign(new MatDialogConfig(), {maxWidth: '800px'})},
     ],
 };
