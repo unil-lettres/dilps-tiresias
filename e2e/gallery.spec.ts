@@ -238,11 +238,23 @@ test('student can read the selected cards, or a number of random cards', async (
     await openSearch(page, tag);
 
     await selectCards(page, [first, second]);
+
+    // Like on a slow network, go to the next card before the first one is loaded
+    await page.route('**/graphql', async route => {
+        const body = route.request().postDataJSON() as {operationName?: string}[] | null;
+        if ([body ?? []].flat().some(operation => operation.operationName === 'CardQuery')) {
+            await new Promise(resolve => setTimeout(resolve, 1_000));
+        }
+
+        // The first card is cancelled when the next one is asked for
+        await route.continue().catch(() => undefined);
+    });
     await galleryAction(page, "Lecture d'oeuvre");
     await expect(page).toHaveURL(/\/quizz;cards=/);
     await expect(page.getByText('Image 1 / 2')).toBeVisible();
     await page.getByRole('button', {name: 'Suivant'}).click();
     await expect(page.getByText('Image 2 / 2')).toBeVisible();
+    await page.unrouteAll({behavior: 'wait'});
     await expect(page.getByRole('button', {name: 'Recommencer'})).toBeVisible();
 
     // Without selection, random cards of the current search are read

@@ -55,7 +55,7 @@ export class QuizzComponent implements OnInit {
         this.routeParams$.subscribe(params => {
             if (params.cards) {
                 this.cards = params.cards.split(',');
-                this.getCard(this.cards[0]);
+                this.getCard(0);
             }
         });
 
@@ -68,28 +68,30 @@ export class QuizzComponent implements OnInit {
 
     protected goToNext(): void {
         this.formCtrl.setValue('');
-        const index = this.cards.findIndex(c => c === this.card?.id);
-        this.getCard(this.cards[index + 1]);
+        this.getCard(this.currentIndex + 1);
     }
 
     protected restart(): void {
         this.formCtrl.setValue('');
-        this.getCard(this.cards[0]);
+        this.getCard(0);
     }
 
     protected getArtistsNames(artists: CardQuery['card']['artists']): string {
         return artists.map(a => a.name).join(', ');
     }
 
-    private getCard(id: string): void {
+    private getCard(index: number): void {
+        const id = this.cards[index];
         if (!id) {
             return;
         }
 
-        const index = this.cards.findIndex(c => c === id);
+        this.currentIndex = index;
         this.cardService.getOne(id).subscribe((card: any) => {
-            this.currentIndex = index;
-            this.selectCard(card);
+            // Another card may have been asked for while this one was loading
+            if (index === this.currentIndex) {
+                this.selectCard(card);
+            }
         });
     }
 
