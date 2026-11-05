@@ -82,28 +82,21 @@ mat-list-item.collection-item {
 }
 
 .no-collection {
+    flex: 1;
     opacity: 0;
 
     // Defer to avoid interface clip.
     animation: fadeIn 0.1s ease-in forwards;
     animation-delay: 700ms;
-    width: 100%;
-    height: 70vh;
 }
 
-.no-collection app-historic-icon,
-.no-selection app-historic-icon {
+// Level with the messages of the gallery, which are below its toolbar
+.empty-state {
+    padding-top: calc(15vh + 69px);
+}
+
+// Overrides the size and colour of the historic badges of the list
+.empty-state app-historic-icon {
     width: 96px;
     color: var(--mat-sys-tertiary);
-}
-
-.no-collection,
-.no-selection {
-    .mat-icon {
-        width: 96px !important;
-        height: 96px !important;
-
-        color: var(--mat-sys-tertiary);
-        font-size: 96px !important;
-    }
 }

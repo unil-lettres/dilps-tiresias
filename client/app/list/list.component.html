@@ -459,23 +459,26 @@
             }
         </div>
         @if (dataSource.data?.length === 0) {
-            <div class="empty-result">
+            <div>
                 @if (hasActiveSearch()) {
-                    <div>
-                        <p>Aucun élément ne correspond aux termes recherchés.</p>
-                        <p>Essayez de :</p>
-                        <ul>
-                            <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
-                            <li>Simplifier la recherche.</li>
-                            <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
-                            <li>Enlever virgules, déterminants, prépositions, ...</li>
-                            <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
-                        </ul>
+                    <div class="empty-state">
+                        <mat-icon fontIcon="search_off" />
+                        <span class="mat-font-title-md">Aucun élément ne correspond aux termes recherchés</span>
+                        <div class="search-tips">
+                            <p>Essayez de :</p>
+                            <ul>
+                                <li>Vérifier l’orthographe, en cas de doute, écrire seulement une partie du mot.</li>
+                                <li>Simplifier la recherche.</li>
+                                <li>Mettre entre guillemets pour rechercher un mot ou une expression précise.</li>
+                                <li>Enlever virgules, déterminants, prépositions, ...</li>
+                                <li>Utiliser la “Recherche approfondie“ pour préciser votre requête.</li>
+                            </ul>
+                        </div>
                     </div>
                 } @else {
-                    <div class="nat-vertical nat-center nat-gap-10 empty-collection">
+                    <div class="empty-state mat-font-title-md empty-collection">
                         <mat-icon fontIcon="hide_image" />
-                        Aucune image dans la collection
+                        <span>Aucune image dans la collection</span>
                     </div>
                 }
             </div>
