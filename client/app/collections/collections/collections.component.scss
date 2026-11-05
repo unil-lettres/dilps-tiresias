@@ -48,6 +48,7 @@
 }
 
 mat-list-item:hover .actions-trigger,
+mat-list-item:focus-within .actions-trigger,
 .actions-trigger[aria-expanded='true'] {
     visibility: visible;
 }
