@@ -667,7 +667,6 @@ export class CardComponent implements OnInit, OnChanges {
                         const cardIds = cards.map(_card => _card.id);
                         // Return all related cards of the specified card filtered by
                         // cards already linked.
-                        console.log(otherCards);
                         return otherCards.filter(
                             _card => !cardIds.includes(_card.id) && _card.id != this.fetchedModel!.id,
                         );
