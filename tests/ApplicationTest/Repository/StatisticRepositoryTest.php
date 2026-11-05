@@ -73,4 +73,18 @@ class StatisticRepositoryTest extends AbstractRepository
         yield [Site::Tiresias, '20asd\'1"9', 1000];
         yield [Site::Tiresias, 'bbb', 1000];
     }
+
+    public function testGetOrCreateCreatesTheStatisticOfTheMonthOnce(): void
+    {
+        $statistic = $this->repository->getOrCreate(Site::Tiresias);
+        $statistic->recordPage();
+        _em()->flush();
+
+        self::assertSame(date('Y-m'), $statistic->getDate());
+        self::assertSame(Site::Tiresias, $statistic->getSite());
+        self::assertSame($statistic, $this->repository->getOrCreate(Site::Tiresias));
+
+        $count = $this->getEntityManager()->getConnection()->fetchOne("SELECT COUNT(*) FROM statistic WHERE date = ? AND site = 'tiresias'", [date('Y-m')]);
+        self::assertSame(1, (int) $count);
+    }
 }
