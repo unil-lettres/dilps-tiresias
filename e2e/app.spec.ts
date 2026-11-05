@@ -10,8 +10,6 @@ test.describe('dilps app', () => {
 
     test('should display auth message', async () => {
         await app.navigateTo();
-        expect(await app.getParagraphText()).toEqual(
-            "Veuillez choisir une méthode d'authentification ou\n" + 'utiliser le bouton "Accès public"',
-        );
+        expect(await app.getParagraphText()).toEqual("Veuillez choisir une méthode d'authentification");
     });
 });

@@ -11,9 +11,7 @@ test.describe('Login page', () => {
     test('with wrong credentials should see an error notification', async () => {
         await app.navigateTo();
         await app.fillCredentials('wrongname', 'wrongpasswd');
-        expect(await app.getParagraphText()).toEqual(
-            "Veuillez choisir une méthode d'authentification ou\n" + 'utiliser le bouton "Accès public"',
-        );
+        expect(await app.getParagraphText()).toEqual("Veuillez choisir une méthode d'authentification");
         expect(await app.getErrorMessage()).toMatch(/Le nom d'utilisateur ou mot de passe est incorrect/);
     });
 });
