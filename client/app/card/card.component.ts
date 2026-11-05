@@ -33,7 +33,7 @@ import {
 } from '@ecodev/natural';
 import {findKey, identity, sortBy} from 'es-toolkit';
 import {QuillEditorComponent, type QuillModules} from 'ngx-quill';
-import {concatMap, first, from, last, map, type Observable, of} from 'rxjs';
+import {concatMap, first, from, last, map, type Observable, of, switchMap} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AntiqueNameComponent} from '../antique-names/antique-name/antique-name.component';
 import {AntiqueNameService} from '../antique-names/services/antique-name.service';
@@ -89,7 +89,6 @@ import {
     CollectionVisibility,
     JoinType,
     Site,
-    type UpdateCard,
     UserRole,
     type ViewerQuery,
 } from '../shared/generated-types';
@@ -357,13 +356,13 @@ export class CardComponent implements OnInit, OnChanges {
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    protected institution!: CardQuery['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
+    protected institution!: CardQuery['card']['institution'] | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    protected artists: CardQuery['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
+    protected artists: CardQuery['card']['artists'] = [];
 
     /**
      * Cache stamped data from server.
@@ -833,18 +832,13 @@ export class CardComponent implements OnInit, OnChanges {
         }
 
         return this.cardService.updateNow(this.model).pipe(
+            // The mutation only returns a few fields, not enough to show the saved card
+            switchMap(card => this.cardService.getOne(card.id).pipe(last())),
             map(card => {
                 this.alertService.info('Mis à jour');
-                this.institution = card.institution;
-                this.artists = card.artists;
-
-                this.stamp = {
-                    ...this.stamp,
-                    updater: card.updater,
-                    updateDate: card.updateDate,
-                };
-
-                this.refreshInitialCardValues();
+                this.fetchedModel = card;
+                this.model = cardToCardInput(card);
+                this.initCard();
                 this.edit = false;
                 this.fetchedModelSnapshot = null;
 
