@@ -936,6 +936,8 @@ export class CardComponent implements OnInit, OnChanges {
                     top: '74px',
                     left: '74px',
                 },
+                // Focusing the field would open its list over the buttons
+                autoFocus: 'dialog',
             })
             .afterClosed()
             .subscribe(selection => {
