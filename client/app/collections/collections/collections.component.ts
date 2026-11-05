@@ -216,10 +216,8 @@ export class CollectionsComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(data => {
-            // if returned data is null, it means deletion
-            if (data === null) {
-                this.router.navigate(['..'], {relativeTo: this.route.firstChild});
-            } else if (data === unsubscribed) {
+            // null means deletion
+            if (data === null || data === unsubscribed) {
                 this.leaveIfShown(collection);
             }
         });
@@ -249,7 +247,7 @@ export class CollectionsComponent implements OnInit {
     }
 
     /**
-     * Stop showing the collection that the current user just left, because they may not see it anymore
+     * Stop showing the collection that the current user just deleted or left, because they may not see it anymore
      */
     private leaveIfShown(collection: CollectionsQuery['collections']['items'][0]): void {
         if (this.route.firstChild?.snapshot.params.collectionId === collection.id) {
