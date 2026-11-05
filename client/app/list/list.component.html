@@ -189,6 +189,7 @@
                                     <button
                                         matIconButton
                                         matTooltip="Ajouter ou retirer les fiches sélectionnées d'une collection"
+                                        aria-label="Ajouter ou retirer les fiches sélectionnées d'une collection"
                                         (click)="linkSelectionToCollection(selected)"
                                     >
                                         <mat-icon naturalIcon="library_add" />
@@ -198,6 +199,7 @@
                                     <button
                                         matIconButton
                                         matTooltip="Retirer les fiches sélectionnées de la collection"
+                                        aria-label="Retirer les fiches sélectionnées de la collection"
                                         (click)="unlinkFromCollection(selected)"
                                     >
                                         <mat-icon svgIcon="library_remove" />
@@ -207,6 +209,7 @@
                                     <button
                                         matIconButton
                                         disabledInteractive
+                                        aria-label="Voir sur la carte"
                                         [disabled]="!hasLocatedSelection()"
                                         [matTooltip]="
                                             hasLocatedSelection()
@@ -228,6 +231,7 @@
                                     <button
                                         matIconButton
                                         matTooltip="Editer en masse la sélection"
+                                        aria-label="Editer en masse la sélection"
                                         (click)="edit(selected)"
                                     >
                                         <mat-icon naturalIcon="edit" />
@@ -237,6 +241,7 @@
                                     <button
                                         matIconButton
                                         matTooltip="Supprimer les fiches sélectionnées définitivement"
+                                        aria-label="Supprimer les fiches sélectionnées définitivement"
                                         (click)="delete(selected)"
                                     >
                                         <mat-icon naturalIcon="delete_forever" />
@@ -247,6 +252,7 @@
                             <button
                                 matIconButton
                                 matTooltip="Actions sur la sélection"
+                                aria-label="Actions sur la sélection"
                                 [matMenuTriggerFor]="selectionActionsMenu"
                             >
                                 <mat-icon naturalIcon="more_vert" />
@@ -271,18 +277,29 @@
                 @if (!showOverflowMenu()) {
                     <div #toolbarOptions class="nat-horizontal nat-align nat-gap-5">
                         @if (viewMode !== ViewMode.grid) {
-                            <button matIconButton matTooltip="Affichage Mosaïque" (click)="setViewMode(ViewMode.grid)">
+                            <button
+                                matIconButton
+                                matTooltip="Affichage Mosaïque"
+                                aria-label="Affichage Mosaïque"
+                                (click)="setViewMode(ViewMode.grid)"
+                            >
                                 <mat-icon naturalIcon="view_compact" />
                             </button>
                         }
                         @if (viewMode !== ViewMode.list) {
-                            <button matIconButton matTooltip="Affichage Liste" (click)="setViewMode(ViewMode.list)">
+                            <button
+                                matIconButton
+                                matTooltip="Affichage Liste"
+                                aria-label="Affichage Liste"
+                                (click)="setViewMode(ViewMode.list)"
+                            >
                                 <mat-icon naturalIcon="view_list" />
                             </button>
                         }
                         <button
                             matIconButton
                             matTooltip="Trier"
+                            aria-label="Trier"
                             [matMenuTriggerFor]="site === Site.Dilps ? dilpsSortingMenu : tiresiasSortingMenu"
                         >
                             <mat-icon svgIcon="sort_asc" />
@@ -291,6 +308,7 @@
                             <button
                                 matIconButton
                                 [matTooltip]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
+                                [attr.aria-label]="showLabels ? 'Masquer les légendes' : 'Afficher les légendes'"
                                 (click)="toggleLabels()"
                             >
                                 @if (!showLabels) {
@@ -306,6 +324,7 @@
                                     matIconButton
                                     class="cancel-selection"
                                     matTooltip="Annuler la sélection"
+                                    aria-label="Annuler la sélection"
                                     (click)="unselectAll()"
                                 >
                                     <mat-icon naturalIcon="deselect" />
@@ -314,30 +333,51 @@
                                 <button
                                     matIconButton
                                     matTooltip="Sélectionner des images"
+                                    aria-label="Sélectionner des images"
                                     (click)="gridSelectionModeActive.set(true)"
                                 >
                                     <mat-icon naturalIcon="select_check_box" />
                                 </button>
                             }
                         } @else if (selected.length) {
-                            <button matIconButton matTooltip="Désélectionner tout" (click)="unselectAll()">
+                            <button
+                                matIconButton
+                                matTooltip="Désélectionner tout"
+                                aria-label="Désélectionner tout"
+                                (click)="unselectAll()"
+                            >
                                 <mat-icon naturalIcon="deselect" />
                             </button>
                         } @else {
-                            <button matIconButton matTooltip="Sélectionner les images visibles" (click)="selectAll()">
+                            <button
+                                matIconButton
+                                matTooltip="Sélectionner les images visibles"
+                                aria-label="Sélectionner les images visibles"
+                                (click)="selectAll()"
+                            >
                                 <mat-icon svgIcon="select_all_mark" />
                             </button>
                         }
                         @if (selected.length) {
                             @if (!!user && site === Site.Dilps) {
-                                <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz(selected)">
+                                <button
+                                    matIconButton
+                                    matTooltip="Lecture d'oeuvre"
+                                    aria-label="Lecture d'oeuvre"
+                                    (click)="goToQuizz(selected)"
+                                >
                                     <mat-icon svgIcon="cards_game" />
                                 </button>
                             }
                         }
                         @if (!selected.length && user) {
                             @if (site === Site.Dilps) {
-                                <button matIconButton matTooltip="Lecture d'oeuvre" (click)="goToQuizz()">
+                                <button
+                                    matIconButton
+                                    matTooltip="Lecture d'oeuvre"
+                                    aria-label="Lecture d'oeuvre"
+                                    (click)="goToQuizz()"
+                                >
                                     <mat-icon svgIcon="cards_game" />
                                 </button>
                             }
