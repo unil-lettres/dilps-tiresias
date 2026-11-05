@@ -1,5 +1,6 @@
 import {
     Component,
+    DestroyRef,
     type ElementRef,
     inject,
     Input,
@@ -37,7 +38,7 @@ import {CdkAccordion, CdkAccordionItem} from '@angular/cdk/accordion';
 import {MatInput} from '@angular/material/input';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {AsyncPipe} from '@angular/common';
-import {tap} from 'rxjs/operators';
+import {shareReplay, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-address',
@@ -69,6 +70,7 @@ export class AddressComponent implements OnInit, OnChanges {
     private readonly addressService = inject(AddressService);
     protected readonly countryService = inject(CountryService);
     private readonly site = inject(SITE);
+    private readonly destroyRef = inject(DestroyRef);
 
     protected readonly googleMapLoaded = this.mapApiService.loaded.pipe(
         tap(() => {
@@ -76,12 +78,14 @@ export class AddressComponent implements OnInit, OnChanges {
             this.icon = this.getIcon();
             // eslint-disable-next-line @typescript-eslint/no-deprecated
             this.autocomplete = new google.maps.places.Autocomplete(this.inputRef().nativeElement);
+            this.moveSuggestionsIntoDialog();
             this.autocomplete.addListener('place_changed', () => {
                 this.ngZone.run(() => {
                     this.onPlaceChange();
                 });
             });
         }),
+        shareReplay(),
     );
 
     protected readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('input');
@@ -318,6 +322,33 @@ export class AddressComponent implements OnInit, OnChanges {
             this.longitude = this.model.longitude;
             this.zoom = 12;
         }
+    }
+
+    /**
+     * Dialogs are in the browser top layer, so the suggestions that Google appends to the body would stay behind them
+     *
+     * Not needed anymore once migrated to the new `PlaceAutocompleteElement`, which shows its suggestions within itself
+     */
+    private moveSuggestionsIntoDialog(): void {
+        const dialog = this.inputRef().nativeElement.closest('[popover]');
+        if (!dialog) {
+            return;
+        }
+
+        const observer = new MutationObserver(mutations => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node instanceof HTMLElement && node.classList.contains('pac-container')) {
+                        node.style.pointerEvents = 'auto';
+                        dialog.append(node);
+                        observer.disconnect();
+                        return;
+                    }
+                }
+            }
+        });
+        observer.observe(document.body, {childList: true});
+        this.destroyRef.onDestroy(() => observer.disconnect());
     }
 
     protected updateSearch(): void {
