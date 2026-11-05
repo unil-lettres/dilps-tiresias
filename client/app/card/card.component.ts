@@ -89,7 +89,6 @@ import {
     CollectionVisibility,
     JoinType,
     Site,
-    type UpdateCard,
     UserRole,
     type ViewerQuery,
 } from '../shared/generated-types';
@@ -357,13 +356,13 @@ export class CardComponent implements OnInit, OnChanges {
      * Cache institution data from server
      * `this.model` is here considered as CardInput and should receive string, not object
      */
-    protected institution!: CardQuery['card']['institution'] | UpdateCard['updateCard']['institution'] | null;
+    protected institution!: CardQuery['card']['institution'] | null;
 
     /**
      * Cache artists data from server
      * this.model is here considered as CardInput and should receive string array, not array of objects
      */
-    protected artists: CardQuery['card']['artists'] | UpdateCard['updateCard']['artists'] = [];
+    protected artists: CardQuery['card']['artists'] = [];
 
     /**
      * Cache stamped data from server.
@@ -835,16 +834,9 @@ export class CardComponent implements OnInit, OnChanges {
         return this.cardService.updateNow(this.model).pipe(
             map(card => {
                 this.alertService.info('Mis à jour');
-                this.institution = card.institution;
-                this.artists = card.artists;
-
-                this.stamp = {
-                    ...this.stamp,
-                    updater: card.updater,
-                    updateDate: card.updateDate,
-                };
-
-                this.refreshInitialCardValues();
+                this.fetchedModel = card;
+                this.model = cardToCardInput(card);
+                this.initCard();
                 this.edit = false;
                 this.fetchedModelSnapshot = null;
 

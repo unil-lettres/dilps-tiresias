@@ -180,23 +180,10 @@ export const createCards = gql`
 export const updateCard = gql`
     mutation UpdateCard($id: CardID!, $input: CardPartialInput!) {
         updateCard(id: $id, input: $input) {
-            id
-            name
-            institution {
-                ...InstitutionDetails
-            }
-            artists {
-                id
-                name
-            }
-            updateDate
-            updater {
-                ...UserMeta
-            }
+            ...CardDetails
         }
     }
-    ${userMetaFragment}
-    ${institutionDetails}
+    ${cardDetailsFragment}
 `;
 
 export const deleteCards = gql`
