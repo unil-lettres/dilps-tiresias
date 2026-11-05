@@ -176,9 +176,14 @@
             </div>
             @if (hasMore) {
                 <div class="nat-horizontal nat-center">
-                    <a matIconButton matTooltip="Afficher d'avantage" (click)="more()">
+                    <button
+                        matIconButton
+                        matTooltip="Afficher davantage"
+                        aria-label="Afficher davantage"
+                        (click)="more()"
+                    >
                         <mat-icon fontIcon="keyboard_arrow_down" />
-                    </a>
+                    </button>
                 </div>
             }
         </div>
