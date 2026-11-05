@@ -8,7 +8,7 @@
 </ng-template>
 
 @if (!showUnclassified && !showMyCards && rootCollections.length === 0) {
-    <p class="no-collection mat-font-title-md nat-vertical nat-gap-10 nat-center">
+    <p class="empty-state mat-font-title-md no-collection">
         @if (!sources) {
             <mat-icon fontIcon="gallery_thumbnail" />
             <span>Aucune collection disponible</span>
@@ -190,7 +190,7 @@
         <mat-divider vertical />
 
         @if (!route.firstChild) {
-            <p class="no-selection mat-font-title-md nat-expand nat-vertical nat-gap-10 nat-center">
+            <p class="empty-state mat-font-title-md nat-expand">
                 @if (!sources) {
                     <mat-icon fontIcon="collections" />
                     <span>Aucune collection sélectionnée</span>

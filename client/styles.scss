@@ -161,6 +161,25 @@ natural-search {
     color: #fff;
 }
 
+// Message in place of a missing content, eg: an empty or unselected collection. At the same height everywhere and near
+// the top, where the user just acted, rather than in the middle of a tall screen.
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 15vh 30px 30px;
+    text-align: center;
+
+    .mat-icon {
+        width: 96px !important;
+        height: 96px !important;
+        color: var(--mat-sys-tertiary);
+        font-size: 96px !important;
+    }
+}
+
 @keyframes loading_pulse {
     0% {
         opacity: 1;
