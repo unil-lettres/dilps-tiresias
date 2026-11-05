@@ -3,6 +3,7 @@
         matIconButton
         [matMenuTriggerFor]="menu"
         [matTooltip]="tooltip"
+        [attr.aria-label]="tooltip"
         (menuOpened)="menuOpened()"
         (menuClosed)="menuClosed()"
     >
