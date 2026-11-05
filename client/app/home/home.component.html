@@ -117,16 +117,17 @@
 
                     <!-- Thésaurus -->
                     @if (showThesaurusMenu()) {
-                        <a
+                        <button
                             matFab
                             class="menu-icon-button"
                             matTooltip="Thésaurus"
+                            aria-label="Thésaurus"
                             matTooltipPosition="after"
                             [class.active]="isThesaurusActive()"
                             [matMenuTriggerFor]="thesaurusMenu"
                         >
                             <mat-icon naturalIcon="book" />
-                        </a>
+                        </button>
                     }
 
                     <!-- Add photos -->
@@ -138,9 +139,10 @@
                             user.role === UserRole.major)
                     ) {
                         <mat-divider />
-                        <a
+                        <button
                             matIconButton
                             matTooltip="Ajouter des images"
+                            aria-label="Ajouter des images"
                             matTooltipPosition="after"
                             naturalFileSelect
                             class="upload-btn spacer-btn"
@@ -149,7 +151,7 @@
                             (filesChange)="uploadImages($event)"
                         >
                             <mat-icon naturalIcon="file_upload" />
-                        </a>
+                        </button>
                     }
 
                     @if (progress !== null && progress > 0) {
@@ -167,15 +169,16 @@
                             user.role === UserRole.junior ||
                             user.role === UserRole.major)
                     ) {
-                        <a
+                        <button
                             matIconButton
                             class="classic-icon-button"
                             matTooltip="Importer avec métadonnées (Excel)"
+                            aria-label="Importer avec métadonnées (Excel)"
                             matTooltipPosition="after"
                             (click)="openImportTemplateDialog()"
                         >
                             <mat-icon naturalIcon="table_view" />
-                        </a>
+                        </button>
                     }
                 } @else {
                     <!-- Dashboard -->
@@ -190,27 +193,29 @@
                     </a>
 
                     <!-- Logout -->
-                    <a
+                    <button
                         matFab
                         class="menu-icon-button"
                         matTooltip="Se connecter"
+                        aria-label="Se connecter"
                         matTooltipPosition="after"
                         (click)="userService.revokeTempAccess()"
                     >
                         <mat-icon naturalIcon="account_circle" />
-                    </a>
+                    </button>
 
                     <!-- Contact -->
                     @if (site === Site.Tiresias) {
-                        <a
+                        <button
                             matFab
                             class="menu-icon-button"
                             matTooltip="Contact"
+                            aria-label="Contact"
                             matTooltipPosition="after"
                             (click)="mailto()"
                         >
                             <mat-icon naturalIcon="announcement" />
-                        </a>
+                        </button>
                     }
                 }
 
@@ -218,42 +223,45 @@
                 <div class="nat-expand"></div>
                 <mat-divider />
                 @if (networkActivityService.errors().length) {
-                    <a
+                    <button
                         matIconButton
                         class="error-btn spacer-btn"
                         color="error"
                         matTooltip="Voir les erreurs"
+                        aria-label="Voir les erreurs"
                         matTooltipPosition="after"
                         (click)="openErrorsDialog()"
                     >
                         <mat-icon naturalIcon="error" />
-                    </a>
+                    </button>
                 }
                 @if (user) {
                     <!-- Administration -->
                     @if (user.role === UserRole.administrator) {
-                        <a
+                        <button
                             matFab
                             class="menu-icon-button"
                             matTooltip="Gestion"
+                            aria-label="Gestion"
                             matTooltipPosition="after"
                             [class.active]="isAdminActive()"
                             [matMenuTriggerFor]="adminMenu"
                         >
                             <mat-icon naturalIcon="build" />
-                        </a>
+                        </button>
                     }
 
                     <!-- Account -->
-                    <a
+                    <button
                         matIconButton
                         class="classic-icon-button"
                         matTooltip="Mon compte"
+                        aria-label="Mon compte"
                         matTooltipPosition="after"
                         [matMenuTriggerFor]="accountMenu"
                     >
                         <mat-icon naturalIcon="account_circle" />
-                    </a>
+                    </button>
                 }
                 <natural-compact-color-schemer class="natural-icon-button spacer-bottom" />
             </div>
