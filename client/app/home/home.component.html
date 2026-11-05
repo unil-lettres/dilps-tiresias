@@ -54,7 +54,8 @@
                         class="menu-icon-button"
                         routerLink="/home"
                         routerLinkActive="active"
-                        matTooltip="Non classé"
+                        matTooltip="Toutes les images"
+                        aria-label="Toutes les images"
                         matTooltipPosition="after"
                         [queryParams]="null"
                         [routerLinkActiveOptions]="{exact: true}"
@@ -67,6 +68,7 @@
                         matFab
                         class="menu-icon-button"
                         matTooltip="Mes collections"
+                        aria-label="Mes collections"
                         matTooltipPosition="after"
                         routerLink="/my-collection"
                         routerLinkActive="active"
@@ -79,6 +81,7 @@
                         matFab
                         class="menu-icon-button"
                         matTooltip="Collections publiques"
+                        aria-label="Collections publiques"
                         matTooltipPosition="after"
                         routerLink="/collection"
                         routerLinkActive="active"
@@ -91,6 +94,7 @@
                         matFab
                         class="menu-icon-button"
                         matTooltip="Fonds"
+                        aria-label="Fonds"
                         matTooltipPosition="after"
                         routerLink="/source"
                         routerLinkActive="active"
@@ -108,6 +112,7 @@
                         matFab
                         class="menu-icon-button"
                         matTooltip="Notifications"
+                        aria-label="Notifications"
                         matTooltipPosition="after"
                         routerLink="/notification"
                         routerLinkActive="active"
@@ -184,6 +189,7 @@
                     <!-- Dashboard -->
                     <a
                         matFab
+                        aria-label="Accueil"
                         class="menu-icon-button"
                         routerLink="/"
                         routerLinkActive="active"
