@@ -18,17 +18,20 @@ class StatisticRepository extends AbstractRepository implements \Ecodev\Felix\Re
     public function getOrCreate(Site $site): Statistic
     {
         $date = date('Y-m');
-        $statistic = $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
+        $find = fn () => $this->getAclFilter()->runWithoutAcl(fn () => $this->findOneBy([
             'date' => $date,
             'site' => $site->value,
         ]));
 
+        $statistic = $find();
         if (!$statistic) {
-            $statistic = new Statistic();
-            $statistic->setSite($site);
-            $statistic->setDate($date);
+            // The first visits of the month may arrive at the same time, and only one of them may create the row
+            $this->getEntityManager()->getConnection()->executeStatement(
+                "INSERT IGNORE INTO statistic (date, site, default_logins, aai_logins, creation_date) VALUES (?, ?, '[]', '[]', NOW())",
+                [$date, $site->value],
+            );
 
-            $this->getEntityManager()->persist($statistic);
+            $statistic = $find();
         }
 
         return $statistic;
