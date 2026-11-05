@@ -240,6 +240,7 @@ export const routes: Routes = [
                 canActivate: [canActivateLoggedIn],
                 data: {
                     title: 'Fonds',
+                    sources: true,
                     creationButtonForRoles: [UserRole.administrator],
                     filter: {
                         groups: [
