@@ -15,11 +15,13 @@ import {
     type NgModel,
     ReactiveFormsModule,
     type ValidationErrors,
+    Validators,
 } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CollectionService} from '../../collections/services/collection.service';
 import {AbstractDetailDirective} from '../../shared/components/AbstractDetail';
 import {UniqueValidatorDirective} from '../../shared/directives/unique-validator.directive';
+import {EmailValidatorDirective} from '../../shared/directives/email-validator.directive';
 import {
     type UpdateUser,
     type UserQuery,
@@ -91,6 +93,7 @@ function matchPassword(ac: AbstractControl): ValidationErrors | null {
         DialogFooterComponent,
         TypePipe,
         UniqueValidatorDirective,
+        EmailValidatorDirective,
         MatDivider,
         HintComponent,
     ],
@@ -187,6 +190,11 @@ export class UserComponent extends AbstractDetailDirective<
     }
 
     protected override postQuery(): void {
+        if (!this.isUpdatePage()) {
+            this.passwordCtrl.addValidators(Validators.required);
+            this.passwordCtrl.updateValueAndValidity();
+        }
+
         if (this.isUpdatePage()) {
             this.institution = this.data.item.institution;
             if (this.data.item.initialView === 'collections') {

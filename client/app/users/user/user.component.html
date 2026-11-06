@@ -36,12 +36,18 @@
                     matInput
                     name="login"
                     fieldName="login"
+                    required
+                    pattern="[a-zA-Z0-9@.\-]+"
                     [appUnique]="data.item"
                     [service]="service"
                     [disabled]="!!data.item.id"
                     [(ngModel)]="data.item.login"
                 />
-                @if (login.invalid && (login?.dirty || login?.touched)) {
+                @if (login.hasError('required')) {
+                    <mat-error>Le login est obligatoire</mat-error>
+                } @else if (login.hasError('pattern')) {
+                    <mat-error>Lettres sans accent, chiffres, « @ », « . » et « - » uniquement</mat-error>
+                } @else if (login.hasError('duplicateValue')) {
                     <mat-error>Ce login est déjà attribué</mat-error>
                 }
             </mat-form-field>
@@ -60,12 +66,15 @@
                         name="email"
                         type="email"
                         fieldName="email"
+                        appEmail
                         [appUnique]="data.item"
                         [service]="service"
                         [disabled]="!canEditAdministrativeFields()"
                         [(ngModel)]="data.item.email"
                     />
-                    @if (email.invalid && (email?.dirty || email?.touched)) {
+                    @if (email.hasError('deliverableEmail')) {
+                        <mat-error>Cet email n'est pas valide</mat-error>
+                    } @else if (email.hasError('duplicateValue')) {
                         <mat-error>Cet email est déjà attribué</mat-error>
                     }
                 </mat-form-field>
@@ -86,6 +95,9 @@
                             spellcheck="false"
                             [formControl]="passwordCtrl"
                         />
+                        @if (passwordCtrl.hasError('required')) {
+                            <mat-error>Le mot de passe est obligatoire</mat-error>
+                        }
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Confirmation du mot passe</mat-label>
@@ -173,7 +185,7 @@
             [canCreate]="user?.globalPermissions?.user?.create"
             [readOnly]="false"
             [formCtrl]="passwordConfirmationCtrl"
-            [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid"
+            [disableCreateAndUpdate]="!!login.invalid || !!emailRef()?.invalid || passwordCtrl.invalid"
             [item]="data.item"
             (create)="create()"
             (delete)="delete()"
