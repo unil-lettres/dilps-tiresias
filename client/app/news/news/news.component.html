@@ -14,10 +14,20 @@
             [(ngModel)]="data.item.isActive"
             >Actif (sera visible sur la page de connexion)</mat-checkbox
         >
+        @if (lacksWhatActiveNeeds()) {
+            <div class="mat-text-error nat-margin-bottom" role="alert">
+                Une actualité active doit avoir un nom et une image
+            </div>
+        }
 
         <mat-form-field>
             <mat-label>Nom</mat-label>
-            <input matInput [readonly]="isUpdatePage() && !data.item.permissions.update" [(ngModel)]="data.item.name" />
+            <input
+                matInput
+                [readonly]="isUpdatePage() && !data.item.permissions.update"
+                [required]="!!data.item.isActive"
+                [(ngModel)]="data.item.name"
+            />
         </mat-form-field>
 
         <mat-form-field>
@@ -79,6 +89,7 @@
         [readOnly]="false"
         [item]="data.item"
         [formCtrl]="$any(url)"
+        [disableCreateAndUpdate]="lacksWhatActiveNeeds()"
         (create)="create()"
         (delete)="delete()"
         (update)="update()"

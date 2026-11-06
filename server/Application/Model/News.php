@@ -58,11 +58,11 @@ class News extends AbstractModel implements HasSiteInterface
     }
 
     /**
-     * Relative URL to image.
+     * Relative URL to image, or empty without image.
      */
     public function getImageUrl(): string
     {
-        return '/news-images/' . $this->getFilename();
+        return $this->hasImage() ? '/news-images/' . $this->getFilename() : '';
     }
 
     public function isActive(): bool

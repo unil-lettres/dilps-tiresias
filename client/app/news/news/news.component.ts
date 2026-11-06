@@ -43,6 +43,15 @@ export class NewsComponent extends AbstractDetailDirective<NewsService, {file?: 
         super(inject(NewsService));
     }
 
+    /**
+     * Whether the news is active without what the login page needs to show it
+     */
+    protected lacksWhatActiveNeeds(): boolean {
+        return (
+            !!this.data.item.isActive && !(this.data.item.name?.trim() && (this.imageData || this.data.item.imageUrl))
+        );
+    }
+
     protected upload(selection: FileSelection): void {
         selection.valid.forEach(file => {
             (this.data.item as unknown as NewsInput).file = file;
