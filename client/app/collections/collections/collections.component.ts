@@ -1,6 +1,7 @@
 import {Component, DestroyRef, inject, type OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {catchError, distinctUntilChanged, EMPTY, filter, first, map, startWith, switchMap} from 'rxjs';
 import {NaturalIconDirective, NaturalQueryVariablesManager} from '@ecodev/natural';
 import {HistoricIconComponent} from '../../shared/components/historic-icon/historic-icon.component';
 import {
@@ -151,6 +152,8 @@ export class CollectionsComponent implements OnInit {
             }
         });
 
+        this.expandShownCollection();
+
         this.collectionsService$.subscribe(collections => {
             if (collections.pageIndex === 0) {
                 this.rootCollections = collections.items;
@@ -188,7 +191,36 @@ export class CollectionsComponent implements OnInit {
         }
     }
 
-    private getChildren(collection: CollectionsQuery['collections']['items'][0]): void {
+    /**
+     * Expand the parents of the shown collection, so that it is visible in the tree, even if it was not opened from
+     * the tree, eg: from a link
+     */
+    private expandShownCollection(): void {
+        this.router.events
+            .pipe(
+                filter(event => event instanceof NavigationEnd),
+                startWith(null),
+                map(() => this.route.firstChild?.snapshot.params.collectionId as string | undefined),
+                filter(id => !!id),
+                distinctUntilChanged(),
+                switchMap(id =>
+                    this.collectionsService.getOne(id!).pipe(
+                        first(),
+                        catchError(() => EMPTY),
+                    ),
+                ),
+                takeUntilDestroyed(this.destroyRef),
+            )
+            .subscribe(collection => {
+                for (const parent of collection.parentHierarchy) {
+                    if (!this.children.has(parent.id)) {
+                        this.getChildren(parent);
+                    }
+                }
+            });
+    }
+
+    private getChildren(collection: {id: string}): void {
         const qvm = new NaturalQueryVariablesManager<CollectionsQueryVariables>();
         qvm.set('variables', {filter: {groups: [{conditions: [{parent: {equal: {value: collection.id}}}]}]}});
 
