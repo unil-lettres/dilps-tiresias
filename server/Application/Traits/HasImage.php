@@ -27,12 +27,7 @@ trait HasImage
     {
         try {
             $this->generateUniqueFilename($file->getClientFilename());
-
-            $path = $this->getPath();
-            if (file_exists($path)) {
-                throw new Exception('Un fichier du même nom existe déjà.');
-            }
-            $file->moveTo($path);
+            $file->moveTo($this->getPath());
 
             $this->validateMimeType();
         } catch (Throwable $e) {
@@ -139,12 +134,27 @@ trait HasImage
     }
 
     /**
-     * Generate unique filename while trying to preserver original extension.
+     * Generate unique filename while trying to preserve original extension, and create its file, empty.
+     *
+     * Simultaneous uploads may generate the same filename, but only one of them may create its file.
      */
     private function generateUniqueFilename(string $originalFilename): void
     {
         $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-        $filename = uniqid() . ($extension ? '.' . $extension : '');
-        $this->setFilename($filename);
+        while (true) {
+            $this->setFilename(uniqid() . ($extension ? '.' . $extension : ''));
+            $path = $this->getPath();
+
+            $handle = @fopen($path, 'xb');
+            if ($handle) {
+                fclose($handle);
+
+                return;
+            }
+
+            if (!file_exists($path)) {
+                throw new Exception("Le fichier n'a pas pu être créé.");
+            }
+        }
     }
 }
