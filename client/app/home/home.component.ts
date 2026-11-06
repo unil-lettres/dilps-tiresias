@@ -19,6 +19,7 @@ import {
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
+    type UrlTree,
 } from '@angular/router';
 import {
     type FileSelection,
@@ -28,7 +29,7 @@ import {
     NetworkActivityService,
 } from '@ecodev/natural';
 import {EMPTY, type Observable, of} from 'rxjs';
-import {catchError, concatMap, filter, finalize, map, startWith, tap} from 'rxjs/operators';
+import {catchError, concatMap, filter, finalize, map, scan, startWith, tap} from 'rxjs/operators';
 import {type AppRouteReuseStrategy} from '../app-route-reuse-strategy';
 import {SITE} from '../app.config';
 import {CardService} from '../card/services/card.service';
@@ -47,6 +48,31 @@ import {handleFileSizeErrors} from '../shared/utils/file-selection.utils';
 import {UserService} from '../users/services/user.service';
 import {UserComponent} from '../users/user/user.component';
 import {WelcomeComponent} from './welcome.component';
+
+/**
+ * The sections of the menu, named after the first segment of their URL
+ */
+type Section = 'home' | 'my-collection' | 'collection' | 'source' | 'notification';
+const sections: readonly string[] = ['home', 'my-collection', 'collection', 'source', 'notification'];
+
+function isCard(url: string): boolean {
+    return url.startsWith('/card/');
+}
+
+function isSection(segment: string): segment is Section {
+    return sections.includes(segment);
+}
+
+/**
+ * The section of the menu of the given URL, if any. A card belongs to the section from where it was opened, or to
+ * the home if unknown, so that a section of the menu is always active
+ */
+function sectionOf(url: string, cardOrigin: string | null): Section | null {
+    const card = isCard(url);
+    const segment = (card ? (cardOrigin ?? '') : url).split(/[/;?#(]/)[1] ?? '';
+
+    return isSection(segment) ? segment : card ? 'home' : null;
+}
 
 function isExcel(file: File): boolean {
     return file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -114,6 +140,42 @@ export class HomeComponent implements OnInit {
             startWith(this.router.url),
         ),
     );
+
+    /**
+     * The URL of the last page of a section of the menu, from where the current card was opened, eg: a collection
+     */
+    private readonly cardOrigin = toSignal(
+        this.router.events.pipe(
+            takeUntilDestroyed(),
+            filter(event => event instanceof NavigationEnd),
+            map(() => this.router.url),
+            startWith(this.router.url),
+            scan((origin: string | null, url) => {
+                if (isCard(url) || url === '/empty') {
+                    return origin;
+                }
+
+                return sectionOf(url, null) ? url : null;
+            }, null),
+        ),
+        {initialValue: null},
+    );
+
+    protected readonly activeSection = computed(() => sectionOf(this.currentUrl() ?? '', this.cardOrigin()));
+
+    /**
+     * Going back from the card to the page from where it was opened, as it was left
+     */
+    private readonly cardOriginLink = computed(() => this.router.parseUrl(this.cardOrigin() ?? '/home'));
+
+    /**
+     * The link of a section of the menu, which goes back from a card to the page from where it was opened
+     */
+    protected sectionLink(section: Section): string | UrlTree {
+        return isCard(this.currentUrl() ?? '') && this.activeSection() === section
+            ? this.cardOriginLink()
+            : '/' + section;
+    }
 
     protected readonly isThesaurusActive = computed(() => {
         const url = this.currentUrl() ?? '';

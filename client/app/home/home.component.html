@@ -52,13 +52,12 @@
                     <a
                         matFab
                         class="menu-icon-button"
-                        routerLink="/home"
-                        routerLinkActive="active"
                         matTooltip="Toutes les images"
                         aria-label="Toutes les images"
                         matTooltipPosition="after"
+                        [class.active]="activeSection() === 'home'"
                         [queryParams]="null"
-                        [routerLinkActiveOptions]="{exact: true}"
+                        [routerLink]="sectionLink('home')"
                     >
                         <mat-icon naturalIcon="home" />
                     </a>
@@ -70,8 +69,8 @@
                         matTooltip="Mes collections"
                         aria-label="Mes collections"
                         matTooltipPosition="after"
-                        routerLink="/my-collection"
-                        routerLinkActive="active"
+                        [class.active]="activeSection() === 'my-collection'"
+                        [routerLink]="sectionLink('my-collection')"
                     >
                         <mat-icon naturalIcon="collections_bookmark" />
                     </a>
@@ -83,8 +82,8 @@
                         matTooltip="Collections publiques"
                         aria-label="Collections publiques"
                         matTooltipPosition="after"
-                        routerLink="/collection"
-                        routerLinkActive="active"
+                        [class.active]="activeSection() === 'collection'"
+                        [routerLink]="sectionLink('collection')"
                     >
                         <mat-icon naturalIcon="collections" />
                     </a>
@@ -96,8 +95,8 @@
                         matTooltip="Fonds"
                         aria-label="Fonds"
                         matTooltipPosition="after"
-                        routerLink="/source"
-                        routerLinkActive="active"
+                        [class.active]="activeSection() === 'source'"
+                        [routerLink]="sectionLink('source')"
                     >
                         @if (site === Site.Dilps) {
                             <app-historic-icon tooltip="" />
@@ -114,8 +113,8 @@
                         matTooltip="Notifications"
                         aria-label="Notifications"
                         matTooltipPosition="after"
-                        routerLink="/notification"
-                        routerLinkActive="active"
+                        [class.active]="activeSection() === 'notification'"
+                        [routerLink]="sectionLink('notification')"
                     >
                         <mat-icon naturalIcon="notifications" />
                     </a>
