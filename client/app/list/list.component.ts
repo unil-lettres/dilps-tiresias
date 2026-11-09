@@ -77,6 +77,7 @@ import {ViewListComponent} from '../view-list/view-list.component';
 import {isLocated, type Location, ViewMapComponent, type ViewMapData} from '../view-map/view-map.component';
 import {ProgressService} from '../shared/services/progress.service';
 import {fromResize} from '../shared/utils/resize.utils';
+import {keepSelectedDomains, type SelectableDomain} from './list.utils';
 
 function applyChanges(
     destination: CardsQuery['cards']['items'][0],
@@ -101,12 +102,6 @@ function applyChanges(
 
 export type ViewInterface = {
     unselectAll: () => void;
-};
-
-type SelectableDomains = {
-    id: string;
-    name: string;
-    selected?: boolean;
 };
 
 enum ViewMode {
@@ -307,7 +302,7 @@ export class ListComponent
      * Enum that specified the displayed list
      */
     protected viewMode: ViewMode = ViewMode.grid;
-    protected domains: SelectableDomains[] = [];
+    protected domains: SelectableDomain[] = [];
 
     /**
      * Specifies if labels must be always displayed or only on hover
@@ -741,12 +736,15 @@ export class ListComponent
         this.fetchDomains().subscribe();
     }
 
-    protected fetchDomains(): Observable<SelectableDomains[]> {
-        const variables = this.variablesManager.variables.value; // card variables
+    protected fetchDomains(): Observable<SelectableDomain[]> {
+        // The domains of the results of the search alone, so the selected domains can be changed
+        const searchOnly = new NaturalQueryVariablesManager(this.variablesManager);
+        searchOnly.set('domains', null);
+
         if (this.site === Site.Dilps && this.hasActiveSearch()) {
-            return this.domainService.getForCards({filter: variables?.filter || {}}).pipe(
+            return this.domainService.getForCards({filter: searchOnly.variables.value?.filter || {}}).pipe(
                 tap(result => {
-                    this.domains = result.map(d => ({...d}));
+                    this.domains = keepSelectedDomains(result, this.domains);
                     // Wait for Angular to render the chips before initializing the observer
                     setTimeout(() => {
                         this.updateScrollArrows();
