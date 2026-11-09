@@ -237,9 +237,29 @@ natural-search {
         }
 
         // Prevent natural-group from wrapping chips to a second row when the toolbar is compressed
-        natural-group {
-            flex-wrap: nowrap;
-            overflow: hidden;
+        @include nat.media(sm) {
+            natural-group {
+                flex-wrap: nowrap;
+                overflow: hidden;
+            }
+        }
+    }
+
+    // On phones, the search is too narrow beside the other tools: it takes a row of its own, where all its terms show
+    @include nat.media(null, sm) {
+        &:has(> natural-search) {
+            flex-wrap: wrap;
+            height: auto;
+
+            natural-search {
+                flex-basis: 100%;
+                order: 1;
+
+                // Natural hides it on phones
+                .natural-search.mobile .clear-button {
+                    display: inline-block;
+                }
+            }
         }
     }
 }
