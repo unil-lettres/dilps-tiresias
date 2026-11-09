@@ -458,9 +458,7 @@ export class ListComponent
      * Search component inner selections are not initialized before this stage, that's why we need after view init.
      */
     public ngAfterViewInit(): void {
-        this.fetchDomains().subscribe(() => {
-            this.domainSelectionChange();
-        });
+        this.fetchDomains().subscribe();
     }
 
     protected override handleHistoryNavigation(): void {
