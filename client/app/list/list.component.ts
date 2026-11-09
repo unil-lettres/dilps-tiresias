@@ -28,6 +28,7 @@ import {
     onHistoryEvent,
     type PaginationInput,
     type Sorting,
+    toUrl,
     type WithId,
 } from '@ecodev/natural';
 import {defaults, isObject} from 'es-toolkit/compat';
@@ -348,6 +349,11 @@ export class ListComponent
 
     private readonly variablesSignal = toSignal(this.variablesManager.variables);
 
+    /**
+     * The search the list shows, as persisted in the URL
+     */
+    private appliedSearch: string | null = null;
+
     public constructor() {
         super(inject(CardService));
 
@@ -363,6 +369,7 @@ export class ListComponent
 
     public override ngOnInit(): void {
         super.ngOnInit();
+        this.appliedSearch = toUrl(this.naturalSearchSelections);
 
         this.showLabels = sessionStorage.getItem('showLabels') !== 'false';
 
@@ -724,8 +731,16 @@ export class ListComponent
     }
 
     public override search(naturalSearchSelections: NaturalSearchSelections): void {
+        // A term submitted with Enter is submitted again when its input loses the focus
+        const search = toUrl(naturalSearchSelections);
+        if (search === this.appliedSearch) {
+            return;
+        }
+
+        this.appliedSearch = search;
         super.search(naturalSearchSelections);
         this.statisticService.recordSearch();
+        this.fetchDomains().subscribe();
     }
 
     protected fetchDomains(): Observable<SelectableDomains[]> {

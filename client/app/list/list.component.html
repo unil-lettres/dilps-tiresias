@@ -272,7 +272,7 @@
                     class="nat-expand"
                     [facets]="naturalSearchFacets"
                     [selections]="naturalSearchSelections"
-                    (selectionChange)="search($event); fetchDomains().subscribe()"
+                    (selectionChange)="search($event)"
                 />
                 @if (!showOverflowMenu()) {
                     <div #toolbarOptions class="nat-horizontal nat-align nat-gap-5">
