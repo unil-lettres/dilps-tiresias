@@ -74,10 +74,10 @@ body {
 }
 
 mat-sidenav-content {
-    height: 100vh;
+    height: 100dvh;
 
     router-outlet + * {
-        height: 100vh;
+        height: 100dvh;
         min-height: 0;
     }
 }
