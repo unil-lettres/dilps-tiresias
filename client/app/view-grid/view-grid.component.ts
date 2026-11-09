@@ -231,6 +231,19 @@ export class ViewGridComponent implements OnInit, ViewInterface {
     private clear(gallery: Natural<GalleryModel>): void {
         if (gallery.collection.length > 0) {
             this.currentHasHistoricImages = false;
+
+            // The lightbox would show and look for images that are gone. It cannot be closed while it opens, and then
+            // looks for the images around the opened one
+            const pswp = gallery.photoSwipe?.pswp;
+            if (pswp) {
+                pswp.on('lazyLoad', event => event.preventDefault());
+                if (pswp.opener.isOpening) {
+                    pswp.on('openingAnimationEnd', () => pswp.destroy());
+                } else {
+                    pswp.destroy();
+                }
+            }
+
             gallery.clear();
 
             // Scroll to top and prevent restoration
