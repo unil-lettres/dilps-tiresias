@@ -17,7 +17,7 @@
         (itemElementCreated)="itemElementCreated($event)"
         (visibleCollectionChange)="visibleCollectionChange($event)"
     />
-    @if (hasMoreItems()) {
+    @if (hasMoreItems() && !isClearing()) {
         <div class="spinner-container">
             <mat-progress-spinner mode="indeterminate" [diameter]="40" />
         </div>
