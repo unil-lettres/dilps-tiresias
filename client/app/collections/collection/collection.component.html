@@ -137,7 +137,16 @@
                             ],
                         }"
                         [autocompleteSelectorFilter]="{
-                            groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
+                            groups: [
+                                {
+                                    conditions: [
+                                        {
+                                            id: {equal: {value: user.id, not: true}},
+                                            type: {equal: {value: UserType.Legacy, not: true}},
+                                        },
+                                    ],
+                                },
+                            ],
                         }"
                         [main]="$any(subscribersMain())"
                         [service]="userService"
@@ -161,7 +170,16 @@
                             ],
                         }"
                         [autocompleteSelectorFilter]="{
-                            groups: [{conditions: [{id: {equal: {value: user.id, not: true}}}]}],
+                            groups: [
+                                {
+                                    conditions: [
+                                        {
+                                            id: {equal: {value: user.id, not: true}},
+                                            type: {equal: {value: UserType.Legacy, not: true}},
+                                        },
+                                    ],
+                                },
+                            ],
                         }"
                         [main]="$any(responsiblesMain())"
                         [service]="userService"

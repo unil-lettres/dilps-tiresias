@@ -9,6 +9,7 @@ use Application\Api\Helper;
 use Application\Api\Input\Operator\ExcludeSelfAndDescendantsOperatorType;
 use Application\Api\Input\Operator\ManageableByViewerOperatorType;
 use Application\Enum\CollectionVisibility;
+use Application\Enum\UserType;
 use Application\Repository\CollectionRepository;
 use Application\Traits\HasInstitution;
 use Application\Traits\HasParent;
@@ -220,6 +221,7 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function addResponsible(User $user): void
     {
+        $this->assertCanSubscribe($user);
         $this->removeSubscriber($user);
 
         if (!$this->responsibles->contains($user)) {
@@ -256,12 +258,21 @@ class Collection extends AbstractModel implements HasParentInterface, HasSiteInt
      */
     public function addSubscriber(User $user): void
     {
+        $this->assertCanSubscribe($user);
+
         if ($this->responsibles->contains($user)) {
             throw new Exception("Cet utilisateur est déjà responsable de la collection. Pour en faire un lecteur, retirez-le d'abord des responsables.");
         }
 
         if (!$this->subscribers->contains($user)) {
             $this->subscribers[] = $user;
+        }
+    }
+
+    private function assertCanSubscribe(User $user): void
+    {
+        if ($user->getType() === UserType::Legacy) {
+            throw new Exception("Le compte « {$user->getLogin()} » est un ancien compte qui ne permet pas de se connecter, il ne peut donc pas être abonné à une collection.");
         }
     }
 

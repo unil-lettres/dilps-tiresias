@@ -6,6 +6,7 @@ namespace ApplicationTest\Model;
 
 use Application\Enum\CollectionVisibility;
 use Application\Enum\Site;
+use Application\Enum\UserType;
 use Application\Model\Collection;
 use Application\Model\User;
 use InvalidArgumentException;
@@ -91,6 +92,26 @@ class CollectionTest extends TestCase
         // But adding a responsible as subscriber must not demote them, because responsibles may add subscribers
         $this->expectExceptionMessage('Cet utilisateur est déjà responsable de la collection.');
         $collection->addSubscriber($user);
+    }
+
+    public function testLegacyUserCannotBeResponsible(): void
+    {
+        $user = new User();
+        $user->setLogin('lgc-john');
+        $user->setType(UserType::Legacy);
+
+        $this->expectExceptionMessage('Le compte « lgc-john » est un ancien compte qui ne permet pas de se connecter');
+        new Collection()->addResponsible($user);
+    }
+
+    public function testLegacyUserCannotBeSubscriber(): void
+    {
+        $user = new User();
+        $user->setLogin('lgc-john');
+        $user->setType(UserType::Legacy);
+
+        $this->expectExceptionMessage('Le compte « lgc-john » est un ancien compte qui ne permet pas de se connecter');
+        new Collection()->addSubscriber($user);
     }
 
     #[DataProvider('providerSetVisibility')]

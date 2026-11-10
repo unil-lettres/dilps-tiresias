@@ -24,6 +24,7 @@ import {
     CollectionVisibility,
     type UpdateCollection,
     UserRole,
+    UserType,
     type UsersQuery,
 } from '../../shared/generated-types';
 import {collectionsHierarchicConfig} from '../../shared/hierarchic-configurations/CollectionConfiguration';
@@ -71,6 +72,7 @@ export class CollectionComponent
 {
     protected readonly institutionSortedByUsageService = inject(InstitutionSortedByUsageService);
     protected readonly UserRole = UserRole;
+    protected readonly UserType = UserType;
 
     protected readonly currentView = signal<'properties' | 'subscribers'>('properties');
     protected readonly responsiblesCount = signal<number>(0);
