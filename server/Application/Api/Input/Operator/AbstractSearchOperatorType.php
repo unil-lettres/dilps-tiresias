@@ -17,6 +17,11 @@ use ReflectionClass;
 abstract class AbstractSearchOperatorType extends AbstractOperator
 {
     /**
+     * Words that InnoDB does not index, from `information_schema.INNODB_FT_DEFAULT_STOPWORD`.
+     */
+    private const array STOPWORDS = ['a', 'about', 'an', 'are', 'as', 'at', 'be', 'by', 'com', 'de', 'en', 'for', 'from', 'how', 'i', 'in', 'is', 'it', 'la', 'of', 'on', 'or', 'that', 'the', 'this', 'to', 'was', 'what', 'when', 'where', 'who', 'will', 'with', 'und', 'www'];
+
+    /**
      * Map a joined alias to the corresponding metadata entity.
      *
      * @var array<string, ClassMetadata>
@@ -206,13 +211,14 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             ),
         );
 
-        $andWheres = [];
+        // Fulltext conditions are cheaper, so they come first to evaluate LIKE on fewer rows
+        $fullTextWheres = [];
+        $likeOnlyWheres = [];
         foreach ($words as $word) {
             $orWheres = [];
 
-            // Fulltext search is configured for minimum 3 characters length.
-            // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
-            if (mb_strlen($word) > 2 && count($fullTextIndexes) > 0) {
+            $useFullText = $this->isIndexed($word) && count($fullTextIndexes) > 0;
+            if ($useFullText) {
                 $fieldsForLike = $fieldsFullTextNotUsed;
 
                 $parameterName = $uniqueNameFactory->createParameterName();
@@ -259,21 +265,25 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 );
             }
 
-            $andWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            if ($useFullText) {
+                $fullTextWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            } else {
+                $likeOnlyWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            }
         }
 
         foreach ($exactTerms as $exactTerm) {
             $orWheres = [];
 
-            // Fulltext search is configured for minimum 3 characters length.
-            // If there are only words smaller than 3 characters, we will make a classic search (LIKE).
-            if (mb_strlen($exactTerm) > 2 && count($fullTextIndexes) > 0) {
+            $cleanedExactTerm = $this->cleanFullTextSpecialChars($exactTerm);
+            $indexedWords = array_filter(explode(' ', $cleanedExactTerm), $this->isIndexed(...));
+            $useFullText = $indexedWords && count($fullTextIndexes) > 0;
+            if ($useFullText) {
                 $fieldsForLike = $fieldsFullTextNotUsed;
 
                 $parameterName = $uniqueNameFactory->createParameterName();
 
                 // "+": The word is mandatory in all rows returned.
-                $cleanedExactTerm = $this->cleanFullTextSpecialChars($exactTerm);
                 $queryBuilder->setParameter($parameterName, "+\"$cleanedExactTerm\"");
 
                 $orWheres = array_merge(
@@ -309,10 +319,24 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 );
             }
 
-            $andWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            if ($useFullText) {
+                $fullTextWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            } else {
+                $likeOnlyWheres[] = '(' . implode(' OR ', $orWheres) . ')';
+            }
         }
 
-        return implode(' AND ', $andWheres);
+        return implode(' AND ', [...$fullTextWheres, ...$likeOnlyWheres]);
+    }
+
+    /**
+     * Whether the word is in the fulltext indexes, otherwise fulltext search cannot find it, and we must use LIKE instead.
+     *
+     * Fulltext search is configured for minimum 3 characters length.
+     */
+    private function isIndexed(string $word): bool
+    {
+        return mb_strlen($word) > 2 && !in_array(mb_strtolower($word), self::STOPWORDS, true);
     }
 
     /**
