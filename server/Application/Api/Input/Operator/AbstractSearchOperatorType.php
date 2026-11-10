@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Application\Api\Input\Operator;
 
 use Application\TextFormat;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Ecodev\Felix\Api\Exception;
 use GraphQL\Doctrine\Definition\Operator\AbstractOperator;
@@ -54,11 +54,10 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
             return '';
         }
 
-        $scalarFields = $this->getSearchableFields($metadata, $alias);
-        $fieldsOnJoin = $this->getSearchableFieldsOnJoin($uniqueNameFactory, $metadata, $queryBuilder, $alias);
-        $allFields = array_merge($scalarFields, $fieldsOnJoin);
+        $fields = $this->getSearchableFields($metadata, $alias);
+        $joinedSearches = $this->getJoinedSearches($uniqueNameFactory, $metadata, $queryBuilder, $alias);
 
-        return $this->buildSearchDqlCondition($uniqueNameFactory, $metadata, $queryBuilder, $allFields, $notExactTerms, $exactTerms);
+        return $this->buildSearchDqlCondition($uniqueNameFactory, $metadata, $queryBuilder, $fields, $notExactTerms, $exactTerms, $joinedSearches);
     }
 
     abstract protected function getSearchableFieldsWhitelist(ClassMetadata $metadata): array;
@@ -100,52 +99,71 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
     abstract protected function getSearchableJoinedEntities(): array;
 
     /**
-     * Return searchable fields from a joined entity.
+     * Return how to search on the joined entities.
      *
      * This should be avoided if possible to instead only search in the original entity itself.
+     *
+     * @return JoinedSearch[]
      */
-    protected function getSearchableFieldsOnJoin(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
+    private function getJoinedSearches(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias): array
     {
-        $config = $this->getSearchableJoinedEntities();
-
-        $fields = [];
-        foreach ($config as $class => $fieldNames) {
+        $result = [];
+        foreach ($this->getSearchableJoinedEntities() as $class => $fieldNames) {
             if (is_a($metadata->getName(), $class, true)) {
                 foreach ($fieldNames as $fieldName) {
-                    $fields = array_merge(
-                        $fields,
-                        $this->searchOnJoinedEntity($uniqueNameFactory, $metadata, $queryBuilder, $alias, $fieldName),
+                    $association = $metadata->getAssociationMapping($fieldName);
+                    $joinedMetadata = $queryBuilder->getEntityManager()->getClassMetadata($association->targetEntity);
+                    $joinedAlias = $uniqueNameFactory->createAliasName($association->targetEntity);
+
+                    $result[] = new JoinedSearch(
+                        $alias . '.' . $fieldName,
+                        $association->isToMany(),
+                        $joinedMetadata,
+                        $joinedAlias,
+                        $this->getSearchableFields($joinedMetadata, $joinedAlias),
                     );
                 }
             }
         }
 
-        return $fields;
+        return $result;
     }
 
     /**
-     * Add a join and return searchable fields in order to search on a joined entity.
+     * Return a DQL condition matching the joined entities that contain the words, or null if none does.
      *
-     * @return string[]
+     * The matching joined entities are found first, by a separate query, because a join with them would prevent
+     * MariaDB from using the fulltext indexes, and would multiply the rows by the number of joined entities.
      */
-    protected function searchOnJoinedEntity(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, string $alias, string $fieldName): array
+    private function getJoinedCondition(UniqueNameFactory $uniqueNameFactory, QueryBuilder $queryBuilder, JoinedSearch $joinedSearch, array $words, array $exactTerms): ?string
     {
-        $association = $metadata->getAssociationMapping($fieldName);
-        $targetEntity = $association['targetEntity'];
+        $joinedQueryBuilder = $queryBuilder->getEntityManager()->createQueryBuilder()
+            ->select($joinedSearch->alias . '.id')
+            ->from($joinedSearch->metadata->getName(), $joinedSearch->alias);
 
-        $joinedMetadata = $queryBuilder->getEntityManager()->getMetadataFactory()->getMetadataFor($targetEntity);
-        $joinedAlias = $uniqueNameFactory->createAliasName($targetEntity);
+        $condition = $this->buildSearchDqlCondition($uniqueNameFactory, $joinedSearch->metadata, $joinedQueryBuilder, $joinedSearch->fields, $words, $exactTerms);
+        $ids = $joinedQueryBuilder->where($condition)->getQuery()->getSingleColumnResult();
+        if (!$ids) {
+            return null;
+        }
 
-        $this->mapAliasToMetadata[$joinedAlias] = $joinedMetadata;
-        $queryBuilder->leftJoin($alias . '.' . $fieldName, $joinedAlias, Join::WITH);
+        $parameterName = $uniqueNameFactory->createParameterName();
+        $queryBuilder->setParameter($parameterName, $ids, ArrayParameterType::INTEGER);
 
-        return $this->getSearchableFields($joinedMetadata, $joinedAlias);
+        if ($joinedSearch->isToMany) {
+            return ":$parameterName MEMBER OF $joinedSearch->path";
+        }
+
+        return "IDENTITY($joinedSearch->path) IN (:$parameterName)";
     }
 
     /**
      * Return a DQL condition to search each of the words in any of the fields.
      */
-    protected function buildSearchDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, array $fields, array $words, array $exactTerms): string
+    /**
+     * @param JoinedSearch[] $joinedSearches
+     */
+    protected function buildSearchDqlCondition(UniqueNameFactory $uniqueNameFactory, ClassMetadata $metadata, QueryBuilder $queryBuilder, array $fields, array $words, array $exactTerms, array $joinedSearches = []): string
     {
         if (!$fields) {
             throw new Exception('Cannot find fields to search on for entity ' . $metadata->name);
@@ -203,12 +221,15 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
         $fieldsFullTextNotUsed = array_diff($fieldsFullTextNotUsed, $tableIds);
 
         // Split words by spaces that replaced fulltext special char.
-        // Ex. Notre-Dame becomes two words: Notre and Dame.
-        $words = array_merge(
-            ...array_map(
-                fn ($word) => explode(' ', $this->cleanFullTextSpecialChars($word)),
-                $words,
+        // Ex. Notre-Dame becomes two words: Notre and Dame, and Notre- becomes only Notre.
+        $words = array_filter(
+            array_merge(
+                ...array_map(
+                    fn ($word) => explode(' ', $this->cleanFullTextSpecialChars($word)),
+                    $words,
+                ),
             ),
+            fn ($word) => $word !== '',
         );
 
         // Fulltext conditions are cheaper, so they come first to evaluate LIKE on fewer rows
@@ -265,6 +286,11 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                 );
             }
 
+            foreach ($joinedSearches as $joinedSearch) {
+                $orWheres[] = $this->getJoinedCondition($uniqueNameFactory, $queryBuilder, $joinedSearch, [$word], []);
+            }
+            $orWheres = array_filter($orWheres);
+
             if ($useFullText) {
                 $fullTextWheres[] = '(' . implode(' OR ', $orWheres) . ')';
             } else {
@@ -318,6 +344,11 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
                     ),
                 );
             }
+
+            foreach ($joinedSearches as $joinedSearch) {
+                $orWheres[] = $this->getJoinedCondition($uniqueNameFactory, $queryBuilder, $joinedSearch, [], [$exactTerm]);
+            }
+            $orWheres = array_filter($orWheres);
 
             if ($useFullText) {
                 $fullTextWheres[] = '(' . implode(' OR ', $orWheres) . ')';

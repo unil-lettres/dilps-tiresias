@@ -22,10 +22,8 @@ class LocalityOrInstitutionLocalityOperatorTypeTest extends TestCase
         $qb = _em()->getRepository(Card::class)->createQueryBuilder($alias);
         $actual = $operator->getDqlCondition($unique, $metadata, $qb, $alias, 'non-used-field-name', ['value' => 'foo']);
 
-        $expected = '( (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (institution1.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )';
+        $expected = '( (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )';
         self::assertSame($expected, $actual);
-
-        $joins = $qb->getDQLPart('join');
-        self::assertCount(1, $joins[$alias], 'Card should have new joins');
+        self::assertEmpty($qb->getDQLPart('join'), 'institution must be searched without join');
     }
 }

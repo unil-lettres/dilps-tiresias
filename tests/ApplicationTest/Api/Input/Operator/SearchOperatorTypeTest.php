@@ -35,12 +35,7 @@ class SearchOperatorTypeTest extends TestCase
 
         self::assertSame($expected, $actual);
 
-        $joins = $qb->getDQLPart('join');
-        if ($class === Card::class) {
-            self::assertCount(3, $joins[$alias], 'Card should have new joins');
-        } else {
-            self::assertEmpty($joins, 'Non-card should not have any joins');
-        }
+        self::assertEmpty($qb->getDQLPart('join'), 'joined entities must be searched without join');
     }
 
     public static function providerSearch(): iterable
@@ -48,12 +43,37 @@ class SearchOperatorTypeTest extends TestCase
         yield 'simple' => [DocumentType::class, 'john', '(a.name LIKE :filter1)'];
         yield 'search predefined fields' => [User::class, 'john', '(a.login LIKE :filter1 OR a.name LIKE :filter1)', User::ROLE_SENIOR];
         yield 'administrator searches by email too' => [User::class, 'john', '(a.login LIKE :filter1 OR a.email LIKE :filter1 OR a.name LIKE :filter1)', User::ROLE_ADMINISTRATOR];
-        yield 'search predefined joins' => [Card::class, 'foo', '( (MATCH (a.dating,a.cachedArtistNames,a.addition,a.expandedName,a.material,a.techniqueAuthor,a.objectReference,a.corpus,a.street,a.locality,a.code,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.expandedName,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (institution1.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (country1.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (domain1.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )'];
-        yield 'search id' => [Card::class, '1', '(a.dating LIKE :filter1 OR a.cachedArtistNames LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.techniqueAuthor LIKE :filter1 OR a.objectReference LIKE :filter1 OR a.corpus LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR institution1.name LIKE :filter1 OR country1.name LIKE :filter1 OR domain1.name LIKE :filter1 OR  a.id = 1 )'];
+        yield 'search card without matching joined entities' => [Card::class, 'foo', '( (MATCH (a.dating,a.cachedArtistNames,a.addition,a.expandedName,a.material,a.techniqueAuthor,a.objectReference,a.corpus,a.street,a.locality,a.code,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.expandedName,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )'];
+        yield 'search card with matching joined entities' => [Card::class, 'test', '( (MATCH (a.dating,a.cachedArtistNames,a.addition,a.expandedName,a.material,a.techniqueAuthor,a.objectReference,a.corpus,a.street,a.locality,a.code,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.locality) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR  (MATCH (a.expandedName,a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0)  OR IDENTITY(a.institution) IN (:filter3) OR :filter6 MEMBER OF a.domains)'];
+        yield 'search id' => [Card::class, '1', '(a.dating LIKE :filter1 OR a.cachedArtistNames LIKE :filter1 OR a.addition LIKE :filter1 OR a.expandedName LIKE :filter1 OR a.material LIKE :filter1 OR a.techniqueAuthor LIKE :filter1 OR a.objectReference LIKE :filter1 OR a.corpus LIKE :filter1 OR a.street LIKE :filter1 OR a.locality LIKE :filter1 OR a.code LIKE :filter1 OR a.name LIKE :filter1 OR  a.id = 1  OR IDENTITY(a.institution) IN (:filter3) OR :filter6 MEMBER OF a.domains)'];
         yield 'fulltext' => [Country::class, 'saints', '( (MATCH (a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )'];
         yield 'stopword is not indexed' => [Country::class, 'When', '(a.name LIKE :filter1)'];
         yield 'stopword along an indexed word' => [Country::class, 'when exposition', '( (MATCH (a.name) AGAINST (:filter2 IN BOOLEAN MODE) > 0) ) AND (a.name LIKE :filter1)'];
         yield 'exact term of only stopwords is not indexed' => [Country::class, '"when the"', '(a.name LIKE :filter1_start OR a.name LIKE :filter1_middle OR a.name LIKE :filter1_end OR a.name = :filter1_exact)'];
         yield 'exact term with an indexed word' => [Country::class, '"the saints"', '( (MATCH (a.name) AGAINST (:filter1 IN BOOLEAN MODE) > 0) )'];
+    }
+
+    #[DataProvider('providerFullTextSpecialChars')]
+    public function testFullTextSpecialChars(string $term, array $expectedParameters): void
+    {
+        $operator = new SearchOperatorType(_types(), Type::string());
+        $qb = _em()->getRepository(Country::class)->createQueryBuilder('a');
+        $operator->getDqlCondition(new UniqueNameFactory(), _em()->getClassMetadata(Country::class), $qb, 'a', 'non-used-field-name', ['value' => $term]);
+
+        $actual = [];
+        foreach ($qb->getParameters() as $parameter) {
+            $actual[] = $parameter->getValue();
+        }
+
+        self::assertSame($expectedParameters, $actual);
+    }
+
+    public static function providerFullTextSpecialChars(): iterable
+    {
+        yield 'hyphenated words are all mandatory' => ['Notre-Dame', ['+Notre*', '+Dame*']];
+        yield 'trailing hyphen, while typing' => ['Notre-', ['+Notre*']];
+        yield 'only special chars' => ['- *', []];
+        yield 'other special chars' => ['+saint* ~pierre (rome) <a>', ['+saint*', '+pierre*', '+rome*', '%a%']];
+        yield 'hyphenated exact term' => ['"Notre-Dame"', ['+"Notre Dame"']];
     }
 }
