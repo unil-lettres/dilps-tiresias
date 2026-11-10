@@ -86,7 +86,7 @@ class AclFilterTest extends TestCase
         yield 'student can access cards that are his own or are public or member' => [
             'student',
             Card::class,
-            'test.id IN (SELECT card.id FROM card LEFT JOIN card_collection card_collection ON card_collection.card_id = card.id LEFT JOIN collection collection ON card_collection.collection_id = collection.id LEFT JOIN collection_responsible collection_responsible ON card_collection.collection_id = collection_responsible.collection_id AND collection_responsible.user_id = 1003 LEFT JOIN collection_subscriber collection_subscriber ON card_collection.collection_id = collection_subscriber.collection_id AND collection_subscriber.user_id = 1003 WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = 1003) OR (card.creator_id = 1003) OR (collection.owner_id = 1003) OR (collection_responsible.user_id = 1003) OR (collection_subscriber.user_id = 1003))',
+            'test.id IN (SELECT card.id FROM card WHERE (card.visibility IN (\'public\', \'member\')) OR (card.owner_id = 1003) OR (card.creator_id = 1003) OR (card.id IN (SELECT card_collection.card_id FROM card_collection WHERE card_collection.collection_id IN (SELECT collection.id FROM collection WHERE collection.owner_id = 1003) OR card_collection.collection_id IN (SELECT collection_responsible.collection_id FROM collection_responsible WHERE collection_responsible.user_id = 1003) OR card_collection.collection_id IN (SELECT collection_subscriber.collection_id FROM collection_subscriber WHERE collection_subscriber.user_id = 1003))))',
         ];
         yield 'collections are invisible to anonymous' => [
             null,

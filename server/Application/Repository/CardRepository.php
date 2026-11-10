@@ -46,16 +46,13 @@ class CardRepository extends AbstractRepository implements LimitedAccessSubQuery
 
         if ($user) {
             $userId = $user->getId() ?? -1;
-            $qb->leftJoin('card', 'card_collection', 'card_collection', 'card_collection.card_id = card.id')
-                ->leftJoin('card_collection', 'collection', 'collection', 'card_collection.collection_id = collection.id')
-                // Membership joins are restricted to the user, to avoid multiplying rows by the number of members
-                ->leftJoin('card_collection', 'collection_responsible', 'collection_responsible', 'card_collection.collection_id = collection_responsible.collection_id AND collection_responsible.user_id = ' . $userId)
-                ->leftJoin('card_collection', 'collection_subscriber', 'collection_subscriber', 'card_collection.collection_id = collection_subscriber.collection_id AND collection_subscriber.user_id = ' . $userId)
-                ->orWhere('card.owner_id = ' . $userId)
+            // Start from the few collections of the user, instead of joining all collections to all cards
+            $qb->orWhere('card.owner_id = ' . $userId)
                 ->orWhere('card.creator_id = ' . $userId)
-                ->orWhere('collection.owner_id = ' . $userId)
-                ->orWhere('collection_responsible.user_id = ' . $userId)
-                ->orWhere('collection_subscriber.user_id = ' . $userId);
+                ->orWhere('card.id IN (SELECT card_collection.card_id FROM card_collection WHERE '
+                    . 'card_collection.collection_id IN (SELECT collection.id FROM collection WHERE collection.owner_id = ' . $userId . ') '
+                    . 'OR card_collection.collection_id IN (SELECT collection_responsible.collection_id FROM collection_responsible WHERE collection_responsible.user_id = ' . $userId . ') '
+                    . 'OR card_collection.collection_id IN (SELECT collection_subscriber.collection_id FROM collection_subscriber WHERE collection_subscriber.user_id = ' . $userId . '))');
         }
 
         return $qb->getSQL();
