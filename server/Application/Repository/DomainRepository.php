@@ -14,21 +14,27 @@ class DomainRepository extends AbstractHasParentRepository
 {
     public function getByCards(array $filter): array
     {
-        // Create filtered query builder for the subquery
+        // Count the domains directly on the filtered cards, because a subquery of the filtered cards is much slower
         $cardQb = _types()->createFilteredQueryBuilder(Card::class, $filter, []);
         $cardAlias = $cardQb->getRootAliases()[0];
-        $cardQb->select($cardAlias . '.id');
+        $ids = $cardQb
+            ->select('countedDomain.id')
+            ->innerJoin($cardAlias . '.domains', 'countedDomain')
+            ->groupBy('countedDomain.id')
+            ->orderBy('COUNT(DISTINCT ' . $cardAlias . '.id)', 'DESC')
+            ->addOrderBy('countedDomain.id', 'ASC')
+            ->getQuery()
+            ->getSingleColumnResult();
 
-        $qb = $this
-            ->createQueryBuilder('d')
-            ->innerJoin(Card::class, 'c')
-            ->innerJoin('c.domains', 'd2', 'WITH', 'd2.id = d.id')
-            ->where('c.id IN (' . $cardQb->getDQL() . ')')
-            ->groupBy('d.id')
-            ->orderBy('COUNT(c.id)', 'DESC')
-            ->addOrderBy('d.id', 'ASC')
-            ->setParameters($cardQb->getParameters());
+        if (!$ids) {
+            return [];
+        }
 
-        return $qb->getQuery()->getResult();
+        $domains = [];
+        foreach ($this->findBy(['id' => $ids]) as $domain) {
+            $domains[$domain->getId()] = $domain;
+        }
+
+        return array_values(array_filter(array_map(fn ($id) => $domains[$id] ?? null, $ids)));
     }
 }
