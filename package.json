@@ -29,7 +29,7 @@
         "@angular/localize": "^22.1.6",
         "@angular/material": "^22.1.6",
         "@angular/platform-browser": "^22.1.6",
-        "@angular/router": "^22.1.6",
+        "@angular/router": "^22.2.1",
         "@apollo/client": "^4.2.7",
         "@bugsnag/core": "^8.9.0",
         "@bugsnag/js": "^8.9.0",
@@ -74,6 +74,6 @@
         "prettier-plugin-css-order": "^2.2.0",
         "typescript": "~6.0.3",
         "typescript-eslint": "^8.62.0",
-        "vitest": "^4.1.10"
+        "vitest": "^5.1.0"
     }
 }
