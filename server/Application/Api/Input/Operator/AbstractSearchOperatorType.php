@@ -379,7 +379,7 @@ abstract class AbstractSearchOperatorType extends AbstractOperator
      */
     protected function cleanFullTextSpecialChars(string $word): string
     {
-        $result = mb_ereg_replace('[+\-<>()~*]', ' ', $word);
+        $result = mb_ereg_replace('[+\-<>()~*@]', ' ', $word);
 
         return $result === false || $result === null ? $word : $result;
     }

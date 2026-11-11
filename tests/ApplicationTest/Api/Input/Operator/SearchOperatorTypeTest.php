@@ -74,6 +74,8 @@ class SearchOperatorTypeTest extends TestCase
         yield 'trailing hyphen, while typing' => ['Notre-', ['+Notre*']];
         yield 'only special chars' => ['- *', []];
         yield 'other special chars' => ['+saint* ~pierre (rome) <a>', ['+saint*', '+pierre*', '+rome*', '%a%']];
+        yield 'email address' => ['jean@unil.ch', ['+jean*', '+unil*', '%ch%']];
+        yield 'email address as exact term' => ['"jean@unil"', ['+"jean unil"']];
         yield 'hyphenated exact term' => ['"Notre-Dame"', ['+"Notre Dame"']];
     }
 }
