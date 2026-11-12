@@ -188,11 +188,11 @@ importers:
         specifier: ^16.14.2
         version: 16.14.2
       highcharts:
-        specifier: ^13.0.0
-        version: 13.0.0
+        specifier: ^13.1.1
+        version: 13.1.1
       highcharts-angular:
         specifier: ^5.4.0
-        version: 5.4.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(highcharts@13.0.0)
+        version: 5.4.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(highcharts@13.1.1)
       ngx-progressbar:
         specifier: ^14.0.0
         version: 14.0.0(4e215b2f78361b2f6ff9127afbf280fd)
@@ -2981,8 +2981,8 @@ packages:
       '@angular/core': '>=19.0.0'
       highcharts: '>=12.2.0'
 
-  highcharts@13.0.0:
-    resolution: {integrity: sha512-AoFXei9hSnVXo8X5PmXzSiNXwPMgA+NzyN35uRRy0N1XwbJbRI1laTCaaFci9QB9Wyv9ZFWlgF0xzgivavJpDA==}
+  highcharts@13.1.1:
+    resolution: {integrity: sha512-k/smhxCgaqHDsuy9ZCWs8FJNTPrbzc8BmMA4M/8f9JMwv9HgmNZjulyWwZ9q9ly6AzHpskL9mhlW8vgsSqnstg==}
     peerDependencies:
       jspdf: ^4.1.0
       svg2pdf.js: ^2.7.0
@@ -7108,14 +7108,14 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  highcharts-angular@5.4.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(highcharts@13.0.0):
+  highcharts-angular@5.4.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(highcharts@13.1.1):
     dependencies:
       '@angular/common': 22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
       '@angular/core': 22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)
-      highcharts: 13.0.0
+      highcharts: 13.1.1
       tslib: 2.8.1
 
-  highcharts@13.0.0: {}
+  highcharts@13.1.1: {}
 
   hono@4.13.1: {}
 
