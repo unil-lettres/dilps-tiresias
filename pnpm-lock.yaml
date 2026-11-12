@@ -155,8 +155,8 @@ importers:
         specifier: ^27.1.1
         version: 27.1.1(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))
       '@ecodev/natural':
-        specifier: 73.4.3
-        version: 73.4.3(c2a22206e6e4f7e0b494ce60769c8e00)
+        specifier: 74.0.0
+        version: 74.0.0(c2a22206e6e4f7e0b494ce60769c8e00)
       '@ecodev/natural-layout':
         specifier: ^2.0.6
         version: 2.0.6
@@ -766,8 +766,8 @@ packages:
   '@ecodev/natural-layout@2.0.6':
     resolution: {integrity: sha512-L24MIxIcN3AZhdfv97X+RlVmSs5M0IR/UBt6YBDGPpv0YuxfBBkquVvdhcD2xyMODxs+bjttfJoQ1iw5P20tUw==}
 
-  '@ecodev/natural@73.4.3':
-    resolution: {integrity: sha512-Qwbd6DFAK2vOZnPVPifAUAN3z52DI6uoQM949WFrDy67lGPNdaRl3XW1wX3Zl3QlRjxFpDGKTWnNXg+WmAZnaw==}
+  '@ecodev/natural@74.0.0':
+    resolution: {integrity: sha512-cpSOOZYyaUMBBmbKz5OOKdYLiBnao8sS3HdVns1MVflKR0U30tN6tvYAxksG4dlW+ST20HHSdxJLfEmwHMLyxQ==}
     hasBin: true
     peerDependencies:
       '@angular/cdk': ^22.1.0
@@ -5003,7 +5003,7 @@ snapshots:
 
   '@ecodev/natural-layout@2.0.6': {}
 
-  '@ecodev/natural@73.4.3(c2a22206e6e4f7e0b494ce60769c8e00)':
+  '@ecodev/natural@74.0.0(c2a22206e6e4f7e0b494ce60769c8e00)':
     dependencies:
       '@angular/cdk': 22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/forms@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(@angular/platform-browser@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2))(@angular/platform-browser@22.1.6(@angular/common@22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2))(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2)))(rxjs@7.8.2)
       '@angular/common': 22.1.6(@angular/core@22.1.6(@angular/compiler@22.1.6)(rxjs@7.8.2)(zone.js@0.16.2))(rxjs@7.8.2)
@@ -6023,7 +6023,7 @@ snapshots:
       detect-libc: 2.1.2
       is-glob: 4.0.3
       node-addon-api: 7.1.1
-      picomatch: 4.0.5
+      picomatch: 4.0.7
     optionalDependencies:
       '@parcel/watcher-android-arm64': 2.6.0
       '@parcel/watcher-darwin-arm64': 2.6.0
@@ -8310,7 +8310,7 @@ snapshots:
   vite@8.1.5(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.101.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       postcss: 8.5.26
       rolldown: 1.1.5
       tinyglobby: 0.2.17
