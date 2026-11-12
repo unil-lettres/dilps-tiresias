@@ -46,7 +46,7 @@
         "dotenv": "^17.4.2",
         "es-toolkit": "^1.48.1",
         "graphql": "^16.14.2",
-        "highcharts": "^13.0.0",
+        "highcharts": "^13.1.1",
         "highcharts-angular": "^5.4.0",
         "ngx-progressbar": "^14.0.0",
         "ngx-quill": "^31.0.1",
