@@ -39,12 +39,14 @@
 /client/app/shared/generated-types.ts
 /client/environments/*
 !/client/environments/.gitkeep
-.env
+/.env
+!/.env.example
 .DS_Store
 *.sql
 *.sql.gz
 
-/dev/.env
+/dev/*.env
+!/dev/*.env.example
 supervisord.log
 supervisord.pid
 

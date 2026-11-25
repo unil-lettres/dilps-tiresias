@@ -19,7 +19,7 @@ The recommended way to get a working copy is the following:
 1. Set up a nginx virtual host to point to `htdocs/` directory and to include `configuration/nginx.conf`
 2. Create a database in MariaDB named "dilps"
 3. Configure database in `config/autoload/local.php` (see example `config/autoload/local.php.dist`)
-4. Copy & rename the example.env file to .env (`cp example.env .env`). Replace the values if needed.
+4. Copy & rename the .env.example file to .env (`cp .env.example .env`). Replace the values if needed.
 5. Finally, build the app:
 
 `./bin/build.sh`
@@ -35,8 +35,9 @@ A working [Docker](https://docs.docker.com/engine/install/) installation is mand
 Copy the following files:
 
 ```sh
-cp example.env .env
-cp dev/example.env dev/.env
+cp .env.example .env
+cp dev/app.env.example dev/app.env
+cp dev/db.env.example dev/db.env
 cp config/development.config.php.dist config/development.config.php
 cp config/autoload/local.php.dist config/autoload/local.php
 cp config/autoload/tiresias.local.php.dist config/autoload/tiresias.local.php

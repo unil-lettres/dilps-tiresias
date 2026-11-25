@@ -72,7 +72,7 @@ jobs:
 
             - name: Prepare app
               run: |
-                  cp example.env .env
+                  cp .env.example .env
                   cp config/autoload/local.php.dist config/autoload/local.php
 
             - name: Build app

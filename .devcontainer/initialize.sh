@@ -1,7 +1,8 @@
 #!/bin/bash
 
-cp example.env .env
-cp dev/example.env dev/.env
+cp .env.example .env
+cp dev/app.env.example dev/app.env
+cp dev/db.env.example dev/db.env
 cp config/development.config.php.dist config/development.config.php
 cp config/autoload/local.php.dist config/autoload/local.php
 cp config/autoload/tiresias.local.php.dist config/autoload/tiresias.local.php

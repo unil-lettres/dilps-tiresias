@@ -11,7 +11,7 @@ services:
             context: ./dev/config
             dockerfile: ./app.dockerfile
         env_file:
-            - ./dev/.env
+            - ./dev/app.env
         volumes:
             - ./:/var/www
             - ./dev/config/dilps-tiresias.ini:/usr/local/etc/php/conf.d/99-php.ini
@@ -54,7 +54,7 @@ services:
     dilps-tiresias-mysql:
         image: mariadb:12.3
         env_file:
-            - ./dev/.env
+            - ./dev/db.env
         environment:
             # Override needed for healthcheck
             - MYSQL_HOST=127.0.0.1
